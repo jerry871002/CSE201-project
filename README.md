@@ -6,14 +6,14 @@ Aim is for the user to have a better understanding of how certain environmental 
 ## Members
 | name surname | github username | trello username | [role] |
 |:------------:|:---------------:|:---------------:|:------:|
-| Vincent Sietses||| Project boss + Algorithms team leader|
+| Vincent Sietses | Vincent-Sietses || Project boss + Algorithms team leader|
 | Antoine De Mascarel| antoine-demascarel|| Trello leader + Objects team leader|
 | Jerry Yang| jerry871002| jerry871002| Git leader|
 | Eliott Sarrey||| Interface team leader|
-| Paloma Thevenet
+| Paloma Thevenet | tpaloma |
 | Ambroise Muller
 | Luca Bonengel
-| Yury Nevenchannyy
+| Yury Nevenchannyy | Yury-Nevencahnnyy
 | Samuel Sahel-Schackis
 | Saga David| sagdav|||
 | Anna| annavlasova19|||
