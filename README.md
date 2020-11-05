@@ -1,6 +1,7 @@
 # CSE201-project
 
 C++ project for understanding the link between human activities and social environmental effects.
+Aim is for the user to have a better understanding of how certain environmental policies work and their impact on different objectives. 
 
 ## Members (name surname, github username, trello username, [role])
 - Vincent Sietses,, Project boss + Algorithms team leader
