@@ -70,3 +70,20 @@ class Nuclear : public Energy {
     double energy_output;
     double environmental_impact() //redefined don't use same as the one in energy
 }
+
+
+
+class Data : public MYPROJECT2_API ACity {
+public:
+    // no general attributes yet
+}
+
+class Indices : public Data {
+public:
+    int max=100;
+    int min=0;
+    int current_value;
+    int long_term;
+
+
+}
