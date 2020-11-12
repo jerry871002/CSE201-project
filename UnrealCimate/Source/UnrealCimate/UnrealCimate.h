@@ -77,7 +77,10 @@ class Nuclear : public Energy {
     double environmental_impact() //redefined don't use same as the one in energy
 }
 
-
+class Water : public Factory {
+    double water_output;
+    double environmental_impact();
+}
 
 class Data : public MYPROJECT2_API ACity {
 public:
@@ -109,3 +112,48 @@ public:
 }
 
 */
+
+class Pollution : public Indices {
+    //input: mainly:factory outputs, also: housing and public services level
+}
+
+class Happiness : public Indices {
+    //input: factories nature, housing and public services level, unemployment, average income, restrictions
+}
+
+class Unemployment : public Indices {
+    //input: mainly: capacity of factories, also: happiness, public services
+}
+
+class Income : public Indices {
+    //input: mainly: factories nature/capacity
+}
+
+class Counters : public Data {
+public:
+    double current;
+    int min=0;
+    //optimal value: city usage
+}
+
+class GDP : public Counters {
+    //input: average income, unemployment
+}
+
+class CarbonEmissions : public Counters {
+    //input: factories nature/level/capacity, housing/public services level, restrictions
+}
+
+/* not needed?
+class Resources : public Counters {
+    //input: factories output - city usage
+}
+*/
+
+class Energy : public Counters {
+     //input: dedicated factories output - city usage
+}
+
+class Water : public Counters {
+    //input: dedicated factories output - city usage
+}
