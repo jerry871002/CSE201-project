@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "UnrealCimate",
+			"Path": "C:\\Users\\LOREdinateur\\Documents\\Unreal Projects\\CSE201-project\\UnrealCimate\\Source\\UnrealCimate.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "UnrealCimateEditor",
+			"Path": "C:\\Users\\LOREdinateur\\Documents\\Unreal Projects\\CSE201-project\\UnrealCimate\\Source\\UnrealCimateEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
