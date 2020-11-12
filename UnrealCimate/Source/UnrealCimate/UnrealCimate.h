@@ -90,6 +90,22 @@ public:
     int min=0;
     int current_value;
     int long_term;
-
-
 }
+
+/* not needed (just mind map)? :
+class Environmental : public Indices {
+public:
+    
+}
+
+class Social : public Indices {
+public:
+    
+}
+
+class Economical : public Indices {
+public:
+    
+}
+
+*/
