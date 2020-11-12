@@ -18,13 +18,17 @@ UCLASS()
 class MYPROJECT2_API ACity : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+	//time seetings
+	//reset function
 };
 
 class Structure : public MYPROJECT2_API ACity {
 public:
     double cost, location, age, type;
-
+    //solar panels template function which can be applied to any building (ie shop)
+    template <typename T> void Solar_panels(T){
+	    //if "button clicked" : solar panels appear
+    }
 }
 
 class Production : public Structure {
@@ -50,9 +54,11 @@ class Factory : public Production {
 }
 
 class Shop : public Production {
-    //get attributes from production : employment i don't remember how to do that
     //constructor :
-    Shop(double employment);
+    Shop(double employment){
+	    //if employment high enough : shope open
+	    //else : shope closed
+    };
 }
 
 
