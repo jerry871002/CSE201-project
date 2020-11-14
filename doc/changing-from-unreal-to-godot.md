@@ -1,5 +1,4 @@
 # Changing from Unreal to Godot
-> [time=Nov 14, 2020]
 
 Since most of us are facing troubles with unreal engine and it will be unconvenient to have to work in the labs or in the lore office.
 
