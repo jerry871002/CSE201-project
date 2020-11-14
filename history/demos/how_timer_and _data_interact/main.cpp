@@ -44,8 +44,8 @@ int main(int argc, char const *argv[]) {
 void show_status(int time, Indices happiness, Indices economics) {
     std::cout << "============================\n";
     std::cout << "Current time: " << time << std::endl;
-    std::cout << "Happiness: " << happiness.get_current_value() << std::endl;
-    std::cout << "Economics: " << economics.get_current_value() << std::endl;
+    std::cout << "Happiness: " << happiness.get_value() << std::endl;
+    std::cout << "Economics: " << economics.get_value() << std::endl;
     std::cout << "============================\n";
 }
 
