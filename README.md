@@ -23,10 +23,10 @@ Aim is for the user to have a better understanding of how certain environmental 
 ### Interface
 #### 3d world
 - Eliott
-- Paloma/Ambroise
+- Ambroise
 #### UI
 - Luca
-- Ambroise/Paloma
+- Arthur
 ### Algorithms
 - Vincent
 - Jerry
