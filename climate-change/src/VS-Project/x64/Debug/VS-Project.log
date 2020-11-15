@@ -1,44 +1,57 @@
-﻿  GodotLibrary.cpp
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(117,23): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(124,21): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(147,19): warning C4244: 'initializing': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(149,26): warning C4305: '=': truncation from 'double' to 'real_t'
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,30): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,22): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(208,16): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(218,24): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(227,43): warning C4244: '=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(110,11): warning C4244: 'return': conversion from 'int' to 'T', possible loss of data
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppClean.targets(76,5): warning : The process cannot access the file 'c:\godot\cse201-project\climate-change\src\vs-project\dllexport\libvs-project-x64-debug.pdb' because it is being used by another process.
+  GodotLibrary.cpp
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(117,23): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(124,21): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(147,19): warning C4244: 'initializing': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(149,26): warning C4305: '=': truncation from 'double' to 'real_t'
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,30): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,22): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(208,16): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(218,24): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(227,43): warning C4244: '=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(110,11): warning C4244: 'return': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(187): message : see reference to function template instantiation 'T godot::Math::sign<float>(T)' being compiled
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(187): message : see reference to function template instantiation 'T godot::Math::sign<float>(T)' being compiled
           with
           [
               T=float
           ]
   Player.cpp
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(117,23): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(124,21): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(147,19): warning C4244: 'initializing': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(149,26): warning C4305: '=': truncation from 'double' to 'real_t'
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,30): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,22): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(208,16): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(218,24): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(227,43): warning C4244: '=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(110,11): warning C4244: 'return': conversion from 'int' to 'T', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(117,23): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(124,21): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(147,19): warning C4244: 'initializing': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(149,26): warning C4305: '=': truncation from 'double' to 'real_t'
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,30): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,22): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(208,16): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(218,24): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(227,43): warning C4244: '=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(37,32): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(38,32): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(41,32): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(42,32): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(45,32): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(46,32): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(49,32): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(50,32): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(53,20): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(56,20): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(59,20): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(62,20): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(110,11): warning C4244: 'return': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(187): message : see reference to function template instantiation 'T godot::Math::sign<float>(T)' being compiled
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(187): message : see reference to function template instantiation 'T godot::Math::sign<float>(T)' being compiled
           with
           [
               T=float
           ]
   Root.cpp
   Generating Code...
-     Creating library C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\DLLExport\LibVS-Project-x64-Debug.lib and object C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\DLLExport\LibVS-Project-x64-Debug.exp
-  VS-Project.vcxproj -> C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\DLLExport\LibVS-Project-x64-Debug.dll
+     Creating library C:\Godot\CSE201-project\climate-change\src\VS-Project\DLLExport\LibVS-Project-x64-Debug.lib and object C:\Godot\CSE201-project\climate-change\src\VS-Project\DLLExport\LibVS-Project-x64-Debug.exp
+  VS-Project.vcxproj -> C:\Godot\CSE201-project\climate-change\src\VS-Project\DLLExport\LibVS-Project-x64-Debug.dll

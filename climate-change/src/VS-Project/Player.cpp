@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <Math.hpp>
 
 using namespace godot;
 
@@ -32,16 +33,32 @@ void Player::UpdateMotionFromInput()
 {
 	motion = Vector3(0, 0, 0);
 	Input* i = Input::get_singleton();
-	if (i->is_action_pressed("ui_up")) {
+	if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right"))) {
+		motion.z -= SPEED / (sqrt(2));
+		motion.x += SPEED / (sqrt(2));
+	}
+	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right"))) {
+		motion.z += SPEED / (sqrt(2));
+		motion.x += SPEED / (sqrt(2));
+	}
+	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_left"))) {
+		motion.z -= SPEED / (sqrt(2));
+		motion.x -= SPEED / (sqrt(2));
+	}
+	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_left"))) {
+		motion.z += SPEED / (sqrt(2));
+		motion.x -= SPEED / (sqrt(2));
+	}
+	else if (i->is_action_pressed("ui_up")) {
 		motion.z -= SPEED;
 	}
-	if (i->is_action_pressed("ui_down")) {
+	else if (i->is_action_pressed("ui_down")) {
 		motion.z += SPEED;
 	}
-	if (i->is_action_pressed("ui_right")) {
+	else if (i->is_action_pressed("ui_right")) {
 		motion.x += SPEED;
 	}
-	if (i->is_action_pressed("ui_left")) {
+	else if (i->is_action_pressed("ui_left")) {
 		motion.x -= SPEED;
 	}
 
