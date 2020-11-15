@@ -8,8 +8,9 @@ namespace godot {
 		GODOT_CLASS(Player, KinematicBody)
 	private:
 		Vector3 motion;
+		const int SPEED = 3;
 	public:
-		const int SPEED = 300;
+		
 		static void _register_methods();
 		void _init();
 		void _process(float delta);

@@ -1,5 +1,4 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppClean.targets(77,5): warning : The process cannot access the file 'c:\users\eliott\documents\github\cse201-project\climate-change\src\vs-project\dllexport\libvs-project-x64-debug.lib' because it is being used by another process.
-  GodotLibrary.cpp
+﻿  GodotLibrary.cpp
 C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(117,23): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
 C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(124,21): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
 C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(147,19): warning C4244: 'initializing': conversion from 'double' to 'real_t', possible loss of data

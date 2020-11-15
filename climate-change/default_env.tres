@@ -9,3 +9,4 @@ ambient_light_energy = 0.1
 glow_enabled = true
 glow_intensity = 8.0
 glow_strength = 0.9
+glow_bicubic_upscale = true

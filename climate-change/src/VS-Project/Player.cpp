@@ -32,17 +32,17 @@ void Player::UpdateMotionFromInput()
 {
 	motion = Vector3(0, 0, 0);
 	Input* i = Input::get_singleton();
-	if (i->is_action_just_pressed("ui_up")) {
-		motion.x -= SPEED;
+	if (i->is_action_pressed("ui_up")) {
+		motion.z -= SPEED;
 	}
-	if (i->is_action_just_pressed("ui_down")) {
-		motion.x += SPEED;
-	}
-	if (i->is_action_just_pressed("ui_right")) {
+	if (i->is_action_pressed("ui_down")) {
 		motion.z += SPEED;
 	}
-	if (i->is_action_just_pressed("ui_left")) {
-		motion.z -= SPEED;
+	if (i->is_action_pressed("ui_right")) {
+		motion.x += SPEED;
+	}
+	if (i->is_action_pressed("ui_left")) {
+		motion.x -= SPEED;
 	}
 
 }
