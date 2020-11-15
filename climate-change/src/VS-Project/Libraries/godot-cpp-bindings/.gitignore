@@ -9,7 +9,6 @@ logs/*
 *.pyc
 *.dblite
 *.pdb
-bin
 *.config
 *.creator
 *.creator.user
