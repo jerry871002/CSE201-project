@@ -10,7 +10,6 @@ logs/*
 *.dblite
 *.pdb
 *.lib
-bin
 *.config
 *.creator
 *.creator.user
