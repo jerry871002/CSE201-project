@@ -48,7 +48,7 @@ I also wrote a document about why and how we can change from Unreal to Godot.
 Next week I will be working on (1) make sure our project works on mac (since we don't have visual studio on mac) (2) implementing interaction among obects created by object team. 
 
 Samuel:
-This week I discussed the main objective of the simulation with the objects and simulation team. Moreover, I organised the main classes with the teams on the data
+This week I discussed the main objectives of the simulation with the objects and simulation team. Moreover, I organised the main classes with the teams on the data
 and on the structures sides. After a try with prezi, I helped build the chart tree on Lucid.
 I pushed my first commits, focussing on the organization of the classes on the simulation side, coupled with input and output ideas written as comments, which I
 will transform to actual code the coming week. This was coded using the Unreal Engine, which I managed to run on my mac. As it took a lot of time and it wasn't
