@@ -16,3 +16,10 @@ Last week, I worked on a class map with the objects team, so as to visualize the
 I also tried to understand and download unreal engine until we decided to switch to Godot, so I watched tutorials on how to work on Godot.
 Finally I started writing the classes, but next week I will need to separate each one of them in different files, so that our game can work on Godot. 
 So, next week I will continue working on the objects classes.
+
+Paloma :
+This week I organized with the objects' team the main classes we need for the simulation, with their attributes and some functions, in a lucid chart tree and coded them 
+in a file with the basic structure we have for now.
+After working on Unreal Engine, I switched to understaning how Godot works especially to link the 3D interface with C++ code using Virtual Studio and DLLs.
+Next week, I want to finish defining our classes and game structure with both the objects' and simulation team to start coding in detail the Structures branch, where each 
+class represented in the interface will have to be defined in a separate file.
