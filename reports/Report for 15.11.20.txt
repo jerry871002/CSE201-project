@@ -15,12 +15,18 @@ I also tried to understand and download unreal engine until we decided to switch
 Finally I started writing the classes, but next week I will need to separate each one of them in different files, so that our game can work on Godot.
 So, next week I will continue working on the objects classes.
 
+
 Paloma:
 This week I organized with the objects' team the main classes we need for the simulation, with their attributes and some functions, in a lucid chart tree and coded them
 in a file with the basic structure we have for now.
 After working on Unreal Engine, I switched to understaning how Godot works especially to link the 3D interface with C++ code using Virtual Studio and DLLs.
 Next week, I want to finish defining our classes and game structure with both the objects' and simulation team to start coding in detail the Structures branch, where each
 class represented in the interface will have to be defined in a separate file.
+
+Anna:
+This week I worked together with the objects team on structuring and visualising our classes, their attributes and inheritance on Lucid. We also coded the most basic parts of this classes in C++.
+Also I worked on installing and running unreal engine, which was an issue on my computer, and after we switched to Godot, I started watching different tutotials.
+Next week I plan on better understanding Godot and how ot works and define classes better together with objects team.
 
 Luca:
 This week, I worked on finding the most suitable game engine for our project by following tutorials to familiarise myself with different engines in order to understand how they work.
@@ -34,3 +40,13 @@ I discussed with members of my team what some very basic properties and policies
 We had planned to start coding last thursday, however the original engine, Unreal Engine 4, was too heavy for most computers to run well - and some laptops flat out refused to load it.
 After lenghty discussion the graphics team decided they had to find an alternative, which is why we decided to switch the project to the Godot engine.
 I created a very basic Data class to understand how the C++ bindings in Godot work. Next week the simulations team will work on the basic implementation of the indices and counters we have in mind.
+
+Eliott:
+This week I started by creating the 2 first assets of our 3D world on blender and did a lot of research on game engines.
+Then, I implemented them in unreal engine and started the 3D world. We found out that this game engine was too heavy for some laptops so we decided to try Godot.
+I implemented by assets and set up everything to allow us writing only C++ and not GD native using DLL. I found a way to make a visual studio project able to compile
+our code to a godot library on any win laptop. Moreover, I tested my first scripts by implementing the camera movement in the 3d world. Next week I need to find how
+to compile the code on mac, create more assets on blender and implement building highlight and menus.
+
+
+
