@@ -41,3 +41,8 @@ We then opted for Unreal Engine, which had immense potential regarding functiona
 Unfortunately, the engine's requirements in terms of space and processing power made it impossible for the entire team to use it, and hence we chose to use the Godot game engine.
 A much lighter engine, Godot presented one main challenge. Originally designed for its own scripting language, we had to work on making it C++ friendly by the means of CPP bindings and the use of DLL's. I then set up the project in Visual Studio (which we chose as our IDE to work with Godot) in such a way that all files, libraries and DLL's generated could be accessed with relative paths, thus allowing anyone to compile the code and run the Godot game without going through all the setup process.
 In the coming week, I will focus on several specific tasks such as implementing clickable items, a time scale, and more sophisticated character movement in the Godot game.
+
+Jerry:
+This week I work on tutorials of Godot game engine, trying to understand the structure and the workflow. With the help of those tutorials, I managed to figure out an architechture of our project that everyone can work on together.
+I also wrote a document about why and how we can change from Unreal to Godot.
+Next week I will be working on (1) make sure our project works on mac (since we don't have visual studio on mac) (2) implementing interaction among obects created by object team. 
