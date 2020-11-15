@@ -64,3 +64,6 @@ After lenghty discussion the graphics team decided they had to find an alternati
 I created a very basic Data class to understand how the C++ bindings in Godot work. Next week the simulations team will work on the basic implementation of the indices and counters we have in mind.
 
 Anna:
+This week I worked together with the objects team on structuring and visualising our classes, their attributes and inheritance on Lucid. We also coded the most basic parts of this classes in C++.
+Also I worked on installing and running unreal engine, which was an issue on my computer, and after we switched to Godot, I started watching different tutotials.
+Next week I plan on better understanding Godot and how ot works and define classes better together with objects team.
