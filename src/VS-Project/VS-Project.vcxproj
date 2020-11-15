@@ -75,6 +75,7 @@
     <OutDir>..\DLLExport</OutDir>
     <IncludePath>C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\godot_headers;C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\include\core;C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\include\gen;C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\bin;$(LibraryPath)</LibraryPath>
+    <TargetName>Lib$(ProjectName)-$(Platform)-$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -87,12 +88,14 @@
     <OutDir>..\DLLExport</OutDir>
     <IncludePath>C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\godot_headers;C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\include\core;C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\include\gen;C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\bin;$(LibraryPath)</LibraryPath>
+    <TargetName>Lib$(ProjectName)-$(Platform)-$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\DLLExport</OutDir>
     <IncludePath>C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\godot_headers;C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\include\core;C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\include\gen;C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Eliott\Documents\GitHub\CSE201-project\godot-cpp\bin;$(LibraryPath)</LibraryPath>
+    <TargetName>Lib$(ProjectName)-$(Platform)-$(Configuration)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -153,6 +156,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GodotLibrary.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Root.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Root.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
