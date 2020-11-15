@@ -26,3 +26,10 @@ Luca:
 This week, I worked on finding the most suitable game engine for our project by following tutorials to familiarise myself with different engines in order to understand how they work.
 With the interface team, we finally opted for Godot. Now, I try to make it possible every mac user to use visual code studio with Godot.
 Next week, I plan to start coding in c++ with Godot in order to implement various actions for the user interface.
+
+Eliott:
+This week I started by creating the 2 first assets of our 3D world on blender and did a lot of research about game engines.
+Then, I implemented them in unreal engine and started the 3D world. We found out that this game engine was too heavy for some laptops so we decided to try Godot.
+I implemented by assets and set up everything to allow us writing only C++ and not GD native using DLL. I find a way to make a visual studio project able to compil
+our code to a godot library on any win laptop. Moreover, I tested my first scripts by implementing the camera movement in the 3d world. Next week I need to find how
+to compil the code on mac, create more assets on blender and implement building highlight and menus.
