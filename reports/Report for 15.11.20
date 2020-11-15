@@ -10,3 +10,9 @@ This week I worked on better understanding unreal engine, and now instead famili
 More importantly with the object team we designed our basic inheritance tree for our main objects in our world. 
 I did this though a prezi presentation, which we then changed to using the Lucid app, building our inheritance tree there. 
 For next week I want to understand how Godot works and enter in more detail the structure of our inheritance objects. 
+
+Saga:
+Last week, I worked on a class map with the objects team, so as to visualize the classes that we were going to need for our project, especially the attributes they would have and the inheritance.
+I also tried to understand and download unreal engine until we decided to switch to Godot, so I watched tutorials on how to work on Godot.
+Finally I started writing the classes, but next week I will need to separate each one of them in different files, so that our game can work on Godot. 
+So, next week I will continue working on the objects classes.
