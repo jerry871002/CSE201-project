@@ -28,3 +28,9 @@ With the interface team, we finally opted for Godot. Now, I try to make it possi
 Next week, I plan to start coding in c++ with Godot in order to implement various actions for the user interface.
 
 Vincent:
+Last monday, we discussed at lengths what the roles of the simulation and object teams would be. We designed a rudimentary draft of the classes and their properties. 
+I created a Lucid Chart document where the whole project team could coordinate how the objects work. Lucid chart is an online software which displays UML diagrams.
+I discussed with members of my team what some very basic properties and policies could be in our simulation, and decided on a few simple equations.
+We had planned to start coding last thursday, however the original engine, Unreal Engine 4, was too heavy for most computers to run well - and some laptops flat out refused to load it.
+After lenghty discussion the graphics team decided they had to find an alternative, which is why we decided to switch the project to the Godot engine.
+I created a very basic Data class to understand how the C++ bindings in Godot work. Next week the simulations team will work on the basic implementation of the indices and counters we have in mind.
