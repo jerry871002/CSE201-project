@@ -36,4 +36,4 @@ Aim is for the user to have a better understanding of how certain environmental 
 - Antoine
 - Saga
 - Anna
-- Arthur
+- Paloma
