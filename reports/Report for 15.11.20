@@ -33,3 +33,11 @@ Then, I implemented them in unreal engine and started the 3D world. We found out
 I implemented by assets and set up everything to allow us writing only C++ and not GD native using DLL. I find a way to make a visual studio project able to compil
 our code to a godot library on any win laptop. Moreover, I tested my first scripts by implementing the camera movement in the 3d world. Next week I need to find how
 to compil the code on mac, create more assets on blender and implement building highlight and menus.
+
+Ambroise:
+I spent the week working with the interface team to explore the possibilities and potential of different game engines to find the one that was best suited to our project.
+After having a look at Qt engine and coding a simple game in two dimensions, it was clear that the Qt library was not sufficient and that implementing an entire three-dimensional city simulation would imply a considerable amount of work on the graphical side, compared to other options. 
+We then opted for Unreal Engine, which had immense potential regarding functionality and offered a comprehensive interface to implement our graphical objects. I therefore started several test projects with the help of tutorials, for example to link user input and character actions or to create clickable objects.  
+Unfortunately, the engine's requirements in terms of space and processing power made it impossible for the entire team to use it, and hence we chose to use the Godot game engine.
+A much lighter engine, Godot presented one main challenge. Originally designed for its own scripting language, we had to work on making it C++ friendly by the means of CPP bindings and the use of DLL's. I then set up the project in Visual Studio (which we chose as our IDE to work with Godot) in such a way that all files, libraries and DLL's generated could be accessed with relative paths, thus allowing anyone to compile the code and run the Godot game without going through all the setup process.
+In the coming week, I will focus on several specific tasks such as implementing clickable items, a time scale, and more sophisticated character movement in the Godot game.
