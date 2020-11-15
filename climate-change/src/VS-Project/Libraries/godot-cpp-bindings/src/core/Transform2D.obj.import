@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Transform2D.obj-9ce070203aa9d3104dca3b9b1151672c.mesh"
+
+[deps]
+
+files=[ "res://.import/Transform2D.obj-9ce070203aa9d3104dca3b9b1151672c.mesh" ]
+
+source_file="res://src/VS-Project/Libraries/godot-cpp-bindings/src/core/Transform2D.obj"
+dest_files=[ "res://.import/Transform2D.obj-9ce070203aa9d3104dca3b9b1151672c.mesh", "res://.import/Transform2D.obj-9ce070203aa9d3104dca3b9b1151672c.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

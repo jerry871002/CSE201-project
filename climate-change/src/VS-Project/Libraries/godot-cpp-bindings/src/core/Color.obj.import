@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Color.obj-d6b6e148e083c7d6b7904feb365602df.mesh"
+
+[deps]
+
+files=[ "res://.import/Color.obj-d6b6e148e083c7d6b7904feb365602df.mesh" ]
+
+source_file="res://src/VS-Project/Libraries/godot-cpp-bindings/src/core/Color.obj"
+dest_files=[ "res://.import/Color.obj-d6b6e148e083c7d6b7904feb365602df.mesh", "res://.import/Color.obj-d6b6e148e083c7d6b7904feb365602df.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

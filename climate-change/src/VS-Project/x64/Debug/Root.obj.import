@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Root.obj-8e65328590e6d978ee1dc6dd9b400040.mesh"
+
+[deps]
+
+files=[ "res://.import/Root.obj-8e65328590e6d978ee1dc6dd9b400040.mesh" ]
+
+source_file="res://src/VS-Project/x64/Debug/Root.obj"
+dest_files=[ "res://.import/Root.obj-8e65328590e6d978ee1dc6dd9b400040.mesh", "res://.import/Root.obj-8e65328590e6d978ee1dc6dd9b400040.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

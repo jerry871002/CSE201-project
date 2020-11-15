@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/GodotGlobal.obj-6eae560dfc08b8e1bee09e07b69251cb.mesh"
+
+[deps]
+
+files=[ "res://.import/GodotGlobal.obj-6eae560dfc08b8e1bee09e07b69251cb.mesh" ]
+
+source_file="res://src/VS-Project/Libraries/godot-cpp-bindings/src/core/GodotGlobal.obj"
+dest_files=[ "res://.import/GodotGlobal.obj-6eae560dfc08b8e1bee09e07b69251cb.mesh", "res://.import/GodotGlobal.obj-6eae560dfc08b8e1bee09e07b69251cb.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

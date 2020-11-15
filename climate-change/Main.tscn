@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Buildings/Restau.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Buildings/Shop.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Main.gdns" type="Script" id=3]
 
 [sub_resource type="ProceduralSky" id=1]
 
@@ -14,6 +15,7 @@ glow_intensity = 3.61
 glow_strength = 0.87
 
 [node name="Spatial" type="Spatial"]
+script = ExtResource( 3 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.833693, -0.391328, 0.389638, 0, 0.705575, 0.708636, -0.552228, -0.590784, 0.588233, 0, 2.03515, 2.14566 )
