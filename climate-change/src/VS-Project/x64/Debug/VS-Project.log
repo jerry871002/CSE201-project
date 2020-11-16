@@ -1,1 +1,42 @@
-﻿  VS-Project.vcxproj -> C:\Godot\CSE201-project\climate-change\src\VS-Project\DLLExport\LibVS-Project-x64-Debug.dll
+﻿  Player.cpp
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(117,23): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(124,21): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(147,19): warning C4244: 'initializing': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(149,26): warning C4305: '=': truncation from 'double' to 'real_t'
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,30): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,22): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(208,16): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(218,24): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(227,43): warning C4244: '=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(67,79): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(70,78): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(73,140): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(74,142): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(75,140): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(76,139): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(80,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(81,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(84,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(85,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(88,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(89,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(92,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(93,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(95,63): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(96,65): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(97,66): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(98,65): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(105,39): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(108,53): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(109,53): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(110,11): warning C4244: 'return': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(187): message : see reference to function template instantiation 'T godot::Math::sign<float>(T)' being compiled
+          with
+          [
+              T=float
+          ]
+  VS-Project.vcxproj -> C:\Godot\CSE201-project\climate-change\src\VS-Project\DLLExport\LibVS-Project-x64-Debug.dll
