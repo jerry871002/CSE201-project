@@ -12,17 +12,19 @@ namespace godot {
 		Vector3 motion;
 		Vector3 rotation;
 		const double SPEED_T = 3;
-		const double SPEED_R = 2;
+		const double SPEED_R = 20;
 	public:
 		
 		static void _register_methods();
 		void _init();
 		void _process(float delta);
+		void _input(InputEvent* e);
+		void _ready();
 
 		Player();
 		~Player();
 
 		void UpdateMotionFromInput();
-		void UpdateRotationFromInput();
+		void UpdateRotationFromInput(InputEventMouseMotion* e);
 	};
 }
