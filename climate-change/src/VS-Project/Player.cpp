@@ -16,6 +16,8 @@ void Player::_process(float delta)
 {
 	UpdateMotionFromInput();
 	move_and_slide(motion);
+	UpdateRotationFromInput();
+	set_rotation_degrees(rotation);
 
 }
 
@@ -34,32 +36,36 @@ void Player::UpdateMotionFromInput()
 	motion = Vector3(0, 0, 0);
 	Input* i = Input::get_singleton();
 	if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right"))) {
-		motion.z -= SPEED / (sqrt(2));
-		motion.x += SPEED / (sqrt(2));
+		motion.z -= SPEED_T / (sqrt(2));
+		motion.x += SPEED_T / (sqrt(2));
 	}
 	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right"))) {
-		motion.z += SPEED / (sqrt(2));
-		motion.x += SPEED / (sqrt(2));
+		motion.z += SPEED_T / (sqrt(2));
+		motion.x += SPEED_T / (sqrt(2));
 	}
 	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_left"))) {
-		motion.z -= SPEED / (sqrt(2));
-		motion.x -= SPEED / (sqrt(2));
+		motion.z -= SPEED_T / (sqrt(2));
+		motion.x -= SPEED_T / (sqrt(2));
 	}
 	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_left"))) {
-		motion.z += SPEED / (sqrt(2));
-		motion.x -= SPEED / (sqrt(2));
+		motion.z += SPEED_T / (sqrt(2));
+		motion.x -= SPEED_T / (sqrt(2));
 	}
 	else if (i->is_action_pressed("ui_up")) {
-		motion.z -= SPEED;
+		motion.z -= SPEED_T;
 	}
 	else if (i->is_action_pressed("ui_down")) {
-		motion.z += SPEED;
+		motion.z += SPEED_T;
 	}
 	else if (i->is_action_pressed("ui_right")) {
-		motion.x += SPEED;
+		motion.x += SPEED_T;
 	}
 	else if (i->is_action_pressed("ui_left")) {
-		motion.x -= SPEED;
+		motion.x -= SPEED_T;
 	}
+
+}
+
+void Player::UpdateRotationFromInput() {
 
 }

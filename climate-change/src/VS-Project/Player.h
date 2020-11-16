@@ -10,7 +10,9 @@ namespace godot {
 		GODOT_CLASS(Player, KinematicBody)
 	private:
 		Vector3 motion;
-		const double SPEED = 3;
+		Vector3 rotation;
+		const double SPEED_T = 3;
+		const double SPEED_R = 2;
 	public:
 		
 		static void _register_methods();
@@ -21,5 +23,6 @@ namespace godot {
 		~Player();
 
 		void UpdateMotionFromInput();
+		void UpdateRotationFromInput();
 	};
 }
