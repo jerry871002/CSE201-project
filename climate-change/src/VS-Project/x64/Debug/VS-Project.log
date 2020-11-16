@@ -1,46 +1,39 @@
 ﻿  Player.cpp
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(117,23): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(124,21): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(147,19): warning C4244: 'initializing': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(149,26): warning C4305: '=': truncation from 'double' to 'real_t'
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,30): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,22): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(208,16): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(218,24): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(227,43): warning C4244: '=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(54,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(55,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(58,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(59,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(62,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(63,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(66,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(67,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(70,22): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(73,22): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(76,22): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(79,22): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Player.cpp(87,37): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(110,11): warning C4244: 'return': conversion from 'int' to 'T', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(117,23): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(124,21): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(147,19): warning C4244: 'initializing': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(149,26): warning C4305: '=': truncation from 'double' to 'real_t'
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,30): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(168,22): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(208,16): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(218,24): warning C4244: 'argument': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(227,43): warning C4244: '=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(53,140): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(54,142): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(55,140): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(56,139): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(60,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(61,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(64,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(65,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(68,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(69,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(72,34): warning C4244: '+=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(73,34): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(75,62): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(76,64): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(77,65): warning C4244: '+=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(78,64): warning C4244: '-=': conversion from 'const double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(85,37): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Player.cpp(86,39): warning C4244: '-=': conversion from 'double' to 'real_t', possible loss of data
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(110,11): warning C4244: 'return': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Eliott\Documents\GitHub\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(187): message : see reference to function template instantiation 'T godot::Math::sign<float>(T)' being compiled
+C:\Godot\CSE201-project\climate-change\src\VS-Project\Libraries\godot-cpp-bindings\include\core\Math.hpp(187): message : see reference to function template instantiation 'T godot::Math::sign<float>(T)' being compiled
           with
           [
               T=float
           ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003: The specified task executable "CL.exe" could not be run. System.IO.IOException: The requested operation cannot be performed on a file with a user-mapped section open.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003: 
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at System.IO.File.InternalWriteAllText(String path, String contents, Encoding encoding, Boolean checkHost)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at System.IO.File.WriteAllText(String path, String contents, Encoding encoding)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at Microsoft.Build.Utilities.CanonicalTrackedInputFiles.SaveTlog(DependencyFilter includeInTLog)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at Microsoft.Build.CPPTasks.CL.PostExecuteTool(Int32 exitCode)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at Microsoft.Build.CPPTasks.TrackedVCToolTask.ExecuteTool(String pathToTool, String responseFileCommands, String commandLineCommands)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(632,5): error MSB6003:    at Microsoft.Build.Utilities.ToolTask.Execute()
+  VS-Project.vcxproj -> C:\Godot\CSE201-project\climate-change\src\VS-Project\DLLExport\LibVS-Project-x64-Debug.dll

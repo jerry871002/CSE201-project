@@ -49,8 +49,14 @@ void Player::UpdateMotionFromInput()
 {
 	motion = Vector3(0, 0, 0);
 	Input* i = Input::get_singleton();
-
-	if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right"))) {
+	if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))){}
+	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) { motion.z -= SPEED_T; }
+	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) { motion.z += SPEED_T; }
+	else if ((i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) { motion.x += SPEED_T; }
+	else if ((i->is_action_pressed("ui_left")) && (i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) { motion.x -= SPEED_T; }
+	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) {}
+	else if ((i->is_action_pressed("ui_left")) && (i->is_action_pressed("ui_right"))) {}
+	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right"))) {
 		motion.z -= SPEED_T / (sqrt(2));
 		motion.x += SPEED_T / (sqrt(2));
 	}
@@ -66,18 +72,10 @@ void Player::UpdateMotionFromInput()
 		motion.z += SPEED_T / (sqrt(2));
 		motion.x -= SPEED_T / (sqrt(2));
 	}
-	else if (i->is_action_pressed("ui_up")) {
-		motion.z -= SPEED_T;
-	}
-	else if (i->is_action_pressed("ui_down")) {
-		motion.z += SPEED_T;
-	}
-	else if (i->is_action_pressed("ui_right")) {
-		motion.x += SPEED_T;
-	}
-	else if (i->is_action_pressed("ui_left")) {
-		motion.x -= SPEED_T;
-	}
+	else if (i->is_action_pressed("ui_up")) {motion.z -= SPEED_T;}
+	else if (i->is_action_pressed("ui_down")) {motion.z += SPEED_T;}
+	else if (i->is_action_pressed("ui_right")) {motion.x += SPEED_T;}
+	else if (i->is_action_pressed("ui_left")) {motion.x -= SPEED_T;}
 
 }
 
@@ -85,4 +83,5 @@ void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
 
 	Vector2 rot = e->get_relative();
 	rotation.y -= rot.x * (SPEED_R/360);    //Must depends on the screen size to avoid slower rotation on high def screens
+	rotation.x -= rot.y * (SPEED_R / 360);
 }
