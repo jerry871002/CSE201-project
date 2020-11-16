@@ -6,6 +6,8 @@ using namespace godot;
 void Player::_register_methods()
 {
 	register_method((char*)"_process", &Player::_process);
+	register_method((char*)"_input", &Player::_input);
+	register_method((char*)"_ready", &Player::_ready);
 }
 
 void Player::_init()
@@ -16,13 +18,29 @@ void Player::_process(float delta)
 {
 	UpdateMotionFromInput();
 	move_and_slide(motion);
+	set_rotation_degrees(rotation);
+}
 
+void Player::_input(InputEvent* e)
+{
+	const godot::String ev = "InputEventMouseMotion";
+	godot::String cl = e->get_class();
+
+	if (ev==cl) {
+		UpdateRotationFromInput((InputEventMouseMotion*)e);
+	}
+}
+
+void Player::_ready()
+{
+	
 }
 
 
 Player::Player()
 {
 	motion = Vector3(0, 0, 0);
+	rotation = Vector3(0, 0, 0);
 }
 
 Player::~Player()
@@ -33,33 +51,40 @@ void Player::UpdateMotionFromInput()
 {
 	motion = Vector3(0, 0, 0);
 	Input* i = Input::get_singleton();
+
 	if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right"))) {
-		motion.z -= SPEED / (sqrt(2));
-		motion.x += SPEED / (sqrt(2));
+		motion.z -= SPEED_T / (sqrt(2));
+		motion.x += SPEED_T / (sqrt(2));
 	}
 	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right"))) {
-		motion.z += SPEED / (sqrt(2));
-		motion.x += SPEED / (sqrt(2));
+		motion.z += SPEED_T / (sqrt(2));
+		motion.x += SPEED_T / (sqrt(2));
 	}
 	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_left"))) {
-		motion.z -= SPEED / (sqrt(2));
-		motion.x -= SPEED / (sqrt(2));
+		motion.z -= SPEED_T / (sqrt(2));
+		motion.x -= SPEED_T / (sqrt(2));
 	}
 	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_left"))) {
-		motion.z += SPEED / (sqrt(2));
-		motion.x -= SPEED / (sqrt(2));
+		motion.z += SPEED_T / (sqrt(2));
+		motion.x -= SPEED_T / (sqrt(2));
 	}
 	else if (i->is_action_pressed("ui_up")) {
-		motion.z -= SPEED;
+		motion.z -= SPEED_T;
 	}
 	else if (i->is_action_pressed("ui_down")) {
-		motion.z += SPEED;
+		motion.z += SPEED_T;
 	}
 	else if (i->is_action_pressed("ui_right")) {
-		motion.x += SPEED;
+		motion.x += SPEED_T;
 	}
 	else if (i->is_action_pressed("ui_left")) {
-		motion.x -= SPEED;
+		motion.x -= SPEED_T;
 	}
 
+}
+
+void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
+
+	Vector2 rot = e->get_relative();
+	rotation.y -= rot.x * (SPEED_R/360);
 }
