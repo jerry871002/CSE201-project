@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <Math.hpp>
+#include <GodotGlobal.hpp>
 
 using namespace godot;
 
@@ -23,10 +24,7 @@ void Player::_process(float delta)
 
 void Player::_input(InputEvent* e)
 {
-	const godot::String ev = "InputEventMouseMotion";
-	godot::String cl = e->get_class();
-
-	if (ev==cl) {
+	if (e->get_class() == "InputEventMouseMotion") {
 		UpdateRotationFromInput((InputEventMouseMotion*)e);
 	}
 }
@@ -86,5 +84,5 @@ void Player::UpdateMotionFromInput()
 void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
 
 	Vector2 rot = e->get_relative();
-	rotation.y -= rot.x * (SPEED_R/360);
+	rotation.y -= rot.x * (SPEED_R/360);    //Must depends on the screen size to avoid slower rotation on high def screens
 }
