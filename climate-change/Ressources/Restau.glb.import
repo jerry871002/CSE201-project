@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/Restau.glb-410d767ad2c191493e1fbcc7d80650c0.scn"
+path="res://.import/Restau.glb-3e80ce411cdc8151155e613aec67a9a0.scn"
 
 [deps]
 
-source_file="res://Resources/Restau.glb"
-dest_files=[ "res://.import/Restau.glb-410d767ad2c191493e1fbcc7d80650c0.scn" ]
+source_file="res://Ressources/Restau.glb"
+dest_files=[ "res://.import/Restau.glb-3e80ce411cdc8151155e613aec67a9a0.scn" ]
 
 [params]
 
