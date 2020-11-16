@@ -105,8 +105,21 @@ void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
 	rotation.y -= rot.x * (SPEED_R / 360);    //Must depends on the screen size to avoid slower rotation on high def screens
 	// rotation.x -= rot.y * (SPEED_R / 360);
 	
-	motion.z += (rot.y * cos(30 * 180 / 3.14159)) / 100;
-	motion.y += (rot.y * sin(30 * 180 / 3.14159)) / 100;
+	if (rot.y <= 0) {
+		if (this->get_global_transform().get_origin().y <= 20) { 
+			motion.z += (rot.y * cos(15/* * 180 / 3.14159*/)) / 100;
+			motion.y -= (rot.y * sin(15/* * 180 / 3.14159*/)) / 100;
+		}
+	} else {
+		if (this->get_global_transform().get_origin().y >= 3) { 
+			motion.z += (rot.y * cos(15/* * 180 / 3.14159*/)) / 100;
+			motion.y -= (rot.y * sin(15/* * 180 / 3.14159*/)) / 100;
+		}
+	}
+
+	//motion.z += (rot.y * cos(30 * 180 / 3.14159)) / 100;
+	//motion.y += (rot.y * sin(30 * 180 / 3.14159)) / 100;
+
 }
 
 void Player::ChangeMouseMode()
