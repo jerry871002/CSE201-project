@@ -25,6 +25,7 @@ shadow_bias = 0.0
 
 [node name="KinematicBody" type="KinematicBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5638, 3.09563, 8.23812 )
+input_capture_on_drag = true
 script = ExtResource( 4 )
 
 [node name="ClippedCamera" type="ClippedCamera" parent="KinematicBody"]
@@ -32,7 +33,6 @@ transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0
 fov = 35.0
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, -1.5638, -0.58039, -6.59145 )
 shape = SubResource( 1 )
 
 [node name="Mall" parent="." instance=ExtResource( 5 )]
