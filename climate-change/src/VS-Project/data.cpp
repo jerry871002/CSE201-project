@@ -6,6 +6,7 @@ using namespace godot;
 
 Data::Data() {
 	value = 0;
+	
 }
 
 Data::~Data() {
@@ -23,8 +24,6 @@ void Data::change_value(int i) {
 int Data::get_value() {
 	return value;
 }
-
-
 
 
 

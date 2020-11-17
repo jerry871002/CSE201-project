@@ -9,19 +9,32 @@ namespace godot {
 	class Data : public Object {
 		GODOT_CLASS(Data, Object)
 	private:
+		// static char* counters[];
 		int value;
 	public:
-
+		virtual void update_statistic();
 		void set_value(int);
 		void change_value(int);
 		int get_value();
 
 		Data();
 		~Data();
-		update_data();
+		
 	};
 }
+////Counters - initialize somewhere, probably not as classes
 
+Data income;
+Data population; 
+Data employed;
+Data carbon;
+Data energyDemand;
+Data energySupply;
+
+
+
+
+////Indices
 
 // added a cap - the bool cap returns true when the value is at 100 
 // incomplete ! need to add a function to update
@@ -39,3 +52,68 @@ namespace godot {
 	};
 }
 
+namespace godot {
+	class Happiness : public Index {
+		GODOT_CLASS(Happiness,Index)
+	
+
+
+
+	};
+
+
+}
+
+
+
+namespace godot {
+	class Employment : public Index {
+		GODOT_CLASS(Employment, Index)
+
+
+
+
+	};
+
+
+}
+
+
+
+namespace godot {
+	class Emissions : public Index {
+		GODOT_CLASS(Emissions, Index)
+
+
+
+
+	};
+
+
+}
+
+
+
+namespace godot {
+	class Medical : public Index {
+		GODOT_CLASS(Medical, Index)
+
+
+
+
+	};
+
+
+}
+
+namespace godot {
+	class Employment : public Index {
+		GODOT_CLASS(Employment, Index)
+
+
+
+
+	};
+
+
+}
