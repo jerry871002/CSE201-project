@@ -106,14 +106,14 @@ void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
 	// rotation.x -= rot.y * (SPEED_R / 360);
 	
 	if (rot.y <= 0) {
-		if (this->get_global_transform().get_origin().y <= 20) { 
-			motion.z += (rot.y * cos(15/* * 180 / 3.14159*/)) / 100;
-			motion.y -= (rot.y * sin(15/* * 180 / 3.14159*/)) / 100;
+		if (this->get_global_transform().get_origin().y >= 3) { 
+			motion.z -= (rot.y * cos(15/* * 180 / 3.14159*/)) / 50;
+			motion.y += (rot.y * sin(15/* * 180 / 3.14159*/)) / 50;
 		}
 	} else {
-		if (this->get_global_transform().get_origin().y >= 3) { 
-			motion.z += (rot.y * cos(15/* * 180 / 3.14159*/)) / 100;
-			motion.y -= (rot.y * sin(15/* * 180 / 3.14159*/)) / 100;
+		if (this->get_global_transform().get_origin().y <= 20) { 
+			motion.z -= (rot.y * cos(15/* * 180 / 3.14159*/)) / 50;
+			motion.y += (rot.y * sin(15/* * 180 / 3.14159*/)) / 50;
 		}
 	}
 
