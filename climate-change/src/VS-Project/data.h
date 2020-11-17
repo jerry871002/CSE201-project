@@ -11,21 +11,96 @@ namespace godot {
 	private:
 		int value;
 	public:
-
+		virtual void update_statistic();
 		void set_value(int);
 		void change_value(int);
 		int get_value();
 
 		Data();
 		~Data();
-		update_data();
+		
 	};
 }
 ////Counters
+namespace godot {
+	class Income : public Data {
+		GODOT_CLASS(Income, Data)
+	private:
+		
+	public:
+
+		
+	};
+}
+
+namespace godot {
+	class Population : public Data {
+		GODOT_CLASS(Population, Data)
+	private:
+
+	public:
 
 
+	};
+}
 
 
+namespace godot {
+	class Employed : public Data {
+		GODOT_CLASS(Employed, Data)
+	private:
+
+	public:
+
+
+	};
+}
+
+
+namespace godot {
+	class Carbon : public Data {
+		GODOT_CLASS(Carbon, Data)
+	private:
+
+	public:
+
+
+	};
+}
+
+
+namespace godot {
+	class EnergyDemand : public Data {
+		GODOT_CLASS(EnergyDemand, Data)
+	private:
+
+	public:
+
+
+	};
+}
+
+namespace godot {
+	class EnergySupply : public Data {
+		GODOT_CLASS(EnergySupply, Data)
+	private:
+
+	public:
+
+
+	};
+}
+
+namespace godot {
+	class Needs : public Data {
+		GODOT_CLASS(Needs, Data)
+	private:
+
+	public:
+
+
+	};
+}
 
 
 
