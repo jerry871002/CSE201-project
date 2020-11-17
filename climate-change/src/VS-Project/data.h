@@ -21,7 +21,16 @@ namespace godot {
 		update_data();
 	};
 }
+////Counters
 
+
+
+
+
+
+
+
+////Indices
 
 // added a cap - the bool cap returns true when the value is at 100 
 // incomplete ! need to add a function to update
@@ -39,3 +48,68 @@ namespace godot {
 	};
 }
 
+namespace godot {
+	class Happiness : public Index {
+		GODOT_CLASS(Happiness,Index)
+	
+
+
+
+	};
+
+
+}
+
+
+
+namespace godot {
+	class Employment : public Index {
+		GODOT_CLASS(Employment, Index)
+
+
+
+
+	};
+
+
+}
+
+
+
+namespace godot {
+	class Emissions : public Index {
+		GODOT_CLASS(Emissions, Index)
+
+
+
+
+	};
+
+
+}
+
+
+
+namespace godot {
+	class Medical : public Index {
+		GODOT_CLASS(Medical, Index)
+
+
+
+
+	};
+
+
+}
+
+namespace godot {
+	class Employment : public Index {
+		GODOT_CLASS(Employment, Index)
+
+
+
+
+	};
+
+
+}
