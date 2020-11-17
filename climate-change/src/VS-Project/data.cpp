@@ -6,6 +6,7 @@ using namespace godot;
 
 Data::Data() {
 	value = 0;
+	
 }
 
 Data::~Data() {

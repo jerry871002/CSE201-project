@@ -49,7 +49,6 @@ Player::Player()
 {
 	motion = Vector3(0, 0, 0);
 	rotation = Vector3(0, 0, 0);
-
 }
 
 Player::~Player()
