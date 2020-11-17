@@ -23,3 +23,11 @@ void Data::change_value(int i) {
 int Data::get_value() {
 	return value;
 }
+
+
+
+
+
+bool Index::is_capped() {
+	return (get_value() == 100);
+}
