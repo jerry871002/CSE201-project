@@ -1,5 +1,5 @@
 #include "obj.h"
 
-class AgriculturalProduction: public Services{
+class AgriculturalProduction: public Production{
 
 };
