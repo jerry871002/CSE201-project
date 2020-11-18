@@ -1,2 +1,0 @@
-C:\Users\LOREdinateur\Documents\Unreal Projects\CSE201-project\UnrealCimate\Intermediate\Build\Win64\UE4Editor\Development\UnrealCimate\Definitions.UnrealCimate.h
-C:\Users\LOREdinateur\Documents\Unreal Projects\CSE201-project\UnrealCimate\Source\UnrealCimate\UnrealCimate.h

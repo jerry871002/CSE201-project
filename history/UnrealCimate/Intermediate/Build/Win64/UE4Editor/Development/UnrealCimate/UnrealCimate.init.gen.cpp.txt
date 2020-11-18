@@ -1,3 +1,0 @@
-C:\Users\LOREdinateur\Documents\Unreal Projects\CSE201-project\UnrealCimate\Intermediate\Build\Win64\UE4Editor\Development\UnrealCimate\Definitions.UnrealCimate.h
-C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
-C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h

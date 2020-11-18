@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/main.obj-f47f2e08a5cf3f8abb9470b842abef6f.mesh"
+
+[deps]
+
+files=[ "res://.import/main.obj-f47f2e08a5cf3f8abb9470b842abef6f.mesh" ]
+
+source_file="res://src/VS-Project/Libraries/godot-cpp-bindings/out/build/x64-Debug (default)/CMakeFiles/ShowIncludes/main.obj"
+dest_files=[ "res://.import/main.obj-f47f2e08a5cf3f8abb9470b842abef6f.mesh", "res://.import/main.obj-f47f2e08a5cf3f8abb9470b842abef6f.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
