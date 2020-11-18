@@ -1,7 +1,3 @@
-
-// #ifndef TD7_HPP
-// #define TD7_HPP
-
 class Structure {
     protected:
         double cost, location, age, type;
@@ -25,15 +21,26 @@ class Housing: public Structure {
     public:
         
 };
+class Infrastructure: public Structure {
+    int employment;
 
-class PublicServices: public Structure {
+}
+
+class Transport: public Infrastructure {
+    protected:
+        double input, output, efficiency;
+        double efficiency;
+
+}
+
+/*class PublicServices: public Structure {
     protected:
         double input, output, efficiency;
         int employment;
     public:
     PublicServices();
     PublicServices(double input, double output, double efficiency);
-};
+};*/
 
 class Factory: public Production {
 
