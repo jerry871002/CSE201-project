@@ -1,10 +1,10 @@
 class Structure {
     protected:
-        double cost, location, age, type;
+        double cost, energyuse, maintenance, satisfaction;
     public:
     Structure();
-    Structure(double cost, double location, double age, double type):
-     cost{cost}, location{location}, age{age}, type{type} {}
+    Structure(double cost, double energyuse, double maintenance, double satisfaction):
+     cost{cost}, energyuse{energyuse}, maintenance{maintenance}, satisfaction{satisfaction} {}
 };
 
 class Production: public Structure {
@@ -13,25 +13,28 @@ class Production: public Structure {
         int employment;
     public:
     Production();
-    Production(double cost, double location, double age, double input, double output, double efficiency, int employment):
-    Structure {cost, location,age,0}, input{input}, output{output}, efficiency{efficiency} {}
+    Production(double cost, double energyuse, double maintenance, double satisfaction, double input, double output, double efficiency, int employment):
+    Structure {cost, location,maintenance, satisfaction}, input{input}, output{output}, efficiency{efficiency}, empolyment{employment} {}
 };
 
 class Housing: public Structure {
-    public:
+    //public:
         
 };
-class Infrastructure: public Structure {
-    int employment;
 
-}
+class Infrastructure: public Structure {
+    protected:
+        int employment;
+
+};
 
 class Transport: public Infrastructure {
     protected:
         double input, output, efficiency;
         double efficiency;
 
-}
+};
+ 
 
 /*class PublicServices: public Structure {
     protected:
@@ -63,18 +66,9 @@ class Shop: public Production {
     Shop();
     Shop(double employment);
 };
-class Mall: public Shop{
-public:
-Mall();
-};
-class Restaraunt: public Shop{
-public:
-Restaraunt();
-};
-class SmallShop: public Shop{
-public:
-SmallShop();
-};
+
+
+
 
 class Energy: public Factory {
     protected:
