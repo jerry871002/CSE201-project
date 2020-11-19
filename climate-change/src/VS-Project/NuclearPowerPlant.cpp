@@ -4,40 +4,40 @@
 
 using namespace godot;
 
-void Nuclear::_register_methods()
+void NuclearPowerPlant::_register_methods()
 {
-	register_method((char*)"_process", &Nuclear::_process);
-	register_method((char*)"_input", &Nuclear::_input);
-	register_method((char*)"_ready", &Nuclear::_ready);
+	register_method((char*)"_process", &NuclearPowerPlant::_process);
+	register_method((char*)"_input", &NuclearPowerPlant::_input);
+	register_method((char*)"_ready", &NuclearPowerPlant::_ready);
 }
 
-void Nuclear::_init()
-{
-
-}
-
-void Nuclear::_process(float delta)
+void NuclearPowerPlant::_init()
 {
 
 }
 
-void Nuclear::_input(InputEvent* e)
+void NuclearPowerPlant::_process(float delta)
 {
 
 }
 
-void Nuclear::_ready()
+void NuclearPowerPlant::_input(InputEvent* e)
+{
+
+}
+
+void NuclearPowerPlant::_ready()
 {
 
 }
 
 
-Nuclear::Nuclear()
+NuclearPowerPlant::NuclearPowerPlant()
 {
 
 }
 
-Nuclear::~Nuclear()
+NuclearPowerPlant::~NuclearPowerPlant()
 {
 
 }

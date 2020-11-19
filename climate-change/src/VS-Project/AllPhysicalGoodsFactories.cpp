@@ -4,40 +4,40 @@
 
 using namespace godot;
 
-void GoodsFactories::_register_methods()
+void AllPhysicalGoodsFactories::_register_methods()
 {
-	register_method((char*)"_process", &GoodsFactories::_process);
-	register_method((char*)"_input", &GoodsFactories::_input);
-	register_method((char*)"_ready", &GoodsFactories::_ready);
+	register_method((char*)"_process", &AllPhysicalGoodsFactories::_process);
+	register_method((char*)"_input", &AllPhysicalGoodsFactories::_input);
+	register_method((char*)"_ready", &AllPhysicalGoodsFactories::_ready);
 }
 
-void GoodsFactories::_init()
-{
-
-}
-
-void GoodsFactories::_process(float delta)
+void AllPhysicalGoodsFactories::_init()
 {
 
 }
 
-void GoodsFactories::_input(InputEvent* e)
+void AllPhysicalGoodsFactories::_process(float delta)
 {
 
 }
 
-void GoodsFactories::_ready()
+void AllPhysicalGoodsFactories::_input(InputEvent* e)
+{
+
+}
+
+void AllPhysicalGoodsFactories::_ready()
 {
 
 }
 
 
-GoodsFactories::GoodsFactories()
+AllPhysicalGoodsFactories::AllPhysicalGoodsFactories()
 {
 
 }
 
-GoodsFactories::~GoodsFactories()
+AllPhysicalGoodsFactories::~AllPhysicalGoodsFactories()
 {
 
 }

@@ -4,40 +4,40 @@
 
 using namespace godot;
 
-void Recycling::_register_methods()
+void RecyclingFactory::_register_methods()
 {
-	register_method((char*)"_process", &Recycling::_process);
-	register_method((char*)"_input", &Recycling::_input);
-	register_method((char*)"_ready", &Recycling::_ready);
+	register_method((char*)"_process", &RecyclingFactory::_process);
+	register_method((char*)"_input", &RecyclingFactory::_input);
+	register_method((char*)"_ready", &RecyclingFactory::_ready);
 }
 
-void Recycling::_init()
-{
-
-}
-
-void Recycling::_process(float delta)
+void RecyclingFactory::_init()
 {
 
 }
 
-void Recycling::_input(InputEvent* e)
+void RecyclingFactory::_process(float delta)
 {
 
 }
 
-void Recycling::_ready()
+void RecyclingFactory::_input(InputEvent* e)
+{
+
+}
+
+void RecyclingFactory::_ready()
 {
 
 }
 
 
-Recycling::Recycling()
+RecyclingFactory::RecyclingFactory()
 {
 
 }
 
-Recycling::~Recycling()
+RecyclingFactory::~RecyclingFactory()
 {
 
 }

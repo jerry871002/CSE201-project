@@ -4,40 +4,40 @@
 
 using namespace godot;
 
-void Wind::_register_methods()
+void Windmill::_register_methods()
 {
-	register_method((char*)"_process", &Wind::_process);
-	register_method((char*)"_input", &Wind::_input);
-	register_method((char*)"_ready", &Wind::_ready);
+	register_method((char*)"_process", &Windmill::_process);
+	register_method((char*)"_input", &Windmill::_input);
+	register_method((char*)"_ready", &Windmill::_ready);
 }
 
-void Wind::_init()
-{
-
-}
-
-void Wind::_process(float delta)
+void Windmill::_init()
 {
 
 }
 
-void Wind::_input(InputEvent* e)
+void Windmill::_process(float delta)
 {
 
 }
 
-void Wind::_ready()
+void Windmill::_input(InputEvent* e)
+{
+
+}
+
+void Windmill::_ready()
 {
 
 }
 
 
-Wind::Wind()
+Windmill::Windmill()
 {
 
 }
 
-Wind::~Wind()
+Windmill::~Windmill()
 {
 
 }

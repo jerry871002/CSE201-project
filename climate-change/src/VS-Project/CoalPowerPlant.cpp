@@ -4,40 +4,40 @@
 
 using namespace godot;
 
-void Coal::_register_methods()
+void CoalPowerPlant::_register_methods()
 {
-	register_method((char*)"_process", &Coal::_process);
-	register_method((char*)"_input", &Coal::_input);
-	register_method((char*)"_ready", &Coal::_ready);
+	register_method((char*)"_process", &CoalPowerPlant::_process);
+	register_method((char*)"_input", &CoalPowerPlant::_input);
+	register_method((char*)"_ready", &CoalPowerPlant::_ready);
 }
 
-void Coal::_init()
-{
-
-}
-
-void Coal::_process(float delta)
+void CoalPowerPlant::_init()
 {
 
 }
 
-void Coal::_input(InputEvent* e)
+void CoalPowerPlant::_process(float delta)
 {
 
 }
 
-void Coal::_ready()
+void CoalPowerPlant::_input(InputEvent* e)
+{
+
+}
+
+void CoalPowerPlant::_ready()
 {
 
 }
 
 
-Coal::Coal()
+CoalPowerPlant::CoalPowerPlant()
 {
 
 }
 
-Coal::~Coal()
+CoalPowerPlant::~CoalPowerPlant()
 {
 
 }

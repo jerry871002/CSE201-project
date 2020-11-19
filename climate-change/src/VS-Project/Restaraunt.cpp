@@ -4,40 +4,40 @@
 
 using namespace godot;
 
-void Restau::_register_methods()
+void Restaraunt::_register_methods()
 {
-	register_method((char*)"_process", &Restau::_process);
-	register_method((char*)"_input", &Restau::_input);
-	register_method((char*)"_ready", &Restau::_ready);
+	register_method((char*)"_process", &Restaraunt::_process);
+	register_method((char*)"_input", &Restaraunt::_input);
+	register_method((char*)"_ready", &Restaraunt::_ready);
 }
 
-void Restau::_init()
-{
-
-}
-
-void Restau::_process(float delta)
+void Restaraunt::_init()
 {
 
 }
 
-void Restau::_input(InputEvent* e)
+void Restaraunt::_process(float delta)
 {
 
 }
 
-void Restau::_ready()
+void Restaraunt::_input(InputEvent* e)
+{
+
+}
+
+void Restaraunt::_ready()
 {
 
 }
 
 
-Restau::Restau()
+Restaraunt::Restaraunt()
 {
 
 }
 
-Restau::~Restau()
+Restaraunt::~Restaraunt()
 {
 
 }
