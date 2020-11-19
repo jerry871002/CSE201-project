@@ -14,14 +14,14 @@ namespace godot {
 		Vector3 motion;
 		Vector3 rotation;
 		
-		const double SPEED_T = 0.1;
+		const double SPEED_T = 1;
 		const double SPEED_R = 20;
 		const double VSPEED_INVERSE = 512;
 		const double VSPEED_POWER = 1.2;
 
 		const double CameraAngleDeg = 15;
-		const double MaxHeight{ 30 };
-		const double MinHeight{ 3 };
+		const double MaxHeight{ 300 };
+		const double MinHeight{ 30 };
 
 
 	public:
@@ -29,6 +29,7 @@ namespace godot {
 		static void _register_methods();
 		void _init();
 		void _process(float delta);
+		void _physics_process(float);
 		void _input(InputEvent* e);
 		void _ready();
 		
