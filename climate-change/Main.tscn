@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Building/Shop.tscn" type="PackedScene" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
 [ext_resource path="res://Building/Restau.tscn" type="PackedScene" id=3]
 [ext_resource path="res://KinematicBody.gdns" type="Script" id=4]
 [ext_resource path="res://Building/Mall.tscn" type="PackedScene" id=5]
+[ext_resource path="res://TextureButton.tscn" type="PackedScene" id=6]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -40,3 +41,9 @@ shape = SubResource( 1 )
 
 [node name="Mall" parent="." instance=ExtResource( 5 )]
 transform = Transform( 10, 0, 0, 0, 9.99988, -0.0492181, 0, 0.0492181, 9.99988, 0, 0.15, -30 )
+
+[node name="MenuButton" parent="." instance=ExtResource( 6 )]
+margin_left = -4.06616
+margin_top = 801.054
+margin_right = 193.934
+margin_bottom = 891.054
