@@ -51,7 +51,6 @@ namespace godot {
 }
 
 
-////Counters - initialize somewhere, probably not as classes, list of counters to update indices
 
 ////Indices
 
