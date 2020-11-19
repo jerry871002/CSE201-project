@@ -113,3 +113,8 @@ void Player::ChangeMouseMode()
 	}
 }
 
+void Player::_physics_process(float delta) {
+
+
+}
+

@@ -11,10 +11,15 @@ namespace godot {
 	class Data : public Object {
 		GODOT_CLASS(Data, Object)
 	protected:
-		//set containing 
-		static std::set<Data*> counters;
+		
+		
 		int value;
 	public:
+		//set containing all pointers
+		static std::set<Data*> counters;
+
+
+
 		virtual void update_statistic();
 		void set_value(int);
 		void change_value(int);
@@ -26,6 +31,8 @@ namespace godot {
 	};
 
 	////Counters - initialize somewhere, probably not as classes
+
+
 
 	Data income;
 	Data population;
