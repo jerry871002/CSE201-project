@@ -158,10 +158,12 @@
   <ItemGroup>
     <ClCompile Include="GodotLibrary.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="Root.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Restaurant.h" />
     <ClInclude Include="Root.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

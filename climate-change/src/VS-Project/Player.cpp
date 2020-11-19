@@ -125,6 +125,7 @@ void Player::UpdateMotionFromInput()
 	else if (i->is_action_pressed("ui_right")) { motion.x += SPEED_T; }
 	else if (i->is_action_pressed("ui_left")) { motion.x -= SPEED_T; }
 
+
 }
 
 void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
