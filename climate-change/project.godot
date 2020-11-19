@@ -19,10 +19,6 @@ config/name="GodotProject"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
-[display]
-
-window/size/fullscreen=true
-
 [gdnative]
 
 singletons=[  ]
@@ -72,6 +68,4 @@ ui_vdown={
 
 [rendering]
 
-quality/shadows/filter_mode=2
-quality/shadows/filter_mode.mobile=1
 environment/default_environment="res://default_env.tres"
