@@ -6,12 +6,12 @@ using namespace godot;
 
 Data::Data() {
 	value = 0;
-	counters.insert(this);
+	values.insert(this);
 	
 }
 
 Data::~Data() {
-	counters.erase(this);
+	values.erase(this);
 }
 
 void Data::set_value(int i) {
@@ -31,7 +31,7 @@ Index::Index() {
 	set_value(50);
 }
 
-Index::~Data() {
+Index::~Index() {
 	indices.erase(this);
 }
 
