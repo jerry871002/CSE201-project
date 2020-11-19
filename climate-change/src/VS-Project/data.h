@@ -52,31 +52,6 @@ namespace godot {
 
 
 ////Counters - initialize somewhere, probably not as classes, list of counters to update indices
-// separated so that we have a different list of values and counters
-// need function to update
-
-namespace godot {
-	class Counter : public Data {
-		GODOT_CLASS(Counter, Data)
-
-	private:
-		static std::set<Data*> counters;
-
-	public:
-		
-		double powerproduction();
-		double powerconsumption();
-		double employment();
-		double carbonemissions();
-		double population();
-		double income();
-		double healthcare();
-		double needs();
-		double waste();
-
-	}
-}
-
 
 ////Indices
 
