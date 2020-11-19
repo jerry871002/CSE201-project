@@ -1,6 +1,8 @@
 #pragma once
 #include <core/Godot.hpp>
 #include <Object.hpp>
+#include <iostream>
+#include <set>
 
 
 // created a Data class. this class has a value, which can be edited, a constructor which sets value to 0 and a virtual update_data() method
@@ -8,8 +10,9 @@
 namespace godot {
 	class Data : public Object {
 		GODOT_CLASS(Data, Object)
-	private:
-		// static char* counters[];
+	protected:
+		//set containing 
+		static std::set<Data*> counters;
 		int value;
 	public:
 		virtual void update_statistic();
@@ -21,17 +24,19 @@ namespace godot {
 		~Data();
 		
 	};
+
+	////Counters - initialize somewhere, probably not as classes
+
+	Data income;
+	Data population;
+	Data employed;
+	Data carbon;
+	Data energyDemand;
+	Data energySupply;
+
+
+
 }
-////Counters - initialize somewhere, probably not as classes
-
-Data income;
-Data population; 
-Data employed;
-Data carbon;
-Data energyDemand;
-Data energySupply;
-
-
 
 
 ////Indices
@@ -44,7 +49,7 @@ namespace godot {
 		GODOT_CLASS(Index, Data)
 	private:
 		bool capped;
-
+		static std::set<Data*> indices;
 	public:
 
 		bool is_capped();
