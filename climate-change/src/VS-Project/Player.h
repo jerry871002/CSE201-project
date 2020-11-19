@@ -13,7 +13,7 @@ namespace godot {
 		Vector3 motion;
 		Vector3 rotation;
 		
-		const double SPEED_T = 0.1;
+		const double SPEED_T = 1;
 		const double SPEED_R = 20;
 	public:
 		

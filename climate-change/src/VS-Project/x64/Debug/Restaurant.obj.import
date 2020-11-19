@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Restaurant.obj-d4fbda26f35c1d598d7d4954d111c1d0.mesh"
+
+[deps]
+
+files=[ "res://.import/Restaurant.obj-d4fbda26f35c1d598d7d4954d111c1d0.mesh" ]
+
+source_file="res://src/VS-Project/x64/Debug/Restaurant.obj"
+dest_files=[ "res://.import/Restaurant.obj-d4fbda26f35c1d598d7d4954d111c1d0.mesh", "res://.import/Restaurant.obj-d4fbda26f35c1d598d7d4954d111c1d0.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
