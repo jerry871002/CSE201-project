@@ -6,6 +6,10 @@
 
 
 // created a Data class. this class has a value, which can be edited, a constructor which sets value to 0 and a virtual update_data() method
+/* left to do:
+update values -> update counters -> update Indices
+write equations
+*/
 
 namespace godot {
 	class Data : public Object {
@@ -16,7 +20,7 @@ namespace godot {
 		int value;
 	public:
 		//set containing all pointers
-		static std::set<Data*> counters;
+		static std::set<Data*> values;
 
 
 
@@ -30,9 +34,9 @@ namespace godot {
 		
 	};
 
-	////Counters - initialize somewhere, probably not as classes
-
-
+////Counters - initialize somewhere, probably not as classes, list of counters to update indices
+// list of counters updated
+// need function to update
 
 	Data income;
 	Data population;
@@ -40,10 +44,12 @@ namespace godot {
 	Data carbon;
 	Data energyDemand;
 	Data energySupply;
-
-
+	Data healthcare;
+	Data needs;
+	Data waste;
 
 }
+
 
 
 ////Indices
