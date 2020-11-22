@@ -42,3 +42,9 @@ Luca:
 This week, I worked on finding a way to display 2D plots in Godot in order to show statistics of the city on the 2D user interface. In found a Godot library called "easy charts" that I studied and used to display my plots.
 I also followed many tutorials in order to get comfortable with Godot and this library.
 In order to use the "easy charts" library, one has to store the data one wants to plot in CSV files. Hence, this week, I plan to design an algorithm that modifies the data of CSV files.
+
+Samuel:
+This week, with the team, we decided on the list of counters and indices we want to implement and thought of possible implementations.
+I also began to familiarize myself with Godot. I studied the workings around the main game loop and update functions for our indices and counters.
+I was able to implement the beginning of a main game loop.
+Next week, I will work on developing this loop and study the update mechanism more in depth.
