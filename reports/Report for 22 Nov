@@ -16,3 +16,10 @@ Paloma :
 This week I have modified the files for the displayed objects with the basic code necessary for them to match with Godot. I have started working in depth on the 
 energy branch of the object's tree, starting by researching information about coal power plants. In the coming week, I will finish the coal power class and move
 on to the rest of the energy sector.
+
+Ambroise:
+This week I worked with Eliott on sophisticating the character movement and implementing clickable objects in the 3D world. 
+We managed to change the graphical properties of a 3D object with user input, by coding events and signals. 
+This is a significant breakthrough for the interface team as we are now able to access all properties of a graphical object with our C++ code. 
+Our next goal is to program the game in such a way as to allow it to auto-generate and place objects. 
+We also plan to make our objects more functional to allow algorithm implementation and improve player experience.
