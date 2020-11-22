@@ -11,3 +11,8 @@ Next week I plan to do more research about different types of transport and impl
 Eliott:
 This week I work with Ambroise to make object clickable, to display and remove physical attributes of building and created the mall asset.
 Next week, I will implement the 2D menu in the 3D world (appearing when one clicks on the object).
+
+Paloma :
+This week I have modified the files for the displayed objects with the basic code necessary for them to match with Godot. I have started working in depth on the 
+energy branch of the object's tree, starting by researching information about coal power plants. In the coming week, I will finish the coal power class and move
+on to the rest of the energy sector.
