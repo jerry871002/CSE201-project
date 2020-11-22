@@ -28,3 +28,8 @@ Yury:
 This week i build a lucid chart tree with all the counters and indices that we want our game to have. 
 I have worked with Vincent on implementing counters and an idea on how and where they are supposed to be updated. 
 For this week our goal is try to implement time and update the data by running through all the structure classes that are in the game.
+
+
+Antoine:
+This week I have discussed with members of the other teams to get a better understanding of how the overall project will come together. I have started working in depth on the 
+shops branch of the object's tree. Starting on the restaurant object, I have done research on real world statistics and a basic model of the restaurant's micro simulation. This week I plan on finishing the model representing the restaurant and coding it. 
