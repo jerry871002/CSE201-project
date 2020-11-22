@@ -37,3 +37,8 @@ Jerry:
 This week I work on better understanding how the main game loop works and when and how we can initialize and store our game data.
 The built-in functions in the Godot engine provide a well-designed gaming machanism, which we could utilise it for our game.
 Next week I will work with the algorithm team and implement the reaction between buildings in our simulated city and various indices.
+
+Luca:
+This week, I worked on finding a way to display 2D plots in Godot in order to show statistics of the city on the 2D user interface. In found a Godot library called "easy charts" that I studied and used to display my plots.
+I also followed many tutorials in order to get comfortable with Godot and this library.
+In order to use the "easy charts" library, one has to store the data one wants to plot in CSV files. Hence, this week, I plan to design an algorithm that modifies the data of CSV files.
