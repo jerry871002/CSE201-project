@@ -37,6 +37,7 @@ namespace Godot {
 
 		void update_statistics();
 
-
+		float return_income();
 	};
 }
+

@@ -33,7 +33,7 @@
 
 	void City::update_statistics() {
 		for (std::set<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it) {
-			income += (*it)
+			income += (*it);
 
 
 
@@ -42,6 +42,11 @@
 
 
 
+	}
+
+
+	float City::return_income() {
+		return income;
 	}
 
 
