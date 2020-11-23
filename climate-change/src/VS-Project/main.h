@@ -26,3 +26,11 @@ while(running) {
         //decrease fps
     }
 };
+
+/* implementation using godot main scene:
+bool running = true;
+while(running) {
+    update_game(); //based on physics_process function of godot (e.g. update data once per second)
+    display_game(); //based on godot game engine, thus fps
+}
+*/
