@@ -14,7 +14,6 @@ namespace godot {
 
 	private:
 
-		
 		bool Clickable;
 
 	public:
@@ -33,5 +32,9 @@ namespace godot {
 		void _on_Area_mouse_entered();
 		void _on_Area_mouse_exited();
 
+
+		int income;
+		int get_income();
+		void change_income_by_percent(float);
 	};
 }

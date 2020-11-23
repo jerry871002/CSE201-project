@@ -1,8 +1,9 @@
 #pragma once
 #include <core/Godot.hpp>
 #include <iostream>
+#include <cstdlib>
 #include <set>
-
+#include "obj.h"
 
 namespace Godot {
 
@@ -23,7 +24,9 @@ namespace Godot {
 		City();
 		~City();
 
+		std::set<Structure*> buildings;
 
+		void add_building(Structure*);
 
 		float income ;
 		float population ;
