@@ -49,6 +49,11 @@ I also began to familiarize myself with Godot. I studied the workings around the
 I was able to implement the beginning of a main game loop.
 Next week, I will work on developing this loop and study the update mechanism more in depth.
 
+Vincent:
+We met with the simulation team to flesh out the data instances we want to keep track of, and to discuss the time implementation.
+We considered changing the Engine's main loop to get a better understanding of how the engine works, but decided against it.
+This week we want to finalize our implementation of the Scene object which will be displayed in the 3d engine.
+
 Arthur: 
 
 This week, I familiarized myself with Godot and tried to implement a 2d menu, which I am not done with. I now have to make the full 2d menu and make it interactable with the user
