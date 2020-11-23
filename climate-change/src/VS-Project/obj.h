@@ -25,6 +25,8 @@ class Energy: public Production {
         Energy();
         Energy(double energy_output);
         double environmental_impact();
+       //should have attributes cost, location, age, type that can then be used in the subclasses of housing
+        
 };
 
 
@@ -62,6 +64,23 @@ class Shop: public Production {
         Shop();
         Shop(double employment);
 };
+    Shop();
+    Shop(double employment);
+};
+
+
+/*class Mall: public Shop{
+public:
+Mall();
+};
+class Restaraunt: public Shop{
+public:
+Restaraunt();
+};
+class SmallShop: public Shop{
+public:
+SmallShop();
+};*/
 
 
 
