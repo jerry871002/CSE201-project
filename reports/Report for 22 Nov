@@ -48,3 +48,7 @@ This week, with the team, we decided on the list of counters and indices we want
 I also began to familiarize myself with Godot. I studied the workings around the main game loop and update functions for our indices and counters.
 I was able to implement the beginning of a main game loop.
 Next week, I will work on developing this loop and study the update mechanism more in depth.
+
+Arthur: 
+
+This week, I familiarized myself with Godot and tried to implement a 2d menu, which I am not done with. I now have to make the full 2d menu and make it interactable with the user
