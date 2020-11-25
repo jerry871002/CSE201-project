@@ -9,6 +9,7 @@ Restaurant::Restaurant()
 {
 	PanelsOn = true;
 	Clickable = false;
+	income = 100;
 }
 
 Node* Restaurant::GetPanels()
@@ -24,6 +25,15 @@ void Restaurant::_register_methods()
 	register_method((char*)"_ready", &Restaurant::_ready);
 	register_method((char*)"_on_Area_mouse_entered", &Restaurant::_on_Area_mouse_entered);
 	register_method((char*)"_on_Area_mouse_exited", &Restaurant::_on_Area_mouse_exited);
+}
+
+
+int Restaurant::get_income() {
+	return income;
+}
+
+void Restaurant::change_income_by_percent(float factor ) {
+	income *= factor;
 }
 
 void Restaurant::_init()

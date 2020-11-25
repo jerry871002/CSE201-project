@@ -7,43 +7,6 @@
 
 // created a Data class. this class has a value, which can be edited, a constructor which sets value to 0 and a virtual update_data() method
 
-namespace godot {
-	class Data : public Object {
-		GODOT_CLASS(Data, Object)
-	protected:
-		
-		
-		int value;
-	public:
-		//set containing all pointers
-		static std::set<Data*> counters;
-
-
-
-		virtual void update_statistic();
-		void set_value(int);
-		void change_value(int);
-		int get_value();
-
-		Data();
-		~Data();
-		
-	};
-
-	////Counters - initialize somewhere, probably not as classes
-
-
-
-	Data income;
-	Data population;
-	Data employed;
-	Data carbon;
-	Data energyDemand;
-	Data energySupply;
-
-
-
-}
 
 
 ////Indices

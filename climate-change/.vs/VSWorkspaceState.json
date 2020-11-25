@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\VS-Project",
-    "\\src\\VS-Project\\x64"
+    "\\src\\VS-Project"
   ],
-  "SelectedNode": "\\src\\VS-Project\\data.h",
+  "SelectedNode": "\\src\\VS-Project\\City.h",
   "PreviewInSolutionExplorer": false
 }
