@@ -10,7 +10,7 @@ public :
 	void _input(InputEvent* e);
 	void _ready();
 
-	void simulate_step(double days);
+	void simulate_step(double days); // updates every attribute directly as a function of time (days since beginning of the game)
 	double SO2_output;
 	double NOx_output;
 	double ash_ouptu;

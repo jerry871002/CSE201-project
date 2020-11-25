@@ -53,17 +53,26 @@ CoalPowerPlant::~CoalPowerPlant()
 
 }
 
-CoalPowerPlant::simulate_step(double days)
+CoalPowerPlant::simulate_step(double days) 
 {
 	energy_per_day = 9589041; //kWh produced by standard plant in one day
 	energy_output = energy_per_day * days; // total kWh produced by a standard plant 
+	maintenance = 36 * energy_per_day * days;
 	if efficiency_supercritical() == true{
-		energy_per_day = 9589041*(1-0.04);
+		energy_per_day = 9589041 * (1 - 0.04);
+		maintenance = 38 * energy_per_day * days;
 	}
 	if efficiecy_cogeneration() == true{
 		energy_per_day = 9589041 * (1 - 0.09);
+		maintenance = 40 * energy_per_day * days;
 	} 
-	coal = energy_per_day * days * 4.06E-4;
+	if days >= 3650{ 
+		maintenance = maintenance * 1.25; // after 10 years the maintenance and working costs increase by 1/4
+	} 
+	if days >= 10950{
+		maintenance = maintenance * 2; // after 30 years the maintenance and working costs double
+	}
+	coal = 4.06E-4 * energy_per_day * days;
 	CO2_output = 0.768 * energy_per_day * days;  
 	SO2_output = 0.00152 * energy_per_day * days; 
 	NOx_output = 8.49E-4 * energy_per_day * days; 
