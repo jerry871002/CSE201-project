@@ -44,6 +44,7 @@ class Infrastructure: public Structure {
 
 };
 
+<<<<<<< Updated upstream
 class Transport: public Infrastructure {
     protected:
         double num_cars;
@@ -51,6 +52,16 @@ class Transport: public Infrastructure {
         double num_bus;
         double num_tram;
 
+=======
+class Transport : public Infrastructure {
+protected:
+    double num_cars;
+    double num_electric_cars;
+    double num_bus;
+    double num_tram;
+    double fuel_perday, km_perday;
+    int  life_expectancy, age; // life expectancy in years, age in days
+>>>>>>> Stashed changes
 };
  
 
