@@ -1,6 +1,6 @@
 class Structure {
 protected:
-    double cost, energyuse, maintenance, satisfaction;
+    double cost, energyuse, maintenance, CO2_output, building_time, satisfaction;
 
 public:
     Structure();
@@ -24,11 +24,6 @@ public:
 class Energy : public Production {
 protected:
     double energy_output;
-
-public:
-    Energy();
-    Energy(double energy_output);
-    double environmental_impact();
 };
 
 class Housing : public Structure {

@@ -34,10 +34,39 @@ void CoalPowerPlant::_ready()
 
 CoalPowerPlant::CoalPowerPlant()
 {
-
+	coal = 4.06E-4 // tons of coal needed to produce 1 kWh
+	maintenance = 36; //maintenace and working cost in euros per kWh
+	employment = 800; // approximate number of employees in 1 plant 
+	satisfaction = 2; // on scale of 10
+	CO2_output = 0.768; // kg of CO2 emitted per kWh
+	SO2_output = 0.00152; // kg of SO2 emitted per kWh
+	NOx_output = 8.49E-4; // kg of NOx emitted per kWh
+	ash_output = 0.0619; // kg of ash produced per kWh
+	mercury_output = 1.137E-8; // kg of mercury emitted per kWh
+	cost = 3E9; // cost in euros to build a new plant
+	building_time = 8; // years needed to build a new plant
 }
+
 
 CoalPowerPlant::~CoalPowerPlant()
 {
 
+}
+
+CoalPowerPlant::simulate_step(double days)
+{
+	energy_per_day = 9589041; //kWh produced by standard plant in one day
+	energy_output = energy_per_day * days; // total kWh produced by a standard plant 
+	if efficiency_supercritical() == true{
+		energy_per_day = 9589041*(1-0.04);
+	}
+	if efficiecy_cogeneration() == true{
+		energy_per_day = 9589041 * (1 - 0.09);
+	} 
+	coal = energy_per_day * days * 4.06E-4;
+	CO2_output = 0.768 * energy_per_day * days;  
+	SO2_output = 0.00152 * energy_per_day * days; 
+	NOx_output = 8.49E-4 * energy_per_day * days; 
+	ash_output = 0.0619 * energy_per_day * days; 
+	mercury_output = 1.137E-8 * energy_per_day * days; 
 }
