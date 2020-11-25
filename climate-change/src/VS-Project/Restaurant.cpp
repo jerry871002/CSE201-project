@@ -47,8 +47,6 @@ void Restaurant::_input(Input* e)
 }
 
 
-
-
 void Restaurant::_ready()
 {
 	this->GetPanels()->set("visible", PanelsOn);
