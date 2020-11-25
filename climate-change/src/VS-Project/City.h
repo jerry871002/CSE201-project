@@ -3,9 +3,13 @@
 #include <iostream>
 #include <cstdlib>
 #include <set>
+#include <Input.hpp>
+#include <InputEventMouse.hpp>
+#include <InputEventMouseMotion.hpp>
+#include <InputEventMouseButton.hpp>
 #include "obj.h"
 
-namespace Godot {
+namespace godot {
 
 	class City {
 	public:
