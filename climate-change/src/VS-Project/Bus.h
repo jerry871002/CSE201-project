@@ -9,6 +9,8 @@ public:
 	void _process(float delta);
 	void _input(InputEvent* e);
 	void _ready();
-	protected:
-	double capacity, occupancy_rate;
+	void simulate_step(double days); 
+	double occupancy_rate, capacity, km_perday;
+	double fuel_input;
+
 };

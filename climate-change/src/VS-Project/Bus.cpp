@@ -2,8 +2,6 @@
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
 #include <random>
-#include <iostream>
-
 using namespace godot;
 
 void Bus::_register_methods()
@@ -40,32 +38,35 @@ Bus::Bus()
 std::random_device rd; 
 // Mersenne twister PRNG, initialized with seed from previous random device instance
 std::mt19937 gen(rd()); 
-
-age = 0;
-std::normal_distribution <int> d(3125000, 62500);
-cost = d(gen);
-double alpha = (cost-250000)/250000;
+std::normal_distribution <int> d(262500, 52500);
+cost = d(gen); // cost of 1 bus in euros, randomised using gaussian
+double alpha = (cost-262500)/262500;
 if (alpha<0) alpha=0;
-capacity = 30+ alpha*30;
-capacity  = round(capacity);
+capacity = 30+ alpha*30;  
+capacity  = round(capacity); //maximum number of people in 1 bus, positive correlation with cost 
 std::normal_distribution <double> d(0.70, 0.30);
-occupancy_rate = d(gen);
+occupancy_rate = d(gen); // average percentage occupancy of the bus: number of people in the bus / capacity
 if (occupancy_rate>1) occupancy_rate=1;
-std::normal_distribution <int> d(12, 2);
-life_expectancy = d(gen);
+std::normal_distribution <int> d(22, 3);
+building_time = d(gen); // construction time for 1 bus, in days
+std::normal_distribution <double> d(8, 1.5); // satisfaction level rather high, randomised
+satisfaction = d(gen);
+if (satisfaction >10) satisfaction = 10;
 std::normal_distribution <int> d(225, 75);
-km_perday = d(gen);
-CO2_output = km_perday * capacity * occupancy_rate * 70 /1000; // in  kilogramms per day!
-fuel_perday = 26/100*km_perday; //litres per day
+km_perday = d(gen); // kilometres per day,  randomised for each bus
 std::normal_distribution <int> d(3, 1);
 employment = d(gen);
 if (employment <1) employment =1;
-maintenance = (0.8+alpha*0.2)*km_perday; // maintenance cost per day
-
-
-
 }
 
+void Bus::simulate_step(double days)
+{
+fuel_input+= 26/100*km_perday*days; //litres of fuel for bus
+double alpha = (cost-262500)/262500;
+if (alpha<0) alpha=0;
+maintenance += (0.67+alpha*0.17)*km_perday; // maintenance cost 
+CO2_output+=75*occupancy_rate*capacity*km_perday*days;
+}
 Bus::~Bus()
 {
 
