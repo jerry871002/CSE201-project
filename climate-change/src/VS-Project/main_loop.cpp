@@ -6,8 +6,6 @@
 #include "obj.h"
 #include "obj.cpp"
 #include "City.h"
-#include "City.cpp"
-
 
 int main()
 {

@@ -14,7 +14,7 @@ namespace godot {
 	class City : public Object {
 		GODOT_CLASS(City,Object)
 	public:
-		void _register_methods();
+		static void _register_methods();
 
 		void _init();
 
@@ -33,14 +33,11 @@ namespace godot {
 
 		void add_building(Struc*);
 
+		void simulation();
+
 		/* we can keep these vairables as floats as long as each object only computes the ADDITIONAL AMOUNT of energy, income etc. 
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
-		float income ;
-		float population ;
-		float employed;
-		float carbon;
-		float energyDemand;
-		float energySupply;
+		double income, population, employed, carbon, energyDemand, energySupply;
 
 		/* other idea: implement arrays based on sector (housing, production, infrastructure), compute additional amounts but differences between sector
 		(other more radical idea: array with all buildings, not necessarily needed?)*/
