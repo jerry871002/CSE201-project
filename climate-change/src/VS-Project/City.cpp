@@ -64,7 +64,7 @@ void City::simulation() {
 	//write the old values in a file 
 	income = 0;
 	numberOfEmplyees = 0;
-	carbon = 0;
+	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
 
@@ -72,7 +72,7 @@ void City::simulation() {
 	{
 		income += (*it)->income;
 		numberOfEmplyees += (*it)->numberOfEmplyees;
-		carbon += (*it)->carbon;
+		carbonEmission += (*it)->carbonEmission;
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
 		(*it)->simulate_step(); //function that updates the building
@@ -83,7 +83,7 @@ void City::write_stat_history_to_file() {
 	std::ofstream out_file;
 	out_file.open("stat_history.txt", std::ofstream::out | std::ofstream::app);
 	out_file << timer << " " << income << " " << population << " " << numberOfEmplyees << " ";
-	out_file << carbon << " " << energyDemand << " " << energySupply << std::endl;
+	out_file << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
 	out_file.close();
 }
 
