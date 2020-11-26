@@ -27,13 +27,10 @@ namespace godot {
 		static void _register_methods();
 		void _init();
 		void _process(float delta);
-		void _input(Input* e);
+		void _input(InputEvent* e);
 		void _ready();
 		void _on_Area_mouse_entered();
 		void _on_Area_mouse_exited();
-		
-
-		int get_income();
-		void change_income_by_percent(float);
+	
 	};
 }

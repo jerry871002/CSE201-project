@@ -1,9 +1,13 @@
 #include "Restaurant.h"
 #include <Area.hpp>
 #include <Camera.hpp>
+#include <ClippedCamera.hpp>
+#include <SceneTree.hpp>
 
 
 using namespace godot;
+
+// ((ClippedCamera*)get_node("/root")->get_child(0)->get_child(1)->get_child(0))->unproject_position(ObjPos)
 
 
 Restaurant::Restaurant()
@@ -37,12 +41,12 @@ void Restaurant::_process(float delta) {
 
 }
 
-void Restaurant::_input(Input* e) {
-	if (e->get_class() == "InputEventMouseButton" && Clickable) {
-		if (((InputEventMouseButton*)e)->is_pressed()) {		//And button index = ?
-			PanelsOn = (PanelsOn == false);
-			this->GetPanels()->set("visible", PanelsOn);
-		}
+void Restaurant::_input(InputEvent* e) {
+
+
+	if (e->is_action_pressed("ui_select") && Clickable) {
+		PanelsOn = (PanelsOn == false);
+		this->GetPanels()->set("visible", PanelsOn);
 	}
 }
 
@@ -54,7 +58,7 @@ void Restaurant::_ready()
 
 void godot::Restaurant::_on_Area_mouse_entered()
 {
-	//Clickable = true;											//this->GetPanels()->set("visible", true);
+	Clickable = true;											
 	Input* i = Input::get_singleton();							// CHANGE MOUSE CURSOR
 	i->set_default_cursor_shape(i->CURSOR_POINTING_HAND);
 }
@@ -63,7 +67,8 @@ void godot::Restaurant::_on_Area_mouse_entered()
 
 void godot::Restaurant::_on_Area_mouse_exited()
 {
-	Clickable = false;											//this->GetPanels()->set("visible", false);
+	Clickable = false;											
 	Input* i = Input::get_singleton();							// CHANGE MOUSE CURSOR
 	i->set_default_cursor_shape(i->CURSOR_ARROW);
 }
+
