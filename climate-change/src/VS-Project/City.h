@@ -37,7 +37,7 @@ namespace godot {
 
 		/* we can keep these vairables as floats as long as each object only computes the ADDITIONAL AMOUNT of energy, income etc. 
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
-		double income, population, employed, carbon, energyDemand, energySupply;
+		double income, population, numberOfEmplyees, carbon, energyDemand, energySupply;
 
 		/* other idea: implement arrays based on sector (housing, production, infrastructure), compute additional amounts but differences between sector
 		(other more radical idea: array with all buildings, not necessarily needed?)
@@ -49,7 +49,6 @@ namespace godot {
 		float energySupply_array[3];
 		*/
 
-		void update_statistics();
 		void write_stat_history_to_file();
 		void simulation();
 
