@@ -1,28 +1,17 @@
 class Structure {
-protected:
-    double cost, energyuse, maintenance, CO2_output, building_time, satisfaction;
-
 public:
-    Structure();
-    Structure(double cost, double energyuse, double maintenance, double satisfaction) : 
-    cost{cost}, energyuse{energyuse}, maintenance{maintenance}, satisfaction{satisfaction} {}
+    double cost, energyuse, maintenance, CO2_output, building_time, satisfaction;
+    double total_days; //total number of days that have passed in the simulation, will have to be defined by the simulation team
 };
 
 class Production : public Structure {
-protected:
+public:
     double input, output, efficiency;
     int employment;
-
-public:
-    Production();
-    Production(double cost, double energyuse, double maintenance, double satisfaction, 
-               double input, double output, double efficiency, int employment) : 
-               Structure{cost, energyuse, maintenance, satisfaction}, 
-               input{input}, output{output}, efficiency{efficiency}, employment{employment} {}
 };
 
 class Energy : public Production {
-protected:
+public:
     double energy_output;
 };
 
@@ -31,12 +20,12 @@ class Housing : public Structure {
 };
 
 class Infrastructure : public Structure {
-protected:
+public:
     int employment;
 };
 
 class Transport : public Infrastructure {
-protected:
+public:
     double num_cars;
     double num_electric_cars;
     double num_bus;
@@ -44,13 +33,11 @@ protected:
 };
 
 class Shop : public Production {
-protected:
+public:
     bool open;
     //get attributes from production : employment i don't remember how to do that
     //constructor :
-public:
-    Shop();
-    Shop(double employment);
+
 };
 
 /*
