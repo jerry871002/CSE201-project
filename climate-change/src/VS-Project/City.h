@@ -56,6 +56,10 @@ namespace godot {
 		void simulation();
 
 		float return_income();
+	private:
+		float time_speed;
+		float delta_counter;
+		int64_t timer;
 	};
 }
 
