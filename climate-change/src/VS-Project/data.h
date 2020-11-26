@@ -14,6 +14,9 @@
 // added a cap - the bool cap returns true when the value is at 100 
 // incomplete ! need to add a function to update
 
+
+
+/*     useless :: 
 namespace godot {
 	class Index : public Data {
 		GODOT_CLASS(Index, Data)
@@ -92,3 +95,5 @@ namespace godot {
 
 
 }
+
+*/

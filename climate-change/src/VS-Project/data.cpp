@@ -3,7 +3,14 @@
 #include "data.h"
 #include <string>
 
+
+
+/* temporary comment out
+
 using namespace godot;
+
+
+
 
 Data::Data() {
 	value = 0;
@@ -48,3 +55,5 @@ Index::~Index() {
 bool Index::is_capped() {
 	return (get_value() == 100);
 }
+
+*/

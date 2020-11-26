@@ -1,20 +1,26 @@
-class Structure {
+#include <core/Godot.hpp>
+#pragma once
+using namespace godot;
+
+
+class Struc : public Object {
+    GODOT_CLASS(Struc,Object)
     protected:
         double cost, energyuse, maintenance, satisfaction;
     public:
-    Structure();
-    Structure(double cost, double energyuse, double maintenance, double satisfaction):
+    Struc();
+    Struc(double cost, double energyuse, double maintenance, double satisfaction):
     cost{cost}, energyuse{energyuse}, maintenance{maintenance}, satisfaction{satisfaction} {}
 };
-
-class Production: public Structure {
+/*
+class Production: public Struc {
     protected:
         double input, output, efficiency;
         int employment;
     public:
     Production();
     Production(double cost, double energyuse, double maintenance, double satisfaction, double input, double output, double efficiency, int employment):
-    Structure {cost, location,maintenance, satisfaction}, input{input}, output{output}, efficiency{efficiency}, empolyment{employment} {}
+    Struc {cost, location,maintenance, satisfaction}, input{input}, output{output}, efficiency{efficiency}, empolyment{employment} {}
 };
 
 
@@ -29,14 +35,14 @@ class Energy: public Production {
 
 
 
-class Housing: public Structure {
+class Housing: public Struc {
     //public:
         
 };
 
 
 
-class Infrastructure: public Structure {
+class Infrastructure: public Struc {
     protected:
         int employment;
 
@@ -62,7 +68,7 @@ class Shop: public Production {
         Shop();
         Shop(double employment);
 };
-
+*/
 
 
 /*

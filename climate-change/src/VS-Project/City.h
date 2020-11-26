@@ -11,7 +11,8 @@
 
 namespace godot {
 
-	class City {
+	class City : public Object {
+		GODOT_CLASS(City,Object)
 	public:
 		void _register_methods();
 
@@ -28,9 +29,9 @@ namespace godot {
 		City();
 		~City();
 
-		std::set<Structure*> buildings;
+		std::set<Struc*> buildings;
 
-		void add_building(Structure*);
+		void add_building(Struc*);
 
 		float income ;
 		float population ;

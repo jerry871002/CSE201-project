@@ -4,16 +4,18 @@
 #include <cstdlib>
 #include <set>
 #include "obj.h"
+#include "obj.cpp"
 #include "City.h"
+#include "City.cpp"
 
 
 int main()
 {
-	c = City();
+	City c = City();
 
 
-	std::cout << "income of the city is" << c.return_income;
+	std::cout << "income of the city is" << c.return_income();
 	
 
-	return 0
+	return 0;
 }

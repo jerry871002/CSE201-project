@@ -49,14 +49,14 @@ void City::_ready()
 	
 };
 
-void City::add_building(Structure* struc) 
+void City::add_building(Struc* struc) 
 {
 	buildings.insert(struc);
 }
 
 void City::update_statistics() 
 {
-	for (std::set<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
+	for (std::set<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
 		//income += it->;
 	}
