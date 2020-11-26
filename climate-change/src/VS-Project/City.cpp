@@ -6,7 +6,7 @@ using namespace godot;
 City::City() {
 
 	income = 0;
-	population = 0;
+	population = 50000;
 	employed = 0;
 	carbon = 0;
 	energyDemand = 0;
