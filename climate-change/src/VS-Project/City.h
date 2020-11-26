@@ -14,7 +14,7 @@ namespace godot {
 	class City : public Object {
 		GODOT_CLASS(City,Object)
 	public:
-		void _register_methods();
+		static void _register_methods();
 
 		void _init();
 
@@ -54,6 +54,10 @@ namespace godot {
 		void update_statistics();
 
 		float return_income();
+	private:
+		float time_speed;
+		float delta_counter;
+		int64_t timer;
 	};
 }
 
