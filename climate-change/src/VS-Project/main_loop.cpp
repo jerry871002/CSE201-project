@@ -6,7 +6,10 @@
 #include "obj.h"
 #include "obj.cpp"
 #include "City.h"
-#include "City.cpp"
+
+
+/*
+do not bother with for now - possibly useless
 
 
 int main()
@@ -14,8 +17,5 @@ int main()
 	City c = City();
 
 
-	std::cout << "income of the city is" << c.return_income();
-	
-
-	return 0;
 }
+*/

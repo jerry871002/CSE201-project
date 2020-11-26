@@ -14,7 +14,7 @@ namespace godot {
 	class City : public Object {
 		GODOT_CLASS(City,Object)
 	public:
-		void _register_methods();
+		static void _register_methods();
 
 		void _init();
 
@@ -43,15 +43,17 @@ namespace godot {
 		float energySupply;
 
 		/* other idea: implement arrays based on sector (housing, production, infrastructure), compute additional amounts but differences between sector
-		(other more radical idea: array with all buildings, not necessarily needed?)*/
+		(other more radical idea: array with all buildings, not necessarily needed?)
 		float income_array[3];
 		float population_array[3];
 		float employed_array[3];
 		float carbon_array[3];
 		float energyDemand_array[3];
 		float energySupply_array[3];
+		*/
 
-		void update_statistics();
+
+		void simulation();
 
 		float return_income();
 	};

@@ -56,7 +56,7 @@ void City::add_building(Struc* struc)
 	buildings.insert(struc);
 }
 
-void City::update_statistics() 
+void City::simulation() 
 {
 	for (std::set<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
