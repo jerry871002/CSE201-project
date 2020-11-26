@@ -13,6 +13,7 @@ namespace godot {
 	private:
 		Vector3 motion;
 		Vector3 rotation;
+		Vector2 mouse_p;
 		
 		const double SPEED_T = 1;
 		const double SPEED_R = 20;
