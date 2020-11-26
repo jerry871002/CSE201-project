@@ -7,13 +7,13 @@
 #include "obj.cpp"
 #include "City.h"
 
+/*
+do not bother with for now - possibly useless
+
 int main()
 {
 	City c = City();
 
 
-	std::cout << "income of the city is" << c.return_income();
-	
-
-	return 0;
 }
+*/

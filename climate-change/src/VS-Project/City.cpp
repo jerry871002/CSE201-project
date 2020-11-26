@@ -1,6 +1,5 @@
 #include "City.h"
 
-
 using namespace godot;
 
 City::City() {
@@ -12,6 +11,9 @@ City::City() {
 	energyDemand = 0;
 	energySupply = 0;
 
+	time_speed = 1;
+	delta_counter = 0.0;
+	timer = 0;
 }
 
 City::~City()
@@ -21,7 +23,9 @@ City::~City()
 
 void City::_register_methods() 
 {
-	
+	register_method((char*)"_process", &City::_process);
+	register_method((char*)"_input", &City::_input);
+	register_method((char*)"_ready", &City::_ready);
 };
 
 void City::_init() 
@@ -34,10 +38,13 @@ void City::_process(float)
 	
 };
 
-void City::_physics_process(float) 
-{
-	
-};
+void City::_physics_process(float delta) {
+	delta_counter += (delta * time_speed);
+	if (timer != (int64_t)delta_counter) {
+		timer = (int64_t)delta_counter;
+		// call city_simulate()
+	}
+}
 
 void City::_input(InputEvent*) 
 {
@@ -71,16 +78,6 @@ void City::simulation() {
 		energySupply += (*it)->energySupply;
 		(*it)->simulate_step(); //function that updates the building
 	}
-}
-
-void City::update_statistics() 
-{
-
-	for (std::set<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
-	{
-
-	}
-
 }
 
 float City::return_income() 
