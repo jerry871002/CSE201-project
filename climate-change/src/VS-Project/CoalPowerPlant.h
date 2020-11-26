@@ -10,14 +10,11 @@ public :
 	void _input(InputEvent* e);
 	void _ready();
 
-	void simulate_step(double days); // updates every attribute directly as a function of time (days since beginning of the game)
+	void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 	double SO2_output;
 	double NOx_output;
-	double ash_ouptu;
+	double ash_ouptut;
 	double mercury_output;
 	double coal;
-
-	// policies (constructor creates subcritical plant of 38% efficiency) :
-	bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-	bool improvement_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
+	double envirnomental_cost;
 };
