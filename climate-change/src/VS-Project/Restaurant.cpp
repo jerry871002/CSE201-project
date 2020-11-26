@@ -1,5 +1,6 @@
 #include "Restaurant.h"
 #include <Area.hpp>
+#include <Camera.hpp>
 
 
 using namespace godot;
@@ -9,7 +10,6 @@ Restaurant::Restaurant()
 {
 	PanelsOn = true;
 	Clickable = false;
-	income = 100;
 }
 
 Node* Restaurant::GetPanels()
@@ -28,13 +28,6 @@ void Restaurant::_register_methods()
 }
 
 
-int Restaurant::get_income() {
-	return income;
-}
-
-void Restaurant::change_income_by_percent(float factor ) {
-	income *= factor;
-}
 
 void Restaurant::_init() {
 
@@ -74,4 +67,3 @@ void godot::Restaurant::_on_Area_mouse_exited()
 	Input* i = Input::get_singleton();							// CHANGE MOUSE CURSOR
 	i->set_default_cursor_shape(i->CURSOR_ARROW);
 }
-
