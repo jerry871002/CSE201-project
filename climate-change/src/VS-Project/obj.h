@@ -4,13 +4,14 @@ using namespace godot;
 
 
 class Struc : public Object {
-    GODOT_CLASS(Struc,Object)
-    protected:
-        double cost, energyuse, maintenance, satisfaction;
+    GODOT_CLASS(Struc,Object)    
     public:
-    Struc();
-    Struc(double cost, double energyuse, double maintenance, double satisfaction):
-    cost{cost}, energyuse{energyuse}, maintenance{maintenance}, satisfaction{satisfaction} {}
+        void simulate_step() {};
+        double cost, energyuse, maintenance, satisfaction;
+        double income, population, employed, carbon, energyDemand, energySupply;
+        //Struc();
+        Struc(double cost, double energyuse, double maintenance, double satisfaction, double income, double population, double employed, double carbon, double energyDemand, double energySupply):
+            cost{ cost }, energyuse{ energyuse }, maintenance{ maintenance }, satisfaction{ satisfaction }, income{ income }, population{ population }, employed{ employed }, carbon{ carbon }, energyDemand{ energyDemand }, energySupply{energySupply}{}
 };
 /*
 class Production: public Struc {

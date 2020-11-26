@@ -17,7 +17,6 @@ Node* Restaurant::GetPanels()
 	return get_node("Restau")->get_node("SolarPanels");
 }
 
-
 void Restaurant::_register_methods()
 {
 	register_method((char*)"_process", &Restaurant::_process);
