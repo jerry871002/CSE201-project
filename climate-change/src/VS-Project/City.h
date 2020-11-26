@@ -52,6 +52,7 @@ namespace godot {
 		float energySupply_array[3];
 
 		void update_statistics();
+		void write_stat_history_to_file();
 
 		float return_income();
 	private:

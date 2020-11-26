@@ -1,9 +1,9 @@
+#include <fstream>
 #include "City.h"
 
 using namespace godot;
 
 City::City() {
-
 	income = 0;
 	population = 50000;
 	employed = 0;
@@ -56,20 +56,25 @@ void City::_ready()
 	
 };
 
-void City::add_building(Struc* struc) 
-{
+void City::add_building(Struc* struc) {
 	buildings.insert(struc);
 }
 
-void City::update_statistics() 
-{
-	for (std::set<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
-	{
+void City::update_statistics() {
+	for (std::set<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it) {
 		//income += it->;
 	}
 }
 
-float City::return_income() 
-{
+void City::write_stat_history_to_file() {
+	std::ofstream out_file;
+	out_file.open("stat_history.txt", std::ofstream::out | std::ofstream::app);
+	out_file << timer << " " << income << " " << population << " " << employed << " ";
+	out_file << carbon << " " << energyDemand << " " << energySupply << std::endl;
+	out_file.close();
+}
+
+
+float City::return_income() {
 	return income;
 }
