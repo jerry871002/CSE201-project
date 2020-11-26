@@ -23,7 +23,9 @@ City::~City()
 
 void City::_register_methods() 
 {
-	
+	register_method((char*)"_process", &City::_process);
+	register_method((char*)"_input", &City::_input);
+	register_method((char*)"_ready", &City::_ready);
 };
 
 void City::_init() 
