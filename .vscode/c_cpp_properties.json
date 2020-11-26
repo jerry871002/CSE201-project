@@ -4,7 +4,10 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/climate-change/src/VS-Project/Libraries/godot-cpp-bindings/include"
+                "climate-change/src/VS-Project/Libraries/godot-cpp-bindings/godot_headers",
+                "climate-change/src/VS-Project/Libraries/godot-cpp-bindings/include",
+                "climate-change/src/VS-Project/Libraries/godot-cpp-bindings/include/core",
+                "climate-change/src/VS-Project/Libraries/godot-cpp-bindings/include/gen"
             ],
             "defines": [],
             "macFrameworkPath": [
