@@ -1,37 +1,47 @@
 #pragma once
 #include <core/Godot.hpp>
 #include "data.h"
+#include <string>
 
 using namespace godot;
 
 Data::Data() {
 	value = 0;
-	counters.insert(this);
-	
+	values.insert(this);
+	units = "no units";
 }
 
 Data::~Data() {
-	counters.erase(this);
+	values.erase(this);
 }
 
-void Data::set_value(int i) {
+void Data::set_value(float i) {
 	value = i;
 }
 
-void Data::change_value(int i) {
+void Data::set_units(string new_units) {
+	units = new_units;
+}
+
+void Data::change_value(float i) {
 	value += i;
 }
 
-int Data::get_value() {
+float Data::get_value() {
 	return value;
 }
+
+string Data::get_units() {
+	return units;
+}
+
 
 Index::Index() {
 	indices.insert(this);
 	set_value(50);
 }
 
-Index::~Data() {
+Index::~Index() {
 	indices.erase(this);
 }
 
