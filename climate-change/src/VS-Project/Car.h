@@ -9,4 +9,6 @@ public:
 	void _process(float delta);
 	void _input(InputEvent* e);
 	void _ready();
-}
+	void simulate_step(double days);
+	double fuel_input;
+};

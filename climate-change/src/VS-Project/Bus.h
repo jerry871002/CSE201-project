@@ -10,6 +10,5 @@ public:
 	void _input(InputEvent* e);
 	void _ready();
 	void simulate_step(double days);
-	double occupancy_rate, capacity;
-	double km_perday, fuel_input;
+	double fuel_input;
 };

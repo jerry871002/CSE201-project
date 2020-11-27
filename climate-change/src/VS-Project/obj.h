@@ -37,6 +37,7 @@ public:
     double num_electric_cars;
     double num_bus;
     double num_tram;
+    double occupancy_rate, capacity, km_perday,passengers;
 };
 
 class Shop : public Production {
