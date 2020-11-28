@@ -42,8 +42,6 @@ void Restaurant::_process(float delta) {
 }
 
 void Restaurant::_input(InputEvent* e) {
-
-
 	if (e->is_action_pressed("ui_select") && Clickable) {
 		PanelsOn = (PanelsOn == false);
 		this->GetPanels()->set("visible", PanelsOn);

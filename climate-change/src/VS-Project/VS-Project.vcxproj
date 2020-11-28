@@ -156,12 +156,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="GodotLibrary.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="Root.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Car.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Restaurant.h" />
     <ClInclude Include="Root.h" />

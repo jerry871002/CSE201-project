@@ -30,6 +30,8 @@ void Player::_init() {
 void Player::_ready() {
 	Input* i = Input::get_singleton();
 	i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
+
+
 }
 
 void Player::_process(float delta) {
@@ -64,7 +66,6 @@ void Player::_input(InputEvent* e)
 	if (e->is_action_released("ui_turn")) {
 		i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
 		this->get_viewport()->warp_mouse(mouse_p);
-
 	}
 
 	this->translate(motion);
@@ -134,7 +135,7 @@ void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
 	{
 		// LOOK LEFT/RIGHT
 		rotation.y -= rot.x * (SPEED_R / 360);				//Must depends on the screen size to avoid slower rotation on high def screens
-
+		
 		// ZOOM-IN MOTION 
 		if (rot.y <= 0) {
 			if (this->get_global_transform().get_origin().y <= MaxHeight)	// Set maximum height
