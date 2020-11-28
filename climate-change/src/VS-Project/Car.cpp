@@ -13,7 +13,7 @@ void Car::_register_methods()
 }
 
 void Car::_init() {
-	motion = Vector3(SPEED_T, 0, 0);
+	motion = Vector3(0, 0, 0);
 	position = 0;
 	rot = (M_PI / 2);
 	center = Vector3(0, 0, 0);
@@ -36,9 +36,15 @@ void Car::_process(float delta)
 	if (position >= (26.0 - (2.0 * Turn_R))) {
 		turn(dir, delta);
 		if (rot >= (M_PI/2)) {
-			this->rotate_y((M_PI / 2) - rot);
-			if (dir == -1 && round((Vector3(0, 1, 0).dot(this->get_global_transform().get_basis().y))) == 0) { position = -8; } // && (Vector3(1, 0, 0).dot(this->get_global_transform().get_basis().y)) == 0
+			this->rotate_y((M_PI / 2) - rot);						//make sure the angle is corrct
+			if (dir == -1 && round((Vector3(1, 0, 0).dot(this->get_global_transform().get_basis().orthonormalized().x))) == 0) { // check the axes and the dir
+				position = -8;
+			} 
 			else { position = 0;  }
+			motion = this->get_global_transform().get_origin();
+			motion.x = round(motion.x); motion.y = round(motion.y);
+			this->set_translation(motion);							//make sure the car is on the grid
+
 		}
 	}
 	
