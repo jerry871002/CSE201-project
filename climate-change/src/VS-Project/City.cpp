@@ -4,6 +4,7 @@
 using namespace godot;
 
 City::City() {
+	
 	income = 0;
 	population = 50000;
 	numberOfEmplyees = 0;
@@ -14,6 +15,8 @@ City::City() {
 	time_speed = 1;
 	delta_counter = 0.0;
 	timer = 0;
+	day_tick = 0;
+
 }
 
 City::~City()
@@ -61,6 +64,7 @@ void City::add_building(Struc* struc) {
 }
 
 void City::simulation() {
+	day_tick++;
 	//write the old values in a file 
 	income = 0;
 	numberOfEmplyees = 0;
@@ -90,4 +94,76 @@ void City::write_stat_history_to_file() {
 
 float City::return_income() {
 	return income;
+}
+
+
+
+
+std::string City::return_game_date() {
+	std::string date = "Year ";
+	date += std::to_string((day_tick / 365)+1) + ", ";
+	int temp = day_tick % 365;
+	if (temp <= 31) {
+		date += "January" + std::to_string(temp);
+		return date;
+	}
+	temp -= 31;
+	if (temp <= 28) {
+		date += "February" + std::to_string(temp);
+		return date;
+	}
+	temp -= 28;
+	if (temp <= 31) {
+		date += "March" + std::to_string(temp);
+		return date;
+	}
+	temp -= 31;
+	if (temp <= 30) {
+		date += "April " + std::to_string(temp);
+		return date;
+	}
+	temp -= 30;
+	if (temp <= 31) {
+		date += "May " + std::to_string(temp);
+		return date;
+	}
+	temp -= 31;
+	if (temp <= 30) {
+		date += "June " + std::to_string(temp);
+		return date;
+	}
+	temp -= 30;
+	if (temp <= 31) {
+		date += "July " + std::to_string(temp);
+		return date;
+	}
+	temp -= 31;
+	if (temp <= 31) {
+		date += "August " + std::to_string(temp);
+		return date;
+	}
+	temp -= 31;
+	if (temp <= 30) {
+		date += "September" + std::to_string(temp);
+		return date;
+	}
+	temp -= 30;
+	if (temp <= 31) {
+		date += "October" + std::to_string(temp);
+		return date;
+	}
+	temp -= 31;
+
+	if (temp <= 30) {
+		date += "November" + std::to_string(temp);
+		return date;
+	}
+	temp -= 30;
+
+	if (temp <= 31) {
+		date += "December" + std::to_string(temp);
+		return date;
+	}
+	return "error";
+
 }

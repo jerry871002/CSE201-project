@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <set>
+#include <string>
 #include <Input.hpp>
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
@@ -36,6 +37,7 @@ namespace godot {
 		void simulation();
 		void write_stat_history_to_file();
 		float return_income();
+		std::string return_game_date();
 
 		/* we can keep these vairables as floats as long as each object only computes the ADDITIONAL AMOUNT of energy, income etc. 
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
@@ -54,6 +56,11 @@ namespace godot {
 		float time_speed;
 		float delta_counter;
 		int64_t timer;
+
+
+		// this variable keeps track of the in-game days, one day added every time city.sim() is called
+		int day_tick;
+
 	};
 }
 
