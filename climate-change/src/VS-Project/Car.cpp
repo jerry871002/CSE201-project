@@ -51,12 +51,15 @@ void Car::_process(float delta)
 
 void Car::turn(int dir, float delta)
 {
-
-	rot += (SPEED_T * delta) * M_PI;
+	double drot;
+	if (dir == 1) { drot = (SPEED_T * delta) * M_PI ; }
+	else { drot = (SPEED_T * delta) * M_PI  / 4; }
+	rot += drot;
 	
 	this->global_translate(-center);
 
-	this->set_transform(this->get_transform().rotated(Vector3(0, 1, 0), -dir * (SPEED_T * delta) * M_PI));
+
+	this->set_transform(this->get_transform().rotated(Vector3(0, 1, 0), drot));
 	this->global_translate(center);
 
 	if ((180 / M_PI) * rot < 40) {
