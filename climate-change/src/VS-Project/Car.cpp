@@ -26,25 +26,24 @@ void Car::_process(float delta)
 
 	if (rot >= (M_PI / 2)) {
 		straight(delta);
+
 		if (position >= (26.0 - (2.0 * Turn_R))) {
 			rot = 0;
-			center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z)*Turn_R*dir;
+			if (dir == 1) { center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z)*Turn_R*dir;	}
+			else { center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z) * (Turn_R + 4) * dir; }
 		}
 	}
 	
 	
 	if (position >= (26.0 - (2.0 * Turn_R))) {
 		turn(dir, delta);
+
 		if (rot >= (M_PI/2)) {
 			this->rotate_y((M_PI / 2) - rot);						//make sure the angle is corrct
-			if (dir == -1 && round((Vector3(1, 0, 0).dot(this->get_global_transform().get_basis().orthonormalized().x))) == 0) { // check the axes and the dir
-				position = -8;
-			} 
-			else { position = 0;  }
 			motion = this->get_global_transform().get_origin();
 			motion.x = round(motion.x); motion.y = round(motion.y);
 			this->set_translation(motion);							//make sure the car is on the grid
-
+			position = 0;
 		}
 	}
 	
@@ -52,9 +51,11 @@ void Car::_process(float delta)
 
 void Car::turn(int dir, float delta)
 {
+
 	rot += (SPEED_T * delta) * M_PI;
 	
 	this->global_translate(-center);
+
 	this->set_transform(this->get_transform().rotated(Vector3(0, 1, 0), -dir * (SPEED_T * delta) * M_PI));
 	this->global_translate(center);
 
