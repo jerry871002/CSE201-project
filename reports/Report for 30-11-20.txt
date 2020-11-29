@@ -34,3 +34,6 @@ Next week I will continue working on the class City.
 Luca:
 This week, I have been busy trying to fix some problems I have encountered with a Godot plugin that enables to display 2D charts and I have started coding my algorithm that changes data in csv files.
 Next week, I plan to try to fix the problems I have faced with the Godot plugin and I aim at finishing my algorithm.
+
+Antoine:
+This week I worked on the restaurant class and micro-simulation. Next week I will work on implementing the shop and mall classes. 
