@@ -4,10 +4,7 @@
 using namespace godot;
 
 
-Menu::Menu()
-{
-	Sidebar = false;
-}
+Menu::Menu(){};
 
 Node* Menu::getsidebar()
 {
@@ -35,7 +32,7 @@ void Menu::_input(Input* e)
 			this->getsidebar()->set("visible", Sidebar);
 		}
 	}
-}
+} 
 
 
 void Menu::_ready()
