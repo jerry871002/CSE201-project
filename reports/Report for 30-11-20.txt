@@ -22,3 +22,6 @@ Next week we will want to implement all features necessary in the city class to 
 
 Ambroise:
 This week, I started creating a simplified model of the game to establish a skeleton for storing, getting and changing data about the game objects, based on a time factor and user input about the objects. Next week, I will continue working on this simplified model to ensure that we have a working game skeleton, which we will then be able to complexify. I will also help Eliott to fix some minor problems with car motion and will find a way to spawn objects and instanciate scenes as a result of parameters either related to time or user input.
+
+Paloma : 
+This week I have finished coding the coal fired plant micro-simulation and started the research and coding for the nuclear power plant, which I will be writing next week.
