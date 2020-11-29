@@ -103,18 +103,19 @@ std::string City::return_game_date() {
 	std::string date = "Year ";
 	date += std::to_string((day_tick / 365)+1) + ", ";
 	int temp = day_tick % 365;
+	if (day_tick % 365 == 0) { temp = 365; }
 	if (temp <= 31) {
-		date += "January" + std::to_string(temp);
+		date += "January " + std::to_string(temp);
 		return date;
 	}
 	temp -= 31;
 	if (temp <= 28) {
-		date += "February" + std::to_string(temp);
+		date += "February " + std::to_string(temp);
 		return date;
 	}
 	temp -= 28;
 	if (temp <= 31) {
-		date += "March" + std::to_string(temp);
+		date += "March " + std::to_string(temp);
 		return date;
 	}
 	temp -= 31;
@@ -144,26 +145,26 @@ std::string City::return_game_date() {
 	}
 	temp -= 31;
 	if (temp <= 30) {
-		date += "September" + std::to_string(temp);
+		date += "September " + std::to_string(temp);
 		return date;
 	}
 	temp -= 30;
 	if (temp <= 31) {
-		date += "October" + std::to_string(temp);
+		date += "October " + std::to_string(temp);
 		return date;
 	}
 	temp -= 31;
 
 	if (temp <= 30) {
-		date += "November" + std::to_string(temp);
+		date += "November " + std::to_string(temp);
 		return date;
 	}
 	temp -= 30;
 
 	if (temp <= 31) {
-		date += "December" + std::to_string(temp);
+		date += "December " + std::to_string(temp);
 		return date;
 	}
-	return "error";
+	return "Time Representation Error";
 
 }
