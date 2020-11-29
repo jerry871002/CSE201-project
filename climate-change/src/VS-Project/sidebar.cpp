@@ -1,5 +1,5 @@
 #include "sidebar.h"
-
+#include "City.hpp"
 using namespace godot;
 
 void Menu::_register_methods() {
@@ -9,3 +9,4 @@ void Menu::_register_methods() {
 Menu::Menu() {}
 Menu::~Menu() {}
 void Menu::_init() {}
+void set_item_text ( int 2, String Date:<<return_game_date ){}

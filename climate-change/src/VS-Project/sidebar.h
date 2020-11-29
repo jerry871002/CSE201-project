@@ -6,6 +6,7 @@
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
+#include <menu.h>
 
 namespace godot {
 	class Sidebar : public TextureRect {
@@ -17,5 +18,6 @@ namespace godot {
 		void _init();
 		void _input(Input* e);
 		void _ready();
+		void set_item_text ( int nb, String string);
 	};
 }
