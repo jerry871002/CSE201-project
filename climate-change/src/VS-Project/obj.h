@@ -33,11 +33,11 @@ public:
 
 class Transport : public Infrastructure {
 public:
-    double num_cars;
-    double num_electric_cars;
-    double num_bus;
-    double num_tram;
-    double occupancy_rate, capacity, km_perday,passengers;
+    double numCars;
+    double numElectricCars;
+    double numBus;
+    double numTram;
+    double occupancyRate, capacity, kmPerDay,passengers;
 };
 
 class Shop : public Production {

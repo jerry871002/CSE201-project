@@ -6,3 +6,6 @@ Jerry:
 This week I figure out how to implement time mechanism using the built-in function of Godot. Also I work with the algo team to fix some bugs in our city object, 
 design the algorithm of calculating the indices of our city by iterating all the buildings in our city.
 Next week I will keep working on the algorithm and also try to design the algorithm behind the newly add car object.
+
+Anna:
+This week I worked on modelling and implementing car and bus classes. Next week i am planning to work on other types of classes.  

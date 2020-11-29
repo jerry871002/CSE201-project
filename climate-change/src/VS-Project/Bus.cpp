@@ -46,15 +46,15 @@ if (alpha > 1) alpha =1;
 capacity = 30+ alpha*30;  
 capacity  = round(capacity); //maximum number of people in 1 bus, positive correlation with cost 
 std::normal_distribution <double> d(0.70, 0.30);
-occupancy_rate = d(gen); // average percentage occupancy of the bus: number of people in the bus / capacity
-if (occupancy_rate>1) occupancy_rate=1;
+occupancyRate = d(gen); // average percentage occupancy of the bus: number of people in the bus / capacity
+if (occupancyRate>1) occupancyRate=1;
 std::normal_distribution <double> d(22, 3);
 building_time = d(gen); // construction time for 1 bus, in days
 std::normal_distribution <double> d(8, 1.5); // satisfaction level rather high, randomised
 satisfaction = d(gen);
 if (satisfaction >10) satisfaction = 10;
 std::normal_distribution <double> d(225, 75);
-km_perday = d(gen); // kilometres per day,  randomised for each bus
+kmPerDay = d(gen); // kilometres per day,  randomised for each bus
 std::normal_distribution <int> d(3, 1);
 employment = d(gen);
 if (employment <1) employment =1;
@@ -66,13 +66,13 @@ passengers = 0; //total number of passengers that used the bus
 
 void Bus::simulate_step(double days)
 {
-fuel_input+= 26/100*km_perday*days; //litres of fuel for bus
+fuel_input+= 26/100*kmPerDay*days; //litres of fuel for bus
 double alpha = (cost-262500)/262500;
 if (alpha<0) alpha=0;
 if (alpha > 1) alpha =1;
-maintenance += (0.67+alpha*0.17)*km_perday; // maintenance cost in euros
-CO2_output+=1250/1000*occupancy_rate*capacity*km_perday*days; //co2 output in kg 
-passengers+=capacity*occupancy_rate*days; //number of people that used the bus in given period
+maintenance += (0.67+alpha*0.17)*kmPerDay; // maintenance cost in euros
+CO2_output+=1250/1000*occupancyRate*capacity*kmPerDay*days; //co2 output in kg 
+passengers+=capacity*occupancyRate*days; //number of people that used the bus in given period
 }
 
 Bus::~Bus()
