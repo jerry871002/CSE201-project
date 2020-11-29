@@ -25,3 +25,8 @@ This week, I started creating a simplified model of the game to establish a skel
 
 Paloma : 
 This week I have finished coding the coal fired plant micro-simulation and started the research and coding for the nuclear power plant, which I will be writing next week.
+
+Samuel:
+This week I studied the update mechanism and the workings around the main game loop.
+I started working on this main class, called City. I thought about different ways to synchronise values among all instances and implemented it.
+Next week I will continue working on the class City.
