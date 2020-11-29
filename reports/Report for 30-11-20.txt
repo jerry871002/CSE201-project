@@ -1,32 +1,36 @@
 Yury:
 This week I have implemented the update function of the City object, which will allow to recompute all the structures and counters at time t+1.
-For the week the goal is to create a running simulation with one "restaurant" object in it and to standardize all the variable names. 
+For the week the goal is to create a running simulation with one "restaurant" object in it and to standardize all the variable names.
 
 Jerry:
-This week I figure out how to implement time mechanism using the built-in function of Godot. Also I work with the algo team to fix some bugs in our city object, 
+This week I figure out how to implement time mechanism using the built-in function of Godot. Also I work with the algo team to fix some bugs in our city object,
 design the algorithm of calculating the indices of our city by iterating all the buildings in our city.
 Next week I will keep working on the algorithm and also try to design the algorithm behind the newly add car object.
 
 Anna:
-This week I worked on modelling and implementing car and bus classes. Next week i am planning to work on other types of classes.  
+This week I worked on modelling and implementing car and bus classes. Next week i am planning to work on other types of classes.
 
 Saga:
 This week, I wrote the code for the lowhouse and highhouse classes, and gathered information on buildings.
 next week i will implement the code for buildings, and start working on another class.
 
-Vincent : 
-This week the simulation team mainly worked on writing a City class, which contains all the crucial elements in our game. 
-We worked on creating a mechanism independent from Godot for progressing time and fixed several bugs that we found in the code. 
+Vincent :
+This week the simulation team mainly worked on writing a City class, which contains all the crucial elements in our game.
+We worked on creating a mechanism independent from Godot for progressing time and fixed several bugs that we found in the code.
 I created a return_game_date() function which gives the time in our program, and managed to create functioning a main loop which creates a city instance and runs outside of the Godot engine, which should allow us to debug the simulation without actually opening the game itself.
-Next week we will want to implement all features necessary in the city class to be able to add buildings of any class to the city and keep track of changes in their attributes.  
+Next week we will want to implement all features necessary in the city class to be able to add buildings of any class to the city and keep track of changes in their attributes.
 
 Ambroise:
 This week, I started creating a simplified model of the game to establish a skeleton for storing, getting and changing data about the game objects, based on a time factor and user input about the objects. Next week, I will continue working on this simplified model to ensure that we have a working game skeleton, which we will then be able to complexify. I will also help Eliott to fix some minor problems with car motion and will find a way to spawn objects and instanciate scenes as a result of parameters either related to time or user input.
 
-Paloma : 
+Paloma :
 This week I have finished coding the coal fired plant micro-simulation and started the research and coding for the nuclear power plant, which I will be writing next week.
 
 Samuel:
 This week I studied the update mechanism and the workings around the main game loop.
 I started working on this main class, called City. I thought about different ways to synchronise values among all instances and implemented it.
 Next week I will continue working on the class City.
+
+Luca:
+This week, I have been busy trying to fix some problems I have encountered with a Godot plugin that enables to display 2D charts and I have started coding my algorithm that changes data in csv files.
+Next week, I plan to try to fix the problems I have faced with the Godot plugin and I aim at finishing my algorithm.
