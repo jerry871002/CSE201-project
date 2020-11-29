@@ -1,3 +1,3 @@
 Yury:
 This week I have implemented the update function of the City object, which will allow to recompute all the structures and counters at time t+1.
-For the week the goal is to create a running simulation with one "restaurant" object in it. 
+For the week the goal is to create a running simulation with one "restaurant" object in it and to standardize all the variable names. 
