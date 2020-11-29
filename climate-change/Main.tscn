@@ -43,7 +43,7 @@ shape = SubResource( 1 )
 transform = Transform( 10, 0, 0, 0, 9.99988, -0.0492181, 0, 0.0492181, 9.99988, 0, 0.15, -30 )
 
 [node name="MenuButton" parent="." instance=ExtResource( 6 )]
-margin_left = -4.06616
-margin_top = 801.054
-margin_right = 193.934
-margin_bottom = 891.054
+margin_left = 12.1989
+margin_top = 792.922
+margin_right = 210.199
+margin_bottom = 882.922

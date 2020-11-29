@@ -1,19 +1,21 @@
 #pragma once
-
 #include <core/Godot.hpp>
-#include <TextureRect.hpp>
-#include "Root.h"
+#include <StaticBody.hpp>
+#include <MeshInstance.hpp>
+#include <Input.hpp>
+#include <InputEventMouse.hpp>
+#include <InputEventMouseMotion.hpp>
+#include <InputEventMouseButton.hpp>
 
 namespace godot {
-	class Menu : public TextureRect {
+	class Sidebar : public TextureRect {
 		GODOT_CLASS(Menu, TextureRect)
 	public:
-		Menu();
-		~Menu();
-
+		Sidebar();
+		~Sidebar();
 		static void _register_methods();
 		void _init();
-
-		void _on_TextureButton_pressed(Variant body);
+		void _input(Input* e);
+		void _ready();
 	};
 }

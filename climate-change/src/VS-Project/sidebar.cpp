@@ -1,4 +1,3 @@
-#include "menu.h"
 #include "sidebar.h"
 
 using namespace godot;
@@ -10,7 +9,3 @@ void Menu::_register_methods() {
 Menu::Menu() {}
 Menu::~Menu() {}
 void Menu::_init() {}
-
-void Menu::_on_TextureButton_pressed(Variant body ) {
-    
-}

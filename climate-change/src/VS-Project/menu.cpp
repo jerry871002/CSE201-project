@@ -8,7 +8,6 @@ using namespace godot;
 Menu::Menu()
 {
 	Sidebar = false;
-	Clickable = false;
 }
 
 Node* Menu::getsidebar()
@@ -31,7 +30,7 @@ void Menu::_init(){}
 
 void Menu::_input(Input* e)
 {
-	if (e->get_class() == "InputEventMouseButton" && Clickable) {
+	if (e->get_class() == "InputEventMouseButton") {
 		if (((InputEventMouseButton*)e)->is_pressed()) {   
 			Sidebar = (Sidebar == true);
 			this->getsidebar()->set("visible", Sidebar);
@@ -47,10 +46,6 @@ void Menu::_ready()
 
 void godot::Menu::_on_MenuButton_mouse_entered()
 {
-
-	Clickable = true;
-	//this->GetPanels()->set("visible", true);
-
 	Input* i = Input::get_singleton();
 	i->set_default_cursor_shape(i->CURSOR_POINTING_HAND);
 	
@@ -58,8 +53,6 @@ void godot::Menu::_on_MenuButton_mouse_entered()
 
 void godot::Menu::_on_MenuButton_mouse_exited()
 {
-	Clickable = false;
-	//this->GetPanels()->set("visible", false);
 	Input* i = Input::get_singleton();
 	i->set_default_cursor_shape(i->CURSOR_ARROW);
 }

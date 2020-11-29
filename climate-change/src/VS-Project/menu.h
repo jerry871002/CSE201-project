@@ -6,20 +6,18 @@
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
+#include <sidebar.h>
+
 
 
 namespace godot {
 	class Menu : public StaticBody {
 		GODOT_CLASS(Menu, StaticBody)
 
-	private:
-
-		bool Clickable;
-
 	public:
 
 		Menu();
- 
+		~Menu()
 		bool Sidebar;
 		
 		Node* getsidebar();
