@@ -37,3 +37,6 @@ Next week, I plan to try to fix the problems I have faced with the Godot plugin 
 
 Antoine:
 This week I worked on the restaurant class and micro-simulation. Next week I will work on implementing the shop and mall classes. 
+
+Eliott:
+This week I created the collection car asset and I implemented the car functions: turning, go forward and then I implemented random movements. I will then implement acceleration, timer and collisions with other cars.
