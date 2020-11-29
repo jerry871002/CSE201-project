@@ -19,3 +19,6 @@ This week the simulation team mainly worked on writing a City class, which conta
 We worked on creating a mechanism independent from Godot for progressing time and fixed several bugs that we found in the code. 
 I created a return_game_date() function which gives the time in our program, and managed to create functioning a main loop which creates a city instance and runs outside of the Godot engine, which should allow us to debug the simulation without actually opening the game itself.
 Next week we will want to implement all features necessary in the city class to be able to add buildings of any class to the city and keep track of changes in their attributes.  
+
+Ambroise:
+This week, I started creating a simplified model of the game to establish a skeleton for storing, getting and changing data about the game objects, based on a time factor and user input about the objects. Next week, I will continue working on this simplified model to ensure that we have a working game skeleton, which we will then be able to complexify. I will also help Eliott to fix some minor problems with car motion and will find a way to spawn objects and instanciate scenes as a result of parameters either related to time or user input.
