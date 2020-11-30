@@ -12,7 +12,6 @@
 namespace godot {
 	class Restaurant : public Struc, public StaticBody {
 		GODOT_CLASS(Restaurant, StaticBody)
-
 	private:
 
 		bool Clickable;

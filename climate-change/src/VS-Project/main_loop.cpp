@@ -5,7 +5,6 @@
 #include <set>
 #include "Restaurant.h"
 #include "obj.h"
-#include "obj.cpp"
 #include "City.h"
 #include<windows.h>
 
@@ -27,8 +26,6 @@ int main()
 		Struc* struc_pointer = &rest;
 		c.add_building(struc_pointer);
 		Sleep(200);
-
-
 
 		// advance by 3 days before rerunning through the loop 
 		c.simulation();
