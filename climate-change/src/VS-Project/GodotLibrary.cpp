@@ -3,7 +3,6 @@
 #include "City.h"
 #include "AgriculturalProduction.h"
 #include "AllPhysicalGoodsFactories.h"
-#include "Car.h"
 #include "CoalPowerPlant.h"
 #include "Education.h"
 #include "ElectricCar.h"
@@ -39,7 +38,6 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<City>();
 	register_class<AgriculturalProduction>();
 	register_class<AllPhysicalGoodsFactories>();
-	register_class<Car>();
 	register_class<CoalPowerPlant>();
 	register_class<Education>();
 	register_class<ElectricCar>();
