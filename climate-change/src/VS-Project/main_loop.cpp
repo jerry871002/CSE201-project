@@ -6,9 +6,11 @@
 #include "Restaurant.h"
 #include "obj.h"
 #include "City.h"
-#include<windows.h>
-
-
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 
 int main()
 {
@@ -22,7 +24,7 @@ int main()
 		std::cout << "city income is " << c.return_income() << std::endl;
 
 		// add a restaurant pointer to the buildings set
-		Restaurant rest = Restaurant();
+		Restaurant rest = Restaurant(100);
 		Struc* struc_pointer = &rest;
 		c.add_building(struc_pointer);
 		Sleep(200);
@@ -42,8 +44,6 @@ int main()
 		std::cout << c.return_game_date() << std::endl;
 		std::cout << "city income is " << c.return_income() << std::endl;
 	}
-
-
 
 }
 

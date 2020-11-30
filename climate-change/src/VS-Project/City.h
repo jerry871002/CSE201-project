@@ -31,7 +31,7 @@ namespace godot {
 		~City();
 
 		std::set<Struc*> buildings;
-		double income, population, numberOfEmplyees, carbonEmission, energyDemand, energySupply;
+		double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply;
 
 		void add_building(Struc*);
 		void simulation();

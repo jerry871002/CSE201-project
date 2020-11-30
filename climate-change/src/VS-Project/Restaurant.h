@@ -19,6 +19,7 @@ namespace godot {
 	public:
 
 		Restaurant();
+		Restaurant(int);
 
 		bool PanelsOn;
 		

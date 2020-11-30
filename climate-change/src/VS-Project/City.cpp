@@ -7,7 +7,7 @@ City::City() {
 	
 	income = 0;
 	population = 50000;
-	numberOfEmplyees = 0;
+	numberOfEmployees = 0;
 	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
@@ -67,7 +67,7 @@ void City::simulation() {
 	day_tick++;
 	//write the old values in a file 
 	income = 0;
-	numberOfEmplyees = 0;
+	numberOfEmployees = 0;
 	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
@@ -75,7 +75,7 @@ void City::simulation() {
 	for (std::set<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
 		income += (*it)->income;
-		numberOfEmplyees += (*it)->numberOfEmplyees;
+		numberOfEmployees += (*it)->numberOfEmployees;
 		carbonEmission += (*it)->carbonEmission;
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
@@ -86,7 +86,7 @@ void City::simulation() {
 void City::write_stat_history_to_file() {
 	std::ofstream out_file;
 	out_file.open("stat_history.txt", std::ofstream::out | std::ofstream::app);
-	out_file << timer << " " << income << " " << population << " " << numberOfEmplyees << " ";
+	out_file << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
 	out_file << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
 	out_file.close();
 }

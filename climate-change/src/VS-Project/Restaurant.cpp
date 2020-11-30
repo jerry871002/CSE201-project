@@ -12,6 +12,14 @@ Restaurant::Restaurant()
 	income = 100;
 }
 
+Restaurant::Restaurant(int inc)
+{
+	PanelsOn = true;
+	Clickable = false;
+	income = inc;
+}
+
+
 Node* Restaurant::GetPanels()
 {
 	return get_node("Restau")->get_node("SolarPanels");
