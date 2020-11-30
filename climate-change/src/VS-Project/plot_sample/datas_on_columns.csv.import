@@ -1,0 +1,13 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+valid=false
+
+[deps]
+
+source_file="res://src/VS-Project/plot_sample/datas_on_columns.csv"
+[params]
+
+compress=true
+delimiter=0
