@@ -6,10 +6,11 @@
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
+#include "obj.h"
 
 
 namespace godot {
-	class Restaurant : public StaticBody {
+	class Restaurant : public Struc, public StaticBody {
 		GODOT_CLASS(Restaurant, StaticBody)
 
 	private:
@@ -19,6 +20,7 @@ namespace godot {
 	public:
 
 		Restaurant();
+		Restaurant(int);
 
 		bool PanelsOn;
 		

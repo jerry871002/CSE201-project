@@ -76,7 +76,7 @@ void City::simulation() {
 	{
 		income += (*it)->income;
 		std::cout << "in LOOP income " << (*it)->income << std::endl;
-		numberOfEmplyees += (*it)->numberOfEmployees;
+		numberOfEmployees += (*it)->numberOfEmployees;
 		carbonEmission += (*it)->carbonEmission;
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
