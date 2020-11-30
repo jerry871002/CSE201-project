@@ -92,7 +92,7 @@ void City::write_stat_history_to_file() {
 }
 
 
-float City::return_income() {
+double City::return_income() {
 	return income;
 }
 

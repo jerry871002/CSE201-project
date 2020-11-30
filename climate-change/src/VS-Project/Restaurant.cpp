@@ -27,9 +27,6 @@ void Restaurant::_register_methods()
 }
 
 
-int Restaurant::get_income() {
-	return income;
-}
 
 void Restaurant::change_income_by_percent(float factor ) {
 	income *= factor;

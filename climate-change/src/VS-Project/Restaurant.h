@@ -1,4 +1,5 @@
 #pragma once
+#include "obj.h"
 #include <core/Godot.hpp>
 #include <StaticBody.hpp>
 #include <MeshInstance.hpp>
@@ -9,7 +10,7 @@
 
 
 namespace godot {
-	class Restaurant : public StaticBody {
+	class Restaurant : public Struc, public StaticBody {
 		GODOT_CLASS(Restaurant, StaticBody)
 
 	private:
@@ -34,7 +35,7 @@ namespace godot {
 
 
 		int income;
-		int get_income();
+
 		void change_income_by_percent(float);
 	};
 }

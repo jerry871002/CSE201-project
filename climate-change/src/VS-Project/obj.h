@@ -1,15 +1,22 @@
 #include <core/Godot.hpp>
 #pragma once
+#include <StaticBody.hpp>
+#include <MeshInstance.hpp>
+#include <Input.hpp>
+#include <InputEventMouse.hpp>
+#include <InputEventMouseMotion.hpp>
+#include <InputEventMouseButton.hpp>
+
 using namespace godot;
 
 
-class Struc : public Object {
-    GODOT_CLASS(Struc,Object)    
+class Struc {   
     public:
         void simulate_step() {};
         double cost, energyuse, maintenance, satisfaction;
         double income, population, numberOfEmplyees, carbonEmission, energyDemand, energySupply;
-        //Struc();
+        Struc();
+        ~Struc();
         Struc(double cost, double energyuse, double maintenance, double satisfaction, double income, double population, double numberOfEmplyees, double carbonEmission, double energyDemand, double energySupply):
             cost{ cost }, energyuse{ energyuse }, maintenance{ maintenance }, satisfaction{ satisfaction }, income{ income }, population{ population }, numberOfEmplyees{ numberOfEmplyees }, carbonEmission{ carbonEmission }, energyDemand{ energyDemand }, energySupply{energySupply}{}
 };

@@ -36,7 +36,7 @@ namespace godot {
 		void add_building(Struc*);
 		void simulation();
 		void write_stat_history_to_file();
-		float return_income();
+		double return_income();
 		std::string return_game_date();
 
 		/* we can keep these vairables as floats as long as each object only computes the ADDITIONAL AMOUNT of energy, income etc. 
