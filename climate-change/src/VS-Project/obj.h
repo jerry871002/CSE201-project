@@ -31,15 +31,6 @@ public:
     int employment;
 };
 
-class Transport : public Infrastructure {
-public:
-    double numCars;
-    double numElectricCars;
-    double numBus;
-    double numTram;
-    double occupancyRate, capacity, kmPerDay,passengers;
-};
-
 class Shop : public Production {
 public:
     bool open;
