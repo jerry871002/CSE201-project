@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -156,19 +156,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="City.cpp" />
-    <ClCompile Include="data.cpp" />
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="GodotLibrary.cpp" />
-    <ClCompile Include="main_loop.cpp" />
-    <ClCompile Include="obj.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="Root.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="City.h" />
-    <ClInclude Include="data.h" />
-    <ClInclude Include="obj.h" />
+    <ClInclude Include="Car.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Restaurant.h" />
     <ClInclude Include="Root.h" />
