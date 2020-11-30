@@ -75,7 +75,8 @@ void City::simulation() {
 	for (std::set<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
 		income += (*it)->income;
-		numberOfEmployees += (*it)->numberOfEmployees;
+		std::cout << "in LOOP income " << (*it)->income << std::endl;
+		numberOfEmplyees += (*it)->numberOfEmployees;
 		carbonEmission += (*it)->carbonEmission;
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
