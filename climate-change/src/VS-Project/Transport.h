@@ -11,7 +11,7 @@ public:
     int type; /*
     0 - electic car, 1 - big american car 2 - normal car 
     3 - old collection car 4 - bike 5 -  motorcycle 6 - bus*/
-    Transport();
+    Transport(int transportType);
 	~Transport();
 	/*void _register_methods();
 	void _init();

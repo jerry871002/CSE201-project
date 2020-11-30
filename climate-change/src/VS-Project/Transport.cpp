@@ -28,7 +28,8 @@ void Transport::_ready(){
     0 - electic car, 1 - big american car 2 - normal car 
     3 - old collection car 4 - bike 5 -  motorcycle 6 - bus*/
 
-Transport::Transport(){
+Transport::Transport(int transportType){
+type = transportType;
 CO2_output = 0; // co2 output for the whole duration of simulation
 maintenance = 0; // maintenance cost for the whole duration of simulation
 fuelInput = 0; // fuel needed for the whole duration of simulation
