@@ -2,9 +2,27 @@
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
 #include <Math.hpp>
+#include <SceneTree.hpp>
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
+
+Player::Player()
+{
+
+	// INITIALIZE MOTION AND ROTATION VECTORS USED FOR PLAYER CONTROL
+	motion = Vector3(0, 0, 0);
+	rotation = Vector3(0, 0, 0);
+
+	// CUSTOM CAMERA
+	//camera.set_fov(35);
+	//camera.set_rotation_degrees(Vector3(-15, 0, 0));
+
+}
+
+Player::~Player()
+{
+}
 
 void Player::_register_methods()
 {
@@ -18,6 +36,15 @@ void Player::_init()
 
 }
 
+void Player::_ready()
+{
+
+	// SET INITIAL MOUSE MODE TO CAPTURED
+	Input* i = Input::get_singleton();
+	i->set_mouse_mode(i->MOUSE_MODE_CAPTURED);
+
+}
+
 void Player::_process(float delta)
 {
 	
@@ -27,55 +54,45 @@ void Player::_process(float delta)
 
 }
 
+void Player::_physics_process(float delta) 
+{
+	
+}
+
 void Player::_input(InputEvent* e)
 {
+	
 	motion = Vector3(0, 0, 0);
 
 	// MOUSE MOTION EVENTS
-	if (e->get_class() == "InputEventMouseMotion") {
+	if (e->get_class() == "InputEventMouseMotion") 
+	{
 		// Rotation and vertical motion using relative mouse coordinates
 		UpdateRotationFromInput((InputEventMouseMotion*)e);
-	};
+	}
 
 	// MOUSE BUTTON EVENTS
-	if (e->get_class() == "InputEventMouseButton") {
+	if (e->get_class() == "InputEventMouseButton") 
+	{
 		// Double click to change mouse mode
 		if (((InputEventMouseButton*)e)->is_doubleclick()) {
 			ChangeMouseMode();
 		}
-
 	}
 
 	this->translate(motion);
-}
 
-void Player::_ready()
-{
-	// SET INITIAL MOUSE MODE TO CAPTURED
-	Input* i = Input::get_singleton();
-	i->set_mouse_mode(i->MOUSE_MODE_CAPTURED);
-
-}
-
-
-Player::Player()
-{
-	// INITIALIZE MOTION AND ROTATION VECTORS USED FOR PLAYER CONTROL
-	motion = Vector3(0, 0, 0);
-	rotation = Vector3(0, 0, 0);
-
-	// CUSTOM CAMERA
-	//camera.set_fov(35);
-	//camera.set_rotation_degrees(Vector3(-15, 0, 0));
+	// EXIT GAME
+	if (e->is_action_pressed("ui_cancel"))
+	{
+		get_tree()->quit();
+	}
 	
-}
-
-Player::~Player()
-{
 }
 
 void Player::UpdateMotionFromInput()
 {
+	
 	// RESET MOTION VECTOR TO ZERO
 	motion = Vector3(0, 0, 0);
 
@@ -127,7 +144,8 @@ void Player::UpdateMotionFromInput()
 
 }
 
-void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
+void Player::UpdateRotationFromInput(InputEventMouseMotion* e) 
+{
 
 	// RELATIVE ROTATION VECTOR OBTAINED FROM MOUSE MOTION
 	Vector2 rot = e->get_relative();
@@ -147,37 +165,36 @@ void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
 		// ZOOM-IN MOTION 
 		if (rot.y <= 0) {
 			// Set maximum height
-			if (this->get_global_transform().get_origin().y <= MaxHeight) {
+			if (this->get_global_transform().get_origin().y <= MaxHeight) 
+			{
 				motion.z -= (rot.y * cos(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight/2, VSPEED_POWER));
 				motion.y -= (rot.y * sin(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
 			}
 		}
 		else {
 			// Set minimum height
-			if (this->get_global_transform().get_origin().y >= MinHeight) {
+			if (this->get_global_transform().get_origin().y >= MinHeight) 
+			{
 				motion.z -= (rot.y * cos(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
 				motion.y -= (rot.y * sin(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
 			}
 		}
-
 	}
 
 }
 
 void Player::ChangeMouseMode()
 {
+
 	Input* i = Input::get_singleton();
+
 	// CHANGE MOUSE MODE
-	if (i->get_mouse_mode() == i->MOUSE_MODE_CAPTURED) {
+	if (i->get_mouse_mode() == i->MOUSE_MODE_CAPTURED) 
+	{
 		i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
 	}
 	else {
 		i->set_mouse_mode(i->MOUSE_MODE_CAPTURED);
 	}
-}
-
-void Player::_physics_process(float delta) {
-
 
 }
-
