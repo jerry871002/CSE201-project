@@ -1,4 +1,5 @@
 #include "obj.h"
+#include "Transport.h"
 
 class Tram: public Transport{
 public:

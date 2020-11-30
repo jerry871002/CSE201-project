@@ -9,11 +9,9 @@ public:
 	void _process(float delta);
 	void _input(InputEvent* e);
 	void _ready();
-}
 
-void simulate_step(double days); // updates every attribute directly as a function of time (days since beginning of the game)
-    double insulation;
-    
+    void simulate_step(double days); // updates every attribute directly as a function of time (days since beginning of the game)
+    double insulation, window_cost;
 	
 
 	// policies (constructor creates subcritical plant of 38% efficiency) :

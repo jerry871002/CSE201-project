@@ -16,10 +16,9 @@ public:
     // variables that the sim team needs. If any of these are already covered or need to  be implemented diffferently let Vincent, Yury, Jerry or Sam know 
     double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply;
 
-
     double total_days; //total number of days that have passed in the simulation, will be passed on by the City object
 
-// All of our policies have to go in the City class !! Look at City.h 
+    // All of our policies have to go in the City class !! Look at City.h 
     Structure();
     ~Structure();
 
@@ -47,12 +46,10 @@ public:
 };
 
 class Housing : public Structure {
-    //public:
+public:
     Housing();
     ~Housing();
 };
-
-
 
 
 class Infrastructure : public Structure {
@@ -65,8 +62,6 @@ public:
     bool open;
     //get attributes from production : employment i don't remember how to do that
     //constructor :
-
-public:
     Shop();
 };
 

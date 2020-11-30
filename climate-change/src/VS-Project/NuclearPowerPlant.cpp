@@ -39,7 +39,7 @@ NuclearPowerPlant::NuclearPowerPlant()
 	satisfaction = 2; // on scale of 10
 	CO2_output = 0.012; // kg of CO2 emitted per kWh
 	//mercury_output = ; // kg of mercury emitted per kWh
-	cost 10E9= ; // cost in euros to build a new plant
+	cost = 10E9; // cost in euros to build a new plant
 	building_time = 5; // years needed to build a new plant
 	environmental_cost = 0.0019; // environmental and health costs in euros per kWh
 }
@@ -51,6 +51,6 @@ NuclearPowerPlant::~NuclearPowerPlant()
 
 void NuclearPowerPlant::simulate_step(double days) 
 {
-	energy_per_day = 20 000 000; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
+	energy_per_day = 20000000; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 
 }

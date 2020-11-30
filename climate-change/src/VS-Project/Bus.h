@@ -1,5 +1,5 @@
 #include "obj.h"
-
+#include "Transport.h"
 class Bus: public Transport{
 public:
 	Bus();

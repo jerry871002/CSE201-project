@@ -4,6 +4,7 @@
 
 
 Structure::Structure() {
+    /*
     cost = 0;
     energyuse = 0;
     maintenance = 0;
@@ -14,15 +15,10 @@ Structure::Structure() {
     carbonEmission = 0;
     energyDemand = 0;
     energySupply = 0;
+     */
+    
 }
 /*
 Structure::Structure(double cost, double energyuse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply) :
     cost{ cost }, energyuse{ energyuse }, maintenance{ maintenance }, satisfaction{ satisfaction }, income{ income }, population{ population }, numberOfEmployees{ numberOfEmployees }, carbonEmission{ carbonEmission }, energyDemand{ energyDemand }, energySupply{ energySupply }{}
 */
-
-
-
-
-Structure::~Structure() {
-
-}
