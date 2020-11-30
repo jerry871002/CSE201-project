@@ -19,10 +19,25 @@ int main()
 		c.simulation();
 		std::cout << c.return_game_date()<< std::endl;
 		std::cout << "city income is " << c.return_income() << std::endl;
-		Restaurant resto = Restaurant();
-		Restaurant *restpoint = &resto;
-		// c.add_building(restpoint);
+
+		Restaurant rest = Restaurant();
+
+		c.add_building((Struc*) & rest);
 		Sleep(200);
+
+		c.simulation();
+		std::cout << c.return_game_date() << std::endl;
+		std::cout << "city income is " << c.return_income() << std::endl;
+		Sleep(200);
+
+		c.simulation();
+		std::cout << c.return_game_date() << std::endl;
+		std::cout << "city income is " << c.return_income() << std::endl;
+		Sleep(200);
+
+		c.simulation();
+		std::cout << c.return_game_date() << std::endl;
+		std::cout << "city income is " << c.return_income() << std::endl;
 	}
 
 
