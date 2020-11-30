@@ -22,7 +22,6 @@ public:
     Structure();
     ~Structure();
 
-
     virtual void simulate_step();
     // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
     bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)

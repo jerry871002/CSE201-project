@@ -1,4 +1,4 @@
-#include "obj.h"
+#include "obj.h";
 
 class Health: public Infrastructure {
 public:

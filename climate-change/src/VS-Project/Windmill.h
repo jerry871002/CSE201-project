@@ -1,6 +1,6 @@
-#include "obj.h"
+#include "obj.h";
 
-class Windmill: public Energy{
+class Windmill: public Energy {
 public:
 	Windmill();
 	~Windmill();
