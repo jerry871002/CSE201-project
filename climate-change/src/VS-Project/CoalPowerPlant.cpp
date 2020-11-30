@@ -75,6 +75,7 @@ void CoalPowerPlant::simulate_step(double days)
 	if (total_time >= 10950) {
 		maintenance += maintenance * 2; // after 30 years the maintenance and working costs double
 	}
+
 	coal += 4.06E-4 * energy_per_day * days;
 	CO2_output += 0.768 * energy_per_day * days;  
 	SO2_output += 0.00152 * energy_per_day * days; 
