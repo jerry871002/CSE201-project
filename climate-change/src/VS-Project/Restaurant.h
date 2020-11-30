@@ -10,7 +10,7 @@
 
 
 namespace godot {
-	class Restaurant : public Struc, public StaticBody {
+	class Restaurant : public Structure, public StaticBody {
 		GODOT_CLASS(Restaurant, StaticBody)
 	private:
 

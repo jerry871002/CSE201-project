@@ -59,7 +59,7 @@ void City::_ready()
 	
 };
 
-void City::add_building(Struc* struc) {
+void City::add_building(Structure* struc) {
 	buildings.insert(struc);
 }
 
@@ -72,11 +72,11 @@ void City::simulation() {
 	energyDemand = 0;
 	energySupply = 0;
 
-	for (std::set<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
+	for (std::set<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
 		income += (*it)->income;
 		std::cout << "in LOOP income " << (*it)->income << std::endl;
-		numberOfEmplyees += (*it)->numberOfEmployees;
+		numberOfEmployees += (*it)->numberOfEmployees;
 		carbonEmission += (*it)->carbonEmission;
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;

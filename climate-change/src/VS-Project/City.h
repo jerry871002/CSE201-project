@@ -30,10 +30,10 @@ namespace godot {
 		City();
 		~City();
 
-		std::set<Struc*> buildings;
+		std::set<Structure*> buildings;
 		double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply;
 
-		void add_building(Struc*);
+		void add_building(Structure*);
 		void simulation();                    //updates all the stats abd the building
 		void write_stat_history_to_file();    //writes all the stats to a file so that the inteface team can make graphs 
 		double return_income();               //returns the income of the city
