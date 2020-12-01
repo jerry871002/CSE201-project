@@ -1,6 +1,7 @@
 #include "AgriculturalProduction.h"
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
+#include <iostream>
 
 using namespace godot;
 
@@ -40,4 +41,8 @@ AgriculturalProduction::AgriculturalProduction()
 AgriculturalProduction::~AgriculturalProduction()
 {
 
+}
+
+void AgriculturalProduction::test() {
+	std::cout << "AgriculturalProduction" << std::endl;
 }
