@@ -3,6 +3,7 @@
 #include <GodotGlobal.hpp>
 #include <Timer.hpp>
 #include <time.h>
+#include <cstdlib>
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
@@ -15,11 +16,7 @@ void Car::_register_methods()
 }
 
 void Car::_init() {
-	motion = Vector3(0, 0, 0);
-	position = 0;
-	rot = (M_PI / 2);
-	center = Vector3(0, 0, 0);
-	dir = 0;
+	
 
 }
 
@@ -30,11 +27,10 @@ void Car::_process(float delta)
 
 		if (position >= (26.0 - (2.0 * Turn_R))) {
 			rot = 0;
-			dir = rand() % 3 - 1;
-			//dir = 1;
+			dir = -( rand() % 3 - 1);
+			//dir = 1;  
 			if (dir == 1) { center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z)*Turn_R*dir;	}
 			else { center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z) * (Turn_R + 4) * dir; }
-			await();
 		}
 	}
 	
@@ -52,10 +48,14 @@ void Car::_process(float delta)
 			turn(dir, delta);
 
 			if (rot >= (M_PI / 2)) {
-				this->rotate_y(-(M_PI / 2) + rot);						//make sure the angle is corrct
+				// Make sure the angle is correct
+				this->set_rotation_degrees(Vector3(round(this->get_rotation_degrees().x/90)*90, round(this->get_rotation_degrees().y/90)*90, round(this->get_rotation_degrees().z/90)*90));
+				// Make sure the car is on the grid
 				motion = this->get_global_transform().get_origin();
-				motion.x = round(motion.x); motion.y = round(motion.y);
-				this->set_translation(motion);							//make sure the car is on the grid
+				motion.x = round(motion.x); 
+				motion.y = round(motion.y);
+				this->set_translation(motion);	
+				// Reset position
 				position = 0;
 			}
 		}
@@ -66,8 +66,8 @@ void Car::_process(float delta)
 void Car::turn(int dir, float delta)
 {
 	double drot;
-	if (dir == 1) { drot = (SPEED_T * delta) * M_PI ; }
-	else { drot = (SPEED_T * delta) * M_PI  / 4; }
+	if (dir == 1) { drot = (SPEED_T * delta) * M_PI /2; }
+	else { drot = (SPEED_T * delta) * M_PI /2; }
 	rot += drot;
 	
 	this->global_translate(-center);
@@ -108,7 +108,11 @@ void godot::Car::_physics_process(float delta)
 
 Car::Car()
 {
-
+	motion = Vector3(0, 0, 0);
+	position = 0;
+	rot = (M_PI / 2);
+	center = Vector3(0, 0, 0);
+	dir = 0;
 }
 
 Car::~Car()
