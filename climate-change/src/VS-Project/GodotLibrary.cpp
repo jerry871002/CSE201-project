@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Restaurant.h"
 #include "Car.h"
+#include "City.h"
 
 using namespace godot;
 
@@ -17,6 +18,7 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<Player>();
 	register_class<Restaurant>();
 	register_class<Car>();
+	register_class<City>();
 }
 
 
