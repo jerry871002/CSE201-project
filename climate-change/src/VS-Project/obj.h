@@ -34,7 +34,7 @@ class Structure {
 class Production : public Structure {
 public:
     double efficiency;
-    int employment;
+    double employment;
 };
 
 
@@ -53,7 +53,7 @@ public:
 
 class Infrastructure : public Structure {
 public:
-    int employment;
+    double employment;
 };
 
 class Shop : public Production {

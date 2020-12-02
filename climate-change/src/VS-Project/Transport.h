@@ -33,6 +33,6 @@ namespace godot {
 		void _on_Area_mouse_entered();
 		void _on_Area_mouse_exited();
 	    void simulate_step(double days);
-        int age; // age of this particular transport (in days)
+        double age; // age of this particular transport (in days)
     };
 }   
