@@ -11,6 +11,8 @@ City::City() {
 	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
+	healthcare = 0;
+	needs = 0;
 
 	time_speed = 1;
 	delta_counter = 0.0;
@@ -74,6 +76,8 @@ void City::simulation() {
 		carbonEmission += (*it)->carbonEmission;
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
+		healthcare += (*it)->healthcare;
+		needs += (*it)->needs;
 		(*it)->simulate_step(); //function that updates the building
 	}
 }
@@ -82,7 +86,7 @@ void City::write_stat_history_to_file() {
 	std::ofstream out_file;
 	out_file.open("stat_history.txt", std::ofstream::out | std::ofstream::app);
 	out_file << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
-	out_file << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
+	out_file << carbonEmission << " " << energyDemand << " " << energySupply << " " << healthcare << " " << needs << std::endl;
 	out_file.close();
 }
 

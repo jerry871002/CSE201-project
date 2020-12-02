@@ -14,10 +14,10 @@ class Struc {
     public:
         void simulate_step() {};
         double cost, energyuse, maintenance, satisfaction;
-        double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply;
+        double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply, healthcare, needs;
         Struc();
         ~Struc();
-        Struc(double cost, double energyuse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply);
+        Struc(double cost, double energyuse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs);
 };
 /*
 class Production: public Struc {
