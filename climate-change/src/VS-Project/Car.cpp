@@ -31,12 +31,12 @@ void Car::_process(float delta)
 		
 		straight(delta);
 
-		double real_rot = std::fmod(abs(this->get_rotation_degrees().y)/90, 2) ;		//0, 90, 180, 270 -> 0, 1, 0, 1
+		int real_rot = round(this->get_rotation_degrees().y /90);
 
-		if (position >= 13 && Acc == 2 && round(real_rot) == 0) {
+		if (position >= 13 && Acc == 2 && real_rot % 2 == 0) {
 			Acc = fmin(10 * (pow(0.2, 2) - pow(SPEED_T, 2)) / (2 * 5), 0);
 		}
-		else if (position >= 18 && Acc == 2 && round(real_rot) == 1 && dir == 1) {
+		else if (position >= 18 && Acc == 2 && real_rot % 2 == 1 && dir == 1) {
 			Acc = fmin(10 * (pow(1, 2) - pow(SPEED_T, 2)) / (2 * 4), 0);			//Decrease also the speed before turning right (small radius)
 		}
 
