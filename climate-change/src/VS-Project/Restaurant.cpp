@@ -1,4 +1,5 @@
 #include "Restaurant.h"
+#include "random"
 #include <Area.hpp>
 
 
@@ -10,15 +11,72 @@ Restaurant::Restaurant()
 	PanelsOn = true;
 	Clickable = false;
 	income = 100;
+
+
+
+	std::random_device rd; 
+	std::mt19937 gen(rd()); 
+	std::normal_distribution <double> mediancost(310000, 150000);  //Median cost of opening restaurant 375K $, including owning the building
+	cost = mediancost(gen); 
+	
+	if (cost<200000){restaurantType = 1;}
+	if ((200000 <= cost) and (cost <= 400000)){restaurantType = 2;}
+	else {restaurantType = 3;}
+
+	//Consider 3 types of restaurant, 1 - small size / fast food type , 2 -Normal Full service resaurant, 3 - Fine dining type 
+	switch (restaurantType){
+	case 1: {
+		std::uniform_real_distribution <double> diningSize1(11, 14); //Average Fast food restaurant has dining space of 11-14 square feet
+		diningSize = diningSize1(gen);
+		energyuse = 38;  //On average 38kWh per square feet
+ 		// maintenance = 0.34;  	Not sure yet
+    	satisfaction = 4;	//Smaller sized not very refined restaurant
+    	averageWage = 11;		// Euros per hour , Slightly above minimum wage in france
+		std::normal_distribution <double> totalemployees1(25, 8);	// 9 out 10 restaurants have less than 50 employees
+    	employment = totalemployees1(gen) *  (1 + ((diningSize-12.5)/12.5)); // number of employees influenced by size of restaurent
+    	// CO2Emission = 0; need to find more info on this
+		buildingTime = 60 ; //On average a casual restaurant takes 12 weeks to set up
+		
+		break;
+	}
+	case 2:  {
+		std::uniform_real_distribution <double> diningSizeg2(12, 15); //Average Full Service restaurant has dining space of 12-15 square feet
+		diningSize = diningSizeg2(gen);
+		energyuse = 38;  //On average 38kWh per square feet
+ 		// maintenance = 0.34;  	Not sure yet
+    	satisfaction = 6;	//Full service normal quality restaurant
+    	averageWage = 12.5;		// Euros per hour, Slightly above minimum wage in france
+		std::normal_distribution <double> totalemployees2(30, 10);	// 9 out 10 restaurants have less than 50 employees
+    	employment = totalemployees2(gen) *  (1 + ((diningSize-12.5)/12.5)); // number of employees influenced by size of restaurent
+    	// CO2Emission = 0; need to find more info on this
+		buildingTime = 70 ; //On average a casual restaurant takes 14 weeks to set up
+		break;
+	}
+	case 3:{
+		std::uniform_real_distribution <double> diningSizeg3(11, 14); //Average Fast food restaurant has dining space of 11-14 square feet
+		diningSize = diningSizeg3(gen);
+		energyuse = 38;  //On average 38kWh per square feet
+ 		// maintenance = 0.34;  	Not sure yet
+    	satisfaction = 7;	//Luxury aimed restaurant - High quality
+    	averageWage = 14;		// Higher than other types as more luxurious 
+		std::normal_distribution <double> totalemployees3(35, 7);	// 9 out 10 restaurants have less than 50 employees
+    	employment = totalemployees3(gen) *  (1 + ((diningSize-12.5)/12.5)); // number of employees influenced by size of restaurent
+    	// CO2Emission = 0; need to find more info on this
+		buildingTime = 80 ; //On average a casual restaurant takes 16 weeks to set up
+
+		break;
+	}
+	}
 }
 
+/*
 Restaurant::Restaurant(int inc)
 {
 	PanelsOn = true;
 	Clickable = false;
 	income = inc;
 }
-
+*/
 
 Node* Restaurant::GetPanels()
 {
@@ -80,7 +138,6 @@ void godot::Restaurant::_on_Area_mouse_entered()
 
 void godot::Restaurant::_on_Area_mouse_exited()
 {
-
 	Clickable = false;
 	//this->GetPanels()->set("visible", false);
 	Input* i = Input::get_singleton();
@@ -88,4 +145,5 @@ void godot::Restaurant::_on_Area_mouse_exited()
 	i->set_default_cursor_shape(i->CURSOR_ARROW);
 
 }
+
 

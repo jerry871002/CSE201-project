@@ -10,7 +10,7 @@
 
 
 namespace godot {
-	class Restaurant : public Structure, public StaticBody {
+	class Restaurant : public Production, public StaticBody {
 		GODOT_CLASS(Restaurant, StaticBody)
 	private:
 
@@ -19,7 +19,7 @@ namespace godot {
 	public:
 
 		Restaurant();
-		Restaurant(int);
+		
 
 		bool PanelsOn;
 		
@@ -37,5 +37,11 @@ namespace godot {
 		int income;
 
 		void change_income_by_percent(float);
+		
+
+
+		int restaurantType;
+		double diningSize;
+		double averageWage;
 	};
 }
