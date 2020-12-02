@@ -22,7 +22,7 @@ namespace godot {
 
 		const double CameraAngleDeg = 15;
 		const double MaxHeight{ 300 };
-		const double MinHeight{ 30 };
+		const double MinHeight{ 10 };
 
 
 	public:

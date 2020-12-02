@@ -15,7 +15,7 @@ namespace godot {
 		double position;
 		double rot;
 		const double SPEED_T = 0.5;
-		const int Turn_R = 4;
+		int Turn_R = 4;
 		int dir;
 
 		const int Acc = 4;
