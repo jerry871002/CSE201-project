@@ -16,7 +16,7 @@ class Structure {
         // variables that the sim team needs. If any of these are already covered or need to  be implemented diffferently let Vincent, Yury, Jerry or Sam know 
         double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply;
 
-        double total_days; //total number of days that have passed in the simulation, will be passed on by the City object
+        double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
 
         // All of our policies have to go in the City class !! Look at City.h 
         Structure();

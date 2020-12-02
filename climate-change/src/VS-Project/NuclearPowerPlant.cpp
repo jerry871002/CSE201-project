@@ -65,14 +65,14 @@ void NuclearPowerPlant::simulate_step(double days)
 	radiation += 1.4E-12 * energyPerDay * days;
 	environmentalCost = 0.06 * energyPerDay * days;
 	maintenance += 166 * energyPerDay * days;
-	if (total_days >= 3650) {
+	if (totalDays >= 3650) {
 		maintenance += 166 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
 	}
-	if (total_days >= 10950) {
+	if (totalDays >= 10950) {
 		maintenance += 166; // after 30 years the maintenance and working costs double
 	}
 	/*
-	if total_days >= 127890{
+	if totalDays >= 127890{
 		// 35 years is the average lifetime of a nuclear power plant, it then has to be replaced by a new plant or different power plant
 	}*/
 }
