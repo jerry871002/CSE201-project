@@ -79,6 +79,8 @@ Create a file called `test_restaurant.cpp` (in the same folder as `Restaurant.h`
 #include <iostream>
 #include "Restaurant"
 
+using namespace godot;
+
 void test_get_total_salary();
 
 int main() {
