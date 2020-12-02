@@ -4,6 +4,7 @@
 #include <Timer.hpp>
 #include <time.h>
 #include <cstdlib>
+
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
@@ -47,13 +48,13 @@ void Car::_process(float delta)
 
 		int real_rot = round(this->get_rotation_degrees().y /90);
 
-		if (position >= 13 && Acc == 2 && real_rot % 2 == 0) { ComputeAcceleration(Acc, SPEED_T, 0.2, 5);}
-		else if (position >= 18 && Acc == 2 && real_rot % 2 == 1 && dir == 1) { ComputeAcceleration(Acc, SPEED_T, 1, 4);} //Decrease also the speed before turning right (small radius)
+		if (position >= 13 && Acc > 0 && real_rot % 2 == 0) { ComputeAcceleration(Acc, SPEED_T, 0.2, 5);}
+		else if (position >= 18 && Acc > 0 && real_rot % 2 == 1 && dir == 1) { ComputeAcceleration(Acc, SPEED_T, 0.7, 4);} //Decrease also the speed before turning right (small radius)
 
 		ComputeSpeed(SPEED_T, Acc, delta);
 
 		if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
-			Acc = 2;	rot = 0;
+			Acc = 0.5;	rot = 0;
 			RoundPosition(this, motion);
 			center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z)*Turn_R*dir;
 
@@ -112,7 +113,14 @@ void Car::turn(int dir, float delta)
 void Car::straight(float delta)
 {
 	this->translate(Vector3((SPEED_T*delta), 0, 0));
-	position += (SPEED_T * delta)*10;
+	if (this->move_and_collide(Vector3(0, 0, 0), true, true, false) != NULL) {
+		
+	}
+	else {
+		position += (SPEED_T * delta) * 10;
+	}
+	
+	
 	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position ));
 	((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
 	((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));

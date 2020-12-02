@@ -82,6 +82,7 @@
     <OutDir>$(ProjectDir)DLLExport\</OutDir>
     <IncludePath>$(ProjectDir)Libraries\godot-cpp-bindings\include;$(ProjectDir)Libraries\godot-cpp-bindings\godot_headers;$(ProjectDir)Libraries\godot-cpp-bindings\include\gen\;$(ProjectDir)Libraries\godot-cpp-bindings\include\core\;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Libraries\godot-cpp-bindings\bin;$(LibraryPath)</LibraryPath>
+    <TargetName>Lib$(ProjectName)-$(Platform)-$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
