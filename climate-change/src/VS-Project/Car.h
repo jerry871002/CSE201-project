@@ -14,7 +14,7 @@ namespace godot {
 		Vector3 motion;
 		double position;
 		double rot;
-		double SPEED_T = 0.5;
+		double SPEED_T;
 		int Turn_R = 4;
 		int dir;
 
