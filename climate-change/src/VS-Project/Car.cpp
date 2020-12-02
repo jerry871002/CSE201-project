@@ -25,6 +25,20 @@ void ComputeSpeed(double &Speed, double Acc, float delta) {
 	if ((Speed <= 2 && Acc>0) or (Acc < 0 and Speed + Acc * delta > 0.2)) { Speed += Acc * delta; }			//Define max speed and min speed
 }
 
+void ComputeAcceleration(double& Acc, double Speed0, double Speed1, double d) {
+	Acc = fmin(10 * (pow(Speed1, 2) - pow(Speed0, 2)) / (2 * d), 0);
+}
+
+template <typename T> void RoundPosition(T obj, Vector3 &Motion) {
+	Vector3 motion = obj->get_global_transform().get_origin();
+	motion.x = round(motion.x); motion.y = round(motion.y);
+	obj->set_translation(motion);
+}
+
+template <typename T> void AlignOnAxes(T obj) {
+	obj->set_rotation_degrees(Vector3(round(obj->get_rotation_degrees().x / 90) * 90, round(obj->get_rotation_degrees().y / 90) * 90, round(obj->get_rotation_degrees().z / 90) * 90));
+}
+
 void Car::_process(float delta)
 {
 	if (rot >= (M_PI / 2)) {
@@ -33,67 +47,43 @@ void Car::_process(float delta)
 
 		int real_rot = round(this->get_rotation_degrees().y /90);
 
-		if (position >= 13 && Acc == 2 && real_rot % 2 == 0) {
-			Acc = fmin(10 * (pow(0.2, 2) - pow(SPEED_T, 2)) / (2 * 5), 0);
-		}
-		else if (position >= 18 && Acc == 2 && real_rot % 2 == 1 && dir == 1) {
-			Acc = fmin(10 * (pow(1, 2) - pow(SPEED_T, 2)) / (2 * 4), 0);			//Decrease also the speed before turning right (small radius)
-		}
+		if (position >= 13 && Acc == 2 && real_rot % 2 == 0) { ComputeAcceleration(Acc, SPEED_T, 0.2, 5);}
+		else if (position >= 18 && Acc == 2 && real_rot % 2 == 1 && dir == 1) { ComputeAcceleration(Acc, SPEED_T, 1, 4);} //Decrease also the speed before turning right (small radius)
 
 		ComputeSpeed(SPEED_T, Acc, delta);
 
 		if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
-			Acc = 2;
-			rot = 0;
-			motion = this->get_global_transform().get_origin();
-			motion.x = round(motion.x); motion.y = round(motion.y);
-			this->set_translation(motion);
-
+			Acc = 2;	rot = 0;
+			RoundPosition(this, motion);
 			center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z)*Turn_R*dir;
 
-			
 		}
 	}
 	
-	else if (position >= 26.0 - Turn_R && dir == 1 or position >= 30.0 - Turn_R && dir == -1 or position >= 26.0 - Turn_R && dir == 0) {
-		
-		if (dir == 0) {
-			position = -8 ;
+	else if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
+
+		ComputeSpeed(SPEED_T, Acc, delta);
+		turn(dir, delta);
+
+		if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
 			rot = M_PI / 2;
-			dir = -(rand() % 3 - 1);
-			if (dir == -1) {
-				Turn_R = 12;
+			AlignOnAxes(this);
+			RoundPosition(this, motion);
+
+			switch (dir) {
+			case -1: position = 8; break;
+			case 0: position = -8; break;
+			default: position = 4; break;
 			}
-			else { Turn_R = 4; }
-		}
-		
-		else {
-			ComputeSpeed(SPEED_T, Acc, delta);
 
-			turn(dir, delta);
+			dir = -(rand() % 3 - 1);
 
-			if (rot >= (M_PI / 2)) {
-				// Make sure the angle is correct
-				this->set_rotation_degrees(Vector3(round(this->get_rotation_degrees().x/90)*90, round(this->get_rotation_degrees().y/90)*90, round(this->get_rotation_degrees().z/90)*90));
-				// Make sure the car is on the grid
-				motion = this->get_global_transform().get_origin();
-				motion.x = round(motion.x); motion.y = round(motion.y);
-				this->set_translation(motion);	
-
-				if (dir == -1) { position = 8; }
-				else { position = 4; }
-
-				dir = -(rand() % 3 - 1);
-
-				if (dir == -1) {
-					Turn_R = 12;
-				}
-				else { Turn_R = 4; }
-
+			switch (dir) {
+			case -1: Turn_R = 12; break;
+			default: Turn_R = 4; break;
 			}
 		}
 	}
-	
 }
 
 void Car::turn(int dir, float delta)
@@ -148,7 +138,6 @@ Car::Car()
 	rot = (M_PI / 2);
 	center = Vector3(0, 0, 0);
 	dir = 1;
-	Turn_R = 4;
 	position = 0;
 	SPEED_T = 0;
 }
