@@ -11,7 +11,7 @@ Say we want to test the `Restaurant` object and see if the newly create function
 
 **Restaurant.h**
 
-```cpp=
+```cpp
 #pragma once
 #include <core/Godot.hpp>
 #include <StaticBody.hpp>
@@ -49,7 +49,7 @@ namespace godot {
 
 **Restaurant.cpp**
 
-```cpp=
+```cpp
 #include "Restaurant.h"
 
 using namespace godot;
@@ -61,7 +61,7 @@ Restaurant::Restaurant() {
 
 Restaurant::Restaurant(int totalEmp, avgSalary) {
     totalEmployee = totalEmp;
-    averageSalary = avgSalary; 
+    averageSalary = avgSalary;
 }
 
 int Restaurant::get_total_salary() {
@@ -75,7 +75,7 @@ Create a file called `test_restaurant.cpp` (in the same folder as `Restaurant.h`
 
 **test_restaurant.cpp**
 
-```cpp=
+```cpp
 #include <iostream>
 #include "Restaurant"
 
