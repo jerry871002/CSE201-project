@@ -20,24 +20,24 @@ void Car::_init() {
 	
 }
 
+
+void ComputeSpeed(double &Speed, double Acc, float delta) {
+	if ((Speed <= 2 && Acc>0) or (Acc < 0 and Speed + Acc * delta > 0.2)) { Speed += Acc * delta; }			//Define max speed and min speed
+}
+
 void Car::_process(float delta)
 {
 	if (rot >= (M_PI / 2)) {
 		
 		straight(delta);
 
-		//if ((this->get_rotation_degrees().y == 0 or this->get_rotation_degrees().y == 180 ) and round(position) == 20 and SPEED_T >= 1) { SPEED_T = 0; }
-
-		if (position >= 15 && dir != 0 && Acc == 1) {
-			if (dir == 1) { Acc = (1 - pow(10*SPEED_T, 2)) / (2 * 7); }
-			else { Acc = (1 - pow(10*SPEED_T, 2)) / (2 * 3); }
-			Acc = fmin(Acc, 0);
+		if (position >= 13 && Acc == 1 && (this->get_rotation_degrees().y == 0 or this->get_rotation_degrees().y == 180)) {
+			Acc = fmin((pow(SPEED_T, 0.2) - 10 * pow(SPEED_T, 2)) / (2 * 5), 0);
 		}
-		else { Acc = 1; }
 
-		SPEED_T += Acc * delta;
+		ComputeSpeed(SPEED_T, Acc, delta);
 
-		if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 26.0 - Turn_R && dir == 0) {
+		if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
 			Acc = 1;
 			rot = 0;
 			motion = this->get_global_transform().get_origin();
@@ -63,7 +63,7 @@ void Car::_process(float delta)
 		}
 		
 		else {
-			SPEED_T += Acc * delta;
+			ComputeSpeed(SPEED_T, Acc, delta);
 
 			turn(dir, delta);
 
