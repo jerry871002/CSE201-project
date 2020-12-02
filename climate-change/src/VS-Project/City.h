@@ -37,6 +37,12 @@ namespace godot {
 		void simulation();                    //updates all the stats abd the building
 		void write_stat_history_to_file();    //writes all the stats to a file so that the inteface team can make graphs 
 		double return_income();               //returns the income of the city
+		double return_numberOfEmployees();
+		double return_carbonEmission();
+		double return_energyDemand();
+		double return_energySupply();
+		double return_healthcare();
+		double return_needs();
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
 		/* we can keep these vairables as floats as long as each object only computes the ADDITIONAL AMOUNT of energy, income etc. 

@@ -95,6 +95,30 @@ double City::return_income() {
 	return income;
 }
 
+double City::return_numberOfEmployees() {
+	return numberOfEmployees;
+}
+
+double City::return_carbonEmission() {
+	return carbonEmission;
+}
+
+double City::return_energyDemand() {
+	return energyDemand;
+}
+
+double City::return_energySupply() {
+	return energySupply;
+}
+
+double City::return_healthcare() {
+	return healthcare;
+}
+
+double City::return_needs() {
+	return needs;
+}
+
 
 
 

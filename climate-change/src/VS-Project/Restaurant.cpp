@@ -16,11 +16,17 @@ Restaurant::Restaurant()
 	Clickable = false;
 }
 
-Restaurant::Restaurant(double inc)
+Restaurant::Restaurant(double income, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs)
 {
 	PanelsOn = true;
 	Clickable = false;
-	income = inc;
+	this->income = income;
+	this->numberOfEmployees = numberOfEmployees;
+	this->carbonEmission = carbonEmission;
+	this->energyDemand = energyDemand;
+	this->energySupply = energySupply;
+	this->healthcare = healthcare;
+	this->needs = needs;
 }
 
 
