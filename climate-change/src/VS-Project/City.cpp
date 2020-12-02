@@ -62,14 +62,14 @@ void City::_ready()
 };
 
 void City::add_building(Struc* struc) {
-	buildings.insert(struc);
+	buildings.push_back(struc);
 }
 
 void City::simulation() {
 	day_tick++;
 	//write the old values in a file
 
-	for (std::set<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
+	for (std::vector<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
 		income += (*it)->income;
 		numberOfEmployees += (*it)->numberOfEmployees;

@@ -2,7 +2,7 @@
 #include <core/Godot.hpp>
 #include <iostream>
 #include <cstdlib>
-#include <set>
+#include <vector>
 #include <string>
 #include <Input.hpp>
 #include <InputEventMouse.hpp>
@@ -30,7 +30,7 @@ namespace godot {
 		City();
 		~City();
 
-		std::set<Struc*> buildings;
+		std::vector<Struc*> buildings;
 		double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply, healthcare, needs;
 
 		void add_building(Struc*);
