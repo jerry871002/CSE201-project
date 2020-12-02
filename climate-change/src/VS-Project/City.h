@@ -9,11 +9,14 @@
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
 #include "obj.h"
+#include <core/Godot.hpp>
+#pragma once
+#include <StaticBody.hpp>
 
 namespace godot {
 
 	class City : public Object {
-		GODOT_CLASS(City,Object)
+		GODOT_CLASS(City, Object)
 	public:
 		static void _register_methods();
 
@@ -39,9 +42,9 @@ namespace godot {
 		double return_income();               //returns the income of the city
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
-		/* we can keep these vairables as floats as long as each object only computes the ADDITIONAL AMOUNT of energy, income etc. 
+		/* we can keep these vairables as floats as long as each object only computes the ADDITIONAL AMOUNT of energy, income etc.
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
-		
+
 		/* other idea: implement arrays based on sector (housing, production, infrastructure), compute additional amounts but differences between sector
 		(other more radical idea: array with all buildings, not necessarily needed?)
 		float income_array[3];
@@ -62,5 +65,5 @@ namespace godot {
 		int day_tick;
 
 	};
-}
+};
 

@@ -10,23 +10,26 @@
 using namespace godot;
 
 class Structure {
-public:
-    double cost, energyuse, maintenance, CO2_output, building_time, satisfaction;
+    class City : public Object {
+        GODOT_CLASS(City, Object)
+    public:
+        double cost, energyuse, maintenance, CO2_output, building_time, satisfaction;
 
-    // variables that the sim team needs. If any of these are already covered or need to  be implemented diffferently let Vincent, Yury, Jerry or Sam know 
-    double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply;
+        // variables that the sim team needs. If any of these are already covered or need to  be implemented diffferently let Vincent, Yury, Jerry or Sam know 
+        double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply;
 
-    double total_days; //total number of days that have passed in the simulation, will be passed on by the City object
+        double total_days; //total number of days that have passed in the simulation, will be passed on by the City object
 
-    // All of our policies have to go in the City class !! Look at City.h 
-    Structure();
-    ~Structure();
+        // All of our policies have to go in the City class !! Look at City.h 
+        Structure();
+        ~Structure();
 
-    virtual void simulate_step();
-    // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
-    bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-    bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
-    // need to add a cost for their implementation in the maintenance variable once
+        virtual void simulate_step();
+        // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
+        bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
+        bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
+        // need to add a cost for their implementation in the maintenance variable once
+    };
 };
 
 

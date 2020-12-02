@@ -2,6 +2,7 @@
 #include <core/Godot.hpp>
 #include <KinematicBody.hpp>
 #include "obj.h"
+#include <StaticBody.hpp>
 
 namespace godot {
 	class AgriculturalProduction : public Production, public StaticBody {
