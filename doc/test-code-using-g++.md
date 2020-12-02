@@ -148,7 +148,7 @@ Let's combine them all together with `g++` syntax. First open a terminal and `cd
 > * `-o` for naming the executable
 > * `-std` for telling which C++ version are we using
 
-Type the following command in the terminal
+Type the following command in the terminal (copy this and change the part you need!)
 
 ```bash
 g++ -std=c++17 test_restaurant.cpp Restaurant.cpp obj.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64 -o test_restaurant
