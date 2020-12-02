@@ -28,10 +28,12 @@ void Car::_process(float delta)
 
 		//if ((this->get_rotation_degrees().y == 0 or this->get_rotation_degrees().y == 180 ) and round(position) == 20 and SPEED_T >= 1) { SPEED_T = 0; }
 
-		if (position >= 15 and dir != 0) {
+		if (position >= 15 && dir != 0 && Acc == 1) {
 			if (dir == 1) { Acc = (1 - pow(10*SPEED_T, 2)) / (2 * 7); }
 			else { Acc = (1 - pow(10*SPEED_T, 2)) / (2 * 3); }
+			Acc = fmin(Acc, 0);
 		}
+		else { Acc = 1; }
 
 		SPEED_T += Acc * delta;
 
