@@ -18,7 +18,7 @@ namespace godot {
 		int Turn_R = 4;
 		int dir;
 
-		double Acc = 1;
+		double Acc = 2;
 		Vector3 center;
 
 	public:
