@@ -31,8 +31,8 @@ LowHouse::LowHouse() {
 	cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
 	energyuse = 68.49; //25000kWh per year i.e. 13.69 kWh per day (from heating and all )
 	maintenance = 0.1765; //cost in euros per kWh
-	CO2_output = 0,0065; //6.5g per kWh
-	building_time = 140; //in average, building a house takes about 140 days
+	CO2Emission = 0,0065; //6.5g per kWh
+	buildingTime = 140; //in average, building a house takes about 140 days
 	satisfaction = 3; //assuming we are on a scale from 0 to 10
 	//attributes special to this class
 	//insulation = 0.5; //I'm taking this attribute to be a percentage of insulation capacity, which is here low at first 
@@ -58,7 +58,7 @@ void LowHouse::simulate_step(double days) {
 	}
 	
 
-	CO2_output += 0,0065 * energyuse * days;  
+	CO2Emission += 0,0065 * energyuse * days;  
 	
 }
 

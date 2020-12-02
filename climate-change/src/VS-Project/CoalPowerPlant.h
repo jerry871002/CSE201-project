@@ -16,12 +16,12 @@ class CoalPowerPlant : public Energy, public StaticBody {
 		void _ready();
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
-		double SO2_output;
-		double NOx_output;
-		double ash_output;
-		double mercury_output;
+		double SO2Emission;
+		double NOxEmission;
+		double ashOutput;
+		double mercuryEmission;
 		double coal;
-		double environmental_cost;
-		double energy_per_day;
+		double environmentalCost;
+		double energyPerDay;
 	};
 };

@@ -11,7 +11,7 @@ using namespace godot;
 
 class Structure {
     public:
-        double cost, energyuse, maintenance, CO2_output, building_time, satisfaction;
+        double cost, energyuse, maintenance, CO2Emission, buildingTime, satisfaction;
 
         // variables that the sim team needs. If any of these are already covered or need to  be implemented diffferently let Vincent, Yury, Jerry or Sam know 
         double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply;
@@ -41,7 +41,7 @@ public:
 
 class Energy : public Production {
 public:
-    double energy_output;
+    double energyOutput;
 };
 
 class Housing : public Structure {
@@ -67,10 +67,10 @@ public:
 
 class Solar : public Energy {
 protected:
-    double energy_output;
+    double energyOutput;
 public:
     Solar();
-    Solar(double energy_output);
+    Solar(double energyOutput);
     double environmental_impact(); //redefined don't use same as the one in energy
 
 };

@@ -31,7 +31,7 @@ void Transport::_ready(){
 
 Transport::Transport(int type){
 transportType = type;
-CO2_output = 0; // co2 output for the whole duration of simulation
+CO2Emission = 0; // co2 output for the whole duration of simulation
 maintenance = 0; // maintenance cost for the whole duration of simulation
 fuelInput = 0; // fuel needed for the whole duration of simulation
 energyuse = 0; //energy needed for the whole duration of simulation
@@ -53,7 +53,7 @@ switch(transportType) {
         std::normal_distribution <double> costt(42000, 8500); //cost randomised using gaussian
         cost = costt(gen);
         std::normal_distribution <double> timet(4, 1);
-        building_time = timet(gen); // building time of 1 electric car in days, taking tesla model 3
+        buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
         std::normal_distribution <double> satisfactiont(9.7, 0.2); //very high satisfaction
         satisfaction = satisfactiont(gen);
         if (satisfaction > 10){
@@ -72,7 +72,7 @@ switch(transportType) {
         std::normal_distribution <double> occupancyg(0.375, 0.25);
         occupancyRate = occupancyg(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeg(1, 0.5);
-        building_time = timeg(gen); // building time of 1 car, very fast
+        buildingTime = timeg(gen); // building time of 1 car, very fast
         std::normal_distribution <double> satisfactiong(8.5, 0.4); // high satisfaction
         satisfaction = satisfactiong(gen);
         break;
@@ -97,7 +97,7 @@ switch(transportType) {
          occupancyRate=1;
         }
         std::normal_distribution <double> buildingb(22, 3);
-        building_time = buildingb(gen); // construction time for 1 bus, in days
+        buildingTime = buildingb(gen); // construction time for 1 bus, in days
         std::normal_distribution <double> satisfactionb(8, 1.5); // satisfaction level rather high, randomised
         satisfaction = satisfactionb(gen);
         if (satisfaction >10) {
@@ -118,7 +118,7 @@ int years = floor((age+days)/365-age/365);
 co2PerKm *=pow(1.05,years); //increase in emissions with each year
 age +=days; //total number of days 
 fuelInput+=fuelPerKm*kmPerDay*days; //litres of fuel for car
-CO2_output+=co2PerKm*kmPerDay*days; // co2 emissions per car
+CO2Emission+=co2PerKm*kmPerDay*days; // co2 emissions per car
 passengers+=capacity*occupancyRate*days; //number of people that used the car in given period
 switch (transportType){
     case 0:{ //electric car
