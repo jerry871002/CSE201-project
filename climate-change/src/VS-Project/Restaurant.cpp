@@ -16,7 +16,7 @@ Restaurant::Restaurant()
 	Clickable = false;
 }
 
-Restaurant::Restaurant(int inc)
+Restaurant::Restaurant(double inc)
 {
 	PanelsOn = true;
 	Clickable = false;

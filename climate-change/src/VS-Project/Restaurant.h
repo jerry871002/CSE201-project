@@ -20,7 +20,7 @@ namespace godot {
 	public:
 
 		Restaurant();
-		Restaurant(int);
+		Restaurant(double);
 
 		bool PanelsOn;
 		

@@ -26,18 +26,18 @@ int main()
 		Restaurant rest = Restaurant(100);
 		Struc* struc_pointer = &rest;
 		c.add_building(struc_pointer);
-		Sleep(200);
+		sleep(2);
 
 		// advance by 3 days before rerunning through the loop 
 		c.simulation();
 		std::cout << c.return_game_date() << std::endl;
 		std::cout << "city income is " << c.return_income() << std::endl;
-		Sleep(200);
+		sleep(2);
 
 		c.simulation();
 		std::cout << c.return_game_date() << std::endl;
 		std::cout << "city income is " << c.return_income() << std::endl;
-		Sleep(200);
+		sleep(2);
 
 		c.simulation();
 		std::cout << c.return_game_date() << std::endl;
