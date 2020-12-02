@@ -31,7 +31,7 @@ int main()
 		// add a restaurant pointer to the buildings set
 		Restaurant rest = Restaurant(100,5,15,2,0,2.5,1.67);
 		Struc* struc_pointer = &rest;
-		sleep(2);
+		Sleep(20);
 		c.add_building(struc_pointer);
 
 		// advance by 3 days before rerunning through the loop 
@@ -45,7 +45,7 @@ int main()
 			std::cout << "city energy supply is " << c.return_energySupply() << std::endl;
 			std::cout << "city healthcare is " << c.return_healthcare() << std::endl;
 			std::cout << "city needs are " << c.return_needs() << std::endl;
-			sleep(2);
+			Sleep(20);
 		}
 	}
 }

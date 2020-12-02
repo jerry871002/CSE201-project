@@ -47,7 +47,7 @@ void City::_physics_process(float delta) {
 	delta_counter += (delta * time_speed);
 	if (timer != (int64_t)delta_counter) {
 		timer = (int64_t)delta_counter;
-		// call city_simulate()
+		simulation();
 	}
 }
 
