@@ -11,6 +11,13 @@ public:
 	void _ready();
 
 	void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
-	double mercury_output;
-	double envirnomental_cost;
+	double environmental_cost;
+
+	//inputs:
+	double natural_uranium;
+	double fissile_material;
+	//outputs:
+	double energy_per_day;
+	double nuclear_waste;
+	double radiation;
 };

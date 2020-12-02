@@ -69,11 +69,11 @@ void CoalPowerPlant::simulate_step(double days)
 	else {
 		maintenance += 36 * energy_per_day * days;
 	}
-	if (total_time >= 3650) { 
-		maintenance += maintenance * 1.25; // after 10 years the maintenance and working costs increase by 1/4
+	if (total_days >= 3650) { 
+		maintenance += 36 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
 	} 
-	if (total_time >= 10950) {
-		maintenance += maintenance * 2; // after 30 years the maintenance and working costs double
+	if (total_days >= 10950) {
+		maintenance += 36; // after 30 years the maintenance and working costs double
 	}
 
 	coal += 4.06E-4 * energy_per_day * days;
@@ -85,7 +85,7 @@ void CoalPowerPlant::simulate_step(double days)
 	environmental_cost = 0.06 * energy_per_day * days;
 
 	/*
-	if total_time >= 18250{
+	if total_days >= 18250{
 		// 50 years is the average lifetime of a coal fired plant, it then has to be replaced by a new coal plant or different power plant
 	}*/
 }

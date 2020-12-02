@@ -25,7 +25,7 @@ public:
     virtual void simulate_step();
     // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
     bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-    bool improvement_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
+    bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
     // need to add a cost for their implementation in the maintenance variable once
 };
 
