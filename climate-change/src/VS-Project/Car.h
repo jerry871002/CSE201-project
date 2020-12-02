@@ -6,6 +6,7 @@
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
 #include <Mesh.hpp>
+#include <String.hpp>
 
 namespace godot {
 	class Car : public KinematicBody {
@@ -30,6 +31,7 @@ namespace godot {
 		void _physics_process(float delta);
 		void turn(int dir, float delta);
 		void straight(float delta);
+		String ___get_class_name();
 
 
 		Car();

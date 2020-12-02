@@ -3,6 +3,7 @@
 #include <GodotGlobal.hpp>
 #include <Timer.hpp>
 #include <time.h>
+#include <String.hpp>
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
@@ -90,6 +91,12 @@ void godot::Car::_physics_process(float delta)
 			}
 		}
 	}
+}
+
+String Car::___get_class_name()
+{
+	String s = "Car";
+	return s;
 }
 
 void Car::straight(float delta)

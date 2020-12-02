@@ -1,6 +1,8 @@
 #pragma once
 #include <stdio.h>
 #include <core/Godot.hpp>
+#include <Node.hpp>
+
 
 namespace godot {
 	class City : public Node {
