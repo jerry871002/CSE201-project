@@ -2,10 +2,9 @@
 #include <core/Godot.hpp>
 #pragma once
 #include <StaticBody.hpp>
-
-class Health : public Infrastructure {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+namespace godot {
+class Health : public Infrastructure, public StaticBody {
+		GODOT_CLASS(Health, StaticBody)
 	public:
 		Health();
 		~Health();

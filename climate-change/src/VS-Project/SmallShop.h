@@ -2,10 +2,9 @@
 #include <core/Godot.hpp>
 #pragma once
 #include <StaticBody.hpp>
-
-class SmallShop : public Shop {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+namespace godot {
+class SmallShop : public Shop, public StaticBody {
+		GODOT_CLASS(SmallShop, StaticBody)
 	public:
 		SmallShop();
 		~SmallShop();

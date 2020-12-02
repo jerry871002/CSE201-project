@@ -3,10 +3,10 @@
 #pragma once
 #include <StaticBody.hpp>
 
+namespace godot{
 //all these numbers are for a house of 100m^2
-class LowHouse : public Housing {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+class LowHouse : public Housing, public StaticBody  {
+		GODOT_CLASS(LowHouse, StaticBody)
 	public:
 		LowHouse();
 		~LowHouse();

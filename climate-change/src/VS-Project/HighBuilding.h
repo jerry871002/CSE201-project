@@ -3,9 +3,9 @@
 #pragma once
 #include <StaticBody.hpp>
 
-class HighBuilding : public Housing {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+namespace godot {
+class HighBuilding : public Housing, public StaticBody {
+		GODOT_CLASS(HighBuilding, StaticBody)
 	public:
 		HighBuilding();
 		~HighBuilding();

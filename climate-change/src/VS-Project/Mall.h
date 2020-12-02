@@ -3,9 +3,9 @@
 #pragma once
 #include <StaticBody.hpp>
 
-class Mall : public Shop {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+namespace godot {
+class Mall : public Shop, public StaticBody {
+		GODOT_CLASS(Mall, StaticBody)
 	public:
 		Mall();
 		~Mall();

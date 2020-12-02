@@ -2,10 +2,9 @@
 #include <core/Godot.hpp>
 #pragma once
 #include <StaticBody.hpp>
-
-class HighHouse : public Housing {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+namespace godot {
+class HighHouse : public Housing, public StaticBody {
+		GODOT_CLASS(HighHouse, StaticBody)
 	public:
 		HighHouse();
 		~HighHouse();

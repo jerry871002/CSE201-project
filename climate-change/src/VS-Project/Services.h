@@ -2,10 +2,9 @@
 #include <core/Godot.hpp>
 #pragma once
 #include <StaticBody.hpp>
-
-class Services : public Production {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+namespace godot {
+class Services : public Production, public StaticBody {
+		GODOT_CLASS(Services, StaticBody)
 	public:
 		Services();
 		~Services();

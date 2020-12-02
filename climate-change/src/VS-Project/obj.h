@@ -10,8 +10,6 @@
 using namespace godot;
 
 class Structure {
-    class City : public Object {
-        GODOT_CLASS(City, Object)
     public:
         double cost, energyuse, maintenance, CO2_output, building_time, satisfaction;
 
@@ -30,7 +28,6 @@ class Structure {
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
         // need to add a cost for their implementation in the maintenance variable once
     };
-};
 
 
 

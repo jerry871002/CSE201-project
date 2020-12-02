@@ -3,9 +3,9 @@
 #pragma once
 #include <StaticBody.hpp>
 
-class AllPhysicalGoodsFactories : public Production {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+namespace godot {
+class AllPhysicalGoodsFactories : public Production, public StaticBody {
+		GODOT_CLASS(City, AllPhysicalGoodsFactories)
 	public:
 		AllPhysicalGoodsFactories();
 		~AllPhysicalGoodsFactories();

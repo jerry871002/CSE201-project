@@ -3,10 +3,9 @@
 #include <core/Godot.hpp>
 #pragma once
 #include <StaticBody.hpp>
-
-class ElectricCar : public Transport {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+namespace godot {
+class ElectricCar : public Transport, public StaticBody {
+		GODOT_CLASS(ElectricCar, StaticBody)
 	public:
 		ElectricCar();
 		~ElectricCar();

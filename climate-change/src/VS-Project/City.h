@@ -42,7 +42,7 @@ namespace godot {
 		double return_income();               //returns the income of the city
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
-		/* we can keep these vairables as floats as long as each object only computes the ADDITIONAL AMOUNT of energy, income etc.
+		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
 
 		/* other idea: implement arrays based on sector (housing, production, infrastructure), compute additional amounts but differences between sector

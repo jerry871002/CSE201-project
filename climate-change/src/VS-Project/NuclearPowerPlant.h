@@ -3,9 +3,9 @@
 #pragma once
 #include <StaticBody.hpp>
 
-class NuclearPowerPlant : public Energy {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+namespace godot {
+class NuclearPowerPlant : public Energy, public StaticBody {
+		GODOT_CLASS(NuclearPowerPlant, StaticBody)
 	public:
 		NuclearPowerPlant();
 		~NuclearPowerPlant();

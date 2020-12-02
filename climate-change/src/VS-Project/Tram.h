@@ -3,10 +3,9 @@
 #include <core/Godot.hpp>
 #pragma once
 #include <StaticBody.hpp>
-
-class Tram : public Transport {
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+namespace godot {
+class Tram : public Transport, public StaticBody {
+		GODOT_CLASS(Tram, StaticBody)
 	public:
 		Tram();
 		~Tram();
