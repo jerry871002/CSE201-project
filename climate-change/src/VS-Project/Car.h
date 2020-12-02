@@ -14,11 +14,11 @@ namespace godot {
 		Vector3 motion;
 		double position;
 		double rot;
-		const double SPEED_T = 0.5;
+		double SPEED_T = 0.5;
 		int Turn_R = 4;
 		int dir;
 
-		const int Acc = 4;
+		double Acc = 1;
 		Vector3 center;
 
 	public:
