@@ -1,5 +1,6 @@
 #include "City.h"
 #include "Car.h"
+#include "Restaurant.h"
 #include <SceneTree.hpp>
 
 #include <ResourceLoader.hpp>
@@ -11,6 +12,7 @@
 #include <Tree.hpp>
 #include <Node.hpp>
 
+#include <cstdlib>
 #include <stdlib.h>
 #include <iostream>
 
@@ -36,24 +38,44 @@ void City::_register_methods()
 
 void City::_init() 
 {
-	ResourceLoader* rl = ResourceLoader::get_singleton();
-
-	Ref<PackedScene> scene = rl->load("res://Ressources/Bugatti.tscn", "PackedScene");
-
-	if (scene.is_valid()) {
-		Node* node = scene->instance();
-		node->set("scale", Vector3(10, 10, 10));
-		node->set("translation", Vector3(10, 10, 10));
-		Car* node2 = (Car*)node;
-		//std::cout << node2->___get_class_name() << std::endl;
-		this->add_child((Node*)node2);
-	}
+	
 
 }
 
 void City::_ready() 
 {
-	
+	std::cout << "HELLO" << std::endl;
+	ResourceLoader* ResLo = ResourceLoader::get_singleton();
+
+	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
+	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
+	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
+
+	if (RestaurantScene.is_valid() && ShopScene.is_valid())
+	{
+		for (int x = 0; x < 5; x ++)
+		{
+			for (int z = 0; z < 5; z ++)
+			{
+				int type = rand() % 2;
+				Node* node;
+				if (type == 0) { node = RestaurantScene->instance(); } else { node = ShopScene->instance(); }
+				node->set("scale", Vector3(10, 10, 10));
+				node->set("translation", Vector3(30 * x, 0, 30 * z));
+				int rot = rand() % 2;
+				node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
+				this->add_child(node);
+			}
+		}
+	}
+
+	if (BugattiScene.is_valid())
+	{
+		Node* node = BugattiScene->instance();
+		node->set("scale", Vector3(10, 10, 10));
+		node->set("translation", Vector3(0, 0, 0));
+		this->add_child(node);
+	}
 }
 
 void City::_process(float delta)

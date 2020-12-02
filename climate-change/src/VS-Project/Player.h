@@ -15,7 +15,7 @@ namespace godot {
 		Vector3 rotation;
 		Vector2 mouse_p;
 		
-		const double SPEED_T = 1;
+		const double SPEED_T = 3;
 		const double SPEED_R = 20;
 		const double VSPEED_INVERSE = 512;
 		const double VSPEED_POWER = 1.2;
