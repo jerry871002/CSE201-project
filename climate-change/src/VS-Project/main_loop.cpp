@@ -22,7 +22,7 @@ int main()
 		std::cout << "city income is " << c.return_income() << std::endl;
 
 		// add a restaurant pointer to the buildings set
-		Restaurant rest = Restaurant(100);
+		Restaurant rest = Restaurant();
 		Structure* struc_pointer = &rest;
 		c.add_building(struc_pointer);
 		#ifdef _WIN32

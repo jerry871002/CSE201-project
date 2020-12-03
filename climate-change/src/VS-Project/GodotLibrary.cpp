@@ -5,7 +5,6 @@
 #include "AllPhysicalGoodsFactories.h"
 #include "CoalPowerPlant.h"
 #include "Education.h"
-#include "ElectricCar.h"
 #include "Health.h"
 #include "HighBuilding.h"
 #include "HighHouse.h"
@@ -16,7 +15,6 @@
 #include "RecyclingFactory.h"
 #include "Services.h"
 #include "SmallShop.h"
-#include "Tram.h"
 #include "Windmill.h"
 
 
@@ -40,7 +38,6 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<AllPhysicalGoodsFactories>();
 	register_class<CoalPowerPlant>();
 	register_class<Education>();
-	register_class<ElectricCar>();
 	register_class<Health>();
 	register_class<HighHouse>();
 	register_class<LowBuilding>();
@@ -51,7 +48,6 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<RecyclingFactory>();
 	register_class<Services>();
 	register_class<SmallShop>();
-	register_class<Tram>();
 	register_class<Windmill>();
 }
 

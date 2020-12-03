@@ -45,16 +45,10 @@
     <ClCompile Include="AllPhysicalGoodsFactories.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Car.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CoalPowerPlant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Education.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ElectricCar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Health.cpp">
@@ -70,9 +64,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LowHouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mall.cpp">
@@ -97,9 +88,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SmallShop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Transport.cpp">
@@ -134,16 +122,10 @@
     <ClInclude Include="AllPhysicalGoodsFactories.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Car.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CoalPowerPlant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Education.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ElectricCar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Health.h">
@@ -186,9 +168,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SmallShop.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Transport.h">
