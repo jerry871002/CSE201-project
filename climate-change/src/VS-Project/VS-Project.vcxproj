@@ -165,12 +165,7 @@
     <ClCompile Include="Education.cpp" />
     <ClCompile Include="GodotLibrary.cpp" />
     <ClCompile Include="Health.cpp" />
-    <ClCompile Include="HighBuilding.cpp" />
-    <ClCompile Include="HighHouse.cpp" />
-    <ClCompile Include="LowBuilding.cpp" />
-    <ClCompile Include="LowHouse.cpp" />
     <ClCompile Include="main_loop.cpp" />
-    <ClCompile Include="Mall.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="NuclearPowerPlant.cpp" />
     <ClCompile Include="obj.cpp" />
@@ -181,7 +176,6 @@
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="Services.cpp" />
     <ClCompile Include="sidebar.cpp" />
-    <ClCompile Include="SmallShop.cpp" />
     <ClCompile Include="Transport.cpp" />
     <ClCompile Include="Windmill.cpp" />
   </ItemGroup>
@@ -194,12 +188,7 @@
     <ClInclude Include="data.h" />
     <ClInclude Include="Education.h" />
     <ClInclude Include="Health.h" />
-    <ClInclude Include="HighBuilding.h" />
-    <ClInclude Include="HighHouse.h" />
-    <ClInclude Include="LowBuilding.h" />
-    <ClInclude Include="LowHouse.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="Mall.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="NuclearPowerPlant.h" />
     <ClInclude Include="obj.h" />
@@ -210,7 +199,6 @@
     <ClInclude Include="Root.h" />
     <ClInclude Include="Services.h" />
     <ClInclude Include="sidebar.h" />
-    <ClInclude Include="SmallShop.h" />
     <ClInclude Include="Transport.h" />
     <ClInclude Include="Windmill.h" />
   </ItemGroup>
