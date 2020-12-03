@@ -27,4 +27,4 @@ class LowHouse : public Housing, public StaticBody  {
 		bool double_glazing(); // improve insulation
 
 	};
-};
+}

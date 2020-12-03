@@ -6,6 +6,7 @@ using namespace godot;
 
 void NuclearPowerPlant::_register_methods()
 {
+	register_method((char*)"_init", &NuclearPowerPlant::_init);
 	register_method((char*)"_process", &NuclearPowerPlant::_process);
 	register_method((char*)"_input", &NuclearPowerPlant::_input);
 	register_method((char*)"_ready", &NuclearPowerPlant::_ready);

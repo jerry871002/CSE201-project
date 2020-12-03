@@ -6,7 +6,6 @@ using namespace godot;
 
 void Windmill::_register_methods()
 {
-	register_method((char*)"_init", &Windmill::_init);
 	register_method((char*)"_process", &Windmill::_process);
 	register_method((char*)"_input", &Windmill::_input);
 	register_method((char*)"_ready", &Windmill::_ready);
