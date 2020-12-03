@@ -63,7 +63,7 @@ void City::_ready()
 				node->set("scale", Vector3(10, 10, 10));
 				node->set("translation", Vector3(30 * x, 0, 30 * z));
 				int rot = rand() % 2;
-				node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
+				//node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
 				this->add_child(node);
 			}
 		}
@@ -73,7 +73,7 @@ void City::_ready()
 	{
 		Node* node = BugattiScene->instance();
 		node->set("scale", Vector3(10, 10, 10));
-		node->set("translation", Vector3(0, 0, 0));
+		node->set("translation", Vector3(-13, 0, 17));
 		this->add_child(node);
 	}
 }

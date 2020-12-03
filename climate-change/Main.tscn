@@ -4,12 +4,12 @@
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
 [ext_resource path="res://City.gdns" type="Script" id=22]
 
-[sub_resource type="NativeScript" id=2]
+[sub_resource type="NativeScript" id=1]
 resource_name = "Player"
 class_name = "Player"
 library = ExtResource( 1 )
 
-[sub_resource type="SphereShape" id=1]
+[sub_resource type="SphereShape" id=2]
 
 [node name="Main" type="Spatial"]
 
@@ -26,8 +26,8 @@ shadow_bias = 0.0
 directional_shadow_max_distance = 1000.0
 
 [node name="KinematicBody" type="KinematicBody" parent="3Dworld"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 30, 30 )
-script = SubResource( 2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 30, 100 )
+script = SubResource( 1 )
 
 [node name="ClippedCamera" type="ClippedCamera" parent="3Dworld/KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0 )
@@ -35,7 +35,7 @@ fov = 35.0
 far = 1000.0
 
 [node name="CollisionShape" type="CollisionShape" parent="3Dworld/KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, -1.5638, -0.58039, -6.59145 )
-shape = SubResource( 1 )
+transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, 0, 0, 0 )
+shape = SubResource( 2 )
 
 [node name="2D layer" type="Spatial" parent="."]
