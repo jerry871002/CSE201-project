@@ -43,6 +43,6 @@ AgriculturalProduction::~AgriculturalProduction()
 
 }
 
-void AgriculturalProduction::test() {
-	std::cout << "AgriculturalProduction" << std::endl;
-}
+// void AgriculturalProduction::test() {
+// 	std::cout << "AgriculturalProduction" << std::endl;
+// }

@@ -42,9 +42,9 @@ class Structure {
 
         // All of our policies have to go in the City class !! Look at City.h 
         Structure();
-        ~Structure();
+        ~Structure(){}
 
-        virtual void simulate_step();
+        // virtual void simulate_step();
         // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
         bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)

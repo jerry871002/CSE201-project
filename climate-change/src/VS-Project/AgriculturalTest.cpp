@@ -1,18 +1,18 @@
 #include <iostream>
-#include "Restaurant.h"
+#include "AgriculturalProduction.h"
 
 
 /*
 If on Mac, use this to test in terminal:
 
-g++ -std=c++17 RestaurantTest.cpp Restaurant.cpp obj.cpp -ILibraries/godot-cpp-bindings/godot_headers \
+g++ -std=c++17 AgriculturalTest.cpp AgriculturalProduction.cpp obj.cpp -ILibraries/godot-cpp-bindings/godot_headers \
 -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core \
 -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin \
--lgodot-cpp.osx.debug.64 -o test_Restaurant
+-lgodot-cpp.osx.debug.64 -o test_AgriculturalProduction
 
 To then run the test if there are no compilation errors:
 enter this in terminal:
-./test_Restaurant
+./test_AgriculturalProduction
 
 */
 
@@ -29,11 +29,10 @@ int main() {
 
 
 void test_constructor() {
-    Restaurant A = Restaurant();
-    Restaurant B = Restaurant();
+    AgriculturalProduction A = AgriculturalProduction();
+    AgriculturalProduction B = AgriculturalProduction();
     
     //Here can add code to check attributes of constructor
 
     std::cout << "Constructor Works " << std::endl;
 }
-
