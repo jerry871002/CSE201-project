@@ -6,10 +6,10 @@ using namespace godot;
 
 void Health::_register_methods()
 {
+	register_method((char*)"_init", &Health::_init);
 	register_method((char*)"_process", &Health::_process);
 	register_method((char*)"_input", &Health::_input);
 	register_method((char*)"_ready", &Health::_ready);
-	register_method((char*)"_init", &Health::_init);
 }
 
 void Health::_init()

@@ -8,7 +8,7 @@ class Health : public Infrastructure, public StaticBody {
 	public:
 		Health();
 		~Health();
-		void _register_methods();
+		static void _register_methods();
 		void _init();
 		void _process(float delta);
 		void _input(InputEvent* e);

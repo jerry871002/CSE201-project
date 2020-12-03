@@ -6,6 +6,7 @@ using namespace godot;
 
 void HighHouse::_register_methods()
 {
+	register_method((char*)"_init", &HighHouse::_init);
 	register_method((char*)"_process", &HighHouse::_process);
 	register_method((char*)"_input", &HighHouse::_input);
 	register_method((char*)"_ready", &HighHouse::_ready);
