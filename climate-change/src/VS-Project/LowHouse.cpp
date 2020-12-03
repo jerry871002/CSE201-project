@@ -36,29 +36,35 @@ LowHouse::LowHouse() {
 	buildingTime = 140; //in average, building a house takes about 140 days
 	satisfaction = 3; //assuming we are on a scale from 0 to 10
 	//attributes special to this class
-	//insulation = 0.5; //I'm taking this attribute to be a percentage of insulation capacity, which is here low at first 
-	window_cost = 0;
+	window_number = 10; 
 }
 
 LowHouse::~LowHouse(){
 }
 
 void LowHouse::simulate_step(double days) {
+	// UNCOMMENT WHEN FUNCTIONS solar_panel() AND double_glazing() ARE DONE
+	
 	if (solar_panel() == true) {
-		energyUse -= 0; //zero incerted
-		maintenance -= 0;//zero incerted
-		satisfaction += 1; //more research to be done on this subject
+		// energyPerDay -= 0 ; // adding solar panels actually does nor reduce the energy used
+		maintenance += solar_panel_cost;
+
+		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
+			satisfaction += 1;
+		}
 	}
+
+	//assuming this is a button to change all windows at once i.e. you cannot call this function more than once on this house	
 	if (double_glazing() == true) {
 		energyUse *= 0.75 ; //when having better insulation of windows, you don't have the 25% loss of heat anymore
-		window_cost += 200; //200€ per window, if function adds one window at a time
-		satisfaction += 1;
-	} 
-	else {
-		maintenance += 0.1765 * energyUse * days;
-	}
-	
+		maintenance += window_cost * window_number; //200€ per window, if function adds one window at a time
 
+		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
+			satisfaction += 2;
+		}
+	} 
+	
+	maintenance += 0.1765 * energyUse * days;
 	CO2Emission += 0.0065 * energyUse * days;  
 	
 }

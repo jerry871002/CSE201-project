@@ -72,8 +72,8 @@ public:
 
 class Housing : public Structure {
 public:
-    Housing();
-    ~Housing();
+    Housing() {}
+    ~Housing(){}
 };
 
 
