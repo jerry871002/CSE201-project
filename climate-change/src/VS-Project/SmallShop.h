@@ -8,7 +8,7 @@ class SmallShop : public Shop, public StaticBody {
 	public:
 		SmallShop();
 		~SmallShop();
-		void _register_methods();
+		static void _register_methods();
 		void _init();
 		void _process(float delta);
 		void _input(InputEvent* e);
