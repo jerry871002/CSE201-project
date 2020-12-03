@@ -95,19 +95,19 @@ switch(transportType) {
         break;
     }
     case 3:{ //old collection car 
-        co2PerKm = 0.5; 
+        co2PerKm = 0.4; 
         fuelPerKm = 0.22; 
-        std::normal_distribution <double> costf(40000, 7000);
-        cost = costf(gen); // cost of 1 car in euros, randomised using gaussian
+        std::normal_distribution <double> costo(40000, 7000);
+        cost = costo(gen); // cost of 1 car in euros, randomised using gaussian
         capacity = 2;
-        std::normal_distribution <double> kmf(50, 10);
-        kmPerDay = kmf(gen); // average km per day for this car using gaussian
-        std::normal_distribution <double> occupancyf(0.5, 0.25);
-        occupancyRate = occupancyf(gen); // average percentage occupancy of the car: number of people in the car / capacity
-        std::normal_distribution <double> timeg(1, 0.5);
-        buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactiong(6.8, 0.5); // medium satisfaction
-        satisfaction = satisfactiong(gen);
+        std::normal_distribution <double> kmo(80, 15);
+        kmPerDay = kmo(gen); // average km per day for this car using gaussian
+        std::normal_distribution <double> occupancyo(0.75, 0.25);
+        occupancyRate = occupancyo(gen); // average percentage occupancy of the car: number of people in the car / capacity
+        std::normal_distribution <double> timeo(7, 2);
+        buildingTime = timeo(gen); // building time of 1 collection (replica i think) car car, not so fast
+        std::normal_distribution <double> satisfactiono(9.3, 0.5); // very high satisfaction
+        satisfaction = satisfactiono(gen);
         break;
     }
     case 6:{ // bus
@@ -213,6 +213,11 @@ switch (transportType){
             maintenance += 1.17*days; //repairs price per day if car is more than 4 yo
             maintenance +=2.26*days; //maintenance price per day if car is more than 4 yo
         }
+        break;
+    }
+    case 3:{ // collection car 
+     // no repairs price if car is <3yo
+        maintenance += 25*days; //maintenance very expensive, does not depend on the age, the car is already old
         break;
     }
     case 6:{ //bus
