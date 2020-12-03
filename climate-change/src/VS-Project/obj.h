@@ -14,6 +14,9 @@ class Struc {
         void simulate_step() {};
         double cost, energyuse, maintenance, satisfaction;
         double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply, healthcare, needs;
+
+        virtual double get_emissions() { return 0; };
+
         Struc();
         ~Struc();
         Struc(double cost, double energyuse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs);

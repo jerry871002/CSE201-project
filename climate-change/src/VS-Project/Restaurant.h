@@ -19,6 +19,7 @@ namespace godot {
 
 	public:
 
+
 		Restaurant();
 		Restaurant(double income, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs);
 
@@ -28,11 +29,15 @@ namespace godot {
 
 		static void _register_methods();
 		void _init();
+
+
 		void _process(float delta);
 		void _input(InputEvent* e);
 		void _ready();
+
 		void _on_Area_mouse_entered();
 		void _on_Area_mouse_exited();
 	
+		double get_emissions();
 	};
 }

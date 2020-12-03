@@ -29,6 +29,13 @@ Restaurant::Restaurant(double income, double numberOfEmployees, double carbonEmi
 	this->needs = needs;
 }
 
+double Restaurant::get_emissions(){
+	double temp = this->carbonEmission;
+	if (PanelsOn) {
+		temp *= 0.5;
+	}
+	return temp;
+}
 
 Node* Restaurant::GetPanels()
 {

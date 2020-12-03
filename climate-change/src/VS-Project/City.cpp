@@ -82,7 +82,7 @@ void City::simulation() {
 	{
 		income += (*it)->income;
 		numberOfEmployees += (*it)->numberOfEmployees;
-		carbonEmission += (*it)->carbonEmission;
+		carbonEmission += (*it)->get_emissions();
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
 		healthcare += (*it)->healthcare;
