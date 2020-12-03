@@ -28,7 +28,7 @@ Restaurant::Restaurant()
 	case 1: {
 		std::uniform_real_distribution <double> diningSize1(11, 14); //Average Fast food restaurant has dining space of 11-14 square feet
 		diningSize = diningSize1(gen);
-		energyuse = 38;  //On average 38kWh per square feet
+		energyUse = 38;  //On average 38kWh per square feet
  		// maintenance = 0.34;  	Not sure yet
     	satisfaction = 4;	//Smaller sized not very refined restaurant
     	averageWage = 11;		// Euros per hour , Slightly above minimum wage in france
@@ -42,7 +42,7 @@ Restaurant::Restaurant()
 	case 2:  {
 		std::uniform_real_distribution <double> diningSizeg2(12, 15); //Average Full Service restaurant has dining space of 12-15 square feet
 		diningSize = diningSizeg2(gen);
-		energyuse = 38;  //On average 38kWh per square feet
+		energyUse = 38;  //On average 38kWh per square feet
  		// maintenance = 0.34;  	Not sure yet
     	satisfaction = 6;	//Full service normal quality restaurant
     	averageWage = 12.5;		// Euros per hour, Slightly above minimum wage in france
@@ -55,7 +55,7 @@ Restaurant::Restaurant()
 	case 3:{
 		std::uniform_real_distribution <double> diningSizeg3(11, 14); //Average Fast food restaurant has dining space of 11-14 square feet
 		diningSize = diningSizeg3(gen);
-		energyuse = 38;  //On average 38kWh per square feet
+		energyUse = 38;  //On average 38kWh per square feet
  		// maintenance = 0.34;  	Not sure yet
     	satisfaction = 7;	//Luxury aimed restaurant - High quality
     	averageWage = 14;		// Higher than other types as more luxurious 
