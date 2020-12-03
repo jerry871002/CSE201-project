@@ -6,6 +6,7 @@ using namespace godot;
 
 void Services::_register_methods()
 {
+	register_method((char*)"_init", &Services::_init);
 	register_method((char*)"_process", &Services::_process);
 	register_method((char*)"_input", &Services::_input);
 	register_method((char*)"_ready", &Services::_ready);

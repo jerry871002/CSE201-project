@@ -8,7 +8,7 @@ class Windmill : public Energy, public StaticBody {
 	public:
 		Windmill();
 		~Windmill();
-		void _register_methods();
+		static void _register_methods();
 		void _init();
 		void _process(float delta);
 		void _input(InputEvent* e);
