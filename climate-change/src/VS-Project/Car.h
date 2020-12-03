@@ -2,11 +2,9 @@
 #include <core/Godot.hpp>
 #include <KinematicBody.hpp>
 #include <Input.hpp>
-#include <InputEventMouse.hpp>
-#include <InputEventMouseMotion.hpp>
-#include <InputEventMouseButton.hpp>
 #include <Mesh.hpp>
-#include <String.hpp>
+#include <Area.hpp>
+#include <KinematicCollision.hpp>
 
 namespace godot {
 	class Car : public KinematicBody {
@@ -15,11 +13,11 @@ namespace godot {
 		Vector3 motion;
 		double position;
 		double rot;
-		const double SPEED_T = 0.5;
+		double SPEED_T ;
 		int Turn_R = 4;
 		int dir;
 
-		const int Acc = 4;
+		double Acc = 0.5;
 		Vector3 center;
 
 	public:
@@ -29,9 +27,12 @@ namespace godot {
 		void _process(float delta);
 		void _ready();
 		void _physics_process(float delta);
+		void _on_Area_area_entered();
 		void turn(int dir, float delta);
 		void straight(float delta);
-		String ___get_class_name();
+
+
+		
 
 
 		Car();

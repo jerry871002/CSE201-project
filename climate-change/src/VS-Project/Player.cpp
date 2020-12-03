@@ -34,7 +34,7 @@ void Player::_ready() {
 }
 
 void Player::_process(float delta) {
-	UpdateMotionFromInput();
+	UpdateMotionFromInput(delta);
 	this->translate(motion);
 	set_rotation_degrees(rotation);
 }
@@ -75,11 +75,13 @@ void Player::_input(InputEvent* e)
 	
 }
 
-void Player::UpdateMotionFromInput() {
+void Player::UpdateMotionFromInput(float delta) {
 	motion = Vector3(0, 0, 0);							// RESET MOTION VECTOR TO ZERO
 
 	// INPUT USED FOR KEY CONTROLS
 	Input* i = Input::get_singleton();
+
+	SPEED_T = 2*get_global_transform().get_origin().y *delta ;
 
 	// VERTICAL MOTION
 
