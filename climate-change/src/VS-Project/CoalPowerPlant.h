@@ -24,4 +24,4 @@ class CoalPowerPlant : public Energy, public StaticBody {
 		double environmentalCost;
 		double energyPerDay;
 	};
-}
+};
