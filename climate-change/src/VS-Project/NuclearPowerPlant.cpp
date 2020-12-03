@@ -35,7 +35,7 @@ void NuclearPowerPlant::_ready()
 NuclearPowerPlant::NuclearPowerPlant()
 {
 	radiation = 1.4E-12; //amount of radiation in millirem per kWh per person living in a 50km radius from the plant 
-	//Just for perspective, coal actually plants release more radiation and an average person receives an exposure of
+	//Just for perspective, coal plants actually release more radiation and an average person receives an exposure of
 	//300 millirem per year from natural background sources of radiation
 	nuclearWaste = 3.4E-9; //tons of high level nuclear waste produced per kWh (it is stored to be reused when radiation decays)
 	naturalUranium = 3.4E-8; //tons of natural uranium necessary per kWh

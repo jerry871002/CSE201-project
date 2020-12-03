@@ -21,7 +21,5 @@ class CoalPowerPlant : public Energy, public StaticBody {
 		double ashOutput;
 		double mercuryEmission;
 		double coal;
-		double environmentalCost;
-		double energyPerDay;
 	};
 };

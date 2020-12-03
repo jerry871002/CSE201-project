@@ -11,7 +11,7 @@ using namespace godot;
 
 class Structure {
     public:
-        double cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction;
+        double cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction, environmentalCost;
 
 
 
@@ -64,6 +64,7 @@ public:
 class Energy : public Production {
 public:
     double energyOutput;
+    double energyPerDay;
 };
 
 class Housing : public Structure {
