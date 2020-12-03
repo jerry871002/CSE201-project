@@ -3,8 +3,7 @@
 
 using namespace godot;
 
-City::City() {
-	
+City::City() {	
 	income = 0;
 	population = 50000;
 	numberOfEmployees = 0;
@@ -18,7 +17,6 @@ City::City() {
 	delta_counter = 0.0;
 	timer = 0;
 	day_tick = 0;
-
 }
 
 City::~City()
@@ -67,7 +65,18 @@ void City::add_building(Struc* struc) {
 
 void City::simulation() {
 	day_tick++;
-	//write the old values in a file
+
+	// TODO: write stats into the file
+
+	// first reset all the values, otherwise they will keep increasing
+	// even if the player doesn't do anything
+	income = 0;
+	numberOfEmployees = 0;
+	carbonEmission = 0;
+	energyDemand = 0;
+	energySupply = 0;
+	healthcare = 0;
+	needs = 0;
 
 	for (std::vector<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
@@ -78,7 +87,7 @@ void City::simulation() {
 		energySupply += (*it)->energySupply;
 		healthcare += (*it)->healthcare;
 		needs += (*it)->needs;
-		(*it)->simulate_step(); //function that updates the building
+		(*it)->simulate_step(); // function that updates the building
 	}
 }
 
@@ -118,9 +127,6 @@ double City::return_healthcare() {
 double City::return_needs() {
 	return needs;
 }
-
-
-
 
 std::string City::return_game_date() {
 	std::string date = "Year ";
@@ -189,5 +195,4 @@ std::string City::return_game_date() {
 		return date;
 	}
 	return "Time Representation Error";
-
 }

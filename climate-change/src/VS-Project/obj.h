@@ -1,5 +1,5 @@
-#include <core/Godot.hpp>
 #pragma once
+#include <core/Godot.hpp>
 #include <StaticBody.hpp>
 #include <MeshInstance.hpp>
 #include <Input.hpp>
@@ -8,7 +8,6 @@
 #include <InputEventMouseButton.hpp>
 
 using namespace godot;
-
 
 class Struc {   
     public:
