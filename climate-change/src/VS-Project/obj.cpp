@@ -4,18 +4,12 @@
 
 
 Structure::Structure() {
-    /*
+    
     cost = 0;
     energyuse = 0;
     maintenance = 0;
     satisfaction = 0;
-    income = 0;
-    population = 0;
-    numberOfEmployees = 0;
-    carbonEmission = 0;
-    energyDemand = 0;
-    energySupply = 0;
-     */
+    PanelsOn = false;
     
 }
 /*

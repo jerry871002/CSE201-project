@@ -64,11 +64,12 @@ void LowHouse::simulate_step(double days) {
 
 //For the interface team
 bool LowHouse::solar_panel() {
-
+	return PanelsOn;
 }
 
 bool LowHouse::double_glazing() {
-
+	// placeholder must change
+	return false;
 }
 
 
