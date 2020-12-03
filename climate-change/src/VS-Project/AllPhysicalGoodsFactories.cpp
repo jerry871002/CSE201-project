@@ -6,6 +6,7 @@ using namespace godot;
 
 void AllPhysicalGoodsFactories::_register_methods()
 {
+	register_method((char*)"_init", &AllPhysicalGoodsFactories::_init);
 	register_method((char*)"_process", &AllPhysicalGoodsFactories::_process);
 	register_method((char*)"_input", &AllPhysicalGoodsFactories::_input);
 	register_method((char*)"_ready", &AllPhysicalGoodsFactories::_ready);

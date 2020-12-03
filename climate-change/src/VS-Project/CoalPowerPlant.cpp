@@ -6,6 +6,7 @@ using namespace godot;
 
 void CoalPowerPlant::_register_methods()
 {
+	register_method((char*)"_init", &CoalPowerPlant::_init);
 	register_method((char*)"_process", &CoalPowerPlant::_process);
 	register_method((char*)"_input", &CoalPowerPlant::_input);
 	register_method((char*)"_ready", &CoalPowerPlant::_ready);
