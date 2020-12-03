@@ -23,7 +23,9 @@ Structure::Structure(double cost, double energyUse, double maintenance, double s
     cost{ cost }, energyUse{ energyUse }, maintenance{ maintenance }, satisfaction{ satisfaction }, income{ income }, population{ population }, numberOfEmployees{ numberOfEmployees }, carbonEmission{ carbonEmission }, energyDemand{ energyDemand }, energySupply{ energySupply }{}
 */
 
-bool Structure::efficiency_cogeneration(){
+Structure::~Structure() {}
+
+bool Structure::efficiency_cogeneration() {
     return false;
 }
 
@@ -31,4 +33,21 @@ bool Structure::efficiency_supercritical() {
     return false;
 }
 
+Production::Production() {}
+Production::~Production() {}
 
+Energy::Energy() {}
+Energy::~Energy() {}
+
+Housing::Housing() {}
+Housing::~Housing() {}
+
+Infrastructure::Infrastructure() {}
+Infrastructure::~Infrastructure() {}
+
+Shop::Shop() {}
+Shop::~Shop() {}
+
+Solar::Solar() {}
+Solar::Solar(double energyOutput) : energyOutput(energyOutput) {}
+Solar::~Solar() {}
