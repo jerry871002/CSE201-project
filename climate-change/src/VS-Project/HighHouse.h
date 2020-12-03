@@ -8,7 +8,7 @@ class HighHouse : public Housing, public StaticBody {
 	public:
 		HighHouse();
 		~HighHouse();
-		void _register_methods();
+		static void _register_methods();
 		void _init();
 		void _process(float delta);
 		void _input(InputEvent* e);

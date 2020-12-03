@@ -9,7 +9,7 @@ class AllPhysicalGoodsFactories : public Production, public StaticBody {
 	public:
 		AllPhysicalGoodsFactories();
 		~AllPhysicalGoodsFactories();
-		void _register_methods();
+		static void _register_methods();
 		void _init();
 		void _process(float);
 		void _input(InputEvent*);

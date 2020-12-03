@@ -10,7 +10,7 @@ class LowHouse : public Housing, public StaticBody  {
 	public:
 		LowHouse();
 		~LowHouse();
-		void _register_methods();
+		static void _register_methods();
 		void _init();
 		void _process(float delta);
 		void _input(InputEvent* e);
