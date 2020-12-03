@@ -55,8 +55,6 @@ class Structure {
 
 class Production : public Structure {
 public:
-    Production(){}
-    ~Production(){}
     double efficiency;
     double employment;
 };
@@ -65,8 +63,6 @@ public:
 
 class Energy : public Production {
 public:
-    Energy(){}
-    ~Energy(){}
     double energyOutput;
 };
 
