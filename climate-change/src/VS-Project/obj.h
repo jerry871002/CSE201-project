@@ -11,7 +11,7 @@ using namespace godot;
 
 class Structure {
     public:
-        double cost, energyuse, maintenance, CO2Emission, buildingTime, satisfaction;
+        double cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction;
 
 
 
@@ -22,12 +22,12 @@ class Structure {
         // carbonEmission the total CO2, energyDemand the sum of all energy needed and energySupply the maximum production capacity
 
         // It would be great if someone could write here what variable we have to call to update each
-        // income : 
-        // population :
-        // numberOfEmployees:
+        // income : we didn't take it into account for the moment
+        // population : we don't have that, thought you would decide about it
+        // numberOfEmployees: employment
         // carbonEmission : CO2Emission
-        // energyDemand :
-        // energySupply : 
+        // energyDemand : that corresponds to energyUse for each class
+        // energySupply : that corresponds to energyOutput for each object producing it in the energy class 
 
         // sim team will program these counters to grab the correct attributes within all structures
         // if needed within any object they will be passed on by the city object
@@ -81,7 +81,6 @@ public:
 class Shop : public Production {
 public:
     bool open;
-    //get attributes from production : employment i don't remember how to do that
     //constructor :
     Shop();
 };

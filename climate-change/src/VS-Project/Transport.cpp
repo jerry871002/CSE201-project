@@ -34,7 +34,7 @@ transportType = type;
 CO2Emission = 0; // co2 output for the whole duration of simulation
 maintenance = 0; // maintenance cost for the whole duration of simulation
 fuelInput = 0; // fuel needed for the whole duration of simulation
-energyuse = 0; //energy needed for the whole duration of simulation
+energyUse = 0; //energy needed for the whole duration of simulation
 passengers = 0; //total number of passengers that used the car
 age = 0; //age in days
 employment = 0; // employees only for the bus
@@ -122,7 +122,7 @@ CO2Emission+=co2PerKm*kmPerDay*days; // co2 emissions per car
 passengers+=capacity*occupancyRate*days; //number of people that used the car in given period
 switch (transportType){
     case 0:{ //electric car
-        energyuse+=11.9/100*kmPerDay*days; //energy use of car for the whole duration in kWh
+        energyUse+=11.9/100*kmPerDay*days; //energy use of car for the whole duration in kWh
         if (age<=365){
             maintenance += 1.09*days; //maintenance service price per day if car is less than 1 yo
         }
