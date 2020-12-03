@@ -20,8 +20,6 @@ namespace godot {
 
 		Restaurant();
 		Restaurant(int);
-
-		bool PanelsOn;
 		
 		Node* GetPanels();
 

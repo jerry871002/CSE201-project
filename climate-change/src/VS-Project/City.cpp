@@ -74,6 +74,9 @@ void City::simulation() {
 
 	for (std::set<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
+		/* 
+		commented out until we know what variables to call in every structure
+		
 		income += (*it)->income;
 		std::cout << "in LOOP income " << (*it)->income << std::endl;
 		numberOfEmployees += (*it)->numberOfEmployees;
@@ -81,6 +84,8 @@ void City::simulation() {
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
 		(*it)->simulate_step(); //function that updates the building
+
+		*/
 	}
 }
 

@@ -3,6 +3,8 @@
 #include <core/Godot.hpp>
 #pragma once
 #include <StaticBody.hpp>
+
+
 namespace godot {
 class Tram : public Transport, public StaticBody {
 		GODOT_CLASS(Tram, StaticBody)

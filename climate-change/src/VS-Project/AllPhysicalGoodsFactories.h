@@ -5,14 +5,14 @@
 
 namespace godot {
 class AllPhysicalGoodsFactories : public Production, public StaticBody {
-		GODOT_CLASS(City, AllPhysicalGoodsFactories)
+		GODOT_CLASS(AllPhysicalGoodsFactories, StaticBody)
 	public:
 		AllPhysicalGoodsFactories();
 		~AllPhysicalGoodsFactories();
 		void _register_methods();
 		void _init();
-		void _process(float delta);
-		void _input(InputEvent* e);
+		void _process(float);
+		void _input(InputEvent*);
 		void _ready();
 	};
 };

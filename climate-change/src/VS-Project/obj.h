@@ -21,13 +21,24 @@ class Structure {
         // income is the total wage (GDP), population is the population of the whole city, numberOfEmployees the total employed people,  
         // carbonEmission the total CO2, energyDemand the sum of all energy needed and energySupply the maximum production capacity
 
+        // It would be great if someone could write here what variable we have to call to update each
+        // income : 
+        // population :
+        // numberOfEmployees:
+        // carbonEmission : CO2Emission
+        // energyDemand :
+        // energySupply : 
+
         // sim team will program these counters to grab the correct attributes within all structures
         // if needed within any object they will be passed on by the city object
         // don't use these specific variable names inside the structures pls or we will all get confused 
 
-
+        
 
         double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
+
+
+        bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
 
         // All of our policies have to go in the City class !! Look at City.h 
         Structure();
