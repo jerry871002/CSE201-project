@@ -1,5 +1,5 @@
-#include <core/Godot.hpp>
 #pragma once
+#include <core/Godot.hpp>
 #include <StaticBody.hpp>
 #include <MeshInstance.hpp>
 #include <Input.hpp>
@@ -9,10 +9,28 @@
 
 using namespace godot;
 
-class Structure {
+class Struc {   
     public:
-        double cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction;
+        void simulate_step() {};
+        double cost, energyuse, maintenance, satisfaction;
+        double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply, healthcare, needs;
 
+        virtual double get_emissions() { return 0; };
+
+        Struc();
+        ~Struc();
+        Struc(double cost, double energyuse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs);
+};
+/*
+class Production: public Struc {
+    protected:
+        double input, output, efficiency;
+        int employment;
+    public:
+    Production();
+    Production(double cost, double energyuse, double maintenance, double satisfaction, double input, double output, double efficiency, int employment):
+    Struc {cost, location,maintenance, satisfaction}, input{input}, output{output}, efficiency{efficiency}, empolyment{employment} {}
+};
 
 
         // The following will be city-wide counters that will be updated every day : 
@@ -33,6 +51,8 @@ class Structure {
         // if needed within any object they will be passed on by the city object
         // don't use these specific variable names inside the structures pls or we will all get confused 
 
+class Housing: public Struc {
+    //public:
         
 
         double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
@@ -50,6 +70,9 @@ class Structure {
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
         // need to add a cost for their implementation in the maintenance variable once
     };
+class Infrastructure: public Struc {
+    protected:
+        int employment;
 
 
 
@@ -71,6 +94,7 @@ public:
     Housing();
     ~Housing();
 };
+*/
 
 
 class Infrastructure : public Structure {

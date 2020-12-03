@@ -3,20 +3,20 @@
 
 using namespace godot;
 
-City::City() {
-	
+City::City() {	
 	income = 0;
 	population = 50000;
 	numberOfEmployees = 0;
 	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
+	healthcare = 0;
+	needs = 0;
 
 	time_speed = 1;
 	delta_counter = 0.0;
 	timer = 0;
 	day_tick = 0;
-
 }
 
 City::~City()
@@ -45,7 +45,7 @@ void City::_physics_process(float delta) {
 	delta_counter += (delta * time_speed);
 	if (timer != (int64_t)delta_counter) {
 		timer = (int64_t)delta_counter;
-		// call city_simulate()
+		simulation();
 	}
 }
 
@@ -59,33 +59,35 @@ void City::_ready()
 	
 };
 
-void City::add_building(Structure* struc) {
-	buildings.insert(struc);
+void City::add_building(Struc* struc) {
+	buildings.push_back(struc);
 }
 
 void City::simulation() {
 	day_tick++;
-	//write the old values in a file 
+
+	// TODO: write stats into the file
+
+	// first reset all the values, otherwise they will keep increasing
+	// even if the player doesn't do anything
 	income = 0;
 	numberOfEmployees = 0;
 	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
+	healthcare = 0;
+	needs = 0;
 
-	for (std::set<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
+	for (std::vector<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
-		/* 
-		commented out until we know what variables to call in every structure
-		
 		income += (*it)->income;
-		std::cout << "in LOOP income " << (*it)->income << std::endl;
 		numberOfEmployees += (*it)->numberOfEmployees;
-		carbonEmission += (*it)->carbonEmission;
+		carbonEmission += (*it)->get_emissions();
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
-		(*it)->simulate_step(); //function that updates the building
-
-		*/
+		healthcare += (*it)->healthcare;
+		needs += (*it)->needs;
+		(*it)->simulate_step(); // function that updates the building
 	}
 }
 
@@ -93,7 +95,7 @@ void City::write_stat_history_to_file() {
 	std::ofstream out_file;
 	out_file.open("stat_history.txt", std::ofstream::out | std::ofstream::app);
 	out_file << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
-	out_file << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
+	out_file << carbonEmission << " " << energyDemand << " " << energySupply << " " << healthcare << " " << needs << std::endl;
 	out_file.close();
 }
 
@@ -102,8 +104,29 @@ double City::return_income() {
 	return income;
 }
 
+double City::return_numberOfEmployees() {
+	return numberOfEmployees;
+}
 
+double City::return_carbonEmission() {
+	return carbonEmission;
+}
 
+double City::return_energyDemand() {
+	return energyDemand;
+}
+
+double City::return_energySupply() {
+	return energySupply;
+}
+
+double City::return_healthcare() {
+	return healthcare;
+}
+
+double City::return_needs() {
+	return needs;
+}
 
 std::string City::return_game_date() {
 	std::string date = "Year ";
@@ -172,5 +195,4 @@ std::string City::return_game_date() {
 		return date;
 	}
 	return "Time Representation Error";
-
 }

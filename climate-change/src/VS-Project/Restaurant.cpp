@@ -71,12 +71,27 @@ Restaurant::Restaurant()
 
 /*
 Restaurant::Restaurant(int inc)
+Restaurant::Restaurant(double income, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs)
 {
 	PanelsOn = true;
 	Clickable = false;
-	income = inc;
+	this->income = income;
+	this->numberOfEmployees = numberOfEmployees;
+	this->carbonEmission = carbonEmission;
+	this->energyDemand = energyDemand;
+	this->energySupply = energySupply;
+	this->healthcare = healthcare;
+	this->needs = needs;
 }
 */
+
+double Restaurant::get_emissions(){
+	double temp = this->carbonEmission;
+	if (PanelsOn) {
+		temp *= 0.5;
+	}
+	return temp;
+}
 
 Node* Restaurant::GetPanels()
 {

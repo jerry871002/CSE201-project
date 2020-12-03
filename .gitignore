@@ -16,4 +16,13 @@ data_*/
 
 ## Editor related ##
 .vscode/
+# object files
+*.os
+*.o
+
+## Editor or IDE related ##
+.vs/
+.vscode/
+
+## scons related ##
 climate-change/src/.sconsign.dblite
