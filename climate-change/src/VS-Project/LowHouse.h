@@ -1,9 +1,11 @@
-#include "obj.h";
-#include <core/Godot.hpp>
+#include "obj.h"
 #pragma once
+#include <core/Godot.hpp>
 #include <StaticBody.hpp>
+#include <MeshInstance.hpp>
+#include <Input.hpp>
 
-namespace godot{
+namespace godot {
 //all these numbers are for a house of 100m^2
 class LowHouse : public Housing, public StaticBody  {
 		GODOT_CLASS(LowHouse, StaticBody)
@@ -27,4 +29,5 @@ class LowHouse : public Housing, public StaticBody  {
 		bool double_glazing(); // improve insulation
 
 	};
+
 };

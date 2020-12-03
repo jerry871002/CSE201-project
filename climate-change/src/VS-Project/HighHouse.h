@@ -1,7 +1,8 @@
-#include "obj.h";
+#include "obj.h"
 #include <core/Godot.hpp>
 #pragma once
 #include <StaticBody.hpp>
+
 namespace godot {
 class HighHouse : public Housing, public StaticBody {
 		GODOT_CLASS(HighHouse, StaticBody)
