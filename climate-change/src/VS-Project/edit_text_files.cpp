@@ -21,15 +21,15 @@ void change_data(string documentName, string dataChanged, string newValue) {
     fstream file;
     string path = get_path(documentName);
     file.open(path, ios::in | ios::out);
-    int lineNumber = 0;
+    int lineNum = 0;
     file.close();
     // Function is not finished
 }
 
 void clear(string documentName) {
     fstream file;
-    string path = get_path(documentName);
-    file.open(path, ios::out | ios::trunc);
+    string path = get_path(documentName); 
+    file.open(path, ios::out | ios::trunc); 
     file.close();
 }
 
