@@ -5,6 +5,7 @@
 using namespace godot;
 
 void LowHouse::_register_methods(){
+	register_method((char*)"_init", &LowHouse::_init);
 	register_method((char*)"_process", &LowHouse::_process);
 	register_method((char*)"_input", &LowHouse::_input);
 	register_method((char*)"_ready", &LowHouse::_ready);

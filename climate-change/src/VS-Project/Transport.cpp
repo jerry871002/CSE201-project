@@ -77,6 +77,38 @@ switch(transportType) {
         satisfaction = satisfactiong(gen);
         break;
     }
+    case 2:{ //normal family car 
+        co2PerKm = 0.115; 
+        fuelPerKm = 0.078; 
+        std::normal_distribution <double> costf(14000, 3000);
+        cost = costf(gen); // cost of 1 car in euros, randomised using gaussian
+        capacity = 4;
+        std::normal_distribution <double> kmf(50, 10);
+        kmPerDay = kmf(gen); // average km per day for this car using gaussian
+        std::normal_distribution <double> occupancyf(0.5, 0.25);
+        occupancyRate = occupancyf(gen); // average percentage occupancy of the car: number of people in the car / capacity
+        std::normal_distribution <double> timeg(1, 0.5);
+        buildingTime = timeg(gen); // building time of 1 car, very fast
+        std::normal_distribution <double> satisfactiong(6.8, 0.5); // medium satisfaction
+        satisfaction = satisfactiong(gen);
+        break;
+    }
+    case 3:{ //old collection car 
+        co2PerKm = 0.5; 
+        fuelPerKm = 0.22; 
+        std::normal_distribution <double> costf(40000, 7000);
+        cost = costf(gen); // cost of 1 car in euros, randomised using gaussian
+        capacity = 2;
+        std::normal_distribution <double> kmf(50, 10);
+        kmPerDay = kmf(gen); // average km per day for this car using gaussian
+        std::normal_distribution <double> occupancyf(0.5, 0.25);
+        occupancyRate = occupancyf(gen); // average percentage occupancy of the car: number of people in the car / capacity
+        std::normal_distribution <double> timeg(1, 0.5);
+        buildingTime = timeg(gen); // building time of 1 car, very fast
+        std::normal_distribution <double> satisfactiong(6.8, 0.5); // medium satisfaction
+        satisfaction = satisfactiong(gen);
+        break;
+    }
     case 6:{ // bus
         fuelPerKm = 0.26; //in liters
         co2PerKm = 1.25; //in kg
@@ -158,6 +190,27 @@ switch (transportType){
         else{
             maintenance += 2.78*days; //repairs price per day if car is more than 4 yo
             maintenance +=3.21*days; //maintenance price per day if car is more than 4 yo
+        }
+        break;
+    }
+    case 2:{ // normal family car
+     // no repairs price if car is <3yo
+        if (age<=365){
+            maintenance += 0.15*days; //maintenance price per day if car is less than 1 yo
+        }
+        else if (age <=730){
+            maintenance += 0.5*days; //maintenance price per day if car is less than 2 yo
+        }
+        else if (age <= 1095){
+            maintenance += 1.05*days; //maintenance price per day if car is less than 3 yo
+        }
+        if (age<=1460) {
+            maintenance+=0.765*days; // repairs price per day is car is less than 4 yo
+            maintenance +=2.70*days; //maintenance price per day if car is less than 4 yo
+        }
+        else{
+            maintenance += 1.17*days; //repairs price per day if car is more than 4 yo
+            maintenance +=2.26*days; //maintenance price per day if car is more than 4 yo
         }
         break;
     }

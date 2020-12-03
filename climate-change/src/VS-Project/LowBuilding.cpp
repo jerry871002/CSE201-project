@@ -6,6 +6,7 @@ using namespace godot;
 
 void LowBuilding::_register_methods()
 {
+	register_method((char*)"_init", &LowBuilding::_init);
 	register_method((char*)"_process", &LowBuilding::_process);
 	register_method((char*)"_input", &LowBuilding::_input);
 	register_method((char*)"_ready", &LowBuilding::_ready);
