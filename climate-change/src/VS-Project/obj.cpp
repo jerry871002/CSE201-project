@@ -3,7 +3,7 @@
 
 
 
-Struc::Structure() {
+Structure::Structure() {
     /*
     cost = 0;
     energyUse = 0;
