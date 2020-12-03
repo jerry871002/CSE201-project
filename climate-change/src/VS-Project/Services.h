@@ -14,4 +14,4 @@ class Services : public Production, public StaticBody {
 		void _input(InputEvent* e);
 		void _ready();
 	};
-};
+}

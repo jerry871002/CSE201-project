@@ -23,5 +23,12 @@ Structure::Structure(double cost, double energyUse, double maintenance, double s
     cost{ cost }, energyUse{ energyUse }, maintenance{ maintenance }, satisfaction{ satisfaction }, income{ income }, population{ population }, numberOfEmployees{ numberOfEmployees }, carbonEmission{ carbonEmission }, energyDemand{ energyDemand }, energySupply{ energySupply }{}
 */
 
+bool Structure::efficiency_cogeneration() {
+    return false; //given interface commands it will then return true and activate improvement
+}
+
+bool Structure::efficiency_supercritical() {
+    return false; //given interface commands it will return true and activate improvement
+}
 
 
