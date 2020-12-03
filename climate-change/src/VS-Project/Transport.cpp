@@ -5,6 +5,7 @@
 using namespace godot;
 
 void Transport::_register_methods(){
+    register_method((char*)"_init", &Transport::_init);
 	register_method((char*)"_process", &Transport::_process);
 	register_method((char*)"_input", &Transport::_input);
 	register_method((char*)"_ready", &Transport::_ready);

@@ -3,10 +3,13 @@
 
 
 
-Structure::Structure() {
+Struc::Structure() {
     /*
     cost = 0;
     energyUse = 0;
+Struc::Struc() {
+    cost = 0;
+    energyuse = 0;
     maintenance = 0;
     satisfaction = 0;
     income = 0;
@@ -32,3 +35,13 @@ bool Structure::efficiency_supercritical() {
 }
 
 
+    healthcare = 0;
+    needs= 0;
+}
+
+Struc::Struc(double cost, double energyuse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs) :
+    cost{ cost }, energyuse{ energyuse }, maintenance{ maintenance }, satisfaction{ satisfaction }, income{ income }, population{ population }, numberOfEmployees{ numberOfEmployees }, carbonEmission{ carbonEmission }, energyDemand{ energyDemand }, energySupply{ energySupply }, healthcare{ healthcare }, needs{ needs } {}
+
+Struc::~Struc() {
+
+}
