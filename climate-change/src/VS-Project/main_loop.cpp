@@ -5,6 +5,8 @@
 #include "Restaurant.h"
 #include "obj.h"
 #include "City.h"
+
+// Sleep(miliseconds) on Windows and sleep(seconds) on linux/mac
 #ifdef _WIN32
 #include <Windows.h>
 #else
@@ -26,13 +28,20 @@ int main()
 		std::cout << "city energy demand is " << c.return_energyDemand() << std::endl;
 		std::cout << "city energy supply is " << c.return_energySupply() << std::endl;
 		std::cout << "city healthcare is " << c.return_healthcare() << std::endl;
-		std::cout << "city needs are " << c.return_needs() << std::endl;
+		std::cout << "city needs are " << c.return_needs() << std::endl << std::endl;
 
 		// add a restaurant pointer to the buildings set
 		Restaurant rest = Restaurant(100,5,15,2,0,2.5,1.67);
 		Struc* struc_pointer = &rest;
-		Sleep(20);
+
+#ifdef _WIN32
+        Sleep(100);
+#else
+        sleep(1);
+#endif
+		
 		c.add_building(struc_pointer);
+        std::cout << "New restaurant!" << std::endl << std::endl;
 
 		// advance by 3 days before rerunning through the loop 
 		for (int i=0; i<3; i++) {
@@ -44,8 +53,13 @@ int main()
 			std::cout << "city energy demand is " << c.return_energyDemand() << std::endl;
 			std::cout << "city energy supply is " << c.return_energySupply() << std::endl;
 			std::cout << "city healthcare is " << c.return_healthcare() << std::endl;
-			std::cout << "city needs are " << c.return_needs() << std::endl;
-			Sleep(20);
+			std::cout << "city needs are " << c.return_needs()<< std::endl << std::endl;
+
+#ifdef _WIN32
+            Sleep(100);
+#else
+            sleep(1);
+#endif
 		}
 	}
 }
