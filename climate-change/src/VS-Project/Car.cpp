@@ -65,7 +65,7 @@ void Car::_process(float delta)
 	else if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
 
 		ComputeSpeed(SPEED_T, Acc, delta);
-		turn(dir, delta);
+		if (this->move_and_collide(Vector3(0, 0, 0), true, true, true) == NULL) { turn(dir, delta); }
 		prevPosition = this->get_global_transform().get_origin();
 
 		if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
