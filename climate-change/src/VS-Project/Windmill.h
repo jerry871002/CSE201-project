@@ -1,5 +1,5 @@
 #pragma once
-#include "obj.h";
+#include "obj.h"
 #include <core/Godot.hpp>
 #include <StaticBody.hpp>
 namespace godot {

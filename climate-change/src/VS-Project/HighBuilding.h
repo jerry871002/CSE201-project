@@ -1,4 +1,4 @@
-#include "obj.h";
+#include "obj.h"
 #include <core/Godot.hpp>
 #pragma once
 #include <StaticBody.hpp>
