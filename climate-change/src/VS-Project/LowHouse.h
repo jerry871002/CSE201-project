@@ -20,9 +20,9 @@ class LowHouse : public Housing, public StaticBody  {
 
 		void simulate_step(double days); // updates every attribute directly as a function of time (days since beginning of the game)
 		double energyUse;
-		int window_cost = 200;
-		int window_number;
-		int solar_panel_cost = 1500;
+		int windowCost = 200;
+		int windowNumber;
+		int solarPanelCost = 1500;
 	
 		// policies (constructor creates subcritical plant of 38% efficiency) :
 		bool solar_panel(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
