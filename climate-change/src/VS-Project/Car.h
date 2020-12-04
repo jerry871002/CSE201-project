@@ -16,7 +16,7 @@ namespace godot {
 		double SPEED_T ;
 		int Turn_R = 4;
 		int dir;
-
+		Vector3 prevPosition = Vector3(0,0,0);
 		double Acc = 0.5;
 		Vector3 center;
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "obj.h";
+#include "obj.h"
 #include <core/Godot.hpp>
 #include <StaticBody.hpp>
 namespace godot {
@@ -15,6 +15,6 @@ class Windmill : public Energy, public StaticBody {
 		void _ready();
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
-		double environmentalCost;
+		
 	};
 };

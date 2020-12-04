@@ -45,6 +45,7 @@ void Car::_process(float delta)
 	if (rot >= (M_PI / 2)) {
 		
 		straight(delta);
+		prevPosition = this->get_global_transform().get_origin();
 
 		int real_rot = round(this->get_rotation_degrees().y /90);
 
@@ -64,7 +65,8 @@ void Car::_process(float delta)
 	else if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
 
 		ComputeSpeed(SPEED_T, Acc, delta);
-		turn(dir, delta);
+		if (this->move_and_collide(Vector3(0, 0, 0), true, true, true) == NULL) { turn(dir, delta); }
+		prevPosition = this->get_global_transform().get_origin();
 
 		if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
 			rot = M_PI / 2;
@@ -112,13 +114,13 @@ void Car::turn(int dir, float delta)
 
 void Car::straight(float delta)
 {
-	this->translate(Vector3((SPEED_T*delta), 0, 0));
-	if (this->move_and_collide(Vector3(0, 0, 0), true, true, false) != NULL) {
-		
-	}
-	else {
-		position += (SPEED_T * delta) * 10;
-	}
+	Vector3 globalSpeed = Vector3((SPEED_T * delta*10), 0, 0);
+	globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
+	this->move_and_collide(globalSpeed, true, true, false);
+	//position += SPEED_T * delta * 10;
+	Vector3 pos = this->get_global_transform().get_origin() - prevPosition;
+	position += pos.normalized().dot(pos);				//Get the norm....
+	prevPosition = this->get_global_transform().get_origin();
 	
 	
 	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position ));
@@ -129,7 +131,7 @@ void Car::straight(float delta)
 
 void Car::_ready()
 {
-
+	prevPosition = this->get_global_transform().get_origin();
 
 }
 

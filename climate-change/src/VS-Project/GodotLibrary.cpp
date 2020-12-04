@@ -6,16 +6,11 @@
 #include "CoalPowerPlant.h"
 #include "Education.h"
 #include "Health.h"
-#include "HighBuilding.h"
-#include "HighHouse.h"
-#include "LowBuilding.h"
-#include "LowHouse.h"
-#include "Mall.h"
 #include "NuclearPowerPlant.h"
 #include "RecyclingFactory.h"
 #include "Services.h"
-#include "SmallShop.h"
 #include "Windmill.h"
+#include "Car.h"
 
 
 
@@ -39,16 +34,11 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<CoalPowerPlant>();
 	register_class<Education>();
 	register_class<Health>();
-	register_class<HighHouse>();
-	register_class<LowBuilding>();
-	register_class<HighBuilding>();
-	register_class<LowHouse>();
-	register_class<Mall>();
 	register_class<NuclearPowerPlant>();
 	register_class<RecyclingFactory>();
 	register_class<Services>();
-	register_class<SmallShop>();
 	register_class<Windmill>();
+	register_class<Car>();
 }
 
 

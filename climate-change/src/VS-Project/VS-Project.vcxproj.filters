@@ -54,28 +54,10 @@
     <ClCompile Include="Health.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HighBuilding.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HighHouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LowBuilding.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LowHouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NuclearPowerPlant.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="plots.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RecyclingFactory.cpp">
@@ -87,9 +69,6 @@
     <ClCompile Include="sidebar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SmallShop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Transport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -97,7 +76,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Car.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,31 +113,13 @@
     <ClInclude Include="Health.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HighBuilding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HighHouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LowBuilding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LowHouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NuclearPowerPlant.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="plots.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RecyclingFactory.h">
@@ -168,9 +129,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sidebar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SmallShop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Transport.h">
