@@ -170,7 +170,6 @@
     <ClCompile Include="NuclearPowerPlant.cpp" />
     <ClCompile Include="obj.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="plots.cpp" />
     <ClCompile Include="RecyclingFactory.cpp" />
     <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="Root.cpp" />
@@ -193,7 +192,6 @@
     <ClInclude Include="NuclearPowerPlant.h" />
     <ClInclude Include="obj.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="plots.h" />
     <ClInclude Include="RecyclingFactory.h" />
     <ClInclude Include="Restaurant.h" />
     <ClInclude Include="Root.h" />

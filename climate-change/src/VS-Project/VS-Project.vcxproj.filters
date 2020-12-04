@@ -60,9 +60,6 @@
     <ClCompile Include="NuclearPowerPlant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="plots.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RecyclingFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,9 +120,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NuclearPowerPlant.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="plots.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RecyclingFactory.h">
