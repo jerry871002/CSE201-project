@@ -6,6 +6,8 @@
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
 #include <ClippedCamera.hpp>
+#include <WorldEnvironment.hpp>
+#include <Environment.hpp>
 
 namespace godot {
 	class Player : public KinematicBody {
@@ -23,6 +25,7 @@ namespace godot {
 		const double CameraAngleDeg = 15;
 		const double MaxHeight{ 300 };
 		const double MinHeight{ 10 };
+		//WorldEnvironment* Env;
 
 
 	public:

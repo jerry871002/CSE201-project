@@ -78,6 +78,7 @@ void Car::_process(float delta)
 			case 0: position = -8; break;
 			default: position = 4; break;
 			}
+			
 
 			dir = -(rand() % 3 - 1);
 
@@ -150,6 +151,7 @@ Car::Car()
 	dir = 1;
 	position = 0;
 	SPEED_T = 0;
+	
 }
 
 Car::~Car()

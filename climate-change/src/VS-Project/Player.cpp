@@ -4,6 +4,8 @@
 #include <Math.hpp>
 #include <SceneTree.hpp>
 #include <Viewport.hpp>
+#include <WorldEnvironment.hpp>
+#include <Environment.hpp>
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
@@ -30,13 +32,14 @@ void Player::_init() {
 void Player::_ready() {
 	Input* i = Input::get_singleton();
 	i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
-
-
 }
 
 void Player::_process(float delta) {
 	UpdateMotionFromInput(delta);
 	this->translate(motion);
+	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
+	worldEnv->get_environment()->set_dof_blur_far_distance(2 * (this->get_global_transform().get_origin().y));
+	worldEnv->get_environment()->set_dof_blur_far_amount( fmax(0, 0.1-(this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight*10)));
 	set_rotation_degrees(rotation);
 }
 
