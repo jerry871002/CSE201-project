@@ -22,4 +22,10 @@ This week i am going to work more on deepening the simulation and writing the da
 
 
 Antoine:
-This week I spent a lot of time to fully understand how to run, compile and debug code on mac alongside Jerry. I was hence able to create a unit test file for each object class and continued working on the restaurant. Next week I plan on continuing to work on classes and further implement the complexity of the unit tests. 
+This week I spent a lot of time to fully understand how to run, compile and debug code on mac alongside Jerry.
+I was hence able to create a unit test file for each object class and continued working on the restaurant.
+Next week I plan on continuing to work on classes and further implement the complexity of the unit tests. 
+
+Eliott:
+This week I implemented car collisions, the blur effect, environnement, the traffic system and I worked on the structure of city. 
+I still have on problem to solve for car collision, I will work on it next week, I will also implement the 2D menu and the traffic generation and  try to design new assets.
