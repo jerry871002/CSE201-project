@@ -107,7 +107,7 @@ exclude_files += Glob('VS-Project/main_loop.cpp')
 for file in exclude_files:
     sources.remove(file)
 
-print(f'There are {len(sources)} files to compile...')
+print('There are {} files to compile...'.format(len(sources)))
 for source_file in sources:
     print(source_file.name)
 print()
