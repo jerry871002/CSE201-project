@@ -19,3 +19,7 @@ Yury:
 This week after merging branch of my team to the master branch I contributed a lot to making sure that the it had a project that was compiling. I also introduced standardization 
 of variable/function/class names and the objects team implemented that in their code.
 This week i am going to work more on deepening the simulation and writing the data into files using the functions that were written by the interface team.
+
+
+Antoine:
+This week I spent a lot of time to fully understand how to run, compile and debug code on mac alongside Jerry. I was hence able to create a unit test file for each object class and continued working on the restaurant. Next week I plan on continuing to work on classes and further implement the complexity of the unit tests. 
