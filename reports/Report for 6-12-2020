@@ -29,3 +29,10 @@ Next week I plan on continuing to work on classes and further implement the comp
 Eliott:
 This week I implemented car collisions, the blur effect, environnement, the traffic system and I worked on the structure of city. 
 I still have on problem to solve for car collision, I will work on it next week, I will also implement the 2D menu and the traffic generation and  try to design new assets.
+
+Ambroise:
+This week, I programmed the city object to allow it to generate its own objects/instances that have both a graphical representation and c++ functionality. 
+I worked on reorganising the godot scenes to make it possible to access any component on the world and its properties and to allow a more fluid link between code and graphics.
+I also started coding and implementing a menu with buttons to command certain properties of displayed 3D objects. 
+Next week, I will continue working on this menu and will work closely with the simulation team to link the work they did to the game skeleton established. 
+I will also work with the objects team to reorganise the inheritance of classes, to avoid writing unnecessary code and add graphical functionality to the superclasses.
