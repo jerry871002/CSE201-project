@@ -33,6 +33,10 @@ namespace godot {
 		void _ready();
 		void _on_Area_mouse_entered();
 		void _on_Area_mouse_exited();
+		void _on_Checkbox_pressed();
+		void _on_Checkbox_button_up();
+		void _on_Checkbox_button_down();
+		void _on_Checkbox_toggled();
 
 
 		int income;
