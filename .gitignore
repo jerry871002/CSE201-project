@@ -14,4 +14,13 @@ data_*/
 ## File system related ##
 .DS_Store
 
+# object files
+*.os
+*.o
 
+## Editor or IDE related ##
+.vs/
+.vscode/
+
+## scons related ##
+climate-change/src/.sconsign.dblite

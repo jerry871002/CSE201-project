@@ -2,7 +2,14 @@
 #include <core/Godot.hpp>
 #include "data.h"
 
+
+
+/* temporary comment out
+
 using namespace godot;
+
+
+
 
 Data::Data() {
 	value = 0;
@@ -38,3 +45,5 @@ Index::~Data() {
 bool Index::is_capped() {
 	return (get_value() == 100);
 }
+
+*/
