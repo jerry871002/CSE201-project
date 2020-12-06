@@ -110,6 +110,23 @@ switch(transportType) {
         satisfaction = satisfactiono(gen);
         break;
     }
+    case 4:{ //bike
+    fuelPerKm = 0;
+    co2PerKm = 0;
+    std::normal_distribution <double> costbike(370, 30);
+    cost = costbike(gen); // cost of 1 bike in euros, randomised using gaussian
+    capacity = 1;
+    occupancyRate = 1;
+    buildingTime = 0.04; //really fast, in days (1 hour )
+    std::normal_distribution <double> satisfactionbike(9, 1);
+    satisfaction = satisfactionbike(gen); //high satisfaction
+    std::normal_distribution <double> kmbike(20, 10);
+    kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
+    break;
+    }
+    case 5:{ //motorcycle 
+
+    }
     case 6:{ // bus
         fuelPerKm = 0.26; //in liters
         co2PerKm = 1.25; //in kg
@@ -219,6 +236,10 @@ switch (transportType){
      // no repairs price if car is <3yo
         maintenance += 25*days; //maintenance very expensive, does not depend on the age, the car is already old
         break;
+    }
+    case 4:{ //bike
+        maintenance+=0.8*days;
+
     }
     case 6:{ //bus
         double alpha = (cost-262500)/262500;

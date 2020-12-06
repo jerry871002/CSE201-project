@@ -1,0 +1,17 @@
+Saga:
+This week I learnt how to compile on Mac with the help of my teammates. I fixed some errors in my code and continued working on the housing classes.
+I now have code for each of the classes I was working on and next week I will see if I need to add things, and then maybe move on to another class.
+
+Jerry:
+This week I focus on designing a unit test process for object and algorithm to test our code. There's a document describing the whole process in the doc/ folder,
+which include how to write, compile and execute testing program on the target. Next week I will working on the counting system of indices in the City class and also
+let the Car and Transport class work together.
+
+Luca:
+This week, as planned, I finished coding my functions that enable to add, replace and delete data (for instance population, pollution, parts of energy supply,…) in .csv files. I also finally managed to plot those data using the Godot plugin “easy charts”. 
+Next week, I plan to organise my charts in a 2D menu for the user interface.
+
+Anna:
+This week I changed the implementation of Transport objects after discussing with the interface team and implemented 6 types of transport in the new transport class.
+Next week I plan to finish implemenation of 2 other types of transport and then proceed to working on other objects and improving existing code for Transport objects.
+

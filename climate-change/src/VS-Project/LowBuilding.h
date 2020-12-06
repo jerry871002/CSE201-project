@@ -14,5 +14,13 @@ class LowBuilding : public Housing, public StaticBody {
 		void _process(float delta);
 		void _input(InputEvent* e);
 		void _ready();
+		void simulate_step(double days);
+		int windowCost = 200;
+		int windowNumber;
+		int solarPanelCost = 1500;
+	
+		// policies 
+		bool solar_panel(); 
+		bool double_glazing(); // improve insulation
 	};
 };
