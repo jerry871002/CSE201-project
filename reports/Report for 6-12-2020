@@ -6,3 +6,6 @@ Jerry:
 This week I focus on designing a unit test process for object and algorithm to test our code. There's a document describing the whole process in the doc/ folder,
 which include how to write, compile and execute testing program on the target. Next week I will working on the counting system of indices in the City class and also
 let the Car and Transport class work together.
+
+Arthur : 
+This week I continued working on the user interface. I put in place the date and the buttons to change to accelaration of time in the game. 

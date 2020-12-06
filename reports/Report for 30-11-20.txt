@@ -42,4 +42,5 @@ Eliott:
 This week I created the collection car asset and I implemented the car functions: turning, go forward and then I implemented random movements. I will then implement acceleration, timer and collisions with other cars.
 
 Arthur : 
-This week I continued working on the 2d interface and I implemented the time and date sections. I also continued working on its design and I kept working on making it fully functional and as practical as possible for the user
+This week I continued working on the 2d interface and I implemented the time and date sections. 
+I also continued working on its design and I kept working on making it fully functional and as practical as possible for the user
