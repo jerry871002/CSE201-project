@@ -32,6 +32,9 @@ void Player::_init() {
 void Player::_ready() {
 	Input* i = Input::get_singleton();
 	i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
+	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
+	worldEnv->get_environment()->set_dof_blur_far_enabled(true);
+	worldEnv->get_environment()->set_dof_blur_near_enabled(true);
 }
 
 void Player::_process(float delta) {
