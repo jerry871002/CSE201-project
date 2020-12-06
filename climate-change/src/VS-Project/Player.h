@@ -24,7 +24,7 @@ namespace godot {
 
 		const double CameraAngleDeg = 15;
 		const double MaxHeight{ 300 };
-		const double MinHeight{ 10 };
+		const double MinHeight{ 20 };
 		//WorldEnvironment* Env;
 
 
