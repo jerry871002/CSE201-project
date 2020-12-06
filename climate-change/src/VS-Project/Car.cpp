@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <vector>
 #include <iostream>
+#include <Node.hpp>
+#include <SceneTree.hpp>
 
 # define M_PI 3.14159265358979323846  /* pi */
 
@@ -43,9 +45,9 @@ int Car::get_direction(Vector3 pos, double rot) {
 		}
 		i++;
 	}
-
+	//(Node*)(this->get_tree()->get_root()->get_node()->get)
 	if (out.size() == 0) {
-		//this->get_tree()->get_root()->get_node("Main");
+
 	}
 
 	return(out[rand() % out.size()]);

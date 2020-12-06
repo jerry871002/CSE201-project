@@ -14,11 +14,12 @@ __meta__ = {
 }
 
 [node name="PieChart" parent="Control" instance=ExtResource( 1 )]
-anchor_left = 0.0198517
-anchor_top = 0.0588547
-anchor_right = 23.5199
-anchor_bottom = 18.5339
+anchor_left = 15.9608
+anchor_top = 7.79546
+anchor_right = 33.3608
+anchor_bottom = 22.5205
 margin_right = -6.10352e-05
+mouse_default_cursor_shape = 8
 chart_name = "Fuck"
 source = "res://addons/easy_charts/file.samples/pie.csv"
 delimiter = ","
