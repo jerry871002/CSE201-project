@@ -37,7 +37,7 @@ int Car::get_direction(Vector3 pos, double rot) {
 	vector<int> out;
 
 	int i = -1;
-	for (const int& n : buildings[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) { //buildings[(int)round(pos.x / 30)][(int)round(pos.y / 30)][(int)rotInt])
+	for (const int& n : traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) { //buildings[(int)round(pos.x / 30)][(int)round(pos.y / 30)][(int)rotInt])
 		if (n == 1) {
 			out.push_back(i);
 		}
@@ -54,7 +54,7 @@ int Car::get_direction(Vector3 pos, double rot) {
 
 template <typename T> void round_position(T obj, Vector3 &Motion) {
 	Vector3 motion = obj->get_global_transform().get_origin();
-	motion.x = round(motion.x); motion.y = round(motion.y);
+	motion.x = round(motion.x); motion.z = round(motion.z);
 	obj->set_translation(motion);
 }
 
