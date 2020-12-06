@@ -1,20 +1,25 @@
 #include "obj.h"
+#include <core/Godot.hpp>
+#pragma once
+#include <StaticBody.hpp>
 
-class CoalPowerPlant: public Energy{
-public :
-	CoalPowerPlant();
-	~CoalPowerPlant();
-	void _register_methods();
-	void _init();
-	void _process(float delta);
-	void _input(InputEvent* e);
-	void _ready();
+namespace godot {
+class CoalPowerPlant : public Energy, public StaticBody {
+		GODOT_CLASS(CoalPowerPlant, StaticBody)
+	public:
+		CoalPowerPlant();
+		~CoalPowerPlant();
+		static void _register_methods();
+		void _init();
+		void _process(float delta);
+		void _input(InputEvent* e);
+		void _ready();
 
-	void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
-	double SO2_output;
-	double NOx_output;
-	double ash_ouptut;
-	double mercury_output;
-	double coal;
-	double envirnomental_cost;
+		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
+		double SO2Emission;
+		double NOxEmission;
+		double ashOutput;
+		double mercuryEmission;
+		double coal;
+	};
 };

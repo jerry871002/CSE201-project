@@ -8,20 +8,122 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Chart",
+"class": "BarChart",
+"language": "GDScript",
+"path": "res://addons/easy_charts/BarChart/BarChart.gd"
+}, {
+"base": "Chart2D",
+"class": "BarChart2D",
+"language": "GDScript",
+"path": "res://addons/easy_charts/BarChart2D/BarChart2D.gd"
+}, {
+"base": "Control",
+"class": "Chart",
+"language": "GDScript",
+"path": "res://addons/easy_charts/Utilities/Scripts/Chart.gd"
+}, {
+"base": "Node2D",
+"class": "Chart2D",
+"language": "GDScript",
+"path": "res://addons/easy_charts/Utilities/Scripts/Chart2D.gd"
+}, {
+"base": "VBoxContainer",
+"class": "LegendElement",
+"language": "GDScript",
+"path": "res://addons/easy_charts/Utilities/Legend/FunctionLegend.gd"
+}, {
+"base": "Chart",
+"class": "LineChart",
+"language": "GDScript",
+"path": "res://addons/easy_charts/LineChart/line_chart.gd"
+}, {
+"base": "Chart2D",
+"class": "LineChart2D",
+"language": "GDScript",
+"path": "res://addons/easy_charts/LineChart2D/LineChart2D.gd"
+}, {
+"base": "Chart",
+"class": "PieChart",
+"language": "GDScript",
+"path": "res://addons/easy_charts/PieChart/pie_chart.gd"
+}, {
+"base": "Control",
+"class": "Point",
+"language": "GDScript",
+"path": "res://addons/easy_charts/Utilities/Point/Point.gd"
+}, {
+"base": "PanelContainer",
+"class": "PointData",
+"language": "GDScript",
+"path": "res://addons/easy_charts/Utilities/Point/PointData.gd"
+}, {
+"base": "Chart",
+"class": "RadarChart",
+"language": "GDScript",
+"path": "res://addons/easy_charts/RadarChart/RadarChart.gd"
+}, {
+"base": "Chart",
+"class": "ScatterChart",
+"language": "GDScript",
+"path": "res://addons/easy_charts/ScatterChart/ScatterChart.gd"
+}, {
+"base": "Chart2D",
+"class": "ScatterChart2D",
+"language": "GDScript",
+"path": "res://addons/easy_charts/ScatterChart2D/ScatterChart2D.gd"
+}, {
+"base": "Spatial",
+"class": "ScatterChart3D",
+"language": "GDScript",
+"path": "res://addons/easy_charts/ScatterChart3D/ScatterChart3D.gd"
+}, {
+"base": "Reference",
+"class": "Slice",
+"language": "GDScript",
+"path": "res://addons/easy_charts/Utilities/Slice/slice.gd"
+} ]
 _global_script_class_icons={
-
+"BarChart": "",
+"BarChart2D": "",
+"Chart": "",
+"Chart2D": "",
+"LegendElement": "",
+"LineChart": "",
+"LineChart2D": "",
+"PieChart": "",
+"Point": "",
+"PointData": "",
+"RadarChart": "",
+"ScatterChart": "",
+"ScatterChart2D": "",
+"ScatterChart3D": "",
+"Slice": ""
 }
 
 [application]
 
 config/name="GodotProject"
 run/main_scene="res://Main.tscn"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
+
+[autoload]
+
+Utilities="*res://addons/easy_charts/Utilities/Scripts/utilities.gd"
 
 [display]
 
-window/size/fullscreen=true
+window/size/width=1920
+window/size/height=1080
+window/size/resizable=false
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "easy_charts" )
 
 [gdnative]
 
@@ -29,6 +131,11 @@ singletons=[  ]
 
 [input]
 
+ui_select={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
 ui_left={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"unicode":0,"echo":false,"script":null)
@@ -69,7 +176,19 @@ ui_vdown={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777236,"unicode":0,"echo":false,"script":null)
  ]
 }
+AddRemoveSolarPanels={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_turn={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":3,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
 
 [rendering]
 
+quality/shadows/filter_mode=2
+quality/filters/msaa=1
 environment/default_environment="res://default_env.tres"

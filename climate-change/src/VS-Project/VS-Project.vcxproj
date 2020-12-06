@@ -156,13 +156,49 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AgriculturalProduction.cpp" />
+    <ClCompile Include="AllPhysicalGoodsFactories.cpp" />
+    <ClCompile Include="Car.cpp" />
+    <ClCompile Include="City.cpp" />
+    <ClCompile Include="CoalPowerPlant.cpp" />
+    <ClCompile Include="data.cpp" />
+    <ClCompile Include="Education.cpp" />
     <ClCompile Include="GodotLibrary.cpp" />
+    <ClCompile Include="Health.cpp" />
+    <ClCompile Include="main_loop.cpp" />
+    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="NuclearPowerPlant.cpp" />
+    <ClCompile Include="obj.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RecyclingFactory.cpp" />
+    <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="Root.cpp" />
+    <ClCompile Include="Services.cpp" />
+    <ClCompile Include="sidebar.cpp" />
+    <ClCompile Include="Transport.cpp" />
+    <ClCompile Include="Windmill.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AgriculturalProduction.h" />
+    <ClInclude Include="AllPhysicalGoodsFactories.h" />
+    <ClInclude Include="Car.h" />
+    <ClInclude Include="City.h" />
+    <ClInclude Include="CoalPowerPlant.h" />
+    <ClInclude Include="data.h" />
+    <ClInclude Include="Education.h" />
+    <ClInclude Include="Health.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="menu.h" />
+    <ClInclude Include="NuclearPowerPlant.h" />
+    <ClInclude Include="obj.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RecyclingFactory.h" />
+    <ClInclude Include="Restaurant.h" />
     <ClInclude Include="Root.h" />
+    <ClInclude Include="Services.h" />
+    <ClInclude Include="sidebar.h" />
+    <ClInclude Include="Transport.h" />
+    <ClInclude Include="Windmill.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

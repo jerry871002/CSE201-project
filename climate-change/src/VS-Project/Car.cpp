@@ -1,66 +1,183 @@
 #include "Car.h"
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
-#include "random"
+#include <Timer.hpp>
+#include <time.h>
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+
+# define M_PI 3.14159265358979323846  /* pi */
+
 using namespace godot;
+using namespace std;
 
-void Car::_register_methods(){
+void Car::_register_methods()
+{
 	register_method((char*)"_process", &Car::_process);
-	register_method((char*)"_input", &Car::_input);
 	register_method((char*)"_ready", &Car::_ready);
+	register_method((char*)"_init", &Car::_init);
 }
 
-void Car::_init(){
+void Car::_init() {
+	
+	
+}
+
+void compute_speed(double &Speed, double Acc, float delta) {
+	if ((Speed <= 0.8 && Acc>0) or (Acc < 0 and Speed + Acc * delta > 0.2)) { Speed += Acc * delta; }			//Define max speed and min speed
+}
+
+void ComputeAcceleration(double& Acc, double Speed0, double Speed1, double d) {
+	Acc = fmin(10 * (pow(Speed1, 2) - pow(Speed0, 2)) / (2 * d), 0);
+}
+
+int Car::get_direction(Vector3 pos, double rot) {
+	int rotInt = (int)((rot / 90)+4) % 4 ;
+	vector<int> out;
+
+	int i = -1;
+	for (const int& n : traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) { //buildings[(int)round(pos.x / 30)][(int)round(pos.y / 30)][(int)rotInt])
+		if (n == 1) {
+			out.push_back(i);
+		}
+		i++;
+	}
+
+	if (out.size() == 0) {
+		//this->get_tree()->get_root()->get_node("Main");
+	}
+
+	return(out[rand() % out.size()]);
+}
+
+template <typename T> void round_position(T obj, Vector3 &Motion) {
+	Vector3 motion = obj->get_global_transform().get_origin();
+	motion.x = round(motion.x); motion.z = round(motion.z);
+	obj->set_translation(motion);
+}
+
+template <typename T> void align_on_axis(T obj) {
+	obj->set_rotation_degrees(Vector3(round(obj->get_rotation_degrees().x / 90) * 90, round(obj->get_rotation_degrees().y / 90) * 90, round(obj->get_rotation_degrees().z / 90) * 90));
+}
+
+void Car::_process(float delta)
+{
+	if (rot >= (M_PI / 2)) {
+		
+		straight(delta);
+		prevPosition = this->get_global_transform().get_origin();
+
+		int real_rot = round(this->get_rotation_degrees().y /90);
+
+		if (position >= 13 && Acc > 0 && real_rot % 2 == 0) { ComputeAcceleration(Acc, SPEED_T, 0.2, 5);}
+		else if (position >= 18 && Acc > 0 && real_rot % 2 == 1 && dir == 1) { ComputeAcceleration(Acc, SPEED_T, 0.7, 4);} //Decrease also the speed before turning right (small radius)
+
+		compute_speed(SPEED_T, Acc, delta);
+
+		if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
+			Acc = 0.5;	rot = 0;
+			round_position(this, motion);
+			center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z)*Turn_R*dir;
+
+		}
+	}
+	
+	else if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
+
+		compute_speed(SPEED_T, Acc, delta);
+		if (this->move_and_collide(Vector3(0, 0, 0), true, true, true) == NULL) { turn(dir, delta); }
+		prevPosition = this->get_global_transform().get_origin();
+
+		if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
+			rot = M_PI / 2;
+			align_on_axis(this);
+			round_position(this, motion);
+
+			switch (dir) {
+			case -1 : position = 8; break;
+			case 0: position = -8; break;
+			default: position = 4; break;
+			}
+
+			dir = get_direction(this->get_global_transform().get_origin() + Vector3(12,0,0).rotated(Vector3(0, 1, 0), this->get_rotation_degrees().y * (M_PI/180)), this->get_rotation_degrees().y );
+
+			switch (dir) {
+			case -1: Turn_R = 12; break;
+			default: Turn_R = 4; break;
+			}
+		}
+	}
+}
+
+
+void Car::turn(int dir, float delta)
+{
+	double drot = (SPEED_T * delta) * 10;
+	if (dir == 1) { drot /= 4; }
+	else { drot /=  12 ; }
+	rot += drot;
+	
+	this->global_translate(-center);			//define the center of rotation
+	this->set_transform(this->get_transform().rotated(Vector3(0, 1, 0), -drot*dir));
+	this->global_translate(center);				//reset the center of rotation
+
+	if (dir == 1) {
+		((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -(90 / M_PI) * sin(rot* 2) , -(180 / M_PI) * rot * 4));
+		((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, -(90 / M_PI)  * sin(rot * 2), -(180 / M_PI) * rot * 4));
+		((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(90 / M_PI)  * sin(rot * 2) * 4));
+	}
+	else {
+		((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, (90 / M_PI)  * sin(rot * 2) , -(180 / M_PI) * rot * 12));
+		((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, (90 / M_PI)  * sin(rot * 2) , -(180 / M_PI) * rot * 12));
+		((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * rot * 12));
+	}
+}
+
+void Car::straight(float delta)
+{
+	Vector3 globalSpeed = Vector3((SPEED_T * delta*10), 0, 0);
+	globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
+	this->move_and_collide(globalSpeed, true, true, false);
+	//position += SPEED_T * delta * 10;
+	Vector3 pos = this->get_global_transform().get_origin() - prevPosition;
+	position += pos.normalized().dot(pos);				//Get the norm....
+	//position += SPEED_T * delta * 10;
+	prevPosition = this->get_global_transform().get_origin();
+	
+	
+	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position ));
+	((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
+	((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
 
 }
 
-void Car::_process(float delta){
+void Car::_ready()
+{
+	prevPosition = this->get_global_transform().get_origin();
+	//dir = get_direction(this->get_global_transform().get_origin(), this->get_rotation_degrees().y);
 
 }
 
-void Car::_input(InputEvent* e){
+void godot::Car::_physics_process(float delta)
+{
 
 }
 
-void Car::_ready(){
 
+
+Car::Car()
+{
+	motion = Vector3(0, 0, 0);
+	rot = (M_PI / 2);
+	center = Vector3(0, 0, 0);
+	dir = 0;
+	position = 0;
+	SPEED_T = 0;
+	
 }
 
-
-Car::Car(){
-CO2_output = 0; // co2 output for the whole duration of simulation
-maintenance = 0; // maintenance cost for the whole duration of simulation
-fuelInput = 0; // fuel needed for the whole duration of simulation
-// random device class instance, source of 'true' randomness for initializing random seed
-std::random_device rd; 
-// Mersenne twister PRNG, initialized with seed from previous random device instance
-std::mt19937 gen(rd()); 
-std::normal_distribution <double> d(36000, 18000);
-cost = d(gen); // cost of 1 car in euros, randomised using gaussian
-capacity = 5;  // capacity for cars if fixed
-std::normal_distribution <double> d(0.5, 0.30);
-occupancyRate = d(gen); // average percentage occupancy of the car: number of people in the car / capacity
-if (occupancyRate >1) occupancyRate=1;
-std::normal_distribution <double> d(1, 0.5);
-building_time = d(gen); // building time of 1 car, very fast
-double alpha = (cost-36000)/36000;
-if (alpha < 1) alpha =1;
-satisfaction = 8.5 + alpha *1.5; //satisfaction is rather high, positive correlation with cost 
-std::normal_distribution <double> d(50, 20);
-kmPerDay = d(gen); // average km per day for this car
-passengers = 0; //total number of passengers that used the car
-}
-
-void Car::simulate_step(double days){
-fuelInput+=9.5/100*kmPerDay*days; //litres of fuel for car
-CO2_output+=130/1000*kmPerDay*days; // co2 emissions per car
-passengers+=capacity*occupancyRate*days; //number of people that used the car in given period
-double alpha = (cost-36000)/36000;
-if (alpha < 1) alpha =1;
-maintenance = (0.35+alpha*0.15)*kmPerDay*days; // maintenance cost depends on number of km
-}
-
-Car::~Car(){
+Car::~Car()
+{
 
 }
-

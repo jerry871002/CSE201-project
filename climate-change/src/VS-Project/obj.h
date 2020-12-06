@@ -1,51 +1,97 @@
+#include <core/Godot.hpp>
+#pragma once
+#include <StaticBody.hpp>
+#include <MeshInstance.hpp>
+#include <Input.hpp>
+#include <InputEventMouse.hpp>
+#include <InputEventMouseMotion.hpp>
+#include <InputEventMouseButton.hpp>
+
+using namespace godot;
+
 class Structure {
 public:
-    double cost, energyuse, maintenance, CO2_output, building_time, satisfaction;
-    double total_days; //total number of days that have passed in the simulation, will have to be defined by the simulation team
+    double cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction, environmentalCost;
 
-// All of our policies 
-    
-//Coal power plant (constructor creates subcritical plant of 38% efficiency) :
+    // The following will be city-wide counters that will be updated every day : 
+    // income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply
+
+    // income is the total wage (GDP), population is the population of the whole city, numberOfEmployees the total employed people,  
+    // carbonEmission the total CO2, energyDemand the sum of all energy needed and energySupply the maximum production capacity
+
+    // It would be great if someone could write here what variable we have to call to update each
+    // income : we didn't take it into account for the moment
+    // population : we don't have that, thought you would decide about it
+    // numberOfEmployees: employment
+    // carbonEmission : CO2Emission
+    // energyDemand : that corresponds to energyUse for each class
+    // energySupply : that corresponds to energyOutput for each object producing it in the energy class 
+
+    // sim team will program these counters to grab the correct attributes within all structures
+    // if needed within any object they will be passed on by the city object
+    // don't use these specific variable names inside the structures pls or we will all get confused    
+
+    double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
+
+    bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
+
+    // All of our policies have to go in the City class !! Look at City.h 
+    Structure();
+    ~Structure();
+
+    // virtual void simulate_step();
+    // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
     bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-    bool improvement_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
+    bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
     // need to add a cost for their implementation in the maintenance variable once
 };
 
 class Production : public Structure {
 public:
+    Production();
+    ~Production();
     double efficiency;
-    int employment;
+    double employment;
 };
 
 class Energy : public Production {
 public:
-    double energy_output;
+    Energy();
+    ~Energy();
+    double energyOutput;
+    double energyPerDay;
 };
 
 class Housing : public Structure {
-    //public:
+public:
+    Housing();
+    ~Housing();
 };
+
 
 class Infrastructure : public Structure {
 public:
-    int employment;
-};
-
-class Transport : public Infrastructure {
-public:
-    double numCars;
-    double numElectricCars;
-    double numBus;
-    double numTram;
-    double occupancyRate, capacity, kmPerDay,passengers;
+    Infrastructure();
+    ~Infrastructure();
+    double employment;
 };
 
 class Shop : public Production {
 public:
+    Shop();
+    ~Shop();
     bool open;
-    //get attributes from production : employment i don't remember how to do that
-    //constructor :
-
 };
 
 
+class Solar : public Energy {
+protected:
+    double energyOutput;
+public:
+    Solar();
+    Solar(double energyOutput);
+    ~Solar();
+    double environmental_impact(); //redefined don't use same as the one in energy
+
+};
+  
