@@ -4,10 +4,13 @@
 #include <Timer.hpp>
 #include <time.h>
 #include <cstdlib>
+#include <vector>
+#include <iostream>
 
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
+using namespace std;
 
 void Car::_register_methods()
 {
@@ -21,13 +24,27 @@ void Car::_init() {
 	
 }
 
-
 void ComputeSpeed(double &Speed, double Acc, float delta) {
-	if ((Speed <= 2 && Acc>0) or (Acc < 0 and Speed + Acc * delta > 0.2)) { Speed += Acc * delta; }			//Define max speed and min speed
+	if ((Speed <= 1 && Acc>0) or (Acc < 0 and Speed + Acc * delta > 0.2)) { Speed += Acc * delta; }			//Define max speed and min speed
 }
 
 void ComputeAcceleration(double& Acc, double Speed0, double Speed1, double d) {
 	Acc = fmin(10 * (pow(Speed1, 2) - pow(Speed0, 2)) / (2 * d), 0);
+}
+
+int Car::get_direction(Vector3 pos, double rot) {
+	int rotInt = (int)((rot / 90)+4) % 4 ;
+	vector<int> out;
+
+	int i = 1;
+	for (const int& n : buildings[(int)round(pos.x / 30)][(int)round(pos.y / 30)][(int)rotInt]) {
+		if (n == 1) {
+			out.push_back(i);
+		}
+		i--;
+	}
+
+	return(out[rand() % out.size()]);
 }
 
 template <typename T> void RoundPosition(T obj, Vector3 &Motion) {
@@ -80,7 +97,7 @@ void Car::_process(float delta)
 			}
 			
 
-			dir = -(rand() % 3 - 1);
+			dir = get_direction(this->get_global_transform().get_origin(), this->get_rotation_degrees().y );
 
 			switch (dir) {
 			case -1: Turn_R = 12; break;
@@ -89,6 +106,7 @@ void Car::_process(float delta)
 		}
 	}
 }
+
 
 void Car::turn(int dir, float delta)
 {
@@ -120,7 +138,8 @@ void Car::straight(float delta)
 	this->move_and_collide(globalSpeed, true, true, false);
 	//position += SPEED_T * delta * 10;
 	Vector3 pos = this->get_global_transform().get_origin() - prevPosition;
-	position += pos.normalized().dot(pos);				//Get the norm....
+	//position += pos.normalized().dot(pos);				//Get the norm....
+	position += SPEED_T * delta * 10;
 	prevPosition = this->get_global_transform().get_origin();
 	
 	
@@ -133,6 +152,7 @@ void Car::straight(float delta)
 void Car::_ready()
 {
 	prevPosition = this->get_global_transform().get_origin();
+	//dir = get_direction(this->get_global_transform().get_origin(), this->get_rotation_degrees().y);
 
 }
 

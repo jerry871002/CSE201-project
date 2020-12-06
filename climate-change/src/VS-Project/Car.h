@@ -19,18 +19,17 @@ namespace godot {
 		Vector3 prevPosition = Vector3(0,0,0);
 		double Acc = 0.5;
 		Vector3 center;
-
+		int buildings[2][1][4][3] = { {{{0, 1, 1},{0, 0, 1},{0, 0, 1},{1, 0, 1}}}, {{{0, 0, 1},{1, 0, 1},{0, 1, 1},{0, 0, 1}}} };
 	public:
 
 		static void _register_methods();
 		void _init();
 		void _process(float delta);
 		void _ready();
-		void _physics_process(float delta);
-		void _on_Area_area_entered();
+		void _physics_process(float delta);;
 		void turn(int dir, float delta);
 		void straight(float delta);
-
+		int get_direction(Vector3 pos, double rot);
 
 		
 
