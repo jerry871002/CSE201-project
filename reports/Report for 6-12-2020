@@ -11,3 +11,7 @@ Luca:
 This week, as planned, I finished coding my functions that enable to add, replace and delete data (for instance population, pollution, parts of energy supply,…) in .csv files. I also finally managed to plot those data using the Godot plugin “easy charts”. 
 Next week, I plan to organise my charts in a 2D menu for the user interface.
 
+Anna:
+This week I changed the implementation of Transport objects after discussing with the interface team and implemented 6 types of transport in the new transport class.
+Next week I plan to finish implemenation of 2 other types of transport and then proceed to working on other objects and improving existing code for Transport objects.
+
