@@ -111,8 +111,8 @@ void Restaurant::_process(float delta)
 void Restaurant::_input(InputEvent* e)
 {
 	Input* i = Input::get_singleton();
-	
-	if (i->is_action_pressed("ui_select")) {
+
+	if (i->is_action_pressed("ui_select") && Clickable) {
 		PanelsOn = (PanelsOn == false);
 		this->GetPanels()->set("visible", PanelsOn);
 	}
