@@ -108,13 +108,13 @@ void Restaurant::_process(float delta)
 
 }
 
-void Restaurant::_input(Input* e)
+void Restaurant::_input(InputEvent* e)
 {
-	if (e->get_class() == "InputEventMouseButton" && Clickable) {
-		if (((InputEventMouseButton*)e)->is_pressed()) {   //And button index = ?
-			PanelsOn = (PanelsOn == false);
-			this->GetPanels()->set("visible", PanelsOn);
-		}
+	Input* i = Input::get_singleton();
+
+	if (i->is_action_pressed("ui_select") && Clickable) {
+		PanelsOn = (PanelsOn == false);
+		this->GetPanels()->set("visible", PanelsOn);
 	}
 }
 
