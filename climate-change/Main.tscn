@@ -2,7 +2,7 @@
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
-[ext_resource path="res://KinematicBody.gdns" type="Script" id=4]
+[ext_resource path="res://Player.gdns" type="Script" id=3]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -22,7 +22,7 @@ directional_shadow_max_distance = 1000.0
 
 [node name="KinematicBody" type="KinematicBody" parent="3Dworld"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5638, 33.7579, 82.5155 )
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 
 [node name="ClippedCamera" type="ClippedCamera" parent="3Dworld/KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0 )

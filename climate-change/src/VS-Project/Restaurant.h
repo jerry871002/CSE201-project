@@ -1,5 +1,5 @@
 #pragma once
-#include "obj.h"
+#include "Structure.h"
 #include <core/Godot.hpp>
 #include <StaticBody.hpp>
 #include <MeshInstance.hpp>
@@ -10,38 +10,24 @@
 
 
 namespace godot {
-	class Restaurant : public Production, public StaticBody {
-		GODOT_CLASS(Restaurant, StaticBody)
+	class Restaurant : public Structure {
+		GODOT_SUBCLASS(Restaurant, Structure)
 	private:
-
-		bool Clickable;
 
 	public:
 
 		Restaurant();
-		//Restaurant(int);
-
-		bool PanelsOn;
-		
-		Node* GetPanels();
+		~Restaurant();
 
 		static void _register_methods();
 		void _init();
 		void _process(float delta);
 		void _input(Input* e);
 		void _ready();
-		void _on_Area_mouse_entered();
-		void _on_Area_mouse_exited();
-
 
 		int income;
 
 		void change_income_by_percent(float);
 		
-
-
-		int restaurantType;
-		double diningSize;
-		double averageWage;
 	};
 }

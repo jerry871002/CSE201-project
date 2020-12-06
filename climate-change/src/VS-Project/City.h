@@ -8,14 +8,15 @@
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
-#include "obj.h"
 #include <StaticBody.hpp>
 #include <Node.hpp>
+#include "Structure.h"
+#include <Spatial.hpp>
 
 namespace godot {
 
-	class City : public Node {
-		GODOT_CLASS(City, Node)
+	class City : public Spatial {
+		GODOT_CLASS(City, Spatial)
 	public:
 		static void _register_methods();
 
