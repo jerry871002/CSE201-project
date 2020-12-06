@@ -44,10 +44,9 @@ int Car::get_direction(Vector3 pos, double rot) {
 		i++;
 	}
 
-	for (i = 0; i < out.size(); i++) {
-		//std::cout << out[i];
+	if (out.size() == 0) {
+		//this->get_tree()->get_root()->get_node("Main");
 	}
-	std::cout << '[' << (int)round(pos.x / 30) << (int)round(pos.z / 30) << ']';
 
 	return(out[rand() % out.size()]);
 }
@@ -142,8 +141,8 @@ void Car::straight(float delta)
 	this->move_and_collide(globalSpeed, true, true, false);
 	//position += SPEED_T * delta * 10;
 	Vector3 pos = this->get_global_transform().get_origin() - prevPosition;
-	//position += pos.normalized().dot(pos);				//Get the norm....
-	position += SPEED_T * delta * 10;
+	position += pos.normalized().dot(pos);				//Get the norm....
+	//position += SPEED_T * delta * 10;
 	prevPosition = this->get_global_transform().get_origin();
 	
 	

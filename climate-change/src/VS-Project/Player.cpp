@@ -35,6 +35,7 @@ void Player::_ready() {
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
 	worldEnv->get_environment()->set_dof_blur_far_enabled(true);
 	worldEnv->get_environment()->set_dof_blur_near_enabled(true);
+	//delete(this);
 }
 
 void Player::_process(float delta) {
@@ -42,7 +43,7 @@ void Player::_process(float delta) {
 	this->translate(motion);
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
 	worldEnv->get_environment()->set_dof_blur_far_distance(2 * (this->get_global_transform().get_origin().y));
-	worldEnv->get_environment()->set_dof_blur_far_amount( fmax(0.1, 0.1-pow((this->get_global_transform().get_origin().y - MinHeight), 1.5) / (MaxHeight*10)));
+	worldEnv->get_environment()->set_dof_blur_far_amount( fmax(0.1, 0.1-pow((this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight * 10), 1.5)));
 	set_rotation_degrees(rotation);
 }
 

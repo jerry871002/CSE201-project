@@ -73,7 +73,7 @@ void City::_ready()
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = 0; x < 3; x++)
+		for (int x = 0; x < 2; x++)
 		{
 			for (int z = 0; z < 3; z++)
 			{
@@ -154,7 +154,7 @@ std::string City::return_game_date() {
 	date += std::to_string((day_tick / 365)+1) + ", ";
 	int temp = day_tick % 365;
 	if (day_tick % 365 == 0) { temp = 365; }
-	if (temp <= 31) {
+	if (temp <= 31) {		
 		date += "January " + std::to_string(temp);
 		return date;
 	}
