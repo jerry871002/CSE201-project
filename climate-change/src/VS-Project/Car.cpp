@@ -36,12 +36,16 @@ int Car::get_direction(Vector3 pos, double rot) {
 	int rotInt = (int)((rot / 90)+4) % 4 ;
 	vector<int> out;
 
-	int i = 1;
-	for (const int& n : buildings[(int)round(pos.x / 30)][(int)round(pos.y / 30)][(int)rotInt]) {
+	int i = -1;
+	for (const int& n : buildings[(int)round(pos.x / 30)][(int)round(pos.y / 30)][(int)rotInt]) { //buildings[(int)round(pos.x / 30)][(int)round(pos.y / 30)][(int)rotInt])
 		if (n == 1) {
 			out.push_back(i);
 		}
-		i--;
+		i++;
+	}
+
+	for (i = 0; i < out.size(); i++) {
+		std::cout << out[i];
 	}
 
 	return(out[rand() % out.size()]);
@@ -91,13 +95,13 @@ void Car::_process(float delta)
 			RoundPosition(this, motion);
 
 			switch (dir) {
-			case -1: position = 8; break;
+			case -1 : position = 8; break;
 			case 0: position = -8; break;
 			default: position = 4; break;
 			}
 			
 
-			dir = get_direction(this->get_global_transform().get_origin(), this->get_rotation_degrees().y );
+			dir = get_direction(this->get_global_transform().get_origin() + Vector3(12,0,0).rotated(Vector3(0, 1, 0), this->get_rotation_degrees().y * (M_PI/180)), this->get_rotation_degrees().y );
 
 			switch (dir) {
 			case -1: Turn_R = 12; break;
