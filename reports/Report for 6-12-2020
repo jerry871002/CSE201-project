@@ -6,3 +6,7 @@ Jerry:
 This week I focus on designing a unit test process for object and algorithm to test our code. There's a document describing the whole process in the doc/ folder,
 which include how to write, compile and execute testing program on the target. Next week I will working on the counting system of indices in the City class and also
 let the Car and Transport class work together.
+
+Luca:
+This week, as planned, I finished coding my functions that enable to add, replace and delete data (for instance population, pollution, parts of energy supply,…) in .csv files. I also finally managed to plot those data using the Godot plugin “easy charts”. Next week, I plan to organise my charts in a 2D menu for the user interface.
+
