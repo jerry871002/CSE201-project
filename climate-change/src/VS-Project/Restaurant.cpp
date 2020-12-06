@@ -80,7 +80,7 @@ Restaurant::Restaurant(int inc)
 
 Node* Restaurant::GetPanels()
 {
-	return get_node("Restau")->get_node("SolarPanels");
+	return get_node("MeshComponents")->get_node("SolarPanels");
 }
 
 void Restaurant::_register_methods()

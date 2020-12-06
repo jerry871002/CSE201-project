@@ -1,5 +1,10 @@
 #include <fstream>
 #include "City.h"
+#include <Resource.hpp>
+#include <ResourceLoader.hpp>
+#include <SceneTree.hpp>
+#include <PackedScene.hpp>
+#include <Node.hpp>
 
 using namespace godot;
 
@@ -54,11 +59,50 @@ void City::_input(InputEvent*)
 	
 };
 
-void City::_ready() 
-{
-	
-};
 
+
+void City::_ready()
+{
+	std::cout << "HELLO" << std::endl;
+	ResourceLoader* ResLo = ResourceLoader::get_singleton();
+
+	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
+	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
+	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
+	Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
+
+	if (RestaurantScene.is_valid() && ShopScene.is_valid())
+	{
+		for (int x = 0; x < 3; x++)
+		{
+			for (int z = 0; z < 3; z++)
+			{
+				int type = rand() % 2;
+				Node* node;
+				if (type == 0) { node = RestaurantScene->instance(); }
+				else { node = ShopScene->instance(); }
+				node->set("scale", Vector3(10, 10, 10));
+				node->set("translation", Vector3(30 * x, 0, 30 * z));
+				//int rot = rand() % 2;
+				//node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
+				this->add_child(node);
+			}
+		}
+	}
+	if (BugattiScene.is_valid() && ChironScene.is_valid())
+	{
+		for (int z = 0; z < 2; z++)
+		{
+			int type = rand() % 2;
+			Node* node;
+			if (type == 0) { node = BugattiScene->instance(); }
+			else { node = ChironScene->instance(); }
+			node->set("scale", Vector3(10, 10, 10));
+			node->set("translation", Vector3(-13, 0, -13 + 30 * z));
+			this->add_child(node);
+		}
+	}
+};
 void City::add_building(Structure* struc) {
 	buildings.insert(struc);
 }

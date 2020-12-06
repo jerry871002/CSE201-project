@@ -9,14 +9,13 @@
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
 #include "obj.h"
-#include <core/Godot.hpp>
-#pragma once
 #include <StaticBody.hpp>
+#include <Spatial.hpp>
 
 namespace godot {
 
-	class City : public Object {
-		GODOT_CLASS(City, Object)
+	class City : public Spatial {
+		GODOT_CLASS(City, Spatial)
 	public:
 		static void _register_methods();
 
