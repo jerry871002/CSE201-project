@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <core/Godot.hpp>
 #include <Node.hpp>
-#include <core/Godot.hpp>
+#include <Spatial.hpp>
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -15,8 +15,8 @@
 
 namespace godot {
 
-	class City : public Object {
-		GODOT_CLASS(City,Object)
+	class City : public Spatial {
+		GODOT_CLASS(City,Spatial)
 	public:
 		static void _register_methods();
 

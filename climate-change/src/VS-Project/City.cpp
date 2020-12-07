@@ -12,11 +12,8 @@
 #include <PackedScene.hpp>
 #include <Tree.hpp>
 #include <Node.hpp>
-
 #include <cstdlib>
 #include <stdlib.h>
-#include <iostream>
-
 
 using namespace godot;
 
@@ -49,7 +46,6 @@ void City::_register_methods()
 	register_method((char*)"_physics_process", &City::_physics_process);
 	register_method((char*)"_init", &City::_init);
 }
-};
 
 void City::_init() 
 {
@@ -100,7 +96,7 @@ void City::_process(float delta)
 
 void City::_physics_process(float delta) {
 	delta_counter += (delta * time_speed);
-	if (timer != (int64_t)delta_counter) {
+	if (timer != (int64_t)delta_counter ) {
 		timer = (int64_t)delta_counter;
 		simulation();
 	}
@@ -111,10 +107,6 @@ void City::_input(InputEvent*)
 	
 };
 
-void City::_ready() 
-{
-	
-};
 
 void City::add_building(Struc* struc) {
 	buildings.push_back(struc);
@@ -146,6 +138,15 @@ void City::simulation() {
 		needs += (*it)->needs;
 		(*it)->simulate_step(); // function that updates the building
 	}
+
+	std::cout << return_game_date() << std::endl;
+	std::cout << "city income is " << return_income() << std::endl;
+	std::cout << "city number of employees is " << return_numberOfEmployees() << std::endl;
+	std::cout << "city carbon emissions are " << return_carbonEmission() << std::endl;
+	std::cout << "city energy demand is " << return_energyDemand() << std::endl;
+	std::cout << "city energy supply is " << return_energySupply() << std::endl;
+	std::cout << "city healthcare is " << return_healthcare() << std::endl;
+	std::cout << "city needs are " << return_needs() << std::endl << std::endl;
 }
 
 void City::write_stat_history_to_file() {
