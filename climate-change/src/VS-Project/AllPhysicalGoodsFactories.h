@@ -1,12 +1,18 @@
 #include "obj.h"
+#include <core/Godot.hpp>
+#pragma once
+#include <StaticBody.hpp>
 
-class AllPhysicalGoodsFactories: public Production{
-public:
-	AllPhysicalGoodsFactories();
-	~AllPhysicalGoodsFactories();
-	void _register_methods();
-	void _init();
-	void _process(float delta);
-	void _input(InputEvent* e);
-	void _ready();
+namespace godot {
+class AllPhysicalGoodsFactories : public Production, public StaticBody {
+		GODOT_CLASS(AllPhysicalGoodsFactories, StaticBody)
+	public:
+		AllPhysicalGoodsFactories();
+		~AllPhysicalGoodsFactories();
+		static void _register_methods();
+		void _init();
+		void _process(float);
+		void _input(InputEvent*);
+		void _ready();
+	};
 };

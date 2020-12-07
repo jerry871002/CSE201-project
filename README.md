@@ -7,10 +7,10 @@ Aim is for the user to have a better understanding of how certain environmental 
 | name surname | github username | trello username | [role] |
 |:------------:|:---------------:|:---------------:|:------:|
 | Vincent Sietses | Vincent-Sietses | vincentsietses | Project boss + Algorithms team leader|
-| Antoine De Mascarel| antoine-demascarel|| Trello leader + Objects team leader|
+| Antoine De Mascarel| antoine-demascarel | antoinedemascarel | Trello leader + Objects team leader|
 | Jerry Yang| jerry871002| jerry871002| Git leader|
 | Eliott Sarrey| Eliott-Sarrey | eliottsarrey | Interface team leader|
-| Paloma Thevenet | tpaloma |
+| Paloma Thevenet | tpaloma | palomathevenet |
 | Ambroise Müller | ambroisemuller | ambroisemuller |
 | Luca Bonengel | lucabonengel | lucabonengel |
 | Yury Nevenchannyy | Yury-Nevencahnnyy | yurynevenchannyy |
@@ -21,7 +21,7 @@ Aim is for the user to have a better understanding of how certain environmental 
 
 ## Team assignments
 ### Interface
-#### 3d world
+#### 3D world
 - Eliott
 - Ambroise
 #### UI

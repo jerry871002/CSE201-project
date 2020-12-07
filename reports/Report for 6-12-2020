@@ -1,0 +1,11 @@
+Saga:
+This week I learnt how to compile on Mac with the help of my teammates. I fixed some errors in my code and continued working on the housing classes.
+I now have code for each of the classes I was working on and next week I will see if I need to add things, and then maybe move on to another class.
+
+Jerry:
+This week I focus on designing a unit test process for object and algorithm to test our code. There's a document describing the whole process in the doc/ folder,
+which include how to write, compile and execute testing program on the target. Next week I will working on the counting system of indices in the City class and also
+let the Car and Transport class work together.
+
+Arthur : 
+This week I continued working on the user interface. I put in place the date and the buttons to change to accelaration of time in the game. 
