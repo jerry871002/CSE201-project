@@ -169,6 +169,25 @@ switch(transportType) {
         employment = 1+ round(alpha*2);
         break;
     }
+    case 7:{ //sports car
+        fuelPerKm = 0.22;
+        co2PerKm = 0.5;
+        std::normal_distribution <double> costsp(52000, 7000);
+        cost = costsp(gen); // cost of 1 car in euros, randomised using gaussian
+        capacity = 2;
+         std::normal_distribution <double> occupancysp(0.75, 0.25);
+        occupancyRate = occupancysp(gen); // average percentage occupancy of the car: number of people in the bus / capacity
+        std::normal_distribution <double> timeg(1.5, 0.75);
+        buildingTime = timeg(gen); // building time of 1 car, very fast
+        std::normal_distribution <double> satisfactionsp(9.5, 0.5); // satisfaction level is very high, randomised
+        satisfaction = satisfactionsp(gen);
+        if (satisfaction >10) {
+         satisfaction = 10;      
+        }
+        std::normal_distribution <double> kmsp(80, 20);
+        kmPerDay = kmsp(gen); // kilometres per day,  randomised for each car
+        break;
+    }
 }
 }
 Transport::Transport(){
@@ -250,7 +269,6 @@ switch (transportType){
     }
     case 4:{ //bike
         maintenance+=0.8*days;
-
     }
     case 5:{ //motorcycle
         maintenance+=2.6*days;
@@ -263,6 +281,10 @@ switch (transportType){
         maintenance += (0.67+alpha*0.17)*kmPerDay*days; // maintenance cost in euros, positive correlation with bus price
         break;
     }
+    case 7:{ //sports car
+        maintenance+=2.5*days;
+    }
+
 }
 }
 
