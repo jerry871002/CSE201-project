@@ -133,7 +133,7 @@ void godot::Restaurant::_on_Area_mouse_entered()
 	Input* i = Input::get_singleton();
 	// CHANGE MOUSE CURSOR
 	i->set_default_cursor_shape(i->CURSOR_POINTING_HAND);
-	
+
 }
 
 void godot::Restaurant::_on_Area_mouse_exited()

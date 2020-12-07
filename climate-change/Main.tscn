@@ -35,3 +35,16 @@ transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, -
 shape = SubResource( 1 )
 
 [node name="2D layer" type="Spatial" parent="."]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="CheckBox" type="CheckBox" parent="Node2D"]
+margin_top = -1.0
+margin_right = 184.0
+margin_bottom = 90.0
+text = "Hello, this is a button"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Hello this is a button"
+}
