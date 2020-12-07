@@ -61,30 +61,14 @@ void City::_ready()
 	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
 	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
 
-	if (RestaurantScene.is_valid() && ShopScene.is_valid())
-	{
-		for (int x = 0; x < 5; x ++)
-		{
-			for (int z = 0; z < 5; z ++)
-			{
-				int type = rand() % 2;
-				Node* node;
-				if (type == 0) { node = RestaurantScene->instance(); } else { node = ShopScene->instance(); }
-				node->set("scale", Vector3(10, 10, 10));
-				node->set("translation", Vector3(30 * x, 0, 30 * z));
-				int rot = rand() % 2;
-				//node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
-				this->add_child(node);
-			}
-		}
-	}
 
-	if (BugattiScene.is_valid())
+	if (RestaurantScene.is_valid())
 	{
-		Node* node = BugattiScene->instance();
+		Node* node = RestaurantScene->instance();
 		node->set("scale", Vector3(10, 10, 10));
-		node->set("translation", Vector3(-13, 0, 17));
+		node->set("translation", Vector3(0, 0, 0));
 		this->add_child(node);
+		this->add_building((Restaurant*)node);
 	}
 }
 
@@ -108,7 +92,7 @@ void City::_input(InputEvent*)
 };
 
 
-void City::add_building(Struc* struc) {
+void City::add_building(Restaurant* struc) {
 	buildings.push_back(struc);
 }
 

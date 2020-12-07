@@ -35,7 +35,7 @@ namespace godot {
 
 		std::vector<Struc*> buildings;
 
-		void add_building(Struc*);
+		void add_building(Restaurant*);
 		void simulation();                   // updates all the stats and the building
 		void write_stat_history_to_file();   // writes all the stats to a file so that the inteface team can make graphs 
 		std::string return_game_date();      // returns the date :day/month/year as a string
