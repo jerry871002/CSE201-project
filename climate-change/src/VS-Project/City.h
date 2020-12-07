@@ -11,6 +11,8 @@
 #include "obj.h"
 #include <StaticBody.hpp>
 #include <Spatial.hpp>
+#include <PackedScene.hpp>
+#include <ResourceLoader.hpp>
 
 namespace godot {
 
@@ -36,6 +38,7 @@ namespace godot {
 		double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply;
 
 		void add_building(Structure*);
+		void add_car();
 		void simulation();                    //updates all the stats abd the building
 		void write_stat_history_to_file();    //writes all the stats to a file so that the inteface team can make graphs 
 		double return_income();               //returns the income of the city
@@ -62,7 +65,17 @@ namespace godot {
 
 		// this variable keeps track of the in-game days, one day added every time city.sim() is called
 		int day_tick;
-
+		/*
+		Ref<PackedScene> RestaurantScene;
+		Ref<PackedScene> ShopScene;
+		Ref<PackedScene> BugattiScene;
+		Ref<PackedScene> ChironScene;
+		*/
+		ResourceLoader* ResLo = ResourceLoader::get_singleton();
+		Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
+		Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
+		Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
+		Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
 	};
 };
 

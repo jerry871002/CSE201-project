@@ -22,6 +22,9 @@ City::City() {
 	timer = 0;
 	day_tick = 0;
 
+
+	
+
 }
 
 City::~City()
@@ -63,9 +66,7 @@ void City::_input(InputEvent*)
 
 void City::_ready()
 {
-	std::cout << "HELLO" << std::endl;
 	ResourceLoader* ResLo = ResourceLoader::get_singleton();
-
 	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
 	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
 	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
@@ -91,20 +92,39 @@ void City::_ready()
 	}
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
-		for (int z = 0; z < 2; z++)
+		for (int z = 0; z < 1; z++)
 		{
 			int type = rand() % 2;
 			Node* node;
 			if (type == 0) { node = BugattiScene->instance(); }
 			else { node = ChironScene->instance(); }
 			node->set("scale", Vector3(10, 10, 10));
-			node->set("translation", Vector3(-13, 0, -13 + 30 * z));
+			node->set("translation", Vector3(-13, 0, -13 + 30 * (z + 1)));
 			this->add_child(node);
 		}
 	}
 };
 void City::add_building(Structure* struc) {
 	buildings.insert(struc);
+}
+
+void City::add_car() {
+	ResourceLoader* ResLo = ResourceLoader::get_singleton();
+	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
+	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
+	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
+	Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
+
+	if (BugattiScene.is_valid() && ChironScene.is_valid())
+	{
+		int type = rand() % 2;
+		Node* node;
+		if (type == 0) { node = BugattiScene->instance(); }
+		else { node = ChironScene->instance(); }
+		node->set("scale", Vector3(10, 10, 10));
+		node->set("translation", Vector3(-13, 0, -13 + 30));
+		this->add_child(node);
+	}
 }
 
 void City::simulation() {
