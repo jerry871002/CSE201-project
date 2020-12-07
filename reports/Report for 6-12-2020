@@ -27,7 +27,8 @@ I was hence able to create a unit test file for each object class and continued 
 Next week I plan on continuing to work on classes and further implement the complexity of the unit tests. 
 
 Eliott:
-This week I implemented car collisions, the blur effect, environnement, the traffic system and I worked on the structure of city. 
+This week I implemented car collisions, the blur effect, environnement, the traffic system and I worked on the structure of city. I also wrote a function to destroyed the car and to create them.
+I will have to design the parking and destroyed cars there.
 I still have on problem to solve for car collision, I will work on it next week, I will also implement the 2D menu and the traffic generation and  try to design new assets.
 
 Ambroise:
