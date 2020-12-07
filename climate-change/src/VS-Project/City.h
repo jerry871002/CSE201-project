@@ -12,6 +12,7 @@
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
 #include "obj.h"
+#include "Restaurant.h"
 
 namespace godot {
 

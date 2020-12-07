@@ -69,7 +69,7 @@ void City::_ready()
 		node->set("translation", Vector3(0, 0, 0));
 		this->add_child(node);
 		this->add_building((Restaurant*)node);
-	}
+		}
 }
 
 void City::_process(float delta)

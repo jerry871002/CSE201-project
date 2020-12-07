@@ -14,6 +14,14 @@ Restaurant::Restaurant()
 {
 	PanelsOn = true;
 	Clickable = false;
+	this->income = 100;
+	this->numberOfEmployees = 20;
+	this->carbonEmission = 1000;
+	this->energyDemand = 300;
+	this->energySupply = 0;
+	this->healthcare = 0;
+	this->needs = 20;
+
 }
 
 Restaurant::Restaurant(double income, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs)

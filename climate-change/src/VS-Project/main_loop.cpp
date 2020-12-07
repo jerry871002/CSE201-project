@@ -40,7 +40,7 @@ int main()
         sleep(1);
 #endif
 		
-		c.add_building(struc_pointer);
+		//c.add_building(struc_pointer);
         std::cout << "New restaurant!" << std::endl << std::endl;
 
 		// advance by 3 days before rerunning through the loop 
