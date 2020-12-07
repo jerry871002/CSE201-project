@@ -1,4 +1,5 @@
 #include "Car.h"
+#include "City.h"
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
 #include <Timer.hpp>
@@ -6,11 +7,32 @@
 #include <cstdlib>
 #include <vector>
 #include <iostream>
+#include <Node.hpp>
+#include <SceneTree.hpp>
+#include <GodotGlobal.hpp>
+#include <SceneTree.hpp>
+#include <Viewport.hpp>
 
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
 using namespace std;
+
+Car::Car()
+{
+	motion = Vector3(0, 0, 0);
+	rot = (M_PI / 2);
+	center = Vector3(0, 0, 0);
+	dir = 0;
+	position = 0;
+	SPEED_T = 0;
+
+}
+
+Car::~Car()
+{
+
+}
 
 void Car::_register_methods()
 {
@@ -39,13 +61,18 @@ int Car::get_direction(Vector3 pos, double rot) {
 	int i = -1;
 	for (const int& n : traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) { //buildings[(int)round(pos.x / 30)][(int)round(pos.y / 30)][(int)rotInt])
 		if (n == 1) {
-			out.push_back(i);
+			//out.push_back(i);
 		}
 		i++;
 	}
+	
+	
 
 	if (out.size() == 0) {
-		//this->get_tree()->get_root()->get_node("Main");
+		City* myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
+		myCity->add_car();
+		this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child( this);
+		return(0);
 	}
 
 	return(out[rand() % out.size()]);
@@ -159,25 +186,10 @@ void Car::_ready()
 
 }
 
-void godot::Car::_physics_process(float delta)
+void Car::_physics_process(float delta)
 {
 
 }
 
 
 
-Car::Car()
-{
-	motion = Vector3(0, 0, 0);
-	rot = (M_PI / 2);
-	center = Vector3(0, 0, 0);
-	dir = 0;
-	position = 0;
-	SPEED_T = 0;
-	
-}
-
-Car::~Car()
-{
-
-}

@@ -35,3 +35,5 @@ transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, -
 shape = SubResource( 1 )
 
 [node name="2D layer" type="Spatial" parent="."]
+
+[node name="Node2D" type="Node2D" parent="."]
