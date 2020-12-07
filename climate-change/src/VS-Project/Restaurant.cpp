@@ -130,7 +130,6 @@ void Restaurant::_ready()
 {
 	this->GetPanels()->set("visible", PanelsOn);
 	this->get_child(0)->set("pressed", PanelsOn);
-	this->get_child(0)->set("visibility", false);
 }
 
 void godot::Restaurant::_on_Area_mouse_entered()
@@ -142,8 +141,7 @@ void godot::Restaurant::_on_Area_mouse_entered()
 	Input* i = Input::get_singleton();
 	// CHANGE MOUSE CURSOR
 	i->set_default_cursor_shape(i->CURSOR_POINTING_HAND);
-	this->get_child(0)->set("rect_position", Vector2(this->get_viewport()->get_mouse_position().x, this->get_viewport()->get_mouse_position().x));
-	this->get_child(0)->set("visibility", true);
+	
 
 }
 
@@ -154,7 +152,7 @@ void godot::Restaurant::_on_Area_mouse_exited()
 	Input* i = Input::get_singleton();
 	// CHANGE MOUSE CURSOR
 	i->set_default_cursor_shape(i->CURSOR_ARROW);
-	this->get_child(0)->set("visibility", false);
+	
 }
 
 
@@ -171,13 +169,11 @@ void godot::Restaurant::_on_Checkbox_toggled()
 
 void godot::Restaurant::_on_Checkbox_button_up()
 {
-	PanelsOn = false;
-	this->GetPanels()->set("visible", PanelsOn);
+	
 }
 
 void godot::Restaurant::_on_Checkbox_button_down()
 {
-	PanelsOn = true;
-	this->GetPanels()->set("visible", PanelsOn);
+	
 }
 
