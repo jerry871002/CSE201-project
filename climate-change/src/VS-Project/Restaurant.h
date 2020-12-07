@@ -8,6 +8,7 @@
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
+#include <String.hpp>
 
 
 namespace godot {
@@ -23,6 +24,7 @@ namespace godot {
 		//Restaurant(int);
 
 		bool PanelsOn;
+		bool MenuVisible;
 		
 		Node* GetPanels();
 
@@ -33,10 +35,11 @@ namespace godot {
 		void _ready();
 		void _on_Area_mouse_entered();
 		void _on_Area_mouse_exited();
-		void _on_Checkbox_pressed();
-		void _on_Checkbox_button_up();
-		void _on_Checkbox_button_down();
-		void _on_Checkbox_toggled();
+		void _on_CheckBox_pressed();
+		void _on_CheckBox_button_up();
+		void _on_CheckBox_button_down();
+		void _on_CheckBox_toggled();
+		String class_name();
 
 
 		int income;

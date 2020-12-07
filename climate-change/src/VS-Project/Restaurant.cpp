@@ -11,6 +11,7 @@ using namespace godot;
 Restaurant::Restaurant()
 {
 	PanelsOn = true;
+	MenuVisible = false;
 	Clickable = false;
 	income = 100;
 
@@ -92,10 +93,10 @@ void Restaurant::_register_methods()
 	register_method((char*)"_ready", &Restaurant::_ready);
 	register_method((char*)"_on_Area_mouse_entered", &Restaurant::_on_Area_mouse_entered);
 	register_method((char*)"_on_Area_mouse_exited", &Restaurant::_on_Area_mouse_exited);
-	register_method((char*)"_on_Checkbox_pressed", &Restaurant::_on_Checkbox_pressed);
-	register_method((char*)"_on_Checkbox_button_up", &Restaurant::_on_Checkbox_button_up);
-	register_method((char*)"_on_Checkbox_button_down", &Restaurant::_on_Checkbox_button_down);
-	register_method((char*)"_on_Checkbox_toggled", &Restaurant::_on_Checkbox_toggled);
+	register_method((char*)"_on_CheckBox_pressed", &Restaurant::_on_CheckBox_pressed);
+	register_method((char*)"_on_CheckBox_button_up", &Restaurant::_on_CheckBox_button_up);
+	register_method((char*)"_on_CheckBox_button_down", &Restaurant::_on_CheckBox_button_down);
+	register_method((char*)"_on_CheckBox_toggled", &Restaurant::_on_CheckBox_toggled);
 }
 
 
@@ -120,8 +121,11 @@ void Restaurant::_input(InputEvent* e)
 
 	if (i->is_action_pressed("ui_select") && Clickable) {
 		PanelsOn = (PanelsOn == false);
-		this->GetPanels()->set("visible", PanelsOn);
-		this->get_child(0)->set("pressed", PanelsOn);
+		//this->GetPanels()->set("visible", PanelsOn);
+		//this->get_child(0)->set("pressed", PanelsOn);
+		MenuVisible = (MenuVisible == false);
+		this->get_child(0)->set("rect_position", Vector2(this->get_viewport()->get_mouse_position().x, this->get_viewport()->get_mouse_position().x));
+		this->get_child(0)->set("visible", MenuVisible);
 	}
 }
 
@@ -130,6 +134,8 @@ void Restaurant::_ready()
 {
 	this->GetPanels()->set("visible", PanelsOn);
 	this->get_child(0)->set("pressed", PanelsOn);
+	this->get_child(0)->set("text", this->class_name() + ": Select to display solar panels");
+	this->get_child(0)->set("visible", MenuVisible);
 }
 
 void godot::Restaurant::_on_Area_mouse_entered()
@@ -156,24 +162,30 @@ void godot::Restaurant::_on_Area_mouse_exited()
 }
 
 
-void godot::Restaurant::_on_Checkbox_pressed() 
+void godot::Restaurant::_on_CheckBox_pressed() 
 {
 	
 }
 
-void godot::Restaurant::_on_Checkbox_toggled()
+void godot::Restaurant::_on_CheckBox_toggled()
+{
+	PanelsOn = (PanelsOn == false);
+	this->GetPanels()->set("visible", PanelsOn);
+}
+
+
+void godot::Restaurant::_on_CheckBox_button_up()
 {
 	
 }
 
-
-void godot::Restaurant::_on_Checkbox_button_up()
+void godot::Restaurant::_on_CheckBox_button_down()
 {
-	
+
 }
 
-void godot::Restaurant::_on_Checkbox_button_down()
-{
-	
-}
 
+String godot::Restaurant::class_name()
+{
+	return "Restaurant";
+}
