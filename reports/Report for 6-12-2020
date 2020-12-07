@@ -36,3 +36,8 @@ I worked on reorganising the godot scenes to make it possible to access any comp
 I also started coding and implementing a menu with buttons to command certain properties of displayed 3D objects. 
 Next week, I will continue working on this menu and will work closely with the simulation team to link the work they did to the game skeleton established. 
 I will also work with the objects team to reorganise the inheritance of classes, to avoid writing unnecessary code and add graphical functionality to the superclasses.
+
+Vincent:
+This week I worked on the City object. It is now able to take in instanced objects when the game world is loaded. 
+In the next week I will continue coordinating between the simulation and interface teams, on topics including the car system, the files outputting data for graphs, and the city object.
+I want to specifically allow buildings to change global variables when they are instanced during the game.
