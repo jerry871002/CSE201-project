@@ -11,16 +11,14 @@
 
 
 namespace godot {
-	class Menu : public StaticBody {
-		GODOT_CLASS(Menu, StaticBody)
+	class Menu {
 
 	public:
 
 		Menu();
-		~Menu()
+		~Menu();
 		bool Sidebar;
 		
-		Node* getsidebar();
 
 		static void _register_methods();
 		void _init();

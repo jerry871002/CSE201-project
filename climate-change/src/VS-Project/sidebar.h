@@ -9,8 +9,8 @@
 #include <menu.h>
 
 namespace godot {
-	class Sidebar : public TextureRect {
-		GODOT_CLASS(Menu, TextureRect)
+	class Sidebar {
+
 	public:
 		Sidebar();
 		~Sidebar();
