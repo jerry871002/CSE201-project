@@ -13,6 +13,7 @@ using namespace godot;
 class Structure {
 public:
     double cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction, environmentalCost;
+    double age; //age of each particular object in days, initialize to 0 in constructor
 
     // The following will be city-wide counters that will be updated every day : 
     // income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply

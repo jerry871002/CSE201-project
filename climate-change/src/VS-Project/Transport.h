@@ -14,15 +14,15 @@ namespace godot {
     private:
         bool Clickable;
     public:
-        double numCars;
+        /*double numCars;
         double numElectricCars;
         double numBus;
-        double numTram;
+        double numTradddm;*/ //not using it for now
         double occupancyRate, capacity, kmPerDay,passengers, co2PerKm, fuelPerKm; // co2 in kg
         double fuelInput; // in litres
         int transportType; /*
         0 - electic car, 1 - big american car 2 - normal car 
-        3 - old collection car 4 - bike 5 -  motorcycle 6 - bus*/
+        3 - old collection car 4 - bike 5 -  motorcycle 6 - bus 7 - sports car*/
         Transport(int type);
         Transport();
 	    static void _register_methods();
@@ -33,6 +33,5 @@ namespace godot {
 		void _on_Area_mouse_entered();
 		void _on_Area_mouse_exited();
 	    void simulate_step(double days);
-        double age; // age of this particular transport (in days)
     };
 }   
