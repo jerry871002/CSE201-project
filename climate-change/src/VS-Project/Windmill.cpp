@@ -41,9 +41,10 @@ Windmill::Windmill()
 
 Windmill::~Windmill()
 {
+	age = 0;
 	maintenance = 7.45E-4; //maintenace and working cost in euros per kWh
 	employment = 1.29; // average number of employees for one windmill
-	satisfaction = 7; // on scale of 10
+	satisfaction = 8; // on scale of 10
 	CO2Emission = 0.011; // kg of CO2 emitted per kWh
 	cost = 4E6; // cost in euros to build a new windmill
 	buildingTime = 0.04; // years needed to build a new windmill (approximatley half a month)
@@ -53,13 +54,14 @@ Windmill::~Windmill()
 
 void Windmill::simulate_step(double days)
 {
+	age += days;
 	energyPerDay = 25000; //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
 	CO2Emission += 0.011 * energyPerDay * days;
 	environmentalCost = 0.0009 * energyPerDay * days;
 	maintenance += 7.45E-4 * energyPerDay * days;
 	/*
-	if totalDays >= 7300{
+	if age >= 7300{
 		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
 	}*/
 }

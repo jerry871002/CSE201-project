@@ -34,6 +34,7 @@ void NuclearPowerPlant::_ready()
 
 NuclearPowerPlant::NuclearPowerPlant()
 {
+	age = 0; 
 	radiation = 1.4E-12; //amount of radiation in millirem per kWh per person living in a 50km radius from the plant 
 	//Just for perspective, coal plants actually release more radiation and an average person receives an exposure of
 	//300 millirem per year from natural background sources of radiation
@@ -56,6 +57,7 @@ NuclearPowerPlant::~NuclearPowerPlant()
 
 void NuclearPowerPlant::simulate_step(double days) 
 {
+	age += days;
 	energyPerDay = 20000000; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
 	fissileMaterial += 1.4E-7 * energyPerDay * days;
@@ -65,14 +67,14 @@ void NuclearPowerPlant::simulate_step(double days)
 	radiation += 1.4E-12 * energyPerDay * days;
 	environmentalCost = 0.06 * energyPerDay * days;
 	maintenance += 166 * energyPerDay * days;
-	if (totalDays >= 3650) {
+	if (age >= 3650) {
 		maintenance += 166 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
 	}
-	if (totalDays >= 10950) {
+	if (age >= 10950) {
 		maintenance += 166; // after 30 years the maintenance and working costs double
 	}
 	/*
-	if totalDays >= 127890{
+	if age >= 127890{
 		// 35 years is the average lifetime of a nuclear power plant, it then has to be replaced by a new plant or different power plant
 	}*/
 }

@@ -41,10 +41,11 @@ Geothermal::Geothermal()
 
 Geothermal::~Geothermal()
 {
+	age = 0;
 	/*
 	maintenance = 7.45E-4; //maintenace and working cost in euros per kWh
 	employment = 1.29; // average number of employees for one windmill
-	satisfaction = 7; // on scale of 10
+	satisfaction = 8; // on scale of 10
 	CO2Emission = 0.011; // kg of CO2 emitted per kWh
 	cost = 4E6; // cost in euros to build a new windmill
 	buildingTime = 0.04; // years needed to build a new windmill (approximatley half a month)
@@ -55,5 +56,5 @@ Geothermal::~Geothermal()
 
 void Geothermal::simulate_step(double days)
 {
-	
+	age += days;
 }
