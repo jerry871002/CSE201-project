@@ -81,10 +81,10 @@ void City::_ready()
 			{
 				// randomly choose between restaurant and shop
 				int type = rand() % 2;
-				Node* node;
-				if (type == 0) { node = RestaurantScene->instance(); }
-				else { node = ShopScene->instance(); }
-
+				//Node* node;
+				//if (type == 0) { node = RestaurantScene->instance(); }
+				//else { node = ShopScene->instance(); }
+				Node* node = RestaurantScene->instance();
 				node->set("scale", Vector3(10, 10, 10));
 				node->set("translation", Vector3(30 * x, 0, 30 * z));
 				//int rot = rand() % 2;
@@ -96,7 +96,7 @@ void City::_ready()
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
 		// TODO: This loop is only going to run once, maybe remove the loop?
-		for (int z = 0; z < 1; z++)
+		for (int z = 0; z < 0; z++) // Car removed to test
 		{
 			// randomly choose between bugatti and chiron
 			int type = rand() % 2;
@@ -162,7 +162,7 @@ void City::simulation() {
 void City::write_stat_history_to_file() {
 	std::ofstream out_file;
 	out_file.open("stat_history.txt", std::ofstream::out | std::ofstream::app);
-	out_file << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
+	//out_file << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
 	out_file << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
 	out_file.close();
 }
