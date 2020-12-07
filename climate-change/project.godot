@@ -118,6 +118,7 @@ Utilities="*res://addons/easy_charts/Utilities/Scripts/utilities.gd"
 window/size/width=1920
 window/size/height=1080
 window/size/resizable=false
+window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
@@ -191,3 +192,4 @@ ui_turn={
 
 quality/shadows/filter_mode=2
 quality/filters/msaa=1
+environment/default_environment="res://default_env.tres"
