@@ -75,9 +75,9 @@ void City::_ready()
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = 0; x < 2; x++)
+		for (int x = 0; x < 1; x++)
 		{
-			for (int z = 0; z < 3; z++)
+			for (int z = 0; z < 1; z++)
 			{
 				// randomly choose between restaurant and shop
 				int type = rand() % 2;
