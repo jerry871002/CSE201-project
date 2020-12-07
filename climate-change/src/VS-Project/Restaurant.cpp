@@ -124,7 +124,7 @@ void Restaurant::_input(InputEvent* e)
 		//this->GetPanels()->set("visible", PanelsOn);
 		//this->get_child(0)->set("pressed", PanelsOn);
 		MenuVisible = (MenuVisible == false);
-		this->get_child(0)->set("rect_position", Vector2(this->get_viewport()->get_mouse_position().x, this->get_viewport()->get_mouse_position().x));
+		//Bthis->get_child(0)->set("rect_position", Vector2(this->get_viewport()->get_mouse_position().x, this->get_viewport()->get_mouse_position().x));
 		this->get_child(0)->set("visible", MenuVisible);
 	}
 }

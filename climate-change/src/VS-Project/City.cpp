@@ -75,16 +75,16 @@ void City::_ready()
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = 0; x < 1; x++)
+		for (int x = 0; x < 2; x++)
 		{
-			for (int z = 0; z < 1; z++)
+			for (int z = 0; z < 3; z++)
 			{
 				// randomly choose between restaurant and shop
 				int type = rand() % 2;
-				//Node* node;
-				//if (type == 0) { node = RestaurantScene->instance(); }
-				//else { node = ShopScene->instance(); }
-				Node* node = RestaurantScene->instance();
+				Node* node;
+				if (type == 0) { node = RestaurantScene->instance(); }
+				else { node = ShopScene->instance(); }
+				//Node* node = RestaurantScene->instance();
 				node->set("scale", Vector3(10, 10, 10));
 				node->set("translation", Vector3(30 * x, 0, 30 * z));
 				//int rot = rand() % 2;
@@ -96,7 +96,7 @@ void City::_ready()
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
 		// TODO: This loop is only going to run once, maybe remove the loop?
-		for (int z = 0; z < 0; z++) // Car removed to test
+		for (int z = 0; z < 1; z++) // Car removed to test
 		{
 			// randomly choose between bugatti and chiron
 			int type = rand() % 2;
