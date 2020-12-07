@@ -120,12 +120,23 @@ switch(transportType) {
     buildingTime = 0.04; //really fast, in days (1 hour )
     std::normal_distribution <double> satisfactionbike(9, 1);
     satisfaction = satisfactionbike(gen); //high satisfaction
-    std::normal_distribution <double> kmbike(20, 10);
+    std::normal_distribution <double> kmbike(18, 7);
     kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
     break;
     }
     case 5:{ //motorcycle 
-
+        fuelPerKm = 0.044; //in liters
+        co2PerKm = 0.11; //in kg
+        std::normal_distribution <double> costm(6200, 2000);
+        cost = costm(gen); // cost of 1 motorcycle in euros, randomised using gaussian
+        capacity = 1;
+        occupancyRate = 1;
+        buildingTime = 0.12; //really fast, in days (3 hours )
+        std::normal_distribution <double> satisfactionm(7, 1);
+        satisfaction = satisfactionm(gen); // not very high satisfaction
+        std::normal_distribution <double> kmbike(30, 10);
+        kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
+        break;
     }
     case 6:{ // bus
         fuelPerKm = 0.26; //in liters
@@ -240,6 +251,9 @@ switch (transportType){
     case 4:{ //bike
         maintenance+=0.8*days;
 
+    }
+    case 5:{ //motorcycle
+        maintenance+=2.6*days;
     }
     case 6:{ //bus
         double alpha = (cost-262500)/262500;
