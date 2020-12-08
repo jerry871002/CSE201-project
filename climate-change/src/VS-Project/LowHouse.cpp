@@ -61,7 +61,7 @@ LowHouse::LowHouse() {
 	satisfaction = 3; //assuming we are on a scale from 0 to 10
 	//attributes special to this class
 	windowNumber = 5; 
-	//age = 0; // set the age of the house at 0 i.e. it was just 
+	age = 0; // set the age of the house at 0 i.e. it was just 
 }
 
 LowHouse::~LowHouse(){
@@ -91,7 +91,7 @@ void LowHouse::simulate_step(double days) {
 	
 	maintenance += 0.1765 * energyUse * days;
 	CO2Emission += 0.0065 * energyUse * days;  
-	//age += days; //age is an attribute from the Structure class
+	age += days; //age is an attribute from the Structure class
 	
 }
 

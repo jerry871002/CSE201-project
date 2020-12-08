@@ -42,7 +42,7 @@ LowBuilding::LowBuilding() {
 	buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
 	satisfaction = 3;
 	windowNumber = 10;
-	//age = 0;
+	age = 0;
 }
 
 void LowBuilding::simulate_step(double days) {
@@ -67,7 +67,7 @@ void LowBuilding::simulate_step(double days) {
 	
 	maintenance += 0.1765 * energyUse * days;
 	CO2Emission += 0.0065 * energyUse * days;  
-	//age += days;
+	age += days;
 	
 }
 

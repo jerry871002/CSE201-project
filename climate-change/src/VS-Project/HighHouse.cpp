@@ -54,14 +54,14 @@ maintenance = 0.1765; //cost in euros per kWh
 CO2Emission = 0.0065; //6.5g per kWh
 buildingTime = 140; //in average, building a house takes about 140 days
 satisfaction = 10; //assuming we are on a scale from 0 to 10
-//age = 0;
+age = 0;
 }
 
 void HighHouse::simulate_step(double days) {
 
 	maintenance += 0.1765 * energyUse * days;
 	CO2Emission += 0.0065 * energyUse * days;
-	//age += days;  
+	age += days;  
 }
 
 HighHouse::~HighHouse() {
