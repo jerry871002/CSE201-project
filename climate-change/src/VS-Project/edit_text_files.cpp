@@ -52,6 +52,8 @@ void copy(string documentNameFrom, string documentNameTo) {
 
 // Function to modify a line of the csv file named documentName.
 // For example, if you want to change the line "2015;76" into "2015;01" of the pollution.csv file, call change_data("pollution", "2015", "01");
+// By calling change_data("pollution", "2015", "01");, you will change all lines of the form "2015;**" into "2015;01".
+// If no line in the file is of the form "2015;**", calling change_data("pollution", "2015", "01") won't do anything.
 void change_data(string documentName, string dataToChange, string newValue) {
     fstream file;
     fstream temp;
