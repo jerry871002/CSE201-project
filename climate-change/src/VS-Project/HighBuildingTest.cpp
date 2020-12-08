@@ -1,5 +1,7 @@
 #include <iostream>
 #include "HighBuilding.h"
+#include <cstdlib>
+#include <ctime>
 
 /*
 If on Mac, use this to test in terminal:

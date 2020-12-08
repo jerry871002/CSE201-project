@@ -1,6 +1,8 @@
 #include "HighBuilding.h"
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
+#include <cstdlib>
+#include <ctime>
 
 using namespace godot;
 
@@ -30,6 +32,10 @@ void HighBuilding::_ready() {
 
 HighBuilding::HighBuilding() {
 	//We consider a 500 m^2 building 
+	srand((int)time(0));
+	//5 appartments pay between 300-500 € per month
+	coOwnershipBudget = (rand() % (83-50) + 50);
+
 	cost = 1000000; //counting price of lot + cost of workforce + cost of all materials used
 	energyUse = 292; // 213 kWh/m^2 per year which gives 106500 kWh per year i.e 292 kwH per day
 	maintenance = 0.1765; //cost in euros per kWh
