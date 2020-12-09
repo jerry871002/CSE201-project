@@ -86,6 +86,7 @@ void change_data(string documentName, string dataToChange, string newValue) {
 
 // Function to delete a line of the csv file named documentName.
 // By calling delete_line("pollution", "2015");, you will delete all lines of the form "2015;**".
+// If no line in the file is of the form "2015;**", calling delete_line("pollution", "2015") won't do anything.
 void delete_line(string documentName, string dataToDelete) {
     fstream file;
     fstream temp;
@@ -115,7 +116,7 @@ void delete_line(string documentName, string dataToDelete) {
 }
 
 int main() {
-    // More examples on how to use the functions: 
+    // More examples on how to use the above functions: 
     // clear("pollution");
     // change_data("pollution", "2013", "01");
     // copy("pollution", "tmp");
