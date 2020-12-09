@@ -1,4 +1,3 @@
-
 #include "City.h"
 #include "Car.h"
 #include "Restaurant.h"
@@ -64,7 +63,8 @@ void City::_ready()
 
 	if (RestaurantScene.is_valid())
 	{
-		Node* node = RestaurantScene->instance();
+		Restaurant* node = (Restaurant*)(RestaurantScene->instance());
+		((Restaurant*)node)->Restaurant::initialize();
 		node->set("scale", Vector3(10, 10, 10));
 		node->set("translation", Vector3(0, 0, 0));
 		this->add_child(node);

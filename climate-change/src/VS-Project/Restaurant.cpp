@@ -14,14 +14,6 @@ Restaurant::Restaurant()
 {
 	PanelsOn = true;
 	Clickable = false;
-	this->income = 100;
-	this->numberOfEmployees = 20;
-	this->carbonEmission = 1000;
-	this->energyDemand = 300;
-	this->energySupply = 0;
-	this->healthcare = 0;
-	this->needs = 20;
-
 }
 
 Restaurant::Restaurant(double income, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs)
@@ -35,6 +27,16 @@ Restaurant::Restaurant(double income, double numberOfEmployees, double carbonEmi
 	this->energySupply = energySupply;
 	this->healthcare = healthcare;
 	this->needs = needs;
+}
+
+void Restaurant::initialize() {
+	this->income = 100;
+	this->numberOfEmployees = 20;
+	this->carbonEmission = 1000;
+	this->energyDemand = 300;
+	this->energySupply = 0;
+	this->healthcare = 0;
+	this->needs = 20;
 }
 
 double Restaurant::get_emissions(){

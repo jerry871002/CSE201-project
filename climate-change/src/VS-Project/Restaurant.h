@@ -39,5 +39,7 @@ namespace godot {
 		void _on_Area_mouse_exited();
 	
 		double get_emissions();
+
+		void initialize();
 	};
 }
