@@ -48,3 +48,6 @@ This week I worked on the City class. The main loop of the game is now able to l
 continuously while other structures are being added. In addition I implemented a basic working simulation with one Restaurant object created by 
 the object's team. Further, I fixed bugs in different branches and am able to compile and run the code on Mac.
 Next week, I will work on the Car and Transport classes.
+
+Paloma:
+This week I have worked on standardizing variables and general syntax with the objects and simulation team. I have also finished coding both the nuclear power plant and windmill class. Next week I will work on the geothermal plant.
