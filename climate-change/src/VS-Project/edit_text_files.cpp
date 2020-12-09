@@ -84,11 +84,42 @@ void change_data(string documentName, string dataToChange, string newValue) {
     clear("tmp");
 }
 
+// Function to delete a line of the csv file named documentName.
+// By calling delete_line("pollution", "2015");, you will delete all lines of the form "2015;**".
+void delete_line(string documentName, string dataToDelete) {
+    fstream file;
+    fstream temp;
+    string path = get_path(documentName);
+    file.open(path);
+    temp.open("data/tmp.csv");
+
+    while (file.good()) {
+        string line;
+        getline(file, line, '\n');
+        if (line.length() > 0) {
+            int pos = line.find(";");
+            string sub = line.substr(0, pos);
+            if (sub != dataToDelete) {
+                temp << line << '\n';
+            }
+        }
+    }
+
+    file.close();
+    temp.close();
+
+    clear(documentName);
+
+    copy("tmp", documentName);
+    clear("tmp");
+}
+
 int main() {
     // More examples on how to use the functions: 
     // clear("pollution");
     // change_data("pollution", "2013", "01");
     // copy("pollution", "tmp");
     // add_data("pollution", "2015", "76");
+    // delete_line("pollution", "2013");
     return 0;
 }
