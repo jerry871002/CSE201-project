@@ -21,20 +21,14 @@ using namespace godot;
 
 //Declare All the test functions:
 void test_constructor();
-<<<<<<< Updated upstream
-=======
 void test_simulate_step();
 void test_get_satisfaction();
->>>>>>> Stashed changes
 
 
 int main() {
     test_constructor();
-<<<<<<< Updated upstream
-=======
     // test_simulate_step();
     test_get_satisfaction();
->>>>>>> Stashed changes
 }
 
 
@@ -47,8 +41,6 @@ void test_constructor() {
     std::cout << "Constructor Works " << std::endl;
 }
 
-<<<<<<< Updated upstream
-=======
 void test_simulate_step(){
     Restaurant A = Restaurant();
 
@@ -74,4 +66,3 @@ void test_get_satisfaction(){
     Restaurant A = Restaurant();
     std::cout << "Restaurant type: " << A.restaurantType << ", Satisfaction is: " << A.get_satisfaction() << std::endl;
 }
->>>>>>> Stashed changes
