@@ -5,6 +5,20 @@
 #include <Mesh.hpp>
 #include <Area.hpp>
 #include <KinematicCollision.hpp>
+<<<<<<< Updated upstream
+=======
+#pragma once
+#include <core/Godot.hpp>
+#include <KinematicBody.hpp>
+#include <Input.hpp>
+#include <InputEventMouse.hpp>
+#include <InputEventMouseMotion.hpp>
+#include <InputEventMouseButton.hpp>
+#include <ClippedCamera.hpp>
+#include <WorldEnvironment.hpp>
+#include <Environment.hpp>
+#include "City.h"
+>>>>>>> Stashed changes
 
 namespace godot {
 	class Car : public KinematicBody {
@@ -19,7 +33,13 @@ namespace godot {
 
 		double Acc = 0.5;
 		Vector3 center;
+<<<<<<< Updated upstream
 
+=======
+		City* myCity ;
+		int traffic[2][3][4][3] = { {{{0, 1, 0},{0, 0, 1},{0, 0, 1},{0, 0, 1}},		{{0, 0, 1},{0, 1, 0},{0, 0, 1},{0, 0, 1}},		{ {0, 1, 1},{0, 1, 1},{0, 0, 1},{0, 0, 1}}},
+									{ {{0, 0, 1},{0, 0, 1},{0, 0, 1},{0, 1, 0}}	,		{{0, 0, 1},{0, 0, 1},{1, 1, 0},{0, 1, 1}},		 { {0, 0, 1},{0, 0, 1},{0, 1, 1},{0, 0, 1}}} };
+>>>>>>> Stashed changes
 	public:
 
 		static void _register_methods();
