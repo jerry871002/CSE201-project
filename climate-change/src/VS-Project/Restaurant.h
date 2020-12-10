@@ -47,11 +47,9 @@ namespace godot {
 		void change_income_by_percent(float);
 		
 
-		bool restaurantStatus;    //True if open, False if closed
+
 		int restaurantType;
 		double diningSize;
 		double averageWage;
-		bool firstYearShock;
-		void simulate_step(double days);
 	};
 }
