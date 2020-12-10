@@ -18,6 +18,8 @@ City::City() {
 	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
+	healthcare = 0;
+    needs = 0;
 
 	time_speed = 1;
 	delta_counter = 0.0;
@@ -131,7 +133,7 @@ void City::_ready()
 
 };
 void City::add_building(Structure* struc) {
-	buildings.insert(struc);
+	buildings.push_back(struc);
 }
 
 void City::add_car() {
@@ -163,8 +165,10 @@ void City::simulation() {
 	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
+    healthcare = 0;
+    needs = 0;
 
-	for (std::set<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
+	for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
 		/*
 		commented out until we know what variables to call in every structure
@@ -175,9 +179,12 @@ void City::simulation() {
 		carbonEmission += (*it)->carbonEmission;
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
+        healthcare += (*it)->healthcare;
+        needs += (*it)->needs;
 		(*it)->simulate_step(); //function that updates the building
-
+		
 		*/
+
 	}
 }
 
@@ -194,6 +201,31 @@ void City::write_stat_history_to_file() {
 double City::return_income() {
 	return income;
 }
+
+double City::return_numberOfEmployees() {
+    return numberOfEmployees;
+}
+
+double City::return_carbonEmission() {
+    return carbonEmission;
+}
+
+double City::return_energyDemand() {
+    return energyDemand;
+}
+
+double City::return_energySupply() {
+    return energySupply;
+}
+
+double City::return_healthcare() {
+    return healthcare;
+}
+
+double City::return_needs() {
+    return needs;
+}
+
 
 std::string City::return_game_date() {
 	std::string date = "Year ";
