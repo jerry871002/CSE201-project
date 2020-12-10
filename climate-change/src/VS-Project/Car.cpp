@@ -57,21 +57,30 @@ void ComputeAcceleration(double& Acc, double Speed0, double Speed1, double d) {
 int Car::get_direction(Vector3 pos, double rot) {
 	int rotInt = (int)((rot / 90)+4) % 4 ;
 	vector<int> out;
-
+	
+	if ((int)round(pos.x / 30) >= sizeof(traffic) or (int)round(pos.z / 30) >= sizeof(traffic[0])) {
+		myCity->add_car();
+		this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
+		myCity->add_car();
+		return(0);
+	}
+	
+	
 	int i = -1;
 	for (const int& n : traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) { //buildings[(int)round(pos.x / 30)][(int)round(pos.y / 30)][(int)rotInt])
 		if (n == 1) {
-			//out.push_back(i);
+			out.push_back(i);
 		}
 		i++;
 	}
 	
-	
+
 
 	if (out.size() == 0) {
-		City* myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
+		
 		myCity->add_car();
 		this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child( this);
+		myCity->add_car();
 		return(0);
 	}
 
@@ -90,6 +99,7 @@ template <typename T> void align_on_axis(T obj) {
 
 void Car::_process(float delta)
 {
+	
 	if (rot >= (M_PI / 2)) {
 		
 		straight(delta);
@@ -182,6 +192,7 @@ void Car::straight(float delta)
 void Car::_ready()
 {
 	prevPosition = this->get_global_transform().get_origin();
+	myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
 	//dir = get_direction(this->get_global_transform().get_origin(), this->get_rotation_degrees().y);
 
 }
