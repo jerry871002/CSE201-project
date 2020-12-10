@@ -1,11 +1,13 @@
 #include "AgriculturalProduction.h"
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
+#include <iostream>
 
 using namespace godot;
 
 void AgriculturalProduction::_register_methods()
 {
+	register_method((char*)"_init", &AgriculturalProduction::_init);
 	register_method((char*)"_process", &AgriculturalProduction::_process);
 	register_method((char*)"_input", &AgriculturalProduction::_input);
 	register_method((char*)"_ready", &AgriculturalProduction::_ready);
@@ -41,3 +43,7 @@ AgriculturalProduction::~AgriculturalProduction()
 {
 
 }
+
+// void AgriculturalProduction::test() {
+// 	std::cout << "AgriculturalProduction" << std::endl;
+// }

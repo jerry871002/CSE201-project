@@ -6,6 +6,7 @@ using namespace godot;
 
 void RecyclingFactory::_register_methods()
 {
+	register_method((char*)"_init", &RecyclingFactory::_init);
 	register_method((char*)"_process", &RecyclingFactory::_process);
 	register_method((char*)"_input", &RecyclingFactory::_input);
 	register_method((char*)"_ready", &RecyclingFactory::_ready);

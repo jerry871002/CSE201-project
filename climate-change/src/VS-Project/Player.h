@@ -6,6 +6,8 @@
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
 #include <ClippedCamera.hpp>
+#include <WorldEnvironment.hpp>
+#include <Environment.hpp>
 
 namespace godot {
 	class Player : public KinematicBody {
@@ -13,15 +15,17 @@ namespace godot {
 	private:
 		Vector3 motion;
 		Vector3 rotation;
+		Vector2 mouse_p;
 		
-		const double SPEED_T = 1;
+		double SPEED_T = 1;
 		const double SPEED_R = 20;
 		const double VSPEED_INVERSE = 512;
 		const double VSPEED_POWER = 1.2;
 
 		const double CameraAngleDeg = 15;
 		const double MaxHeight{ 300 };
-		const double MinHeight{ 30 };
+		const double MinHeight{ 20 };
+		//WorldEnvironment* Env;
 
 
 	public:
@@ -29,7 +33,7 @@ namespace godot {
 		static void _register_methods();
 		void _init();
 		void _process(float delta);
-		void _physics_process(float);
+		void _physics_process(float delta);
 		void _input(InputEvent* e);
 		void _ready();
 		
@@ -37,7 +41,7 @@ namespace godot {
 		Player();
 		~Player();
 
-		void UpdateMotionFromInput();
+		void UpdateMotionFromInput(float delta);
 		void UpdateRotationFromInput(InputEventMouseMotion* e);
 		void ChangeMouseMode();
 	};

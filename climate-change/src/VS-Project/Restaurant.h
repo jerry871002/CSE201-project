@@ -1,37 +1,57 @@
+#pragma once
 #include "obj.h"
+#include <core/Godot.hpp>
+#include <StaticBody.hpp>
+#include <MeshInstance.hpp>
+#include <Input.hpp>
+#include <InputEvent.hpp>
+#include <InputEventMouse.hpp>
+#include <InputEventMouseMotion.hpp>
+#include <InputEventMouseButton.hpp>
+#include <String.hpp>
 
 
-class Restaurant: public Shop{
-public:
-	Restaurant();
-	~Restaurant();
-	void _register_methods();
-	void _init();
-	void _process(float delta);
-	void _input(InputEvent* e);
-	void _ready();
+namespace godot {
+	class Restaurant : public Production, public StaticBody {
+		GODOT_CLASS(Restaurant, StaticBody)
+	private:
+
+		bool Clickable;
+
+	public:
+
+		Restaurant();
+		//Restaurant(int);
+
+		bool PanelsOn;
+		bool MenuVisible;
+		
+		Node* GetPanels();
+
+		static void _register_methods();
+		void _init();
+		void _process(float delta);
+		void _input(InputEvent* e);
+		void _ready();
+		void _on_Area_mouse_entered();
+		void _on_Area_mouse_exited();
+		void _on_CheckBox_pressed();
+		void _on_CheckBox_button_up();
+		void _on_CheckBox_button_down();
+		void _on_CheckBox_toggled();
+		String class_name();
 
 
-	// variable inherited from above: Age/maintenance, Energy use, Satisfaction, Environmental_Impact 
-	//Input, Output , Employment
-	double get_shock(double upper_bound);
-	double get_energyuse();
-	double get_popularity(); 		//calculates a random shock, having impact 
-	void calculate_demand(); 
+		int income;
 
+		void change_income_by_percent(float);
+		
 
-protected:
-	double demand;  //idea is demand between 0-100
-	double owner_skills; // between 0-1
-	double popularity; // between 0-100
-	double shock;  //random external factors
-	double costs; //costs of the restaurant
-	double revenue;  //overall revenue
-
-	
-
-
-
-
-
-};
+		bool restaurantStatus;    //True if open, False if closed
+		int restaurantType;
+		double diningSize;
+		double averageWage;
+		bool firstYearShock;
+		void simulate_step(double days);
+	};
+}

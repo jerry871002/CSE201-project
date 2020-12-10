@@ -99,6 +99,18 @@ env.Append(LIBS=[cpp_library])
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 env.Append(CPPPATH=['VS-Project/'])
 sources = Glob('VS-Project/*.cpp')
+exclude_files = Glob('VS-Project/*Test.cpp')
+exclude_files += Glob('VS-Project/edit_text_files.cpp')
+exclude_files += Glob('VS-Project/main_loop.cpp')
+
+# we don't need to compile the unit test files into our dynamic library
+for file in exclude_files:
+    sources.remove(file)
+
+print('There are {} files to compile...'.format(len(sources)))
+for source_file in sources:
+    print(source_file.name)
+print()
 
 library = env.SharedLibrary(target=env['target_path'] + env['target_name'] , source=sources)
 

@@ -1,43 +1,103 @@
 #include "LowBuilding.h"
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
+#include <cstdlib>
+#include <ctime>
 
 using namespace godot;
 
-void LowBuilding::_register_methods()
-{
+void LowBuilding::_register_methods() {
+	register_method((char*)"_init", &LowBuilding::_init);
 	register_method((char*)"_process", &LowBuilding::_process);
 	register_method((char*)"_input", &LowBuilding::_input);
 	register_method((char*)"_ready", &LowBuilding::_ready);
 }
 
-void LowBuilding::_init()
-{
+void LowBuilding::_init() {
 
 }
 
-void LowBuilding::_process(float delta)
-{
+void LowBuilding::_process(float delta) {
 
 }
 
-void LowBuilding::_input(InputEvent* e)
-{
+void LowBuilding::_input(InputEvent* e) {
 
 }
 
-void LowBuilding::_ready()
-{
+void LowBuilding::_ready() {
 
 }
 
 
-LowBuilding::LowBuilding()
-{
+LowBuilding::LowBuilding() {
+	srand((int)time(0));
+	//5 appartments pay between 200-400 € per month
+	coOwnershipBudget = (rand() % (66-33) + 33);
+	
+	cost = 1000000; //counting price of lot + cost of workforce + cost of all materials used
+	energyUse = 365; // 266.25 kWh/m^2 per year which gives 133125 kWh per year i.e 365 kwH per day
+	maintenance = 0.1765; //cost in euros per kWh
+	CO2Emission = 0.0065; //6.5g per kWh
+	buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
+	satisfaction = 3;
+	windowNumber = 10;
+	age = 0;
+}
+
+void LowBuilding::simulate_step(double days) {
+	if (solar_panel() == true) {
+		// energyPerDay -= 0 ; // adding solar panels actually does nor reduce the energy used
+		maintenance += solarPanelCost;
+
+		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
+			satisfaction += 1;
+		}
+	}
+
+	//assuming this is a button to change all windows at once i.e. you cannot call this function more than once on this house	
+	if (double_glazing() == true) {
+		energyUse *= 0.75 ; //when having better insulation of windows, you don't have the 25% loss of heat anymore
+		maintenance += windowCost * windowNumber; //200€ per window, if function adds one window at a time
+
+		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
+			satisfaction += 2;
+		}
+	} 
+	
+	maintenance += 0.1765 * energyUse * days;
+	CO2Emission += 0.0065 * energyUse * days;  
+	age += days;
+	
+}
+
+
+LowBuilding::~LowBuilding() {
 
 }
 
-LowBuilding::~LowBuilding()
-{
+bool LowBuilding::solar_panel() {
+	if (coOwnershipBudget > 50) {
+		return PanelsOn;	
+	}
+
+	// else {
+	// 	//check if policy from state is giving money
+	// 	//in which case you can add solar panels
+	// 	//otherwise 
+		
+	// }
+
+	return PanelsOn;
+}
+
+bool LowBuilding::double_glazing() {
+	// if (coOwnershipBudget > 40) {
+	// 	return true;	
+	// }
+
+
+	// placeholder must change
+	return false;
 
 }
