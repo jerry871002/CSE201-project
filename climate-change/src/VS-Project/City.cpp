@@ -111,16 +111,16 @@ void City::simulation() {
 	healthcare = 0;
 	needs = 0;
 
-	for (std::vector<Struc*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
+	for (std::vector<Restaurant*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
-		income += (*it)->income;
-		numberOfEmployees += (*it)->numberOfEmployees;
+		//income += (*it)->income;
+		//numberOfEmployees += (*it)->numberOfEmployees;
 		carbonEmission += (*it)->get_emissions();
-		energyDemand += (*it)->energyDemand;
-		energySupply += (*it)->energySupply;
-		healthcare += (*it)->healthcare;
-		needs += (*it)->needs;
-		(*it)->simulate_step(); // function that updates the building
+		//energyDemand += (*it)->energyDemand;
+		//energySupply += (*it)->energySupply;
+		//healthcare += (*it)->healthcare;
+		//needs += (*it)->needs;
+		//(*it)->simulate_step(); // function that updates the building
 	}
 
 	std::cout << return_game_date() << std::endl;

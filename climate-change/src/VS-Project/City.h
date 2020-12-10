@@ -34,7 +34,7 @@ namespace godot {
 		City();
 		~City();
 
-		std::vector<Struc*> buildings;
+		std::vector<Restaurant*> buildings;
 
 		void add_building(Restaurant*);
 		void simulation();                   // updates all the stats and the building
