@@ -10,7 +10,7 @@
 #include "RecyclingFactory.h"
 #include "Services.h"
 #include "Windmill.h"
-#include "Car.h"
+#include "Transport.h"
 
 
 
@@ -38,7 +38,8 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<RecyclingFactory>();
 	register_class<Services>();
 	register_class<Windmill>();
-	register_class<Car>();
+	register_class<Transport>();
+
 }
 
 

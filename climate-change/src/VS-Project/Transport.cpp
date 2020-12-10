@@ -1,10 +1,27 @@
 #include "Transport.h"
+#include "City.h"
 #include "random"
 #include <Area.hpp>
+#include <iostream>
+#include <Math.hpp>
+#include <GodotGlobal.hpp>
+#include <Timer.hpp>
+#include <time.h>
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+#include <Node.hpp>
+#include <SceneTree.hpp>
+#include <GodotGlobal.hpp>
+#include <SceneTree.hpp>
+#include <Viewport.hpp>
+#include <KinematicCollision.hpp>
+#include <Mesh.hpp>
 
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
+using namespace std;
 
 // helper functions
 void compute_speed(double& Speed, double Acc, float delta) {
@@ -29,9 +46,8 @@ template <typename T> void align_on_axis(T obj) {
 }
 
 // Constructors
-Transport::Transport() {
-    int type = rand() % 8;
-    Transport(type);
+Transport::Transport() : Transport(0) {
+
 }
 
 Transport::Transport(int type) {
