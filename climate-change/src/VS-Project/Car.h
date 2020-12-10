@@ -11,6 +11,7 @@
 #include <ClippedCamera.hpp>
 #include <WorldEnvironment.hpp>
 #include <Environment.hpp>
+#include "City.h"
 
 namespace godot {
 	class Car : public KinematicBody {
@@ -25,6 +26,7 @@ namespace godot {
 		Vector3 prevPosition = Vector3(0, 0, 0);
 		double Acc = 0.5;
 		Vector3 center;
+		City* myCity;
 		int traffic[2][3][4][3] = { {{{0, 1, 0},{0, 0, 1},{0, 0, 1},{0, 0, 1}},		{{0, 0, 1},{0, 1, 0},{0, 0, 1},{0, 0, 1}},		{ {0, 1, 1},{0, 1, 1},{0, 0, 1},{0, 0, 1}}},
 									{ {{0, 0, 1},{0, 0, 1},{0, 0, 1},{0, 1, 0}}	,		{{0, 0, 1},{0, 0, 1},{1, 1, 0},{0, 1, 1}},		 { {0, 0, 1},{0, 0, 1},{0, 1, 1},{0, 0, 1}}} };
 	public:
