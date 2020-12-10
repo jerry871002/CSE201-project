@@ -17,7 +17,7 @@ namespace godot {
 		Menu();
 		~Menu();
 		bool Sidebar;
-		
+		bool CloseButton;
 
 		static void _register_methods();
 		void _init();
@@ -26,5 +26,6 @@ namespace godot {
 		void _on_MenuButton_mouse_entered();
 		void _on_MenuButton_mouse_exited();
 		void _on_MenuButton_pressed();
+		void _on_CloseButton_pressed();
 	};
 }

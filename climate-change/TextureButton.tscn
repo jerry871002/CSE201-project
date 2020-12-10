@@ -4,11 +4,11 @@
 [ext_resource path="res://Ressources/Christmas Tree.otf" type="DynamicFontData" id=2]
 [ext_resource path="res://MenuButton.gdns" type="Script" id=3]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 90
 font_data = ExtResource( 2 )
 
-[sub_resource type="ImageTexture" id=1]
+[sub_resource type="ImageTexture" id=2]
 
 [node name="MenuButton" type="TextureButton"]
 margin_right = 199.0
@@ -23,11 +23,11 @@ __meta__ = {
 }
 
 [node name="MenuText" type="Label" parent="."]
-margin_left = -2.87015
-margin_top = -4.21554
-margin_right = 196.13
-margin_bottom = 95.7845
-custom_fonts/font = SubResource( 2 )
+margin_left = -1.18016
+margin_top = -5.90554
+margin_right = 197.82
+margin_bottom = 94.0945
+custom_fonts/font = SubResource( 1 )
 text = "Menu"
 align = 1
 valign = 1
@@ -36,17 +36,41 @@ __meta__ = {
 }
 
 [node name="Sidebar" type="ItemList" parent="."]
-margin_left = 198.428
-margin_top = 6.27942
-margin_right = 399.428
-margin_bottom = 790.279
+margin_left = -1.31006
+margin_top = 6.10352e-05
+margin_right = 226.69
+margin_bottom = 784.0
 custom_colors/guide_color = Color( 0.952941, 0.968627, 0.968627, 1 )
 custom_colors/font_color_selected = Color( 0.952941, 0.968627, 0.968627, 1 )
 custom_colors/font_color = Color( 0.952941, 0.968627, 0.968627, 1 )
 custom_constants/vseparation = 0
 custom_constants/line_separation = 0
 custom_constants/icon_margin = 2
-items = [ "Information about the city", null, false, "Date : ", SubResource( 1 ), false ]
+items = [ "Information about the city", null, false, "Date : ", SubResource( 2 ), false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CloseButton" type="TextureButton" parent="Sidebar"]
+margin_left = 66.0
+margin_top = 755.0
+margin_right = 147.0
+margin_bottom = 783.0
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CloseText" type="Label" parent="Sidebar/CloseButton"]
+margin_left = 0.696884
+margin_top = 7.66565
+margin_right = 75.6969
+margin_bottom = 21.6656
+text = "Close Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="mouse_entered" from="." to="." method="_on_MenuButton_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_MenuButton_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_MenuButton_pressed"]
+[connection signal="pressed" from="Sidebar/CloseButton" to="." method="_on_CloseButton_pressed"]

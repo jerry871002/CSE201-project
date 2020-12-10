@@ -16,6 +16,7 @@ void Menu::_register_methods()
 	register_method((char*)"_on_MenuButton_mouse_entered", &Menu::_on_MenuButton_mouse_entered);
 	register_method((char*)"_on_MenuButton_mouse_exited", &Menu::_on_MenuButton_mouse_exited);
 	register_method((char*)"_on_MenuButton_pressed", &Menu::_on_MenuButton_pressed);
+	register_method((char*)"_on_CloseButton_pressed", &Menu::_on_CloseButton_pressed);
 }
 
 
@@ -30,7 +31,7 @@ void Menu::_input(Input* e)
 void Menu::_ready()
 {
 	Sidebar = false;
-	this->get_child(0)->set("visible", Sidebar);
+	this->get_child(1)->set("visible", Sidebar);
 	std::cout << "success" << std::endl;
 
 }
@@ -50,7 +51,12 @@ void godot::Menu::_on_MenuButton_mouse_exited()
 
 void godot::Menu::_on_MenuButton_pressed()
 {
-	Sidebar = (Sidebar == true);
-	std::cout << "success" << std::endl;
-	this->get_child(0)->set("visible", Sidebar);
+	this->get_child(1)->set("visible", !Sidebar);
+	Sidebar = !Sidebar;
+}
+
+void godot::Menu::_on_CloseButton_pressed()
+{
+	this->get_child(1)->set("visible", !Sidebar);
+	Sidebar = !Sidebar;
 }
