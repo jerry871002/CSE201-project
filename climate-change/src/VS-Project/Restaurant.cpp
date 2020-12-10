@@ -15,8 +15,8 @@ Restaurant::Restaurant()
 	Clickable = false;
 	income = 100;
 
-
-
+	restaurantStatus = true;
+	firstYearShock = false;
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 
 	std::normal_distribution <double> mediancost(310000, 150000);  //Median cost of opening restaurant 375K $, including owning the building
@@ -70,6 +70,24 @@ Restaurant::Restaurant()
 		break;
 	}
 	}
+}
+
+void Restaurant::simulate_step(double days){
+	age += days;
+	double shock;
+	std::random_device rd; 
+	std::mt19937 gen(rd()); 
+	
+	if ((age >= 365) and (!firstYearShock)){
+		std::uniform_real_distribution <double> firstYearShockGen(0,100);
+		double shockgen = firstYearShockGen(gen);
+		if (shockgen <= 17){
+			restaurantStatus = false;		//On average restaurants have a 17% chance of closing in the first year.
+		}
+		firstYearShock = true; //so that this if statement is only run once, after a full year has passed
+	}
+	
+	energyUse += 38*diningSize*days;
 }
 
 /*
