@@ -258,7 +258,22 @@ void Transport::_process(float delta){
     } else if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
 
         compute_speed(SPEED_T, Acc, delta);
-        if (this->move_and_collide(Vector3(0, 0, 0), true, true, true) == NULL) { turn(dir, delta); }
+        if (this->move_and_collide(Vector3(0, 0, 0), true, true, true) == NULL) {
+            turn(dir, delta);
+        }
+        else {
+            Vector3 colVelocity = this->move_and_collide(Vector3(0, 0, 0), true, true, true)->get_collider_velocity();
+            double colVelocityNorm = colVelocity.normalized().dot(colVelocity);
+
+            if ((this->get_floor_velocity()).normalized().dot(this->get_floor_velocity()) > colVelocityNorm) {
+                turn(dir, delta);
+            }
+            else {
+                SPEED_T = 0;
+            }
+        }
+
+
         prevPosition = this->get_global_transform().get_origin();
 
         if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
@@ -403,10 +418,8 @@ void Transport::straight(float delta) {
     Vector3 globalSpeed = Vector3((SPEED_T * delta*10), 0, 0);
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
     this->move_and_collide(globalSpeed, true, true, false);
-    //position += SPEED_T * delta * 10;
     Vector3 pos = this->get_global_transform().get_origin() - prevPosition;
     position += pos.normalized().dot(pos);				//Get the norm....
-    //position += SPEED_T * delta * 10;
     prevPosition = this->get_global_transform().get_origin();	
     
     ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position ));

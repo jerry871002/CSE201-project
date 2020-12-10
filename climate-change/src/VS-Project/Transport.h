@@ -1,5 +1,4 @@
 #pragma once
-
 #include <core/Godot.hpp>
 #include <StaticBody.hpp>
 #include <MeshInstance.hpp>
