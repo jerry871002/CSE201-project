@@ -12,7 +12,7 @@ using namespace godot;
 
 Restaurant::Restaurant()
 {
-	PanelsOn = true;
+	PanelsOn = false;
 	Clickable = false;
 }
 
@@ -30,12 +30,13 @@ void Restaurant::initialize() {
 double Restaurant::get_emissions(){
 	std::cout << "DEBUG: GET_EMISSIONS_CALLED" << std::endl;
 	double temp = this->carbonEmission;
-	if (this->PanelsOn) {
+	std::cout << temp << std::endl;
+	if (this->ArePanelsDisplayed()) {
 		temp = 0.5*temp;
 	}
 	std::cout << "DEBUG: GET_EMISSIONS_DONE" << std::endl;
 	std::cout << temp << std::endl;
-	std::cout << this->PanelsOn << std::endl;
+	std::cout << this->ArePanelsDisplayed() << std::endl;
 	return temp;
 }
 
@@ -92,3 +93,7 @@ void godot::Restaurant::_on_Area_mouse_exited()
 	i->set_default_cursor_shape(i->CURSOR_ARROW);
 }
 
+bool godot::Restaurant::ArePanelsDisplayed() 
+{
+	return this->GetPanels()->get("visible");
+}

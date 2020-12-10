@@ -36,5 +36,8 @@ namespace godot {
 		double get_emissions();
 
 		void initialize();
+
+		bool ArePanelsDisplayed();
+
 	};
 }
