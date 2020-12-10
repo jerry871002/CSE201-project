@@ -166,6 +166,7 @@
     <ClCompile Include="GodotLibrary.cpp" />
     <ClCompile Include="Health.cpp" />
     <ClCompile Include="main_loop.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="NuclearPowerPlant.cpp" />
     <ClCompile Include="obj.cpp" />
     <ClCompile Include="Player.cpp" />

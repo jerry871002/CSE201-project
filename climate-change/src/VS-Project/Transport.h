@@ -1,14 +1,10 @@
 #pragma once
-#include <core/Godot.hpp>
-#include <StaticBody.hpp>
-#include <MeshInstance.hpp>
-#include <Input.hpp>
-#include <KinematicBody.hpp>
-#include <InputEventMouse.hpp>
-#include <InputEventMouseMotion.hpp>
-#include <InputEventMouseButton.hpp>
+
 #include "City.h"
 #include "obj.h"
+
+#include <core/Godot.hpp>
+#include <KinematicBody.hpp>
 
 namespace godot {
     class Transport : public Infrastructure, public KinematicBody {

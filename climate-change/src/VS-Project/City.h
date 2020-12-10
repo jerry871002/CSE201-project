@@ -13,11 +13,12 @@
 #include <Spatial.hpp>
 #include <PackedScene.hpp>
 #include <ResourceLoader.hpp>
-#include "edit_text_files.cpp"
 
-/* current test fct for restaurant only using main_loop.cpp on mac:
+/* current test fct using main_loop.cpp on mac:
 
-g++ -std=c++17 main_loop.cpp Restaurant.cpp obj.cpp City.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
+g++ -std=c++17 main_loop.cpp Restaurant.cpp obj.cpp City.cpp -ILibraries/godot-cpp-bindings/godot_headers
+-ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen
+-LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
 
 then run:
 ./a.out

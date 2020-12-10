@@ -18,20 +18,6 @@ int main()
     City c = City();
 
     while (true) {
-		//check if writing to files works
-
-		/* current test fct on mac:
-
-		g++ -std=c++17 main_loop.cpp obj.cpp edit_text_files.cpp City.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
-
-		then run:
-		./a.out
-
-		*/
-
-		c.simulation();
-
-
 /*
         // run simulation (one day tick) , and then print out date and income
         c.simulation();
