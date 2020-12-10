@@ -158,7 +158,6 @@
   <ItemGroup>
     <ClCompile Include="AgriculturalProduction.cpp" />
     <ClCompile Include="AllPhysicalGoodsFactories.cpp" />
-    <ClCompile Include="Car.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="CoalPowerPlant.cpp" />
     <ClCompile Include="data.cpp" />
