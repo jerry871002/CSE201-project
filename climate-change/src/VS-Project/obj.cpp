@@ -26,11 +26,11 @@ Structure::Structure(double cost, double energyUse, double maintenance, double s
 Structure::~Structure() {}
 
 bool Structure::efficiency_cogeneration() {
-    return false;
+    return false; //need to add possibility of turning true (then definitive) if clicked, adding the cost in maintenace needed for this upgrade
 }
 
 bool Structure::efficiency_supercritical() {
-    return false;
+    return false; //need to add possibility of turning true (then definitive) if clicked, adding the cost in maintenace needed for this upgrade
 }
 
 Production::Production() {}

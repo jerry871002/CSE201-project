@@ -37,5 +37,9 @@ shape = SubResource( 1 )
 
 [node name="2D layer" type="Spatial" parent="."]
 
+<<<<<<< HEAD
 [node name="PowerPlant" parent="." instance=ExtResource( 3 )]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 15, 0, -45 )
+=======
+[node name="Node2D" type="Node2D" parent="."]
+>>>>>>> 5e50c8d4bcb649f8d0bb85d44f118d424ebe965a

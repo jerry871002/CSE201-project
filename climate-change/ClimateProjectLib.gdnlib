@@ -1,0 +1,16 @@
+[general]
+
+singleton=false
+load_once=true
+symbol_prefix="godot_"
+reloadable=true
+
+[entry]
+
+OSX.64="res://src/VS-Project/DLLExport/osx/libproject_mac.dylib"
+Windows.64="res://src/VS-Project/DLLExport/LibVS-Project-x64-Debug.dll"
+
+[dependencies]
+
+OSX.64=[  ]
+Windows.64=[  ]

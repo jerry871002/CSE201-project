@@ -20,15 +20,10 @@ namespace godot {
 		GODOT_CLASS(City, Spatial)
 	public:
 		static void _register_methods();
-
 		void _init();
-
 		void _process(float);
-
 		void _physics_process(float);
-
 		void _input(InputEvent*);
-
 		void _ready();
 
 		City();
@@ -60,11 +55,10 @@ namespace godot {
 	private:
 		float time_speed;
 		float delta_counter;
-		int64_t timer;
-
-
-		// this variable keeps track of the in-game days, one day added every time city.sim() is called
+		// this variable keeps track of the in-game days, 
+		// one day added every time simulation() is called
 		int day_tick;
+		
 		/*
 		Ref<PackedScene> RestaurantScene;
 		Ref<PackedScene> ShopScene;

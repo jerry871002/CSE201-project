@@ -120,12 +120,23 @@ switch(transportType) {
     buildingTime = 0.04; //really fast, in days (1 hour )
     std::normal_distribution <double> satisfactionbike(9, 1);
     satisfaction = satisfactionbike(gen); //high satisfaction
-    std::normal_distribution <double> kmbike(20, 10);
+    std::normal_distribution <double> kmbike(18, 7);
     kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
     break;
     }
     case 5:{ //motorcycle 
-
+        fuelPerKm = 0.044; //in liters
+        co2PerKm = 0.11; //in kg
+        std::normal_distribution <double> costm(6200, 2000);
+        cost = costm(gen); // cost of 1 motorcycle in euros, randomised using gaussian
+        capacity = 1;
+        occupancyRate = 1;
+        buildingTime = 0.12; //really fast, in days (3 hours )
+        std::normal_distribution <double> satisfactionm(7, 1);
+        satisfaction = satisfactionm(gen); // not very high satisfaction
+        std::normal_distribution <double> kmbike(30, 10);
+        kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
+        break;
     }
     case 6:{ // bus
         fuelPerKm = 0.26; //in liters
@@ -156,6 +167,25 @@ switch(transportType) {
         std::normal_distribution <double> kmb(225, 75);
         kmPerDay = kmb(gen); // kilometres per day,  randomised for each bus
         employment = 1+ round(alpha*2);
+        break;
+    }
+    case 7:{ //sports car
+        fuelPerKm = 0.22;
+        co2PerKm = 0.5;
+        std::normal_distribution <double> costsp(52000, 7000);
+        cost = costsp(gen); // cost of 1 car in euros, randomised using gaussian
+        capacity = 2;
+         std::normal_distribution <double> occupancysp(0.75, 0.25);
+        occupancyRate = occupancysp(gen); // average percentage occupancy of the car: number of people in the bus / capacity
+        std::normal_distribution <double> timeg(1.5, 0.75);
+        buildingTime = timeg(gen); // building time of 1 car, very fast
+        std::normal_distribution <double> satisfactionsp(9.5, 0.5); // satisfaction level is very high, randomised
+        satisfaction = satisfactionsp(gen);
+        if (satisfaction >10) {
+         satisfaction = 10;      
+        }
+        std::normal_distribution <double> kmsp(80, 20);
+        kmPerDay = kmsp(gen); // kilometres per day,  randomised for each car
         break;
     }
 }
@@ -239,7 +269,9 @@ switch (transportType){
     }
     case 4:{ //bike
         maintenance+=0.8*days;
-
+    }
+    case 5:{ //motorcycle
+        maintenance+=2.6*days;
     }
     case 6:{ //bus
         double alpha = (cost-262500)/262500;
@@ -249,6 +281,10 @@ switch (transportType){
         maintenance += (0.67+alpha*0.17)*kmPerDay*days; // maintenance cost in euros, positive correlation with bus price
         break;
     }
+    case 7:{ //sports car
+        maintenance+=2.5*days;
+    }
+
 }
 }
 

@@ -1,6 +1,8 @@
 #include "LowBuilding.h"
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
+#include <cstdlib>
+#include <ctime>
 
 using namespace godot;
 
@@ -29,6 +31,10 @@ void LowBuilding::_ready() {
 
 
 LowBuilding::LowBuilding() {
+	srand((int)time(0));
+	//5 appartments pay between 200-400 € per month
+	coOwnershipBudget = (rand() % (66-33) + 33);
+	
 	cost = 1000000; //counting price of lot + cost of workforce + cost of all materials used
 	energyUse = 365; // 266.25 kWh/m^2 per year which gives 133125 kWh per year i.e 365 kwH per day
 	maintenance = 0.1765; //cost in euros per kWh
@@ -36,6 +42,7 @@ LowBuilding::LowBuilding() {
 	buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
 	satisfaction = 3;
 	windowNumber = 10;
+	age = 0;
 }
 
 void LowBuilding::simulate_step(double days) {
@@ -60,6 +67,7 @@ void LowBuilding::simulate_step(double days) {
 	
 	maintenance += 0.1765 * energyUse * days;
 	CO2Emission += 0.0065 * energyUse * days;  
+	age += days;
 	
 }
 
@@ -69,10 +77,26 @@ LowBuilding::~LowBuilding() {
 }
 
 bool LowBuilding::solar_panel() {
+	if (coOwnershipBudget > 50) {
+		return PanelsOn;	
+	}
+
+	// else {
+	// 	//check if policy from state is giving money
+	// 	//in which case you can add solar panels
+	// 	//otherwise 
+		
+	// }
+
 	return PanelsOn;
 }
 
 bool LowBuilding::double_glazing() {
+	// if (coOwnershipBudget > 40) {
+	// 	return true;	
+	// }
+
+
 	// placeholder must change
 	return false;
 

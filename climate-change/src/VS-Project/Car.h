@@ -5,10 +5,6 @@
 #include <Mesh.hpp>
 #include <Area.hpp>
 #include <KinematicCollision.hpp>
-#pragma once
-#include <core/Godot.hpp>
-#include <KinematicBody.hpp>
-#include <Input.hpp>
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
@@ -42,11 +38,7 @@ namespace godot {
 		void straight(float delta);
 		int get_direction(Vector3 pos, double rot);
 
-
-
-
 		Car();
 		~Car();
-
 	};
 }

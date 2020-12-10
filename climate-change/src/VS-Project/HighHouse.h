@@ -16,6 +16,7 @@ class HighHouse : public Housing, public StaticBody {
 		void _ready();
 		void simulate_step(double days); // updates every attribute directly as a function of time (days since beginning of the game)
 		double energyUse;
-		double windowCost;
+		int numberOfInhabitants;
+		double houseIncome;
 	};
 };
