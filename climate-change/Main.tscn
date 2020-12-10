@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
+[ext_resource path="res://Resources/PowerPlant.tscn" type="PackedScene" id=3]
 [ext_resource path="res://KinematicBody.gdns" type="Script" id=4]
 
 [sub_resource type="SphereShape" id=1]
@@ -36,15 +37,5 @@ shape = SubResource( 1 )
 
 [node name="2D layer" type="Spatial" parent="."]
 
-[node name="Node2D" type="Node2D" parent="."]
-
-[node name="CheckBox" type="CheckBox" parent="Node2D"]
-margin_top = -1.0
-margin_right = 184.0
-margin_bottom = 90.0
-text = "Hello, this is a button"
-clip_text = true
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "Hello this is a button"
-}
+[node name="PowerPlant" parent="." instance=ExtResource( 3 )]
+transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 15, 0, -45 )
