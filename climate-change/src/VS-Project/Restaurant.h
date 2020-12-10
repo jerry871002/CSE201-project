@@ -49,6 +49,7 @@ namespace godot {
 
 		bool restaurantStatus;    //True if open, False if closed
 		int restaurantType;
+		double energyUsePerSize;
 		double diningSize;
 		double averageWage;
 		bool firstYearShock;

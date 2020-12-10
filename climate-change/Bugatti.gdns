@@ -3,6 +3,6 @@
 [ext_resource path="res://GDLib.gdnlib" type="GDNativeLibrary" id=1]
 
 [resource]
-resource_name = "Car"
-class_name = "Car"
+resource_name = "Transport"
+class_name = "Transport"
 library = ExtResource( 1 )
