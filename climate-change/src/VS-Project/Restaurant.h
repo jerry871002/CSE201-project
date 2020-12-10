@@ -53,5 +53,8 @@ namespace godot {
 		double averageWage;
 		bool firstYearShock;
 		void simulate_step(double days);
+
+		double get_satisfaction();
+		
 	};
 }

@@ -90,6 +90,11 @@ void Restaurant::simulate_step(double days){
 	energyUse += 38*diningSize*days;
 }
 
+double Restaurant::get_satisfaction(){
+	return this->satisfaction;
+}
+
+
 /*
 Restaurant::Restaurant(int inc)
 {

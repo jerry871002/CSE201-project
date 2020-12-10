@@ -46,6 +46,14 @@ public:
     bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
     bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
     // need to add a cost for their implementation in the maintenance variable once
+
+
+
+    double virtual get_energyuse(){return 0;}
+    double virtual get_co2emmisions(){return 0;}
+    double virtual get_satisfaction(){return 0;}
+    double virtual get_environmentalcost(){return 0;}
+
 };
 
 class Production : public Structure {
