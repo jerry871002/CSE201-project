@@ -4,10 +4,11 @@
 #include <StaticBody.hpp>
 #include <MeshInstance.hpp>
 #include <Input.hpp>
+#include <KinematicBody.hpp>
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
-
+#include "City.h"
 #include "obj.h"
 
 namespace godot {
@@ -60,6 +61,7 @@ namespace godot {
         Vector3 prevPosition = Vector3(0, 0, 0);
         double Acc = 0.5;
         Vector3 center;
+        City* myCity;
         int traffic[2][3][4][3] = { {{{0, 1, 0},{0, 0, 1},{0, 0, 1},{0, 0, 1}},		{{0, 0, 1},{0, 1, 0},{0, 0, 1},{0, 0, 1}},		{ {0, 1, 1},{0, 1, 1},{0, 0, 1},{0, 0, 1}}},
                                     { {{0, 0, 1},{0, 0, 1},{0, 0, 1},{0, 1, 0}}	,		{{0, 0, 1},{0, 0, 1},{1, 1, 0},{0, 1, 1}},		 { {0, 0, 1},{0, 0, 1},{0, 1, 1},{0, 0, 1}}} };
     };

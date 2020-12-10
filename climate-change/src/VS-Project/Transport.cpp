@@ -1,10 +1,12 @@
 #include "Transport.h"
 #include "random"
 #include <Area.hpp>
+#include <iostream>
 
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
+using namespace std;
 
 // helper functions
 void compute_speed(double& Speed, double Acc, float delta) {
