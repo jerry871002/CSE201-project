@@ -1,4 +1,6 @@
 #include "Transport.h"
+#include <iostream>
+#include <vector>
 #include "random"
 #include <Area.hpp>
 
@@ -400,7 +402,7 @@ void Transport::straight(float delta) {
 
 int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90)+4) % 4 ;
-    vector<int> out;
+    std::vector<int> out;
     
     if ((int)round(pos.x / 30) >= sizeof(traffic) or (int)round(pos.z / 30) >= sizeof(traffic[0])) {
         myCity->add_car();

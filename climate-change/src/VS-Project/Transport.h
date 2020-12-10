@@ -2,6 +2,7 @@
 
 #include <core/Godot.hpp>
 #include <StaticBody.hpp>
+#include <KinematicBody.hpp>
 #include <MeshInstance.hpp>
 #include <Input.hpp>
 #include <InputEventMouse.hpp>
