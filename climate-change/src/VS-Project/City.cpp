@@ -111,12 +111,14 @@ void City::simulation() {
 	energySupply = 0;
 	healthcare = 0;
 	needs = 0;
-
-	for (std::vector<Restaurant*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
+	std::cout << "DEBUG: BEFORE LOOP" << std::endl;
+	for (std::vector<Restaurant*>::iterator it = buildings.begin(); it != buildings.end(); it = it+1)
 	{
 		//income += (*it)->income;
 		//numberOfEmployees += (*it)->numberOfEmployees;
-		carbonEmission += (*it)->get_emissions();
+		std::cout << "DEBUG: IN LOOP BEFORE THING" << std::endl;
+		this->carbonEmission = this->carbonEmission + (*it)->Restaurant::get_emissions();
+		std::cout << "DEBUG: IN LOOP AFTER THING" << std::endl;
 		//energyDemand += (*it)->energyDemand;
 		//energySupply += (*it)->energySupply;
 		//healthcare += (*it)->healthcare;

@@ -12,7 +12,7 @@
 #else
 #include <unistd.h>
 #endif
-
+/*
 int main()
 {
 	City c = City();
@@ -63,4 +63,4 @@ int main()
 		}
 	}
 }
-
+*/

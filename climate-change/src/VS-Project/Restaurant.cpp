@@ -16,18 +16,6 @@ Restaurant::Restaurant()
 	Clickable = false;
 }
 
-Restaurant::Restaurant(double income, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs)
-{
-	PanelsOn = true;
-	Clickable = false;
-	this->income = income;
-	this->numberOfEmployees = numberOfEmployees;
-	this->carbonEmission = carbonEmission;
-	this->energyDemand = energyDemand;
-	this->energySupply = energySupply;
-	this->healthcare = healthcare;
-	this->needs = needs;
-}
 
 void Restaurant::initialize() {
 	this->income = 100;
@@ -40,11 +28,14 @@ void Restaurant::initialize() {
 }
 
 double Restaurant::get_emissions(){
+	std::cout << "DEBUG: GET_EMISSIONS_CALLED" << std::endl;
 	double temp = this->carbonEmission;
 	if (this->PanelsOn) {
-		temp *= 0.5;
+		temp = 0.5*temp;
 	}
-	std::cout << "DEBUG: GET EMISSIONS CALLED" << std::endl;
+	std::cout << "DEBUG: GET_EMISSIONS_DONE" << std::endl;
+	std::cout << temp << std::endl;
+	std::cout << this->PanelsOn << std::endl;
 	return temp;
 }
 
@@ -74,7 +65,7 @@ void Restaurant::_process(float delta) {
 
 void Restaurant::_input(InputEvent* e) {
 	if (e->is_action_pressed("ui_select") && Clickable) {
-		PanelsOn = (PanelsOn == false);
+		this->PanelsOn = !(this->PanelsOn);
 		this->GetPanels()->set("visible", PanelsOn);
 	}
 }
