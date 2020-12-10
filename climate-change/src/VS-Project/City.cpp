@@ -63,7 +63,7 @@ void City::_ready()
 
 	if (RestaurantScene.is_valid())
 	{
-		Restaurant* node = (Restaurant*)(RestaurantScene->instance());
+		Node* node = (RestaurantScene->instance());
 		((Restaurant*)node)->Restaurant::initialize();
 		node->set("scale", Vector3(10, 10, 10));
 		node->set("translation", Vector3(0, 0, 0));
