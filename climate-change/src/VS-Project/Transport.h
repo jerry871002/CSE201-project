@@ -23,8 +23,6 @@ namespace godot {
         void _init();
         void _ready();
         void _process(float delta);		
-        void _on_Area_mouse_entered();
-        void _on_Area_mouse_exited();
 
         // simulation function
         void simulate_step(double days);
