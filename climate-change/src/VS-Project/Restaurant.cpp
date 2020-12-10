@@ -41,9 +41,10 @@ void Restaurant::initialize() {
 
 double Restaurant::get_emissions(){
 	double temp = this->carbonEmission;
-	if (PanelsOn) {
+	if (this->PanelsOn) {
 		temp *= 0.5;
 	}
+	std::cout << "DEBUG: GET EMISSIONS CALLED" << std::endl;
 	return temp;
 }
 
