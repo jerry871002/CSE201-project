@@ -2,7 +2,7 @@
 #include <core/Godot.hpp>
 #include <iostream>
 #include <cstdlib>
-#include <set>
+#include <vector>
 #include <string>
 #include <Input.hpp>
 #include <InputEventMouse.hpp>
@@ -13,6 +13,16 @@
 #include <Spatial.hpp>
 #include <PackedScene.hpp>
 #include <ResourceLoader.hpp>
+#include "edit_text_files.cpp"
+
+/* current test fct for restaurant only using main_loop.cpp on mac:
+
+g++ -std=c++17 main_loop.cpp Restaurant.cpp obj.cpp City.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
+
+then run:
+./a.out
+
+*/
 
 namespace godot {
 
@@ -29,14 +39,20 @@ namespace godot {
 		City();
 		~City();
 
-		std::set<Structure*> buildings;
-		double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply;
+		std::vector<Structure*> buildings;
 
 		void add_building(Structure*);
 		void add_car();
 		void simulation();                    //updates all the stats abd the building
-		void write_stat_history_to_file();    //writes all the stats to a file so that the inteface team can make graphs 
+		void write_stat_history_to_file();    //writes all the stats to a file so that the interface team can make graphs 
 		double return_income();               //returns the income of the city
+		// getter functions for city indices
+		double return_numberOfEmployees();
+        double return_carbonEmission();
+        double return_energyDemand();
+        double return_energySupply();
+        double return_healthcare();
+        double return_needs();
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
@@ -53,11 +69,21 @@ namespace godot {
 		*/
 
 	private:
-		float time_speed;
-		float delta_counter;
-		// this variable keeps track of the in-game days, 
+		// city indices
+        double income;
+        double population;
+        double numberOfEmployees;
+        double carbonEmission;
+        double energyDemand;
+        double energySupply; 
+        double healthcare;
+        double needs;
+		// used for caculating in-game time
+		float time_speed; // 1 for regular speed (1 in-game day per second)
+        float delta_counter; // accumulate delta from `_physics_process` function
+		int64_t timer;       // helper data to see if `delta_counter` have carry on units digit
+		int day_tick; // this variable keeps track of the in-game days, 
 		// one day added every time simulation() is called
-		int day_tick;
 		
 		/*
 		Ref<PackedScene> RestaurantScene;
