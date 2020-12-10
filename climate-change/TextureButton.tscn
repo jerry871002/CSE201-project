@@ -3,12 +3,11 @@
 [ext_resource path="res://Ressources/red128x128.png" type="Texture" id=1]
 [ext_resource path="res://Ressources/Christmas Tree.otf" type="DynamicFontData" id=2]
 [ext_resource path="res://MenuButton.gdns" type="Script" id=3]
+[ext_resource path="res://K67.jpg" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 90
 font_data = ExtResource( 2 )
-
-[sub_resource type="ImageTexture" id=2]
 
 [node name="MenuButton" type="TextureButton"]
 margin_right = 199.0
@@ -36,41 +35,123 @@ __meta__ = {
 }
 
 [node name="Sidebar" type="ItemList" parent="."]
-margin_left = -1.31006
-margin_top = 6.10352e-05
-margin_right = 226.69
-margin_bottom = 784.0
+margin_left = 208.0
+margin_top = 19.0
+margin_right = 435.0
+margin_bottom = 803.0
 custom_colors/guide_color = Color( 0.952941, 0.968627, 0.968627, 1 )
 custom_colors/font_color_selected = Color( 0.952941, 0.968627, 0.968627, 1 )
 custom_colors/font_color = Color( 0.952941, 0.968627, 0.968627, 1 )
 custom_constants/vseparation = 0
 custom_constants/line_separation = 0
 custom_constants/icon_margin = 2
-items = [ "Information about the city", null, false, "Date : ", SubResource( 2 ), false ]
+items = [ "Information about the city :", null, true ]
+allow_reselect = true
+max_text_lines = 5
+max_columns = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CloseButton" type="TextureButton" parent="Sidebar"]
-margin_left = 66.0
-margin_top = 755.0
-margin_right = 147.0
-margin_bottom = 783.0
+margin_left = 67.4806
+margin_top = 756.94
+margin_right = 158.481
+margin_bottom = 784.94
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CloseText" type="Label" parent="Sidebar/CloseButton"]
-margin_left = 0.696884
+margin_left = 9.15614
 margin_top = 7.66565
-margin_right = 75.6969
+margin_right = 84.1562
 margin_bottom = 21.6656
 text = "Close Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time1" type="TextureButton" parent="Sidebar"]
+anchor_left = -0.029
+anchor_top = 0.279
+anchor_right = -0.029
+anchor_bottom = 0.279
+margin_left = 45.7431
+margin_top = 454.264
+margin_right = 95.7431
+margin_bottom = 504.264
+texture_normal = ExtResource( 4 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="Time1text" type="Label" parent="Sidebar/Time1"]
+margin_left = 13.7431
+margin_top = 16.7759
+margin_right = 34.7431
+margin_bottom = 32.7759
+rect_pivot_offset = Vector2( 17.6172, 6.62891 )
+custom_colors/font_color = Color( 0.0392157, 0.0392157, 0.0392157, 1 )
+text = "1/2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time2" type="TextureButton" parent="Sidebar"]
+margin_left = 131.519
+margin_top = 673.0
+margin_right = 181.519
+margin_bottom = 723.0
+texture_normal = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time2text" type="Label" parent="Sidebar/Time2"]
+margin_left = 18.0
+margin_top = 16.0
+margin_right = 30.0
+margin_bottom = 47.0
+rect_pivot_offset = Vector2( 17.6172, 6.62891 )
+custom_colors/font_color = Color( 0.0392157, 0.0392157, 0.0392157, 1 )
+text = "1
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GraphButton" type="TextureButton" parent="Sidebar"]
+margin_left = 17.3476
+margin_top = 581.836
+margin_right = 210.348
+margin_bottom = 621.836
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Graphtext" type="Label" parent="Sidebar/GraphButton"]
+margin_left = 12.0
+margin_top = 11.7393
+margin_right = 183.0
+margin_bottom = 42.7393
+rect_pivot_offset = Vector2( 17.6172, 6.62891 )
+custom_colors/font_color = Color( 0.952941, 0.968627, 0.968627, 1 )
+text = "Click Here To View Graphs 
+"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="mouse_entered" from="." to="." method="_on_MenuButton_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_MenuButton_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_MenuButton_pressed"]
+[connection signal="item_selected" from="Sidebar" to="." method="_on_Sidebar_item_selected"]
 [connection signal="pressed" from="Sidebar/CloseButton" to="." method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="Sidebar/Time1" to="." method="_on_Time1_pressed"]
+[connection signal="pressed" from="Sidebar/Time2" to="." method="_on_Time2_pressed"]
+[connection signal="pressed" from="Sidebar/GraphButton" to="." method="_on_GraphButton_pressed"]

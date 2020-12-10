@@ -27,5 +27,9 @@ namespace godot {
 		void _on_MenuButton_mouse_exited();
 		void _on_MenuButton_pressed();
 		void _on_CloseButton_pressed();
+		void set_item_text(int idx, String text);
+		void _on_Time1_pressed();
+		void _on_Time2_pressed();
+		void _on_GraphButton_pressed();
 	};
 }
