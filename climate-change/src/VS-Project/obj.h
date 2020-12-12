@@ -49,10 +49,10 @@ public:
 
 
 
-    double virtual get_energyuse(){return 0;}
-    double virtual get_co2emmisions(){return 0;}
-    double virtual get_satisfaction(){return 0;}
-    double virtual get_environmentalcost(){return 0;}
+    virtual double get_energyuse(){return 0;}
+    virtual double get_co2emissions(){return 0;}
+    virtual double  get_satisfaction(){return 0;}
+    virtual double get_environmentalcost(){return 0;}
 
 };
 

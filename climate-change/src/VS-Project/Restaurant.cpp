@@ -19,11 +19,11 @@ Restaurant::Restaurant()
 	firstYearShock = false;
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 
-	std::normal_distribution <double> mediancost(310000, 150000);  //Median cost of opening restaurant 375K $, including owning the building
+	std::normal_distribution <double> mediancost(350000, 100000);  //Median cost of opening restaurant 375K $, including owning the building
 	cost = mediancost(gen); 
 	
-	if (cost<200000){restaurantType = 1;}
-	if ((200000 <= cost) and (cost <= 400000)){restaurantType = 2;}
+	if (cost < 300000){restaurantType = 1;}
+	else if ((300000 <= cost) && (cost <= 400000)){restaurantType = 2;}
 	else {restaurantType = 3;}
 
 	//Consider 3 types of restaurant, 1 - small size / fast food type , 2 -Normal Full service resaurant, 3 - Fine dining type 
@@ -37,7 +37,7 @@ Restaurant::Restaurant()
     	averageWage = 11;		// Euros per hour , Slightly above minimum wage in france
 		std::normal_distribution <double> totalemployees1(25, 8);	// 9 out 10 restaurants have less than 50 employees
     	employment = totalemployees1(gen) *  (1 + ((diningSize-12.5)/12.5)); // number of employees influenced by size of restaurent
-    	// CO2Emission = 0; need to find more info on this
+    	CO2Emission = 0; //need to find more info on this
 		buildingTime = 60 ; //On average a casual restaurant takes 12 weeks to set up
 		
 		break;
@@ -51,7 +51,7 @@ Restaurant::Restaurant()
     	averageWage = 12.5;		// Euros per hour, Slightly above minimum wage in france
 		std::normal_distribution <double> totalemployees2(30, 10);	// 9 out 10 restaurants have less than 50 employees
     	employment = totalemployees2(gen) *  (1 + ((diningSize-12.5)/12.5)); // number of employees influenced by size of restaurent
-    	// CO2Emission = 0; need to find more info on this
+    	CO2Emission = 0; // need to find more info on this
 		buildingTime = 70 ; //On average a casual restaurant takes 14 weeks to set up
 		break;
 	}
@@ -64,7 +64,7 @@ Restaurant::Restaurant()
     	averageWage = 14;		// Higher than other types as more luxurious 
 		std::normal_distribution <double> totalemployees3(35, 7);	// 9 out 10 restaurants have less than 50 employees
     	employment = totalemployees3(gen) *  (1 + ((diningSize-12.5)/12.5)); // number of employees influenced by size of restaurent
-    	// CO2Emission = 0; need to find more info on this
+    	CO2Emission = 0; // need to find more info on this
 		buildingTime = 80 ; //On average a casual restaurant takes 16 weeks to set up
 
 		break;
@@ -92,6 +92,18 @@ void Restaurant::simulate_step(double days){
 
 double Restaurant::get_satisfaction(){
 	return this->satisfaction;
+}
+
+double Restaurant::get_co2emissions(){
+	return this->CO2Emission;
+}
+
+double Restaurant::get_energyuse(){
+	return this->energyUse;
+}
+
+double Restaurant::get_environmentalcost(){
+	return 0;
 }
 
 

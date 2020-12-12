@@ -55,6 +55,8 @@ namespace godot {
 		void simulate_step(double days);
 
 		double get_satisfaction();
-		
+		double get_co2emissions();
+		double get_energyuse();
+		double get_environmentalcost();
 	};
 }
