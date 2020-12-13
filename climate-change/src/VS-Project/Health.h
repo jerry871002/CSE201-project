@@ -13,5 +13,7 @@ class Health : public Infrastructure, public StaticBody {
 		void _process(float delta);
 		void _input(InputEvent* e);
 		void _ready();
+		double patientsAdmitted, successRate;
+ 		int hospitalType;
 	};
 };
