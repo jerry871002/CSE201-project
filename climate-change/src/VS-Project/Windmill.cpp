@@ -1,6 +1,8 @@
 #include "Windmill.h"
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
+#include <Mesh.hpp>
+# define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
 
@@ -20,7 +22,8 @@ void Windmill::_init()
 
 void Windmill::_process(float delta)
 {
-
+	rot += delta * turnSpeed;
+	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -130, (180 / M_PI) * rot));
 }
 
 void Windmill::_input(InputEvent* e)
@@ -36,7 +39,8 @@ void Windmill::_ready()
 
 Windmill::Windmill()
 {
-
+	turnSpeed = 2;
+	requiredLand = 0;
 }
 
 Windmill::~Windmill()

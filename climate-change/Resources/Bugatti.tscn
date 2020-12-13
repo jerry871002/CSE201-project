@@ -188,10 +188,10 @@ surfaces/4 = {
 }
 
 [sub_resource type="BoxShape" id=5]
-extents = Vector3( 0.222196, 0.26306, 0.21003 )
+extents = Vector3( 0.356, 0.138, 0.18 )
 
 [node name="Bugatti2" type="KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0 )
+transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 3 )
@@ -211,7 +211,7 @@ material/1 = null
 material/2 = null
 
 [node name="BezierCurve001" type="MeshInstance" parent="."]
-transform = Transform( 0.194612, 0, 0, 0, 0.194612, 0, 0, 0, 0.194612, -0.0193076, 0.0501496, 0 )
+transform = Transform( 0.194612, 0, 0, 0, 0.194612, 0, 0, 0, 0.194612, -0.0193071, 0.0501496, 0 )
 mesh = SubResource( 3 )
 material/0 = null
 material/1 = null
@@ -229,5 +229,5 @@ material/4 = null
 [node name="Timer" type="Timer" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 2.391, 0, 0, 0, 1, 0, 0, 0, 0.621, 0.143, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18798, 0.117576, 0 )
 shape = SubResource( 5 )

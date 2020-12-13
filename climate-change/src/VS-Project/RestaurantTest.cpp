@@ -21,19 +21,47 @@ using namespace godot;
 
 //Declare All the test functions:
 void test_constructor();
+void test_simulate_step();
 
 
 int main() {
     test_constructor();
+    test_simulate_step();
+
 }
 
 
 void test_constructor() {
     Restaurant A = Restaurant();
     Restaurant B = Restaurant();
+    std::cout << "Restaurant A is of type: "<< A.restaurantType << std::endl;
     
     //Here can add code to check attributes of constructor
 
     std::cout << "Constructor Works " << std::endl;
 }
 
+void test_simulate_step(){
+    Restaurant A = Restaurant();
+
+    for (int i = 0; i<5; i++) {
+        A.simulate_step(100);
+        //std::cout << "Restaurant age: " << A.age << std::endl;
+        //std::cout << "Restaurant status: " << A.restaurantStatus << std::endl;
+    }
+
+    int numberFailed = 0;
+
+    for (int i = 0; i<101; i++){
+        Restaurant B = Restaurant();
+        B.simulate_step(400);
+        // std::cout << "Restaurant status: " << B.restaurantStatus << std::endl;
+        if (B.restaurantStatus == false){numberFailed += 1;}
+    }
+    std::cout << "Number of Restaurants that failed in 1 year: " << numberFailed << std::endl;
+
+    
+
+
+
+}

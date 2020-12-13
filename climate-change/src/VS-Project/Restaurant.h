@@ -21,7 +21,7 @@ namespace godot {
 	public:
 
 		Restaurant();
-		//Restaurant(int);
+		//Restaurant(double income, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs);
 
 		bool PanelsOn;
 		bool MenuVisible;
@@ -47,9 +47,12 @@ namespace godot {
 		void change_income_by_percent(float);
 		
 
-
+		bool restaurantStatus;    //True if open, False if closed
 		int restaurantType;
+		double energyUsePerSize;
 		double diningSize;
 		double averageWage;
+		bool firstYearShock;
+		void simulate_step(double days);
 	};
 }

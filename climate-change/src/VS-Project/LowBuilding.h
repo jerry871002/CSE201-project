@@ -3,6 +3,7 @@
 #pragma once
 #include <StaticBody.hpp>
 
+
 namespace godot {
 class LowBuilding : public Housing, public StaticBody {
 		GODOT_CLASS(LowBuilding, StaticBody)
@@ -18,6 +19,7 @@ class LowBuilding : public Housing, public StaticBody {
 		int windowCost = 200;
 		int windowNumber;
 		int solarPanelCost = 1500;
+		double coOwnershipBudget;
 	
 		// policies 
 		bool solar_panel(); 

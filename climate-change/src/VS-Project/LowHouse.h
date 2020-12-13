@@ -22,10 +22,17 @@ class LowHouse : public Housing, public StaticBody  {
 		int windowCost = 200;
 		int windowNumber;
 		int solarPanelCost = 1500;
+
+		double houseIncome;
+		int numberOfInhabitants;
 	
 		// policies 
 		bool solar_panel(); 
 		bool double_glazing(); // improve insulation
+
+		//To test rand() function
+		double get_houseIncome();
+		double get_numberofInhabitants();
 
 	};
 

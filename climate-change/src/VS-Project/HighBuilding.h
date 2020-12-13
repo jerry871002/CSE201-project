@@ -15,6 +15,7 @@ class HighBuilding : public Housing, public StaticBody {
 		void _input(InputEvent* e);
 		void _ready();
 		void simulate_step(double days);
+		double coOwnershipBudget;
 
 	};
 };
