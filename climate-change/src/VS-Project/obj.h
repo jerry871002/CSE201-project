@@ -1,128 +1,119 @@
 #pragma once
 
 #include <core/Godot.hpp>
-#include <StaticBody.hpp>
+#include <Spatial.hpp>
+
 #include <MeshInstance.hpp>
+
 #include <Input.hpp>
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
 
-using namespace godot;
 
-/* disregard, only for test purposes
-class Structure {   
-    public:
-        void simulate_step() {};
-        double cost, energyuse, maintenance, satisfaction;
-        double income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply, healthcare, needs;
+namespace godot {
 
-        virtual double get_emissions() { return 0; };
+	class Structure :public Spatial {
 
-        double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
+		GODOT_CLASS(Structure, Spatial)
 
-        bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
+	private:
 
-        virtual void simulate_step();
-        // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
-        bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-        bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
-        // need to add a cost for their implementation in the maintenance variable once
+		bool Clickable;
 
-        Structure();
-        ~Structure();
-        Structure(double cost, double energyuse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs);
-};
-*/
+	public:
 
+		Structure();
+		~Structure();
 
-class Structure {
-public:
-    double cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction, environmentalCost;
-    double age = 0; //age of each particular object in days, initialize to 0 in constructor
+		bool MenuVisible;
 
-    // The following will be city-wide counters that will be updated every day : 
-    // income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply
+		Node* GetPanels();
 
-    // income is the total wage (GDP), population is the population of the whole city, numberOfEmployees the total employed people,  
-    // carbonEmission the total CO2, energyDemand the sum of all energy needed and energySupply the maximum production capacity
+		static void _register_methods();
+		void _init();
+		void _process(float delta);
+		void _input(InputEvent* e);
+		void _ready();
+		void _on_Area_mouse_entered();
+		void _on_Area_mouse_exited();
+		void _on_CheckBox_pressed();
+		void _on_CheckBox_button_up();
+		void _on_CheckBox_button_down();
+		void _on_CheckBox_toggled();
 
-    // It would be great if someone could write here what variable we have to call to update each (ADDITIONS!)
-    // income : we didn't take it into account for the moment
-    // population : we don't have that, thought you would decide about it
-    // numberOfEmployees: employment
-    // carbonEmission : CO2Emission
-    // energyDemand : that corresponds to energyUse for each class
-    // energySupply : that corresponds to energyOutput for each object producing it in the energy class
-    // healthcare : 
-    // needs : 
-
-    // sim team will program these counters to grab the correct attributes within all structures
-    // if needed within any object they will be passed on by the city object
-    // don't use these specific variable names inside the structures pls or we will all get confused    
-
-    double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
-
-    bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
-
-    // All of our policies have to go in the City class !! Look at City.h 
-    Structure();
-    ~Structure();
-
-    // virtual void simulate_step();
-    // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
-    bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-    bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
-    // need to add a cost for their implementation in the maintenance variable once
-};
+		virtual String get_class_name();
 
 
-class Production : public Structure {
-public:
-    Production();
-    ~Production();
-    double efficiency;
-    double employment;
-};
+		double cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction, environmentalCost;
+		double age = 0; //age of each particular object in days, initialize to 0 in constructor  
 
-class Energy : public Production {
-public:
-    Energy();
-    ~Energy();
-    double energyOutput;
-    double energyPerDay;
-};
+		double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
 
-class Housing : public Structure {
-public:
-    Housing();
-    ~Housing();
-};
+		bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
+
+		bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
+		bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
+
+		virtual void simulate_step(double days);
+	};
 
 
-class Infrastructure : public Structure {
-public:
-    Infrastructure();
-    ~Infrastructure();
-    double employment;
-};
-
-class Shop : public Production {
-public:
-    Shop();
-    ~Shop();
-    bool open;
-};
 
 
-class Solar : public Energy {
-protected:
-    double energyOutput;
-public:
-    Solar();
-    Solar(double energyOutput);
-    ~Solar();
-    double environmental_impact(); //redefined don't use same as the one in energy
+	class Production : public Structure {
+		GODOT_SUBCLASS(Production, Structure)
+	public:
+		Production();
+		~Production();
+		double efficiency;
+		double employment;
+	};
 
-};
-  
+	class Energy : public Production {
+		GODOT_SUBCLASS(Energy, Production)
+	public:
+		Energy();
+		~Energy();
+		double energyOutput;
+		double energyPerDay;
+	};
+
+	class Housing : public Structure {
+		GODOT_SUBCLASS(Housing, Structure)
+	public:
+		Housing();
+		~Housing();
+	};
+
+
+	class Infrastructure : public Structure {
+		GODOT_SUBCLASS(Infrastructure, Structure)
+	public:
+		Infrastructure();
+		~Infrastructure();
+		double employment;
+	};
+
+	class Shop : public Production {
+		GODOT_SUBCLASS(Shop, Production)
+	public:
+		Shop();
+		~Shop();
+		bool open;
+	};
+
+
+	class Solar : public Energy {
+		GODOT_SUBCLASS(Solar, Energy)
+	protected:
+		double energyOutput;
+	public:
+		Solar();
+		Solar(double energyOutput);
+		~Solar();
+		double environmental_impact(); //redefined don't use same as the one in energy
+
+	};
+
+}
