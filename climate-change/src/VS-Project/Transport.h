@@ -10,8 +10,10 @@ namespace godot {
     class Transport : public Infrastructure, public KinematicBody {
         GODOT_CLASS(Transport, KinematicBody)
     public:
-        Transport(int type);
+        
         Transport();
+
+        void transport_type(int type);
 
         // godot functions
         static void _register_methods();
@@ -27,11 +29,14 @@ namespace godot {
         void straight(float delta);
         int get_direction(Vector3 pos, double rot);
 
-    private:
-        // simulation variables
         double occupancyRate, capacity, kmPerDay;
         double passengers, co2PerKm, fuelPerKm; // CO2 in kg
         double fuelInput; // in litres
+        double test = 6;
+
+    private:
+        // simulation variables
+        
         /*
         * 0 - electic car
         * 1 - big american car

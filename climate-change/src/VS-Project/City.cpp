@@ -1,5 +1,7 @@
-#include <fstream>
 #include "City.h"
+#include "Transport.h"
+
+#include <fstream>
 #include <Resource.hpp>
 #include <ResourceLoader.hpp>
 #include <SceneTree.hpp>
@@ -7,6 +9,7 @@
 #include <Node.hpp>
 #include <ctime>
 #include <Input.hpp>
+
 
 using namespace godot;
 
@@ -20,6 +23,7 @@ City::City() {
 	energySupply = 0;
 	healthcare = 0;
     needs = 0;
+	timer = 0;
 
 	time_speed = 1;
 	delta_counter = 0.0;
@@ -48,6 +52,7 @@ void City::_init()
 
 void City::_process(float)
 {
+	std::cout << income << std::endl;
 
 };
 
@@ -60,10 +65,12 @@ everytime the integer part of `delta_counter` changes
 we update `day_tick` and execute simulation()
 */
 void City::_physics_process(float delta) {
+	
 	delta_counter += (delta * time_speed);
+	simulation();
 	if (day_tick != (int)delta_counter) {
 		day_tick = (int)delta_counter;
-		// call city_simulate()
+		simulation();
 	}
 }
 
@@ -111,6 +118,8 @@ void City::_ready()
 				//int rot = rand() % 2;
 				//node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
 				this->add_child(node);
+
+
 			}
 		}
 	}
@@ -122,16 +131,19 @@ void City::_ready()
 			// randomly choose between bugatti and chiron
 
 			int type = rand() % 2;
-			Node* node;
-			if (type == 0) { node = BugattiScene->instance(); }
-			else { node = ChironScene->instance(); }
+			Transport* node;
+			if (type == 0) { node = (Transport*)BugattiScene->instance(); }
+			else { node = (Transport*)ChironScene->instance(); }
 			node->set("scale", Vector3(10, 10, 10));
 			node->set("translation", Vector3(-13, 0, -13 + 30 * (z + 1)));
-			this->add_child(node);
+			this->add_child((Node*)node);
+
+			std::cout << node->kmPerDay;
 		}
 	}
 
 };
+
 void City::add_building(Structure* struc) {
 	buildings.push_back(struc);
 }
@@ -146,18 +158,22 @@ void City::add_car() {
 
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
+
 		int type = rand() % 2;
-		Node* node;
-		if (type == 0) { node = BugattiScene->instance(); }
-		else { node = ChironScene->instance(); }
+		Transport* node;
+		if (type == 0) { node = (Transport*)BugattiScene->instance(); }
+		else { node = (Transport*)ChironScene->instance(); }
 		node->set("scale", Vector3(10, 10, 10));
-		node->set("translation", Vector3(-13, 0, -13 + 30));
-		this->add_child(node);
+		node->set("translation", Vector3(-13, 0, -13 + 30 * (1)));
+		node->transport_type(type);
+		this->add_child((Node*)node);
+
+		income -= node->cost;
 	}
 }
 
 void City::simulation() {
-
+	/*
 	day_tick++;
 	//write the old values in a file 
 	income = 0;
@@ -167,6 +183,9 @@ void City::simulation() {
 	energySupply = 0;
     healthcare = 0;
     needs = 0;
+	*/
+
+	std::cout << income << std::endl;
 
 	for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{

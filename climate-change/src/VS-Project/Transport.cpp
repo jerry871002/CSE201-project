@@ -4,6 +4,7 @@
 #include <Viewport.hpp>
 #include <KinematicCollision.hpp>
 #include <Mesh.hpp>
+#include <Timer.hpp>
 
 #include <random>
 
@@ -35,11 +36,11 @@ template <typename T> void align_on_axis(T obj) {
 }
 
 // Constructors
-Transport::Transport() : Transport(0) {
-
+Transport::Transport() {
+    transport_type(0);
 }
 
-Transport::Transport(int type) {
+void Transport::transport_type(int type) {
     // initialize graphical variables
     motion = Vector3(0, 0, 0);
     rot = (M_PI / 2);
@@ -47,7 +48,7 @@ Transport::Transport(int type) {
     dir = 0;
     position = 0;
     SPEED_T = 0;
-
+    kmPerDay = 0;
     transportType = type;
     CO2Emission = 0; // co2 output for the whole duration of simulation
     maintenance = 0; // maintenance cost for the whole duration of simulation
@@ -70,6 +71,7 @@ Transport::Transport(int type) {
             kmPerDay = kmt(gen); // average km per day for this car using gaussian
             std::normal_distribution <double> costt(42000, 8500); //cost randomised using gaussian
             cost = costt(gen);
+            cost = 5;
             std::normal_distribution <double> timet(4, 1);
             buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
             std::normal_distribution <double> satisfactiont(9.7, 0.2); //very high satisfaction
@@ -84,6 +86,7 @@ Transport::Transport(int type) {
             fuelPerKm = 0.24; 
             std::normal_distribution <double> costg(85000, 12000);
             cost = costg(gen); // cost of 1 car in euros, randomised using gaussian
+            cost = 25;
             capacity = 8;
             std::normal_distribution <double> kmg(85, 15);
             kmPerDay = kmg(gen); // average km per day for this car using gaussian
@@ -247,7 +250,18 @@ void Transport::_process(float delta){
     } else if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
 
         compute_speed(SPEED_T, Acc, delta);
-        if (this->move_and_collide(Vector3(0, 0, 0), true, true, true) == NULL) { turn(dir, delta); }
+        Vector3 globalSpeed = Vector3((SPEED_T * 10), 0, 0);
+        globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
+
+        if (this->move_and_collide(globalSpeed, true, true, true) == NULL) {
+            turn(dir, delta);
+        }
+        else {
+            Vector3 colliderVelocity = this->move_and_collide(Vector3(0, 0, 0), true, true, true)->get_collider_velocity();
+            if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
+               // turn(dir, delta);
+            }
+        }
         prevPosition = this->get_global_transform().get_origin();
 
         if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
@@ -266,6 +280,14 @@ void Transport::_process(float delta){
             switch (dir) {
             case -1: Turn_R = 12; break;
             default: Turn_R = 4; break;
+
+                switch ( (int)(round(this->get_rotation_degrees().y / 90) + 4)%4 ) {
+                case 0: this->set_axis_lock(0, true);  break;
+                case 1: this->set_axis_lock(2, true);  break;
+                case 2: this->set_axis_lock(0, true);  break;
+                case 3: this->set_axis_lock(2, true);  break;
+                default:  this->set_axis_lock(0, true); break;
+                }
             }
         }
     }
@@ -389,9 +411,17 @@ void Transport::turn(int dir, float delta) {
 }
 
 void Transport::straight(float delta) {
-    Vector3 globalSpeed = Vector3((SPEED_T * delta*10), 0, 0);
+    //Vector3 globalSpeed = Vector3((SPEED_T * delta*10), 0, 0);
+    Vector3 globalSpeed = Vector3((SPEED_T  * 10), 0, 0);
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
-    this->move_and_collide(globalSpeed, true, true, false);
+    //this->move_and_collide(globalSpeed, true, true, false);
+    if ((int)((rot / 90) + 4) % 2 == 0) {
+        this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(1, 0, 0), true);
+    }
+    else {
+        this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 1, 0), true);
+    }
+    
     //position += SPEED_T * delta * 10;
     Vector3 pos = this->get_global_transform().get_origin() - prevPosition;
     position += pos.normalized().dot(pos);				//Get the norm....
