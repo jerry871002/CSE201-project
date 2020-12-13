@@ -4,3 +4,7 @@ the graphs functional in the menu.
 Anna:
 This week I finished implementing transport class and implemented all types of transport, and I also started implemeting healthcare class (even though i still did not commit my changings)
 and researching about hospitals in real world. Next week I plan to continue working on healthcare and other objects with the team.
+
+Paloma: This week I did research on additional energy sources which we can implement as policies and finished coding the geothermal power plant class. Next week with the objects 
+team we are going to have to modify in part the structure of our classes due to a Godot inheritance problem that is being fixed. I will also continue coding the energy sector to
+finish with one or two more classes only.
