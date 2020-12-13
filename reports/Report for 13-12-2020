@@ -15,4 +15,4 @@ This week I tried to understand how Car and Transport class interact with each o
 Next week I will work on actually implement the algorithm. Calculate all the indices we need to display in the game.
 
 Luca:
-This week, I coded some more functions that edit csv files. I explained to the algorithm team how they can use my work to store some data of the city. I added comments in my cpp files in order to explain how my functions work. I also began to code a 2D menu so as to display my charts that I managed to plot last week. This week, I plan to continue to work on my 2D menu.
+This week, I coded some more functions that edit csv files. I explained to the algorithm team how they can use my work to store some data of the city. I added comments in my cpp files in order to explain how my functions work. I also began to code a 2D menu so as to display my charts that I managed to plot a week ago. This week, I plan to continue to work on my 2D menu.
