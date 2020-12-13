@@ -28,3 +28,10 @@ I will finish this next week and further expand on the main game loop.
 
 Antoine:
 This week I re-updated the object branch with what had been done in master. I mainly focused on discussing with the other team leaders as there are significant changes that need to be implemented in the structure of the object's code. Finally I advanced certain unit tests which lead to some debugging of certain functions. Next week I will implement the structural changes needed for the object's classes. 
+
+Ambroise:
+This week, I worked on using buttons to change properties of our 3D objects. I also worked on finding the most efficient way to organise and hierarchise classes. 
+I rewrote several classes as godot classes and added graphical functionality to the structure superclass. 
+This week, I will have to coordinate the transition from normal C++ classes to godot classes with a new hierarchy, with the help of the objects team. 
+I also need to agree with the graphics team on a standardised scene structure to avoid any bugs when instantiating. 
+Finally, I will work on developing the menu that will allow the player to implement policies when clicking on an object.
