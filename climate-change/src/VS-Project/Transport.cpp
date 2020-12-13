@@ -71,7 +71,6 @@ void Transport::transport_type(int type) {
             kmPerDay = kmt(gen); // average km per day for this car using gaussian
             std::normal_distribution <double> costt(42000, 8500); //cost randomised using gaussian
             cost = costt(gen);
-            cost = 5;
             std::normal_distribution <double> timet(4, 1);
             buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
             std::normal_distribution <double> satisfactiont(9.7, 0.2); //very high satisfaction
