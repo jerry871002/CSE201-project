@@ -16,3 +16,8 @@ Next week I will work on actually implement the algorithm. Calculate all the ind
 
 Luca:
 This week, I coded some more functions that edit csv files. I explained to the algorithm team how they can use my work to store some data of the city. I added comments in my cpp files in order to explain how my functions work. I also began to code a 2D menu so as to display my charts that I managed to plot a week ago. This week, I plan to continue to work on my 2D menu.
+
+Samuel:
+The task of the Car and Transport classes was handed over to Jerry. This week I performed some merges and tried to understand the files that export
+data created by the interface team. I am now working on the main loop writing its statistics in csv files using the functions created by Luca.
+I will finish this next week and further expand on the main game loop.
