@@ -9,3 +9,7 @@ Saga:
 This week I started working on agricultural production and services classes. 
 Next week I will need to make some changes in the housing classes because we have discussed some changes in the way we write our functions with the objects team.
 I will also continue working on the two new classes I started this week.
+
+Jerry:
+This week I tried to understand how Car and Transport class interact with each other and affect the indices of the city. 
+Next week I will work on actually implement the algorithm. Calculate all the indices we need to display in the game.
