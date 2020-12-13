@@ -14,6 +14,10 @@ Jerry:
 This week I tried to understand how Car and Transport class interact with each other and affect the indices of the city. 
 Next week I will work on actually implement the algorithm. Calculate all the indices we need to display in the game.
 
+Paloma: This week I did research on additional energy sources which we can implement as policies and finished coding the geothermal power plant class. Next week with the objects 
+ team we are going to have to modify in part the structure of our classes due to a Godot inheritance problem that is being fixed. I will also continue coding the energy sector to
+ finish with one or two more classes only.
+
 Luca:
 This week, I coded some more functions that edit csv files. I explained to the algorithm team how they can use my work to store some data of the city. I added comments in my cpp files in order to explain how my functions work. I also began to code a 2D menu so as to display my charts that I managed to plot a week ago. This week, I plan to continue to work on my 2D menu.
 
