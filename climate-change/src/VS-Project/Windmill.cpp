@@ -6,19 +6,7 @@
 
 using namespace godot;
 
-void Windmill::_register_methods()
-{
-	register_method((char*)"_init", &Windmill::_init);
-	register_method((char*)"_process", &Windmill::_process);
-	register_method((char*)"_input", &Windmill::_input);
-	register_method((char*)"_ready", &Windmill::_ready);
-	register_method((char*)"_init", &Windmill::_init);
-}
 
-void Windmill::_init()
-{
-
-}
 
 void Windmill::_process(float delta)
 {
@@ -26,15 +14,7 @@ void Windmill::_process(float delta)
 	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -130, (180 / M_PI) * rot));
 }
 
-void Windmill::_input(InputEvent* e)
-{
 
-}
-
-void Windmill::_ready()
-{
-
-}
 
 
 Windmill::Windmill()

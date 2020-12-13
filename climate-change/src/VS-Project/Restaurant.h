@@ -12,33 +12,13 @@
 
 
 namespace godot {
-	class Restaurant : public Production, public StaticBody {
-		GODOT_CLASS(Restaurant, StaticBody)
-	private:
-
-		bool Clickable;
+	class Restaurant : public Production {
+		GODOT_SUBCLASS(Restaurant, Production)
 
 	public:
 
 		Restaurant();
-		//Restaurant(double income, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs);
 
-		bool PanelsOn;
-		bool MenuVisible;
-		
-		Node* GetPanels();
-
-		static void _register_methods();
-		void _init();
-		void _process(float delta);
-		void _input(InputEvent* e);
-		void _ready();
-		void _on_Area_mouse_entered();
-		void _on_Area_mouse_exited();
-		void _on_CheckBox_pressed();
-		void _on_CheckBox_button_up();
-		void _on_CheckBox_button_down();
-		void _on_CheckBox_toggled();
 		String class_name();
 
 
@@ -53,6 +33,8 @@ namespace godot {
 		double diningSize;
 		double averageWage;
 		bool firstYearShock;
+
 		void simulate_step(double days);
 	};
 }
+

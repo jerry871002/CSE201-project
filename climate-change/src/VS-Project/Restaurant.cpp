@@ -10,9 +10,7 @@ using namespace godot;
 
 Restaurant::Restaurant()
 {
-	PanelsOn = true;
-	MenuVisible = false;
-	Clickable = false;
+	
 	income = 100;
 
 	energyUse = 0;
@@ -107,111 +105,13 @@ Restaurant::Restaurant(double income, double numberOfEmployees, double carbonEmi
 }
 */
 
-Node* Restaurant::GetPanels()
-{
-	return get_node("MeshComponents")->get_node("SolarPanels");
-}
 
-void Restaurant::_register_methods()
-{
-	register_method((char*)"_process", &Restaurant::_process);
-	register_method((char*)"_input", &Restaurant::_input);
-	register_method((char*)"_ready", &Restaurant::_ready);
-	register_method((char*)"_on_Area_mouse_entered", &Restaurant::_on_Area_mouse_entered);
-	register_method((char*)"_on_Area_mouse_exited", &Restaurant::_on_Area_mouse_exited);
-	register_method((char*)"_on_CheckBox_pressed", &Restaurant::_on_CheckBox_pressed);
-	register_method((char*)"_on_CheckBox_button_up", &Restaurant::_on_CheckBox_button_up);
-	register_method((char*)"_on_CheckBox_button_down", &Restaurant::_on_CheckBox_button_down);
-	register_method((char*)"_on_CheckBox_toggled", &Restaurant::_on_CheckBox_toggled);
-}
-
-
-
-void Restaurant::change_income_by_percent(float factor ) {
+void Restaurant::change_income_by_percent(float factor) {
 	income *= factor;
 }
 
-void Restaurant::_init()
-{
 
-}
-
-void Restaurant::_process(float delta)
-{
-
-}
-
-void Restaurant::_input(InputEvent* e)
-{
-	Input* i = Input::get_singleton();
-
-	if (i->is_action_pressed("ui_select") && Clickable) {
-		PanelsOn = (PanelsOn == false);
-		//this->GetPanels()->set("visible", PanelsOn);
-		//this->get_child(0)->set("pressed", PanelsOn);
-		MenuVisible = (MenuVisible == false);
-		//Bthis->get_child(0)->set("rect_position", Vector2(this->get_viewport()->get_mouse_position().x, this->get_viewport()->get_mouse_position().x));
-		this->get_child(0)->set("visible", MenuVisible);
-	}
-}
-
-
-void Restaurant::_ready()
-{
-	this->GetPanels()->set("visible", PanelsOn);
-	this->get_child(0)->set("pressed", PanelsOn);
-	this->get_child(0)->set("text", this->class_name() + ": Select to display solar panels");
-	this->get_child(0)->set("visible", MenuVisible);
-}
-
-void godot::Restaurant::_on_Area_mouse_entered()
-{
-
-	Clickable = true;
-	//this->GetPanels()->set("visible", true);
-
-	Input* i = Input::get_singleton();
-	// CHANGE MOUSE CURSOR
-	i->set_default_cursor_shape(i->CURSOR_POINTING_HAND);
-	
-
-}
-
-void godot::Restaurant::_on_Area_mouse_exited()
-{
-	Clickable = false;
-	//this->GetPanels()->set("visible", false);
-	Input* i = Input::get_singleton();
-	// CHANGE MOUSE CURSOR
-	i->set_default_cursor_shape(i->CURSOR_ARROW);
-	
-}
-
-
-void godot::Restaurant::_on_CheckBox_pressed() 
-{
-	
-}
-
-void godot::Restaurant::_on_CheckBox_toggled()
-{
-	PanelsOn = (PanelsOn == false);
-	this->GetPanels()->set("visible", PanelsOn);
-}
-
-
-void godot::Restaurant::_on_CheckBox_button_up()
-{
-	
-}
-
-void godot::Restaurant::_on_CheckBox_button_down()
-{
-
-}
-
-
-String godot::Restaurant::class_name()
+String Restaurant::class_name()
 {
 	return "Restaurant";
 }
