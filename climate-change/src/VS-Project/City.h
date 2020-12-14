@@ -39,9 +39,10 @@ namespace godot {
 		~City();
 
 		std::vector<Structure*> buildings;
+		std::vector<Transport*> all_transports;
 
 		void add_building(Structure*);
-		void add_car();
+		void add_car();                       // adds transport object to city
 		void simulation();                    //updates all the stats abd the building
 		void write_stat_history_to_file();    //writes all the stats to a file so that the interface team can make graphs 
 		double return_income();               //returns the income of the city

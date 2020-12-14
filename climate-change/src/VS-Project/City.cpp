@@ -112,6 +112,10 @@ void City::_ready()
 				if (type == 0) { node = RestaurantScene->instance(); }
 				else { node = ShopScene->instance(); }
 
+
+				// REMOVE COMMENT ONCE INITIALIZE COMMAND IS CREATED
+				// ((Restaurant*)node)->Restaurant::initialize();
+
 				//Node* node = RestaurantScene->instance();
 
 				node->set("scale", Vector3(10, 10, 10));
@@ -120,6 +124,8 @@ void City::_ready()
 				//node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
 				this->add_child(node);
 
+				// REMOVE COMMENT ONCE INHERITANCE IS FIXED
+				// this->add_building((Structure*)node);
 
 			}
 		}
@@ -138,7 +144,6 @@ void City::_ready()
 			node->set("scale", Vector3(10, 10, 10));
 			node->set("translation", Vector3(-13, 0, -13 + 30 * (z + 1)));
 			this->add_child((Node*)node);
-
 			std::cout << node->kmPerDay;
 		}
 	}
@@ -171,6 +176,8 @@ void City::add_car() {
 		this->add_child((Node*)node);
 
 		income -= node->cost;
+
+		all_transports.push_back((Transport*)node);
 	}
 }
 
@@ -205,6 +212,13 @@ void City::simulation() {
         needs += (*it)->needs;
 		(*it)->simulate_step(); //function that updates the building
 		
+		*/
+
+	}
+	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
+	{
+		/*
+		     count up all the vehicle stuff
 		*/
 
 	}
