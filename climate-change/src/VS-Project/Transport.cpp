@@ -222,8 +222,9 @@ void Transport::_init() {
 
 void Transport::_ready() {
     prevPosition = this->get_global_transform().get_origin();
-    myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
+    // myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
 }
+
 
 void Transport::_process(float delta) {
     if (rot >= (M_PI / 2)) {
@@ -437,14 +438,14 @@ void Transport::straight(float delta) {
 int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90) + 4) % 4;
     vector<int> out;
-
+    /*
     if ((int)round(pos.x / 30) >= sizeof(traffic) or (int)round(pos.z / 30) >= sizeof(traffic[0])) {
         myCity->add_car();
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         myCity->add_car();
         return(0);
     }
-
+    */
     int i = -1;
     for (const int& n : traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
@@ -452,7 +453,7 @@ int Transport::get_direction(Vector3 pos, double rot) {
         }
         i++;
     }
-
+    /*
     if (out.size() == 0) {
 
         myCity->add_car();
@@ -460,6 +461,6 @@ int Transport::get_direction(Vector3 pos, double rot) {
         myCity->add_car();
         return(0);
     }
-
+    */
     return(out[rand() % out.size()]);
 }

@@ -9,6 +9,7 @@
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
 #include "obj.h"
+#include "Transport.h"
 #include <StaticBody.hpp>
 #include <Spatial.hpp>
 #include <PackedScene.hpp>
