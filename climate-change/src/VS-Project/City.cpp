@@ -211,15 +211,14 @@ void City::simulation() {
 }
 
 void City::write_stat_history_to_file() {
-	/*
-	std::ofstream incomefile;
- 	incomefile.open("incomefile.txt", std::ofstream::out | std::ofstream::app);
- 	if(!incomefile) { 
+	std::ofstream file;
+ 	file.open("file.txt", std::ofstream::out | std::ofstream::app);
+ 	if(!file) { 
         std::cout<<"Error in creating file!!!"<< std::endl;
     	}
 	std::cout<<"File created successfully."<<std::endl; 
- 	incomefile.close();
-	 */
+ 	file.close();
+
  	//incomefile << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
  	//incomefile << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
  	//add_data("incomefile",std::to_string((day_tick / 365) + 1),std::to_string(income));
