@@ -128,6 +128,7 @@ void City::_ready()
 			}
 		}
 	}
+	/*
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
 		// TODO: This loop is only going to run once, maybe remove the loop?
@@ -145,7 +146,8 @@ void City::_ready()
 			std::cout << node->kmPerDay;
 		}
 	}
-
+	*/
+	time_speed = 2;
 };
 
 void City::add_building(Structure* struc) {
@@ -192,8 +194,8 @@ void City::simulation() {
     healthcare = 0;
     needs = 0;
 	*/
-
-	std::cout << income << std::endl;
+	
+	std::cout << return_game_date() << std::endl;
 
 	for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
@@ -211,6 +213,9 @@ void City::simulation() {
 		(*it)->simulate_step(); //function that updates the building
 		
 		*/
+
+
+
 		(*it)->simulate_step(1);
 
 
