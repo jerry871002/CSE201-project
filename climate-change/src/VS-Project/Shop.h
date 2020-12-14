@@ -24,7 +24,7 @@ namespace godot{
         double employment;
 
         // Will have type: 0 - Empty. 1 - Restaurant. 2 - Small Shop. 3 - Mall
-        void initialize(int shopTypeInput);
+       // void initialize(int shopTypeInput);
         
         double get_satisfaction();
         double get_co2emissions();
