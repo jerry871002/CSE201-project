@@ -11,8 +11,8 @@ using namespace godot;
 // ######################     SHOP     ##############################
 
 Shop::Shop(){
-    PanelsOn = false;
-    this->GetPanels()->set("visible", PanelsOn);
+    
+    
 }
 
 Shop::~Shop() {}
@@ -96,6 +96,13 @@ void Shop::initialize(int shopTypeInput){
 }
 */
 
+void Shop::_ready()
+{
+    std::cout << "DEBUG: SHOP READY CALLED" << std::endl;
+    this->GetPanels()->set("visible", PanelsOn);
+    std::cout << "DEBUG: SHOP READY DONE" << std::endl;
+}
+
 Node* Shop::GetPanels()
 {
     return get_node("MeshComponents")->get_node("SolarPanels");
@@ -124,6 +131,7 @@ double Shop::get_environmentalcost(){
 }
 
 void Shop::simulate_step(double days){
+    std::cout << "HI I SIMULATE" << std::endl;
     if (panels_age == 0) {
         double temp = rand() / (RAND_MAX + 1.);
         if ((1 - (days * panel_probability) / 365) < temp) {
@@ -215,7 +223,8 @@ String Restaurant::class_name()
 Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
-	age += days;
+    std::cout << "RESTAURANT HI I SIMULATE" << std::endl;
+    age += days;
 	double shock;
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 

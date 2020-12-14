@@ -45,7 +45,13 @@ void Structure::_register_methods()
 
 void Structure::_init()
 {
+    std::cout << "DEBUG: STRUCTURE INIT CALLED" << std::endl;
 
+}
+
+void Structure::simulate_step(double days) 
+{
+    std::cout << "HELLO THERE STRUCTURE SIMULATION" << std::endl;
 }
 
 Vector3 Structure::get_position() {
@@ -79,17 +85,13 @@ void Structure::_input(InputEvent* e)
 
 void Structure::_ready()
 {
-	//this->GetPanels()->set("visible", PanelsOn);
-	//this->get_child(0)->set("pressed", PanelsOn);
-	//this->get_child(0)->set("text", this->class_name() + ": Menu");
-	//this->get_child(0)->set("visible", MenuVisible);
+    std::cout << "DEBUG: STRUCTURE READY CALLED" << std::endl;
 }
 
 void godot::Structure::_on_Area_mouse_entered()
 {
 
 	Clickable = true;
-	//this->GetPanels()->set("visible", true);
 
 	Input* i = Input::get_singleton();
 	// CHANGE MOUSE CURSOR
@@ -101,7 +103,7 @@ void godot::Structure::_on_Area_mouse_entered()
 void godot::Structure::_on_Area_mouse_exited()
 {
 	Clickable = false;
-	//this->GetPanels()->set("visible", false);
+
 	Input* i = Input::get_singleton();
 	// CHANGE MOUSE CURSOR
 	i->set_default_cursor_shape(i->CURSOR_ARROW);
@@ -118,8 +120,7 @@ void godot::Structure::_on_CheckBox_pressed()
 
 void godot::Structure::_on_CheckBox_toggled()
 {
-	PanelsOn = (PanelsOn == false);
-	this->GetPanels()->set("visible", PanelsOn);
+	
 }
 
 

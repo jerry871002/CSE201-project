@@ -14,8 +14,9 @@ namespace godot{
         ~Shop();
 
         Node* GetPanels();
-        bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
+        bool PanelsOn{false}; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
 
+        void _ready();
 
         bool shopStatus = true;   //True if open, False if closed
         double employment = 0;
@@ -30,7 +31,7 @@ namespace godot{
         void panels_get_added();
         int panels_age{ 0 };
         bool ArePanelsDisplayed();
-        double panel_probability{ 25 };
+        double panel_probability{ 75 };
         
     };
 

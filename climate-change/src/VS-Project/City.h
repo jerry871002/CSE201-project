@@ -15,6 +15,7 @@
 #include <PackedScene.hpp>
 #include <ResourceLoader.hpp>
 #include "edit_text_files.cpp"
+#include "Shop.h"
 
  /* current test fct for restaurant only using main_loop.cpp on mac:
 
@@ -85,7 +86,7 @@ namespace godot {
 		int64_t timer;       // helper data to see if `delta_counter` have carry on units digit
 		int day_tick; // this variable keeps track of the in-game days, 
 		// one day added every time simulation() is called
-		
+		double counter{0};
 		/*
 		Ref<PackedScene> RestaurantScene;
 		Ref<PackedScene> ShopScene;

@@ -42,7 +42,7 @@ namespace godot {
 
         Vector3 get_position();
 
-        virtual void simulate_step(double) {};
+        virtual void simulate_step(double);
 
         bool is_other_structure_within_distance(Vector3, double);
 

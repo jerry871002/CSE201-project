@@ -25,7 +25,7 @@ City::City() {
     needs = 0;
 	timer = 0;
 
-	time_speed = 1;
+	time_speed = 0;
 	delta_counter = 0.0;
 
 	//timer = 0;
@@ -50,10 +50,24 @@ void City::_init()
 
 };
 
-void City::_process(float)
+void City::_process(float delta)
 {
-	std::cout << income << std::endl;
+	//std::cout << "DEBUG: PROCESS CALLED" << std::endl;
+	counter += delta;
+	if (counter > 1) 
+	{
+		simulation();
+		counter -= 1;
 
+	}
+	
+	//delta_counter += (delta * time_speed);
+	//simulation();
+	//if (day_tick != (int)delta_counter) {
+	//	day_tick = (int)delta_counter;
+	//	simulation();
+	//	std::cout << "DEBUG: yet another lonely second in _process" << std::endl;
+	//}
 };
 
 
@@ -66,12 +80,6 @@ we update `day_tick` and execute simulation()
 */
 void City::_physics_process(float delta) {
 	
-	delta_counter += (delta * time_speed);
-	simulation();
-	if (day_tick != (int)delta_counter) {
-		day_tick = (int)delta_counter;
-		simulation();
-	}
 }
 
 
@@ -92,6 +100,8 @@ void City::_input(InputEvent*)
 
 void City::_ready()
 {
+
+	std::cout << "DEBUG: started ready " << std::endl;
 	ResourceLoader* ResLo = ResourceLoader::get_singleton();
 	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
 	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
@@ -107,7 +117,7 @@ void City::_ready()
 
 				// randomly choose between restaurant and shop
 
-				
+				std::cout << "DEBUG: restaurant before instanciating " << std::endl;
 				Node* node = RestaurantScene->instance();
 				
 
@@ -115,7 +125,7 @@ void City::_ready()
 				// ((Restaurant*)node)->Restaurant::initialize();
 
 				//Node* node = RestaurantScene->instance();
-
+				std::cout << "DEBUG: restaurant instanciating " << std::endl;
 				node->set("scale", Vector3(10, 10, 10));
 				node->set("translation", Vector3(30 * x, 0, 30 * z));
 				//int rot = rand() % 2;
@@ -124,9 +134,11 @@ void City::_ready()
 
 				// REMOVE COMMENT ONCE INHERITANCE IS FIXED
 				this->add_building((Structure*)node);
+				std::cout << "DEBUG: restaurant added to city your mom fat " << std::endl;
 
 			}
 		}
+
 	}
 	/*
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
@@ -147,7 +159,7 @@ void City::_ready()
 		}
 	}
 	*/
-	time_speed = 2;
+	std::cout << "DEBUG: finished ready " << std::endl;
 };
 
 void City::add_building(Structure* struc) {
@@ -183,8 +195,9 @@ void City::add_car() {
 
 
 void City::simulation() {
-	/*
 	day_tick++;
+	/*
+	
 	//write the old values in a file 
 	income = 0;
 	numberOfEmployees = 0;
@@ -194,11 +207,12 @@ void City::simulation() {
     healthcare = 0;
     needs = 0;
 	*/
-	
+
 	std::cout << return_game_date() << std::endl;
 
 	for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{
+		std::cout << "DEBUG: SIMULATION LOOP ENTERED" << std::endl;
 		/*
 		commented out until we know what variables to call in every structure
 
@@ -216,8 +230,8 @@ void City::simulation() {
 
 
 
-		(*it)->simulate_step(1);
-
+		//(*it)->simulate_step(1);
+		std::cout << "DEBUG: ONE RESTAURANT LOOPED" << std::endl;
 
 	}
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
