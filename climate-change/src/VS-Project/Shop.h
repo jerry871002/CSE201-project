@@ -1,14 +1,8 @@
 #pragma once
 
 #include "obj.h"
-
 #include <core/Godot.hpp>
-#include <StaticBody.hpp>
-#include <MeshInstance.hpp>
-#include <Input.hpp>
-#include <InputEventMouse.hpp>
-#include <InputEventMouseMotion.hpp>
-#include <InputEventMouseButton.hpp>
+
 
 
 namespace godot{
@@ -30,11 +24,7 @@ namespace godot{
         double get_co2emissions();
         double get_energyuse();
         double get_environmentalcost();
-
-
-
-
-        void simulate_step(double days);
+                void simulate_step(double days);
     };
 
     class Restaurant : public Shop {

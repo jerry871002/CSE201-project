@@ -9,6 +9,9 @@
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
 #include <String.hpp>
+#include <Mesh.hpp>
+
+# define M_PI 3.14159265358979323846  /* pi */
 
 namespace godot {
     class Structure : public StaticBody {
@@ -22,10 +25,10 @@ namespace godot {
         Node* GetPanels();
 
         static void _register_methods();
-        void _init();
-        void _process(float delta);
-        void _input(InputEvent* e);
-        void _ready();
+        virtual void _init();
+        virtual void _process(float delta);
+        virtual void _input(InputEvent* e);
+        virtual void _ready();
         void _on_Area_mouse_entered();
         void _on_Area_mouse_exited();
         void _on_CheckBox_pressed();
