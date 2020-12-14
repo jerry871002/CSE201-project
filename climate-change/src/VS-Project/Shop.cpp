@@ -133,6 +133,7 @@ double Shop::get_environmentalcost(){
 void Shop::simulate_step(double days){
     std::cout << "HI I SIMULATE" << std::endl;
     if (panels_age == 0) {
+        srand((unsigned)time(0));
         double temp = rand() / (RAND_MAX + 1.);
         if ((1 - (days * panel_probability) / 365) < temp) {
             panels_get_added();
