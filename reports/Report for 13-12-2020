@@ -40,3 +40,7 @@ Eliott:
 This week I continued my work on car collision and looked over all the different functions of Godot, I implemented a way to get the data attributes of all elements
 from the city class, I designed the windmill, and the powerplant (including animation and smoke system) and I am working on the menu for the 3d world. Next week, I
 am gonna finish this menu, help design the 2D menu, work on the red lights for cars (or improve collisions) and implement the time slider on the 3D world.
+
+Vincent:
+This week I continued working on getting the simulated variables and attributes to work together with their graphical representation, and on the time mechanism working properly. I coordinated the simulation team's work on the car system and data outputting system.
+After quite some discussion this week, we decided on how to restructure our project inheritance most efficiently. Next week the top priority for the simulation team is getting the policies to work within the city object and to unify the simulation, all the classes and the visuals. 
