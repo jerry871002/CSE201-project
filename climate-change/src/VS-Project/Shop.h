@@ -27,11 +27,6 @@ namespace godot{
 
         void simulate_step(double days);
 
-        void panels_get_added();
-        int panels_age{ 0 };
-        bool ArePanelsDisplayed();
-        double panel_probability{ 25 };
-        
     };
 
 

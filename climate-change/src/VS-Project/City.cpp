@@ -107,9 +107,11 @@ void City::_ready()
 
 				// randomly choose between restaurant and shop
 
-				
-				Node* node = RestaurantScene->instance();
-				
+				int type = rand() % 2;
+				Node* node;
+				if (type == 0) { node = RestaurantScene->instance(); }
+				else { node = ShopScene->instance(); }
+
 
 				// REMOVE COMMENT ONCE INITIALIZE COMMAND IS CREATED
 				// ((Restaurant*)node)->Restaurant::initialize();
@@ -123,7 +125,7 @@ void City::_ready()
 				this->add_child(node);
 
 				// REMOVE COMMENT ONCE INHERITANCE IS FIXED
-				this->add_building((Structure*)node);
+				// this->add_building((Structure*)node);
 
 			}
 		}
@@ -211,8 +213,6 @@ void City::simulation() {
 		(*it)->simulate_step(); //function that updates the building
 		
 		*/
-		(*it)->simulate_step(1);
-
 
 	}
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
