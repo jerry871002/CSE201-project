@@ -41,6 +41,11 @@ namespace godot {
         double cost ;
         double buildingTime ;
         double satisfaction ;
+        double get_satisfaction();
+		double get_co2emissions();
+		double get_energyuse();
+		double get_environmentalcost();
+        virtual String class_name();
 
     private:
         // simulation variables

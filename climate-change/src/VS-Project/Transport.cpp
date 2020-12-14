@@ -55,10 +55,8 @@ void Transport::transport_type(int type) {
     SPEED_T = 0;
     kmPerDay = 0;
     transportType = type;
-    CO2Emission = 0; // co2 output for the whole duration of simulation
     maintenance = 0; // maintenance cost for the whole duration of simulation
-    fuelInput = 0; // fuel needed for the whole duration of simulation
-    energyUse = 0; //energy needed for the whole duration of simulation
+    energyUse = 0; //energy per day
     passengers = 0; //total number of passengers that used the car
     age = 0; //age in days
     employment = 0; // employees only for the bus
@@ -83,6 +81,7 @@ void Transport::transport_type(int type) {
         if (satisfaction > 10) {
             satisfaction = 10;
         }
+        energyUse = 0.119 * kmPerDay;
         break;
     }
     case 1: {  // big american car
@@ -213,6 +212,8 @@ void Transport::transport_type(int type) {
         break;
     }
     }
+    fuelInput = fuelPerKm*kmPerDay; //in 1 day
+    CO2Emission = co2PerKm*kmPerDay; //in 1 day
 }
 
 void Transport::_register_methods() {
@@ -303,13 +304,14 @@ void Transport::_process(float delta) {
 void Transport::simulate_step(double days) {
     int years = floor((age + days) / 365 - age / 365);
     co2PerKm *= pow(1.05, years); //increase in emissions with each year
+    fuelInput = fuelPerKm*kmPerDay; //in 1 day
+    CO2Emission = co2PerKm*kmPerDay; //in 1 day
     age += days; //total number of days 
-    fuelInput += fuelPerKm * kmPerDay * days; //litres of fuel for car
-    CO2Emission += co2PerKm * kmPerDay * days; // co2 emissions per car
+    /*fuelInput += fuelPerKm * kmPerDay * days; //litres of fuel for car
+    CO2Emission += co2PerKm * kmPerDay * days;*/ // co2 emissions per car
     passengers += capacity * occupancyRate * days; //number of people that used the car in given period
     switch (transportType) {
     case 0: { //electric car
-        energyUse += 11.9 / 100 * kmPerDay * days; //energy use of car for the whole duration in kWh
         if (age <= 365) {
             maintenance += 1.09 * days; //maintenance service price per day if car is less than 1 yo
         }
@@ -468,4 +470,24 @@ int Transport::get_direction(Vector3 pos, double rot) {
     }
     */
     return(out[rand() % out.size()]);
+}
+
+double Transport::get_satisfaction(){
+	return this->satisfaction;
+}
+
+double Transport::get_co2emissions(){
+	return this->CO2Emission;
+}
+
+double Transport::get_energyuse(){
+	return this->energyUse;
+}
+
+double Transport::get_environmentalcost(){
+    return 0; //at least for now
+}
+
+String Transport::class_name(){
+    return "Transport";
 }

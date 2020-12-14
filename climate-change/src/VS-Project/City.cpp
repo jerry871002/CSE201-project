@@ -9,12 +9,14 @@
 #include <Node.hpp>
 #include <ctime>
 #include <Input.hpp>
+#include <Button.hpp>
+#include <Viewport.hpp>
 
 
 using namespace godot;
 
 City::City() {
-
+	
 	income = 0;
 	population = 50000;
 	numberOfEmployees = 0;
@@ -43,6 +45,8 @@ void City::_register_methods()
 	register_method((char*)"_process", &City::_process);
 	register_method((char*)"_input", &City::_input);
 	register_method((char*)"_ready", &City::_ready);
+	register_method((char*)"_on_RoofWindTurbines_pressed", &City::_on_RoofWindTurbines_pressed);
+	
 };
 
 void City::_init()
@@ -148,7 +152,13 @@ void City::_ready()
 		}
 	}
 
-};
+}
+
+void godot::City::_on_RoofWindTurbines_pressed()
+{
+	this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld");
+}
+;
 
 void City::add_building(Structure* struc) {
 	buildings.push_back(struc);
