@@ -212,7 +212,6 @@ void City::simulation() {
 
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
-		std::cout << "DEBUG: SIMULATION LOOP ENTERED" << std::endl;
 		/*
 		commented out until we know what variables to call in every structure
 
@@ -228,10 +227,7 @@ void City::simulation() {
 		
 		*/
 
-
-
-		//(*it)->simulate_step(1);
-		std::cout << "DEBUG: ONE RESTAURANT LOOPED" << std::endl;
+		((Restaurant*)*it)->Restaurant::simulate_step(1);
 
 	}
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
