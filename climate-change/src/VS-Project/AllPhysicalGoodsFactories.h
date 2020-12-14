@@ -4,8 +4,8 @@
 #include <StaticBody.hpp>
 
 namespace godot {
-class AllPhysicalGoodsFactories : public Production, public StaticBody {
-		GODOT_CLASS(AllPhysicalGoodsFactories, StaticBody)
+class AllPhysicalGoodsFactories : public Production {
+		GODOT_SUBCLASS(AllPhysicalGoodsFactories, Production)
 	public:
 		AllPhysicalGoodsFactories();
 		~AllPhysicalGoodsFactories();
@@ -14,5 +14,6 @@ class AllPhysicalGoodsFactories : public Production, public StaticBody {
 		void _process(float);
 		void _input(InputEvent*);
 		void _ready();
+		virtual String class_name();
 	};
 };

@@ -1,9 +1,13 @@
 #include "CoalPowerPlant.h"
-#include <Math.hpp>
+// #include <Math.hpp> do npt have that file on my directory 
 #include <GodotGlobal.hpp>
 
 using namespace godot;
 
+String godot::CoalPowerPlant::class_name()
+{
+	return "CoalPowerPlant";
+}
 void CoalPowerPlant::_register_methods()
 {
 	register_method((char*)"_init", &CoalPowerPlant::_init);

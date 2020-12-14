@@ -12,8 +12,8 @@
 
 
 namespace godot {
-	class Restaurant : public Production, public StaticBody {
-		GODOT_CLASS(Restaurant, StaticBody)
+	class Restaurant : public Shop{
+		GODOT_SUBCLASS(Restaurant, Shop)
 	private:
 
 		bool Clickable;
@@ -54,5 +54,10 @@ namespace godot {
 		double averageWage;
 		bool firstYearShock;
 		void simulate_step(double days);
+
+		double get_satisfaction();
+		double get_co2emissions();
+		double get_energyuse();
+		double get_environmentalcost();
 	};
 }

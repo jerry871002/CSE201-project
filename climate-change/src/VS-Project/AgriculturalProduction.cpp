@@ -5,6 +5,11 @@
 
 using namespace godot;
 
+String godot::AgriculturalProduction::class_name()
+{
+	return "AgriculturalProduction";
+}
+
 void AgriculturalProduction::_register_methods()
 {
 	register_method((char*)"_init", &AgriculturalProduction::_init);

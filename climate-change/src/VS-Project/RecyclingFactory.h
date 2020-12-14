@@ -1,10 +1,10 @@
 #include "obj.h"
 #include <core/Godot.hpp>
 #pragma once
-#include <StaticBody.hpp>
+
 namespace godot {
-class RecyclingFactory : public Production, public StaticBody {
-		GODOT_CLASS(RecyclingFactory, StaticBody)
+class RecyclingFactory : public Production{
+		GODOT_SUBCLASS(RecyclingFactory, Production)
 	public:
 		RecyclingFactory();
 		~RecyclingFactory();
@@ -13,5 +13,6 @@ class RecyclingFactory : public Production, public StaticBody {
 		void _process(float delta);
 		void _input(InputEvent* e);
 		void _ready();
+		virtual String class_name();
 	};
 };

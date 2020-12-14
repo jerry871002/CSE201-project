@@ -7,10 +7,10 @@
 #include <KinematicBody.hpp>
 
 namespace godot {
-    class Transport : public Infrastructure, public KinematicBody {
+    class Transport : public KinematicBody {
         GODOT_CLASS(Transport, KinematicBody)
     public:
-        
+
         Transport();
 
         void transport_type(int type);
@@ -19,7 +19,7 @@ namespace godot {
         static void _register_methods();
         void _init();
         void _ready();
-        void _process(float delta);		
+        void _process(float delta);
 
         // simulation function
         void simulate_step(double days);
@@ -31,20 +31,28 @@ namespace godot {
 
         double occupancyRate, capacity, kmPerDay;
         double passengers, co2PerKm, fuelPerKm; // CO2 in kg
-        double fuelInput; // in litres
-        double test = 6;
+        double test ;
+        double CO2Emission ; // co2 output for the whole duration of simulation
+        double maintenance ; // maintenance cost for the whole duration of simulation
+        double fuelInput ; // fuel needed for the whole duration of simulation
+        double energyUse ; //energy needed for the whole duration of simulation
+        double age ; //age in days
+        double employment ;
+        double cost ;
+        double buildingTime ;
+        double satisfaction ;
 
     private:
         // simulation variables
-        
+
         /*
         * 0 - electic car
         * 1 - big american car
-        * 2 - normal car 
-        * 3 - old collection car 
-        * 4 - bike 
-        * 5 - motorcycle 
-        * 6 - bus 
+        * 2 - normal car
+        * 3 - old collection car
+        * 4 - bike
+        * 5 - motorcycle
+        * 6 - bus
         * 7 - sports car
         */
         int transportType;
@@ -63,4 +71,4 @@ namespace godot {
         int traffic[2][3][4][3] = { {{{0, 1, 0},{0, 0, 1},{0, 0, 1},{0, 0, 1}},		{{0, 0, 1},{0, 1, 0},{0, 0, 1},{0, 0, 1}},		{ {0, 1, 1},{0, 1, 1},{0, 0, 1},{0, 0, 1}}},
                                     { {{0, 0, 1},{0, 0, 1},{0, 0, 1},{0, 1, 0}}	,		{{0, 0, 1},{0, 0, 1},{1, 1, 0},{0, 1, 1}},		 { {0, 0, 1},{0, 0, 1},{0, 1, 1},{0, 0, 1}}} };
     };
-}   
+}

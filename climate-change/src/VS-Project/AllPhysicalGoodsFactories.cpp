@@ -4,6 +4,11 @@
 
 using namespace godot;
 
+String godot::AllPhysicalGoodsFactories::class_name()
+{
+	return "AllPhysicalGoodsFactories";
+}
+
 void AllPhysicalGoodsFactories::_register_methods()
 {
 	register_method((char*)"_init", &AllPhysicalGoodsFactories::_init);
