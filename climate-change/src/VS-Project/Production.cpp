@@ -5,10 +5,10 @@
 
 using namespace godot;
 
-godot::Production::Production()
+Production::Production()
 {
 }
 
-godot::Production::~Production()
+Production::~Production()
 {
 }

@@ -31,18 +31,16 @@ namespace godot {
 
         double occupancyRate, capacity, kmPerDay;
         double passengers, co2PerKm, fuelPerKm; // CO2 in kg
-        double fuelInput; // in litres
-        double test = 6;
-        double CO2Emission = 0; // co2 output for the whole duration of simulation
-        double maintenance = 0; // maintenance cost for the whole duration of simulation
-        double fuelInput = 0; // fuel needed for the whole duration of simulation
-        double energyUse = 0; //energy needed for the whole duration of simulation
-        double passengers = 0; //total number of passengers that used the car
-        double age = 0; //age in days
-        double employment = 0;
-        double cost = 0;
-        double buildingTime = 0;
-        double satisfaction = 0;
+        double test ;
+        double CO2Emission ; // co2 output for the whole duration of simulation
+        double maintenance ; // maintenance cost for the whole duration of simulation
+        double fuelInput ; // fuel needed for the whole duration of simulation
+        double energyUse ; //energy needed for the whole duration of simulation
+        double age ; //age in days
+        double employment ;
+        double cost ;
+        double buildingTime ;
+        double satisfaction ;
 
     private:
         // simulation variables

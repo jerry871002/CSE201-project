@@ -42,9 +42,7 @@ HighHouse::HighHouse() {
 	if (numberOfInhabitants >= 2) {
 		//have two salaries 
 		houseIncome = (rand() % (333-53)) + 53 + (rand() % (333-53)) + 53;  //random number in [53,333]
-	}
-
-	else {
+	} else {
 		houseIncome = (rand() % (333-53)) + 53;
 	}
 	//attributes from structure class
