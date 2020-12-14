@@ -37,7 +37,7 @@ CoalPowerPlant::CoalPowerPlant()
 {
 	age = 0; // age of the building in days
 	coal = 4.06E-4; // tons of coal needed to produce 1 kWh
-	maintenance = 36; //maintenace and working cost in euros per kWh
+	maintenance = 0.05; //maintenace and working cost in euros per kWh
 	employment = 800; // approximate number of employees in 1 plant 
 	satisfaction = 4; // on scale of 10
 	CO2Emission = 0.868; // kg of CO2 emitted per kWh
@@ -63,20 +63,20 @@ void CoalPowerPlant::simulate_step(double days)
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
 	if (efficiency_supercritical() == true) {
 		energyPerDay = 9589041 * (1 - 0.04);
-		maintenance += 38 * energyPerDay * days;
+		maintenance += 0.054 * energyPerDay * days;
 	}
 	if (efficiency_cogeneration() == true) {
 		energyPerDay = 9589041 * (1 - 0.09);
-		maintenance += 40 * energyPerDay * days;
+		maintenance += 0.058 * energyPerDay * days;
 	} 
 	else {
-		maintenance += 36 * energyPerDay * days;
+		maintenance += 0.05 * energyPerDay * days;
 	}
 	if (age >= 3650) { 
-		maintenance += 36 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
+		maintenance += 0.05 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
 	} 
 	if (age >= 10950) {
-		maintenance += 36; // after 30 years the maintenance and working costs double
+		maintenance += 0.05; // after 30 years the maintenance and working costs double
 	}
 
 	coal += 4.06E-4 * energyPerDay * days;

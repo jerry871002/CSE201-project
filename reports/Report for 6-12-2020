@@ -7,6 +7,8 @@ This week I focus on designing a unit test process for object and algorithm to t
 which include how to write, compile and execute testing program on the target. Next week I will working on the counting system of indices in the City class and also
 let the Car and Transport class work together.
 
+Arthur : 
+This week I continued working on the user interface. I put in place the date and the buttons to change to accelaration of time in the game. 
 Luca:
 This week, as planned, I finished coding my functions that enable to add, replace and delete data (for instance population, pollution, parts of energy supply,…) in .csv files. I also finally managed to plot those data using the Godot plugin “easy charts”. 
 Next week, I plan to organise my charts in a 2D menu for the user interface.

@@ -15,8 +15,12 @@ Restaurant::Restaurant()
 	Clickable = false;
 	income = 100;
 
+	energyUse = 0;
+
+
 	restaurantStatus = true;
 	firstYearShock = false;
+	energyUsePerSize = 38;  			//On average 38kWh per square feet
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 
 	std::normal_distribution <double> mediancost(350000, 100000);  //Median cost of opening restaurant 375K $, including owning the building
@@ -31,7 +35,6 @@ Restaurant::Restaurant()
 	case 1: {
 		std::uniform_real_distribution <double> diningSize1(11, 14); //Average Fast food restaurant has dining space of 11-14 square feet
 		diningSize = diningSize1(gen);
-		energyUse = 38;  //On average 38kWh per square feet
  		// maintenance = 0.34;  	Not sure yet
     	satisfaction = 4;	//Smaller sized not very refined restaurant
     	averageWage = 11;		// Euros per hour , Slightly above minimum wage in france
@@ -45,7 +48,6 @@ Restaurant::Restaurant()
 	case 2:  {
 		std::uniform_real_distribution <double> diningSizeg2(12, 15); //Average Full Service restaurant has dining space of 12-15 square feet
 		diningSize = diningSizeg2(gen);
-		energyUse = 38;  //On average 38kWh per square feet
  		// maintenance = 0.34;  	Not sure yet
     	satisfaction = 6;	//Full service normal quality restaurant
     	averageWage = 12.5;		// Euros per hour, Slightly above minimum wage in france
@@ -78,7 +80,7 @@ void Restaurant::simulate_step(double days){
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 
 	
-	if ((age >= 365) and (!firstYearShock)){
+	if ((age >= 365) and (firstYearShock == false)){
 		std::uniform_real_distribution <double> firstYearShockGen(0,100);
 		double shockgen = firstYearShockGen(gen);
 		if (shockgen <= 17){
@@ -107,11 +109,17 @@ double Restaurant::get_environmentalcost(){
 
 
 /*
-Restaurant::Restaurant(int inc)
+Restaurant::Restaurant(double income, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply, double healthcare, double needs)
 {
-	PanelsOn = true;
-	Clickable = false;
-	income = inc;
+    PanelsOn = true;
+    Clickable = false;
+    this->income = income;
+    this->numberOfEmployees = numberOfEmployees;
+    this->carbonEmission = carbonEmission;
+    this->energyDemand = energyDemand;
+    this->energySupply = energySupply;
+    this->healthcare = healthcare;
+    this->needs = needs;
 }
 */
 

@@ -192,4 +192,3 @@ ui_turn={
 
 quality/shadows/filter_mode=2
 quality/filters/msaa=1
-environment/default_environment="res://default_env.tres"
