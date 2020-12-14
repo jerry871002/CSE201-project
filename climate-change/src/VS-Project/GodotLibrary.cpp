@@ -1,21 +1,8 @@
 #include "Player.h"
-#include "Restaurant.h"
 #include "City.h"
-#include "AgriculturalProduction.h"
-#include "AllPhysicalGoodsFactories.h"
-#include "CoalPowerPlant.h"
-#include "Education.h"
-#include "Health.h"
-#include "NuclearPowerPlant.h"
-#include "RecyclingFactory.h"
-#include "Services.h"
-#include "Windmill.h"
-#include "Car.h"
 #include "Transport.h"
 #include "obj.h"
-#include "Geothermal.h"
-
-
+#include "Shop.h"
 
 using namespace godot;
 
@@ -30,25 +17,12 @@ extern "C" void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_opt
 extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	Godot::nativescript_init(handle);
 	register_class<Structure>();
-	register_class<Energy>();
-	register_class<Housing>();
 	register_class<Shop>();
-	register_class<Production>();
 	register_class<Transport>();
 	register_class<Player>();
 	register_class<Restaurant>();
 	register_class<City>();
-	register_class<AgriculturalProduction>();
-	register_class<AllPhysicalGoodsFactories>();
-	register_class<CoalPowerPlant>();
-	register_class<Education>();
-	register_class<Health>();
-	register_class<NuclearPowerPlant>();
-	register_class<RecyclingFactory>();
-	register_class<Services>();
-	register_class<Windmill>();
-	register_class<Car>();
-	register_class<Geothermal>();
+
 }
 
 

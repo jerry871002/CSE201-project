@@ -78,46 +78,4 @@ namespace godot {
 
     };
 }
-namespace godot {
-    class Production : public Structure {
-        GODOT_SUBCLASS(Production, Structure)
-    public:
-        virtual String class_name();
-        Production();
-        ~Production();
-        double efficiency;
-        double employment;
-    };
-}
-namespace godot {
-    class Energy : public Structure {
-        GODOT_SUBCLASS(Energy, Structure)
-    public:
-        virtual String class_name();
-        Energy();
-        ~Energy();
-        double energyOutput;
-        double energyPerDay;
-    };
-}
-namespace godot {
-    class Housing : public Structure {
-        GODOT_SUBCLASS(Housing, Structure)
-    public:
-        virtual String class_name();
-        Housing();
-        ~Housing();
-    };
-}
-
-namespace godot {
-    class Shop : public Structure {
-        GODOT_SUBCLASS(Shop, Structure)
-    public:
-        virtual String class_name();
-        Shop();
-        ~Shop();
-        bool open;
-    };
-}
   
