@@ -31,14 +31,16 @@ namespace godot{
             GODOT_SUBCLASS(Restaurant, Shop)
         private:
 
-            bool Clickable;
+            bool Clickable = false;
 
         public:
 
             Restaurant();
             ~Restaurant();
+
+            String class_name();
             
-            int restaurantType = 0;
+            int restaurantType = 1;
             double energyUsePerSize = 0;
             double diningSize = 0;
             double averageWage = 0;
@@ -49,6 +51,8 @@ namespace godot{
             void simulate_step(double days);
     };
 
+    //####################################   Small Shop   ################################
+
     class SmallShop : public Shop {
 		GODOT_SUBCLASS(SmallShop, Shop)
 	public:
@@ -56,6 +60,8 @@ namespace godot{
         ~SmallShop();
 
     };
+
+    //####################################   Mall   ################################
 
     class Mall : public Shop {
 		GODOT_SUBCLASS(Mall, Shop)

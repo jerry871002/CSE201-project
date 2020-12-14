@@ -171,6 +171,11 @@ Restaurant::Restaurant() {
     }
 }
 
+String Restaurant::class_name()
+{
+	return "Restaurant";
+}
+
 Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
