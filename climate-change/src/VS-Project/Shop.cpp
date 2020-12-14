@@ -190,5 +190,20 @@ void Restaurant::simulate_step(double days){
 	
 }
 
+double Restaurant::get_energyuse(){
+	return (this->energyUsePerSize)*(this->diningSize);
+}
+
+// #############    Small Shop          ####################
+
+SmallShop::SmallShop(){}
+
+SmallShop::~SmallShop(){}
 
 
+
+// ################   Mall              ####################
+
+Mall::Mall(){}
+
+Mall::~Mall(){}
