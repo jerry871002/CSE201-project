@@ -1,23 +1,33 @@
 #include "Transport.h"
-
 #include <SceneTree.hpp>
 #include <Viewport.hpp>
 #include <KinematicCollision.hpp>
 #include <Mesh.hpp>
 #include <Timer.hpp>
-
 #include <random>
-
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
 using namespace std;
+
+
+String godot::Transport::class_name()
+{
+    return "Transport";
+}
 
 void Transport::_register_methods(){
     register_method((char*)"_init", &Transport::_init);
 	register_method((char*)"_process", &Transport::_process);
 	register_method((char*)"_input", &Transport::_input);
 	register_method((char*)"_ready", &Transport::_ready);
+}
+// helper functions
+void compute_speed(double& Speed, double Acc, float delta) {
+    if ((Speed <= 0.8 && Acc>0) or (Acc < 0 and Speed + Acc * delta > 0.2)) { 
+        // Define max speed and min speed
+        Speed += Acc * delta; 
+    }			
 }
 
 void ComputeAcceleration(double& Acc, double Speed0, double Speed1, double d) {

@@ -1,4 +1,3 @@
-#include "obj.h"
 #pragma once
 #include <core/Godot.hpp>
 #include <StaticBody.hpp>
