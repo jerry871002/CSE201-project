@@ -110,12 +110,38 @@ double Shop::get_energyuse(){
     return 0; 
 }
 
+bool Shop::ArePanelsDisplayed()
+{
+    return this->GetPanels()->get("visible");
+}
+
+
 double Shop::get_environmentalcost(){
     return this->environmentalCost;
 }
 
 void Shop::simulate_step(double days){
+    if (panels_age == 0) {
+        double temp = rand() / (RAND_MAX + 1.);
+        if ((1 - (days * panel_probability) / 365) < temp) {
+            panels_get_added();
+            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+        }
+    }
+    else if (panels_age > days) { panels_age -= days; }
+    else {
+        panels_age = 0;
+        PanelsOn = false;
+        this->GetPanels()->set("visible", PanelsOn);
+        std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+    }
+    
+}
 
+void Shop::panels_get_added(){
+    PanelsOn = true;
+    panels_age = 100;
+    std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
 }
 
 
