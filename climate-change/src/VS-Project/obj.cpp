@@ -139,31 +139,3 @@ bool Structure::efficiency_cogeneration() {
 bool Structure::efficiency_supercritical() {
     return false; //need to add possibility of turning true (then definitive) if clicked, adding the cost in maintenace needed for this upgrade
 }
-
-Production::Production() {}
-Production::~Production() {}
-String godot::Production::class_name()
-{
-    return "Production";
-}
-
-Energy::Energy() {}
-Energy::~Energy() {}
-String godot::Energy::class_name()
-{
-    return "Energy";
-}
-
-Housing::Housing() {}
-Housing::~Housing() {}
-String godot::Housing::class_name()
-{
-    return "Housing";
-}
-
-Shop::Shop() {}
-Shop::~Shop() {}
-String godot::Shop::class_name()
-{
-    return "Shop";
-}

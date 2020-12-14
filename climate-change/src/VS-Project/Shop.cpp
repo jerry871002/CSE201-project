@@ -8,12 +8,9 @@
 
 
 using namespace godot;
-
 // ######################     SHOP     ##############################
-Shop::Shop(){
-    //initialize(0);
 
-}
+Shop::Shop(){}
 
 Shop::~Shop() {}
 /*
@@ -93,79 +90,37 @@ void Shop::initialize(int shopTypeInput){
 
 }
 */
+
 double Shop::get_satisfaction(){
-	switch (shopType) {
-    case 1:   // For the Restaurant
-        return (this->satisfaction);
-        break;
-    
-    default:
-        return 0;
-        break;
-    };
+    return this->satisfaction;
 }
 
 double Shop::get_co2emissions(){
-    switch (shopType) {
-    case 1:   // For the Restaurant
-        return (this->CO2Emission);
-        break;
-    
-    default:
-        return 0;
-        break;
-    }
+    return this->satisfaction;
 }
 
 double Shop::get_energyuse(){
-    switch (shopType) {
-    case 1:   // For the Restaurant
-        return (this->energyUsePerSize) * (this->diningSize);
-        break;
-    
-    default:
-        return 0;
-        break;
-    }
-
+    return 0; 
 }
 
 double Shop::get_environmentalcost(){
-    switch (shopType) {
-    case 1:   // For the Restaurant
-        return (this->environmentalCost);
-        break;
-
-    default:
-        return 0;
-        break;
-    }
+    return this->environmentalCost;
 }
 
 void Shop::simulate_step(double days){
-    switch (shopType) {
-    case 1:   // For the Restaurant
-        age += days;
-        double shock;
-        if ((age >= 365) and (firstYearShock == false)){
-            std::uniform_real_distribution <double> firstYearShockGen(0,100);
-            double shockgen = firstYearShockGen(gen);
-            if (shockgen <= 17){
-                shopStatus = false;		//On average restaurants have a 17% chance of closing in the first year.
-            }
-            firstYearShock = true; //so that this if statement is only run once, after a full year has passed
-        }
 
-        break;
-
-    default:
-        
-        break;
-    }
 }
 
+
+//  #################################   RESTAURANT      ###############################
+
+
 Restaurant::Restaurant() {
-    energyUsePerSize = 38;  			//On average 38kWh per square feet 
+    energyUsePerSize = 38;          //On average 38kWh per square feet 
+    
+    std::random_device rd; 
+    std::mt19937 gen(rd());	
+
     std::normal_distribution <double> mediancost(350000, 100000);  //Median cost of opening restaurant 375K $, including owning the building
     cost = mediancost(gen);
 
@@ -216,6 +171,24 @@ Restaurant::Restaurant() {
     }
 }
 
-Restaurant::~Restaurant() {
+Restaurant::~Restaurant() {}
 
+void Restaurant::simulate_step(double days){
+	age += days;
+	double shock;
+	std::random_device rd; 
+	std::mt19937 gen(rd()); 
+	
+	if ((age >= 365) and (firstYearShock == false)){
+		std::uniform_real_distribution <double> firstYearShockGen(0,100);
+		double shockgen = firstYearShockGen(gen);
+		if (shockgen <= 17){
+			shopStatus = false;		//On average restaurants have a 17% chance of closing in the first year.
+		}
+		firstYearShock = true; //so that this if statement is only run once, after a full year has passed
+	}
+	
 }
+
+
+

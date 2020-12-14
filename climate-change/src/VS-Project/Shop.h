@@ -14,40 +14,63 @@
 namespace godot{
     class Shop : public Structure {
         GODOT_SUBCLASS(Shop, Structure)
-        
+
     public:
         Shop();
         ~Shop();
 
-        int shopType;       //Tells us what type of the object is
-        bool shopStatus;   //True if open, False if closed
-        double employment;
-
-        // Will have type: 0 - Empty. 1 - Restaurant. 2 - Small Shop. 3 - Mall
-       // void initialize(int shopTypeInput);
+        bool shopStatus = true;   //True if open, False if closed
+        double employment = 0;
         
-        double get_satisfaction();
-        double get_co2emissions();
-        double get_energyuse();
-        double get_environmentalcost();
-
-
-
+        virtual double get_satisfaction();
+        virtual double get_co2emissions();
+        virtual double get_energyuse();
+        virtual double get_environmentalcost();
 
         void simulate_step(double days);
+
     };
 
-    class Restaurant : public Shop {
-        GODOT_SUBCLASS(Restaurant, Shop)
-    public:
-        Restaurant();
-        ~Restaurant();
 
-        //Attributes used for restaurant:
-        int restaurantType;
-        double energyUsePerSize;
-        double diningSize;
-        double averageWage;
-        bool firstYearShock = false;
+
+    class Restaurant : public Shop{
+            GODOT_SUBCLASS(Restaurant, Shop)
+        private:
+
+            bool Clickable;
+
+        public:
+
+            Restaurant();
+            ~Restaurant();
+            
+            int restaurantType = 0;
+            double energyUsePerSize = 0;
+            double diningSize = 0;
+            double averageWage = 0;
+            bool firstYearShock = false;
+
+            double get_satisfaction();
+            double get_co2emissions();
+            double get_energyuse();
+            double get_environmentalcost();
+
+            void simulate_step(double days);
     };
+
+    class SmallShop : public Shop {
+		GODOT_SUBCLASS(SmallShop, Shop)
+	public:
+        SmallShop();
+        ~SmallShop();
+
+    };
+
+    class Mall : public Shop {
+		GODOT_SUBCLASS(Mall, Shop)
+	public:
+        Mall();
+        ~Mall();
+    };
+
 }

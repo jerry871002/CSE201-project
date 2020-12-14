@@ -34,6 +34,9 @@ namespace godot {
         void _on_CheckBox_toggled();
         virtual String class_name();
 
+        Structure();
+        ~Structure();
+
         double employment, cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction, environmentalCost;
         double age; //age of each particular object in days, initialize to 0 in constructor
 
@@ -60,8 +63,6 @@ namespace godot {
         bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
 
         // All of our policies have to go in the City class !! Look at City.h 
-        Structure();
-        ~Structure();
 
         // virtual void simulate_step();
         // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
