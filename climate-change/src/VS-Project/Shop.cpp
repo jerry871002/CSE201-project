@@ -131,10 +131,18 @@ double Shop::get_environmentalcost(){
 }
 
 void Shop::simulate_step(double days){
-    std::cout << "HI I SIMULATE" << std::endl;
+    std::cout << "DEBUG: SHOP SIMULATION" << std::endl;
+    
+    //PanelsOn = !PanelsOn;
+    //this->GetPanels()->set("visible", PanelsOn);
+
+    
     if (panels_age == 0) {
+
+
         srand((unsigned)time(0));
-        double temp = rand() / (RAND_MAX + 1.);
+        double temp = rand() % 1;
+
         if ((1 - (days * panel_probability) / 365) < temp) {
             panels_get_added();
             std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
@@ -224,7 +232,10 @@ String Restaurant::class_name()
 Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
-    std::cout << "RESTAURANT HI I SIMULATE" << std::endl;
+
+    this->Shop::simulate_step(days);
+    
+    std::cout << "DEBUG: RESTAURANT SIMULATION" << std::endl;
     age += days;
 	double shock;
 	std::random_device rd; 
