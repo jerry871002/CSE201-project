@@ -10,6 +10,9 @@
 #include <InputEventMouseButton.hpp>
 #include <String.hpp>
 #include <Mesh.hpp>
+#include <cstdlib>
+#include <ctime>
+#include <random>
 
 # define M_PI 3.14159265358979323846  /* pi */
 
@@ -19,7 +22,6 @@ namespace godot {
     private:
         bool Clickable;
     public:
-        bool PanelsOn;
         bool MenuVisible;
 
         Node* GetPanels();
@@ -72,8 +74,6 @@ namespace godot {
         bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
         // need to add a cost for their implementation in the maintenance variable once
-
-
 
         virtual double get_energyuse() { return 0; }
         virtual double get_co2emissions() { return 0; }

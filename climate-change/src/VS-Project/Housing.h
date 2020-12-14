@@ -21,5 +21,8 @@ namespace godot {
 		~House();
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
+
+		double numberOfInhabitants = 0;
+		double houseIncome = 0;
 	};
 }

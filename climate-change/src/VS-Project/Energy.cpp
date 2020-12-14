@@ -5,6 +5,10 @@
 
 using namespace godot;
 
+/// <summary>
+/// ENERGY SUPER CLASS
+/// </summary>
+
 Energy::Energy() {
 
 }
@@ -12,6 +16,10 @@ Energy::Energy() {
 Energy::~Energy() {
 
 }
+
+/// <summary>
+/// POWERPLANT CLASS
+/// </summary>
 
 NuclearPowerPlant::NuclearPowerPlant() {
 	age = 0;
@@ -56,6 +64,10 @@ void NuclearPowerPlant::simulate_step(double days)
 	}*/
 }
 
+/// <summary>
+/// WINDMILL CLASS
+/// </summary>
+
 Windmill::Windmill() {
 	turnSpeed = 2;
 
@@ -72,7 +84,6 @@ Windmill::Windmill() {
 }
 
 Windmill::~Windmill() {}
-
 
 void Windmill::_process(float delta)
 {
