@@ -2,7 +2,8 @@
 #include "obj.h"
 #include <GodotGlobal.hpp>
 
-using namespace godot
+
+using namespace godot;
 
 Structure::Structure() {
     PanelsOn = true;
