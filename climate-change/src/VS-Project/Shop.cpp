@@ -88,8 +88,15 @@ void Shop::initialize(int shopTypeInput){
         }
     }
 
+
+
 }
 */
+
+Node* Shop::GetPanels()
+{
+    return get_node("MeshComponents")->get_node("SolarPanels");
+}
 
 double Shop::get_satisfaction(){
     return this->satisfaction;

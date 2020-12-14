@@ -6,7 +6,7 @@
 using namespace godot;
 
 Structure::Structure() {
-    PanelsOn = true;
+
     MenuVisible = false;
     Clickable = false;
     /*
@@ -27,10 +27,6 @@ Structure::Structure() {
 Structure::Structure(double cost, double energyUse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply) :
     cost{ cost }, energyUse{ energyUse }, maintenance{ maintenance }, satisfaction{ satisfaction }, income{ income }, population{ population }, numberOfEmployees{ numberOfEmployees }, carbonEmission{ carbonEmission }, energyDemand{ energyDemand }, energySupply{ energySupply }{}
 */
-Node* Structure::GetPanels()
-{
-    return get_node("MeshComponents")->get_node("SolarPanels");
-}
 
 Structure::~Structure() {}
 
@@ -41,10 +37,10 @@ void Structure::_register_methods()
     register_method((char*)"_ready", &Structure::_ready);
     register_method((char*)"_on_Area_mouse_entered", &Structure::_on_Area_mouse_entered);
     register_method((char*)"_on_Area_mouse_exited", &Structure::_on_Area_mouse_exited);
-    register_method((char*)"_on_CheckBox_pressed", &Structure::_on_CheckBox_pressed);
-    register_method((char*)"_on_CheckBox_button_up", &Structure::_on_CheckBox_button_up);
-    register_method((char*)"_on_CheckBox_button_down", &Structure::_on_CheckBox_button_down);
-    register_method((char*)"_on_CheckBox_toggled", &Structure::_on_CheckBox_toggled);
+    // register_method((char*)"_on_CheckBox_pressed", &Structure::_on_CheckBox_pressed);
+    // register_method((char*)"_on_CheckBox_button_up", &Structure::_on_CheckBox_button_up);
+    // register_method((char*)"_on_CheckBox_button_down", &Structure::_on_CheckBox_button_down);
+    // register_method((char*)"_on_CheckBox_toggled", &Structure::_on_CheckBox_toggled);
 }
 
 void Structure::_init()
@@ -62,22 +58,22 @@ void Structure::_input(InputEvent* e)
 	Input* i = Input::get_singleton();
 
 	if (i->is_action_pressed("ui_select") && Clickable) {
-		PanelsOn = (PanelsOn == false);
+		//PanelsOn = (PanelsOn == false);
 		//this->GetPanels()->set("visible", PanelsOn);
 		//this->get_child(0)->set("pressed", PanelsOn);
-		MenuVisible = (MenuVisible == false);
+		//MenuVisible = (MenuVisible == false);
 		//Bthis->get_child(0)->set("rect_position", Vector2(this->get_viewport()->get_mouse_position().x, this->get_viewport()->get_mouse_position().x));
-		this->get_child(0)->set("visible", MenuVisible);
+		//this->get_child(0)->set("visible", MenuVisible);
 	}
 }
 
 
 void Structure::_ready()
 {
-	this->GetPanels()->set("visible", PanelsOn);
-	this->get_child(0)->set("pressed", PanelsOn);
-	this->get_child(0)->set("text", this->class_name() + ": Select to display solar panels");
-	this->get_child(0)->set("visible", MenuVisible);
+	//this->GetPanels()->set("visible", PanelsOn);
+	//this->get_child(0)->set("pressed", PanelsOn);
+	//this->get_child(0)->set("text", this->class_name() + ": Menu");
+	//this->get_child(0)->set("visible", MenuVisible);
 }
 
 void godot::Structure::_on_Area_mouse_entered()
@@ -103,6 +99,8 @@ void godot::Structure::_on_Area_mouse_exited()
 
 }
 
+/*
+
 
 void godot::Structure::_on_CheckBox_pressed()
 {
@@ -126,6 +124,7 @@ void godot::Structure::_on_CheckBox_button_down()
 
 }
 
+*/
 
 String godot::Structure::class_name()
 {

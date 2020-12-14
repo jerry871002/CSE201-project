@@ -24,8 +24,6 @@ namespace godot {
     public:
         bool MenuVisible;
 
-        Node* GetPanels();
-
         static void _register_methods();
         virtual void _init();
         virtual void _process(float delta);
@@ -33,10 +31,10 @@ namespace godot {
         virtual void _ready();
         void _on_Area_mouse_entered();
         void _on_Area_mouse_exited();
-        void _on_CheckBox_pressed();
-        void _on_CheckBox_button_up();
-        void _on_CheckBox_button_down();
-        void _on_CheckBox_toggled();
+        //void _on_CheckBox_pressed();
+        //void _on_CheckBox_button_up();
+        //void _on_CheckBox_button_down();
+        //void _on_CheckBox_toggled();
         virtual String class_name();
 
         Structure();
@@ -64,8 +62,6 @@ namespace godot {
         // don't use these specific variable names inside the structures pls or we will all get confused    
 
         double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
-
-        bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
 
         // All of our policies have to go in the City class !! Look at City.h 
 

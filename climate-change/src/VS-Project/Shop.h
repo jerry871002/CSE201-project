@@ -13,6 +13,10 @@ namespace godot{
         Shop();
         ~Shop();
 
+        Node* GetPanels();
+        bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
+
+
         bool shopStatus = true;   //True if open, False if closed
         double employment = 0;
         
