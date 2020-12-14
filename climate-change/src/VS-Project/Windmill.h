@@ -18,5 +18,10 @@ class Windmill : public Energy{
 		//the sim team can use it in order to simulate a wind farm of the size it chooses
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 		double requiredLand; 
+		double turnSpeed;
+	private:
+		double rot = 0;
+
+
 	};
 };
