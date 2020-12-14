@@ -211,6 +211,7 @@ void City::simulation() {
 }
 
 void City::write_stat_history_to_file() {
+	/*
 	std::ofstream file;
  	file.open("file.txt", std::ofstream::out | std::ofstream::app);
  	if(!file) { 
@@ -218,6 +219,7 @@ void City::write_stat_history_to_file() {
     	}
 	std::cout<<"File created successfully."<<std::endl; 
  	file.close();
+	 */
 
  	//incomefile << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
  	//incomefile << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
