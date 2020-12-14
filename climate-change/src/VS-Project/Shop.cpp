@@ -10,10 +10,7 @@
 using namespace godot;
 // ######################     SHOP     ##############################
 
-Shop::Shop(){
-    PanelsOn = false;
-    this->GetPanels()->set("visible", PanelsOn);
-}
+Shop::Shop(){}
 
 Shop::~Shop() {}
 /*
