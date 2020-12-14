@@ -1,5 +1,11 @@
 #pragma once
+
+#include "obj.h"
+
+
 #include <core/Godot.hpp>
+#include <Spatial.hpp>
+
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -8,11 +14,13 @@
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
-#include "obj.h"
+
 #include <StaticBody.hpp>
-#include <Spatial.hpp>
+
 #include <PackedScene.hpp>
 #include <ResourceLoader.hpp>
+
+
 
 /* current test fct using main_loop.cpp on mac:
 
@@ -30,15 +38,20 @@ namespace godot {
 	class City : public Spatial {
 		GODOT_CLASS(City, Spatial)
 	public:
+
+		City();
+		~City();
+
+
 		static void _register_methods();
 		void _init();
 		void _process(float);
 		void _physics_process(float);
 		void _input(InputEvent*);
 		void _ready();
+		void _on_RoofWindTurbines_pressed();
 
-		City();
-		~City();
+
 
 		std::vector<Structure*> buildings;
 
@@ -49,11 +62,11 @@ namespace godot {
 		double return_income();               //returns the income of the city
 		// getter functions for city indices
 		double return_numberOfEmployees();
-        double return_carbonEmission();
-        double return_energyDemand();
-        double return_energySupply();
-        double return_healthcare();
-        double return_needs();
+		double return_carbonEmission();
+		double return_energyDemand();
+		double return_energySupply();
+		double return_healthcare();
+		double return_needs();
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
@@ -71,21 +84,21 @@ namespace godot {
 
 	private:
 		// city indices
-        double income;
-        double population;
-        double numberOfEmployees;
-        double carbonEmission;
-        double energyDemand;
-        double energySupply; 
-        double healthcare;
-        double needs;
+		double income;
+		double population;
+		double numberOfEmployees;
+		double carbonEmission;
+		double energyDemand;
+		double energySupply;
+		double healthcare;
+		double needs;
 		// used for caculating in-game time
 		float time_speed; // 1 for regular speed (1 in-game day per second)
-        float delta_counter; // accumulate delta from `_physics_process` function
+		float delta_counter; // accumulate delta from `_physics_process` function
 		int64_t timer;       // helper data to see if `delta_counter` have carry on units digit
 		int day_tick; // this variable keeps track of the in-game days, 
 		// one day added every time simulation() is called
-		
+
 		/*
 		Ref<PackedScene> RestaurantScene;
 		Ref<PackedScene> ShopScene;

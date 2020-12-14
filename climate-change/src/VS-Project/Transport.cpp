@@ -483,5 +483,5 @@ double Transport::get_environmentalcost(){
 }
 
 String Transport::class_name(){
-return 'Transport';
+    return "Transport";
 }

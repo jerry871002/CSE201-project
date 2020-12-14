@@ -1,42 +1,27 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
 [ext_resource path="res://Resources/PowerPlant.tscn" type="PackedScene" id=3]
 [ext_resource path="res://KinematicBody.gdns" type="Script" id=4]
 [ext_resource path="res://Resources/WindMill.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Ressources/Icons/BackGround.png" type="Texture" id=6]
-[ext_resource path="res://Ressources/Icons/Wind.png" type="Texture" id=7]
+[ext_resource path="res://Ressources/Icons/RoofWindTurb1.png" type="Texture" id=6]
+[ext_resource path="res://Ressources/Icons/RoofWindTurb2.png" type="Texture" id=7]
 
 [sub_resource type="SphereShape" id=1]
 
-[sub_resource type="Animation" id=2]
-resource_name = "Hover"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/path = NodePath("Node2D/NinePatchRect/Button/NinePatchRect:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( -500, 0 ), Vector2( -50, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Node2D/RotButton:rect_rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 360.0 ]
-}
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 347, 100 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 100, 100 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 100, 100 )
 
 [node name="Main" type="Spatial"]
 
@@ -76,50 +61,17 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
 
 [node name="Node2D" type="Node2D" parent="."]
 
-[node name="Node2D" type="Node2D" parent="Node2D"]
-
-[node name="NinePatchRect" type="NinePatchRect" parent="Node2D/Node2D"]
-margin_right = 140.0
-margin_bottom = 140.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="Node2D/Node2D/NinePatchRect"]
-margin_left = 70.0
-margin_top = 20.0
-margin_right = 520.0
-margin_bottom = 120.0
-grow_horizontal = 0
-rect_clip_content = true
+[node name="RoofWindTurbines" type="Button" parent="Node2D"]
+margin_left = 931.054
+margin_top = 488.576
+margin_right = 1031.05
+margin_bottom = 588.576
 mouse_default_cursor_shape = 2
-size_flags_stretch_ratio = 4.42
-flat = true
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+action_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="NinePatchRect" type="NinePatchRect" parent="Node2D/Node2D/NinePatchRect/Button"]
-margin_left = -50.0
-margin_right = 450.0
-margin_bottom = 100.0
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RotButton" type="NinePatchRect" parent="Node2D/Node2D"]
-margin_left = 1.52588e-05
-margin_top = -1.52588e-05
-margin_right = 140.0
-margin_bottom = 140.0
-rect_rotation = 360.0
-rect_pivot_offset = Vector2( 70, 70 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/Node2D"]
-anims/Hover = SubResource( 2 )
-[connection signal="mouse_exited" from="Node2D/Node2D/RotButton" to="3Dworld" method="_on_RotButton_mouse_exited"]
+[connection signal="pressed" from="Node2D/RoofWindTurbines" to="3Dworld" method="_on_RoofWindTurbines_pressed"]
