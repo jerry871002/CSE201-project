@@ -13,6 +13,11 @@
 using namespace godot;
 using namespace std;
 
+String godot::Transport::class_name()
+{
+    return "Transport";
+}
+
 // helper functions
 void compute_speed(double& Speed, double Acc, float delta) {
     if ((Speed <= 0.8 && Acc > 0) or (Acc < 0 and Speed + Acc * delta > 0.2)) {

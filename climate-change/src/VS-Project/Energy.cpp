@@ -9,6 +9,11 @@ using namespace godot;
 /// ENERGY SUPER CLASS
 /// </summary>
 
+String godot::Energy::class_name()
+{
+	return "Energy";
+}
+
 Energy::Energy() {
 
 }
@@ -20,6 +25,11 @@ Energy::~Energy() {
 /// <summary>
 /// NUCLEAR POWERPLANT CLASS
 /// </summary>
+
+String godot::NuclearPowerPlant::class_name()
+{
+	return "NuclearPowerPlant";
+}
 
 NuclearPowerPlant::NuclearPowerPlant() {
 	age = 0;
@@ -68,6 +78,11 @@ void NuclearPowerPlant::simulate_step(double days)
 /// WINDMILL CLASS
 /// </summary>
 
+String godot::Windmill::class_name()
+{
+	return "Windmill";
+}
+
 Windmill::Windmill() {
 	turnSpeed = 2;
 
@@ -108,6 +123,11 @@ void Windmill::simulate_step(double days)
 /// <summary>
 /// GEOTHERMAL POWERPLANT CLASS
 /// </summary>
+
+String godot::GeothermalPowerPlant::class_name()
+{
+	return "GeothermalPowerPlant";
+}
 
 GeothermalPowerPlant::GeothermalPowerPlant()
 {
@@ -162,6 +182,11 @@ void GeothermalPowerPlant::simulate_step(double days)
 /// <summary>
 /// COAL POWERPLANT CLASS
 /// </summary>
+
+String godot::CoalPowerPlant::class_name()
+{
+	return "CoalPowerPlant";
+}
 
 CoalPowerPlant::CoalPowerPlant()
 {

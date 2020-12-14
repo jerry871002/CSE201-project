@@ -5,6 +5,11 @@
 
 using namespace godot;
 
+String godot::Production::class_name()
+{
+	return "Production";
+}
+
 Production::Production()
 {
 }

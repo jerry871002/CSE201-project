@@ -10,6 +10,7 @@ namespace godot{
         GODOT_SUBCLASS(Shop, Structure)
 
     public:
+        virtual String class_name();
         Shop();
         ~Shop();
 
@@ -38,11 +39,9 @@ namespace godot{
             bool Clickable = false;
 
         public:
-
+            virtual String class_name();
             Restaurant();
             ~Restaurant();
-
-            String class_name();
             
             int restaurantType = 1;
             double energyUsePerSize = 0;
@@ -60,6 +59,7 @@ namespace godot{
     class SmallShop : public Shop {
 		GODOT_SUBCLASS(SmallShop, Shop)
 	public:
+        virtual String class_name();
         SmallShop();
         ~SmallShop();
 
@@ -70,6 +70,7 @@ namespace godot{
     class Mall : public Shop {
 		GODOT_SUBCLASS(Mall, Shop)
 	public:
+        virtual String class_name();
         Mall();
         ~Mall();
     };

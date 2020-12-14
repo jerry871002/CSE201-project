@@ -13,6 +13,7 @@ namespace godot {
 		GODOT_SUBCLASS(Energy, Structure)
 
 	public:
+		virtual String class_name();
 		Energy();
 		~Energy();
 
@@ -44,6 +45,7 @@ namespace godot {
 	class NuclearPowerPlant : public Energy {
 		GODOT_SUBCLASS(NuclearPowerPlant, Energy)
 	public:
+		virtual String class_name();
 		NuclearPowerPlant();
 		~NuclearPowerPlant();
 
@@ -57,6 +59,7 @@ namespace godot {
 	class Windmill : public Energy {
 		GODOT_SUBCLASS(Windmill, Energy)
 	public:
+		virtual String class_name();
 		Windmill();
 		~Windmill();
 
@@ -77,6 +80,7 @@ namespace godot {
 	class CoalPowerPlant : public Energy {
 		GODOT_SUBCLASS(CoalPowerPlant, Energy)
 	public:
+		virtual String class_name();
 		CoalPowerPlant();
 		~CoalPowerPlant();
 
@@ -90,6 +94,7 @@ namespace godot {
 	class GeothermalPowerPlant : public Energy {
 		GODOT_SUBCLASS(GeothermalPowerPlant, Energy)
 	public:
+		virtual String class_name();
 		GeothermalPowerPlant();
 		~GeothermalPowerPlant();
 

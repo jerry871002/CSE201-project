@@ -9,7 +9,10 @@
 
 using namespace godot;
 // ######################     SHOP     ##############################
-
+String godot::Shop::class_name()
+{
+    return "Shop";
+}
 Shop::Shop(){}
 
 Shop::~Shop() {}
@@ -121,6 +124,10 @@ void Shop::simulate_step(double days){
 
 //  #################################   RESTAURANT      ###############################
 
+String godot::Restaurant::class_name()
+{
+    return "Restaurant";
+}
 
 Restaurant::Restaurant() {
     energyUsePerSize = 38;          //On average 38kWh per square feet 
@@ -178,10 +185,6 @@ Restaurant::Restaurant() {
     }
 }
 
-String Restaurant::class_name()
-{
-	return "Restaurant";
-}
 
 Restaurant::~Restaurant() {}
 
@@ -208,6 +211,10 @@ double Restaurant::get_energyuse(){
 
 // #############    Small Shop          ####################
 
+String godot::SmallShop::class_name()
+{
+    return "SmallShop";
+}
 SmallShop::SmallShop(){}
 
 SmallShop::~SmallShop(){}
@@ -215,7 +222,10 @@ SmallShop::~SmallShop(){}
 
 
 // ################   Mall              ####################
-
+String godot::Mall::class_name()
+{
+    return "Mall";
+}
 Mall::Mall(){}
 
 Mall::~Mall(){}
