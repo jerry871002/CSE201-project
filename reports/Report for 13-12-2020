@@ -44,3 +44,7 @@ am gonna finish this menu, help design the 2D menu, work on the red lights for c
 Vincent:
 This week I continued working on getting the simulated variables and attributes to work together with their graphical representation, and on the time mechanism working properly. I coordinated the simulation team's work on the car system and data outputting system.
 After quite some discussion this week, we decided on how to restructure our project inheritance most efficiently. Next week the top priority for the simulation team is getting the policies to work within the city object and to unify the simulation, all the classes and the visuals. 
+
+Yury:
+This week i worked with Eliott on trying to implement the transport class (putting together what he did and what the object's team did) the way it was decided and solved some problems with regard to merging branchs to master.
+I thought about how to implement a system to make cars know which turns they can take on each intersection but was unsuccessful yet to implement it. This week i will continue workig on that and work on policies as part of the simulation team. 
