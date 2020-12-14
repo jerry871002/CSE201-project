@@ -48,6 +48,15 @@ void Structure::_init()
 
 }
 
+Vector3 Structure::get_position() {
+    return (Vector3)((Spatial*)this)->get_translation();
+}
+
+bool Structure::is_other_structure_within_distance(Vector3 other, double distance) {
+    Vector3 pos =  get_position();
+    return  (sqrtf(other[0] * pos[0] +other[1]*pos[1] + other[2] * pos[2]) <= distance);
+}
+
 void Structure::_process(float delta)
 {
 

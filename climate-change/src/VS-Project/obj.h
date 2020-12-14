@@ -40,6 +40,10 @@ namespace godot {
         Structure();
         ~Structure();
 
+        Vector3 get_position();
+
+        bool is_other_structure_within_distance(Vector3, double);
+
         double employment, cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction, environmentalCost;
         double age; //age of each particular object in days, initialize to 0 in constructor
 
