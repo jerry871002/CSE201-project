@@ -4,6 +4,11 @@
 
 using namespace godot;
 
+String godot::Transport::class_name()
+{
+    return "Transport";
+}
+
 void Transport::_register_methods(){
     register_method((char*)"_init", &Transport::_init);
 	register_method((char*)"_process", &Transport::_process);

@@ -4,9 +4,10 @@
 #include <StaticBody.hpp>
 
 namespace godot {
-class CoalPowerPlant : public Energy, public StaticBody {
-		GODOT_CLASS(CoalPowerPlant, StaticBody)
+class CoalPowerPlant : public Energy {
+		GODOT_SUBCLASS(CoalPowerPlant, Energy)
 	public:
+		virtual String class_name();
 		CoalPowerPlant();
 		~CoalPowerPlant();
 		static void _register_methods();

@@ -4,6 +4,11 @@
 
 using namespace godot;
 
+String godot::Windmill::class_name()
+{
+	return "Windmill";
+}
+
 void Windmill::_register_methods()
 {
 	register_method((char*)"_init", &Windmill::_init);

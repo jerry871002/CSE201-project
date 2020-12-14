@@ -5,11 +5,10 @@
 #include <StaticBody.hpp>
 
 namespace godot {
-	class AgriculturalProduction : public Production, public StaticBody {
-		GODOT_CLASS(AgriculturalProduction, StaticBody)
-	private:
-
+	class AgriculturalProduction : public Production {
+		GODOT_SUBCLASS(AgriculturalProduction, Production)
 	public:
+		virtual String class_name();
 		AgriculturalProduction();
 		~AgriculturalProduction();
 		//void test();

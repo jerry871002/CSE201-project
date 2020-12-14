@@ -3,6 +3,10 @@
 #include <GodotGlobal.hpp>
 
 using namespace godot;
+String godot::Services::class_name()
+{
+	return "Services";
+}
 
 void Services::_register_methods()
 {

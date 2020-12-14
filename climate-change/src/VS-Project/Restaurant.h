@@ -12,8 +12,8 @@
 
 
 namespace godot {
-	class Restaurant : public Production, public StaticBody {
-		GODOT_CLASS(Restaurant, StaticBody)
+	class Restaurant : public Shop{
+		GODOT_SUBCLASS(Restaurant, Shop)
 	private:
 
 		bool Clickable;

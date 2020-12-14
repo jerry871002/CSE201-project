@@ -3,6 +3,10 @@
 #include <GodotGlobal.hpp>
 
 using namespace godot;
+String godot::RecyclingFactory::class_name()
+{
+	return "RecyclingFactory";
+}
 
 void RecyclingFactory::_register_methods()
 {

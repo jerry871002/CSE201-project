@@ -4,6 +4,10 @@
 
 using namespace godot;
 
+String godot::Health::class_name()
+{
+	return "Health";
+}
 void Health::_register_methods()
 {
 	register_method((char*)"_init", &Health::_init);

@@ -3,9 +3,10 @@
 #include <core/Godot.hpp>
 #include <StaticBody.hpp>
 namespace godot {
-class Windmill : public Energy, public StaticBody {
-		GODOT_CLASS(Windmill, StaticBody)
+class Windmill : public Energy{
+		GODOT_SUBCLASS(Windmill, Energy)
 	public:
+		virtual String class_name();
 		Windmill();
 		~Windmill();
 		static void _register_methods();

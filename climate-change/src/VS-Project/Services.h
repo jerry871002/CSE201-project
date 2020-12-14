@@ -6,6 +6,7 @@ namespace godot {
 class Services : public Production, public StaticBody {
 		GODOT_CLASS(Services, StaticBody)
 	public:
+		virtual String class_name();
 		Services();
 		~Services();
 		static void _register_methods();

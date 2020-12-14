@@ -11,6 +11,9 @@
 #include "Services.h"
 #include "Windmill.h"
 #include "Car.h"
+#include "Transport.h"
+#include "obj.h"
+#include "Geothermal.h"
 
 
 
@@ -26,6 +29,12 @@ extern "C" void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_opt
 
 extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	Godot::nativescript_init(handle);
+	register_class<Structure>();
+	register_class<Energy>();
+	register_class<Housing>();
+	register_class<Shop>();
+	register_class<Production>();
+	register_class<Transport>();
 	register_class<Player>();
 	register_class<Restaurant>();
 	register_class<City>();
@@ -39,6 +48,7 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<Services>();
 	register_class<Windmill>();
 	register_class<Car>();
+	register_class<Geothermal>();
 }
 
 

@@ -7,10 +7,11 @@
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
+#include <KinematicBody.hpp>
 
 namespace godot {
-    class Transport : public Infrastructure, public StaticBody {
-        GODOT_CLASS(Transport, StaticBody)
+    class Transport : public KinematicBody {
+        GODOT_CLASS(Transport, KinematicBody)
     private:
         bool Clickable;
     public:
@@ -32,6 +33,10 @@ namespace godot {
 		void _ready();
 		void _on_Area_mouse_entered();
 		void _on_Area_mouse_exited();
+        virtual String class_name();
 	    void simulate_step(double days);
+
+        double employment, cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction, environmentalCost;
+        double age;
     };
 }   

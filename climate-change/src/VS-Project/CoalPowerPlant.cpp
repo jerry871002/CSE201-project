@@ -4,6 +4,10 @@
 
 using namespace godot;
 
+String godot::CoalPowerPlant::class_name()
+{
+	return "CoalPowerPlant";
+}
 void CoalPowerPlant::_register_methods()
 {
 	register_method((char*)"_init", &CoalPowerPlant::_init);

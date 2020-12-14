@@ -4,6 +4,10 @@
 
 using namespace godot;
 
+String godot::NuclearPowerPlant::class_name()
+{
+	return "NuclearPowerPlant";
+}
 void NuclearPowerPlant::_register_methods()
 {
 	register_method((char*)"_process", &NuclearPowerPlant::_process);

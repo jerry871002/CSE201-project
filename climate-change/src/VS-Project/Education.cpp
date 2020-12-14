@@ -3,6 +3,10 @@
 #include <GodotGlobal.hpp>
 
 using namespace godot;
+String godot::Education::class_name()
+{
+	return "Education";
+}
 
 void Education::_register_methods()
 {

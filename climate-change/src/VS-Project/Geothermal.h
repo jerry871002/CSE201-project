@@ -3,9 +3,10 @@
 #include <core/Godot.hpp>
 #include <StaticBody.hpp>
 namespace godot {
-class Geothermal : public Energy, public StaticBody {
-		GODOT_CLASS(Geothermal, StaticBody)
+class Geothermal : public Energy{
+		GODOT_SUBCLASS(Geothermal, Energy)
 	public:
+		virtual String class_name();
 		Geothermal();
 		~Geothermal();
 		static void _register_methods();

@@ -4,8 +4,8 @@
 #include <StaticBody.hpp>
 
 namespace godot {
-class Education : public Infrastructure, public StaticBody {
-		GODOT_CLASS(Education, StaticBody)
+class Education : public Production {
+		GODOT_SUBCLASS(Education, Production)
 	public:
 		Education();
 		~Education();
@@ -14,5 +14,6 @@ class Education : public Infrastructure, public StaticBody {
 		void _process(float delta);
 		void _input(InputEvent* e);
 		void _ready();
+		virtual String class_name();
 	};
 };
