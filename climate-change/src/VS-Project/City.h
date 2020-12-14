@@ -13,17 +13,15 @@
 #include <Spatial.hpp>
 #include <PackedScene.hpp>
 #include <ResourceLoader.hpp>
+#include "edit_text_files.cpp"
 
-/* current test fct using main_loop.cpp on mac:
+ /* current test fct for restaurant only using main_loop.cpp on mac:
 
-g++ -std=c++17 main_loop.cpp Restaurant.cpp obj.cpp City.cpp -ILibraries/godot-cpp-bindings/godot_headers
--ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen
--LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
+ g++ -std=c++17 main_loop.cpp Restaurant.cpp obj.cpp City.cpp Transport.cpp edit_text_files.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
 
-then run:
-./a.out
-
-*/
+ then run:
+ ./a.out
+ */
 
 namespace godot {
 
@@ -56,7 +54,7 @@ namespace godot {
         double return_needs();
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
-		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
+		/* we can keep these variables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
 
 		/* other idea: implement arrays based on sector (housing, production, infrastructure), compute additional amounts but differences between sector

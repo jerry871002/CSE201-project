@@ -74,6 +74,7 @@ void City::_physics_process(float delta) {
 	}
 }
 
+
 void City::_input(InputEvent*)
 {
 
@@ -148,6 +149,7 @@ void City::add_building(Structure* struc) {
 	buildings.push_back(struc);
 }
 
+
 void City::add_car() {
 
 	ResourceLoader* ResLo = ResourceLoader::get_singleton();
@@ -171,6 +173,7 @@ void City::add_car() {
 		income -= node->cost;
 	}
 }
+
 
 void City::simulation() {
 	/*
@@ -208,12 +211,29 @@ void City::simulation() {
 }
 
 void City::write_stat_history_to_file() {
-	std::ofstream out_file;
-	out_file.open("stat_history.txt", std::ofstream::out | std::ofstream::app);
+	/*
+	std::ofstream incomefile;
+ 	incomefile.open("incomefile.txt", std::ofstream::out | std::ofstream::app);
+ 	if(!incomefile) { 
+        std::cout<<"Error in creating file!!!"<< std::endl;
+    	}
+	std::cout<<"File created successfully."<<std::endl; 
+ 	incomefile.close();
+	 */
+ 	//incomefile << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
+ 	//incomefile << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
+ 	//add_data("incomefile",std::to_string((day_tick / 365) + 1),std::to_string(income));
 
-	//out_file << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
-	out_file << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
-	out_file.close();
+
+
+ 	/* old version to be deleted?
+ 	std::ofstream out_file;
+ 	out_file.open("stat_history.txt", std::ofstream::out | std::ofstream::app);
+
+ 	//out_file << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
+ 	out_file << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
+ 	out_file.close();
+ 	*/
 }
 
 

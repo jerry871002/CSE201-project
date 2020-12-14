@@ -115,6 +115,8 @@ void delete_line(string documentName, string dataToDelete) {
     clear("tmp");
 }
 
+/*
+
 int main() {
     // More examples on how to use the above functions: 
     // clear("pollution");
@@ -124,3 +126,4 @@ int main() {
     // delete_line("pollution", "2013");
     return 0;
 }
+*/
