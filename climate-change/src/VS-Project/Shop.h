@@ -31,7 +31,7 @@ namespace godot{
             GODOT_SUBCLASS(Restaurant, Shop)
         private:
 
-            bool Clickable;
+            bool Clickable = false;
 
         public:
 

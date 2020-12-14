@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Resources/WindMill.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Ressources/Icons/BackGround.png" type="Texture" id=6]
 [ext_resource path="res://Ressources/Icons/Wind.png" type="Texture" id=7]
-[ext_resource path="res://Resources/Restaurant.tscn" type="PackedScene" id=8]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -73,8 +72,6 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 15, 0, -45 )
 [node name="Windmill" parent="3Dworld" instance=ExtResource( 5 )]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
 
-[node name="Restaurant" parent="3Dworld" instance=ExtResource( 8 )]
-
 [node name="2D layer" type="Spatial" parent="."]
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -125,5 +122,4 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/Node2D"]
 anims/Hover = SubResource( 2 )
-[connection signal="mouse_entered" from="Node2D/Node2D/RotButton" to="3Dworld/Restaurant" method="_on_RotButton_mouse_entered"]
 [connection signal="mouse_exited" from="Node2D/Node2D/RotButton" to="3Dworld" method="_on_RotButton_mouse_exited"]
