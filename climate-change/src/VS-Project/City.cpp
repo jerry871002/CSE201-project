@@ -156,7 +156,8 @@ void City::_ready()
 
 void godot::City::_on_RoofWindTurbines_pressed()
 {
-	this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld");
+	this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->set("Visible", false);
+	// Write here the policy you want for the button, here the button is called Ads for windturbines on roofs
 }
 ;
 
