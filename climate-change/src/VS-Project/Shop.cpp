@@ -12,12 +12,12 @@ using namespace godot;
 
 // ######################     SHOP     ##############################
 Shop::Shop(){
-    initialize(0);
+    //initialize(0);
 
 }
 
 Shop::~Shop() {}
-
+/*
 void Shop::initialize(int shopTypeInput){
     shopType = shopTypeInput;
     shopStatus = true;
@@ -93,7 +93,7 @@ void Shop::initialize(int shopTypeInput){
     }
 
 }
-
+*/
 double Shop::get_satisfaction(){
 	switch (shopType) {
     case 1:   // For the Restaurant

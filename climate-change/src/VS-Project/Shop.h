@@ -31,14 +31,23 @@ namespace godot{
         double get_energyuse();
         double get_environmentalcost();
 
+
+
+
+        void simulate_step(double days);
+    };
+
+    class Restaurant : public Shop {
+        GODOT_SUBCLASS(Restaurant, Shop)
+    public:
+        Restaurant();
+        ~Restaurant();
+
         //Attributes used for restaurant:
         int restaurantType;
         double energyUsePerSize;
         double diningSize;
         double averageWage;
         bool firstYearShock = false;
-
-
-        void simulate_step(double days);
     };
 }
