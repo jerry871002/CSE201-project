@@ -49,6 +49,7 @@ Structure::Structure() {
 
 Structure::~Structure() {}
 
+void Structure::simulate_step(double days) {}
 
 Node* Structure::GetPanels()
 {

@@ -86,7 +86,6 @@ namespace godot {
         
         virtual String class_name();
         
-        virtual void simulate_step(double days);
 
         Production();
         ~Production();

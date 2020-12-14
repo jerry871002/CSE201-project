@@ -7,13 +7,13 @@
 #include <KinematicBody.hpp>
 
 namespace godot {
-    class Transport : public Infrastructure, public KinematicBody {
+    class Transport :  public KinematicBody {
         GODOT_CLASS(Transport, KinematicBody)
     public:
         
         Transport();
 
-        void transport_type(int type);
+        // void transport_type(int type);
 
         // godot functions
         static void _register_methods();

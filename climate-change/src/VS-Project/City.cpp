@@ -165,10 +165,10 @@ void City::add_car() {
 		else { node = (Transport*)ChironScene->instance(); }
 		node->set("scale", Vector3(10, 10, 10));
 		node->set("translation", Vector3(-13, 0, -13 + 30 * (1)));
-		node->transport_type(type);
+		//node->transport_type(type);
 		this->add_child((Node*)node);
 
-		income -= node->cost;
+		//income -= node->cost;
 	}
 }
 

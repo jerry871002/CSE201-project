@@ -37,9 +37,9 @@ template <typename T> void align_on_axis(T obj) {
 
 // Constructors
 Transport::Transport() {
-    transport_type(0);
+    //transport_type(0);
 }
-
+/*
 void Transport::transport_type(int type) {
     // initialize graphical variables
     motion = Vector3(0, 0, 0);
@@ -209,6 +209,7 @@ void Transport::transport_type(int type) {
         }
     }
 }
+*/
 
 void Transport::_register_methods() {
     register_method((char*)"_init", &Transport::_init);
@@ -293,6 +294,7 @@ void Transport::_process(float delta){
 }
 
 void Transport::simulate_step(double days){
+    /*
     int years = floor((age+days)/365-age/365); 
     co2PerKm *=pow(1.05,years); //increase in emissions with each year
     age +=days; //total number of days 
@@ -385,6 +387,7 @@ void Transport::simulate_step(double days){
         }
 
     }
+    */
 }
 
 void Transport::turn(int dir, float delta) {
