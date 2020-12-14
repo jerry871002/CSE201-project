@@ -133,7 +133,7 @@ void City::_ready()
 				this->add_child(node);
 
 				// REMOVE COMMENT ONCE INHERITANCE IS FIXED
-				this->add_building((Structure*)node);
+				this->add_shop((Shop*)node);
 				std::cout << "DEBUG: restaurant added to city your mom fat " << std::endl;
 
 			}
@@ -162,8 +162,8 @@ void City::_ready()
 	std::cout << "DEBUG: finished ready " << std::endl;
 };
 
-void City::add_building(Structure* struc) {
-	buildings.push_back(struc);
+void City::add_shop(Shop* shop) {
+	all_shops.push_back(shop);
 }
 
 
@@ -210,7 +210,7 @@ void City::simulation() {
 
 	std::cout << return_game_date() << std::endl;
 
-	for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
+	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
 		std::cout << "DEBUG: SIMULATION LOOP ENTERED" << std::endl;
 		/*
