@@ -22,6 +22,60 @@ Energy::~Energy() {
 
 }
 
+double Energy::get_energy_output() {
+	return this->energyOutput;
+}
+
+double Energy::get_radiation()
+{
+	return this->radiation;
+}
+
+double Energy::get_H2Semission()
+{
+	return this->H2SEmission;
+}
+
+double Energy::get_CH4emission()
+{
+	return this->CH4Emission;
+}
+
+double Energy::get_NH3emission()
+{
+	return this->NH3Emission;
+}
+
+double Energy::get_SO2emission()
+{
+	return this->SO2Emission;
+}
+
+double Energy::get_NOxemission()
+{
+	return this->NOxEmission;
+}
+
+double Energy::get_mercuryemission()
+{
+	return this->mercuryEmission;
+}
+
+double Energy::get_uranium()
+{
+	return this->naturalUranium;
+}
+
+double Energy::get_fissile_material()
+{
+	return this->fissileMaterial;
+}
+
+double Energy::get_coal()
+{
+	return this->coal;
+}
+
 /// <summary>
 /// NUCLEAR POWERPLANT CLASS
 /// </summary>

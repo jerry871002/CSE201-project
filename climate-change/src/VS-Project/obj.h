@@ -44,8 +44,15 @@ namespace godot {
 
         bool is_other_structure_within_distance(Vector3, double);
 
-        double employment, cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction, environmentalCost;
-        double age; //age of each particular object in days, initialize to 0 in constructor
+        double employment = 0; // approximate number of employees per building
+        double cost = 0; // cost in euros to build a new building
+        double energyUse = 0; //amount of energy used by the building in kWh
+        double maintenance = 0; //maintenace and working cost in euros
+        double CO2Emission = 0; // kg of CO2 emitted
+        double buildingTime = 0; // years needed to build a new building
+        double satisfaction = 0; // on scale of 10
+        double environmentalCost = 0; // environmental and health costs in euros 
+        double age = 0; //age of each particular object in days
 
         // The following will be city-wide counters that will be updated every day : 
         // income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply
@@ -75,10 +82,14 @@ namespace godot {
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
         // need to add a cost for their implementation in the maintenance variable once
 
-        virtual double get_energyuse() { return 0; }
-        virtual double get_co2emissions() { return 0; }
-        virtual double  get_satisfaction() { return 0; }
-        virtual double get_environmentalcost() { return 0; }
+        virtual double get_maintenance();
+        virtual double get_building_time();
+        virtual double get_cost();
+        virtual double get_employment();
+        virtual double get_energyuse();
+        virtual double get_co2emissions();
+        virtual double get_satisfaction();
+        virtual double get_environmentalcost();
 
     };
 }

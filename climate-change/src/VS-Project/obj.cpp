@@ -30,6 +30,38 @@ Structure::Structure(double cost, double energyUse, double maintenance, double s
 
 Structure::~Structure() {}
 
+double Structure::get_satisfaction() {
+	return this->satisfaction;
+}
+
+double Structure::get_co2emissions() {
+	return this->CO2Emission;
+}
+
+double Structure::get_energyuse() {
+	return this->energyUse;
+}
+
+double Structure::get_environmentalcost() {
+	return this->environmentalCost;
+}
+
+double Structure::get_cost() {
+	return this->cost;
+}
+
+double Structure::get_employment() {
+	return this->employment;
+}
+
+double Structure::get_building_time() {
+	return this->buildingTime;
+}
+
+double Structure::get_maintenance() {
+	return this->maintenance;
+}
+
 void Structure::_register_methods()
 {
     register_method((char*)"_process", &Structure::_process);
