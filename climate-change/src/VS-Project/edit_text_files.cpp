@@ -5,6 +5,7 @@
 
 using namespace std;
 
+/*
 // All inputs are strings for the functions below.
 // The documentName for the file pollution.csv that is located in the "data" folder is "pollution".
 // Ideally, all csv files should be stored in the "data" folder.
@@ -114,8 +115,6 @@ void delete_line(string documentName, string dataToDelete) {
     copy("tmp", documentName);
     clear("tmp");
 }
-
-/*
 
 int main() {
     // More examples on how to use the above functions: 
