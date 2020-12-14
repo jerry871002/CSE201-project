@@ -3,6 +3,9 @@
 #include "Transport.h"
 #include "obj.h"
 #include "Shop.h"
+#include "Housing.h"
+#include "Production.h"
+#include "Energy.h"
 
 using namespace godot;
 
@@ -22,6 +25,9 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<Player>();
 	register_class<Restaurant>();
 	register_class<City>();
+	register_class<Housing>();
+	register_class<Energy>();
+	register_class<Production>();
 
 }
 
