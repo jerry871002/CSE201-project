@@ -2,7 +2,9 @@
 
 #include "obj.h"
 #include <core/Godot.hpp>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
 
 
 namespace godot{
