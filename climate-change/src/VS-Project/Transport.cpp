@@ -37,7 +37,8 @@ template <typename T> void align_on_axis(T obj) {
 
 // Constructors
 Transport::Transport() {
-    transport_type(0);
+    int type = rand()%8;
+    transport_type(type);
 }
 
 void Transport::transport_type(int type) {
