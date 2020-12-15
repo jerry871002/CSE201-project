@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Restaurant.h"
+#include "Shop.h"
 
 
 /*
@@ -52,6 +52,12 @@ int main() {
 }
 
 
+void test_shop_constructor(){
+    Shop A = Shop();
+}
+
+
+
 void test_restaurant_constructor() {
     try {
         Restaurant A = Restaurant();
@@ -92,7 +98,7 @@ void test_restaurant_simulate_step(){
         Restaurant B = Restaurant();
         B.simulate_step(400);
         // std::cout << "Restaurant status: " << B.restaurantStatus << std::endl;
-        if (B.restaurantStatus == false){numberFailed += 1;}
+        if (B.shopStatus == false){numberFailed += 1;}
     }
     //std::cout << "Number of Restaurants that failed in 1 year: " << numberFailed << std::endl;
 
@@ -112,4 +118,14 @@ void test_restaurant_get_attributes(){
     } catch (...){
         std::cout << "Error with one of the restaurant's get_.... functions" << std::endl;
     }
+}
+
+
+
+void test_smallshop_constructor(){
+    SmallShop A = SmallShop();
+}
+
+void test_mall_constructor(){
+    Mall A = Mall();
 }
