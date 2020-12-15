@@ -138,16 +138,27 @@ void Shop::simulate_step(double days){
 
     
     if (panels_age == 0) {
-
-
+        /*
         srand((unsigned)time(0));
-        double temp = rand() % 1;
+        double temp = rand() % 100;
 
-        if ((1 - (days * panel_probability) / 365) < temp) {
+        if ((100 - (days * panel_probability) / 3.65) < temp) {
             panels_get_added();
+            this->GetPanels()->set("visible", PanelsOn);
             std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
+        */
+        int r = (rand() % (10000));
+        if (r < int((pow(1 - panel_probability, 1 / 365))*10000))
+        {
+            panels_get_added();
+            this->GetPanels()->set("visible", PanelsOn);
+            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+        }
+        else {}
+
     }
+
     else if (panels_age > days) { panels_age -= days; }
     else {
         panels_age = 0;

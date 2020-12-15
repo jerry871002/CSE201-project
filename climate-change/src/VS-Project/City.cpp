@@ -25,7 +25,7 @@ City::City() {
     needs = 0;
 	timer = 0;
 
-	time_speed = 0;
+	time_speed = 4;
 	delta_counter = 0.0;
 
 	//timer = 0;
@@ -53,7 +53,7 @@ void City::_init()
 void City::_process(float delta)
 {
 	//std::cout << "DEBUG: PROCESS CALLED" << std::endl;
-	counter += delta;
+	counter += delta*time_speed;
 	if (counter > 1) 
 	{
 		simulation();

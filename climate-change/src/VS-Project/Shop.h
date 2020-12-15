@@ -33,7 +33,7 @@ namespace godot{
         void panels_get_added();
         int panels_age{ 0 };
         bool ArePanelsDisplayed();
-        double panel_probability{ 75 };
+        double panel_probability{ 0.75 };
         
     };
 
