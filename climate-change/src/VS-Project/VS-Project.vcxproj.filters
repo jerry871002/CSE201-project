@@ -45,6 +45,9 @@
     <ClCompile Include="Housing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main_loop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="obj.h">

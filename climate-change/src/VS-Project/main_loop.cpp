@@ -1,11 +1,12 @@
+#include "obj.h"
+#include "City.h"
+#include "edit_text_files.cpp"
+
 #include <core/Godot.hpp>
 #include <iostream>
 #include <cstdlib>
 #include <set>
-#include "Restaurant.h"
-#include "obj.h"
-#include "City.h"
-#include "edit_text_files.cpp"
+
 
 // Sleep(miliseconds) on Windows and sleep(seconds) on linux/mac
 #ifdef _WIN32
@@ -13,6 +14,7 @@
 #else
 #include <unistd.h>
 #endif
+using namespace godot;
 
 int main()
 {

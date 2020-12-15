@@ -160,6 +160,7 @@
     <ClCompile Include="Energy.cpp" />
     <ClCompile Include="GodotLibrary.cpp" />
     <ClCompile Include="Housing.cpp" />
+    <ClCompile Include="main_loop.cpp" />
     <ClCompile Include="obj.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Production.cpp" />
