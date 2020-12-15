@@ -194,8 +194,7 @@ void City::add_building(Structure* struc) {
 
 void City::add_car() {
 
-	// RUNTIME ERROR AFTER A FEW SECONDS
-	/*
+
 	ResourceLoader* ResLo = ResourceLoader::get_singleton();
 	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
 	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
@@ -205,19 +204,21 @@ void City::add_car() {
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
 
+		// randomly choose between bugatti and chiron
+
 		int type = rand() % 2;
 		Transport* node;
 		if (type == 0) { node = (Transport*)BugattiScene->instance(); }
 		else { node = (Transport*)ChironScene->instance(); }
 		node->set("scale", Vector3(10, 10, 10));
-		node->set("translation", Vector3(-13, 0, -13 + 30 * (1)));
-		node->transport_type(type);
+		node->set("translation", Vector3(-13, 0, -13 + 30 * (0 + 1)));
 		this->add_child((Node*)node);
 
-		income -= node->cost;
+
+		//income -= node->cost;
 
 		//all_transports.push_back((Transport*)node);
-	}*/
+	}
 }
 
 

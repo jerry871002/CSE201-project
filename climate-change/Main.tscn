@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Ressources/Icons/RoofWindTurb2.png" type="Texture" id=7]
 [ext_resource path="res://MyTheme.tres" type="Theme" id=8]
 [ext_resource path="res://integerLineEdit.gd" type="Script" id=9]
+[ext_resource path="res://Ressources/Roboto/Roboto-Black.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Resources/Mall.tscn" type="PackedScene" id=11]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -41,6 +43,11 @@ texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 100, 100 )
 
 [sub_resource type="RectangleShape2D" id=7]
+
+[sub_resource type="DynamicFont" id=8]
+size = 60
+use_mipmaps = true
+font_data = ExtResource( 10 )
 
 [node name="Main" type="Spatial"]
 
@@ -75,6 +82,9 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 15, 0, -45 )
 
 [node name="Windmill" parent="3Dworld" instance=ExtResource( 5 )]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
+
+[node name="StaticBody2" parent="3Dworld" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 15 )
 
 [node name="2D layer" type="Spatial" parent="."]
 
@@ -178,12 +188,14 @@ margin_top = 420.0
 margin_right = 1420.0
 margin_bottom = 520.0
 theme = ExtResource( 8 )
+custom_fonts/font = SubResource( 8 )
 align = 1
 max_length = 7
 context_menu_enabled = false
 virtual_keyboard_enabled = false
 shortcut_keys_enabled = false
 selecting_enabled = false
+placeholder_text = "0"
 script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false,

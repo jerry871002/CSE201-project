@@ -35,7 +35,7 @@ then run:
 */
 
 namespace godot {
-
+	class Transport;
 	class City : public Spatial {
 		GODOT_CLASS(City, Spatial)
 	public:

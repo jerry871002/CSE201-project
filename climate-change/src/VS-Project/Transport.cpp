@@ -77,10 +77,7 @@ void Transport::transport_type(int type) {
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
         std::normal_distribution <double> satisfactiont(9.7, 0.2); //very high satisfaction
-        satisfaction = satisfactiont(gen);
-        if (satisfaction > 10) {
-            satisfaction = 10;
-        }
+        satisfaction = fmax(satisfactiont(gen), 10);
         energyUse = 0.119 * kmPerDay;
         break;
     }
@@ -89,7 +86,6 @@ void Transport::transport_type(int type) {
         fuelPerKm = 0.24;
         std::normal_distribution <double> costg(85000, 12000);
         cost = costg(gen); // cost of 1 car in euros, randomised using gaussian
-        cost = 25;
         capacity = 8;
         std::normal_distribution <double> kmg(85, 15);
         kmPerDay = kmg(gen); // average km per day for this car using gaussian
@@ -420,16 +416,10 @@ void Transport::turn(int dir, float delta) {
 }
 
 void Transport::straight(float delta) {
-    //Vector3 globalSpeed = Vector3((SPEED_T * delta*10), 0, 0);
-    Vector3 globalSpeed = Vector3((SPEED_T * 10), 0, 0);
+    Vector3 globalSpeed = Vector3((SPEED_T * delta*10), 0, 0);
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
-    //this->move_and_collide(globalSpeed, true, true, false);
-    if ((int)((rot / 90) + 4) % 2 == 0) {
-        this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(1, 0, 0), true);
-    }
-    else {
-        this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 1, 0), true);
-    }
+    this->move_and_collide(globalSpeed, true, true, false);
+
 
     //position += SPEED_T * delta * 10;
     Vector3 pos = this->get_global_transform().get_origin() - prevPosition;
