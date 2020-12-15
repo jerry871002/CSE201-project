@@ -260,12 +260,12 @@ void Transport::_process(float delta) {
             turn(dir, delta);
         }
         else {
-            /*
+            
             Vector3 colliderVelocity = this->move_and_collide(Vector3(0, 0, 0), true, true, true)->get_collider_velocity();
             if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
-                // turn(dir, delta);
+                 turn(dir, delta);
             }
-            */
+            
         }
         prevPosition = this->get_global_transform().get_origin();
 
