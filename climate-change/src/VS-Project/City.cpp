@@ -46,7 +46,7 @@ void City::_register_methods()
 	register_method((char*)"_process", &City::_process);
 	register_method((char*)"_input", &City::_input);
 	register_method((char*)"_ready", &City::_ready);
-	register_method((char*)"_on_RoofWindTurbines_pressed", &City::_on_RoofWindTurbines_pressed);
+	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
 	
 };
 
@@ -159,7 +159,7 @@ void City::_ready()
 
 }
 
-void godot::City::_on_RoofWindTurbines_pressed()
+void godot::City::_on_MenuShop_pressed(String name)
 {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	// Write here the policy you want for the button, here the button is called Ads for windturbines on roofs

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -9,6 +9,22 @@
 [ext_resource path="res://Ressources/Icons/RoofWindTurb2.png" type="Texture" id=7]
 
 [sub_resource type="SphereShape" id=1]
+
+[sub_resource type="Shader" id=6]
+code = "shader_type canvas_item;
+
+uniform float blur_amount = 3.0;
+
+void fragment()
+{
+	COLOR = textureLod(SCREEN_TEXTURE, SCREEN_UV, blur_amount);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=7]
+render_priority = 1
+shader = SubResource( 6 )
+shader_param/blur_amount = 3.0
 
 [sub_resource type="StyleBoxTexture" id=2]
 texture = ExtResource( 7 )
@@ -63,6 +79,17 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
 
 [node name="2Dworld" type="Node2D" parent="."]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="2Dworld"]
+
+[node name="ColorRect" type="ColorRect" parent="2Dworld/CanvasLayer"]
+visible = false
+material = SubResource( 7 )
+margin_right = 1920.0
+margin_bottom = 1082.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Menus" type="KinematicBody2D" parent="2Dworld"]
 
 [node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
@@ -83,10 +110,10 @@ __meta__ = {
 }
 
 [node name="RoofWindTurbines3" type="Button" parent="2Dworld/Menus/MenuShop"]
-margin_left = -50.0
-margin_top = -140.0
-margin_right = 50.0
-margin_bottom = -40.0
+margin_left = -46.0
+margin_top = -156.0
+margin_right = 54.0
+margin_bottom = -56.0
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 2 )
 custom_styles/pressed = SubResource( 3 )
@@ -97,10 +124,10 @@ __meta__ = {
 }
 
 [node name="RoofWindTurbines4" type="Button" parent="2Dworld/Menus/MenuShop"]
-margin_left = -50.0
-margin_top = 40.0
-margin_right = 50.0
-margin_bottom = 140.0
+margin_left = 52.0
+margin_top = -52.0
+margin_right = 152.0
+margin_bottom = 48.0
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 2 )
 custom_styles/pressed = SubResource( 3 )
@@ -110,11 +137,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RoofWindTurbines" type="Button" parent="2Dworld/Menus/MenuShop"]
-margin_left = 40.0
-margin_top = -50.0
-margin_right = 140.0
-margin_bottom = 50.0
+[node name="RoofWindTurbines5" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -44.0
+margin_top = 56.0
+margin_right = 56.0
+margin_bottom = 156.0
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 2 )
 custom_styles/pressed = SubResource( 3 )
@@ -137,7 +164,7 @@ margin_bottom = 584.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines2" to="3Dworld" method="_on_RoofWindTurbines_pressed"]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines3" to="3Dworld" method="_on_RoofWindTurbines_pressed"]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_RoofWindTurbines_pressed"]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines" to="3Dworld" method="_on_RoofWindTurbines_pressed"]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]

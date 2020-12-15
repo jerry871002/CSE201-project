@@ -19,6 +19,7 @@
 
 #include <PackedScene.hpp>
 #include <ResourceLoader.hpp>
+#include <String.hpp>
 
 
 
@@ -49,7 +50,7 @@ namespace godot {
 		void _physics_process(float);
 		void _input(InputEvent*);
 		void _ready();
-		void _on_RoofWindTurbines_pressed();
+		void _on_MenuShop_pressed(String Name);
 
 
 
