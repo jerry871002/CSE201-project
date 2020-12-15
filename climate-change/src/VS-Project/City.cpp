@@ -12,6 +12,7 @@
 #include <Input.hpp>
 #include <Button.hpp>
 #include <Viewport.hpp>
+#include <HSlider.hpp>
 
 
 using namespace godot;
@@ -48,6 +49,7 @@ void City::_register_methods()
 	register_method((char*)"_ready", &City::_ready);
 	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
 	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
+	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
 	
 };
 
@@ -184,6 +186,11 @@ void godot::City::_on_Validate_pressed()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 	std::cout << "" << std::endl;
 	std::cout << "HELLO THERE" << std::endl;
+}
+void godot::City::_on_Game_Speed_changed()
+{
+	time_speed = this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value");
+	std::cout << time_speed;
 }
 ;
 

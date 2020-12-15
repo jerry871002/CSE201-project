@@ -52,6 +52,7 @@ namespace godot {
 		void _ready();
 		void _on_MenuShop_pressed(String Name);
 		void _on_Validate_pressed();
+		void _on_Game_Speed_changed();
 
 		String active_button;
 

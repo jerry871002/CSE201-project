@@ -91,7 +91,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 15 )
 
 [node name="2Dworld" type="Node2D" parent="."]
 
-[node name="HSlider" type="HSlider" parent="2Dworld"]
+[node name="Slider" type="Node2D" parent="2Dworld"]
+
+[node name="HSlider" type="HSlider" parent="2Dworld/Slider"]
 margin_left = 728.0
 margin_top = 24.0
 margin_right = 1404.0
@@ -107,7 +109,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="2Dworld"]
+[node name="Label" type="Label" parent="2Dworld/Slider"]
 margin_left = 500.0
 margin_top = 24.0
 margin_right = 700.0
@@ -120,7 +122,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="2Dworld"]
+[node name="Label2" type="Label" parent="2Dworld/Slider"]
 margin_left = 704.0
 margin_top = 80.0
 margin_right = 776.0
@@ -133,7 +135,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label3" type="Label" parent="2Dworld"]
+[node name="Label3" type="Label" parent="2Dworld/Slider"]
 margin_left = 848.0
 margin_top = 80.0
 margin_right = 953.0
@@ -146,7 +148,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label4" type="Label" parent="2Dworld"]
+[node name="Label4" type="Label" parent="2Dworld/Slider"]
 margin_left = 1032.0
 margin_top = 80.0
 margin_right = 1104.0
@@ -159,7 +161,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label5" type="Label" parent="2Dworld"]
+[node name="Label5" type="Label" parent="2Dworld/Slider"]
 margin_left = 1196.0
 margin_top = 80.0
 margin_right = 1268.0
@@ -172,7 +174,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label6" type="Label" parent="2Dworld"]
+[node name="Label6" type="Label" parent="2Dworld/Slider"]
 margin_left = 1360.0
 margin_top = 80.0
 margin_right = 1432.0
@@ -297,6 +299,7 @@ text = "Valide"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
