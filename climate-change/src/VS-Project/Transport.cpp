@@ -253,17 +253,19 @@ void Transport::_process(float delta) {
     else if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
 
         compute_speed(SPEED_T, Acc, delta);
-        Vector3 globalSpeed = Vector3((SPEED_T * 10), 0, 0);
-        globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
+        //Vector3 globalSpeed = Vector3((SPEED_T * 10), 0, 0);
+        //globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
 
-        if (this->move_and_collide(globalSpeed, true, true, true) == NULL) {
+        if (this->move_and_collide(Vector3(), true, true, true) == NULL) {
             turn(dir, delta);
         }
         else {
+            /*
             Vector3 colliderVelocity = this->move_and_collide(Vector3(0, 0, 0), true, true, true)->get_collider_velocity();
             if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
                 // turn(dir, delta);
             }
+            */
         }
         prevPosition = this->get_global_transform().get_origin();
 
@@ -434,14 +436,14 @@ void Transport::straight(float delta) {
 int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90) + 4) % 4;
     vector<int> out;
-    /*
+    
     if ((int)round(pos.x / 30) >= sizeof(traffic) or (int)round(pos.z / 30) >= sizeof(traffic[0])) {
         myCity->add_car();
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         myCity->add_car();
         return(0);
     }
-    */
+    
     int i = -1;
     for (const int& n : traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
@@ -449,7 +451,7 @@ int Transport::get_direction(Vector3 pos, double rot) {
         }
         i++;
     }
-    /*
+    
     if (out.size() == 0) {
 
         myCity->add_car();
@@ -457,7 +459,7 @@ int Transport::get_direction(Vector3 pos, double rot) {
         myCity->add_car();
         return(0);
     }
-    */
+    
     return(out[rand() % out.size()]);
 }
 
