@@ -38,6 +38,11 @@ void Player::_ready() {
 	//delete(this);
 }
 
+void godot::Player::set_revert_movable()
+{
+	movable = !movable;
+}
+
 void Player::_process(float delta) {
 	UpdateMotionFromInput(delta);
 	this->translate(motion);

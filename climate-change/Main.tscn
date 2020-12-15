@@ -66,12 +66,54 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
 [node name="Menus" type="KinematicBody2D" parent="2Dworld"]
 
 [node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
-visible = false
+position = Vector2( -1, 0 )
+
+[node name="RoofWindTurbines2" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -140.0
+margin_top = -50.0
+margin_right = -40.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoofWindTurbines3" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -50.0
+margin_top = -140.0
+margin_right = 50.0
+margin_bottom = -40.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoofWindTurbines4" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -50.0
+margin_top = 40.0
+margin_right = 50.0
+margin_bottom = 140.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="RoofWindTurbines" type="Button" parent="2Dworld/Menus/MenuShop"]
-margin_left = -50.0
+margin_left = 40.0
 margin_top = -50.0
-margin_right = 50.0
+margin_right = 140.0
 margin_bottom = 50.0
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 2 )
@@ -84,4 +126,18 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="2Dworld/Menus"]
 shape = SubResource( 5 )
+
+[node name="PoliciesInput" type="Node2D" parent="2Dworld"]
+
+[node name="TextEdit" type="TextEdit" parent="2Dworld/PoliciesInput"]
+margin_left = 568.0
+margin_top = 480.0
+margin_right = 1374.0
+margin_bottom = 584.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines2" to="3Dworld" method="_on_RoofWindTurbines_pressed"]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines3" to="3Dworld" method="_on_RoofWindTurbines_pressed"]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_RoofWindTurbines_pressed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines" to="3Dworld" method="_on_RoofWindTurbines_pressed"]

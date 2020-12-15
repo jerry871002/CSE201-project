@@ -103,7 +103,6 @@ void Structure::_input(InputEvent* e)
         Vector2 mousePos = this->get_viewport()->get_mouse_position();
         std::cout << mousePos.x;
         (this->get_tree()->get_root()->get_node("Main/2Dworld/Menus"))->set("position", mousePos);
-        ((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->movable = false;
 		show_menu();
 	}
 }

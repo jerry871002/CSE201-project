@@ -94,7 +94,6 @@ void City::_input(InputEvent*)
 
 	if (i->is_action_pressed("ui_turn")) {
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
-		((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->movable = true;
 	}
 };
 
@@ -163,7 +162,6 @@ void City::_ready()
 void godot::City::_on_RoofWindTurbines_pressed()
 {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
-	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->movable = true;
 	// Write here the policy you want for the button, here the button is called Ads for windturbines on roofs
 }
 ;
@@ -175,6 +173,8 @@ void City::add_building(Structure* struc) {
 
 void City::add_car() {
 
+	// RUNTIME ERROR AFTER A FEW SECONDS
+	/*
 	ResourceLoader* ResLo = ResourceLoader::get_singleton();
 	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
 	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
@@ -196,7 +196,7 @@ void City::add_car() {
 		income -= node->cost;
 
 		//all_transports.push_back((Transport*)node);
-	}
+	}*/
 }
 
 
