@@ -170,6 +170,7 @@ void godot::City::_on_MenuShop_pressed(String name)
 {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 	// Write here the policy you want for the button, here the button is called Ads for windturbines on roofs
 
 	active_button = name;
@@ -180,6 +181,7 @@ void godot::City::_on_Validate_pressed()
 	
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 	String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 	std::cout << "" << std::endl;
 	std::cout << "HELLO THERE" << std::endl;
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Resources/WindMill.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Ressources/Icons/RoofWindTurb1.png" type="Texture" id=6]
 [ext_resource path="res://Ressources/Icons/RoofWindTurb2.png" type="Texture" id=7]
+[ext_resource path="res://MyTheme.tres" type="Theme" id=8]
+[ext_resource path="res://integerLineEdit.gd" type="Script" id=9]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -22,7 +24,6 @@ void fragment()
 "
 
 [sub_resource type="ShaderMaterial" id=3]
-render_priority = 1
 shader = SubResource( 2 )
 shader_param/blur_amount = 3.0
 
@@ -79,13 +80,16 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
 
 [node name="2Dworld" type="Node2D" parent="."]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="2Dworld"]
-
-[node name="ColorRect" type="ColorRect" parent="2Dworld/CanvasLayer"]
+[node name="Blur" type="Node2D" parent="2Dworld"]
 visible = false
+
+[node name="ColorRect" type="ColorRect" parent="2Dworld/Blur"]
 material = SubResource( 3 )
-margin_right = 1920.0
-margin_bottom = 1082.0
+margin_left = -47.1433
+margin_top = -26.9391
+margin_right = 2019.86
+margin_bottom = 1115.06
+rect_pivot_offset = Vector2( 536.625, 1828.64 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -93,6 +97,7 @@ __meta__ = {
 [node name="Menus" type="KinematicBody2D" parent="2Dworld"]
 
 [node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
+visible = false
 position = Vector2( -1, 0 )
 
 [node name="RoofWindTurbines2" type="Button" parent="2Dworld/Menus/MenuShop"]
@@ -154,25 +159,45 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="2Dworld/Menus"]
 shape = SubResource( 7 )
 
-[node name="PoliciesInput" type="Node2D" parent="2Dworld"]
-
-[node name="TextEdit" type="TextEdit" parent="2Dworld/PoliciesInput"]
-margin_left = 568.0
-margin_top = 480.0
-margin_right = 1374.0
-margin_bottom = 584.0
+[node name="HSlider" type="HSlider" parent="2Dworld"]
+margin_left = 557.703
+margin_top = 14.2544
+margin_right = 1391.7
+margin_bottom = 139.254
+theme = ExtResource( 8 )
+max_value = 5.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PoliciesInput" type="Node2D" parent="2Dworld"]
+
+[node name="TextEdit" type="LineEdit" parent="2Dworld/PoliciesInput"]
+margin_left = 500.0
+margin_top = 420.0
+margin_right = 1420.0
+margin_bottom = 520.0
+theme = ExtResource( 8 )
+align = 1
+max_length = 7
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
 [node name="Button" type="Button" parent="2Dworld/PoliciesInput"]
-margin_left = 927.017
-margin_top = 631.844
-margin_right = 1001.02
-margin_bottom = 651.844
-rect_scale = Vector2( 2, 2 )
-text = "VALIDATE"
-expand_icon = true
+margin_left = 800.0
+margin_top = 542.0
+margin_right = 1120.0
+margin_bottom = 602.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "Valide"
 __meta__ = {
 "_edit_use_anchors_": false
 }
