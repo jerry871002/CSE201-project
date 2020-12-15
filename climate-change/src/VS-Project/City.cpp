@@ -47,6 +47,7 @@ void City::_register_methods()
 	register_method((char*)"_input", &City::_input);
 	register_method((char*)"_ready", &City::_ready);
 	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
+	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
 	
 };
 
@@ -57,7 +58,6 @@ void City::_init()
 
 void City::_process(float)
 {
-	std::cout << income << std::endl;
 
 };
 
@@ -88,12 +88,19 @@ void City::_input(InputEvent*)
 
 	// VERTICAL MOTION
 
-	if (i->is_action_pressed("ui_test")) {
+	if (i->is_action_pressed("ui_test")) 
+	{
 		add_car();
 	}
 
-	if (i->is_action_pressed("ui_turn")) {
+	if (i->is_action_pressed("ui_turn")) 
+	{
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+	}
+
+	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible")) 
+	{
+		_on_Validate_pressed();
 	}
 };
 
@@ -153,16 +160,28 @@ void City::_ready()
 			node->set("scale", Vector3(10, 10, 10));
 			node->set("translation", Vector3(-13, 0, -13 + 30 * (z + 1)));
 			this->add_child((Node*)node);
-			std::cout << node->kmPerDay;
+			
 		}
 	}
-
+	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 }
 
 void godot::City::_on_MenuShop_pressed(String name)
 {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
 	// Write here the policy you want for the button, here the button is called Ads for windturbines on roofs
+
+	active_button = name;
+
+}
+void godot::City::_on_Validate_pressed()
+{
+	
+	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+	String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
+	std::cout << "" << std::endl;
+	std::cout << "HELLO THERE" << std::endl;
 }
 ;
 
@@ -213,7 +232,6 @@ void City::simulation() {
     needs = 0;
 	*/
 
-	std::cout << income << std::endl;
 
 	for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
 	{

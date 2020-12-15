@@ -51,6 +51,9 @@ namespace godot {
 		void _input(InputEvent*);
 		void _ready();
 		void _on_MenuShop_pressed(String Name);
+		void _on_Validate_pressed();
+
+		String active_button;
 
 
 
