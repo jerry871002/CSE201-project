@@ -1,5 +1,6 @@
 #include "City.h"
 #include "Transport.h"
+#include "Player.h"
 
 #include <fstream>
 #include <Resource.hpp>
@@ -90,6 +91,11 @@ void City::_input(InputEvent*)
 	if (i->is_action_pressed("ui_test")) {
 		add_car();
 	}
+
+	if (i->is_action_pressed("ui_turn")) {
+		this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+		((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->movable = true;
+	}
 };
 
 
@@ -156,7 +162,8 @@ void City::_ready()
 
 void godot::City::_on_RoofWindTurbines_pressed()
 {
-	this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->set("Visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->movable = true;
 	// Write here the policy you want for the button, here the button is called Ads for windturbines on roofs
 }
 ;
@@ -188,7 +195,7 @@ void City::add_car() {
 
 		income -= node->cost;
 
-		all_transports.push_back((Transport*)node);
+		//all_transports.push_back((Transport*)node);
 	}
 }
 
@@ -226,13 +233,15 @@ void City::simulation() {
 		*/
 
 	}
+	/*
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
 	{
-		/*
-		     count up all the vehicle stuff
-		*/
+	
+		    // count up all the vehicle stuff
+		
 
 	}
+	*/
 }
 
 void City::write_stat_history_to_file() {

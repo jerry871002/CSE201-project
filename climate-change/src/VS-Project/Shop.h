@@ -9,11 +9,14 @@ namespace godot{
     class Shop : public Structure {
         GODOT_SUBCLASS(Shop, Structure)
 
+    private:
+        bool Clickable = false;
     public:
         virtual String class_name();
         Shop();
         ~Shop();
 
+        
         Node* GetPanels();
         bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
 
@@ -27,6 +30,7 @@ namespace godot{
         virtual double get_environmentalcost();
 
         void simulate_step(double days);
+        void show_menu();
 
     };
 
@@ -35,8 +39,6 @@ namespace godot{
     class Restaurant : public Shop{
             GODOT_SUBCLASS(Restaurant, Shop)
         private:
-
-            bool Clickable = false;
 
         public:
             virtual String class_name();

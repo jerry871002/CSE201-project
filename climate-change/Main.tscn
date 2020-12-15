@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -22,6 +22,8 @@ region_rect = Rect2( 0, 0, 100, 100 )
 [sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 100, 100 )
+
+[sub_resource type="RectangleShape2D" id=5]
 
 [node name="Main" type="Spatial"]
 
@@ -59,13 +61,18 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
 
 [node name="2D layer" type="Spatial" parent="."]
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="2Dworld" type="Node2D" parent="."]
 
-[node name="RoofWindTurbines" type="Button" parent="Node2D"]
-margin_left = 931.054
-margin_top = 488.576
-margin_right = 1031.05
-margin_bottom = 588.576
+[node name="Menus" type="KinematicBody2D" parent="2Dworld"]
+
+[node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
+visible = false
+
+[node name="RoofWindTurbines" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -50.0
+margin_top = -50.0
+margin_right = 50.0
+margin_bottom = 50.0
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 2 )
 custom_styles/pressed = SubResource( 3 )
@@ -74,4 +81,7 @@ action_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="Node2D/RoofWindTurbines" to="3Dworld" method="_on_RoofWindTurbines_pressed"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="2Dworld/Menus"]
+shape = SubResource( 5 )
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines" to="3Dworld" method="_on_RoofWindTurbines_pressed"]

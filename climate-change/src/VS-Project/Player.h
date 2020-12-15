@@ -17,6 +17,8 @@ namespace godot {
 		Vector3 rotation;
 		Vector2 mouse_p;
 		
+		
+
 		double SPEED_T = 1;
 		const double SPEED_R = 20;
 		const double VSPEED_INVERSE = 512;
@@ -29,7 +31,7 @@ namespace godot {
 
 
 	public:
-		
+		bool movable = true;
 		static void _register_methods();
 		void _init();
 		void _process(float delta);

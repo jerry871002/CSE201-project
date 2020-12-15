@@ -487,7 +487,3 @@ double Transport::get_energyuse(){
 double Transport::get_environmentalcost(){
     return 0; //at least for now
 }
-
-String Transport::class_name(){
-    return "Transport";
-}

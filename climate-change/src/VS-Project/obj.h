@@ -36,6 +36,7 @@ namespace godot {
         //void _on_CheckBox_button_down();
         //void _on_CheckBox_toggled();
         virtual String class_name();
+        virtual void show_menu();
 
         Structure();
         ~Structure();

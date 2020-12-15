@@ -4,6 +4,8 @@
 #include "Shop.h"
 
 #include <core/Godot.hpp>
+#include <SceneTree.hpp>
+#include <Viewport.hpp>
 
 
 
@@ -13,7 +15,10 @@ String godot::Shop::class_name()
 {
     return "Shop";
 }
-Shop::Shop(){}
+Shop::Shop(){
+    Clickable = false;
+    PanelsOn = false;
+}
 
 Shop::~Shop() {}
 /*
@@ -99,6 +104,10 @@ void Shop::initialize(int shopTypeInput){
 Node* Shop::GetPanels()
 {
     return get_node("MeshComponents")->get_node("SolarPanels");
+}
+
+void Shop::show_menu() {
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", true);
 }
 
 double Shop::get_satisfaction(){
@@ -190,7 +199,7 @@ Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
 	age += days;
-	double shock;
+	double shock = 0;
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 
 	

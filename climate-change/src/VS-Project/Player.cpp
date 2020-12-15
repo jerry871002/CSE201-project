@@ -86,53 +86,55 @@ void Player::_input(InputEvent* e)
 void Player::UpdateMotionFromInput(float delta) {
 	motion = Vector3(0, 0, 0);							// RESET MOTION VECTOR TO ZERO
 
-	// INPUT USED FOR KEY CONTROLS
-	Input* i = Input::get_singleton();
+	if (movable) {
+		// INPUT USED FOR KEY CONTROLS
+		Input* i = Input::get_singleton();
 
-	SPEED_T = 2*get_global_transform().get_origin().y *delta ;
+		SPEED_T = 2 * get_global_transform().get_origin().y * delta;
 
-	// VERTICAL MOTION
+		// VERTICAL MOTION
 
-	if (i->is_action_pressed("ui_vup")) {
-		if (this->get_global_transform().get_origin().y <= MaxHeight) { motion.y += SPEED_T; }
-	}
-	else if (i->is_action_pressed("ui_vdown")) {
-		if (this->get_global_transform().get_origin().y >= MinHeight) { motion.y -= SPEED_T; }
-	}
+		if (i->is_action_pressed("ui_vup")) {
+			if (this->get_global_transform().get_origin().y <= MaxHeight) { motion.y += SPEED_T; }
+		}
+		else if (i->is_action_pressed("ui_vdown")) {
+			if (this->get_global_transform().get_origin().y >= MinHeight) { motion.y -= SPEED_T; }
+		}
 
-	// PLANAR MOTION
+		// PLANAR MOTION
 
-	// 4-key combinations
-	if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) {}
-	// 3-key combinations
-	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) { motion.z -= SPEED_T; }
-	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) { motion.z += SPEED_T; }
-	else if ((i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) { motion.x += SPEED_T; }
-	else if ((i->is_action_pressed("ui_left")) && (i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) { motion.x -= SPEED_T; }
-	// 2-key combinations
-	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) {}
-	else if ((i->is_action_pressed("ui_left")) && (i->is_action_pressed("ui_right"))) {}
-	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right"))) {
-		motion.z -= SPEED_T / (sqrt(2));
-		motion.x += SPEED_T / (sqrt(2));
+		// 4-key combinations
+		if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) {}
+		// 3-key combinations
+		else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) { motion.z -= SPEED_T; }
+		else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) { motion.z += SPEED_T; }
+		else if ((i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) { motion.x += SPEED_T; }
+		else if ((i->is_action_pressed("ui_left")) && (i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) { motion.x -= SPEED_T; }
+		// 2-key combinations
+		else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) {}
+		else if ((i->is_action_pressed("ui_left")) && (i->is_action_pressed("ui_right"))) {}
+		else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right"))) {
+			motion.z -= SPEED_T / (sqrt(2));
+			motion.x += SPEED_T / (sqrt(2));
+		}
+		else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right"))) {
+			motion.z += SPEED_T / (sqrt(2));
+			motion.x += SPEED_T / (sqrt(2));
+		}
+		else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_left"))) {
+			motion.z -= SPEED_T / (sqrt(2));
+			motion.x -= SPEED_T / (sqrt(2));
+		}
+		else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_left"))) {
+			motion.z += SPEED_T / (sqrt(2));
+			motion.x -= SPEED_T / (sqrt(2));
+		}
+		// 1-key combinations
+		else if (i->is_action_pressed("ui_up")) { motion.z -= SPEED_T; }
+		else if (i->is_action_pressed("ui_down")) { motion.z += SPEED_T; }
+		else if (i->is_action_pressed("ui_right")) { motion.x += SPEED_T; }
+		else if (i->is_action_pressed("ui_left")) { motion.x -= SPEED_T; }
 	}
-	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right"))) {
-		motion.z += SPEED_T / (sqrt(2));
-		motion.x += SPEED_T / (sqrt(2));
-	}
-	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_left"))) {
-		motion.z -= SPEED_T / (sqrt(2));
-		motion.x -= SPEED_T / (sqrt(2));
-	}
-	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_left"))) {
-		motion.z += SPEED_T / (sqrt(2));
-		motion.x -= SPEED_T / (sqrt(2));
-	}
-	// 1-key combinations
-	else if (i->is_action_pressed("ui_up")) { motion.z -= SPEED_T; }
-	else if (i->is_action_pressed("ui_down")) { motion.z += SPEED_T; }
-	else if (i->is_action_pressed("ui_right")) { motion.x += SPEED_T; }
-	else if (i->is_action_pressed("ui_left")) { motion.x -= SPEED_T; }
 
 }
 

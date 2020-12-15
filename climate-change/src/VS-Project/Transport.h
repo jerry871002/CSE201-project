@@ -10,7 +10,6 @@ namespace godot {
     class Transport : public KinematicBody {
         GODOT_CLASS(Transport, KinematicBody)
     public:
-        virtual String class_name();
         Transport();
 
         void transport_type(int type);
