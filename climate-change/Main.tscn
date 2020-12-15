@@ -197,10 +197,6 @@ shortcut_keys_enabled = false
 selecting_enabled = false
 placeholder_text = "0"
 script = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": ""
-}
 
 [node name="Button" type="Button" parent="2Dworld/PoliciesInput"]
 margin_left = 800.0
