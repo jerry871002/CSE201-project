@@ -1,21 +1,28 @@
 #pragma once
+
+#include "obj.h"
+#include "Transport.h"
+#include "Shop.h"
+
 #include <core/Godot.hpp>
-#include <iostream>
-#include <cstdlib>
-#include <vector>
-#include <string>
 #include <Input.hpp>
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
-#include "obj.h"
-#include "Transport.h"
 #include <StaticBody.hpp>
 #include <Spatial.hpp>
 #include <PackedScene.hpp>
 #include <ResourceLoader.hpp>
-#include "edit_text_files.cpp"
-#include "Shop.h"
+
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+#include <string>
+
+// use forward declarations to get around the circular dependencies problem
+namespace godot {
+	class Transport;
+};
 
  /* current test fct for restaurant only using main_loop.cpp on mac:
 
