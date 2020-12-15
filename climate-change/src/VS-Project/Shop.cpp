@@ -148,8 +148,8 @@ void Shop::simulate_step(double days){
             std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         */
-        int r = (rand() % (10000));
-        if (r < int((pow(1 - panel_probability, 1 / 365))*10000))
+        double r = double(rand()) / double((RAND_MAX + 1.));
+        if (r > (pow(1 - panel_probability, 1 / 365)))
         {
             panels_get_added();
             this->GetPanels()->set("visible", PanelsOn);
