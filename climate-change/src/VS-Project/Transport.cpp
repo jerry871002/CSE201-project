@@ -5,7 +5,6 @@
 #include <KinematicCollision.hpp>
 #include <Mesh.hpp>
 #include <Timer.hpp>
-
 #include <random>
 
 # define M_PI 3.14159265358979323846  /* pi */
@@ -40,7 +39,7 @@ template <typename T> void align_on_axis(T obj) {
     obj->set_rotation_degrees(Vector3(round(obj->get_rotation_degrees().x / 90) * 90, round(obj->get_rotation_degrees().y / 90) * 90, round(obj->get_rotation_degrees().z / 90) * 90));
 }
 
-// Constructors
+
 Transport::Transport() {
     transport_type(0);
 }
@@ -224,7 +223,7 @@ void Transport::_init() {
 
 void Transport::_ready() {
     prevPosition = this->get_global_transform().get_origin();
-    // myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
+    myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
 }
 
 
