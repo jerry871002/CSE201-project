@@ -232,11 +232,11 @@ void City::simulation() {
 	}
 
 
-	if (day_tick % 365 == 0) {
+	if (day_tick % 140 == 0) {
 		// randomly finds an open spot and splats down a restaurant
 
 
-		std::cout << "DEBUG: daytick mod 365 entered in simulation " << std::endl;
+		std::cout << "DEBUG: daytick mod 140 entered in simulation " << std::endl;
 		Vector3 temp = Vector3(0, 0, 0);
 		bool location_covered = true;
 		while (location_covered) {
@@ -315,7 +315,7 @@ void City::add_restaurant_to_city(Vector3 position) {
 		//int rot = rand() % 2;
 		//node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
 		this->add_child(node);
-
+		
 		// REMOVE COMMENT ONCE INHERITANCE IS FIXED
 		this->add_shop((Shop*)node);
 		//std::cout << "DEBUG: restaurant added to city your mom fat " << std::endl;
