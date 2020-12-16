@@ -168,6 +168,9 @@ void City::_ready()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("position", Vector2(20, 20));
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("visible", true);
 }
 
 void godot::City::_on_MenuShop_pressed(String name)
