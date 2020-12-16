@@ -249,19 +249,18 @@ void City::simulation() {
 			int r = rand() % 4;
 			std::cout << "DEBUG: about to add to temp " << std::endl;
 			switch (r) {
-			case 0: temp += Vector3(10, 0, 0);
-			case 1: temp += Vector3(-10, 0, 0);
-			case 2: temp += Vector3(0, 0, 10);
-			case 3: temp += Vector3(0, 0, -10);
+			case 0: temp += Vector3(30, 0, 0);
+			case 1: temp += Vector3(-30, 0, 0);
+			case 2: temp += Vector3(0, 0, 30);
+			case 3: temp += Vector3(0, 0, -30);
+
+			}
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 			{
 				std::cout << "DEBUG: looking at a restaurant's position " << std::endl;
 				if (temp == ((Structure*)*it)->Structure::get_position()) {
 					location_covered = true;
 				}
-			}
-			
-
 			}
 			
 		}
