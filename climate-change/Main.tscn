@@ -110,12 +110,12 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="2Dworld/Slider"]
-margin_left = 500.0
+margin_left = 488.0
 margin_top = 24.0
-margin_right = 700.0
+margin_right = 689.0
 margin_bottom = 94.0
 custom_fonts/font = ExtResource( 12 )
-text = "GAME SPEED"
+text = "GAME SPEED "
 align = 2
 valign = 1
 __meta__ = {
@@ -205,6 +205,7 @@ __meta__ = {
 [node name="Menus" type="KinematicBody2D" parent="2Dworld"]
 
 [node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
+visible = false
 position = Vector2( -1, 0 )
 
 [node name="RoofWindTurbines2" type="Button" parent="2Dworld/Menus/MenuShop"]

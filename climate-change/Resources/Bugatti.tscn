@@ -6,6 +6,7 @@
 [ext_resource path="res://Ressources/Metal white.material" type="Material" id=4]
 [ext_resource path="res://Ressources/Metal.material" type="Material" id=5]
 [ext_resource path="res://Ressources/Light.material" type="Material" id=6]
+[ext_resource path="res://Resources/BoxCar.tres" type="Shape" id=7]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "BezierCurve007"
@@ -187,9 +188,6 @@ surfaces/4 = {
 "vertex_count": 32
 }
 
-[sub_resource type="BoxShape" id=5]
-extents = Vector3( 0.356, 0.138, 0.18 )
-
 [node name="Bugatti2" type="KinematicBody"]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 collision_layer = 2
@@ -229,5 +227,5 @@ material/4 = null
 [node name="Timer" type="Timer" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18798, 0.117576, 0 )
-shape = SubResource( 5 )
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.15, 0.1, 0 )
+shape = ExtResource( 7 )
