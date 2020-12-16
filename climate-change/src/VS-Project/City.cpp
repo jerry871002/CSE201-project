@@ -241,6 +241,9 @@ void City::simulation() {
 
 
 	if (day_tick % 30 == 0) {
+		// randomly finds an open spot and splats down a restaurant
+
+
 		std::cout << "DEBUG: daytick mod 30 entered in simulation " << std::endl;
 		Vector3 temp = Vector3(0, 0, 0);
 		bool location_covered = true;
@@ -261,13 +264,13 @@ void City::simulation() {
 					location_covered = true;
 					break;
 				}
-				
+
 			}
-			
-		}
-		add_restaurant_to_city(temp);
+		
 	}
-}
+		add_restaurant_to_city(temp);
+
+	}
 
 void City::write_stat_history_to_file() {
 	/*
