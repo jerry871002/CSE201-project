@@ -295,7 +295,24 @@ margin_right = 1120.0
 margin_bottom = 624.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
-text = "Valide"
+text = "VALIDE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InfoBox" type="Label" parent="2Dworld"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 384.0
+margin_bottom = 1040.0
+theme = SubResource( 9 )
+custom_styles/normal = ExtResource( 13 )
+custom_fonts/font = ExtResource( 12 )
+text = "
+Income: 1000
+thing: 3
+HELLO THERE MF"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
