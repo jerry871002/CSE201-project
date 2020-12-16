@@ -304,18 +304,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="InfoBox" type="RichTextLabel" parent="2Dworld"]
+[node name="InfoBox" type="Label" parent="2Dworld"]
 margin_right = 384.0
 margin_bottom = 1061.0
 theme = SubResource( 9 )
-custom_styles/focus = ExtResource( 13 )
 custom_styles/normal = ExtResource( 13 )
-text = "income: 1000
+custom_fonts/font = ExtResource( 12 )
+text = "
+Income: 1000
 thing: 3
 HELLO THERE MF"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+align = 1
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
