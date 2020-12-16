@@ -37,7 +37,8 @@ namespace godot {
         //void _on_CheckBox_toggled();
         virtual String class_name();
         virtual void show_menu();
-
+        real_t MenuSize{ 300 };
+        real_t InfoBoxWidth{ 300 };
         virtual String output_information();
 
         Structure();
