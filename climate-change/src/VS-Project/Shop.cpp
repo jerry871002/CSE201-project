@@ -149,7 +149,7 @@ void Shop::simulate_step(double days){
         }
         */
         double r = double(rand()) / double((RAND_MAX + 1.));
-        if (r > (pow(1 - panel_probability, 1 / 365)))
+        if (r > (pow(1 - panel_probability, days / 365)))
         {
             panels_get_added();
             this->GetPanels()->set("visible", PanelsOn);
@@ -171,7 +171,7 @@ void Shop::simulate_step(double days){
 
 void Shop::panels_get_added(){
     PanelsOn = true;
-    panels_age = 100;
+    panels_age = 120;
     std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
 }
 

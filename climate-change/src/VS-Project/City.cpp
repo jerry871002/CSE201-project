@@ -227,9 +227,9 @@ void City::simulation() {
 		(*it)->simulate_step(); //function that updates the building
 		
 		*/
-
-		((Restaurant*)*it)->Restaurant::simulate_step(1);
-
+		if (day_tick % 15 == 0) {
+			((Restaurant*)*it)->Restaurant::simulate_step(15);
+		}
 	}
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
 	{
@@ -246,22 +246,22 @@ void City::simulation() {
 		bool location_covered = true;
 		while (location_covered) {
 			location_covered = false;
-			int r = rand() % 4;
+			int r = rand() % 2;
+			int s = rand() % 2;
 			std::cout << "DEBUG: about to add to temp " << std::endl;
 			switch (r) {
-			case 0: temp += Vector3(10, 0, 0);
-			case 1: temp += Vector3(-10, 0, 0);
-			case 2: temp += Vector3(0, 0, 10);
-			case 3: temp += Vector3(0, 0, -10);
+			case 0: temp += Vector3(pow(-1, s) * 10, 0, 0);
+			case 1: temp += Vector3(0, 0, pow(-1, s) * 10);
+			}
+
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 			{
-				std::cout << "DEBUG: looking at a restaurant's position " << std::endl;
+				// std::cout << "DEBUG: looking at a restaurant's position " << std::endl;
 				if (temp == ((Structure*)*it)->Structure::get_position()) {
 					location_covered = true;
+					break;
 				}
-			}
-			
-
+				
 			}
 			
 		}
