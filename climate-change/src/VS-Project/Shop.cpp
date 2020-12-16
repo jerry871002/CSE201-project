@@ -11,7 +11,7 @@ using namespace godot;
 // ######################     SHOP     ##############################
 
 Shop::Shop(){
-    
+    panels_age = 0;
     
 }
 
@@ -148,9 +148,9 @@ void Shop::simulate_step(double days){
             std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         */
-        float r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1
-        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(float(1 - panel_probability), days / 365)) << std::endl;
-        if (r > (pow(1 - panel_probability, days / 365)))
+        double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1
+        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(float(1 - panel_probability), float(days / 365.0))) << std::endl;
+        if (r > (pow(float(1 - panel_probability), float(days / 365.0))))
         {
             panels_get_added();
             this->GetPanels()->set("visible", PanelsOn);

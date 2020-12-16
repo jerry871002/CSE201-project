@@ -246,7 +246,9 @@ void City::simulation() {
 			std::cout << "DEBUG: about to add to temp " << std::endl;
 			switch (r) {
 			case 0: temp += Vector3(s * 30, 0, 0);
+				break;
 			case 1: temp += Vector3(0, 0, s * 30);
+				break;
 			}
 
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
@@ -258,7 +260,7 @@ void City::simulation() {
 				}
 
 			}
-
+			
 		}
 		add_restaurant_to_city(temp);
 	}
