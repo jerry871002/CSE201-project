@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 
 
 # Declare member variables here. Examples:
@@ -8,9 +8,8 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#$PieChart.plot()
+	#$BarChart2D.plot()
 	pass
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

@@ -8,8 +8,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#$PieChart.plot()
-	pass
+	$BarChart2D.plot()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

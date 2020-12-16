@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://Ressources/Roboto/Roboto-Black.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://Resources/Mall.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Font.tres" type="DynamicFont" id=12]
-[ext_resource path="res://Box.tres" type="StyleBox" id=13]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -50,8 +49,6 @@ region_rect = Rect2( 0, 0, 100, 100 )
 size = 60
 use_mipmaps = true
 font_data = ExtResource( 10 )
-
-[sub_resource type="Theme" id=9]
 
 [node name="Main" type="Spatial"]
 
@@ -113,12 +110,12 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="2Dworld/Slider"]
-margin_left = 488.0
+margin_left = 500.0
 margin_top = 24.0
-margin_right = 689.0
+margin_right = 700.0
 margin_bottom = 94.0
 custom_fonts/font = ExtResource( 12 )
-text = "GAME SPEED "
+text = "Game speed :"
 align = 2
 valign = 1
 __meta__ = {
@@ -271,7 +268,6 @@ __meta__ = {
 shape = SubResource( 7 )
 
 [node name="PoliciesInput" type="Node2D" parent="2Dworld"]
-position = Vector2( 17.6389, 1.25995 )
 
 [node name="TextEdit" type="LineEdit" parent="2Dworld/PoliciesInput"]
 margin_left = 500.0
@@ -299,20 +295,7 @@ margin_right = 1120.0
 margin_bottom = 624.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
-text = "VALIDE"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="InfoBox" type="RichTextLabel" parent="2Dworld"]
-margin_right = 384.0
-margin_bottom = 1061.0
-theme = SubResource( 9 )
-custom_styles/focus = ExtResource( 13 )
-custom_styles/normal = ExtResource( 13 )
-text = "income: 1000
-thing: 3
-HELLO THERE MF"
+text = "Valide"
 __meta__ = {
 "_edit_use_anchors_": false
 }
