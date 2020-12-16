@@ -59,7 +59,7 @@ namespace godot{
             bool firstYearShock = false;
 
             double get_energyuse();
-
+            void initialize();
             void simulate_step(double days);
     };
 

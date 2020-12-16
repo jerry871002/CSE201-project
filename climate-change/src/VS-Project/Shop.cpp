@@ -264,6 +264,11 @@ void Restaurant::simulate_step(double days){
 	
 }
 
+void Restaurant::initialize() {
+    PanelsOn = false;
+}
+
+
 double Restaurant::get_energyuse(){
 	return (this->energyUsePerSize)*(this->diningSize);
 }
