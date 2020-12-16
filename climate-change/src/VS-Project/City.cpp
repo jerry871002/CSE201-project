@@ -240,7 +240,7 @@ void City::simulation() {
 	}
 
 
-	if (day_tick % 30) {
+	if (day_tick % 30 == 0) {
 		std::cout << "DEBUG: daytick mod 30 entered in simulation " << std::endl;
 		Vector3 temp = Vector3(0, 0, 0);
 		bool location_covered = true;
@@ -251,8 +251,8 @@ void City::simulation() {
 			switch (r) {
 			case 0: temp += Vector3(10, 0, 0);
 			case 1: temp += Vector3(-10, 0, 0);
-			case 2: temp += Vector3(0, 10, 0);
-			case 3: temp += Vector3(0, -10, 0);
+			case 2: temp += Vector3(0, 0, 10);
+			case 3: temp += Vector3(0, 0, -10);
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 			{
 				std::cout << "DEBUG: looking at a restaurant's position " << std::endl;
