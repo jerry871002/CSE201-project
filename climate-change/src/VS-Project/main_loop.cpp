@@ -23,6 +23,7 @@ int main()
     while (true) {
 
         c.simulation();
+       
         Sleep(200);
  	//check if writing to files works
 

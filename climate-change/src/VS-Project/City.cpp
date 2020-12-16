@@ -25,6 +25,10 @@ City::City() {
     needs = 0;
 	timer = 0;
 
+	sizeOfCity = 10;
+	//positionOfBuildings[sizeOfCity][sizeOfCity] = { 0 };
+	//traffic[sizeOfCity][sizeOfCity][4][3] = { 0 };
+
 	time_speed = 4;
 	delta_counter = 0.0;
 
@@ -157,6 +161,43 @@ void City::_ready()
 
 void City::add_shop(Shop* shop) {
 	all_shops.push_back(shop);
+	int x = shop->get_position()[0]/30;
+	int y = shop->get_position()[1]/30;
+	if (x <= 10 && y <= 10) {
+		positionOfBuildings[x][y] = 1;
+		update_traffic(x, y);
+	}
+}
+
+void City::update_traffic(int x, int y) {
+	traffic[x][y][0][3] = 1;
+	traffic[x][y][1][3] = 1;
+	traffic[x][y][2][3] = 1;
+	traffic[x][y][3][3] = 1;
+	if (x + 1 < sizeOfCity && y + 1 > sizeOfCity && positionOfBuildings[x + 1][y + 1] == 1) {
+		traffic[x][y][3][0] = 1;
+	}
+	if (y + 1 < sizeOfCity && positionOfBuildings[x][y + 1] == 1) {
+		traffic[x][y][3][1] = 1;
+	}
+	if (x - 1 > 0 && y + 1 > sizeOfCity && positionOfBuildings[x - 1][y + 1] == 1) {
+		traffic[x][y][2][0] = 1;
+	}
+	if (x - 1 > 0 && positionOfBuildings[x - 1][y] == 1) {
+		traffic[x][y][2][1] = 1;
+	}
+	if (x - 1 > 0 && y - 1 > 0 && positionOfBuildings[x - 1][y - 1] == 1) {
+		traffic[x][y][1][0] = 1;
+	}
+	if (y - 1 > 0 && positionOfBuildings[x][y - 1] == 1) {
+		traffic[x][y][1][1] = 1;
+	}
+	if (x + 1 < sizeOfCity && y - 1 > 0 && positionOfBuildings[x + 1][y - 1] == 1) {
+		traffic[x][y][0][0] = 1;
+	}
+	if (x + 1 < sizeOfCity && positionOfBuildings[x + 1][y] == 1) {
+		traffic[x][y][0][1] = 1;
+	}
 }
 
 

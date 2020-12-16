@@ -447,7 +447,7 @@ int Transport::get_direction(Vector3 pos, double rot) {
     }
     */
     int i = -1;
-    for (const int& n : traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
+    for (const int& n : myCity->traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
             out.push_back(i);
         }

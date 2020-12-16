@@ -32,7 +32,7 @@ namespace godot {
  ./a.out
  */
 
-namespace godot {
+namespace godot { 
 
 	class City : public Spatial {
 		GODOT_CLASS(City, Spatial)
@@ -50,7 +50,8 @@ namespace godot {
 		std::vector<Shop*> all_shops;
 		std::vector<Transport*> all_transports;
 
-		void add_shop(Shop*);
+		void add_restaurant_to_city(Vector3); // 
+		void add_shop(Shop*);                 // adds a shop to the shop list
 		void add_car();                       // adds transport object to city
 		void simulation();                    //updates all the stats abd the building
 		void write_stat_history_to_file();    //writes all the stats to a file so that the interface team can make graphs 
@@ -62,6 +63,7 @@ namespace godot {
         double return_energySupply();
         double return_healthcare();
         double return_needs();
+		//int* return_traffic();
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
 		/* we can keep these variables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
@@ -76,6 +78,11 @@ namespace godot {
 		float energyDemand_array[3];
 		float energySupply_array[3];
 		*/
+		// array that defines the movement of cars at intersections 
+		int sizeOfCity; // buildings are placed on a square sizeOfCity * sizeOfCity
+		int positionOfBuildings[10][10] = { 0 };
+		int traffic[10][10][4][3] = { 0 };
+		void update_traffic(int x, int y);
 
 	private:
 		// city indices
@@ -87,7 +94,9 @@ namespace godot {
         double energySupply; 
         double healthcare;
         double needs;
-		// used for caculating in-game time
+		//transport related variable 
+		
+		//used for caculating in-game time
 		float time_speed; // 1 for regular speed (1 in-game day per second)
         float delta_counter; // accumulate delta from `_physics_process` function
 		int64_t timer;       // helper data to see if `delta_counter` have carry on units digit
@@ -101,7 +110,6 @@ namespace godot {
 		Ref<PackedScene> ChironScene;
 		*/
 
-		void add_restaurant_to_city(Vector3);
 
 		ResourceLoader* ResLo = ResourceLoader::get_singleton();
 		Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
