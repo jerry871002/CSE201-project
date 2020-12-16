@@ -17,8 +17,7 @@ namespace godot {
 		Energy();
 		~Energy();
 
-		//inputs:
-		//Nuclear plant :
+		//inputs::
 		double naturalUranium = 0;
 		double fissileMaterial = 0;
 		double requiredLand = 0;
