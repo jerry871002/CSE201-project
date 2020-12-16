@@ -112,6 +112,10 @@ config/icon="res://icon.png"
 [autoload]
 
 Utilities="*res://addons/easy_charts/Utilities/Scripts/utilities.gd"
+PluginSettings="*res://addons/github-integration/scripts/PluginSettings.gd"
+IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
+UserData="*res://addons/github-integration/scripts/user_data.gd"
+RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
 
 [display]
 
@@ -124,7 +128,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "easy_charts" )
+enabled=PoolStringArray( "..", "easy_charts", "lod", "ui_design_tool" )
 
 [gdnative]
 
@@ -177,7 +181,7 @@ ui_vdown={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777236,"unicode":0,"echo":false,"script":null)
  ]
 }
-AddRemoveSolarPanels={
+ui_test={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
  ]
@@ -192,4 +196,3 @@ ui_turn={
 
 quality/shadows/filter_mode=2
 quality/filters/msaa=1
-environment/default_environment="res://default_env.tres"

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Ressources/red128x128.png" type="Texture" id=1]
 [ext_resource path="res://Ressources/Christmas Tree.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://MenuButton.gdns" type="Script" id=3]
+[ext_resource path="res://TextureButton.gdns" type="Script" id=3]
 [ext_resource path="res://K67.jpg" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=1]
