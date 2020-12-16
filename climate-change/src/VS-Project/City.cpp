@@ -153,16 +153,17 @@ void City::_ready()
 		// TODO: This loop is only going to run once, maybe remove the loop?
 		for (int z = 0; z < 1; z++) // Car removed to test
 		{
-			// randomly choose between bugatti and chiron
 
-			int type = rand() % 2;
-			Transport* node;
-			if (type == 0) { node = (Transport*)BugattiScene->instance(); }
-			else { node = (Transport*)ChironScene->instance(); }
-			node->set("scale", Vector3(10, 10, 10));
-			node->set("translation", Vector3(-13, 0, -13 + 30 * (z + 1)));
-			this->add_child((Node*)node);
-			
+				// randomly choose between bugatti and chiron
+
+				int type = rand() % 2;
+				Transport* node;
+				if (type == 0) { node = (Transport*)BugattiScene->instance(); }
+				else { node = (Transport*)ChironScene->instance(); }
+				node->set("scale", Vector3(10, 10, 10));
+				node->set("translation", Vector3(-13 , 0, -13 + 30 * (z + 1)));
+				this->add_child((Node*)node);
+
 		}
 	}
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);

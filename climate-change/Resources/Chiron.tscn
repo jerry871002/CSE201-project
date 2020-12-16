@@ -204,7 +204,7 @@ surfaces/8 = {
 }
 
 [sub_resource type="CapsuleShape" id=5]
-radius = 0.15
+radius = 0.1
 height = 0.35
 
 [node name="Chiron" type="KinematicBody"]
@@ -247,5 +247,5 @@ material/8 = null
 [node name="Timer" type="Timer" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.05, 0.1, 0 )
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.175, 0.1, 0 )
 shape = SubResource( 5 )

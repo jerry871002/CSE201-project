@@ -233,6 +233,14 @@ void Transport::_process(float delta) {
 
     if (rot >= (M_PI / 2)) {
         straight(delta);
+        Vector3 p = this->get_global_transform().get_origin();
+        switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the car on the road if problems
+        case 0: this->set("translation", Vector3(p.x, 0, p.z + 28 - fmod(p.z + 28, 30) - 13)); break;
+        case 2: this->set("translation", Vector3(p.x, 0, p.z + 2 - fmod(p.z + 2, 30) + 13)); break;
+        case 3: this->set("translation", Vector3(p.x + 2 - fmod(p.x + 2, 30) + 13, 0, p.z)); break;
+        case 1: this->set("translation", Vector3(p.x + 28 - fmod(p.x + 28, 30) - 13, 0, p.z)); break;
+        default: break; }
+
 
         //prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
 
@@ -261,21 +269,22 @@ void Transport::_process(float delta) {
         globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
         
 
-        if (this->move_and_collide(globalSpeed, true, true, true) == NULL) { //No collision
+        if (this->move_and_collide(Vector3(), true, true, true) == NULL) { //No collision
             turn(dir, delta);
         }
         else {
             
-            Vector3 colliderVelocity = this->move_and_collide(globalSpeed, true, true, true)->get_collider_velocity();
-            if (fmod(((Transport*)(this->move_and_collide(globalSpeed, true, true, true)->get_collider()))->get_rotation_degrees().y + 360, 90) != 0) { //Car not on a straight line
+            Vector3 colliderVelocity = this->move_and_collide(Vector3(), true, true, true)->get_collider_velocity();
+            if (fmod(((Transport*)(this->move_and_collide(Vector3(), true, true, true)->get_collider()))->get_rotation_degrees().y + 360, 90) != 0) { //Car not on a straight line
                 if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
                     turn(dir, delta);
                 }
             }
+            else if (colliderVelocity.dot(colliderVelocity) == 0) {
+                turn(dir, delta);
+            }
 
         }
-
-        //prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
 
         if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
             rot = M_PI / 2;
@@ -424,12 +433,11 @@ void Transport::straight(float delta) {
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
 
     switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {
-    case 0: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(-1, 0, 0), true, 90).z; break;
-    case 2: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(1, 0, 0), true, 90).z; break;
-    case 1: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 0, 1), true, 90).x; break;
-    case 3: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 0, -1), true, 90).x; break;
-    default:
-        break;
+    case 0: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(-1, 0, 0), true).z; break;
+    case 2: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(1, 0, 0), true).z; break;
+    case 1: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 0, 1), true).x; break;
+    case 3: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 0, -1), true).x; break;
+    default:     break;
     }
 
     position = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - prevPosition;
