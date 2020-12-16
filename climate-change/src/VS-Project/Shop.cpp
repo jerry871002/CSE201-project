@@ -134,9 +134,60 @@ double Shop::get_environmentalcost(){
     return this->environmentalCost;
 }
 
-void Shop::simulate_step(double days){
+
+void Shop::simulate_step(double days) {
+    // std::cout << "DEBUG: SHOP SIMULATION" << std::endl;
+
+    //PanelsOn = !PanelsOn;
+    //this->GetPanels()->set("visible", PanelsOn);
+
+
+    if (panels_age == 0) {
+        /*
+        * 
+        * TESTING STUFF LIKELY TO BE REMOVED SOON
+        * 
+        srand((unsigned)time(0));
+        double temp = rand() % 100;
+
+        if ((100 - (days * panel_probability) / 3.65) < temp) {
+            panels_get_added();
+            this->GetPanels()->set("visible", PanelsOn);
+            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+        }
+        */
+        double r = double(rand()) / double((RAND_MAX + 1.));
+        if (r > (pow(1 - panel_probability, 1 / 365)))
+        {
+            panels_get_added();
+            this->GetPanels()->set("visible", PanelsOn);
+            // std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+        }
+        else {}
+
+    }
+
+    else if (panels_age > days) { panels_age -= days; }
+    else {
+        panels_age = 0;
+        PanelsOn = false;
+        this->GetPanels()->set("visible", PanelsOn);
+        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+    }
 
 }
+
+void Shop::panels_get_added() {
+    PanelsOn = true;
+    panels_age = 100;   // set the panels age here ! when they are just built
+
+
+    // std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
+}
+
+
+
+
 
 
 //  #################################   RESTAURANT      ###############################
