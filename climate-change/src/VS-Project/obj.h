@@ -23,6 +23,7 @@ namespace godot {
         bool Clickable;
     public:
         bool MenuVisible;
+        bool PanelsOn {false};
 
         static void _register_methods();
         virtual void _init();
