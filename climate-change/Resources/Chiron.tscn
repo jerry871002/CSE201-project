@@ -8,7 +8,6 @@
 [ext_resource path="res://Ressources/glass.material" type="Material" id=6]
 [ext_resource path="res://Bugatti.gdns" type="Script" id=7]
 [ext_resource path="res://Ressources/Red.material" type="Material" id=8]
-[ext_resource path="res://Resources/BoxCar.tres" type="Shape" id=9]
 [ext_resource path="res://Ressources/Metal.material" type="Material" id=10]
 [ext_resource path="res://Ressources/Light.material" type="Material" id=11]
 
@@ -204,6 +203,10 @@ surfaces/8 = {
 "vertex_count": 92
 }
 
+[sub_resource type="CapsuleShape" id=5]
+radius = 0.15
+height = 0.35
+
 [node name="Chiron" type="KinematicBody"]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 collision_layer = 2
@@ -244,5 +247,5 @@ material/8 = null
 [node name="Timer" type="Timer" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.15, 0.1, 0 )
-shape = ExtResource( 9 )
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.05, 0.1, 0 )
+shape = SubResource( 5 )
