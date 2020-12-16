@@ -115,7 +115,7 @@ void Shop::show_menu() {
 
 String Shop::output_information()
 {
-    return this->Structure::output_information() + "\n SHOP CO2 EMISSIONS: " + String(float(employment));
+    return this->Structure::output_information() + "\n SHOP: " + String(float(employment));
 }
 
 double Shop::get_satisfaction(){

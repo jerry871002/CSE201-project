@@ -166,8 +166,7 @@ void City::_ready()
 		}
 	}
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
-	this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
-
+	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 }
 

@@ -16,6 +16,8 @@
 
 [sub_resource type="SphereShape" id=1]
 
+[sub_resource type="Theme" id=9]
+
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
 
@@ -50,8 +52,6 @@ region_rect = Rect2( 0, 0, 100, 100 )
 size = 60
 use_mipmaps = true
 font_data = ExtResource( 10 )
-
-[sub_resource type="Theme" id=9]
 
 [node name="Main" type="Spatial"]
 
@@ -93,6 +93,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 15 )
 [node name="2D layer" type="Spatial" parent="."]
 
 [node name="2Dworld" type="Node2D" parent="."]
+
+[node name="InfoBox" type="Label" parent="2Dworld"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 384.0
+margin_bottom = 1040.0
+theme = SubResource( 9 )
+custom_styles/normal = ExtResource( 13 )
+custom_fonts/font = ExtResource( 12 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Slider" type="Node2D" parent="2Dworld"]
 
@@ -300,23 +313,6 @@ margin_bottom = 624.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "VALIDE"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="InfoBox" type="Label" parent="2Dworld"]
-margin_left = 40.0
-margin_top = 40.0
-margin_right = 384.0
-margin_bottom = 1040.0
-theme = SubResource( 9 )
-custom_styles/normal = ExtResource( 13 )
-custom_fonts/font = ExtResource( 12 )
-text = "
-Income: 1000
-thing: 3
-HELLO THERE MF"
-align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

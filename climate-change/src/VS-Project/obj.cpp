@@ -5,7 +5,7 @@
 #include <StaticBody2D.hpp>
 #include <SceneTree.hpp>
 #include <Rect2.hpp>
-#include <RichTextLabel.hpp>
+#include <Label.hpp>
 #include "City.h"
 #include "Player.h"
 
@@ -107,28 +107,40 @@ void Structure::_input(InputEvent* e)
         Vector2 mousePos = this->get_viewport()->get_mouse_position();
         std::cout << mousePos.x;
 
-        
+        ((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 40));
+
         if (mousePos.x > (get_viewport()->get_size().x) / 2) {
-            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(0, 0));
+            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(20, 20));
         }
         else {
-            real_t InfoBoxWidth = ((Vector2)(((RichTextLabel*)(this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")))->get("rect_size"))).x;
-            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x - InfoBoxWidth, 0));
+            real_t AdaptedWidth = ((Vector2)(((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->get("rect_size"))).x;
+            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x - AdaptedWidth - 20, 20));
         }
 
-        if (get_viewport()->get_size().x - mousePos.x <= 400) {
-            mousePos.x = get_viewport()->get_size().x - 400;
-        }
-        else if (mousePos.x <= 400) 
+        if (get_viewport()->get_size().x - mousePos.x <= MenuSize) 
         {
-            mousePos.x = 400;
+            if (mousePos.y > (get_viewport()->get_size().y / 2)) {mousePos.y -= MenuSize - (get_viewport()->get_size().x - mousePos.x);}
+            else {mousePos.y += MenuSize - (get_viewport()->get_size().x - mousePos.x);}
+            mousePos.x = get_viewport()->get_size().x - MenuSize;
         }
-        if (get_viewport()->get_size().y - mousePos.y <= 300) {
-            mousePos.y = get_viewport()->get_size().y - 300;
-        }
-        else if (mousePos.y <= 300)
+        else if (mousePos.x <= MenuSize)
         {
-            mousePos.y = 300;
+            if (mousePos.y > (get_viewport()->get_size().y / 2)) {mousePos.y -= MenuSize  - mousePos.x;}
+            else {mousePos.y += MenuSize - mousePos.x;}
+            mousePos.x = MenuSize;
+        }
+
+        if (get_viewport()->get_size().y - mousePos.y <= MenuSize) {
+            
+            if (mousePos.x > (get_viewport()->get_size().x / 2)) {mousePos.x -= MenuSize - (get_viewport()->get_size().y - mousePos.y);}
+            else {mousePos.x += MenuSize - (get_viewport()->get_size().y - mousePos.y);}
+            mousePos.y = get_viewport()->get_size().y - MenuSize;
+        }
+        else if (mousePos.y <= MenuSize)
+        {
+            if (mousePos.x > (get_viewport()->get_size().x / 2)) {mousePos.x -= MenuSize - mousePos.y;}
+            else {mousePos.x += MenuSize - mousePos.y;}
+            mousePos.y = MenuSize;
         }
 
         (this->get_tree()->get_root()->get_node("Main/2Dworld/Menus"))->set("position", mousePos);
@@ -140,12 +152,13 @@ void Structure::_input(InputEvent* e)
 void Structure::show_menu() 
 { 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", output_information());
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true); 
 }
 
 String Structure::output_information() 
 {
-    return "This is the main info for Structure";
+    return "\n Structure";
 }
 
 void Structure::_ready()
