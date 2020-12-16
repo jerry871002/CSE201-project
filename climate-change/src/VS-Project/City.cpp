@@ -71,6 +71,7 @@ void City::_process(float delta)
 };
 
 
+
 /*
 This function calls simulation() every second
 
@@ -110,9 +111,9 @@ void City::_ready()
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = 0; x < 2; x++)
+		for (int x = 0; x < 1; x++)
 		{
-			for (int z = 0; z < 3; z++)
+			for (int z = 0; z < 1; z++)
 			{
 
 				// randomly choose between restaurant and shop
@@ -237,6 +238,35 @@ void City::simulation() {
 		*/
 
 	}
+
+
+	if (day_tick % 30) {
+		std::cout << "DEBUG: daytick mod 30 entered in simulation " << std::endl;
+		Vector3 temp = Vector3(0, 0, 0);
+		bool location_covered = true;
+		while (location_covered) {
+			location_covered = false;
+			int r = rand() % 4;
+			std::cout << "DEBUG: about to add to temp " << std::endl;
+			switch (r) {
+			case 0: temp += Vector3(10, 0, 0);
+			case 1: temp += Vector3(-10, 0, 0);
+			case 2: temp += Vector3(0, 10, 0);
+			case 3: temp += Vector3(0, -10, 0);
+			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
+			{
+				std::cout << "DEBUG: looking at a restaurant's position " << std::endl;
+				if (temp == ((Structure*)*it)->Structure::get_position()) {
+					location_covered = true;
+				}
+			}
+			
+
+			}
+			
+		}
+		add_restaurant_to_city(temp);
+	}
 }
 
 void City::write_stat_history_to_file() {
@@ -266,6 +296,29 @@ void City::write_stat_history_to_file() {
  	*/
 }
 
+
+void City::add_restaurant_to_city(Vector3 position) {
+
+	std::cout << "DEBUG: add_restaurant_to_city called " << std::endl;
+	Node* node = RestaurantScene->instance();
+
+
+	// REMOVE COMMENT ONCE INITIALIZE COMMAND IS CREATED
+	// ((Restaurant*)node)->Restaurant::initialize();
+
+	//Node* node = RestaurantScene->instance();
+	//std::cout << "DEBUG: restaurant instanciating " << std::endl;
+	node->set("scale", Vector3(10, 10, 10));
+	node->set("translation", position);
+	//int rot = rand() % 2;
+	//node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
+	this->add_child(node);
+
+	// REMOVE COMMENT ONCE INHERITANCE IS FIXED
+	this->add_shop((Shop*)node);
+	//std::cout << "DEBUG: restaurant added to city your mom fat " << std::endl;
+
+}
 
 double City::return_income() {
 	return income;

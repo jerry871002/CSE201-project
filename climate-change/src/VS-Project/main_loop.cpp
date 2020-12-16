@@ -21,6 +21,8 @@ int main()
     City c = City();
 
     while (true) {
+
+
  	//check if writing to files works
 
  	/* current test fct on mac:
@@ -32,7 +34,7 @@ int main()
 
  	*/
 
- 	c.simulation();
+ 	 c.simulation();
 
         /*
         // run simulation (one day tick) , and then print out date and income

@@ -100,6 +100,9 @@ namespace godot {
 		Ref<PackedScene> BugattiScene;
 		Ref<PackedScene> ChironScene;
 		*/
+
+		void add_restaurant_to_city(Vector3);
+
 		ResourceLoader* ResLo = ResourceLoader::get_singleton();
 		Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
 		Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
