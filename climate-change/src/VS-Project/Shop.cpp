@@ -148,7 +148,8 @@ void Shop::simulate_step(double days){
             std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         */
-        double r = double(rand()) / double((RAND_MAX + 1.));
+        double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1
+        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << std::endl;
         if (r > (pow(1 - panel_probability, days / 365)))
         {
             panels_get_added();

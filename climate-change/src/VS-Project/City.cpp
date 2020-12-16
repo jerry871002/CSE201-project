@@ -60,7 +60,6 @@ void City::_process(float delta)
 		counter -= 1;
 
 	}
-	
 	//delta_counter += (delta * time_speed);
 	//simulation();
 	//if (day_tick != (int)delta_counter) {
@@ -253,8 +252,8 @@ void City::simulation() {
 			int s = pow(-1,rand() % 2);
 			std::cout << "DEBUG: about to add to temp " << std::endl;
 			switch (r) {
-			case 0: temp += Vector3(s * 10, 0, 0);
-			case 1: temp += Vector3(0, 0, s * 10);
+			case 0: temp += Vector3(s * 30, 0, 0);
+			case 1: temp += Vector3(0, 0, s * 30);
 			}
 
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
@@ -304,7 +303,6 @@ void City::add_restaurant_to_city(Vector3 position) {
 
 	std::cout << "DEBUG: add_restaurant_to_city called " << std::endl;
 	Node* node = RestaurantScene->instance();
-
 
 	// REMOVE COMMENT ONCE INITIALIZE COMMAND IS CREATED
 	// ((Restaurant*)node)->Restaurant::initialize();

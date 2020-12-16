@@ -110,4 +110,3 @@ namespace godot {
 		Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
 	};
 };
-

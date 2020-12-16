@@ -22,7 +22,8 @@ int main()
 
     while (true) {
 
-
+        c.simulation();
+        Sleep(200);
  	//check if writing to files works
 
  	/* current test fct on mac:
@@ -34,7 +35,7 @@ int main()
 
  	*/
 
- 	 c.simulation();
+ 	 
 
         /*
         // run simulation (one day tick) , and then print out date and income
