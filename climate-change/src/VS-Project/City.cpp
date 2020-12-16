@@ -198,15 +198,15 @@ void City::add_car() {
 void City::simulation() {
 	day_tick++;
 	/*
-	
-	//write the old values in a file 
+
+	//write the old values in a file
 	income = 0;
 	numberOfEmployees = 0;
 	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
-    healthcare = 0;
-    needs = 0;
+	healthcare = 0;
+	needs = 0;
 	*/
 
 	std::cout << return_game_date() << std::endl;
@@ -222,10 +222,10 @@ void City::simulation() {
 		carbonEmission += (*it)->carbonEmission;
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
-        healthcare += (*it)->healthcare;
-        needs += (*it)->needs;
+		healthcare += (*it)->healthcare;
+		needs += (*it)->needs;
 		(*it)->simulate_step(); //function that updates the building
-		
+
 		*/
 		if (day_tick % 15 == 0) {
 			((Restaurant*)*it)->Restaurant::simulate_step(15);
@@ -234,7 +234,7 @@ void City::simulation() {
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
 	{
 		/*
-		     count up all the vehicle stuff
+			 count up all the vehicle stuff
 		*/
 
 	}
@@ -250,11 +250,11 @@ void City::simulation() {
 		while (location_covered) {
 			location_covered = false;
 			int r = rand() % 2;
-			int s = rand() % 2;
+			int s = pow(-1,rand() % 2);
 			std::cout << "DEBUG: about to add to temp " << std::endl;
 			switch (r) {
-			case 0: temp += Vector3(pow(-1, s) * 10, 0, 0);
-			case 1: temp += Vector3(0, 0, pow(-1, s) * 10);
+			case 0: temp += Vector3(s * 10, 0, 0);
+			case 1: temp += Vector3(0, 0, s * 10);
 			}
 
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
@@ -266,11 +266,11 @@ void City::simulation() {
 				}
 
 			}
-		
-	}
-		add_restaurant_to_city(temp);
 
+		}
+		add_restaurant_to_city(temp);
 	}
+}
 
 void City::write_stat_history_to_file() {
 	/*
