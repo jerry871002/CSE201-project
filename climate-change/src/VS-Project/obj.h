@@ -86,6 +86,23 @@ namespace godot {
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
         // need to add a cost for their implementation in the maintenance variable once
 
+        /* SOLAR PANELS VARIABLES 
+        They describe the characteristics of one single average solar panel, taking as a model the most used one : The Canadian Solar 
+        CS3U-345P model of 1x2m in size.
+        */
+
+        double solarSatisfaction = 9; //ratings of these solar panels by surveys
+        double solarCost = 450; //cost in euros for one new solar panel (product and installation)
+        double solarEnergy = 7.45; //average kWh produced per day
+        double solarLifetime = 25; //years of energy production warranty
+
+        /// ROOFTOP WIND TURBINES VARIABLES - They describe the characteristics of one single average rooftop turbine
+
+        double windSatisfaction = 6; //public opinion on rooftop wind turbines
+        double windCost = 800; //cost in euros for a new turbine with its tower
+        double windEnergy = 1.1; //average kWh produced per day
+        double windLifetime = 2; // years of energy production warranty
+
         virtual double get_maintenance();
         virtual double get_building_time();
         virtual double get_cost();
