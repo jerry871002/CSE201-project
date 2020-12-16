@@ -38,6 +38,8 @@ namespace godot {
         virtual String class_name();
         virtual void show_menu();
 
+        virtual String output_information();
+
         Structure();
         ~Structure();
 

@@ -107,7 +107,15 @@ Node* Shop::GetPanels()
 }
 
 void Shop::show_menu() {
+
+    this->Structure::show_menu();
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", true);
+}
+
+String Shop::output_information()
+{
+    return this->Structure::output_information() + "\n SHOP CO2 EMISSIONS: " + String(float(employment));
 }
 
 double Shop::get_satisfaction(){
@@ -115,7 +123,7 @@ double Shop::get_satisfaction(){
 }
 
 double Shop::get_co2emissions(){
-    return this->satisfaction;
+    return this->CO2Emission;
 }
 
 double Shop::get_energyuse(){

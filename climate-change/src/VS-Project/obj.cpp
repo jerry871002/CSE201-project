@@ -4,6 +4,9 @@
 #include <Viewport.hpp>
 #include <StaticBody2D.hpp>
 #include <SceneTree.hpp>
+#include <Rect2.hpp>
+#include <RichTextLabel.hpp>
+#include "City.h"
 #include "Player.h"
 
 
@@ -99,16 +102,51 @@ void Structure::_input(InputEvent* e)
 {
 	Input* i = Input::get_singleton();
 
+    
 	if (i->is_action_pressed("ui_select") && Clickable) {
         Vector2 mousePos = this->get_viewport()->get_mouse_position();
         std::cout << mousePos.x;
+
+        
+        if (mousePos.x > (get_viewport()->get_size().x) / 2) {
+            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(0, 0));
+        }
+        else {
+            real_t InfoBoxWidth = ((Vector2)(((RichTextLabel*)(this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")))->get("rect_size"))).x;
+            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x - InfoBoxWidth, 0));
+        }
+
+        if (get_viewport()->get_size().x - mousePos.x <= 400) {
+            mousePos.x = get_viewport()->get_size().x - 400;
+        }
+        else if (mousePos.x <= 400) 
+        {
+            mousePos.x = 400;
+        }
+        if (get_viewport()->get_size().y - mousePos.y <= 300) {
+            mousePos.y = get_viewport()->get_size().y - 300;
+        }
+        else if (mousePos.y <= 300)
+        {
+            mousePos.y = 300;
+        }
+
         (this->get_tree()->get_root()->get_node("Main/2Dworld/Menus"))->set("position", mousePos);
+        
 		show_menu();
 	}
 }
 
-void Structure::show_menu() {}
+void Structure::show_menu() 
+{ 
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", output_information());
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true); 
+}
 
+String Structure::output_information() 
+{
+    return "This is the main info for Structure";
+}
 
 void Structure::_ready()
 {
