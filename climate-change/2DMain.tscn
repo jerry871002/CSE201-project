@@ -38,7 +38,6 @@ __meta__ = {
 }
 
 [node name="PieChart" parent="TabContainer/Tabs/Node2D/Control" instance=ExtResource( 1 )]
-visible = false
 anchor_left = -0.00144718
 anchor_top = -0.00576923
 anchor_right = 0.998553
