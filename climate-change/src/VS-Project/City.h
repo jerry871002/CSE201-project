@@ -87,6 +87,8 @@ namespace godot {
 		float energySupply_array[3];
 		*/
 
+		bool ClickActive{ false };
+
 	private:
 		// city indices
 		double income;

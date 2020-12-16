@@ -31,6 +31,7 @@ namespace godot{
 
         void simulate_step(double days);
         void show_menu();
+        virtual String output_information();
 
     };
 
@@ -42,6 +43,9 @@ namespace godot{
 
         public:
             virtual String class_name();
+
+            
+
             Restaurant();
             ~Restaurant();
             
