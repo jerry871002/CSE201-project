@@ -42,6 +42,21 @@ AgriculturalProduction::AgriculturalProduction(int type){
 
 void AgriculturalProduction::agriculture_type(int type){
 	agricultureType= type; // 0 - wheat, 1 - meat, 2 - vegetables
+	switch(agricultureType){
+		case(0):{ // wheat
+
+		break;
+		}
+
+	}
+}
+void AgriculturalProduction::simulate_step(double days){
+	switch(agricultureType){
+		case(0):{ // wheat
+
+		break;
+		}
+}
 }
 double AgriculturalProduction::get_satisfaction(){
 	return this->satisfaction;
@@ -55,6 +70,7 @@ double AgriculturalProduction::get_energyuse(){
 double AgriculturalProduction::get_environmentalcost(){
 	return 0;
 }
+
 // void AgriculturalProduction::test() {
 // 	std::cout << "AgriculturalProduction" << std::endl;
 // }
