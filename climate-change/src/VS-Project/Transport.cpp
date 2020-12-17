@@ -441,7 +441,6 @@ void Transport::straight(float delta) {
     }
 
     position = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - prevPosition;
-    std::cout << position << endl;
 
     ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
     ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));

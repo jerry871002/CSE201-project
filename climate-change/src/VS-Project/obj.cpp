@@ -6,6 +6,9 @@
 #include <SceneTree.hpp>
 #include <Rect2.hpp>
 #include <Label.hpp>
+#include <String.hpp>
+#include <wchar.h>
+#include <stdlib.h>
 #include "City.h"
 #include "Player.h"
 
@@ -104,17 +107,22 @@ void Structure::_input(InputEvent* e)
 
     
 	if (i->is_action_pressed("ui_select") && Clickable) {
-        Vector2 mousePos = this->get_viewport()->get_mouse_position();
-        std::cout << mousePos.x;
 
-        //((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 160));
+        std::cout << "DEBUG: STRUCTURE OBJECT CLICKED" << std::endl;
+
+        Vector2 mousePos = this->get_viewport()->get_mouse_position();
+
+        //((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->set_movable(false);
+        //std::cout << "PLAYER SHOULD NOT BE MOVABLE" << std::endl;
+
+        ((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 260));
 
         if (mousePos.x > (get_viewport()->get_size().x) / 2) {
-            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(60, 90));
+            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(60, 200));
         }
         else {
             real_t AdaptedWidth = ((Vector2)(((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->get("rect_size"))).x;
-            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x - AdaptedWidth - 60, 90));
+            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x - AdaptedWidth - 60, 200));
         }
 
         if (get_viewport()->get_size().x - mousePos.x <= MenuSize) 
@@ -151,6 +159,7 @@ void Structure::_input(InputEvent* e)
 
 void Structure::show_menu() 
 { 
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", output_information());
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true); 
@@ -158,7 +167,8 @@ void Structure::show_menu()
 
 String Structure::output_information() 
 {
-    return "\n Structure";
+    int h = 1;
+    return String("\n Employment: ") + String("HELLO");
 }
 
 void Structure::_ready()

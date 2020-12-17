@@ -32,6 +32,7 @@ City::City() {
 	time_speed = 1;
 	delta_counter = 0.0;
 
+
 	//timer = 0;
 	day_tick = 0;
 	srand((int)time(0));
@@ -97,7 +98,7 @@ void City::_input(InputEvent*)
 
 	if (i->is_action_pressed("ui_turn")) 
 	{
-		this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+		//this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	}
 
 	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible")) 
@@ -184,14 +185,16 @@ void godot::City::_on_MenuShop_pressed(String name)
 	active_button = name;
 
 }
+
 void godot::City::_on_Validate_pressed()
 {
 	
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 	String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
-	std::cout << "" << std::endl;
-	std::cout << "HELLO THERE" << std::endl;
+
+	//((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->set_movable(true);
+
 }
 void godot::City::_on_Game_Speed_changed()
 {

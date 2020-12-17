@@ -43,7 +43,6 @@ namespace godot {
 		City();
 		~City();
 
-
 		static void _register_methods();
 		void _init();
 		void _process(float);

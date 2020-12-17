@@ -16,8 +16,6 @@ namespace godot {
 		Vector3 motion;
 		Vector3 rotation;
 		Vector2 mouse_p;
-		
-		bool movable = true;
 
 		double SPEED_T = 1;
 		const double SPEED_R = 20;
@@ -29,8 +27,16 @@ namespace godot {
 		const double MinHeight{ 20 };
 		//WorldEnvironment* Env;
 
+		bool movable;
 
 	public:
+
+		void _on_MenuShop_visibility_changed();
+		void _on_PoliciesInput_visibility_changed();
+
+		int counter;
+		bool is_movable();
+		void set_movable(bool b);
 		
 		static void _register_methods();
 		void _init();
@@ -38,7 +44,6 @@ namespace godot {
 		void _physics_process(float delta);
 		void _input(InputEvent* e);
 		void _ready();
-		void set_revert_movable();
 
 		Player();
 		~Player();

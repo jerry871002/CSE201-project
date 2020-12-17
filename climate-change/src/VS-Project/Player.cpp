@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "City.h"
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
 #include <Math.hpp>
@@ -6,6 +7,7 @@
 #include <Viewport.hpp>
 #include <WorldEnvironment.hpp>
 #include <Environment.hpp>
+#include <iostream>
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
@@ -14,15 +16,44 @@ Player::Player() {
 	// INITIALIZE MOTION AND ROTATION VECTORS USED FOR PLAYER CONTROL
 	motion = Vector3(0, 0, 0);
 	rotation = Vector3(0, 0, 0);
+	std::cout << "DEBUG: PLAYER CONSTRUCTOR CALLED" << std::endl;
+	movable = true;
+	counter = 0;
+}
+
+void Player::set_movable(bool b) 
+{
+	this->movable = b;
+	movable = b;
+}
+
+bool Player::is_movable()
+{
+	return this->movable;
+}
+
+void Player::_on_MenuShop_visibility_changed() 
+{
+	this->set_movable(false);
+}
+
+void Player::_on_PoliciesInput_visibility_changed() 
+{
+	if (((bool)(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) == false) {
+		this->set_movable(true);
+	}
+	
 }
 
 Player::~Player() {
 }
 
 void Player::_register_methods() {
-	register_method((char*)"_process", &Player::_process);
+	register_method((char*)"_physics_process", &Player::_physics_process);
 	register_method((char*)"_input", &Player::_input);
 	register_method((char*)"_ready", &Player::_ready);
+	register_method((char*)"_on_MenuShop_visibility_changed", &Player::_on_MenuShop_visibility_changed);
+	register_method((char*)"_on_PoliciesInput_visibility_changed", &Player::_on_PoliciesInput_visibility_changed);
 }
 
 void Player::_init() {
@@ -35,24 +66,36 @@ void Player::_ready() {
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
 	worldEnv->get_environment()->set_dof_blur_far_enabled(true);
 	worldEnv->get_environment()->set_dof_blur_near_enabled(true);
-	//delete(this);
+	
 }
 
-void godot::Player::set_revert_movable()
+void Player::_physics_process(float delta) 
 {
-	movable = !movable;
-}
+	/*
+	counter += 1;
+	if (counter == 100) {
+		
+		std::cout << "DEBUG: MOVABLE SHOULD CHANGE" << std::endl;
+		this->set_movable(!(this->is_movable()));
+		counter = 0;
+	}
+	*/
 
-void Player::_process(float delta) {
-	UpdateMotionFromInput(delta);
-	this->translate(motion);
+	if (this->is_movable()) { UpdateMotionFromInput(delta); }
+	
+	
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
 	worldEnv->get_environment()->set_dof_blur_far_distance(2 * (this->get_global_transform().get_origin().y));
 	worldEnv->get_environment()->set_dof_blur_far_amount(0.1 * pow((1 - (this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight - MinHeight)), 3) );
+	
+	
+	this->translate(motion); 
 	set_rotation_degrees(rotation);
+	
 }
 
-void Player::_physics_process(float delta) {
+void Player::_process(float delta) 
+{
 	
 }
 
@@ -64,7 +107,11 @@ void Player::_input(InputEvent* e)
 	// MOUSE MOTION EVENTS
 	
 	if (e->get_class() == "InputEventMouseMotion") {
-		UpdateRotationFromInput((InputEventMouseMotion*)e); // Rotation and vertical motion using relative mouse coordinates
+		
+		
+		if (this->is_movable()) {
+			UpdateRotationFromInput((InputEventMouseMotion*)e); // Rotation and vertical motion using relative mouse coordinates
+		}
 	}
 	
 	Input* i = Input::get_singleton();
@@ -91,7 +138,7 @@ void Player::_input(InputEvent* e)
 void Player::UpdateMotionFromInput(float delta) {
 	motion = Vector3(0, 0, 0);							// RESET MOTION VECTOR TO ZERO
 
-	if (movable) {
+	
 		// INPUT USED FOR KEY CONTROLS
 		Input* i = Input::get_singleton();
 
@@ -139,7 +186,7 @@ void Player::UpdateMotionFromInput(float delta) {
 		else if (i->is_action_pressed("ui_down")) { motion.z += SPEED_T; }
 		else if (i->is_action_pressed("ui_right")) { motion.x += SPEED_T; }
 		else if (i->is_action_pressed("ui_left")) { motion.x -= SPEED_T; }
-	}
+	
 
 }
 
