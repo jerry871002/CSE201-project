@@ -214,7 +214,7 @@ void godot::City::_on_Validate_pressed()
 void godot::City::_on_Game_Speed_changed()
 {
 	time_speed = this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value");
-	std::cout << time_speed;
+	std::cout << time_speed <<std::endl;
 }
 ;
 
@@ -320,7 +320,6 @@ void City::add_car() {
 void City::simulation() {
 	day_tick++;
 	/*
-
 	//write the old values in a file
 	income = 0;
 	numberOfEmployees = 0;
@@ -330,10 +329,7 @@ void City::simulation() {
 	healthcare = 0;
 	needs = 0;
 	*/
-
-
 	std::cout << return_game_date() << std::endl;
-
 
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
