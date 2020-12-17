@@ -294,7 +294,7 @@ void City::simulation() {
 	}
 	*/
 }
-
+/*
 int * return_date(int day_tick) {
     int date[3];
 
@@ -334,11 +334,11 @@ double find_avg(double array[],int leap) {
     }
     return sum/size;
 }
-
-double stat = 0;
-int day_tick = 0;
-double stats[366];
-int daycount=0;
+*/
+//double stat = 0;
+//int day_tick = 0;
+//double stats[366];
+//int daycount=0;
 
 void City::write_stat_history_to_file() {
 	/*

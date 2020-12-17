@@ -235,13 +235,14 @@ void Transport::_ready() {
 
 
 void Transport::_process(float delta) {
-    myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld");
+    myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
     prevPositionVec = this->get_global_transform().get_origin();
    
     if (rot >= (M_PI / 2)) {
-        int gameSpeed = myCity->time_speed;
-        std::cout << gameSpeed;
-        for (int i=0; i< gameSpeed; i++) { straight(delta); }
+        //
+        //float gameSpeed = myCity->time_speed;
+        //std::cout << gameSpeed;
+        //for (int i=0; i< gameSpeed; i++) { straight(delta); }
        
         Vector3 p = this->get_global_transform().get_origin();
         switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the car on the road if problems
