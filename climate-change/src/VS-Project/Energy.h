@@ -23,17 +23,24 @@ namespace godot {
 		double requiredLand = 0;
 		double coal = 0;
 		//outputs:
-		double nuclearWaste = 0;
-		double radiation = 0;
 		double energyPerDay = 0;
 		double energyOutput = 0;
+
 		double H2SEmission = 0;
 		double CH4Emission = 0;
 		double NH3Emission = 0;
 		double SO2Emission = 0;
 		double NOxEmission = 0;
-		double ashOutput = 0;
+		//I still need to add these contributions from the plants :
+		double COEmission = 0; 
+		double PMEmission = 0;
+		double O3Emission = 0;
+
+		double radiation = 0;
 		double mercuryEmission = 0;
+
+		double ashOutput = 0;
+		double nuclearWaste = 0;
 
 		virtual double get_energy_output();
 

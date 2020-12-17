@@ -47,6 +47,8 @@ String godot::GoodsFactories::class_name()
 }
 
 GoodsFactories::GoodsFactories() {
+	employment = 8000; // number of employees of the whole city in the manufacturing/industry sector 
+	CO2Emission = 850000; //kg of CO2 emitted per day across the manufacturing/industry sector 
 }
 
 GoodsFactories::~GoodsFactories() {}
@@ -65,6 +67,7 @@ String godot::Services::class_name()
 }
 
 Services::Services() {
+	employment = 30000; // number of employees of the whole city in the service sector 
 }
 
 Services::~Services() {}
