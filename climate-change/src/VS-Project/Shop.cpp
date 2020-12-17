@@ -158,8 +158,9 @@ void Shop::simulate_step(double days){
     std::cout << "DEBUG: SHOP SIMULATION" << std::endl;
     
 
+    std::cout << "DEBUG: panels " << panels_age << "  *panels" << *panels_age <<  " this panel  " << this->panels_age <<  std::endl;
 
-    if (panels_age == 0) {
+    if (*panels_age == 0) {
         
         // TESTING STUFF LIKELY TO BE REMOVED SOON
 
