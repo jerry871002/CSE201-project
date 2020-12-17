@@ -5,7 +5,8 @@
 
 using namespace std;
 
-/*
+// g++ -std=c++17 edit_text_files.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
+
 // All inputs are strings for the functions below.
 // The documentName for the file pollution.csv that is located in the "data" folder is "pollution".
 // Ideally, all csv files should be stored in the "data" folder.
@@ -116,13 +117,67 @@ void delete_line(string documentName, string dataToDelete) {
     clear("tmp");
 }
 
-int main() {
-    // More examples on how to use the above functions: 
-    // clear("pollution");
-    // change_data("pollution", "2013", "01");
-    // copy("pollution", "tmp");
-    // add_data("pollution", "2015", "76");
-    // delete_line("pollution", "2013");
-    return 0;
+int * return_date(int day_tick) {
+    int date[3];
+
+    int Y=1,M=1,D=1;
+    int julian = (1461 * (Y + 4800 + (M - 14)/12))/4 +(367 * (M - 2 - 12 / ((M - 14)/12)))/12 - (3 * ((Y + 4900 + (M - 14)/12)/100))/4 + D - 32075+day_tick+35;
+
+    int gregorian = julian + 1401 + (int)((((int)(4*day_tick+274277) / 146097)*3) / 4) -38;
+    int e = 4*gregorian+3;
+    int h = 5*((int)(e%1461)/4)+2;
+    int day = ((int)(h%153)/5)+1;
+    int month = (((int)h/153)+2)%12+1;
+    int year = (int)(e/1461) - 4716 + (int)((14-month)/12);
+
+    date[0]= day;
+    date[1] = month;
+    date[2] = year;
+
+    return date;
 }
-*/
+
+string return_string_date(int day, int month, int year) {
+    return to_string(day) + ", " + to_string(month) + ", " + to_string(year);
+}
+
+
+int main() {
+    // More examples on how to use the above functions:
+    /*
+    clear("pollution");
+    change_data("pollution", "2013", "01");
+    copy("pollution", "tmp");
+    add_data("pollution", "2015", "76");
+    delete_line("pollution", "2013");
+    */
+
+   /*
+    ofstream file();
+ 	file.open("file.txt", ofstream::out | ofstream::app);
+ 	if(!file) { 
+        cout<<"Error in creating file!!!"<< endl;
+    	}
+	cout<<"File created successfully."<<endl; 
+ 	file.close(); 
+    */
+
+
+    clear("stats");
+    double stat = 0;
+    int day_tick = 0;
+
+    while (true) {
+        day_tick += 1;
+        stat+=25;
+
+        int *date;
+        date = return_date(day_tick);
+        int day = *date;
+        int month = *(date+1);
+        int year = *(date+2);
+
+        add_data("stats", return_string_date(day,month,year), to_string(stat));
+         
+     }
+}
