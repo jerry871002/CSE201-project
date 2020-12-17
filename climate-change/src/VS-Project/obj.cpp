@@ -8,6 +8,7 @@
 #include <Label.hpp>
 #include <String.hpp>
 #include <wchar.h>
+#include <string>
 #include <stdlib.h>
 #include "City.h"
 #include "Player.h"
@@ -165,10 +166,29 @@ void Structure::show_menu()
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true); 
 }
 
+template<typename T> String to_godot_string(T s)
+{
+    std::string standardString = std::to_string(s);
+    godot::String godotString = godot::String(standardString.c_str());
+    return godotString;
+}
+
+//template String to_godot_string<double>(double);
+//template String to_godot_string<int>(int);
+//template String to_godot_string<float>(float);
+//template String to_godot_string<real_t>(real_t);
+//template String to_godot_string<bool>(bool);
+
 String Structure::output_information() 
 {
     int h = 1;
-    return String("\n Employment: ") + String("HELLO");
+    std::string y = "HELLO";
+    String s = String("\n Employment: ");
+    std::string standardString = std::to_string(h);
+    godot::String godotString = godot::String(standardString.c_str());
+    std::string s2 = "hello";
+    
+    return String("EMPLOYMENT: ") + to_godot_string(employment);
 }
 
 void Structure::_ready()

@@ -98,7 +98,9 @@ void City::_input(InputEvent*)
 
 	if (i->is_action_pressed("ui_turn")) 
 	{
-		//this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+		this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+		this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
+		//((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get_child(1)))->Player::set_movable(true);
 	}
 
 	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible")) 

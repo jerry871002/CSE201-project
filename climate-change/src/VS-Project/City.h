@@ -56,7 +56,6 @@ namespace godot {
 		String active_button;
 
 
-
 		std::vector<Structure*> buildings;
 
 		void add_building(Structure*);
