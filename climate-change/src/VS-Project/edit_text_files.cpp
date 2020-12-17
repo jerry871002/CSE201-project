@@ -2,14 +2,6 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <stdio.h>
-
-#ifdef _WIN32
-#include <Windows.h>
-#else
-#include <unistd.h>
-#endif
-
 
 using namespace std;
 
@@ -125,7 +117,6 @@ void delete_line(string documentName, string dataToDelete) {
     clear("tmp");
 }
 
-
 int * return_date(int day_tick) {
     int date[3];
 
@@ -146,87 +137,47 @@ int * return_date(int day_tick) {
     return date;
 }
 
-
 string return_string_date(int day, int month, int year) {
     return to_string(day) + ", " + to_string(month) + ", " + to_string(year);
 }
 
-double find_avg(double array[],int leap) {
-    int size;
-    double sum=0;
-    if (leap==0) {
-        size=366;
-    }
-    else {
-        size=365;
-    }
-    for (int i=0; i<size; i++) {
-        sum+=array[i];
-    }
-    return sum/size;
-}
 
-
-/*
 int main() {
     // More examples on how to use the above functions:
-    
+    /*
     clear("pollution");
     change_data("pollution", "2013", "01");
     copy("pollution", "tmp");
     add_data("pollution", "2015", "76");
     delete_line("pollution", "2013");
-    
+    */
+
+   /*
+    ofstream file();
+ 	file.open("file.txt", ofstream::out | ofstream::app);
+ 	if(!file) { 
+        cout<<"Error in creating file!!!"<< endl;
+    	}
+	cout<<"File created successfully."<<endl; 
+ 	file.close(); 
+    */
 
 
-
+    clear("stats");
     double stat = 0;
     int day_tick = 0;
-    double stats[366];
-    int daycount=0;
 
     while (true) {
-
-        #ifdef _WIN32
-            Sleep(100);
-        #else
-            sleep(1);
-        #endif
-
         day_tick += 1;
         stat+=25;
-        
 
-
-        int *date; 
+        int *date;
         date = return_date(day_tick);
         int day = *date;
         int month = *(date+1);
         int year = *(date+2);
 
-        
-        if (day==1 && month==1 && year!=1) {
-            daycount=0;
-            int leap = (year-1)%4;
-            add_data("alltimestats", to_string(year-1), to_string(find_avg(stats,leap)));
-            double stats[366];
-            remove(get_path("statsyear" + to_string(year-1)).c_str());
-        }
-        
-
-        stats[daycount]=stat;
-        daycount+=1;
-        add_data("statsyear" + to_string(year), return_string_date(day,month,year), to_string(stat));
-
-        
-        int *daysbef;
-        daysbef = return_date(day_tick-30);
-        int daydaysbef=*daysbef;
-        int monthdaysbef=*(daysbef+1);
-        int yeardaysbef=*(daysbef+2);
-        delete_line("statsyear" + to_string(year), return_string_date(daydaysbef,monthdaysbef,yeardaysbef));
-        
+        add_data("stats", return_string_date(day,month,year), to_string(stat));
+         
      }
 }
-
-*/
