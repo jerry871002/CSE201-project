@@ -229,42 +229,43 @@ void City::add_shop(Shop* shop) {
 		}	
 		else {
 			positionOfBuildings[int(x)][int(y)] = 2;
-			positionOfBuildings[int(x) + 1][int(y)] = 2;
-			positionOfBuildings[int(x) + 1][int(y) + 1] = 2;
-			positionOfBuildings[int(x)][int(y) + 1] = 2;
+			positionOfBuildings[int(x) + 1][int(y)] = 3;
+			positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
+			positionOfBuildings[int(x)][int(y) + 1] = 5;
 		}
 		update_traffic(x, y, true);
 	}
 }
 
+  
 void City::update_traffic(int x, int y, bool newBuilding) {
 	if (x == int(x)) {
-		traffic[x][y][0][3] = 1;
-		traffic[x][y][1][3] = 1;
-		traffic[x][y][2][3] = 1;
-		traffic[x][y][3][3] = 1;
-		if (x + 1 < sizeOfCity && y + 1 > sizeOfCity && positionOfBuildings[x + 1][y + 1] == 1) {
+		traffic[x][y][0][2] = 1;
+		traffic[x][y][1][2] = 1;
+		traffic[x][y][2][2] = 1;
+		traffic[x][y][3][2] = 1;
+		if (x + 1 < sizeOfCity && y + 1 > sizeOfCity && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 3)) {
 			traffic[x][y][3][0] = 1;
 		}
-		if (y + 1 < sizeOfCity && positionOfBuildings[x][y + 1] == 1) {
+		if (y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y + 1] == 1 || positionOfBuildings[x + 1][y + 1] == 2 || positionOfBuildings[x + 1][y] == 5)) {
 			traffic[x][y][3][1] = 1;
 		}
-		if (x - 1 > 0 && y + 1 > sizeOfCity && positionOfBuildings[x - 1][y + 1] == 1) {
+		if (x - 1 > 0 && y + 1 > sizeOfCity && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 3 || positionOfBuildings[x - 1][y + 1] == 4)) {
 			traffic[x][y][2][0] = 1;
 		}
-		if (x - 1 > 0 && positionOfBuildings[x - 1][y] == 1) {
+		if (x - 1 > 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
 			traffic[x][y][2][1] = 1;
 		}
-		if (x - 1 > 0 && y - 1 > 0 && positionOfBuildings[x - 1][y - 1] == 1) {
+		if (x - 1 > 0 && y - 1 > 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
 			traffic[x][y][1][0] = 1;
 		}
-		if (y - 1 > 0 && positionOfBuildings[x][y - 1] == 1) {
+		if (y - 1 > 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
 			traffic[x][y][1][1] = 1;
 		}
-		if (x + 1 < sizeOfCity && y - 1 > 0 && positionOfBuildings[x + 1][y - 1] == 1) {
+		if (x + 1 < sizeOfCity && y - 1 > 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
 			traffic[x][y][0][0] = 1;
 		}
-		if (x + 1 < sizeOfCity && positionOfBuildings[x + 1][y] == 1) {
+		if (x + 1 < sizeOfCity && (positionOfBuildings[x + 1][y] == 1 || positionOfBuildings[x + 1][y] == 2 || positionOfBuildings[x + 1][y] == 3)) {
 			traffic[x][y][0][1] = 1;
 		}
 		if (newBuilding == true) {
@@ -297,16 +298,27 @@ void City::update_traffic(int x, int y, bool newBuilding) {
 	else {
 		x = int(x);
 		y = int(y);
-		traffic[x][y][0][3] = 1;
-		if (x + 1 < sizeOfCity && y + 1 > sizeOfCity && (positionOfBuildings[x + 1][y + 1] == 1 || (positionOfBuildings[x + 1][y + 1] == 1))) {
+		traffic[x][y][0][1] = 1;
+		if (x + 1 < sizeOfCity && (positionOfBuildings[x + 1][y] == 1 || positionOfBuildings[x + 1][y] == 4 || positionOfBuildings[x + 1][y] == 5)) {
+			traffic[x][y][0][0] = 1;
+		}
+		traffic[x][y][1][2] = 1;
+		if (x + 1 < sizeOfCity && y - 1 > 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
+			traffic[x][y][0][0] = 1;
+		}
+		if (x + 1 < sizeOfCity && (positionOfBuildings[x + 1][y] == 1 || positionOfBuildings[x + 1][y] == 2 || positionOfBuildings[x + 1][y] == 3)) {
+			traffic[x][y][0][1] = 1;
+		}
+		traffic[x+1][y][0][2] = 1;
+		if (x + 2 < sizeOfCity && y + 1 > sizeOfCity && (positionOfBuildings[x + 2][y + 1] == 1 || positionOfBuildings[x + 2][y + 1] == 2 || positionOfBuildings[x + 2][y] == 3)) {
 			traffic[x][y][3][0] = 1;
 		}
-		if (y + 1 < sizeOfCity && positionOfBuildings[x][y + 1] == 1) {
+		if (y + 1 < sizeOfCity && (positionOfBuildings[x + 2][y + 1] == 1 || positionOfBuildings[x + 2][y + 1] == 2 || positionOfBuildings[x + 2][y] == 5)) {
 			traffic[x][y][3][1] = 1;
 		}
+		
+
 	}
-	
-	
 }
 
 
