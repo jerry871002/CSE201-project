@@ -10,7 +10,7 @@
 // use forward declarations to get around the circular dependencies problem
 namespace godot {
 	class City;
-};
+}
 
 namespace godot {
     class Transport : public KinematicBody {
