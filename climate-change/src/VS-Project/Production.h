@@ -24,15 +24,17 @@ namespace godot {
 		double O3Emission = 0; //ozone formed from emitted chemicals
 		double COEmission = 0; //kg of carbon monoxide emitted
 		double NH3Emission = 0; //kg of ammonia emitted
-		double benzene = 0; //kg of benzene released
+		double benzeneEmission = 0; //kg of benzene released
 		double VOCsEmission; // kg of volatile organic compounds emitted
 		double CFCsEmission; // kg of Chlorofluorocarbons emitted
 
 		//Heavy metals released (in kg) :
-		double arsenic = 0;
-		double cadmium = 0;
-		double lead = 0;
-		double nickel = 0;
+
+		double mercuryEmission = 0;
+		double arsenicEmission = 0;
+		double cadmiumEmission = 0;
+		double leadEmission = 0;
+		double nickelEmission = 0;
 	};
 
 	/// <summary>
