@@ -9,6 +9,11 @@ using namespace godot;
 /// HOUSING SUPER CLASS
 /// </summary>
 
+String godot::Housing::class_name()
+{
+	return "Housing";
+}
+
 Housing::Housing()
 {
 }
@@ -21,6 +26,10 @@ Housing::~Housing()
 ///	HOUSE CLASS
 /// </summary>
 
+String godot::House::class_name()
+{
+	return "House";
+}
 
 House::House() {
 	srand((int)time(0));

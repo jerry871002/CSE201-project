@@ -1,18 +1,29 @@
-
 #include <iostream>
 #include "random"
 #include "Shop.h"
 
 #include <core/Godot.hpp>
+#include <SceneTree.hpp>
+#include <Viewport.hpp>
 
 
 
 using namespace godot;
 // ######################     SHOP     ##############################
 
+
 Shop::Shop(){
     panels_age = 0;
-    
+
+String godot::Shop::class_name()
+{
+    return "Shop";
+}
+
+Shop::Shop(){
+    Clickable = false;
+    PanelsOn = false;
+
 }
 
 Shop::~Shop() {}
@@ -90,9 +101,6 @@ void Shop::initialize(int shopTypeInput){
             break;
         }
     }
-
-
-
 }
 */
 
@@ -108,12 +116,24 @@ Node* Shop::GetPanels()
     return get_node("MeshComponents")->get_node("SolarPanels");
 }
 
+void Shop::show_menu() {
+
+    this->Structure::show_menu();
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", true);
+}
+
+String Shop::output_information()
+{
+    return this->Structure::output_information() + "\n SHOP: " + String(float(employment));
+}
+
 double Shop::get_satisfaction(){
     return this->satisfaction;
 }
 
 double Shop::get_co2emissions(){
-    return this->satisfaction;
+    return this->CO2Emission;
 }
 
 double Shop::get_energyuse(){
@@ -130,27 +150,20 @@ double Shop::get_environmentalcost(){
     return this->environmentalCost;
 }
 
+
 void Shop::simulate_step(double days){
     std::cout << "DEBUG: SHOP SIMULATION" << std::endl;
     
-    //PanelsOn = !PanelsOn;
-    //this->GetPanels()->set("visible", PanelsOn);
 
-    
+
     if (panels_age == 0) {
-        /*
-        srand((unsigned)time(0));
-        double temp = rand() % 100;
+        
+        // TESTING STUFF LIKELY TO BE REMOVED SOON
 
-        if ((100 - (days * panel_probability) / 3.65) < temp) {
-            panels_get_added();
-            this->GetPanels()->set("visible", PanelsOn);
-            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
-        }
-        */
-        double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1
-        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - panel_probability), 2)) << std::endl; //double(days / 365.0)
-        if (r > (pow(float(1 - panel_probability), float(days / 365.0))))
+
+        double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
+        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - panel_probability), double(days / 365.0))) << std::endl; //double(days / 365.0)
+        if (r > (pow(double(1 - panel_probability), double(days / 365.0))))
         {
             panels_get_added();
             this->GetPanels()->set("visible", PanelsOn);
@@ -174,11 +187,23 @@ void Shop::panels_get_added(){
     PanelsOn = true;
     panels_age = 120;
     std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
+
+        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+    }
+
 }
+
+
+
+
 
 
 //  #################################   RESTAURANT      ###############################
 
+String godot::Restaurant::class_name()
+{
+    return "Restaurant";
+}
 
 Restaurant::Restaurant() {
     energyUsePerSize = 38;          //On average 38kWh per square feet 
@@ -236,20 +261,21 @@ Restaurant::Restaurant() {
     }
 }
 
-String Restaurant::class_name()
-{
-	return "Restaurant";
-}
 
 Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
+
 
     this->Shop::simulate_step(days);
     
     std::cout << "DEBUG: RESTAURANT SIMULATION" << std::endl;
     age += days;
 	double shock;
+
+	age += days;
+	double shock = 0;
+
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 
 	
@@ -275,6 +301,10 @@ double Restaurant::get_energyuse(){
 
 // #############    Small Shop          ####################
 
+String godot::SmallShop::class_name()
+{
+    return "SmallShop";
+}
 SmallShop::SmallShop(){}
 
 SmallShop::~SmallShop(){}
@@ -282,7 +312,10 @@ SmallShop::~SmallShop(){}
 
 
 // ################   Mall              ####################
-
+String godot::Mall::class_name()
+{
+    return "Mall";
+}
 Mall::Mall(){}
 
 Mall::~Mall(){}

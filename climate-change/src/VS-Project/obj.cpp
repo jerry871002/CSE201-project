@@ -1,6 +1,16 @@
 #include <iostream>
 #include "obj.h"
 #include <GodotGlobal.hpp>
+#include <Viewport.hpp>
+#include <StaticBody2D.hpp>
+#include <SceneTree.hpp>
+#include <Rect2.hpp>
+#include <Label.hpp>
+#include <String.hpp>
+#include <wchar.h>
+#include <stdlib.h>
+#include "City.h"
+#include "Player.h"
 
 
 using namespace godot;
@@ -9,6 +19,7 @@ Structure::Structure() {
 
     MenuVisible = false;
     Clickable = false;
+    totalDays = 0;
     /*
     cost = 0;
     energyUse = 0;
@@ -30,6 +41,38 @@ Structure::Structure(double cost, double energyUse, double maintenance, double s
 
 Structure::~Structure() {}
 
+double Structure::get_satisfaction() {
+	return this->satisfaction;
+}
+
+double Structure::get_co2emissions() {
+	return this->CO2Emission;
+}
+
+double Structure::get_energyuse() {
+	return this->energyUse;
+}
+
+double Structure::get_environmentalcost() {
+	return this->environmentalCost;
+}
+
+double Structure::get_cost() {
+	return this->cost;
+}
+
+double Structure::get_employment() {
+	return this->employment;
+}
+
+double Structure::get_building_time() {
+	return this->buildingTime;
+}
+
+double Structure::get_maintenance() {
+	return this->maintenance;
+}
+
 void Structure::_register_methods()
 {
     register_method((char*)"_process", &Structure::_process);
@@ -37,10 +80,6 @@ void Structure::_register_methods()
     register_method((char*)"_ready", &Structure::_ready);
     register_method((char*)"_on_Area_mouse_entered", &Structure::_on_Area_mouse_entered);
     register_method((char*)"_on_Area_mouse_exited", &Structure::_on_Area_mouse_exited);
-    // register_method((char*)"_on_CheckBox_pressed", &Structure::_on_CheckBox_pressed);
-    // register_method((char*)"_on_CheckBox_button_up", &Structure::_on_CheckBox_button_up);
-    // register_method((char*)"_on_CheckBox_button_down", &Structure::_on_CheckBox_button_down);
-    // register_method((char*)"_on_CheckBox_toggled", &Structure::_on_CheckBox_toggled);
 }
 
 void Structure::_init()
@@ -72,20 +111,77 @@ void Structure::_input(InputEvent* e)
 {
 	Input* i = Input::get_singleton();
 
+    
 	if (i->is_action_pressed("ui_select") && Clickable) {
-		//PanelsOn = (PanelsOn == false);
-		//this->GetPanels()->set("visible", PanelsOn);
-		//this->get_child(0)->set("pressed", PanelsOn);
-		//MenuVisible = (MenuVisible == false);
-		//Bthis->get_child(0)->set("rect_position", Vector2(this->get_viewport()->get_mouse_position().x, this->get_viewport()->get_mouse_position().x));
-		//this->get_child(0)->set("visible", MenuVisible);
+
+        std::cout << "DEBUG: STRUCTURE OBJECT CLICKED" << std::endl;
+
+        Vector2 mousePos = this->get_viewport()->get_mouse_position();
+
+        //((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->set_movable(false);
+        //std::cout << "PLAYER SHOULD NOT BE MOVABLE" << std::endl;
+
+        ((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 260));
+
+        if (mousePos.x > (get_viewport()->get_size().x) / 2) {
+            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(60, 200));
+        }
+        else {
+            real_t AdaptedWidth = ((Vector2)(((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->get("rect_size"))).x;
+            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x - AdaptedWidth - 60, 200));
+        }
+
+        if (get_viewport()->get_size().x - mousePos.x <= MenuSize) 
+        {
+            if (mousePos.y > (get_viewport()->get_size().y / 2)) {mousePos.y -= MenuSize - (get_viewport()->get_size().x - mousePos.x);}
+            else {mousePos.y += MenuSize - (get_viewport()->get_size().x - mousePos.x);}
+            mousePos.x = get_viewport()->get_size().x - MenuSize;
+        }
+        else if (mousePos.x <= MenuSize)
+        {
+            if (mousePos.y > (get_viewport()->get_size().y / 2)) {mousePos.y -= MenuSize  - mousePos.x;}
+            else {mousePos.y += MenuSize - mousePos.x;}
+            mousePos.x = MenuSize;
+        }
+
+        if (get_viewport()->get_size().y - mousePos.y <= MenuSize) {
+            
+            if (mousePos.x > (get_viewport()->get_size().x / 2)) {mousePos.x -= MenuSize - (get_viewport()->get_size().y - mousePos.y);}
+            else {mousePos.x += MenuSize - (get_viewport()->get_size().y - mousePos.y);}
+            mousePos.y = get_viewport()->get_size().y - MenuSize;
+        }
+        else if (mousePos.y <= MenuSize)
+        {
+            if (mousePos.x > (get_viewport()->get_size().x / 2)) {mousePos.x -= MenuSize - mousePos.y;}
+            else {mousePos.x += MenuSize - mousePos.y;}
+            mousePos.y = MenuSize;
+        }
+
+        (this->get_tree()->get_root()->get_node("Main/2Dworld/Menus"))->set("position", mousePos);
+        
+		show_menu();
 	}
 }
 
+void Structure::show_menu() 
+{ 
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", output_information());
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true); 
+}
+
+String Structure::output_information() 
+{
+    int h = 1;
+    return String("\n Employment: ") + String("HELLO");
+}
 
 void Structure::_ready()
 {
+
     std::cout << "DEBUG: STRUCTURE READY CALLED" << std::endl;
+
 }
 
 void godot::Structure::_on_Area_mouse_entered()
@@ -94,7 +190,6 @@ void godot::Structure::_on_Area_mouse_entered()
 	Clickable = true;
 
 	Input* i = Input::get_singleton();
-	// CHANGE MOUSE CURSOR
 	i->set_default_cursor_shape(i->CURSOR_POINTING_HAND);
 
 
@@ -105,7 +200,6 @@ void godot::Structure::_on_Area_mouse_exited()
 	Clickable = false;
 
 	Input* i = Input::get_singleton();
-	// CHANGE MOUSE CURSOR
 	i->set_default_cursor_shape(i->CURSOR_ARROW);
 }
 

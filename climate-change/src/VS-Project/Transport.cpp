@@ -5,7 +5,6 @@
 #include <KinematicCollision.hpp>
 #include <Mesh.hpp>
 #include <Timer.hpp>
-
 #include <random>
 
 # define M_PI 3.14159265358979323846  /* pi */
@@ -13,9 +12,14 @@
 using namespace godot;
 using namespace std;
 
+String godot::Transport::class_name()
+{
+    return "Transport";
+}
+
 // helper functions
 void compute_speed(double& Speed, double Acc, float delta) {
-    if ((Speed <= 0.8 && Acc > 0) or (Acc < 0 and Speed + Acc * delta > 0.2)) {
+    if ((Speed <= 0.8 && Acc > 0) or (Acc < 0 and Speed + Acc * delta > 0.1)) {
         // Define max speed and min speed
         Speed += Acc * delta;
     }
@@ -35,7 +39,7 @@ template <typename T> void align_on_axis(T obj) {
     obj->set_rotation_degrees(Vector3(round(obj->get_rotation_degrees().x / 90) * 90, round(obj->get_rotation_degrees().y / 90) * 90, round(obj->get_rotation_degrees().z / 90) * 90));
 }
 
-// Constructors
+
 Transport::Transport() {
     transport_type(0);
 }
@@ -50,10 +54,8 @@ void Transport::transport_type(int type) {
     SPEED_T = 0;
     kmPerDay = 0;
     transportType = type;
-    CO2Emission = 0; // co2 output for the whole duration of simulation
     maintenance = 0; // maintenance cost for the whole duration of simulation
-    fuelInput = 0; // fuel needed for the whole duration of simulation
-    energyUse = 0; //energy needed for the whole duration of simulation
+    energyUse = 0; //energy per day
     passengers = 0; //total number of passengers that used the car
     age = 0; //age in days
     employment = 0; // employees only for the bus
@@ -74,10 +76,8 @@ void Transport::transport_type(int type) {
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
         std::normal_distribution <double> satisfactiont(9.7, 0.2); //very high satisfaction
-        satisfaction = satisfactiont(gen);
-        if (satisfaction > 10) {
-            satisfaction = 10;
-        }
+        satisfaction = fmax(satisfactiont(gen), 10);
+        energyUse = 0.119 * kmPerDay;
         break;
     }
     case 1: {  // big american car
@@ -85,7 +85,6 @@ void Transport::transport_type(int type) {
         fuelPerKm = 0.24;
         std::normal_distribution <double> costg(85000, 12000);
         cost = costg(gen); // cost of 1 car in euros, randomised using gaussian
-        cost = 25;
         capacity = 8;
         std::normal_distribution <double> kmg(85, 15);
         kmPerDay = kmg(gen); // average km per day for this car using gaussian
@@ -208,6 +207,8 @@ void Transport::transport_type(int type) {
         break;
     }
     }
+    fuelInput = fuelPerKm*kmPerDay; //in 1 day
+    CO2Emission = co2PerKm*kmPerDay; //in 1 day
 }
 
 void Transport::_register_methods() {
@@ -221,15 +222,27 @@ void Transport::_init() {
 }
 
 void Transport::_ready() {
-    prevPosition = this->get_global_transform().get_origin();
-    // myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
+    prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
+    myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
 }
 
 
 void Transport::_process(float delta) {
+    // Position bug to implement
+   
+
     if (rot >= (M_PI / 2)) {
         straight(delta);
-        prevPosition = this->get_global_transform().get_origin();
+        Vector3 p = this->get_global_transform().get_origin();
+        switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the car on the road if problems
+        case 0: this->set("translation", Vector3(p.x, 0, p.z + 28 - fmod(p.z + 28, 30) - 13)); break;
+        case 2: this->set("translation", Vector3(p.x, 0, p.z + 2 - fmod(p.z + 2, 30) + 13)); break;
+        case 3: this->set("translation", Vector3(p.x + 2 - fmod(p.x + 2, 30) + 13, 0, p.z)); break;
+        case 1: this->set("translation", Vector3(p.x + 28 - fmod(p.x + 28, 30) - 13, 0, p.z)); break;
+        default: break; }
+
+
+        //prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
 
         int real_rot = round(this->get_rotation_degrees().y / 90);
 
@@ -252,44 +265,43 @@ void Transport::_process(float delta) {
     else if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
 
         compute_speed(SPEED_T, Acc, delta);
-        Vector3 globalSpeed = Vector3((SPEED_T * 10), 0, 0);
+        Vector3 globalSpeed = Vector3((SPEED_T * 10 *delta), 0, 0);
         globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
+        
 
-        if (this->move_and_collide(globalSpeed, true, true, true) == NULL) {
+        if (this->move_and_collide(Vector3(), true, true, true) == NULL) { //No collision
             turn(dir, delta);
         }
         else {
-            Vector3 colliderVelocity = this->move_and_collide(Vector3(0, 0, 0), true, true, true)->get_collider_velocity();
-            if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
-                // turn(dir, delta);
+            
+            Vector3 colliderVelocity = this->move_and_collide(Vector3(), true, true, true)->get_collider_velocity();
+            if (fmod(((Transport*)(this->move_and_collide(Vector3(), true, true, true)->get_collider()))->get_rotation_degrees().y + 360, 90) != 0) { //Car not on a straight line
+                if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
+                    turn(dir, delta);
+                }
+            }
+            else if (colliderVelocity.dot(colliderVelocity) == 0) {
+                turn(dir, delta);
             }
         }
-        prevPosition = this->get_global_transform().get_origin();
 
         if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
             rot = M_PI / 2;
             align_on_axis(this);
             round_position(this, motion);
-
+            
             switch (dir) {
             case -1: position = 8; break;
             case 0: position = -8; break;
             default: position = 4; break;
             }
+            prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - position;
 
             dir = get_direction(this->get_global_transform().get_origin() + Vector3(12, 0, 0).rotated(Vector3(0, 1, 0), this->get_rotation_degrees().y * (M_PI / 180)), this->get_rotation_degrees().y);
 
             switch (dir) {
             case -1: Turn_R = 12; break;
             default: Turn_R = 4; break;
-
-                switch ((int)(round(this->get_rotation_degrees().y / 90) + 4) % 4) {
-                case 0: this->set_axis_lock(0, true);  break;
-                case 1: this->set_axis_lock(2, true);  break;
-                case 2: this->set_axis_lock(0, true);  break;
-                case 3: this->set_axis_lock(2, true);  break;
-                default:  this->set_axis_lock(0, true); break;
-                }
             }
         }
     }
@@ -298,13 +310,14 @@ void Transport::_process(float delta) {
 void Transport::simulate_step(double days) {
     int years = floor((age + days) / 365 - age / 365);
     co2PerKm *= pow(1.05, years); //increase in emissions with each year
+    fuelInput = fuelPerKm*kmPerDay; //in 1 day
+    CO2Emission = co2PerKm*kmPerDay; //in 1 day
     age += days; //total number of days 
-    fuelInput += fuelPerKm * kmPerDay * days; //litres of fuel for car
-    CO2Emission += co2PerKm * kmPerDay * days; // co2 emissions per car
+    /*fuelInput += fuelPerKm * kmPerDay * days; //litres of fuel for car
+    CO2Emission += co2PerKm * kmPerDay * days;*/ // co2 emissions per car
     passengers += capacity * occupancyRate * days; //number of people that used the car in given period
     switch (transportType) {
     case 0: { //electric car
-        energyUse += 11.9 / 100 * kmPerDay * days; //energy use of car for the whole duration in kWh
         if (age <= 365) {
             maintenance += 1.09 * days; //maintenance service price per day if car is less than 1 yo
         }
@@ -413,22 +426,20 @@ void Transport::turn(int dir, float delta) {
 }
 
 void Transport::straight(float delta) {
-    //Vector3 globalSpeed = Vector3((SPEED_T * delta*10), 0, 0);
+    
+
     Vector3 globalSpeed = Vector3((SPEED_T * 10), 0, 0);
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
-    //this->move_and_collide(globalSpeed, true, true, false);
-    if ((int)((rot / 90) + 4) % 2 == 0) {
-        this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(1, 0, 0), true);
-    }
-    else {
-        this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 1, 0), true);
+
+    switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {
+    case 0: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(-1, 0, 0), true).z; break;
+    case 2: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(1, 0, 0), true).z; break;
+    case 1: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 0, 1), true).x; break;
+    case 3: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 0, -1), true).x; break;
+    default:     break;
     }
 
-    //position += SPEED_T * delta * 10;
-    Vector3 pos = this->get_global_transform().get_origin() - prevPosition;
-    position += pos.normalized().dot(pos);				//Get the norm....
-    //position += SPEED_T * delta * 10;
-    prevPosition = this->get_global_transform().get_origin();
+    position = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - prevPosition;
 
     ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
     ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
@@ -438,6 +449,7 @@ void Transport::straight(float delta) {
 int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90) + 4) % 4;
     vector<int> out;
+
 
     if ((int)round(pos.x / 30) >= sizeof(myCity->traffic) or (int)round(pos.z / 30) >= sizeof(myCity->traffic[0])) {
         std::cout << "out of the map" << endl;
@@ -456,14 +468,30 @@ int Transport::get_direction(Vector3 pos, double rot) {
     if (out.size() == 0) {
         std::cout << "No where to go" << endl;
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
-        myCity->add_car();
         return(0);
     }
-    
+
     for (i = 0; i < out.size(); i++) {
         std::cout << out[i] ;
     }
     std::cout << endl;
     std::cout << myCity->traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt];
+
     return(out[rand() % out.size()]);
+}
+
+double Transport::get_satisfaction(){
+	return this->satisfaction;
+}
+
+double Transport::get_co2emissions(){
+	return this->CO2Emission;
+}
+
+double Transport::get_energyuse(){
+	return this->energyUse;
+}
+
+double Transport::get_environmentalcost(){
+    return 0; //at least for now
 }

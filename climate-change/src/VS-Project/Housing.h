@@ -10,6 +10,7 @@ namespace godot {
         GODOT_SUBCLASS(Housing, Structure)
 
     public:
+		virtual String class_name();
         Housing();
         ~Housing();
     };
@@ -17,6 +18,7 @@ namespace godot {
 	class House : public Housing {
 		GODOT_SUBCLASS(House, Housing)
 	public:
+		virtual String class_name();
 		House();
 		~House();
 

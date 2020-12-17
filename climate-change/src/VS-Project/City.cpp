@@ -1,5 +1,6 @@
 #include "City.h"
 #include "Transport.h"
+#include "Player.h"
 
 #include <fstream>
 #include <Resource.hpp>
@@ -9,12 +10,15 @@
 #include <Node.hpp>
 #include <ctime>
 #include <Input.hpp>
+#include <Button.hpp>
+#include <Viewport.hpp>
+#include <HSlider.hpp>
 
 
 using namespace godot;
 
 City::City() {
-
+	
 	income = 0;
 	population = 50000;
 	numberOfEmployees = 0;
@@ -32,6 +36,7 @@ City::City() {
 	time_speed = 4;
 	delta_counter = 0.0;
 
+
 	//timer = 0;
 	day_tick = 0;
 	srand((int)time(0));
@@ -47,6 +52,10 @@ void City::_register_methods()
 	register_method((char*)"_process", &City::_process);
 	register_method((char*)"_input", &City::_input);
 	register_method((char*)"_ready", &City::_ready);
+	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
+	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
+	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
+	
 };
 
 void City::_init()
@@ -56,12 +65,14 @@ void City::_init()
 
 void City::_process(float delta)
 {
+
 	//std::cout << "DEBUG: PROCESS CALLED" << std::endl;
 	counter += delta*time_speed;
 	if (counter > 1) 
 	{
 		simulation();
 		counter -= 1;
+
 
 	}
 	//delta_counter += (delta * time_speed);
@@ -95,8 +106,19 @@ void City::_input(InputEvent*)
 
 	// VERTICAL MOTION
 
-	if (i->is_action_pressed("ui_test")) {
+	if (i->is_action_pressed("ui_test")) 
+	{
 		add_car();
+	}
+
+	if (i->is_action_pressed("ui_turn")) 
+	{
+		//this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+	}
+
+	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible")) 
+	{
+		_on_Validate_pressed();
 	}
 };
 
@@ -138,6 +160,7 @@ void City::_ready()
 
 	}
 	
+
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
 		// TODO: This loop is only going to run once, maybe remove the loop?
@@ -157,7 +180,44 @@ void City::_ready()
 	}
 	
 	std::cout << "DEBUG: finished ready " << std::endl;
+	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("position", Vector2(20, 20));
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("visible", true);
 };
+
+
+
+void godot::City::_on_MenuShop_pressed(String name)
+{
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
+
+	active_button = name;
+
+}
+
+void godot::City::_on_Validate_pressed()
+{
+	
+	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+	String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
+
+	//((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->set_movable(true);
+
+}
+void godot::City::_on_Game_Speed_changed()
+{
+	time_speed = this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value");
+	std::cout << time_speed;
+}
+;
+
 
 void City::add_shop(Shop* shop) {
 	all_shops.push_back(shop);
@@ -229,6 +289,7 @@ void City::update_traffic(int x, int y, bool newBuilding) {
 
 void City::add_car() {
 
+
 	ResourceLoader* ResLo = ResourceLoader::get_singleton();
 	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
 	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
@@ -238,18 +299,20 @@ void City::add_car() {
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
 
+		// randomly choose between bugatti and chiron
+
 		int type = rand() % 2;
 		Transport* node;
 		if (type == 0) { node = (Transport*)BugattiScene->instance(); }
 		else { node = (Transport*)ChironScene->instance(); }
 		node->set("scale", Vector3(10, 10, 10));
-		node->set("translation", Vector3(-13, 0, -13 + 30 * (1)));
-		node->transport_type(type);
+		node->set("translation", Vector3(-13, 0, -13 + 30 * (0 + 1)));
 		this->add_child((Node*)node);
 
-		income -= node->cost;
 
-		all_transports.push_back((Transport*)node);
+		//income -= node->cost;
+
+		//all_transports.push_back((Transport*)node);
 	}
 }
 
@@ -268,7 +331,9 @@ void City::simulation() {
 	needs = 0;
 	*/
 
+
 	std::cout << return_game_date() << std::endl;
+
 
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
@@ -290,12 +355,15 @@ void City::simulation() {
 			((Restaurant*)*it)->Restaurant::simulate_step(15.0);
 		}
 	}
+	/*
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
 	{
-		/*
+
+		
 			 count up all the vehicle stuff
-		*/
+		
 	}
+	*/
 
 
 	if (day_tick % 140 == 0) {
@@ -330,6 +398,7 @@ void City::simulation() {
 		}
 		add_restaurant_to_city(temp);
 	}
+	
 }
 
 void City::write_stat_history_to_file() {

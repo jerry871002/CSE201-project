@@ -1,10 +1,14 @@
-#include "obj.h"
-#include <core/Godot.hpp>
 #pragma once
-#include <StaticBody.hpp>
+
+#include "City.h"
+#include "obj.h"
+
+#include <core/Godot.hpp>
+#include <KinematicBody.hpp>
+
 namespace godot {
-class Health : public Production {
-		GODOT_SUBCLASS(Health, Production)
+class Health : public KinematicBody  {
+		GODOT_CLASS(Health, KinematicBody)
 	public:
 		Health();
 		~Health();
@@ -16,5 +20,9 @@ class Health : public Production {
 		double patientsAdmitted, successRate;
  		int hospitalType;
 		virtual String class_name();
+		double get_satisfaction();
+		double get_co2emissions();
+		double get_energyuse();
+		double get_environmentalcost();
 	};
 };

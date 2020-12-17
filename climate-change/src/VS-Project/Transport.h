@@ -5,6 +5,7 @@
 
 #include <core/Godot.hpp>
 #include <KinematicBody.hpp>
+#include "City.h"
 
 // use forward declarations to get around the circular dependencies problem
 namespace godot {
@@ -15,7 +16,6 @@ namespace godot {
     class Transport : public KinematicBody {
         GODOT_CLASS(Transport, KinematicBody)
     public:
-
         Transport();
 
         void transport_type(int type);
@@ -46,6 +46,11 @@ namespace godot {
         double cost ;
         double buildingTime ;
         double satisfaction ;
+        double get_satisfaction();
+		double get_co2emissions();
+		double get_energyuse();
+		double get_environmentalcost();
+        virtual String class_name();
 
     private:
         // simulation variables
@@ -69,10 +74,14 @@ namespace godot {
         double SPEED_T;
         int Turn_R = 4;
         int dir;
-        Vector3 prevPosition = Vector3(0, 0, 0);
+        double prevPosition = 0;
         double Acc = 0.5;
         Vector3 center;
         City* myCity;
-       
+
+        // old traffic array
+        //     int traffic[2][3][4][3] = { {{{0, 1, 0},{0, 0, 1},{0, 0, 1},{0, 0, 1}},		{{0, 0, 1},{0, 1, 0},{0, 0, 1},{0, 0, 1}},		{ {0, 1, 1},{0, 1, 1},{0, 0, 1},{0, 0, 1}}},
+        //                            { {{0, 0, 1},{0, 0, 1},{0, 0, 1},{0, 1, 0}}	,		{{0, 0, 1},{0, 0, 1},{1, 1, 0},{0, 1, 1}},		 { {0, 0, 1},{0, 0, 1},{0, 1, 1},{0, 0, 1}}} };
+>
     };
 }
