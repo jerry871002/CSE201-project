@@ -167,23 +167,18 @@ double find_avg(double array[],int leap) {
 }
 
 
+/*
 int main() {
     // More examples on how to use the above functions:
-    /*
+    
     clear("pollution");
     change_data("pollution", "2013", "01");
     copy("pollution", "tmp");
     add_data("pollution", "2015", "76");
     delete_line("pollution", "2013");
-    */
-
-    /*
-    clear("alltimestats");
-    for (int k;k<10;k++) {
-        clear("stats" + to_string(k));
-    }
-    */
     
+
+
 
     double stat = 0;
     int day_tick = 0;
@@ -233,3 +228,5 @@ int main() {
         
      }
 }
+
+*/
