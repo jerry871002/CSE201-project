@@ -137,7 +137,7 @@ void City::_ready()
 				std::cout << "DEBUG: restaurant added to city your mom fat " << std::endl;
 
 	}
-	/*
+	
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
 		// TODO: This loop is only going to run once, maybe remove the loop?
@@ -150,12 +150,12 @@ void City::_ready()
 			if (type == 0) { node = (Transport*)BugattiScene->instance(); }
 			else { node = (Transport*)ChironScene->instance(); }
 			node->set("scale", Vector3(10, 10, 10));
-			node->set("translation", Vector3(-13, 0, -13 + 30 * (z + 1)));
+			node->set("translation", Vector3(-13, 0, -13));
 			this->add_child((Node*)node);
 			std::cout << node->kmPerDay;
 		}
 	}
-	*/
+	
 	std::cout << "DEBUG: finished ready " << std::endl;
 };
 

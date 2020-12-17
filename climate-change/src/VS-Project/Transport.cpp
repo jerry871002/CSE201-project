@@ -438,14 +438,13 @@ void Transport::straight(float delta) {
 int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90) + 4) % 4;
     vector<int> out;
-    /*
-    if ((int)round(pos.x / 30) >= sizeof(traffic) or (int)round(pos.z / 30) >= sizeof(traffic[0])) {
-        myCity->add_car();
+
+    if ((int)round(pos.x / 30) >= sizeof(myCity->traffic) or (int)round(pos.z / 30) >= sizeof(myCity->traffic[0])) {
+        std::cout << "out of the map" << endl;
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
-        myCity->add_car();
         return(0);
     }
-    */
+    
     int i = -1;
     for (const int& n : myCity->traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
@@ -453,14 +452,18 @@ int Transport::get_direction(Vector3 pos, double rot) {
         }
         i++;
     }
-    /*
+    
     if (out.size() == 0) {
-
-        myCity->add_car();
+        std::cout << "No where to go" << endl;
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         myCity->add_car();
         return(0);
     }
-    */
+    
+    for (i = 0; i < out.size(); i++) {
+        std::cout << out[i] ;
+    }
+    std::cout << endl;
+    std::cout << myCity->traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt];
     return(out[rand() % out.size()]);
 }
