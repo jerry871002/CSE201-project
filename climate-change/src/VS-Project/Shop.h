@@ -21,7 +21,6 @@ namespace godot{
         
         Node* GetPanels();
         bool PanelsOn{false}; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
-
         void _ready();
 
         bool shopStatus = true;   //True if open, False if closed
@@ -36,19 +35,15 @@ namespace godot{
         void show_menu();
         virtual String output_information();
 
+        
+        // double supposed to represent yearly probability of panel appearing - this will be changed by policies
+         
+
+
         void panels_get_added(); // function to add the panels, both in simulation and visually
         int panels_age{ 0 }; // int to track the panels_age once they are installed - ticks down every day, when it reaches 0 the panels dissapear
         bool ArePanelsDisplayed(); // method just to check whether the panels are on visually (mostly for debug)
-
-        // double supposed to represent yearly probability of panel appearing - this will be changed by policies
-        double panel_probability{ 0.05 };  // will likely be changed to a more complex function soon 
-
-
-        void panels_get_added();
-        int panels_age{ 0 };
-        bool ArePanelsDisplayed();
-        double panel_probability{ 0.75 };
-        
+        double panel_probability{ 0.75 };  // will likely be changed to a more complex function soon
     };
 
 

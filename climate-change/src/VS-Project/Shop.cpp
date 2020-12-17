@@ -12,19 +12,18 @@ using namespace godot;
 // ######################     SHOP     ##############################
 
 
-Shop::Shop(){
+Shop::Shop() {
     panels_age = 0;
+    Clickable = false;
+    PanelsOn = false;
+}
 
 String godot::Shop::class_name()
 {
     return "Shop";
 }
 
-Shop::Shop(){
-    Clickable = false;
-    PanelsOn = false;
 
-}
 
 Shop::~Shop() {}
 /*
@@ -189,7 +188,7 @@ void Shop::panels_get_added(){
     std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
 
         //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
-    }
+    
 
 }
 
@@ -273,8 +272,6 @@ void Restaurant::simulate_step(double days){
     age += days;
 	double shock;
 
-	age += days;
-	double shock = 0;
 
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 
@@ -305,9 +302,14 @@ String godot::SmallShop::class_name()
 {
     return "SmallShop";
 }
-SmallShop::SmallShop(){}
 
-SmallShop::~SmallShop(){}
+SmallShop::SmallShop() {
+
+};
+
+SmallShop::~SmallShop() {
+
+}
 
 
 
