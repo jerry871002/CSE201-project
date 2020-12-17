@@ -201,7 +201,7 @@ void godot::City::_on_Validate_pressed()
 void godot::City::_on_Game_Speed_changed()
 {
 	time_speed = this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value");
-	std::cout << time_speed;
+
 }
 ;
 

@@ -235,13 +235,14 @@ void Transport::_ready() {
 
 
 void Transport::_process(float delta) {
-    // Position bug to implement
-
-   
+    myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld");
     prevPositionVec = this->get_global_transform().get_origin();
    
     if (rot >= (M_PI / 2)) {
-        straight(delta);
+        int gameSpeed = myCity->time_speed;
+        std::cout << gameSpeed;
+        for (int i=0; i< gameSpeed; i++) { straight(delta); }
+       
         Vector3 p = this->get_global_transform().get_origin();
         switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the car on the road if problems
         case 0: this->set("translation", Vector3(p.x, 0, p.z + 28 - fmod(p.z + 28, 30) - 13)); break;
@@ -412,7 +413,7 @@ void Transport::simulate_step(double days) {
 }
 
 void Transport::turn(int dir, float delta) {
-    double drot = (SPEED_T * delta) * 10;
+    double drot = (SPEED_T * delta) * 10 ;
     if (dir == 1) { drot /= 4; }
     else { drot /= 12; }
     rot += drot;
