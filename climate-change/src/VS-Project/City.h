@@ -87,6 +87,7 @@ namespace godot {
 		*/
 
 		bool ClickActive{ false };
+		float time_speed = 1; // 1 for regular speed (1 in-game day per second)
 
 	private:
 		// city indices
@@ -99,7 +100,7 @@ namespace godot {
 		double healthcare;
 		double needs;
 		// used for caculating in-game time
-		float time_speed; // 1 for regular speed (1 in-game day per second)
+		
 		float delta_counter; // accumulate delta from `_physics_process` function
 		int64_t timer;       // helper data to see if `delta_counter` have carry on units digit
 		int day_tick; // this variable keeps track of the in-game days, 
