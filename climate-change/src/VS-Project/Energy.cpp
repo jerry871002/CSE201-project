@@ -289,7 +289,7 @@ void CoalPowerPlant::simulate_step(double days)
 	}
 
 	coal += 4.06E-4 * energyPerDay * days;
-	CO2Emission += 0.768 * energyPerDay * days;
+	CO2Emission += 0.868 * energyPerDay * days;
 	SO2Emission += 0.00152 * energyPerDay * days;
 	NOxEmission += 8.49E-4 * energyPerDay * days;
 	ashOutput += 0.0619 * energyPerDay * days;

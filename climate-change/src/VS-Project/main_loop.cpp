@@ -14,8 +14,9 @@
 #include <unistd.h>
 #endif
 
-int main()
-{
+using namespace godot;
+
+int main() {
     City c = City();
 
     while (true) {
