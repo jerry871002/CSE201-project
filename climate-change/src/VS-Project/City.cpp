@@ -2,7 +2,6 @@
 #include "Transport.h"
 #include "Player.h"
 
-#include <fstream>
 #include <Resource.hpp>
 #include <ResourceLoader.hpp>
 #include <SceneTree.hpp>
@@ -13,6 +12,19 @@
 #include <Button.hpp>
 #include <Viewport.hpp>
 #include <HSlider.hpp>
+
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <stdio.h>
+#include "edit_text_files.cpp"
+
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 
 
 using namespace godot;
@@ -283,31 +295,81 @@ void City::simulation() {
 	*/
 }
 
+int * return_date(int day_tick) {
+    int date[3];
+
+    int Y=1,M=1,D=1;
+    int julian = (1461 * (Y + 4800 + (M - 14)/12))/4 +(367 * (M - 2 - 12 / ((M - 14)/12)))/12 - (3 * ((Y + 4900 + (M - 14)/12)/100))/4 + D - 32075+day_tick+35;
+
+    int gregorian = julian + 1401 + (int)((((int)(4*day_tick+274277) / 146097)*3) / 4) -38;
+    int e = 4*gregorian+3;
+    int h = 5*((int)(e%1461)/4)+2;
+    int day = ((int)(h%153)/5)+1;
+    int month = (((int)h/153)+2)%12+1;
+    int year = (int)(e/1461) - 4716 + (int)((14-month)/12);
+
+    date[0]= day;
+    date[1] = month;
+    date[2] = year;
+
+    return date;
+}
+
+
+string return_string_date(int day, int month, int year) {
+    return to_string(day) + ", " + to_string(month) + ", " + to_string(year);
+}
+
+double find_avg(double array[],int leap) {
+    int size;
+    double sum=0;
+    if (leap==0) {
+        size=366;
+    }
+    else {
+        size=365;
+    }
+    for (int i=0; i<size; i++) {
+        sum+=array[i];
+    }
+    return sum/size;
+}
+
+double stat = 0;
+int day_tick = 0;
+double stats[366];
+int daycount=0;
+
 void City::write_stat_history_to_file() {
 	/*
-	std::ofstream file;
- 	file.open("file.txt", std::ofstream::out | std::ofstream::app);
- 	if(!file) { 
-        std::cout<<"Error in creating file!!!"<< std::endl;
-    	}
-	std::cout<<"File created successfully."<<std::endl; 
- 	file.close();
-	 */
+        int *date; 
+        date = return_date(day_tick);
+        int day = *date;
+        int month = *(date+1);
+        int year = *(date+2);
 
- 	//incomefile << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
- 	//incomefile << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
- 	//add_data("incomefile",std::to_string((day_tick / 365) + 1),std::to_string(income));
+        
+        if (day==1 && month==1 && year!=1) {
+            daycount=0;
+            int leap = (year-1)%4;
+            add_data("alltimestats", to_string(year-1), to_string(find_avg(stats,leap)));
+            double stats[366];
+            remove(get_path("statsyear" + to_string(year-1)).c_str());
+        }
+        
 
+        stats[daycount]=stat;
+        daycount+=1;
+        add_data("statsyear" + to_string(year), return_string_date(day,month,year), to_string(stat));
 
-
- 	/* old version to be deleted?
- 	std::ofstream out_file;
- 	out_file.open("stat_history.txt", std::ofstream::out | std::ofstream::app);
-
- 	//out_file << timer << " " << income << " " << population << " " << numberOfEmployees << " ";
- 	out_file << carbonEmission << " " << energyDemand << " " << energySupply << std::endl;
- 	out_file.close();
- 	*/
+        
+        int *daysbef;
+        daysbef = return_date(day_tick-30);
+        int daydaysbef=*daysbef;
+        int monthdaysbef=*(daysbef+1);
+        int yeardaysbef=*(daysbef+2);
+        delete_line("statsyear" + to_string(year), return_string_date(daydaysbef,monthdaysbef,yeardaysbef));
+	*/
 }
 
 
