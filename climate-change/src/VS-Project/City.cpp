@@ -163,13 +163,13 @@ void City::add_shop(Shop* shop) {
 	all_shops.push_back(shop);
 	int x = shop->get_position()[0]/30;
 	int y = shop->get_position()[1]/30;
-	if (x <= 10 && y <= 10) {
+	if (x < sizeOfCity && y < sizeOfCity) {
 		positionOfBuildings[x][y] = 1;
-		update_traffic(x, y);
+		update_traffic(x, y, true);
 	}
 }
 
-void City::update_traffic(int x, int y) {
+void City::update_traffic(int x, int y, bool newBuilding) {
 	traffic[x][y][0][3] = 1;
 	traffic[x][y][1][3] = 1;
 	traffic[x][y][2][3] = 1;
@@ -197,6 +197,32 @@ void City::update_traffic(int x, int y) {
 	}
 	if (x + 1 < sizeOfCity && positionOfBuildings[x + 1][y] == 1) {
 		traffic[x][y][0][1] = 1;
+	}
+	if (newBuilding == true) {
+		if (x - 1 > 0) {
+			if (y - 1 > 0) {
+				update_traffic(x - 1, y - 1, false);
+			}
+			update_traffic(x - 1, y, false);
+			if (y + 1 < sizeOfCity) {
+				update_traffic(x - 1, y - 1, false);
+			}
+		}
+		if (y - 1 > 0) {
+			update_traffic(x, y - 1, false);
+		}
+		if (y + 1 < sizeOfCity) {
+			update_traffic(x, y + 1, false);
+		}
+		if (x + 1 < sizeOfCity) {
+			if (y - 1 > 0) {
+				update_traffic(x + 1, y - 1, false);
+			}
+			update_traffic(x + 1, y, false);
+			if (y + 1 < sizeOfCity) {
+				update_traffic(x + 1, y - 1, false);
+			}
+		}
 	}
 }
 

@@ -82,7 +82,7 @@ namespace godot {
 		int sizeOfCity; // buildings are placed on a square sizeOfCity * sizeOfCity
 		int positionOfBuildings[10][10] = { 0 };
 		int traffic[10][10][4][3] = { 0 };
-		void update_traffic(int x, int y);
+		void update_traffic(int x, int y, bool newBuilding);
 
 	private:
 		// city indices
