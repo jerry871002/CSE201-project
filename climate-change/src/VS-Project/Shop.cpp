@@ -1,4 +1,7 @@
 #include <iostream>
+#include <cmath>
+
+
 #include "random"
 #include "Shop.h"
 
@@ -13,7 +16,7 @@ using namespace godot;
 
 
 Shop::Shop() {
-    panels_age = 0;
+    unsigned int * panels_age = new unsigned int();
     Clickable = false;
     PanelsOn = false;
 }
@@ -25,7 +28,8 @@ String godot::Shop::class_name()
 
 
 
-Shop::~Shop() {}
+Shop::~Shop() { delete panels_age; }
+
 /*
 void Shop::initialize(int shopTypeInput){
     shopType = shopTypeInput;
@@ -159,10 +163,13 @@ void Shop::simulate_step(double days){
         
         // TESTING STUFF LIKELY TO BE REMOVED SOON
 
+        double temp1 = double(1.0 - panel_probability);
+        double temp2 = double(days / 365.0);
+        double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - panel_probability), double(days / 365.0))) << std::endl; //double(days / 365.0)
-        if (r > (pow(double(1 - panel_probability), double(days / 365.0))))
+        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - panel_probability), double(days / 365.0))) << temp3 << std::endl; //double(days / 365.0)
+        if (r > temp3)
         {
             panels_get_added();
             this->GetPanels()->set("visible", PanelsOn);
@@ -172,9 +179,9 @@ void Shop::simulate_step(double days){
 
     }
 
-    else if (panels_age > days) { panels_age -= days; }
+    else if (double(*panels_age) > days) { *panels_age -= int(days); }
     else {
-        panels_age = 0;
+        *panels_age = 0;
         PanelsOn = false;
         this->GetPanels()->set("visible", PanelsOn);
         std::cout << "DEBUG: PANEL REMOVED" << std::endl;
@@ -184,7 +191,7 @@ void Shop::simulate_step(double days){
 
 void Shop::panels_get_added(){
     PanelsOn = true;
-    panels_age = 120;
+    *panels_age = 120;
     std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
 
         //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
@@ -267,7 +274,6 @@ void Restaurant::simulate_step(double days){
 
 
     this->Shop::simulate_step(days);
-    
     std::cout << "DEBUG: RESTAURANT SIMULATION" << std::endl;
     age += days;
 	double shock;
