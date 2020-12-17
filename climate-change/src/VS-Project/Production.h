@@ -10,8 +10,6 @@ namespace godot {
         GODOT_SUBCLASS(Production, Structure)
 
     public:
-        Production();
-        ~Production();
 
     };
 }

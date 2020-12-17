@@ -13,7 +13,7 @@ namespace godot {
 	public:
 		virtual String class_name();
 		AgriculturalProduction();
-		~AgriculturalProduction();
+		AgriculturalProduction(int type);
 		//void test();
 		static void _register_methods();
 		void _init();
@@ -25,13 +25,14 @@ namespace godot {
 		double get_co2emissions();
 		double get_energyuse();
 		double get_environmentalcost();
+		void agriculture_type(int type);
 		double waterConsumption; // per day 
-		int agricultureType; // 0 - wheat, 1 - vegetables, 2 - meat
+		int agricultureType; // 0 - wheat, 1 - meat, 2 - vegetables
 		bool pesticide; // true if pesticides are used
 		bool GMO; // true if GMO is used
 		bool fertilizer; // true if fertilizer is used
 		double size; //size of the field in m^2
 		double fertility; //per m^2 output
-		double production; //how output much per day
+		double production; //how much output per day
 	};
 }
