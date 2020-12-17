@@ -36,6 +36,10 @@ namespace godot {
         //void _on_CheckBox_button_down();
         //void _on_CheckBox_toggled();
         virtual String class_name();
+        virtual void show_menu();
+        real_t MenuSize{ 300 };
+        real_t InfoBoxWidth{ 300 };
+        virtual String output_information();
 
         Structure();
         ~Structure();
@@ -46,8 +50,15 @@ namespace godot {
 
         bool is_other_structure_within_distance(Vector3, double);
 
-        double employment, cost, energyUse, maintenance, CO2Emission, buildingTime, satisfaction, environmentalCost;
-        double age; //age of each particular object in days, initialize to 0 in constructor
+        double employment = 0; // approximate number of employees per building
+        double cost = 0; // cost in euros to build a new building
+        double energyUse = 0; //amount of energy used by the building in kWh
+        double maintenance = 0; //maintenace and working cost in euros
+        double CO2Emission = 0; // kg of CO2 emitted
+        double buildingTime = 0; // years needed to build a new building
+        double satisfaction = 0; // on scale of 10
+        double environmentalCost = 0; // environmental and health costs in euros 
+        double age = 0; //age of each particular object in days
 
         // The following will be city-wide counters that will be updated every day : 
         // income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply
@@ -77,10 +88,31 @@ namespace godot {
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
         // need to add a cost for their implementation in the maintenance variable once
 
-        virtual double get_energyuse() { return 0; }
-        virtual double get_co2emissions() { return 0; }
-        virtual double  get_satisfaction() { return 0; }
-        virtual double get_environmentalcost() { return 0; }
+        /* SOLAR PANEL VARIABLES 
+        They describe the characteristics of one single average solar panel, taking as a model the most used one : The Canadian Solar 
+        CS3U-345P model of 1x2m in size.
+        */
+
+        double solarSatisfaction = 9; //ratings of these solar panels by surveys
+        double solarCost = 450; //cost in euros for one new solar panel (product and installation)
+        double solarEnergy = 7.45; //average kWh produced per day
+        double solarLifetime = 25; //years of energy production warranty
+
+        /// ROOFTOP WIND TURBINE VARIABLES - They describe the characteristics of one single average rooftop turbine
+
+        double windSatisfaction = 6; //public opinion on rooftop wind turbines
+        double windCost = 800; //cost in euros for a new turbine with its tower
+        double windEnergy = 1.1; //average kWh produced per day
+        double windLifetime = 5; // years of energy production warranty
+
+        virtual double get_maintenance();
+        virtual double get_building_time();
+        virtual double get_cost();
+        virtual double get_employment();
+        virtual double get_energyuse();
+        virtual double get_co2emissions();
+        virtual double get_satisfaction();
+        virtual double get_environmentalcost();
 
     };
 }

@@ -213,7 +213,7 @@ var mouse_on_slice : bool = false
 func _input(event):
 	if event is InputEventMouseMotion:
 		for area_idx in range(areas.size()):
-			if Geometry.is_point_in_polygon(event.global_position, areas[area_idx]):
+			if Geometry.is_point_in_polygon(event.global_position - get_global_transform().origin, areas[area_idx]):
 				mouse_on_slice = true
 				mouse_on_area = area_idx
 				show_slice_data(slices[area_idx])

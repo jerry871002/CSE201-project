@@ -11,10 +11,14 @@ namespace godot{
     class Shop : public Structure {
         GODOT_SUBCLASS(Shop, Structure)
 
+    private:
+        bool Clickable = false;
     public:
+        virtual String class_name();
         Shop();
         ~Shop();
 
+        
         Node* GetPanels();
         bool PanelsOn{false}; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
 
@@ -29,6 +33,16 @@ namespace godot{
         virtual double get_environmentalcost();
 
         void simulate_step(double days);
+        void show_menu();
+        virtual String output_information();
+
+        void panels_get_added(); // function to add the panels, both in simulation and visually
+        int panels_age{ 0 }; // int to track the panels_age once they are installed - ticks down every day, when it reaches 0 the panels dissapear
+        bool ArePanelsDisplayed(); // method just to check whether the panels are on visually (mostly for debug)
+
+        // double supposed to represent yearly probability of panel appearing - this will be changed by policies
+        double panel_probability{ 0.05 };  // will likely be changed to a more complex function soon 
+
 
         void panels_get_added();
         int panels_age{ 0 };
@@ -43,14 +57,13 @@ namespace godot{
             GODOT_SUBCLASS(Restaurant, Shop)
         private:
 
-            bool Clickable = false;
-
         public:
+            virtual String class_name();
+
+            
 
             Restaurant();
             ~Restaurant();
-
-            String class_name();
             
             int restaurantType = 1;
             double energyUsePerSize = 0;
@@ -68,6 +81,7 @@ namespace godot{
     class SmallShop : public Shop {
 		GODOT_SUBCLASS(SmallShop, Shop)
 	public:
+        virtual String class_name();
         SmallShop();
         ~SmallShop();
 
@@ -78,6 +92,7 @@ namespace godot{
     class Mall : public Shop {
 		GODOT_SUBCLASS(Mall, Shop)
 	public:
+        virtual String class_name();
         Mall();
         ~Mall();
     };
