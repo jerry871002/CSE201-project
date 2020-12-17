@@ -261,7 +261,7 @@ void City::simulation() {
 
 		*/
 		if (day_tick % 15 == 0) {
-			((Restaurant*)*it)->Restaurant::simulate_step(15);
+			((Restaurant*)*it)->Restaurant::simulate_step(15.0);
 		}
 	}
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
@@ -269,7 +269,6 @@ void City::simulation() {
 		/*
 			 count up all the vehicle stuff
 		*/
-
 	}
 
 
