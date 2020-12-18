@@ -126,8 +126,9 @@ void delete_line(string documentName, string dataToDelete) {
 }
 
 
-int * return_date(int day_tick) {
-    int date[3];
+
+int* return_date(int day_tick) {
+    static int date[3];
 
     int Y=1,M=1,D=1;
     int julian = (1461 * (Y + 4800 + (M - 14)/12))/4 +(367 * (M - 2 - 12 / ((M - 14)/12)))/12 - (3 * ((Y + 4900 + (M - 14)/12)/100))/4 + D - 32075+day_tick+35;
@@ -168,6 +169,7 @@ double find_avg(double array[],int leap) {
 
 
 /*
+//uncomment to run
 int main() {
     // More examples on how to use the above functions:
     
@@ -228,5 +230,4 @@ int main() {
         
      }
 }
-
 */

@@ -112,9 +112,6 @@ void City::_input(InputEvent*)
 	{
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 		this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
-		
-		((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
-		std::cout << "PLAYER SHOULD BE MOVABLE" << std::endl;
 		//((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get_child(1)))->Player::set_movable(true);
 	}
 
@@ -210,14 +207,13 @@ void godot::City::_on_Validate_pressed()
 	String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
-	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
-	std::cout << "PLAYER SHOULD BE MOVABLE" << std::endl;
+	//((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->set_movable(true);
 
 }
 void godot::City::_on_Game_Speed_changed()
 {
 	time_speed = this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value");
-
+	std::cout << time_speed;
 }
 ;
 
@@ -298,7 +294,9 @@ void City::simulation() {
 	}
 	*/
 }
+
 /*
+
 int * return_date(int day_tick) {
     int date[3];
 
@@ -338,11 +336,13 @@ double find_avg(double array[],int leap) {
     }
     return sum/size;
 }
-*/
-//double stat = 0;
-//int day_tick = 0;
-//double stats[366];
-//int daycount=0;
+
+double stat = 0;
+int day_tick = 0;
+double stats[366];
+int daycount=0;
+
+/*/
 
 void City::write_stat_history_to_file() {
 	/*
