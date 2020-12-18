@@ -318,10 +318,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
-[connection signal="visibility_changed" from="2Dworld/Menus/MenuShop" to="3Dworld/Player" method="_on_MenuShop_visibility_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
-[connection signal="visibility_changed" from="2Dworld/PoliciesInput" to="3Dworld/Player" method="_on_PoliciesInput_visibility_changed" binds= [ false ]]
 [connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]

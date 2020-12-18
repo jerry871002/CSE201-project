@@ -113,8 +113,8 @@ void Structure::_input(InputEvent* e)
 
         Vector2 mousePos = this->get_viewport()->get_mouse_position();
 
-        //((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/KinematicBody")))->set_movable(false);
-        //std::cout << "PLAYER SHOULD NOT BE MOVABLE" << std::endl;
+        ((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", false);
+        std::cout << "PLAYER SHOULD NOT BE MOVABLE" << std::endl;
 
         ((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 260));
 
