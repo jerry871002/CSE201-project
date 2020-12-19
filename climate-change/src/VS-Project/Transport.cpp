@@ -240,9 +240,9 @@ void Transport::_process(float delta) {
    
     if (rot >= (M_PI / 2)) {
         
-        int gameSpeed = myCity->get_time_speed();
+        int gameSpeed = myCity->get("time_speed");
         std::cout << gameSpeed << "pointer timespeed transport" << endl;
-        //if (gameSpeed != 0) { straight(delta); }
+        if (gameSpeed != 0) { straight(delta); }
        
         Vector3 p = this->get_global_transform().get_origin();
         switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the car on the road if problems

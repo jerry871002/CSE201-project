@@ -48,7 +48,7 @@ Player::~Player() {
 }
 
 void Player::_register_methods() {
-	register_method((char*)"_physics_process", &Player::_physics_process);
+	register_method((char*)"_process", &Player::_process);
 	register_method((char*)"_input", &Player::_input);
 	register_method((char*)"_ready", &Player::_ready);
 	register_property<Player, bool>("movable", &Player::movable, true);
@@ -67,7 +67,7 @@ void Player::_ready() {
 	
 }
 
-void Player::_physics_process(float delta) 
+void Player::_process(float delta) 
 {
 	/*
 	counter += 1;
@@ -83,7 +83,7 @@ void Player::_physics_process(float delta)
 	
 	
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
-	worldEnv->get_environment()->set_dof_blur_far_distance(2 * (this->get_global_transform().get_origin().y));
+	worldEnv->get_environment()->set_dof_blur_far_distance(4 * (this->get_global_transform().get_origin().y));
 	worldEnv->get_environment()->set_dof_blur_far_amount(0.1 * pow((1 - (this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight - MinHeight)), 3) );
 	
 	
@@ -92,7 +92,7 @@ void Player::_physics_process(float delta)
 	
 }
 
-void Player::_process(float delta) 
+void Player::_physics_process(float delta)
 {
 	
 }
