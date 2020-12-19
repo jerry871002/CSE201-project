@@ -17,10 +17,9 @@ Player::Player() {
 	motion = Vector3(0, 0, 0);
 	rotation = Vector3(0, 0, 0);
 	std::cout << "DEBUG: PLAYER CONSTRUCTOR CALLED" << std::endl;
-	movable = true;
 	counter = 0;
 }
-
+/*
 void Player::set_movable(bool b) 
 {
 	this->movable = b;
@@ -44,7 +43,7 @@ void Player::_on_PoliciesInput_visibility_changed()
 	}
 	
 }
-
+*/
 Player::~Player() {
 }
 
@@ -52,12 +51,11 @@ void Player::_register_methods() {
 	register_method((char*)"_physics_process", &Player::_physics_process);
 	register_method((char*)"_input", &Player::_input);
 	register_method((char*)"_ready", &Player::_ready);
-	register_method((char*)"_on_MenuShop_visibility_changed", &Player::_on_MenuShop_visibility_changed);
-	register_method((char*)"_on_PoliciesInput_visibility_changed", &Player::_on_PoliciesInput_visibility_changed);
+	register_property<Player, bool>("movable", &Player::movable, true);
 }
 
 void Player::_init() {
-
+	movable = true;
 }
 
 void Player::_ready() {
@@ -81,7 +79,7 @@ void Player::_physics_process(float delta)
 	}
 	*/
 
-	if (this->is_movable()) { UpdateMotionFromInput(delta); }
+	if (movable) { UpdateMotionFromInput(delta); }
 	
 	
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
@@ -109,7 +107,7 @@ void Player::_input(InputEvent* e)
 	if (e->get_class() == "InputEventMouseMotion") {
 		
 		
-		if (this->is_movable()) {
+		if (movable) {
 			UpdateRotationFromInput((InputEventMouseMotion*)e); // Rotation and vertical motion using relative mouse coordinates
 		}
 	}
