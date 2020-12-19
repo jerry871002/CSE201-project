@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "City.h"
@@ -7,7 +8,7 @@
 #include <core/Godot.hpp>
 #include <KinematicBody.hpp>
 
-namespace godot {
+/*namespace godot {
 	class AgriculturalProduction : public Production {
 		GODOT_SUBCLASS(AgriculturalProduction, Production)
 	public:
@@ -35,5 +36,4 @@ namespace godot {
 		double fertility; //per m^2 output
 		double production; //how much output per day
 	};
-}
-
+}*/

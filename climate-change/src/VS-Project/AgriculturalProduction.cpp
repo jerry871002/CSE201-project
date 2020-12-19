@@ -3,7 +3,7 @@
 #include <random>
 using namespace godot;
 
-String godot::AgriculturalProduction::class_name(){
+/*String godot::AgriculturalProduction::class_name(){
 	return "AgriculturalProduction";
 }
 
@@ -73,4 +73,4 @@ double AgriculturalProduction::get_environmentalcost(){
 
 // void AgriculturalProduction::test() {
 // 	std::cout << "AgriculturalProduction" << std::endl;
-// }
+// }*/
