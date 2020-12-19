@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "string": "cpp",
-        "filesystem": "cpp",
-        "ctime": "cpp"
-    }
-}
