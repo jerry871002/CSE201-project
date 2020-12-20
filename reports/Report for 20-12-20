@@ -23,3 +23,6 @@ Next week I m gonna implement bikes, fields, help for the policies....
 Antoine:
 This week I worked on re-structuring all of the objects code alongside Paloma and Elliot. This also us to simply our overall project, reducing the total number of files we have for different objects. I then had to re-create my test file for the Shop branch and all the sub classes included within Shop and this led to some debugging. I will continue to work on the project over the holidays.
 
+Yury:
+This week I worked mostly on trying to update the traffic array class – now I removed most of the problems that I encountered last time.
+Now I can add both 1x1 and 2x2 buildings recomputing how the car moves. Next week I am going to work on implementing the economics of the game..
