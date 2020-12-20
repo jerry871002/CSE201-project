@@ -26,3 +26,7 @@ This week I worked on re-structuring all of the objects code alongside Paloma an
 Yury:
 This week I worked mostly on trying to update the traffic array class – now I removed most of the problems that I encountered last time.
 Now I can add both 1x1 and 2x2 buildings recomputing how the car moves. Next week I am going to work on implementing the economics of the game..
+
+Luca:
+This week, I continued working on the 2D menu to plot my graphs and I had to make changes in some functions that edit csv files in order to have a first descriptive line in each of the files.
+I still have some bugs in my graphs and I plan to fix them next week.
