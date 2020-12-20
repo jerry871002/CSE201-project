@@ -13,6 +13,9 @@
 #include <Button.hpp>
 #include <Viewport.hpp>
 #include <HSlider.hpp>
+#include <TextureProgress.hpp>
+
+
 
 
 using namespace godot;
@@ -51,6 +54,7 @@ void City::_register_methods()
 	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
 	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
 	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
+
 	
 };
 
@@ -238,6 +242,7 @@ void City::add_car() {
 }
 
 
+
 void City::simulation() {
 	/*
 	day_tick++;
@@ -407,3 +412,17 @@ std::string City::return_game_date() {
 	return "Time Representation Error";
 
 }
+
+void City::update_satisfaction_color() {
+	green = Color( 0, 1, 0, 1 );
+	orange =  Color( 1, 0.65, 0, 1 );
+	red = Color( 1, 0, 0, 1 );
+	if (satifaction < 70){
+			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(orange)
+	}
+	if (satifaction < 33){
+			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(red)
+	}
+}
+
+

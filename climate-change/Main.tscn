@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Resources/Mall.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Font.tres" type="DynamicFont" id=12]
 [ext_resource path="res://Box.tres" type="StyleBox" id=13]
+[ext_resource path="res://RingTexture.png" type="Texture" id=15]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -128,9 +129,11 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="2Dworld/Slider"]
-margin_top = -1.49829
-margin_right = 201.0
-margin_bottom = 68.5017
+margin_left = 20.0801
+margin_top = 4.19507
+margin_right = 221.08
+margin_bottom = 74.1951
+rect_pivot_offset = Vector2( 108.465, 27.7958 )
 custom_fonts/font = ExtResource( 12 )
 text = "GAME SPEED "
 align = 2
@@ -314,6 +317,43 @@ margin_bottom = 624.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "VALIDE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Infographics" type="Node2D" parent="2Dworld"]
+position = Vector2( 1658.04, 38.8548 )
+
+[node name="Satisfaction" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 109.844
+margin_top = -38.2587
+margin_right = 609.844
+margin_bottom = 461.741
+rect_scale = Vector2( 0.3, 0.3 )
+min_value = 1.0
+value = 44.0
+rounded = true
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 0.403922, 0.403922, 0.403922, 1 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CO2" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 109.8
+margin_top = 121.201
+margin_right = 609.8
+margin_bottom = 621.201
+rect_scale = Vector2( 0.3, 0.3 )
+value = 20.0
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 0.403922, 0.403922, 0.403922, 1 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
