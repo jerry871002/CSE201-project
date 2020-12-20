@@ -28,5 +28,5 @@ This week I worked mostly on trying to update the traffic array class – now I 
 Now I can add both 1x1 and 2x2 buildings recomputing how the car moves. Next week I am going to work on implementing the economics of the game..
 
 Luca:
-This week, I continued working on the 2D menu to plot my graphs and I had to make changes in some functions that edit csv files in order to have a first descriptive line in each of the files.
+This week, I continued working on the 2D menu to plot my graphs and I had to make changes in some functions that edit csv files in order to have a first descriptive line in each of them.
 I still have some bugs in my graphs and I plan to fix them next week.
