@@ -69,6 +69,7 @@ namespace godot {
 		double return_energySupply();
 		double return_healthcare();
 		double return_needs();
+		double return_totalSatisfaction;
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
@@ -97,6 +98,7 @@ namespace godot {
 		double energySupply;
 		double healthcare;
 		double needs;
+		double totalSatisfaction;
 		// used for caculating in-game time
 		
 		float delta_counter; // accumulate delta from `_physics_process` function

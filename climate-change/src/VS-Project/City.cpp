@@ -43,6 +43,7 @@ City::City() {
 	healthcare = 0;
     needs = 0;
 	timer = 0;
+	totalSatisfaction = 100;
 
 	time_speed = 1;
 	delta_counter = 0.0;
@@ -390,6 +391,10 @@ double City::return_income() {
 	return income;
 }
 
+double City::return_totalSatisfaction() {
+	return totalSatisfaction;
+}
+
 double City::return_numberOfEmployees() {
     return numberOfEmployees;
 }
@@ -485,14 +490,15 @@ std::string City::return_game_date() {
 
 }
 
+
 void City::update_satisfaction_color() {
 	green = Color( 0, 1, 0, 1 );
 	orange =  Color( 1, 0.65, 0, 1 );
 	red = Color( 1, 0, 0, 1 );
-	if (satifaction < 70){
+	if (totalSatisfaction < 70){
 			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(orange)
 	}
-	if (satifaction < 33){
+	if (totalSatisfaction < 33){
 			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(red)
 	}
 }

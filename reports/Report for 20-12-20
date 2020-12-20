@@ -1,0 +1,9 @@
+Paloma :
+This week I restructured the objects' code together with Antoine and Eliott. I found the data and coded the variables we need for implementing solar panels and rooftop wind
+turbines. I started working on the Services and Goods factories classes and created a document in which we are adding the policies which we are going to implement in the simulation.
+I now need to finsih coding the Services and Factories classes, add randomness in the energy class which is otherwise done and help deciding and implementing policies with the 
+simulation team. 
+
+Arthur: 
+This week I worked on displaying the indexes on the interface. I added two infographs that display CO2 emissions and also satisfaction level so the user can keep up with what is going on in the city. 
+I will continue working on this next week as I am not quite done. 
