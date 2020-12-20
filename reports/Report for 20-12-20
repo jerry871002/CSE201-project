@@ -11,3 +11,10 @@ I will continue working on this next week as I am not quite done.
 Saga:
 This week, I recoded the housing class with the new structure of our objects, and I continued my research on Production class.
 I started coding the agriculture class, in particular for meat production.
+
+Eliott:
+This week I implemented the 2d menu with Ambroise, implementing the time slider, the input and the get method using godot binds, and all the policies button. 
+I also helped restructuring all the classes and worked on the problem of getting functions and variables from other classes. I continued my work on cars, created 
+our godot template with the fonts and..ect I designed the buildind, bus, high house, and the factory assets. I also worked with a friend in eco and we designed the
+simulation to compute the proportion of each type of transport in the city depending on the environnement variables. 
+Next week I m gonna implement bikes, fields, help for the policies....
