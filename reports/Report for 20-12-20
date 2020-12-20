@@ -30,3 +30,6 @@ Now I can add both 1x1 and 2x2 buildings recomputing how the car moves. Next wee
 Luca:
 This week, I continued working on the 2D menu to plot my graphs and I had to make changes in some functions that edit csv files in order to have a first descriptive line in each of them.
 I still have some bugs in my graphs and I plan to fix them next week.
+
+Anna:
+This week I made some modifications to the Transport in order for it to meet the requierement to the new developed structure of classes. I also researched about wheat agricultural production and started implementing this class, in the following weeks I am planning to continue working on it.
