@@ -31,6 +31,9 @@ String godot::AgriculturalProduction::class_name()
 AgriculturalProduction::AgriculturalProduction() {
 	int type = rand()%3;
 	agriculture_type(type);
+	employment = 50;
+	
+	
 }
 
 AgriculturalProduction::~AgriculturalProduction() {}
@@ -41,6 +44,15 @@ void AgriculturalProduction::simulate_step(double days)
 		case(0):{ // wheat
 
 		break;
+		}
+
+		switch(agricultureType){ 
+			//requiredLand =;
+			CO2Emission = 27144; // co2 output per day for meat production in city
+			waterConsumption = 31135;
+			production = 1415;
+			energyUse = 0;
+			environmentalCost = 0;
 		}
 }
 }
@@ -54,6 +66,12 @@ void AgriculturalProduction::agriculture_type(int type){
 
 		break;
 		}
+
+		case 1: { // meat
+			
+			break;
+		}
+
 
 	}
 }
