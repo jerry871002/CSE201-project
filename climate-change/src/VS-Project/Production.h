@@ -60,8 +60,8 @@ namespace godot {
 		bool pesticide; // true if pesticides are used
 		bool GMO; // true if GMO is used
 		bool fertilizer; // true if fertilizer is used
-		double requiredLand; //size of the field in m^2
-		double fertility; //per m^2 output
+		double requiredLand; //size of the field in km^2
+		double fertility; //per km^2 output
 		double production; //how much output per day
 
 

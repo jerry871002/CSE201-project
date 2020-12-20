@@ -43,6 +43,13 @@ void AgriculturalProduction::simulate_step(double days)
 	switch(agricultureType){
 		case(0):{ // wheat
 
+			// random device class instance, source of 'true' randomness for initializing random seed
+    		std::random_device rd;
+    		std::mt19937 gen(rd());
+			std::normal_distribution <double> wheatfieldsize(1.74, 0.04);
+			requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
+			
+
 		break;
 		}
 
