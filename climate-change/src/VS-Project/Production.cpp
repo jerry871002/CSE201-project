@@ -2,7 +2,7 @@
 #include <GodotGlobal.hpp>
 #include <core/Godot.hpp>
 #include <Math.hpp>
-
+#include <random>
 using namespace godot;
 
 String godot::Production::class_name()
@@ -29,12 +29,45 @@ String godot::AgriculturalProduction::class_name()
 }
 
 AgriculturalProduction::AgriculturalProduction() {
+	int type = rand()%3;
+	agriculture_type(type);
 }
 
 AgriculturalProduction::~AgriculturalProduction() {}
 
 void AgriculturalProduction::simulate_step(double days)
 {
+	switch(agricultureType){
+		case(0):{ // wheat
+
+		break;
+		}
+}
+}
+AgriculturalProduction::AgriculturalProduction(int type){
+	agriculture_type(type);
+}
+void AgriculturalProduction::agriculture_type(int type){
+	agricultureType= type; // 0 - wheat, 1 - meat, 2 - vegetables
+	switch(agricultureType){
+		case(0):{ // wheat
+
+		break;
+		}
+
+	}
+}
+double AgriculturalProduction::get_satisfaction(){
+	return this->satisfaction;
+}
+double AgriculturalProduction::get_co2emissions(){
+	return this->CO2Emission;
+}		
+double AgriculturalProduction::get_energyuse(){
+	return this->energyUse;
+}
+double AgriculturalProduction::get_environmentalcost(){
+	return 0;
 }
 
 /// <summary>
@@ -47,6 +80,8 @@ String godot::GoodsFactories::class_name()
 }
 
 GoodsFactories::GoodsFactories() {
+	employment = 8000; // number of employees of the whole city in the manufacturing/industry sector 
+	CO2Emission = 850000; //kg of CO2 emitted per day across the manufacturing/industry sector 
 }
 
 GoodsFactories::~GoodsFactories() {}
@@ -65,6 +100,7 @@ String godot::Services::class_name()
 }
 
 Services::Services() {
+	employment = 30000; // number of employees of the whole city in the service sector 
 }
 
 Services::~Services() {}

@@ -14,7 +14,7 @@
 #include <ctime>
 #include <random>
 
-# define M_PI 3.14159265358979323846  /* pi */
+//# define M_PI 3.14159265358979323846  /* pi */
 
 namespace godot {
     class Structure : public StaticBody {
@@ -23,6 +23,7 @@ namespace godot {
         bool Clickable;
     public:
         bool MenuVisible;
+        bool PanelsOn {false};
 
         static void _register_methods();
         virtual void _init();

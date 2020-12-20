@@ -2,6 +2,9 @@
 #include <GodotGlobal.hpp>
 #include <core/Godot.hpp>
 #include <Math.hpp>
+#include <SceneTree.hpp>
+#include <Viewport.hpp>
+#include "City.h"
 
 using namespace godot;
 
@@ -138,7 +141,7 @@ String godot::Windmill::class_name()
 }
 
 Windmill::Windmill() {
-	turnSpeed = 2;
+	turnSpeed = 1;
 
 	requiredLand = 0;
 	age = 0;
@@ -156,8 +159,8 @@ Windmill::~Windmill() {}
 
 void Windmill::_process(float delta)
 {
-	rot += delta * turnSpeed;
-	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -130, (180 / M_PI) * rot));
+	rot += delta * turnSpeed * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"));
+	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
 }
 
 void Windmill::simulate_step(double days)
@@ -289,7 +292,7 @@ void CoalPowerPlant::simulate_step(double days)
 	}
 
 	coal += 4.06E-4 * energyPerDay * days;
-	CO2Emission += 0.768 * energyPerDay * days;
+	CO2Emission += 0.868 * energyPerDay * days;
 	SO2Emission += 0.00152 * energyPerDay * days;
 	NOxEmission += 8.49E-4 * energyPerDay * days;
 	ashOutput += 0.0619 * energyPerDay * days;

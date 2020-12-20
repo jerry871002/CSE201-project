@@ -25,9 +25,8 @@
 
 /* current test fct using main_loop.cpp on mac:
 
-g++ -std=c++17 main_loop.cpp Restaurant.cpp obj.cpp City.cpp -ILibraries/godot-cpp-bindings/godot_headers
--ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen
--LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
+g++ -std=c++17 main_loop.cpp obj.cpp edit_text_files.cpp City.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
+
 
 then run:
 ./a.out
@@ -54,7 +53,6 @@ namespace godot {
 		void _on_Game_Speed_changed();
 
 		String active_button;
-
 
 
 		std::vector<Structure*> buildings;
@@ -87,6 +85,7 @@ namespace godot {
 		*/
 
 		bool ClickActive{ false };
+		float time_speed = 1; // 1 for regular speed (1 in-game day per second)
 
 	private:
 		// city indices
@@ -99,7 +98,7 @@ namespace godot {
 		double healthcare;
 		double needs;
 		// used for caculating in-game time
-		float time_speed; // 1 for regular speed (1 in-game day per second)
+		
 		float delta_counter; // accumulate delta from `_physics_process` function
 		int64_t timer;       // helper data to see if `delta_counter` have carry on units digit
 		int day_tick; // this variable keeps track of the in-game days, 

@@ -38,8 +38,8 @@ Finally, I will work on developing the menu that will allow the player to implem
 
 Eliott:
 This week I continued my work on car collision and looked over all the different functions of Godot, I implemented a way to get the data attributes of all elements
-from the city class, I designed the windmill, and the powerplant (including animation and smoke system) and I am working on the menu for the 3d world. Next week, I
-am gonna finish this menu, help design the 2D menu, work on the red lights for cars (or improve collisions) and implement the time slider on the 3D world.
+from the city class, I designed the windmill, and the powerplant (including animation and smoke system) and I am working on the menu for the 3d world. I also helped Antoine and restructured all classes
+. Next week, I am gonna finish this menu, help design the 2D menu, work on the red lights for cars (or improve collisions) and implement the time slider on the 3D world.
 
 Vincent:
 This week I continued working on getting the simulated variables and attributes to work together with their graphical representation, and on the time mechanism working properly. I coordinated the simulation team's work on the car system and data outputting system.

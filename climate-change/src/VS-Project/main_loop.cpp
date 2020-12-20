@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <set>
 #include "Restaurant.h"
+#include "Player.h"
+#include "Transport.h"
 #include "obj.h"
 #include "City.h"
 #include "edit_text_files.cpp"
@@ -14,8 +16,9 @@
 #include <unistd.h>
 #endif
 
-int main()
-{
+using namespace godot;
+
+int main() {
     City c = City();
 
     while (true) {
