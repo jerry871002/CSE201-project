@@ -18,3 +18,8 @@ I also helped restructuring all the classes and worked on the problem of getting
 our godot template with the fonts and..ect I designed the buildind, bus, high house, and the factory assets. I also worked with a friend in eco and we designed the
 simulation to compute the proportion of each type of transport in the city depending on the environnement variables. 
 Next week I m gonna implement bikes, fields, help for the policies....
+
+
+Antoine:
+This week I worked on re-structuring all of the objects code alongside Paloma and Elliot. This also us to simply our overall project, reducing the total number of files we have for different objects. I then had to re-create my test file for the Shop branch and all the sub classes included within Shop and this led to some debugging. I will continue to work on the project over the holidays.
+
