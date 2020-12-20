@@ -491,16 +491,3 @@ std::string City::return_game_date() {
 }
 
 
-void City::update_satisfaction_color() {
-	green = Color( 0, 1, 0, 1 );
-	orange =  Color( 1, 0.65, 0, 1 );
-	red = Color( 1, 0, 0, 1 );
-	if (totalSatisfaction < 70){
-			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(orange)
-	}
-	if (totalSatisfaction < 33){
-			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(red)
-	}
-}
-
-
