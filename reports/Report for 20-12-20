@@ -15,7 +15,7 @@ I started coding the agriculture class, in particular for meat production.
 Eliott:
 This week I implemented the 2d menu with Ambroise, implementing the time slider, the input and the get method using godot binds, and all the policies button. 
 I also helped restructuring all the classes and worked on the problem of getting functions and variables from other classes. I continued my work on cars, created 
-our godot template with the fonts and..ect I designed the buildind, bus, high house, and the factory assets. I also worked with a friend in eco and we designed the
+our godot template with the fonts and..ect I designed the buildind, bus, high house, and the factory assets. I also worked with a friend in economics and we designed the
 simulation to compute the proportion of each type of transport in the city depending on the environnement variables. 
 Next week I m gonna implement bikes, fields, help for the policies....
 
@@ -37,4 +37,9 @@ Samuel:
 This week, I managed to finish writing the statistics in csv files for every day that passed. Moreover, the statistics get deleted after 30 days in the corresponding file accounting for every year.
 At the same time, all days of the current year are kept in record in order to compute an average per year that gets written into a separate file. Further, I managed to implement a new algorithm computing
 the date in an easier mathematical way based on the ticks (corresponding to a turn in the game) using Julian's number. Using this algorithm I also managed to implement leap years every four years.
-I am now working on couting up all the values of the objects into the final counters in the city class, this includes coming up with adequate formulas.
+I am now working on counting up all the values of the objects into the final counters in the city class, this includes coming up with adequate formulas.
+
+Vincent:
+This week my main issue was finding how to access attributes and methods in different classes in c++ through the Godot engine. This issue would have been very dangerous for our project as a whole if it wasn't fixed. However, we now believe that we found the issue.
+I further worked on finding why adding buildings to the simulation sometimes caused it to crash (still not fixed) and on adding details to the City class. 
+Lastly, and this is the main issue I will work on during the holidays and the foreseeable future, I want all the City variables (which should now finally be able to be updated and gotten as expected) to be successfully counted up.
