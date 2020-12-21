@@ -48,3 +48,13 @@ Jerry:
 This week I worked on resolving the circular dependency issue between City and Transport. 
 And also working on creating a document that explains all the interactions between objects in our city and also thinks about what policy we can implement.
 Next week I work on 
+
+Ambroise:
+This week I programmed the 2d menu with Eliott, the buttons to execute policies and the box that the user will use to input selected values for the policies he choses to implement. 
+The challenge here was to be able to link the input to the corresponding policy, which we will do by storing the id of the last button clicked. 
+This will reduce the number of objects needed on the interface and avoid using Godot signals which become messy as they can only be applied to specific objects.
+I also programmed some specific aspects of the menu (button display position, size, mouse controls) that will contribute to an enhanced user experience. 
+I implemented an info box where we will be able to display specific data about each object upon clicking. 
+A main challenge I encountered was to allow the getting and setting of properties for different objects from completely different objects. 
+This was solved last Friday by programming the registering of object properties in Godot, for example the game speed which is now used by cars and the wind turbine. 
+Next week I will continue working with Eliott on policy implementation through our interface and programming additional assets, and will work with the simulation team to link the overall simulation to the Godot engine. 
