@@ -43,3 +43,8 @@ Vincent:
 This week my main issue was finding how to access attributes and methods in different classes in c++ through the Godot engine. This issue would have been very dangerous for our project as a whole if it wasn't fixed. However, we now believe that we found the issue.
 I further worked on finding why adding buildings to the simulation sometimes caused it to crash (still not fixed) and on adding details to the City class. 
 Lastly, and this is the main issue I will work on during the holidays and the foreseeable future, I want all the City variables (which should now finally be able to be updated and gotten as expected) to be successfully counted up.
+
+Jerry:
+This week I worked on resolving the circular dependency issue between City and Transport. 
+And also working on creating a document that explains all the interactions between objects in our city and also thinks about what policy we can implement.
+Next week I work on 
