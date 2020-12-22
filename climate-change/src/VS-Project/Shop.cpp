@@ -158,7 +158,7 @@ void Shop::simulate_step(double days){
     std::cout << "DEBUG: SHOP SIMULATION" << std::endl;
     
 
-    std::cout << "DEBUG: panels " << panels_age << "  *panels" << *panels_age <<  " this panel  " << this->panels_age <<  std::endl;
+    std::cout << "DEBUG: panels " << panels_age << "  *panels" << *panels_age << std::endl; //   IMPORTANT : this->panels_age  causes a crash in Godot!
 
     if (*panels_age == 0) {
         

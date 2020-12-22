@@ -71,7 +71,7 @@ void City::_register_methods()
 	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
 	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
 	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
-
+	register_method((char*)"add_shop", &City::add_shop);
 	
 	register_property<City, float>("time_speed", &City::time_speed, 1.0);
 };
@@ -161,25 +161,24 @@ void City::_ready()
 	{
 		
 				// randomly choose between restaurant and shop
-
-				std::cout << "DEBUG: restaurant before instanciating " << std::endl;
-				Node* node = RestaurantScene->instance();
+				std::cout << "DEBUG: shop before instanciating " << std::endl;
+				Shop* node = (Shop*)ShopScene->instance();
 				
 
 				// REMOVE COMMENT ONCE INITIALIZE COMMAND IS CREATED
 				// ((Restaurant*)node)->Restaurant::initialize();
 
 				//Node* node = RestaurantScene->instance();
-				std::cout << "DEBUG: restaurant instanciating " << std::endl;
-				node->set("scale", Vector3(10, 10, 10));
-				node->set("translation", Vector3(0, 0, 0));
+				std::cout << "DEBUG: shop instanciating " << std::endl;
+				((Node*)node)->set("scale", Vector3(10, 10, 10));
+				((Node*)node)->set("translation", Vector3(0, 0, 0));
 				//int rot = rand() % 2;
-				//node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
-				this->add_child(node);
+
+				this->add_child((Node*)node);
 
 				// REMOVE COMMENT ONCE INHERITANCE IS FIXED
 				this->add_shop((Shop*)node);
-				std::cout << "DEBUG: restaurant added to city your mom fat " << std::endl;
+				std::cout << "DEBUG: restaurant added to city " << std::endl;
 
 	}
 	
@@ -187,7 +186,7 @@ void City::_ready()
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
 		// TODO: This loop is only going to run once, maybe remove the loop?
-		for (int z = 0; z < 1; z++) // Car removed to test
+		for (int z = 0; z < 0; z++) // Car removed to test
 		{
 			// randomly choose between bugatti and chiron
 
@@ -406,8 +405,9 @@ void City::simulation() {
 		(*it)->simulate_step(); //function that updates the building
 
 		*/
+
 		if (day_tick % 15 == 0) {
-			((Restaurant*)*it)->Restaurant::simulate_step(15.0);
+			((Shop*)*it)->Shop::simulate_step(15.0);
 		}
 	}
 	/*
@@ -447,11 +447,17 @@ void City::simulation() {
 					location_covered = true;
 					break;
 				}
-
 			}
 			
 		}
-		add_restaurant_to_city(temp);
+		int spawn = rand() % 2;
+		switch (spawn) {
+		case 0:add_restaurant_to_city(temp);
+			break;
+		case 1: add_shop_to_city(temp);
+
+		}
+		
 	}
 	
 }
@@ -558,10 +564,42 @@ void City::add_restaurant_to_city(Vector3 position) {
 		//std::cout << "DEBUG: restaurant instanciating " << std::endl;
 		((Node*)node)->set("scale", Vector3(10, 10, 10));
 		((Node*)node)->set("translation", position);
-		//int rot = rand() % 2;
-		//node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
+		int rot = rand() % 2;
+		((Node*)node)->set("rotation_degrees", Vector3(0, 180 * rot, 0));
 		this->add_child((Node*)node);
 		
+		// REMOVE COMMENT ONCE INHERITANCE IS FIXED
+		this->add_shop((Shop*)node);
+		//std::cout << "DEBUG: restaurant added to city your mom fat " << std::endl;
+	}
+	else { std::cout << "DEBUG: Major error, restaurant scene not valid " << std::endl; }
+}
+
+
+void City::add_shop_to_city(Vector3 position) {
+
+	ResourceLoader* ResLo = ResourceLoader::get_singleton();
+	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
+	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
+	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
+	Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
+
+	if (RestaurantScene.is_valid())
+	{
+		std::cout << "DEBUG: add_shop_to_city called " << std::endl;
+		Shop* node = (Shop*)ShopScene->instance();
+
+		// REMOVE COMMENT ONCE INITIALIZE COMMAND IS CREATED
+		//((Shop*)node)->Shop::initialize();
+
+		//Node* node = RestaurantScene->instance();
+		//std::cout << "DEBUG: restaurant instanciating " << std::endl;
+		((Node*)node)->set("scale", Vector3(10, 10, 10));
+		((Node*)node)->set("translation", position);
+		int rot = rand() % 2;
+		((Node*)node)->set("rotation_degrees", Vector3(0, 180 * rot, 0));
+		this->add_child((Node*)node);
+
 		// REMOVE COMMENT ONCE INHERITANCE IS FIXED
 		this->add_shop((Shop*)node);
 		//std::cout << "DEBUG: restaurant added to city your mom fat " << std::endl;

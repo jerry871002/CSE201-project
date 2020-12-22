@@ -82,6 +82,7 @@ namespace godot {
 		std::vector<Transport*> all_transports;
 
 		void add_restaurant_to_city(Vector3); // 
+		void add_shop_to_city(Vector3);
 		void add_shop(Shop*);                 // adds a shop to the shop list
 		void add_car();                       // adds transport object to city
 
