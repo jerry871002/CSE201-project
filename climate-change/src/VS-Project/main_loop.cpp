@@ -1,18 +1,16 @@
-#include "obj.h"
-#include "City.h"
-#include "edit_text_files.cpp"
+//#include "edit_text_files.cpp"
 
 #include <core/Godot.hpp>
 #include <iostream>
 #include <cstdlib>
 #include <set>
 
-#include "Restaurant.h"
+// #include "Restaurant.h"  we don't use this file anymore !!!!!
 #include "Player.h"
 #include "Transport.h"
 #include "obj.h"
 #include "City.h"
-#include "edit_text_files.cpp"
+// #include "edit_text_files.cpp"   please comment this line out when pushing to git cause it blows up the godot project right now
 
 
 // Sleep(miliseconds) on Windows and sleep(seconds) on linux/mac

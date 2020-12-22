@@ -99,7 +99,7 @@ namespace godot {
 		double return_energySupply();
 		double return_healthcare();
 		double return_needs();
-		double return_totalSatisfaction;
+		double return_totalSatisfaction();
 
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
@@ -130,7 +130,7 @@ namespace godot {
 		
 		//used for caculating in-game time
 
-		float time_speed; // 1 for regular speed (1 in-game day per second)
+		
 // city indices
 		double income;
 		double population;
