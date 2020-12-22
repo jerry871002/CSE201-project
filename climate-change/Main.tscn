@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Resources/Mall.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Font.tres" type="DynamicFont" id=12]
 [ext_resource path="res://Box.tres" type="StyleBox" id=13]
+[ext_resource path="res://RingTexture.png" type="Texture" id=15]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -62,22 +63,33 @@ script = ExtResource( 1 )
 environment = ExtResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="3Dworld/WorldEnvironment"]
-transform = Transform( 0.737796, -0.477997, 0.47663, 0, 0.706094, 0.708118, -0.675024, -0.522447, 0.520953, 0, 30.4054, 0 )
+transform = Transform( 0.737796, -0.477997, 0.47663, 0, 0.706094, 0.708118, -0.675024, -0.522447, 0.520953, 0, 136.034, 0 )
+light_color = Color( 1, 0.882353, 0.85098, 1 )
+light_energy = 2.0
 shadow_enabled = true
 shadow_bias = 0.0
 directional_shadow_max_distance = 1000.0
 
-[node name="KinematicBody" type="KinematicBody" parent="3Dworld"]
+[node name="DirectionalLight2" type="DirectionalLight" parent="3Dworld/WorldEnvironment"]
+transform = Transform( -0.208031, 0.692626, -0.690646, 0, 0.706094, 0.708118, 0.978122, 0.147311, -0.14689, -3.895, 0, -3.493 )
+light_color = Color( 0.101961, 0.329412, 0.568627, 1 )
+light_energy = 0.15
+light_indirect_energy = 0.0
+light_specular = 0.0
+shadow_bias = 0.0
+directional_shadow_max_distance = 1000.0
+
+[node name="Player" type="KinematicBody" parent="3Dworld"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5638, 33.7579, 82.5155 )
 script = ExtResource( 4 )
 
-[node name="ClippedCamera" type="ClippedCamera" parent="3Dworld/KinematicBody"]
+[node name="ClippedCamera" type="ClippedCamera" parent="3Dworld/Player"]
 transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0 )
 environment = ExtResource( 2 )
 fov = 35.0
 far = 1000.0
 
-[node name="CollisionShape" type="CollisionShape" parent="3Dworld/KinematicBody"]
+[node name="CollisionShape" type="CollisionShape" parent="3Dworld/Player"]
 transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, -1.5638, -0.58039, -6.59145 )
 shape = SubResource( 1 )
 
@@ -128,9 +140,11 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="2Dworld/Slider"]
-margin_top = -1.49829
-margin_right = 201.0
-margin_bottom = 68.5017
+margin_left = 20.0801
+margin_top = 4.19507
+margin_right = 221.08
+margin_bottom = 74.1951
+rect_pivot_offset = Vector2( 108.465, 27.7958 )
 custom_fonts/font = ExtResource( 12 )
 text = "GAME SPEED "
 align = 2
@@ -313,15 +327,50 @@ margin_right = 1120.0
 margin_bottom = 624.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
-text = "VALIDE"
+text = "CONFIRM"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Infographics" type="Node2D" parent="2Dworld"]
+position = Vector2( 1658.04, 38.8548 )
+
+[node name="Satisfaction" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 109.844
+margin_top = -38.2587
+margin_right = 609.844
+margin_bottom = 461.741
+rect_scale = Vector2( 0.3, 0.3 )
+min_value = 1.0
+value = 44.0
+rounded = true
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 0.403922, 0.403922, 0.403922, 1 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CO2" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 109.8
+margin_top = 121.201
+margin_right = 609.8
+margin_bottom = 621.201
+rect_scale = Vector2( 0.3, 0.3 )
+value = 20.0
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 0.403922, 0.403922, 0.403922, 1 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
-[connection signal="visibility_changed" from="2Dworld/Menus/MenuShop" to="3Dworld/KinematicBody" method="_on_MenuShop_visibility_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
-[connection signal="visibility_changed" from="2Dworld/PoliciesInput" to="3Dworld/KinematicBody" method="_on_PoliciesInput_visibility_changed" binds= [ false ]]
 [connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]

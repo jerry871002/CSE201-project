@@ -1,0 +1,60 @@
+Paloma :
+This week I restructured the objects' code together with Antoine and Eliott. I found the data and coded the variables we need for implementing solar panels and rooftop wind
+turbines. I started working on the Services and Goods factories classes and created a document in which we are adding the policies which we are going to implement in the simulation.
+I now need to finsih coding the Services and Factories classes, add randomness in the energy class which is otherwise done and help deciding and implementing policies with the 
+simulation team. 
+
+Arthur: 
+This week I worked on displaying the indexes on the interface. I added two infographs that display CO2 emissions and also satisfaction level so the user can keep up with what is going on in the city. 
+I will continue working on this next week as I am not quite done. 
+
+Saga:
+This week, I recoded the housing class with the new structure of our objects, and I continued my research on Production class.
+I started coding the agriculture class, in particular for meat production.
+
+Eliott:
+This week I implemented the 2d menu with Ambroise, implementing the time slider, the input and the get method using godot binds, and all the policies button. 
+I also helped restructuring all the classes and worked on the problem of getting functions and variables from other classes. I continued my work on cars, created 
+our godot template with the fonts and..ect I designed the buildind, bus, high house, and the factory assets. I also worked with a friend in economics and we designed the
+simulation to compute the proportion of each type of transport in the city depending on the environnement variables. 
+Next week I m gonna implement bikes, fields, help for the policies....
+
+Antoine:
+This week I worked on re-structuring all of the objects code alongside Paloma and Elliot. This also us to simply our overall project, reducing the total number of files we have for different objects. I then had to re-create my test file for the Shop branch and all the sub classes included within Shop and this led to some debugging. I will continue to work on the project over the holidays.
+
+Yury:
+This week I worked mostly on trying to update the traffic array class – now I removed most of the problems that I encountered last time.
+Now I can add both 1x1 and 2x2 buildings recomputing how the car moves. Next week I am going to work on implementing the economics of the game..
+
+Luca:
+This week, I continued working on the 2D menu to plot my graphs and I had to make changes in some functions that edit csv files in order to have a first descriptive line in each of them.
+I still have some bugs in my graphs and I plan to fix them next week.
+
+Anna:
+This week I made some modifications to the Transport in order for it to meet the requierement to the new developed structure of classes. I also researched about wheat agricultural production and started implementing this class, in the following weeks I am planning to continue working on it.
+
+Samuel:
+This week, I managed to finish writing the statistics in csv files for every day that passed. Moreover, the statistics get deleted after 30 days in the corresponding file accounting for every year.
+At the same time, all days of the current year are kept in record in order to compute an average per year that gets written into a separate file. Further, I managed to implement a new algorithm computing
+the date in an easier mathematical way based on the ticks (corresponding to a turn in the game) using Julian's number. Using this algorithm I also managed to implement leap years every four years.
+I am now working on counting up all the values of the objects into the final counters in the city class, this includes coming up with adequate formulas.
+
+Vincent:
+This week my main issue was finding how to access attributes and methods in different classes in c++ through the Godot engine. This issue would have been very dangerous for our project as a whole if it wasn't fixed. However, we now believe that we found the issue.
+I further worked on finding why adding buildings to the simulation sometimes caused it to crash (still not fixed) and on adding details to the City class. 
+Lastly, and this is the main issue I will work on during the holidays and the foreseeable future, I want all the City variables (which should now finally be able to be updated and gotten as expected) to be successfully counted up.
+
+Jerry:
+This week I worked on resolving the circular dependency issue between City and Transport. 
+And also working on creating a document that explains all the interactions between objects in our city and also thinks about what policy we can implement.
+Next week I work on 
+
+Ambroise:
+This week I programmed the 2d menu with Eliott, the buttons to execute policies and the box that the user will use to input selected values for the policies he choses to implement. 
+The challenge here was to be able to link the input to the corresponding policy, which we will do by storing the id of the last button clicked. 
+This will reduce the number of objects needed on the interface and avoid using Godot signals which become messy as they can only be applied to specific objects.
+I also programmed some specific aspects of the menu (button display position, size, mouse controls) that will contribute to an enhanced user experience. 
+I implemented an info box where we will be able to display specific data about each object upon clicking. 
+A main challenge I encountered was to allow the getting and setting of properties for different objects from completely different objects. 
+This was solved last Friday by programming the registering of object properties in Godot, for example the game speed which is now used by cars and the wind turbine. 
+Next week I will continue working with Eliott on policy implementation through our interface and programming additional assets, and will work with the simulation team to link the overall simulation to the Godot engine. 

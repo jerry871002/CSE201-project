@@ -18,11 +18,16 @@ String godot::Transport::class_name()
 }
 
 // helper functions
-void compute_speed(double& Speed, double Acc, float delta) {
-    if ((Speed <= 0.8 && Acc > 0) or (Acc < 0 and Speed + Acc * delta > 0.1)) {
-        // Define max speed and min speed
+void compute_speed(double& Speed, double &Acc, float delta, Vector3 prevPos, Vector3 pos) {
+    //Speed = (pos - prevPos).dot((pos - prevPos).normalized()) / (10 * delta);
+    if ((Speed <= 0.8 && Acc > 0) or (Acc < 0 and Speed + Acc * delta > 0.2)) {
         Speed += Acc * delta;
     }
+    else if (Acc < 0 && Speed < 0.2) {
+        Acc = 0.1;
+        Speed += Acc * delta;
+    }
+
 }
 
 void ComputeAcceleration(double& Acc, double Speed0, double Speed1, double d) {
@@ -223,16 +228,22 @@ void Transport::_init() {
 
 void Transport::_ready() {
     prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
-    myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
+    prevPositionVec = this->get_global_transform().get_origin();
+    myCity = (City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")));
+
 }
 
 
 void Transport::_process(float delta) {
-    // Position bug to implement
+    prevPositionVec = this->get_global_transform().get_origin();
    
-
+   
     if (rot >= (M_PI / 2)) {
-        straight(delta);
+        
+        int gameSpeed = myCity->get("time_speed");
+        std::cout << gameSpeed << "pointer timespeed transport" << endl;
+        if (gameSpeed != 0) { straight(delta); }
+       
         Vector3 p = this->get_global_transform().get_origin();
         switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the car on the road if problems
         case 0: this->set("translation", Vector3(p.x, 0, p.z + 28 - fmod(p.z + 28, 30) - 13)); break;
@@ -240,9 +251,6 @@ void Transport::_process(float delta) {
         case 3: this->set("translation", Vector3(p.x + 2 - fmod(p.x + 2, 30) + 13, 0, p.z)); break;
         case 1: this->set("translation", Vector3(p.x + 28 - fmod(p.x + 28, 30) - 13, 0, p.z)); break;
         default: break; }
-
-
-        //prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
 
         int real_rot = round(this->get_rotation_degrees().y / 90);
 
@@ -254,28 +262,28 @@ void Transport::_process(float delta) {
             ComputeAcceleration(Acc, SPEED_T, 0.7, 4);
         }
 
-        compute_speed(SPEED_T, Acc, delta);
+        
 
-        if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
+        if (position >= 22 ) {
             Acc = 0.5;	rot = 0;
             round_position(this, motion);
             center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z) * Turn_R * dir;
         }
     }
-    else if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
+    else if (position >= 22) {
 
-        compute_speed(SPEED_T, Acc, delta);
+
         Vector3 globalSpeed = Vector3((SPEED_T * 10 *delta), 0, 0);
         globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
         
 
-        if (this->move_and_collide(Vector3(), true, true, true) == NULL) { //No collision
+        if (this->move_and_collide(globalSpeed, true, true, true) == NULL) { //No collision
             turn(dir, delta);
         }
         else {
             
-            Vector3 colliderVelocity = this->move_and_collide(Vector3(), true, true, true)->get_collider_velocity();
-            if (fmod(((Transport*)(this->move_and_collide(Vector3(), true, true, true)->get_collider()))->get_rotation_degrees().y + 360, 90) != 0) { //Car not on a straight line
+            Vector3 colliderVelocity = this->move_and_collide(globalSpeed, true, true, true)->get_collider_velocity();
+            if (fmod(((Transport*)(this->move_and_collide(globalSpeed, true, true, true)->get_collider()))->get_rotation_degrees().y + 360, 90) != 0) { //Car not on a straight line
                 if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
                     turn(dir, delta);
                 }
@@ -291,20 +299,21 @@ void Transport::_process(float delta) {
             round_position(this, motion);
             
             switch (dir) {
-            case -1: position = 8; break;
             case 0: position = -8; break;
             default: position = 4; break;
             }
-            prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - position;
 
+            prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - position;
             dir = get_direction(this->get_global_transform().get_origin() + Vector3(12, 0, 0).rotated(Vector3(0, 1, 0), this->get_rotation_degrees().y * (M_PI / 180)), this->get_rotation_degrees().y);
 
             switch (dir) {
-            case -1: Turn_R = 12; break;
+            case -1: Turn_R = 8; break;
             default: Turn_R = 4; break;
             }
         }
     }
+
+    compute_speed(SPEED_T, Acc, delta, prevPositionVec, this->get_global_transform().get_origin());
 }
 
 void Transport::simulate_step(double days) {
@@ -404,7 +413,7 @@ void Transport::simulate_step(double days) {
 }
 
 void Transport::turn(int dir, float delta) {
-    double drot = (SPEED_T * delta) * 10;
+    double drot = (SPEED_T * delta) * 10 ;
     if (dir == 1) { drot /= 4; }
     else { drot /= 12; }
     rot += drot;
@@ -450,9 +459,12 @@ int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90) + 4) % 4;
     vector<int> out;
 
-
     if ((int)round(pos.x / 30) >= sizeof(myCity->traffic) or (int)round(pos.z / 30) >= sizeof(myCity->traffic[0])) {
         std::cout << "out of the map" << endl;
+
+    
+    // this code was used before :  if ((int)round(pos.x / 30) >= sizeof(traffic) or (int)round(pos.z / 30) >= sizeof(traffic[0])) {
+
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         return(0);
     }

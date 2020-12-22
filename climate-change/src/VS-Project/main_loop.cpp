@@ -7,6 +7,13 @@
 #include <cstdlib>
 #include <set>
 
+#include "Restaurant.h"
+#include "Player.h"
+#include "Transport.h"
+#include "obj.h"
+#include "City.h"
+#include "edit_text_files.cpp"
+
 
 // Sleep(miliseconds) on Windows and sleep(seconds) on linux/mac
 #ifdef _WIN32
@@ -16,8 +23,9 @@
 #endif
 using namespace godot;
 
-int main()
-{
+using namespace godot;
+
+int main() {
     City c = City();
 
     while (true) {

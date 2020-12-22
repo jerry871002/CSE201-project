@@ -188,7 +188,7 @@ surfaces/4 = {
 }
 
 [sub_resource type="CapsuleShape" id=5]
-radius = 0.1
+radius = 0.15
 height = 0.35
 
 [node name="Bugatti2" type="KinematicBody"]
@@ -230,5 +230,5 @@ material/4 = null
 [node name="Timer" type="Timer" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.175, 0.1, 0 )
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.1, 0.1, 0 )
 shape = SubResource( 5 )

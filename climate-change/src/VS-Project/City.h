@@ -41,6 +41,7 @@ g++ -std=c++17 main_loop.cpp Restaurant.cpp obj.cpp City.cpp -ILibraries/godot-c
 -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen
 -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
 
+
 then run:
 ./a.out
 
@@ -76,6 +77,7 @@ namespace godot {
 
 		std::vector<Structure*> buildings; // still necessary ? check which functions use it
 
+
 		std::vector<Shop*> all_shops;
 		std::vector<Transport*> all_transports;
 
@@ -83,9 +85,7 @@ namespace godot {
 		void add_shop(Shop*);                 // adds a shop to the shop list
 		void add_car();                       // adds transport object to city
 
-		
 
-		void add_building(Structure*);
 		
 
 		void simulation();                    //updates all the stats abd the building
@@ -94,12 +94,12 @@ namespace godot {
 		// getter functions for city indices
 		double return_numberOfEmployees();
 
-        double return_carbonEmission();
-        double return_energyDemand();
-        double return_energySupply();
-        double return_healthcare();
-        double return_needs();
-		//int* return_traffic();
+		double return_carbonEmission();
+		double return_energyDemand();
+		double return_energySupply();
+		double return_healthcare();
+		double return_needs();
+		double return_totalSatisfaction;
 
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
@@ -122,23 +122,27 @@ namespace godot {
 		void update_traffic(int x, int y, bool newBuilding);
 
 		bool ClickActive{ false };
+		float time_speed = 1; // 1 for regular speed (1 in-game day per second)
 
 	private:
-		// city indices
+		
 
-        double income;
-        double population;
-        double numberOfEmployees;
-        double carbonEmission;
-        double energyDemand;
-        double energySupply; 
-        double healthcare;
-        double needs;
-		//transport related variable 
 		
 		//used for caculating in-game time
 
 		float time_speed; // 1 for regular speed (1 in-game day per second)
+// city indices
+		double income;
+		double population;
+		double numberOfEmployees;
+		double carbonEmission;
+		double energyDemand;
+		double energySupply;
+		double healthcare;
+		double needs;
+		double totalSatisfaction;
+		// used for caculating in-game time
+		
 		float delta_counter; // accumulate delta from `_physics_process` function
 		int64_t timer;       // helper data to see if `delta_counter` have carry on units digit
 		int day_tick; // this variable keeps track of the in-game days, 
