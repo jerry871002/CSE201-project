@@ -81,6 +81,7 @@ void Structure::_register_methods()
     register_method((char*)"_ready", &Structure::_ready);
     register_method((char*)"_on_Area_mouse_entered", &Structure::_on_Area_mouse_entered);
     register_method((char*)"_on_Area_mouse_exited", &Structure::_on_Area_mouse_exited);
+    register_method((char*)"simulate_step", &Structure::simulate_step);
 }
 
 void Structure::_init()

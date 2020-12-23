@@ -389,6 +389,7 @@ void City::simulation() {
 	*/
 	std::cout << return_game_date() << std::endl;
 
+	
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
 		/*
@@ -405,11 +406,14 @@ void City::simulation() {
 		(*it)->simulate_step(); //function that updates the building
 
 		*/
-
+		
 		if (day_tick % 15 == 0) {
 			((Shop*)*it)->Shop::simulate_step(15.0);
 		}
+		
 	}
+	
+
 	/*
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
 	{
@@ -426,6 +430,7 @@ void City::simulation() {
 
 
 		std::cout << "DEBUG: daytick mod 140 entered in simulation " << std::endl;
+
 		Vector3 temp = Vector3(0, 0, 0);
 		bool location_covered = true;
 		while (location_covered) {

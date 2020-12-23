@@ -131,6 +131,11 @@ String Shop::output_information()
     return this->Structure::output_information() + "\n SHOP: " + String(float(employment));
 }
 
+void godot::Shop::_register_method()
+{
+    register_method((char*)"simulate_step", &Shop::simulate_step);
+}
+
 double Shop::get_satisfaction(){
     return this->satisfaction;
 }

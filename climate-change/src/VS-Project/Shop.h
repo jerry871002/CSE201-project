@@ -35,6 +35,8 @@ namespace godot{
         void show_menu();
         virtual String output_information();
 
+        static void _register_method();
+
         
         // double supposed to represent yearly probability of panel appearing - this will be changed by policies
          
