@@ -6,6 +6,7 @@
 #include <Mesh.hpp>
 #include <Timer.hpp>
 #include <random>
+#include <AnimationPlayer.hpp>
 
 # define M_PI 3.14159265358979323846  /* pi */
 
@@ -496,4 +497,30 @@ double Transport::get_energyuse(){
 
 double Transport::get_environmentalcost(){
     return 0; //at least for now
+}
+
+Pedestrian::Pedestrian() {
+    player = (AnimationPlayer*)(this->get_child(0));
+}
+
+Pedestrian::~Pedestrian() {}
+
+void Pedestrian::_register_methods() {
+    register_method((char*)"_init", &Pedestrian::_init);
+    register_method((char*)"_process", &Pedestrian::_process);
+    register_method((char*)"_ready", &Pedestrian::_ready);
+}
+
+void Pedestrian::_init() {
+    
+}
+
+void Pedestrian::_ready() {
+    //player->set_autoplay("Walk");
+    //this->set("visible", false);
+}
+
+
+void Pedestrian::_process(float delta) {
+    move(Vector3(5, 0, 0));
 }

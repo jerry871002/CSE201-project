@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Resources/Mall.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Font.tres" type="DynamicFont" id=12]
 [ext_resource path="res://Box.tres" type="StyleBox" id=13]
+[ext_resource path="res://Resources/Pedestrian1.tscn" type="PackedScene" id=14]
 [ext_resource path="res://RingTexture.png" type="Texture" id=15]
 
 [sub_resource type="SphereShape" id=1]
@@ -101,6 +102,9 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
 
 [node name="StaticBody2" parent="3Dworld" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 15 )
+
+[node name="Pedestrian1" parent="3Dworld" instance=ExtResource( 14 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -8, 0, -9 )
 
 [node name="2D layer" type="Spatial" parent="."]
 

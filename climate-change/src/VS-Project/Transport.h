@@ -1,10 +1,10 @@
 #pragma once
 
-//#include "City.h"
 #include "obj.h"
 
 #include <core/Godot.hpp>
 #include <KinematicBody.hpp>
+#include <AnimationPlayer.hpp>
 #include "City.h"
 
 namespace godot {
@@ -77,5 +77,20 @@ namespace godot {
         City* myCity = new City();
         int traffic[2][3][4][3] = { {{{0, 1, 0},{0, 0, 1},{0, 0, 1},{0, 0, 1}},		{{0, 0, 1},{0, 1, 0},{0, 0, 1},{0, 0, 1}},		{ {0, 1, 1},{0, 1, 1},{0, 0, 1},{0, 0, 1}}},
                                     { {{0, 0, 1},{0, 0, 1},{0, 0, 1},{0, 1, 0}}	,		{{0, 0, 1},{0, 0, 1},{1, 1, 0},{0, 1, 1}},		 { {0, 0, 1},{0, 0, 1},{0, 1, 1},{0, 0, 1}}} };
+    };
+
+    class Pedestrian : public KinematicBody {
+        GODOT_CLASS(Pedestrian, KinematicBody)
+    public:
+        Pedestrian();
+        ~Pedestrian();
+        // godot functions
+        static void _register_methods();
+        void _init();
+        void _ready();
+        void _process(float delta);
+
+    private:
+        AnimationPlayer* player;
     };
 }
