@@ -68,8 +68,8 @@ void City::_register_methods()
 	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
 	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
 
-	
 	register_property<City, float>("time_speed", &City::time_speed, 1.0);
+
 };
 
 void City::_init()
@@ -202,6 +202,7 @@ void godot::City::_on_MenuShop_pressed(String name)
 {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
@@ -214,6 +215,7 @@ void godot::City::_on_Validate_pressed()
 	
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 	String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
+	Godot::print(mytext);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
 	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
