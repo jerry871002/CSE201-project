@@ -13,6 +13,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <random>
+#include <Math.hpp>
 
 //# define M_PI 3.14159265358979323846  /* pi */
 
@@ -91,7 +92,6 @@ namespace godot {
         They describe the characteristics of one single average solar panel, taking as a model the most used one : The Canadian Solar 
         CS3U-345P model of 1x2m in size.
         */
-
         double solarSatisfaction = 9; //ratings of these solar panels by surveys
         double solarCost = 450; //cost in euros for one new solar panel (product and installation)
         double solarEnergy = 7.45; //average kWh produced per day

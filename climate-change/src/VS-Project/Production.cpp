@@ -105,9 +105,14 @@ String godot::GoodsFactories::class_name()
 }
 
 GoodsFactories::GoodsFactories() {
-	employment = 8000; // number of employees of the whole city in the manufacturing/industry sector 
-	CO2Emission = 850000; //kg of CO2 emitted per day across the manufacturing/industry sector per day
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::normal_distribution <double> employees(8000, 200);
+	employment = employees(gen); // number of employees of the whole city in the manufacturing/industry sector 
+
 	energyUse = 2E6; //amount of kWh needed thorughout the sector per day
+
+	CO2Emission = 850000; //kg of CO2 emitted per day across the manufacturing/industry sector per day
 	mercuryEmission = 0.0046; //kg of mercury per day 
 	arsenicEmission = 0.0048; //kg of arsenic per day
 	cadmiumEmission = 0.0028; //kg of cadmium per day
@@ -124,19 +129,34 @@ GoodsFactories::~GoodsFactories() {}
 
 void GoodsFactories::simulate_step(double days)
 {
-	energyUse += 2E6; 
+	std::random_device rd;
+	std::mt19937 gen(rd());
 
-	CO2Emission += 850000; 
-	mercuryEmission += 0.0046;  
-	arsenicEmission += 0.0048; 
-	cadmiumEmission += 0.0028; 
-	nickelEmission += 0.037; 
-	leadEmission += 0.074; 
-	SO2Emission += 800; 
-	NH3Emission += 1000; 
-	NOxEmission += 1000; 
-	VOCsEmission += 1500;
-	PMEmission += 10000;
+	std::normal_distribution <double> energy(2E6, 100000);
+	energyUse += energy(gen); 
+
+	std::normal_distribution <double> co2(850000, 10000);
+	CO2Emission += co2(gen); 
+	std::normal_distribution <double> mercury(0.0046, 0.0002);
+	mercuryEmission += mercury(gen); 
+	std::normal_distribution <double> arsenic(0.0048, 0.0002);
+	arsenicEmission += arsenic(gen); 
+	std::normal_distribution <double> cadmium(0.0028, 0.0001);
+	cadmiumEmission += cadmium(gen); 
+	std::normal_distribution <double> nickel(0.037, 0.001);
+	nickelEmission += nickel(gen); 
+	std::normal_distribution <double> lead(0.074, 0.001);
+	leadEmission += lead(gen); 
+	std::normal_distribution <double> so2(800, 20);
+	SO2Emission += so2(gen); 
+	std::normal_distribution <double> nh3(1000, 50);
+	NH3Emission += nh3(gen); 
+	std::normal_distribution <double> nox(1000, 50);
+	NOxEmission += nox(gen); 
+	std::normal_distribution <double> vocs(1500, 100);
+	VOCsEmission += vocs(gen);
+	std::normal_distribution <double> pm(10000, 300);
+	PMEmission += pm(gen);
 }
 
 /// <summary>
@@ -149,8 +169,13 @@ String godot::Services::class_name()
 }
 
 Services::Services() {
-	employment = 30000; // number of employees of the whole city in the service sector 
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::normal_distribution <double> employees(30000, 1000);
+	employment = employees(gen); // number of employees of the whole city in the service sector 
+
 	energyUse = 250000; //amount of kWh needed thorughout the sector per day
+
 	PMEmission = 1010; //kg of particulate matter emitted per day
 	arsenicEmission = 0.002; //kg of arsenic per day
 	nickelEmission = 0.012; //kg of nickel per day
@@ -164,11 +189,20 @@ Services::~Services() {}
 
 void Services::simulate_step(double days)
 {
-	energyUse += 250000; 
-	PMEmission += 1010; 
-	arsenicEmission += 0.002; 
-	nickelEmission += 0.012;
-	leadEmission += 0.021; 
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
+
+	std::normal_distribution <double> energy(250000, 5000);
+	energyUse += energy(gen); 
+	std::normal_distribution <double> pm(1010, 70);
+	PMEmission += pm(gen);
+	std::normal_distribution <double> arsenic(0.002, 0.0001);
+	arsenicEmission += arsenic(gen);
+	std::normal_distribution <double> nickel(0.012, 0.001);
+	nickelEmission += nickel(gen);
+	std::normal_distribution <double> lead(0.021, 0.002);
+	leadEmission += lead(gen); 
 }
 
 /// <summary>

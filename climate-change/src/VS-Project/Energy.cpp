@@ -5,6 +5,7 @@
 #include <SceneTree.hpp>
 #include <Viewport.hpp>
 #include "City.h"
+#include <random>
 
 using namespace godot;
 
@@ -89,29 +90,45 @@ String godot::NuclearPowerPlant::class_name()
 }
 
 NuclearPowerPlant::NuclearPowerPlant() {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
 	age = 0;
+
 	radiation = 1.4E-12; //amount of radiation in millirem per kWh per person living in a 50km radius from the plant 
 	//Just for perspective, coal plants actually release more radiation and an average person receives an exposure of
 	//300 millirem per year from natural background sources of radiation
 	nuclearWaste = 3.4E-9; //tons of high level nuclear waste produced per kWh (it is stored to be reused when radiation decays)
 	naturalUranium = 3.4E-8; //tons of natural uranium necessary per kWh
 	fissileMaterial = 1.4E-7; //kg of fissile material needed per kWh
-	maintenance = 0.04; //maintenace and working cost in euros per kWh
-	employment = 800; // approximate number of employees in 1 plant 
-	satisfaction = 2; // on scale of 10
 	CO2Emission = 0.012; // kg of CO2 emitted per kWh
-	cost = 10E9; // cost in euros to build a new plant
-	buildingTime = 5; // years needed to build a new plant
+
+	maintenance = 0.04; //maintenace and working cost in euros per kWh
 	environmentalCost = 0.0019; // environmental and health costs in euros per kWh
+
+	//fixed values after constructor :
+	std::normal_distribution <double> employees(800, 50);
+	employment = employees(gen); // approximate number of employees in 1 plant 
+	std::normal_distribution <double> sat(2, 0.1);
+	satisfaction = sat(gen); // on scale of 10
+	std::normal_distribution <double> money(10E9, 10E6);
+	cost = money(gen); // cost in euros to build a new plant
+	std::normal_distribution <double> build(5, 1);
+	buildingTime = build(gen); // years needed to build a new plant
 }
 
 NuclearPowerPlant::~NuclearPowerPlant() {}
 
 void NuclearPowerPlant::simulate_step(double days)
 {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
 	age += days;
-	energyPerDay = 20000000; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
+	std::normal_distribution <double> energy(20000000, 300000);
+	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
+
 	fissileMaterial += 1.4E-7 * energyPerDay * days;
 	naturalUranium += 3.4E-8 * energyPerDay * days;
 	CO2Emission += 0.012 * energyPerDay * days;
@@ -141,16 +158,21 @@ String godot::Windmill::class_name()
 }
 
 Windmill::Windmill() {
+	std::random_device rd;
+	std::mt19937 gen(rd());
 	turnSpeed = 1;
 
-	requiredLand = 0;
 	age = 0;
 	maintenance = 7.45E-4; //maintenace and working cost in euros per kWh
-	employment = 1.29; // average number of employees for one windmill
-	satisfaction = 8; // on scale of 10
+	std::normal_distribution <double> employees(1.29, 0.02);
+	employment = employees(gen); // average number of employees for one windmill
+	std::normal_distribution <double> sat(8, 0.1);
+	satisfaction = sat(gen); // on scale of 10
 	CO2Emission = 0.011; // kg of CO2 emitted per kWh
-	cost = 4E6; // cost in euros to build a new windmill
-	buildingTime = 0.04; // years needed to build a new windmill (approximatley half a month)
+	std::normal_distribution <double> money(4E6, 300000);
+	cost = money(gen); // cost in euros to build a new windmill
+	std::normal_distribution <double> build(0.04, 0.005);
+	buildingTime =build(gen); // years needed to build a new windmill (approximatley half a month)
 	environmentalCost = 0.0009; // environmental and health costs in euros per kWh
 	requiredLand = 6070; // square meters of land needed for installing one windmill
 }
@@ -166,8 +188,12 @@ void Windmill::_process(float delta)
 void Windmill::simulate_step(double days)
 {
 	age += days;
-	energyPerDay = 25000; //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::normal_distribution <double> energy(25000, 5000);
+	energyPerDay = energy(gen); //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
+
 	CO2Emission += 0.011 * energyPerDay * days;
 	environmentalCost = 0.0009 * energyPerDay * days;
 	maintenance += 7.45E-4 * energyPerDay * days;
@@ -197,15 +223,22 @@ GeothermalPowerPlant::GeothermalPowerPlant()
 		cost = 5E6; // cost in euros to build a new plant (plus all the research needed)
 	}
 	age = 0;
-	satisfaction = 8; // on scale of 10
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::normal_distribution <double> sat(8, 0.1);
+	satisfaction = sat(gen); // on scale of 10
+	std::normal_distribution <double> build(8, 1);
+	buildingTime = build(gen); // years needed to build a new plant (plus research needed)
+	std::normal_distribution <double> employees(50, 2);
+	employment = employees(gen); // average number of employees linked to one plant
+
 	CO2Emission = 0.09; // kg of CO2 emitted per kWh
 	H2SEmission = 8.2E-5; //kg of H2S emitted per kWh
 	CH4Emission = 1.6E-5; //kg of CH4 emitted per kWh
 	NH3Emission = 1.7E-5; //kg of NH3 emitted per kWh
 	maintenance = 0.08; //maintenace and working cost in euros per kWh
-	buildingTime = 8; // years needed to build a new plant (plus research needed)
 	environmentalCost = 0.0015; // environmental and health costs in euros per kWh
-	employment = 50; // average number of employees linked to one plant
 }
 
 GeothermalPowerPlant::~GeothermalPowerPlant() {}
@@ -213,8 +246,13 @@ GeothermalPowerPlant::~GeothermalPowerPlant() {}
 void GeothermalPowerPlant::simulate_step(double days)
 {
 	age += days;
-	energyPerDay = 32800; //kWh produced by in one day
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::normal_distribution <double> energy(32800, 1500);
+	energyPerDay = energy(gen); //kWh produced by in one day
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
+
 	maintenance += 0.08 * energyPerDay * days;
 	if (age >= 3650) {
 		maintenance += 0.08 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
@@ -247,19 +285,28 @@ String godot::CoalPowerPlant::class_name()
 
 CoalPowerPlant::CoalPowerPlant()
 {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	
 	age = 0; // age of the building in days
-	coal = 4.06E-4; // tons of coal needed to produce 1 kWh
-	maintenance = 0.05; //maintenace and working cost in euros per kWh
-	employment = 800; // approximate number of employees in 1 plant 
-	satisfaction = 4; // on scale of 10
+
+	std::normal_distribution <double> money(3E9, 10E6);
+	cost = money(gen); // cost in euros to build a new plant
+	std::normal_distribution <double> build(8, 1);
+	buildingTime = build(gen); // years needed to build a new plant
+	std::normal_distribution <double> employees(800, 20);
+	employment = employees(gen); // approximate number of employees in 1 plant 
+	std::normal_distribution <double> sat(4, 0.1);
+	satisfaction = sat(gen); // on scale of 10
+
 	CO2Emission = 0.868; // kg of CO2 emitted per kWh
 	SO2Emission = 0.00152; // kg of SO2 emitted per kWh
 	NOxEmission = 8.49E-4; // kg of NOx emitted per kWh
 	PMEmission = 4E-5; //kg of total PM emitted per kWh
 	ashOutput = 0.0619; // kg of ash produced per kWh
 	mercuryEmission = 1.137E-8; // kg of mercury emitted per kWh
-	cost = 3E9; // cost in euros to build a new plant
-	buildingTime = 8; // years needed to build a new plant
+	coal = 4.06E-4; // tons of coal needed to produce 1 kWh
+	maintenance = 0.05; //maintenace and working cost in euros per kWh
 	environmentalCost = 0.06; // environmental and health costs in euros per kWh
 }
 
@@ -272,8 +319,13 @@ CoalPowerPlant::~CoalPowerPlant()
 void CoalPowerPlant::simulate_step(double days)
 {
 	age += days;
-	energyPerDay = 9589041; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::normal_distribution <double> energy(9589041, 500000);
+	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
+	
 	if (efficiency_supercritical() == true) {
 		energyPerDay = 9589041 * (1 - 0.04);
 		maintenance += 0.054 * energyPerDay * days;
