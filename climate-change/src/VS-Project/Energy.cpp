@@ -255,6 +255,7 @@ CoalPowerPlant::CoalPowerPlant()
 	CO2Emission = 0.868; // kg of CO2 emitted per kWh
 	SO2Emission = 0.00152; // kg of SO2 emitted per kWh
 	NOxEmission = 8.49E-4; // kg of NOx emitted per kWh
+	PMEmission = 4E-5; //kg of total PM emitted per kWh
 	ashOutput = 0.0619; // kg of ash produced per kWh
 	mercuryEmission = 1.137E-8; // kg of mercury emitted per kWh
 	cost = 3E9; // cost in euros to build a new plant
@@ -295,6 +296,7 @@ void CoalPowerPlant::simulate_step(double days)
 	CO2Emission += 0.868 * energyPerDay * days;
 	SO2Emission += 0.00152 * energyPerDay * days;
 	NOxEmission += 8.49E-4 * energyPerDay * days;
+	PMEmission += 4E-5 * energyPerDay * days;
 	ashOutput += 0.0619 * energyPerDay * days;
 	mercuryEmission += 1.137E-8 * energyPerDay * days;
 	environmentalCost = 0.06 * energyPerDay * days;

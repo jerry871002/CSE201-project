@@ -21,12 +21,8 @@ namespace godot {
 		double SO2Emission = 0; //kg of sulfure dioxide emitted 
 		double NOxEmission = 0; //kg of nitrogen oxides emitted 
 		double PMEmission = 0; //particulate matter emitted
-		double O3Emission = 0; //ozone formed from emitted chemicals
-		double COEmission = 0; //kg of carbon monoxide emitted
 		double NH3Emission = 0; //kg of ammonia emitted
-		double benzeneEmission = 0; //kg of benzene released
-		double VOCsEmission; // kg of volatile organic compounds emitted
-		double CFCsEmission; // kg of Chlorofluorocarbons emitted
+		double VOCsEmission = 0; // kg of volatile organic compounds emitted
 
 		//Heavy metals released (in kg) :
 

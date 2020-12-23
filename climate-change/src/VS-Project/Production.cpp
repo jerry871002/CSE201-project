@@ -106,13 +106,37 @@ String godot::GoodsFactories::class_name()
 
 GoodsFactories::GoodsFactories() {
 	employment = 8000; // number of employees of the whole city in the manufacturing/industry sector 
-	CO2Emission = 850000; //kg of CO2 emitted per day across the manufacturing/industry sector 
+	CO2Emission = 850000; //kg of CO2 emitted per day across the manufacturing/industry sector per day
+	energyUse = 2E6; //amount of kWh needed thorughout the sector per day
+	mercuryEmission = 0.0046; //kg of mercury per day 
+	arsenicEmission = 0.0048; //kg of arsenic per day
+	cadmiumEmission = 0.0028; //kg of cadmium per day
+	nickelEmission = 0.037; //kg of nickel per day
+	leadEmission = 0.074; //kg of lead per day
+	SO2Emission = 800; //kg of sulfure dioxide emitted per day
+	NH3Emission = 1000; // kg of NH3 emitted per day
+	NOxEmission = 1000; //kg of nitrogen oxides emitted per day
+	VOCsEmission = 1500; // kg of volatile organic compounds emitted
+	PMEmission = 10000; //kg of particulate matter emitted per day
 }
 
 GoodsFactories::~GoodsFactories() {}
 
 void GoodsFactories::simulate_step(double days)
 {
+	energyUse += 2E6; 
+
+	CO2Emission += 850000; 
+	mercuryEmission += 0.0046;  
+	arsenicEmission += 0.0048; 
+	cadmiumEmission += 0.0028; 
+	nickelEmission += 0.037; 
+	leadEmission += 0.074; 
+	SO2Emission += 800; 
+	NH3Emission += 1000; 
+	NOxEmission += 1000; 
+	VOCsEmission += 1500;
+	PMEmission += 10000;
 }
 
 /// <summary>
@@ -126,12 +150,25 @@ String godot::Services::class_name()
 
 Services::Services() {
 	employment = 30000; // number of employees of the whole city in the service sector 
+	energyUse = 250000; //amount of kWh needed thorughout the sector per day
+	PMEmission = 1010; //kg of particulate matter emitted per day
+	arsenicEmission = 0.002; //kg of arsenic per day
+	nickelEmission = 0.012; //kg of nickel per day
+	leadEmission = 0.021; //kg of lead per day
 }
 
 Services::~Services() {}
 
+//For the moment this class stays fixed and is olny necessary for realistic data and especially employment
+//We are not going to implement policies on it as it is also basically impossible in real life
+
 void Services::simulate_step(double days)
 {
+	energyUse += 250000; 
+	PMEmission += 1010; 
+	arsenicEmission += 0.002; 
+	nickelEmission += 0.012;
+	leadEmission += 0.021; 
 }
 
 /// <summary>

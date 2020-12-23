@@ -31,10 +31,7 @@ namespace godot {
 		double NH3Emission = 0;
 		double SO2Emission = 0;
 		double NOxEmission = 0;
-		//I still need to add these contributions from the plants :
-		double COEmission = 0; 
 		double PMEmission = 0;
-		double O3Emission = 0;
 
 		double radiation = 0;
 		double mercuryEmission = 0;
