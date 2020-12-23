@@ -93,7 +93,7 @@ far = 1000.0
 transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, -1.5638, -0.58039, -6.59145 )
 shape = SubResource( 1 )
 
-[node name="Spatial" parent="3Dworld" instance=ExtResource( 3 )]
+[node name="NuclearPowerPlant" parent="3Dworld" instance=ExtResource( 3 )]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 15, 0, -45 )
 
 [node name="Windmill" parent="3Dworld" instance=ExtResource( 5 )]

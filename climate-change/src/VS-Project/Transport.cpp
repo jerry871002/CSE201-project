@@ -413,7 +413,7 @@ void Transport::simulate_step(double days) {
 }
 
 void Transport::turn(int dir, float delta) {
-    double drot = (SPEED_T * delta) * 10 ;
+    double drot = (SPEED_T * delta * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))) * 5 ;
     if (dir == 1) { drot /= 4; }
     else { drot /= 12; }
     rot += drot;
@@ -437,7 +437,7 @@ void Transport::turn(int dir, float delta) {
 void Transport::straight(float delta) {
     
 
-    Vector3 globalSpeed = Vector3((SPEED_T * 10), 0, 0);
+    Vector3 globalSpeed = Vector3((SPEED_T * 5 * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))), 0, 0);
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
 
     switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {

@@ -158,7 +158,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "..", "easy_charts" )
+enabled=PoolStringArray( "..", "easy_charts", "lod" )
 
 [gdnative]
 
