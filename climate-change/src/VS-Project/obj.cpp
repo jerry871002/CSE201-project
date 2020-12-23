@@ -117,6 +117,8 @@ void Structure::_input(InputEvent* e)
 
         std::cout << "DEBUG: STRUCTURE OBJECT CLICKED" << std::endl;
 
+        ((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->set("time_speed", 0);
+
         Vector2 mousePos = this->get_viewport()->get_mouse_position();
 
         ((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", false);
