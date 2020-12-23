@@ -63,7 +63,7 @@ namespace godot{
         public:
             virtual String class_name();
 
-            
+            static void _register_methods();
 
             Restaurant();
             ~Restaurant();

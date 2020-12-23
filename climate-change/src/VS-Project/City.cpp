@@ -72,7 +72,10 @@ void City::_register_methods()
 	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
 	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
 	register_method((char*)"add_shop", &City::add_shop);
-	
+	register_method((char*)"add_shop", &City::add_restaurant_to_city);
+	register_method((char*)"add_shop", &City::add_shop_to_city);
+
+
 	register_property<City, float>("time_speed", &City::time_speed, 1.0);
 
 };
@@ -161,26 +164,45 @@ void City::_ready()
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		
+		for (int i =0; i<4; i++){
 				// randomly choose between restaurant and shop
 				std::cout << "DEBUG: shop before instanciating " << std::endl;
-				Shop* node = (Shop*)ShopScene->instance();
-				
 
+				int rthing = rand() % 2;
+
+				if (rthing == 0) { std::cout << "restaurant instanciating" << std::endl; 
+				
+				Restaurant* node = (Restaurant*)RestaurantScene->instance();   // why doesnt this run ?? 
 				// REMOVE COMMENT ONCE INITIALIZE COMMAND IS CREATED
 				// ((Restaurant*)node)->Restaurant::initialize();
 
 				//Node* node = RestaurantScene->instance();
-				std::cout << "DEBUG: shop instanciating " << std::endl;
+				std::cout << "step  1"  << std::endl;
 				((Node*)node)->set("scale", Vector3(10, 10, 10));
-				((Node*)node)->set("translation", Vector3(0, 0, 0));
-				//int rot = rand() % 2;
-
+				std::cout << "step  2" << std::endl;
+				((Node*)node)->set("translation", Vector3(i * -30, 0, 0));
+				std::cout << "step  3" << std::endl;
+				
 				this->add_child((Node*)node);
-
-				// REMOVE COMMENT ONCE INHERITANCE IS FIXED
+				std::cout << "step  4" << std::endl;
 				this->add_shop((Shop*)node);
-				std::cout << "DEBUG: restaurant added to city " << std::endl;
+				}
+				else { std::cout << "shop instanciating " << std::endl; 
+				
+				Shop* node = (Shop*)ShopScene->instance();
+				((Node*)node)->set("scale", Vector3(10, 10, 10));
+				((Node*)node)->set("translation", Vector3(i * -30, 0, 0));
+				//int rot = rand() % 2;
+				this->add_child((Node*)node);
+				this->add_shop((Shop*)node);
+				
+				}
+				
+
+				
+
+
+		}
 
 	}
 	
@@ -251,6 +273,11 @@ void City::add_shop(Shop* shop) {
 	all_shops.push_back(shop);
 	int x = shop->get_position()[0]/30;
 	int y = shop->get_position()[1]/30;
+
+
+
+
+	//traffic stuff
 	if (x < sizeOfCity && y < sizeOfCity) {
 		if (x == int(x)) {
 			positionOfBuildings[x][y] = 1;
@@ -394,15 +421,17 @@ void City::simulation() {
 	//write the old values in a file
 	income = 0;
 	numberOfEmployees = 0;
-	carbonEmission = 0;
+	
 	energyDemand = 0;
 	energySupply = 0;
 	healthcare = 0;
 	needs = 0;
 	*/
 	std::cout << return_game_date() << std::endl;
-
-	
+	std::cout << "DEBUG: employees " << numberOfEmployees  << std::endl;
+	this->carbonEmission = 0;
+	this->numberOfEmployees = 0;
+	if (day_tick % 2 == 0){   // line to easily change how often it updates 
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
 		/*
@@ -417,17 +446,22 @@ void City::simulation() {
 		healthcare += (*it)->healthcare;
 		needs += (*it)->needs;
 		(*it)->simulate_step(); //function that updates the building
-
 		*/
-		
-		if (day_tick % 15 == 0) {
+		std::cout << "DEBUG: iterator loop started" <<std::endl;
+		std::cout << "DEBUG:  it  " << *it <<"   struc it " << ((Structure*)*it) << std::endl;
+		//std::cout << "DEBUG: employees in a single shop:" << ((Structure*)*it)->Structure::get_employment() << std::endl;
+
+		numberOfEmployees += ((Structure*)*it)->Structure::get_employment();
+		//carbonEmission += ((Structure*)*it)->get_co2emissions();
+
+		if (day_tick % 14 == 0) {
 			
 			((Shop*)*it)->Shop::simulate_step(15.0);
-			Godot::print((*it)->___get_godot_base_class_name());
-			Godot::print((*it)->___get_class_name());
-			Godot::print((*it)->get_class());
+			// Godot::print((*it)->___get_godot_base_class_name());
+			// Godot::print((*it)->___get_class_name());
+			// Godot::print((*it)->get_class());
 		}
-		
+	}
 	}
 	
 
@@ -444,9 +478,9 @@ void City::simulation() {
 
 	if (day_tick % 140 == 0) {
 		// randomly finds an open spot and splats down a restaurant
-
-
 		std::cout << "DEBUG: daytick mod 140 entered in simulation " << std::endl;
+
+		std::cout << "DEBUG: carbon emission total: " << return_carbonEmission() << std::endl;
 
 		Vector3 temp = Vector3(0, 0, 0);
 		bool location_covered = true;
@@ -642,7 +676,7 @@ double City::return_numberOfEmployees() {
 }
 
 double City::return_carbonEmission() {
-    return carbonEmission;
+    return this->carbonEmission;
 }
 
 double City::return_energyDemand() {

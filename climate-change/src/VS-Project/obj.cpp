@@ -63,7 +63,9 @@ double Structure::get_cost() {
 }
 
 double Structure::get_employment() {
-	return this->employment;
+    std::cout << "get employment called in struc" << std::endl;
+
+    return (((Node*)this)->get("employment"));
 }
 
 double Structure::get_building_time() {
@@ -82,6 +84,11 @@ void Structure::_register_methods()
     register_method((char*)"_on_Area_mouse_entered", &Structure::_on_Area_mouse_entered);
     register_method((char*)"_on_Area_mouse_exited", &Structure::_on_Area_mouse_exited);
     register_method((char*)"simulate_step", &Structure::simulate_step);
+    register_method((char*)"get_employment", &Structure::get_employment);
+
+
+    register_property<Structure, double>("CO2Emission", &Structure::CO2Emission, 0);
+    register_property<Structure, double>("employment", &Structure::employment, 0);
 }
 
 void Structure::_init()

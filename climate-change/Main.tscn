@@ -58,6 +58,7 @@ font_data = ExtResource( 10 )
 
 [node name="3Dworld" type="Spatial" parent="."]
 script = ExtResource( 1 )
+time_speed = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="3Dworld"]
 environment = ExtResource( 2 )
@@ -82,6 +83,7 @@ directional_shadow_max_distance = 1000.0
 [node name="Player" type="KinematicBody" parent="3Dworld"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5638, 33.7579, 82.5155 )
 script = ExtResource( 4 )
+movable = null
 
 [node name="ClippedCamera" type="ClippedCamera" parent="3Dworld/Player"]
 transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0 )
@@ -98,6 +100,8 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 15, 0, -45 )
 
 [node name="Windmill" parent="3Dworld" instance=ExtResource( 5 )]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
+CO2Emission = null
+employment = null
 
 [node name="StaticBody2" parent="3Dworld" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 15 )
