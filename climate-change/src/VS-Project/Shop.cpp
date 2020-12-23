@@ -4,7 +4,7 @@
 
 #include "random"
 #include "Shop.h"
-
+#include <string>
 #include <core/Godot.hpp>
 #include <SceneTree.hpp>
 #include <Viewport.hpp>
@@ -16,10 +16,30 @@ using namespace godot;
 
 
 Shop::Shop() {
-    unsigned int * panels_age = new unsigned int();
+    //unsigned int * panels_age = new unsigned int();
+    panels_age = 0;
+    panel_probability = 0.75;
     Clickable = false;
     PanelsOn = false;
 }
+
+
+
+
+void Shop::_register_methods()
+{
+    /*
+    register_method((char*)"_process", &Structure::_process);
+    register_method((char*)"_input", &Structure::_input);
+    register_method((char*)"_ready", &Structure::_ready);
+    register_method((char*)"_on_Area_mouse_entered", &Structure::_on_Area_mouse_entered);
+    register_method((char*)"_on_Area_mouse_exited", &Structure::_on_Area_mouse_exited);
+    */
+    register_method((char*)"simulate_step", &Shop::simulate_step);
+    register_property<Shop, int>("panels_age", &Shop::panels_age, 0);
+    register_property<Shop, double>("panel_probability", &Shop::panel_probability, 0.75);
+}
+
 
 String godot::Shop::class_name()
 {
@@ -28,7 +48,10 @@ String godot::Shop::class_name()
 
 
 
-Shop::~Shop() { delete panels_age; }
+Shop::~Shop() 
+{ 
+    //delete panels_age; 
+}
 
 /*
 void Shop::initialize(int shopTypeInput){
@@ -107,6 +130,13 @@ void Shop::initialize(int shopTypeInput){
 }
 */
 
+template<typename T> String to_godot_string(T s)
+{
+    std::string standardString = std::to_string(s);
+    godot::String godotString = godot::String(standardString.c_str());
+    return godotString;
+}
+
 void Shop::_ready()
 {
     std::cout << "DEBUG: SHOP READY CALLED" << std::endl;
@@ -160,21 +190,26 @@ double Shop::get_environmentalcost(){
 
 
 void Shop::simulate_step(double days){
+    
     std::cout << "DEBUG: SHOP SIMULATION" << std::endl;
     
+    /*
+    Godot::print("DEBUG: PANELS_AGE = ");
+    Godot::print(to_godot_string(int(((Node*)this)->get("panels_age"))));
+    Godot::print("DEBUG: PANEL_PROBABILITY = ");
+    Godot::print(to_godot_string(double(((Node*)this)->get("panel_probability"))));
+    */
 
-    std::cout << "DEBUG: panels " << panels_age << "  *panels" << *panels_age << std::endl; //   IMPORTANT : this->panels_age  causes a crash in Godot!
-
-    if (*panels_age == 0) {
+    if (int(((Node*)this)->get("panels_age")) == 0) {
         
         // TESTING STUFF LIKELY TO BE REMOVED SOON
 
-        double temp1 = double(1.0 - panel_probability);
+        double temp1 = double(1.0 - double(((Node*)this)->get("panel_probability")));
         double temp2 = double(days / 365.0);
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - panel_probability), double(days / 365.0))) << temp3 << std::endl; //double(days / 365.0)
+        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(((Node*)this)->get("panel_probability"))), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             panels_get_added();
@@ -185,9 +220,12 @@ void Shop::simulate_step(double days){
 
     }
 
-    else if (double(*panels_age) > days) { *panels_age -= int(days); }
+    else if (int(((Node*)this)->get("panels_age")) > days) 
+    { 
+        ((Node*)this)->set("panels_age", int(((Node*)this)->get("panels_age")) - int(days));
+    }
     else {
-        *panels_age = 0;
+        ((Node*)this)->set("panels_age", 0);
         PanelsOn = false;
         this->GetPanels()->set("visible", PanelsOn);
         std::cout << "DEBUG: PANEL REMOVED" << std::endl;
@@ -197,10 +235,8 @@ void Shop::simulate_step(double days){
 
 void Shop::panels_get_added(){
     PanelsOn = true;
-    *panels_age = 120;
+    ((Node*)this)->set("panels_age", 120);
     std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
-
-        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     
 
 }

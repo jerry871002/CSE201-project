@@ -74,6 +74,7 @@ void City::_register_methods()
 	register_method((char*)"add_shop", &City::add_shop);
 	
 	register_property<City, float>("time_speed", &City::time_speed, 1.0);
+
 };
 
 void City::_init()
@@ -136,6 +137,7 @@ void City::_input(InputEvent*)
 		if (!(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) {
 			((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 		}
+		this->_on_Game_Speed_changed();
 		
 	}
 
@@ -208,6 +210,9 @@ void City::_ready()
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("position", Vector2(20, 20));
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("visible", true);
+
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider/HSlider")->set("value", 2);
+	time_speed = this->get_tree()->get_root()->get_node("Main/2Dworld/Slider/HSlider")->get("value");
 };
 
 
@@ -231,11 +236,12 @@ void godot::City::_on_Validate_pressed()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
 	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
+	this->_on_Game_Speed_changed();
 
 }
 void godot::City::_on_Game_Speed_changed()
 {
-	time_speed = this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value");
+	time_speed = this->get_tree()->get_root()->get_node("Main/2Dworld/Slider/HSlider")->get("value");
 	std::cout << time_speed <<std::endl;
 }
 ;
@@ -374,6 +380,13 @@ void City::add_car() {
 }
 
 
+template<typename T> String to_godot_string(T s)
+{
+	std::string standardString = std::to_string(s);
+	godot::String godotString = godot::String(standardString.c_str());
+	return godotString;
+}
+
 
 void City::simulation() {
 	day_tick++;
@@ -408,7 +421,11 @@ void City::simulation() {
 		*/
 		
 		if (day_tick % 15 == 0) {
+			
 			((Shop*)*it)->Shop::simulate_step(15.0);
+			Godot::print((*it)->___get_godot_base_class_name());
+			Godot::print((*it)->___get_class_name());
+			Godot::print((*it)->get_class());
 		}
 		
 	}
