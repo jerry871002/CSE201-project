@@ -161,56 +161,69 @@ void City::_ready()
 	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
 	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
 	Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
-
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int i =0; i<4; i++){
+		for (int i =0; i<7; i++){
+			
+
 				// randomly choose between restaurant and shop
-				std::cout << "DEBUG: shop before instanciating " << std::endl;
+				std::cout << "DEBUG: start of instanciating " << std::endl;
 
-				int rthing = rand() % 2;
+				int rthing = int(rand() % 2);
+				std::cout << "DEBUG: creating nodes " << std::endl;
+				Restaurant* rnode;
+				Shop* snode;
 
-				if (rthing == 0) { std::cout << "restaurant instanciating" << std::endl; 
+
+				if (rthing == 0) {
+					ResourceLoader* ResLo = ResourceLoader::get_singleton();
+					Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
+					Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
+					Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
+					Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
+
+
+				std::cout << "restaurant instanciating" << std::endl; 
 				
-				Restaurant* node = (Restaurant*)RestaurantScene->instance();   // why doesnt this run ?? 
+				rnode = (Restaurant*)RestaurantScene->instance();
 				// REMOVE COMMENT ONCE INITIALIZE COMMAND IS CREATED
 				// ((Restaurant*)node)->Restaurant::initialize();
 
 				//Node* node = RestaurantScene->instance();
 				std::cout << "step  1"  << std::endl;
-				((Node*)node)->set("scale", Vector3(10, 10, 10));
+				((Node*)rnode)->set("scale", Vector3(10, 10, 10));
 				std::cout << "step  2" << std::endl;
-				((Node*)node)->set("translation", Vector3(i * -30, 0, 0));
+				((Node*)rnode)->set("translation", Vector3(i * -30, 0, 0));
 				std::cout << "step  3" << std::endl;
 				
-				this->add_child((Node*)node);
+				this->add_child((Node*)rnode);
 				std::cout << "step  4" << std::endl;
-				this->add_shop((Shop*)node);
+				this->add_shop((Shop*)rnode);
+
 				}
-				else { std::cout << "shop instanciating " << std::endl; 
-				
-				Shop* node = (Shop*)ShopScene->instance();
-				((Node*)node)->set("scale", Vector3(10, 10, 10));
-				((Node*)node)->set("translation", Vector3(i * -30, 0, 0));
+				else { 		
+					ResourceLoader* ResLo = ResourceLoader::get_singleton();
+					Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
+					Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
+					Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
+					Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
+
+				std::cout << "shop instanciating " << std::endl; 
+				snode = (Shop*)ShopScene->instance();
+				((Node*)snode)->set("scale", Vector3(10, 10, 10));
+				((Node*)snode)->set("translation", Vector3(i * -30, 0, 0));
 				//int rot = rand() % 2;
-				this->add_child((Node*)node);
-				this->add_shop((Shop*)node);
-				
+				this->add_child((Node*)snode);
+				this->add_shop((Shop*)snode);
+
 				}
-				
-
-				
-
-
 		}
 
 	}
-	
-
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
 		// TODO: This loop is only going to run once, maybe remove the loop?
-		for (int z = 0; z < 0; z++) // Car removed to test
+		for (int z = 0; z < 1; z++) // Car removed to test
 		{
 			// randomly choose between bugatti and chiron
 
