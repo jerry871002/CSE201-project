@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include "City.h"
 #include "Player.h"
+#include <random>
+#include <Math.hpp>
 
 
 using namespace godot;

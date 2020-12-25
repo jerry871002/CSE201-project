@@ -112,27 +112,46 @@ House::~House() {
 }
 
 void House::simulate_step(double days) {
-	if (houseType == 1) {
-        if (solar_panel() == true) {
-			maintenance += solarPanelCost;
-		}
-		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
-			satisfaction += 1;
-		}
+	if (solar_panel() == true) {
+		solarPanelAge += 1;
+		//maintenance += solarPanelCost;
+	}
 	
-
-	//assuming this is a button to change all windows at once i.e. you cannot call this function more than once on this house	
 	if (double_glazing() == true) {
+		doubleGlazingAge += 1;
 		energyUse *= 0.75 ; //when having better insulation of windows, you don't have the 25% loss of heat anymore
-		maintenance += windowCost * windowNumber; //200€ per window, if function adds one window at a time
-		}
-		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
-			satisfaction += 2;
-		}
+		//maintenance += windowCost * windowNumber; //200€ per window, if function adds one window at a time
 	} 
 
-	maintenance += 0.1765 * energyUse * days;
-	CO2Emission += 0.0065 * energyUse * days;  
+	/*	Need names for PanelsOff and GlazingOff
+	if (solarPanelAge >= 10950) {
+		//Then the solar panels are removed and we have 
+		solar_panel() = false;
+		solarPanelAge = 0;
+	}
+
+	if (doubleGlazingAge >= 18250) {
+		//remove windows, they need to be changed 
+		double_glazing() = false;
+		doubleGlazingAge = 0;
+	}
+	*/
+
+
+	switch (houseType){
+		case 1: {
+			maintenance += 0.1765 * energyUse * days;
+			CO2Emission += 0.0065 * energyUse * days; 
+		}
+
+		case 2: {
+			maintenance += 0.1765 * energyUse * days;
+			CO2Emission += 0.0065 * energyUse * days; 
+		}
+
+		break;
+	}
+	 
 	age += days; //age is an attribute from the Structure class
 	
 }
@@ -143,6 +162,13 @@ bool House::solar_panel() {
 		return PanelsOn;	
 	}
 
+	if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
+			satisfaction += 1;
+		}
+	
+	solarPanelAge = 0;
+	//put this for now
+	return PanelsOn;
 	// else {
 	// 	//check if policy from state is giving money
 	// 	//in which case you can add solar panels
@@ -158,6 +184,11 @@ bool House::double_glazing() {
 	// }
 	
 	// placeholder must change
+	if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
+			satisfaction += 2;
+		}
+	
+	doubleGlazingAge = 0;
 	return false;
 }
 
@@ -215,28 +246,52 @@ Building::~Building() {
 }
 
 void Building::simulate_step(double days) {
-	if (buildingType == 1) { // if it doesn't already have solar panels because it is high level 
-        if (solar_panel() == true) {
-			maintenance += solarPanelCost;
-		}
-			
-		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
-			satisfaction += 1;
-		}
-	
-
-		//assuming this is a button to change all windows at once i.e. you cannot call this function more than once on this house	
-		if (double_glazing() == true) {
-			energyUse *= 0.75 ; //when having better insulation of windows, you don't have the 25% loss of heat anymore
-			maintenance += windowCost * windowNumber; //200€ per window, if function adds one window at a time
-		}
-		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
-			satisfaction += 2;
-		}
+	if (solar_panel() == true) {
+		//maintenance += solarPanelCost;
+		solarPanelAge += 1;
 	}
+			
+	//assuming this is a button to change all windows at once i.e. you cannot call this function more than once on this house	
+	if (double_glazing() == true) {
+		doubleGlazingAge += 1;
+		 
+		//maintenance += windowCost * windowNumber; //200€ per window, if function adds one window at a time
+	}
+
+	/*	Need names for PanelsOff and GlazingOff
+	if (solarPanelAge >= 10950) {
+		//Then the solar panels are removed and we have 
+		solar_panel() = false;
+		solarPanelAge = 0;
+	}
+
+	if (doubleGlazingAge >= 18250) {
+		//remove windows, they need to be changed 
+		double_glazing() = false;
+		doubleGlazingAge = 0;
+	}
+	*/
     
-	maintenance += 0.1765 * energyUse * days;
-	CO2Emission += 0.0065 * energyUse * days;  
+	switch (buildingType){
+	case 1: { //Low level house
+		if (double_glazing() == true) {
+			energyUse *= 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore
+		}
+
+		maintenance += 0.1765 * energyUse * days;
+		CO2Emission += 0.0065 * energyUse * days;  
+
+		break;
+	}
+
+	case 2:  {
+		maintenance += 0.1765 * energyUse * days;
+		CO2Emission += 0.0065 * energyUse * days;  
+		break;
+	}
+	
+	}
+	
 	age += days; //age is an attribute from the Structure class
 	
 }
@@ -252,7 +307,10 @@ bool Building::solar_panel() {
 	// 	//otherwise 
 		
 	// }
-
+	if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
+			satisfaction += 1;
+		}
+	solarPanelAge = 0;
 	return PanelsOn;
 }
 
@@ -263,6 +321,10 @@ bool Building::double_glazing() {
 
 
 	// placeholder must change
+	doubleGlazingAge = 0;
+	if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
+			satisfaction += 1;
+		}
 	return false;
 
 }

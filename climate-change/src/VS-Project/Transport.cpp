@@ -6,6 +6,7 @@
 #include <Mesh.hpp>
 #include <Timer.hpp>
 #include <random>
+#include <AnimationPlayer.hpp>
 
 # define M_PI 3.14159265358979323846  /* pi */
 
@@ -241,7 +242,6 @@ void Transport::_process(float delta) {
     if (rot >= (M_PI / 2)) {
         
         int gameSpeed = myCity->get("time_speed");
-        std::cout << gameSpeed << "pointer timespeed transport" << endl;
         if (gameSpeed != 0) { straight(delta); }
        
         Vector3 p = this->get_global_transform().get_origin();
@@ -414,7 +414,7 @@ void Transport::simulate_step(double days) {
 }
 
 void Transport::turn(int dir, float delta) {
-    double drot = (SPEED_T * delta) * 10 ;
+    double drot = (SPEED_T * delta * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))) * 5 ;
     if (dir == 1) { drot /= 4; }
     else { drot /= 12; }
     rot += drot;
@@ -438,7 +438,7 @@ void Transport::turn(int dir, float delta) {
 void Transport::straight(float delta) {
     
 
-    Vector3 globalSpeed = Vector3((SPEED_T * 10), 0, 0);
+    Vector3 globalSpeed = Vector3((SPEED_T * 5 * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))), 0, 0);
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
 
     switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {
@@ -497,4 +497,30 @@ double Transport::get_energyuse(){
 
 double Transport::get_environmentalcost(){
     return 0; //at least for now
+}
+
+Pedestrian::Pedestrian() {
+    player = (AnimationPlayer*)(this->get_child(0));
+}
+
+Pedestrian::~Pedestrian() {}
+
+void Pedestrian::_register_methods() {
+    register_method((char*)"_init", &Pedestrian::_init);
+    register_method((char*)"_process", &Pedestrian::_process);
+    register_method((char*)"_ready", &Pedestrian::_ready);
+}
+
+void Pedestrian::_init() {
+    
+}
+
+void Pedestrian::_ready() {
+    //player->set_autoplay("Walk");
+    //this->set("visible", false);
+}
+
+
+void Pedestrian::_process(float delta) {
+    move(Vector3(5, 0, 0));
 }
