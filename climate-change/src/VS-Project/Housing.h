@@ -16,7 +16,8 @@ namespace godot {
 		double numberOfInhabitants = 0;
 		int maxIncome=333; //max income per day, should be defined by sim team
 		int minIncome=53; // min income per day, I put values for now so that it compiles
-
+		int solarPanelAge = 0;
+		int doubleGlazingAge = 0;
 		double get_satisfaction();
 		double get_co2emissions();
 		double get_energyuse();
@@ -37,6 +38,7 @@ namespace godot {
 
 		int houseType;
 		double houseIncome = 0;
+		
         
 	};
 
