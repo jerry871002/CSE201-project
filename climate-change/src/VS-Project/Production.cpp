@@ -38,7 +38,7 @@ AgriculturalProduction::AgriculturalProduction() {
 		break;
 		}
 
-	}
+	 }
 }
 
 AgriculturalProduction::~AgriculturalProduction() {
@@ -59,7 +59,7 @@ void AgriculturalProduction::simulate_step(double days) {
 		case(1):{ 
 			std::random_device rd;
     		std::mt19937 gen(rd());
-			std::normal_distribution <double> foodformeatfieldsize(4.96, 0.1);
+			std::normal_distribution <double> foodformeatfieldsize(1.2, 0.04);
 			requiredLand = foodformeatfieldsize(gen);
 			CO2Emission += 27144;
 			waterConsumption += 31135; 
