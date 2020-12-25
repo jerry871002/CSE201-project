@@ -5,17 +5,14 @@
 #include <random>
 using namespace godot;
 
-String godot::Production::class_name()
-{
+String godot::Production::class_name() {
 	return "Production";
 }
 
-Production::Production()
-{
+Production::Production() {
 }
 
-Production::~Production()
-{
+Production::~Production() {
 }
 
 
@@ -23,8 +20,7 @@ Production::~Production()
 /// AGRICULTURAL PRODUCTION
 /// </summary>
 
-String godot::AgriculturalProduction::class_name()
-{
+String godot::AgriculturalProduction::class_name() {
 	return "AgriculturalProduction";
 }
 
@@ -32,37 +28,48 @@ AgriculturalProduction::AgriculturalProduction() {
 	int type = rand()%3;
 	agriculture_type(type);
 	employment = 50;
-	
-	
+	switch (agricultureType){
+	case 1: { 
+        CO2Emission = 27144; // co2 output per day for meat production in city
+		waterConsumption = 31135; //liters per day
+		production = 1415; //in kg of meat every day
+		energyUse = 0;
+		environmentalCost = 0;   
+		break;
+		}
+
+	}
 }
 
-AgriculturalProduction::~AgriculturalProduction() {}
+AgriculturalProduction::~AgriculturalProduction() {
 
-void AgriculturalProduction::simulate_step(double days)
-{
+}
+
+void AgriculturalProduction::simulate_step(double days) {
 	switch(agricultureType){
 		case(0):{ // wheat
-
 			// random device class instance, source of 'true' randomness for initializing random seed
     		std::random_device rd;
     		std::mt19937 gen(rd());
 			std::normal_distribution <double> wheatfieldsize(1.74, 0.04);
 			requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
-			
-
-		break;
+			break;
 		}
 
-		switch(agricultureType){ 
-			//requiredLand =;
-			CO2Emission = 27144; // co2 output per day for meat production in city
-			waterConsumption = 31135;
-			production = 1415;
-			energyUse = 0;
-			environmentalCost = 0;
+		case(1):{ 
+			std::random_device rd;
+    		std::mt19937 gen(rd());
+			std::normal_distribution <double> foodformeatfieldsize(4.96, 0.1);
+			requiredLand = foodformeatfieldsize(gen);
+			CO2Emission += 27144;
+			waterConsumption += 31135; 
+			production += 1415; 
+			break;
 		}
+	}
 }
-}
+
+
 AgriculturalProduction::AgriculturalProduction(int type){
 	agriculture_type(type);
 }
@@ -78,8 +85,6 @@ void AgriculturalProduction::agriculture_type(int type){
 			
 			break;
 		}
-
-
 	}
 }
 double AgriculturalProduction::get_satisfaction(){
@@ -94,6 +99,8 @@ double AgriculturalProduction::get_energyuse(){
 double AgriculturalProduction::get_environmentalcost(){
 	return 0;
 }
+
+
 
 /// <summary>
 /// GOODS FACTORIES
@@ -110,7 +117,7 @@ GoodsFactories::GoodsFactories() {
 	std::normal_distribution <double> employees(8000, 200);
 	employment = employees(gen); // number of employees of the whole city in the manufacturing/industry sector 
 
-	energyUse = 2E6; //amount of kWh needed thorughout the sector per day
+	energyUse = 2E6; //amount of kWh needed throughout the sector per day
 
 	CO2Emission = 850000; //kg of CO2 emitted per day across the manufacturing/industry sector per day
 	mercuryEmission = 0.0046; //kg of mercury per day 

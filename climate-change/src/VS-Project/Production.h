@@ -59,11 +59,6 @@ namespace godot {
 		double requiredLand; //size of the field in km^2
 		double fertility; //per km^2 output
 		double production; //how much output per day
-
-
-
-
-		
 	};
 
 	/// <summary>
