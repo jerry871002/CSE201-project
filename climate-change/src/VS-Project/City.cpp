@@ -13,7 +13,6 @@
 #include <Viewport.hpp>
 #include <HSlider.hpp>
 #include <TextureProgress.hpp>
-#include <Color.hpp>
 
 
 
@@ -68,7 +67,6 @@ void City::_register_methods()
 	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
 	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
 	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
-	register_method((char*)"_on_Satisfaction_value_changed", &City::_on_Satisfaction_value_changed);
 
 	
 	register_property<City, float>("time_speed", &City::time_speed, 1.0);
@@ -490,19 +488,6 @@ std::string City::return_game_date() {
 	}
 	return "Time Representation Error";
 
-}
-
-
-void City::on_Satisfaction_value_changed(totalSatisfaction){
-	Color green = Color( 0, 1, 0, 1 );
-	Color orange =  Color( 1, 0.65, 0, 1 );
-	Color red = Color( 1, 0, 0, 1 );
-	if (totalSatisfaction < 70){
-			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(orange);
-	}
-	if (totalSatisfaction < 33){
-			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(red);
-	}
 }
 
 

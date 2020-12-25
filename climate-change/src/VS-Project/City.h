@@ -69,7 +69,7 @@ namespace godot {
 		double return_energySupply();
 		double return_healthcare();
 		double return_needs();
-		double return_totalSatisfaction();
+		double return_totalSatisfaction;
 		std::string return_game_date();       //returns the date :day/month/year as a string
 
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
