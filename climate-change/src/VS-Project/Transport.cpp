@@ -500,10 +500,10 @@ double Transport::get_environmentalcost(){
 }
 
 Pedestrian::Pedestrian() {
-    //player = (AnimationPlayer*)(this->get_child(0));
+    
 }
 
-Pedestrian::~Pedestrian() {}
+
 
 void Pedestrian::_register_methods() {
     register_method((char*)"_init", &Pedestrian::_init);
@@ -513,14 +513,18 @@ void Pedestrian::_register_methods() {
 
 void Pedestrian::_init() {
     
+    
 }
 
 void Pedestrian::_ready() {
-    //player->set_autoplay("Walk");
-    //this->set("visible", false);
+    player = (AnimationPlayer*)(this->get_child(0));
+    player->play("Walk");
 }
 
-
 void Pedestrian::_process(float delta) {
-    //move(Vector3(50, 0, 0));
+
+    Vector3 globalSpeed = Vector3((delta * 2 * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))), 0, 0);
+    globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
+    player->set_speed_scale(int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))); //TO BE CHANGED
+    this->move_and_collide(globalSpeed);
 }

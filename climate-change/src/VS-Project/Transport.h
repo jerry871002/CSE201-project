@@ -83,7 +83,7 @@ namespace godot {
         GODOT_CLASS(Pedestrian, KinematicBody)
     public:
         Pedestrian();
-        ~Pedestrian();
+
         // godot functions
         static void _register_methods();
         void _init();
