@@ -500,7 +500,7 @@ double Transport::get_environmentalcost(){
 }
 
 Pedestrian::Pedestrian() {
-    player = (AnimationPlayer*)(this->get_child(0));
+    //player = (AnimationPlayer*)(this->get_child(0));
 }
 
 Pedestrian::~Pedestrian() {}
@@ -522,5 +522,5 @@ void Pedestrian::_ready() {
 
 
 void Pedestrian::_process(float delta) {
-    move(Vector3(5, 0, 0));
+    //move(Vector3(50, 0, 0));
 }
