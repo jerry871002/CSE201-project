@@ -2,7 +2,7 @@
 #include <iostream>
 #include "random"
 #include "Shop.h"
-
+#include <string>
 #include <core/Godot.hpp>
 #include <SceneTree.hpp>
 #include <Viewport.hpp>
@@ -10,17 +10,21 @@
 
 
 using namespace godot;
-// ######################     SHOP     ##############################
-String godot::Shop::class_name()
+
+
+// ######################     SHOP SUPERCLASS     ##############################
+
+Shop::Shop()
 {
-    return "Shop";
-}
-Shop::Shop(){
     Clickable = false;
     PanelsOn = false;
 }
 
-Shop::~Shop() {}
+Shop::~Shop() 
+{
+
+}
+
 /*
 void Shop::initialize(int shopTypeInput){
     shopType = shopTypeInput;
@@ -101,21 +105,18 @@ void Shop::initialize(int shopTypeInput){
 }
 */
 
-Node* Shop::GetPanels()
+template<typename T> String to_godot_string(T s)
 {
-    return get_node("MeshComponents")->get_node("SolarPanels");
+    std::string standardString = std::to_string(s);
+    godot::String godotString = godot::String(standardString.c_str());
+    return godotString;
 }
 
-void Shop::show_menu() {
-
-    this->Structure::show_menu();
-
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", true);
-}
-
-String Shop::output_information()
+String Shop::get_object_info()
 {
-    return this->Structure::output_information() + "\n SHOP: " + String(float(employment));
+    String info = this->Structure::get_object_info();
+    info += "Employement: " + to_godot_string(this->employment) + String("\n");
+    return info;
 }
 
 double Shop::get_satisfaction(){
@@ -135,46 +136,9 @@ double Shop::get_environmentalcost(){
 }
 
 
-void Shop::simulate_step(double days) {
-    // std::cout << "DEBUG: SHOP SIMULATION" << std::endl;
-
-    //PanelsOn = !PanelsOn;
-    //this->GetPanels()->set("visible", PanelsOn);
-
-
-    if (panels_age == 0) {
-        /*
-        * 
-        * TESTING STUFF LIKELY TO BE REMOVED SOON
-        * 
-        srand((unsigned)time(0));
-        double temp = rand() % 100;
-
-        if ((100 - (days * panel_probability) / 3.65) < temp) {
-            panels_get_added();
-            this->GetPanels()->set("visible", PanelsOn);
-            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
-        }
-        */
-        double r = double(rand()) / double((RAND_MAX + 1.));
-        if (r > (pow(1 - panel_probability, 1 / 365)))
-        {
-            panels_get_added();
-            this->GetPanels()->set("visible", PanelsOn);
-            // std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
-        }
-        else {}
-
-    }
-
-    else if (panels_age > days) { panels_age -= days; }
-    else {
-        panels_age = 0;
-        PanelsOn = false;
-        this->GetPanels()->set("visible", PanelsOn);
-        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
-    }
-
+void Shop::simulate_step(double days) 
+{
+    
 }
 
 void Shop::panels_get_added() {
@@ -191,11 +155,6 @@ void Shop::panels_get_added() {
 
 
 //  #################################   RESTAURANT      ###############################
-
-String godot::Restaurant::class_name()
-{
-    return "Restaurant";
-}
 
 Restaurant::Restaurant() {
     energyUsePerSize = 38;          //On average 38kWh per square feet 
@@ -253,7 +212,6 @@ Restaurant::Restaurant() {
     }
 }
 
-
 Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
@@ -277,12 +235,9 @@ double Restaurant::get_energyuse(){
 	return (this->energyUsePerSize)*(this->diningSize);
 }
 
+
 // #############    Small Shop          ####################
 
-String godot::SmallShop::class_name()
-{
-    return "SmallShop";
-}
 SmallShop::SmallShop(){}
 
 SmallShop::~SmallShop(){}
@@ -290,10 +245,8 @@ SmallShop::~SmallShop(){}
 
 
 // ################   Mall              ####################
-String godot::Mall::class_name()
-{
-    return "Mall";
-}
+
 Mall::Mall(){}
 
 Mall::~Mall(){}
+

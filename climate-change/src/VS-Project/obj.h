@@ -21,8 +21,14 @@ namespace godot {
     class Structure : public StaticBody {
         GODOT_CLASS(Structure, StaticBody)
     private:
-        bool Clickable;
+        
     public:
+
+        Structure();
+        ~Structure();
+
+        bool Clickable;
+
         bool MenuVisible;
         bool PanelsOn {false};
 
@@ -33,18 +39,14 @@ namespace godot {
         virtual void _ready();
         void _on_Area_mouse_entered();
         void _on_Area_mouse_exited();
-        //void _on_CheckBox_pressed();
-        //void _on_CheckBox_button_up();
-        //void _on_CheckBox_button_down();
-        //void _on_CheckBox_toggled();
-        virtual String class_name();
+
+        virtual String get_object_type() { return "Structure"; };
+        virtual String get_main_type() { return "Default"; };
         virtual void show_menu();
+        virtual String get_object_info();
+
         real_t MenuSize{ 300 };
         real_t InfoBoxWidth{ 300 };
-        virtual String output_information();
-
-        Structure();
-        ~Structure();
 
         Vector3 get_position();
 

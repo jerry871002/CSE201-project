@@ -51,13 +51,11 @@ namespace godot {
 		void _on_MenuShop_pressed(String Name);
 		void _on_Validate_pressed();
 		void _on_Game_Speed_changed();
+		void generate_initial_city_graphics();
+		void set_initial_visible_components();
 
 		String active_button;
 
-
-		std::vector<Structure*> buildings;
-
-		void add_building(Structure*);
 		void add_car();
 		void simulation();                    //updates all the stats abd the building
 		void write_stat_history_to_file();    //writes all the stats to a file so that the interface team can make graphs 
@@ -87,6 +85,7 @@ namespace godot {
 
 		bool ClickActive{ false };
 		float time_speed = 1; // 1 for regular speed (1 in-game day per second)
+		double counter{ 0 };
 
 	private:
 		// city indices
@@ -105,6 +104,8 @@ namespace godot {
 		int64_t timer;       // helper data to see if `delta_counter` have carry on units digit
 		int day_tick; // this variable keeps track of the in-game days, 
 		// one day added every time simulation() is called
+
+		
 
 		/*
 		Ref<PackedScene> RestaurantScene;

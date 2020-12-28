@@ -61,7 +61,7 @@ City::~City()
 
 void City::_register_methods()
 {
-	register_method((char*)"_process", &City::_process);
+	register_method((char*)"_physics_process", &City::_physics_process);
 	register_method((char*)"_input", &City::_input);
 	register_method((char*)"_ready", &City::_ready);
 	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
@@ -92,11 +92,11 @@ we update `day_tick` and execute simulation()
 */
 void City::_physics_process(float delta) {
 	
-	delta_counter += (delta * time_speed);
-	simulation();
-	if (day_tick != (int)delta_counter) {
-		day_tick = (int)delta_counter;
+	counter += delta * time_speed;
+	if (counter > 1)
+	{
 		simulation();
+		counter -= 1;
 	}
 }
 
@@ -121,6 +121,7 @@ void City::_input(InputEvent*)
 		if (!(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) {
 			((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 		}
+		this->_on_Game_Speed_changed();
 		
 	}
 
@@ -131,12 +132,12 @@ void City::_input(InputEvent*)
 };
 
 
-
-void City::_ready()
+void City::generate_initial_city_graphics()
 {
 	ResourceLoader* ResLo = ResourceLoader::get_singleton();
 	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
 	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
+	Ref<PackedScene> MallScene = ResLo->load("res://Resources/Mall.tscn", "PackedScene");
 	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
 	Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
 
@@ -146,56 +147,42 @@ void City::_ready()
 		{
 			for (int z = 0; z < 3; z++)
 			{
-
-				// randomly choose between restaurant and shop
-
 				int type = rand() % 2;
 				Node* node;
-				if (type == 0) { node = RestaurantScene->instance(); }
+				if (type == 0) { node = RestaurantScene->instance(); } 
 				else { node = ShopScene->instance(); }
-
-
-				// REMOVE COMMENT ONCE INITIALIZE COMMAND IS CREATED
-				// ((Restaurant*)node)->Restaurant::initialize();
-
-				//Node* node = RestaurantScene->instance();
-
 				node->set("scale", Vector3(10, 10, 10));
 				node->set("translation", Vector3(30 * x, 0, 30 * z));
-				//int rot = rand() % 2;
-				//node->set("rotation_degrees", Vector3(0, 180 * rot, 0));
 				this->add_child(node);
-
-				// REMOVE COMMENT ONCE INHERITANCE IS FIXED
-				// this->add_building((Structure*)node);
-
 			}
 		}
 	}
-	if (BugattiScene.is_valid() && ChironScene.is_valid())
+	if (MallScene.is_valid()) 
 	{
-		// TODO: This loop is only going to run once, maybe remove the loop?
-		for (int z = 0; z < 1; z++) // Car removed to test
-		{
-
-				// randomly choose between bugatti and chiron
-
-				int type = rand() % 2;
-				Transport* node;
-				if (type == 0) { node = (Transport*)BugattiScene->instance(); }
-				else { node = (Transport*)ChironScene->instance(); }
-				node->set("scale", Vector3(10, 10, 10));
-				node->set("translation", Vector3(-13 , 0, -13 + 30 * (z + 1)));
-				this->add_child((Node*)node);
-
-		}
+		Node* node = MallScene->instance();
+		node->set("translation", Vector3(75, 0, 45));
+		this->add_child(node);
 	}
+}
+
+void City::set_initial_visible_components()
+{
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("position", Vector2(20, 20));
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("visible", true);
+}
+
+
+void City::_ready()
+{
+
+	this->generate_initial_city_graphics();
+
+	this->set_initial_visible_components();
+
 }
 
 void godot::City::_on_MenuShop_pressed(String name)
@@ -219,19 +206,15 @@ void godot::City::_on_Validate_pressed()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
 	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
+	this->_on_Game_Speed_changed();
 
 }
+
 void godot::City::_on_Game_Speed_changed()
 {
 	time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
-	std::cout << time_speed;
 }
 ;
-
-void City::add_building(Structure* struc) {
-	buildings.push_back(struc);
-}
-
 
 void City::add_car() {
 
@@ -262,49 +245,9 @@ void City::add_car() {
 	}
 }
 
-
-
-void City::simulation() {
-	/*
-	day_tick++;
-	//write the old values in a file 
-	income = 0;
-	numberOfEmployees = 0;
-	carbonEmission = 0;
-	energyDemand = 0;
-	energySupply = 0;
-    healthcare = 0;
-    needs = 0;
-	*/
-
-
-	for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
-	{
-		/*
-		commented out until we know what variables to call in every structure
-
-		income += (*it)->income;
-		std::cout << "in LOOP income " << (*it)->income << std::endl;
-		numberOfEmployees += (*it)->numberOfEmployees;
-		carbonEmission += (*it)->carbonEmission;
-		energyDemand += (*it)->energyDemand;
-		energySupply += (*it)->energySupply;
-        healthcare += (*it)->healthcare;
-        needs += (*it)->needs;
-		(*it)->simulate_step(); //function that updates the building
-		
-		*/
-
-	}
-	/*
-	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
-	{
-	
-		    // count up all the vehicle stuff
-		
-
-	}
-	*/
+void City::simulation() 
+{
+	std::cout << "Simulation" << std::endl;
 }
 
 /*

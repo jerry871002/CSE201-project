@@ -113,6 +113,8 @@ void Structure::_input(InputEvent* e)
 
         std::cout << "DEBUG: STRUCTURE OBJECT CLICKED" << std::endl;
 
+        ((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->set("time_speed", 0);
+
         Vector2 mousePos = this->get_viewport()->get_mouse_position();
 
         ((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", false);
@@ -163,9 +165,15 @@ void Structure::_input(InputEvent* e)
 void Structure::show_menu() 
 { 
 
-    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", output_information());
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", get_object_info());
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true); 
+
+    godot::String MenuPath = "Main/2Dworld/Menus/Menu" + this->get_main_type();
+    Godot::print(MenuPath);
+
+    this->get_tree()->get_root()->get_node((NodePath)MenuPath)->set("visible", true);
+
 }
 
 template<typename T> String to_godot_string(T s)
@@ -175,22 +183,11 @@ template<typename T> String to_godot_string(T s)
     return godotString;
 }
 
-//template String to_godot_string<double>(double);
-//template String to_godot_string<int>(int);
-//template String to_godot_string<float>(float);
-//template String to_godot_string<real_t>(real_t);
-//template String to_godot_string<bool>(bool);
-
-String Structure::output_information() 
-{
-    int h = 1;
-    std::string y = "HELLO";
-    String s = String("\n Employment: ");
-    std::string standardString = std::to_string(h);
-    godot::String godotString = godot::String(standardString.c_str());
-    std::string s2 = "hello";
-    
-    return String("EMPLOYMENT: ") + to_godot_string(employment);
+String Structure::get_object_info() 
+{    
+    String info = String("INFORMATION") + String("\n");
+    info += this->get_main_type() + String(" >> ") + this->get_object_type() + String("\n");
+    return  info;
 }
 
 void Structure::_ready()
@@ -216,37 +213,6 @@ void godot::Structure::_on_Area_mouse_exited()
 
 }
 
-/*
-
-
-void godot::Structure::_on_CheckBox_pressed()
-{
-
-}
-
-void godot::Structure::_on_CheckBox_toggled()
-{
-	PanelsOn = (PanelsOn == false);
-	this->GetPanels()->set("visible", PanelsOn);
-}
-
-
-void godot::Structure::_on_CheckBox_button_up()
-{
-
-}
-
-void godot::Structure::_on_CheckBox_button_down()
-{
-
-}
-
-*/
-
-String godot::Structure::class_name()
-{
-	return "Structure";
-}
 
 bool Structure::efficiency_cogeneration() {
     return false; //need to add possibility of turning true (then definitive) if clicked, adding the cost in maintenace needed for this upgrade

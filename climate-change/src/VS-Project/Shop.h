@@ -5,19 +5,18 @@
 
 
 
-namespace godot{
+namespace godot {
+
     class Shop : public Structure {
         GODOT_SUBCLASS(Shop, Structure)
 
-    private:
-        bool Clickable = false;
     public:
-        virtual String class_name();
+        
         Shop();
         ~Shop();
+        virtual String get_object_type() { return "Shop"; };
+        String get_main_type() { return "Shop"; };
 
-        
-        Node* GetPanels();
         bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
 
 
@@ -30,8 +29,7 @@ namespace godot{
         virtual double get_environmentalcost();
 
         void simulate_step(double days);
-        void show_menu();
-        virtual String output_information();
+        virtual String get_object_info();
 
         void panels_get_added(); // function to add the panels, both in simulation and visually
         int panels_age{ 0 }; // int to track the panels_age once they are installed - ticks down every day, when it reaches 0 the panels dissapear
@@ -45,17 +43,16 @@ namespace godot{
 
 
 
-    class Restaurant : public Shop{
+    class Restaurant : public Shop {
             GODOT_SUBCLASS(Restaurant, Shop)
         private:
 
         public:
-            virtual String class_name();
-
-            
 
             Restaurant();
             ~Restaurant();
+            virtual String get_object_type() { return "Restaurant"; };
+            
             
             int restaurantType = 1;
             double energyUsePerSize = 0;
@@ -72,10 +69,12 @@ namespace godot{
 
     class SmallShop : public Shop {
 		GODOT_SUBCLASS(SmallShop, Shop)
+
 	public:
-        virtual String class_name();
+        
         SmallShop();
         ~SmallShop();
+        virtual String get_object_type() { return "SmallShop"; };
 
     };
 
@@ -84,9 +83,11 @@ namespace godot{
     class Mall : public Shop {
 		GODOT_SUBCLASS(Mall, Shop)
 	public:
-        virtual String class_name();
+        
         Mall();
         ~Mall();
+        virtual String get_object_type() { return "Mall"; };
+        
     };
 
 }
