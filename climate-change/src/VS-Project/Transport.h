@@ -91,6 +91,6 @@ namespace godot {
         void _process(float delta);
 
     private:
-        AnimationPlayer* player;
+        AnimationPlayer* player = new AnimationPlayer();
     };
 }
