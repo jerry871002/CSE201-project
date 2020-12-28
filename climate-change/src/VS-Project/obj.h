@@ -21,10 +21,16 @@ namespace godot {
     class Structure : public StaticBody {
         GODOT_CLASS(Structure, StaticBody)
     private:
-        bool Clickable;
+
     public:
+
+        Structure();
+        ~Structure();
+
+        bool Clickable;
+
         bool MenuVisible;
-        bool PanelsOn {false};
+        bool PanelsOn{ false };
 
         static void _register_methods();
         virtual void _init();
@@ -33,18 +39,14 @@ namespace godot {
         virtual void _ready();
         void _on_Area_mouse_entered();
         void _on_Area_mouse_exited();
-        //void _on_CheckBox_pressed();
-        //void _on_CheckBox_button_up();
-        //void _on_CheckBox_button_down();
-        //void _on_CheckBox_toggled();
-        virtual String class_name();
+
+        virtual String get_object_type() { return "Structure"; };
+        virtual String get_main_type() { return "Default"; };
         virtual void show_menu();
+        virtual String get_object_info();
+
         real_t MenuSize{ 300 };
         real_t InfoBoxWidth{ 300 };
-        virtual String output_information();
-
-        Structure();
-        ~Structure();
 
         Vector3 get_position();
 
@@ -88,8 +90,8 @@ namespace godot {
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
         // need to add a cost for their implementation in the maintenance variable once
 
-        /* SOLAR PANEL VARIABLES 
-        They describe the characteristics of one single average solar panel, taking as a model the most used one : The Canadian Solar 
+        /* SOLAR PANEL VARIABLES
+        They describe the characteristics of one single average solar panel, taking as a model the most used one : The Canadian Solar
         CS3U-345P model of 1x2m in size.
         */
         double solarSatisfaction = 9; //ratings of these solar panels by surveys
@@ -115,4 +117,3 @@ namespace godot {
 
     };
 }
-  

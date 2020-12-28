@@ -35,8 +35,8 @@ Structure::Structure() {
     energyDemand = 0;
     energySupply = 0;
      */
-    
- }
+
+}
 /*
 Structure::Structure(double cost, double energyUse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply) :
     cost{ cost }, energyUse{ energyUse }, maintenance{ maintenance }, satisfaction{ satisfaction }, income{ income }, population{ population }, numberOfEmployees{ numberOfEmployees }, carbonEmission{ carbonEmission }, energyDemand{ energyDemand }, energySupply{ energySupply }{}
@@ -45,35 +45,35 @@ Structure::Structure(double cost, double energyUse, double maintenance, double s
 Structure::~Structure() {}
 
 double Structure::get_satisfaction() {
-	return this->satisfaction;
+    return this->satisfaction;
 }
 
 double Structure::get_co2emissions() {
-	return this->CO2Emission;
+    return this->CO2Emission;
 }
 
 double Structure::get_energyuse() {
-	return this->energyUse;
+    return this->energyUse;
 }
 
 double Structure::get_environmentalcost() {
-	return this->environmentalCost;
+    return this->environmentalCost;
 }
 
 double Structure::get_cost() {
-	return this->cost;
+    return this->cost;
 }
 
 double Structure::get_employment() {
-	return this->employment;
+    return this->employment;
 }
 
 double Structure::get_building_time() {
-	return this->buildingTime;
+    return this->buildingTime;
 }
 
 double Structure::get_maintenance() {
-	return this->maintenance;
+    return this->maintenance;
 }
 
 void Structure::_register_methods()
@@ -95,8 +95,8 @@ Vector3 Structure::get_position() {
 }
 
 bool Structure::is_other_structure_within_distance(Vector3 other, double distance) {
-    Vector3 pos =  get_position();
-    return  (sqrtf(other[0] * pos[0] +other[1]*pos[1] + other[2] * pos[2]) <= distance);
+    Vector3 pos = get_position();
+    return  (sqrtf(other[0] * pos[0] + other[1] * pos[1] + other[2] * pos[2]) <= distance);
 }
 
 void Structure::_process(float delta)
@@ -106,12 +106,14 @@ void Structure::_process(float delta)
 
 void Structure::_input(InputEvent* e)
 {
-	Input* i = Input::get_singleton();
+    Input* i = Input::get_singleton();
 
-    
-	if (i->is_action_pressed("ui_select") && Clickable) {
+
+    if (i->is_action_pressed("ui_select") && Clickable) {
 
         std::cout << "DEBUG: STRUCTURE OBJECT CLICKED" << std::endl;
+
+        ((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->set("time_speed", 0);
 
         Vector2 mousePos = this->get_viewport()->get_mouse_position();
 
@@ -128,44 +130,50 @@ void Structure::_input(InputEvent* e)
             (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x - AdaptedWidth - 60, 200));
         }
 
-        if (get_viewport()->get_size().x - mousePos.x <= MenuSize) 
+        if (get_viewport()->get_size().x - mousePos.x <= MenuSize)
         {
-            if (mousePos.y > (get_viewport()->get_size().y / 2)) {mousePos.y -= MenuSize - (get_viewport()->get_size().x - mousePos.x);}
-            else {mousePos.y += MenuSize - (get_viewport()->get_size().x - mousePos.x);}
+            if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize - (get_viewport()->get_size().x - mousePos.x); }
+            else { mousePos.y += MenuSize - (get_viewport()->get_size().x - mousePos.x); }
             mousePos.x = get_viewport()->get_size().x - MenuSize;
         }
         else if (mousePos.x <= MenuSize)
         {
-            if (mousePos.y > (get_viewport()->get_size().y / 2)) {mousePos.y -= MenuSize  - mousePos.x;}
-            else {mousePos.y += MenuSize - mousePos.x;}
+            if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize - mousePos.x; }
+            else { mousePos.y += MenuSize - mousePos.x; }
             mousePos.x = MenuSize;
         }
 
         if (get_viewport()->get_size().y - mousePos.y <= MenuSize) {
-            
-            if (mousePos.x > (get_viewport()->get_size().x / 2)) {mousePos.x -= MenuSize - (get_viewport()->get_size().y - mousePos.y);}
-            else {mousePos.x += MenuSize - (get_viewport()->get_size().y - mousePos.y);}
+
+            if (mousePos.x > (get_viewport()->get_size().x / 2)) { mousePos.x -= MenuSize - (get_viewport()->get_size().y - mousePos.y); }
+            else { mousePos.x += MenuSize - (get_viewport()->get_size().y - mousePos.y); }
             mousePos.y = get_viewport()->get_size().y - MenuSize;
         }
         else if (mousePos.y <= MenuSize)
         {
-            if (mousePos.x > (get_viewport()->get_size().x / 2)) {mousePos.x -= MenuSize - mousePos.y;}
-            else {mousePos.x += MenuSize - mousePos.y;}
+            if (mousePos.x > (get_viewport()->get_size().x / 2)) { mousePos.x -= MenuSize - mousePos.y; }
+            else { mousePos.x += MenuSize - mousePos.y; }
             mousePos.y = MenuSize;
         }
 
         (this->get_tree()->get_root()->get_node("Main/2Dworld/Menus"))->set("position", mousePos);
-        
-		show_menu();
-	}
+
+        show_menu();
+    }
 }
 
-void Structure::show_menu() 
-{ 
+void Structure::show_menu()
+{
 
-    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", output_information());
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", get_object_info());
 
-    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true); 
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
+
+    godot::String MenuPath = "Main/2Dworld/Menus/Menu" + this->get_main_type();
+    Godot::print(MenuPath);
+
+    this->get_tree()->get_root()->get_node((NodePath)MenuPath)->set("visible", true);
+
 }
 
 template<typename T> String to_godot_string(T s)
@@ -175,22 +183,11 @@ template<typename T> String to_godot_string(T s)
     return godotString;
 }
 
-//template String to_godot_string<double>(double);
-//template String to_godot_string<int>(int);
-//template String to_godot_string<float>(float);
-//template String to_godot_string<real_t>(real_t);
-//template String to_godot_string<bool>(bool);
-
-String Structure::output_information() 
+String Structure::get_object_info()
 {
-    int h = 1;
-    std::string y = "HELLO";
-    String s = String("\n Employment: ");
-    std::string standardString = std::to_string(h);
-    godot::String godotString = godot::String(standardString.c_str());
-    std::string s2 = "hello";
-    
-    return String("EMPLOYMENT: ") + to_godot_string(employment);
+    String info = String("INFORMATION") + String("\n");
+    info += this->get_main_type() + String(" >> ") + this->get_object_type() + String("\n");
+    return  info;
 }
 
 void Structure::_ready()
@@ -201,52 +198,21 @@ void Structure::_ready()
 void godot::Structure::_on_Area_mouse_entered()
 {
 
-	Clickable = true;
-	Input* i = Input::get_singleton();
-	i->set_default_cursor_shape(i->CURSOR_POINTING_HAND);
+    Clickable = true;
+    Input* i = Input::get_singleton();
+    i->set_default_cursor_shape(i->CURSOR_POINTING_HAND);
 
 
 }
 
 void godot::Structure::_on_Area_mouse_exited()
 {
-	Clickable = false;
-	Input* i = Input::get_singleton();
-	i->set_default_cursor_shape(i->CURSOR_ARROW);
+    Clickable = false;
+    Input* i = Input::get_singleton();
+    i->set_default_cursor_shape(i->CURSOR_ARROW);
 
 }
 
-/*
-
-
-void godot::Structure::_on_CheckBox_pressed()
-{
-
-}
-
-void godot::Structure::_on_CheckBox_toggled()
-{
-	PanelsOn = (PanelsOn == false);
-	this->GetPanels()->set("visible", PanelsOn);
-}
-
-
-void godot::Structure::_on_CheckBox_button_up()
-{
-
-}
-
-void godot::Structure::_on_CheckBox_button_down()
-{
-
-}
-
-*/
-
-String godot::Structure::class_name()
-{
-	return "Structure";
-}
 
 bool Structure::efficiency_cogeneration() {
     return false; //need to add possibility of turning true (then definitive) if clicked, adding the cost in maintenace needed for this upgrade
