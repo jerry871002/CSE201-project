@@ -500,7 +500,13 @@ double Transport::get_environmentalcost(){
 }
 
 Pedestrian::Pedestrian() {
-    
+    motion = Vector3(0, 0, 0);
+    rot = (M_PI / 2);
+    center = Vector3(0, 0, 0);
+    dir = 1;
+    position = 6;
+    SPEED_T = 2;
+    Turn_R = 2;
 }
 
 
@@ -519,12 +525,65 @@ void Pedestrian::_init() {
 void Pedestrian::_ready() {
     player = (AnimationPlayer*)(this->get_child(0));
     player->play("Walk");
+
+    prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
+    prevPositionVec = this->get_global_transform().get_origin();
+    myCity = (City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")));
 }
 
 void Pedestrian::_process(float delta) {
+    std::cout << position << endl;
+    player->set_speed_scale(int(myCity->get("time_speed"))); //TO BE CHANGED
 
-    Vector3 globalSpeed = Vector3((delta * 2 * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))), 0, 0);
+    if (rot >= (M_PI / 2)) {
+
+        if ( ((int)(myCity->get("time_speed"))) != 0) { straight(delta); }
+        /*
+        Vector3 p = this->get_global_transform().get_origin();
+        switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the pedestrian on the road if problems
+        case 0: this->set("translation", Vector3(p.x, 0, p.z + 24 - fmod(p.z + 24, 30) - 9)); break;
+        case 2: this->set("translation", Vector3(p.x, 0, p.z + 6 - fmod(p.z + 6, 30) + 9)); break;
+        case 3: this->set("translation", Vector3(p.x + 6 - fmod(p.x + 6, 30) + 9, 0, p.z)); break;
+        case 1: this->set("translation", Vector3(p.x + 24 - fmod(p.x + 24, 30) - 9, 0, p.z)); break;
+        default: break;
+        }
+        */
+
+        if (position >= 2*9 - 2 * Turn_R) {
+            rot = 0;
+            round_position(this, motion);
+            center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z) * Turn_R * dir;
+        }
+    }
+    else if (position >= 2*9 - 2 * Turn_R) {
+        turn(dir, delta);
+
+        if (rot >= (M_PI / 2)) {
+            rot = M_PI / 2;
+            align_on_axis(this);
+            round_position(this, motion);
+
+            prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
+        }
+    }   
+}
+
+void Pedestrian::turn(int dir, float delta) {
+    double drot = (SPEED_T * delta * int(myCity->get("time_speed"))) / Turn_R;
+    rot += drot;
+
+    this->global_translate(-center);			//define the center of rotation
+    this->set_transform(this->get_transform().rotated(Vector3(0, 1, 0), -drot * dir));
+    this->global_translate(center);				//reset the center of rotation
+
+
+}
+
+void Pedestrian::straight(float delta) {
+    Vector3 globalSpeed = Vector3(SPEED_T * delta * int(myCity->get("time_speed")), 0, 0);
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
-    player->set_speed_scale(int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))); //TO BE CHANGED
+
     this->move_and_collide(globalSpeed);
+    position = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - prevPosition;
+
 }

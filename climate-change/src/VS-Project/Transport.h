@@ -92,5 +92,19 @@ namespace godot {
 
     private:
         AnimationPlayer* player;
+
+        Vector3 motion;
+        double position;
+        double rot;
+        double SPEED_T;
+        int Turn_R = 4;
+        int dir;
+        double prevPosition = 0;
+        Vector3 prevPositionVec = Vector3();
+        double Acc = 0.5;
+        Vector3 center;
+        City* myCity = new City();
+        void turn(int dir, float delta);
+        void straight(float delta);
     };
 }
