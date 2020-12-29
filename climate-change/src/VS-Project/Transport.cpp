@@ -532,7 +532,7 @@ void Pedestrian::_ready() {
 }
 
 void Pedestrian::_process(float delta) {
-    std::cout << position << endl;
+    //std::cout << position << endl;
     player->set_speed_scale(int(myCity->get("time_speed"))); //TO BE CHANGED
 
     if (rot >= (M_PI / 2)) {

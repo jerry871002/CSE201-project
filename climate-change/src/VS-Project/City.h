@@ -30,13 +30,21 @@ then run:
 */
 
 namespace godot {
-	class Transport;
+
+	//class Transport;
+
 	class City : public Spatial {
+
 		GODOT_CLASS(City, Spatial)
+
 	public:
+
+		// CONSTRUCTOR, DESTRUCTOR
 
 		City();
 		~City();
+
+		// GODOT FUNCTIONAL METHODS
 
 		static void _register_methods();
 		void _init();
@@ -44,19 +52,39 @@ namespace godot {
 		void _physics_process(float);
 		void _input(InputEvent*);
 		void _ready();
+
+		// SIGNALS
+
 		void _on_MenuShop_pressed(String Name);
 		void _on_Validate_pressed();
 		void _on_Game_Speed_changed();
+
+		// INITIAL GRAPHICAL SETUP
+
 		void generate_initial_city_graphics();
 		void set_initial_visible_components();
+
+		// TIME AND OVERALL SIMULATION
+
+		float time_speed = 1; // 1 for regular speed (1 in-game day per second)
+		double counter{ 0 }; // counter used to cast per-frame processing to a time_speed related frequency
+		int day_tick; // keeps track of the in-game days, incremented when simulation() is called
+		std::string return_game_date(); // returns the date :day/month/year as a string
+		void simulation(); // updates all the stats and calls the simulation for the buildings
+
+		// ARRAYS CONTAINING ALL ACTIVE ELEMENTS
+
+
 
 		String active_button;
 
 		void add_car();
-		void simulation();                    //updates all the stats abd the building
+		                
 		void write_stat_history_to_file();    //writes all the stats to a file so that the interface team can make graphs 
-		double return_income();               //returns the income of the city
+		
+											  
 		// getter functions for city indices
+		double return_income();
 		double return_numberOfEmployees();
 		double return_carbonEmission();
 		double return_energyDemand();
@@ -64,7 +92,7 @@ namespace godot {
 		double return_healthcare();
 		double return_needs();
 		double return_totalSatisfaction();
-		std::string return_game_date();       //returns the date :day/month/year as a string
+		
 
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
@@ -79,11 +107,7 @@ namespace godot {
 		float energySupply_array[3];
 		*/
 
-		bool ClickActive{ false };
-		float time_speed = 1; // 1 for regular speed (1 in-game day per second)
-		double counter{ 0 };
-		int day_tick; // this variable keeps track of the in-game days, one day added every time simulation() is called
-
+		
 
 	private:
 		// city indices

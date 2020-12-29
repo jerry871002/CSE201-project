@@ -16,34 +16,9 @@ Player::Player() {
 	// INITIALIZE MOTION AND ROTATION VECTORS USED FOR PLAYER CONTROL
 	motion = Vector3(0, 0, 0);
 	rotation = Vector3(0, 0, 0);
-	std::cout << "DEBUG: PLAYER CONSTRUCTOR CALLED" << std::endl;
 	counter = 0;
 }
-/*
-void Player::set_movable(bool b) 
-{
-	this->movable = b;
-	movable = b;
-}
 
-bool Player::is_movable()
-{
-	return this->movable;
-}
-
-void Player::_on_MenuShop_visibility_changed() 
-{
-	this->set_movable(false);
-}
-
-void Player::_on_PoliciesInput_visibility_changed() 
-{
-	if (((bool)(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) == false) {
-		this->set_movable(true);
-	}
-	
-}
-*/
 Player::~Player() {
 }
 
@@ -69,27 +44,14 @@ void Player::_ready() {
 
 void Player::_process(float delta) 
 {
-	/*
-	counter += 1;
-	if (counter == 100) {
-		
-		std::cout << "DEBUG: MOVABLE SHOULD CHANGE" << std::endl;
-		this->set_movable(!(this->is_movable()));
-		counter = 0;
-	}
-	*/
-
 	if (movable) { UpdateMotionFromInput(delta); }
-	
 	
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
 	worldEnv->get_environment()->set_dof_blur_far_distance(4 * (this->get_global_transform().get_origin().y));
 	worldEnv->get_environment()->set_dof_blur_far_amount(0.1 * pow((1 - (this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight - MinHeight)), 3) );
 	
-	
 	this->translate(motion); 
 	set_rotation_degrees(rotation);
-	
 }
 
 void Player::_physics_process(float delta)
@@ -99,92 +61,92 @@ void Player::_physics_process(float delta)
 
 void Player::_input(InputEvent* e)
 {
-	
 	motion = Vector3(0, 0, 0);
 	
 	// MOUSE MOTION EVENTS
 	
-	if (e->get_class() == "InputEventMouseMotion") {
-		
-		
-		if (movable) {
-			UpdateRotationFromInput((InputEventMouseMotion*)e); // Rotation and vertical motion using relative mouse coordinates
-		}
+	if (e->get_class() == "InputEventMouseMotion") 
+	{
+		// Rotation and vertical motion using relative mouse coordinates
+		if (movable) { UpdateRotationFromInput((InputEventMouseMotion*)e); }
 	}
 	
 	Input* i = Input::get_singleton();
 
-	if (e->is_action_pressed("ui_turn")) {
-		
+	if (e->is_action_pressed("ui_turn")) 
+	{
 		mouse_p = this->get_viewport()->get_mouse_position();
 		i->set_mouse_mode(i->MOUSE_MODE_CAPTURED);
 	}
 
-	if (e->is_action_released("ui_turn")) {
+	if (e->is_action_released("ui_turn")) 
+	{
 		i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
 		this->get_viewport()->warp_mouse(mouse_p);
 	}
 
 	this->translate(motion);
 
-	if (e->is_action_pressed("ui_cancel")) {
-		get_tree()->quit();								// EXIT GAME
+	if (e->is_action_pressed("ui_cancel")) 
+	{
+		// EXIT GAME
+		get_tree()->quit();								
 	}
 	
 }
 
-void Player::UpdateMotionFromInput(float delta) {
-	motion = Vector3(0, 0, 0);							// RESET MOTION VECTOR TO ZERO
+void Player::UpdateMotionFromInput(float delta) 
+{
+	// RESET MOTION VECTOR TO ZERO
+	motion = Vector3(0, 0, 0);							
 
-	
-		// INPUT USED FOR KEY CONTROLS
-		Input* i = Input::get_singleton();
+	// INPUT USED FOR KEY CONTROLS
+	Input* i = Input::get_singleton();
 
-		SPEED_T = 2 * get_global_transform().get_origin().y * delta;
+	SPEED_T = 2 * get_global_transform().get_origin().y * delta;
 
-		// VERTICAL MOTION
+	// VERTICAL MOTION
 
-		if (i->is_action_pressed("ui_vup")) {
-			if (this->get_global_transform().get_origin().y <= MaxHeight) { motion.y += SPEED_T; }
-		}
-		else if (i->is_action_pressed("ui_vdown")) {
-			if (this->get_global_transform().get_origin().y >= MinHeight) { motion.y -= SPEED_T; }
-		}
+	if (i->is_action_pressed("ui_vup")) {
+		if (this->get_global_transform().get_origin().y <= MaxHeight) { motion.y += SPEED_T; }
+	}
+	else if (i->is_action_pressed("ui_vdown")) {
+		if (this->get_global_transform().get_origin().y >= MinHeight) { motion.y -= SPEED_T; }
+	}
 
-		// PLANAR MOTION
+	// PLANAR MOTION
 
-		// 4-key combinations
-		if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) {}
-		// 3-key combinations
-		else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) { motion.z -= SPEED_T; }
-		else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) { motion.z += SPEED_T; }
-		else if ((i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) { motion.x += SPEED_T; }
-		else if ((i->is_action_pressed("ui_left")) && (i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) { motion.x -= SPEED_T; }
-		// 2-key combinations
-		else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) {}
-		else if ((i->is_action_pressed("ui_left")) && (i->is_action_pressed("ui_right"))) {}
-		else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right"))) {
-			motion.z -= SPEED_T / (sqrt(2));
-			motion.x += SPEED_T / (sqrt(2));
-		}
-		else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right"))) {
-			motion.z += SPEED_T / (sqrt(2));
-			motion.x += SPEED_T / (sqrt(2));
-		}
-		else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_left"))) {
-			motion.z -= SPEED_T / (sqrt(2));
-			motion.x -= SPEED_T / (sqrt(2));
-		}
-		else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_left"))) {
-			motion.z += SPEED_T / (sqrt(2));
-			motion.x -= SPEED_T / (sqrt(2));
-		}
-		// 1-key combinations
-		else if (i->is_action_pressed("ui_up")) { motion.z -= SPEED_T; }
-		else if (i->is_action_pressed("ui_down")) { motion.z += SPEED_T; }
-		else if (i->is_action_pressed("ui_right")) { motion.x += SPEED_T; }
-		else if (i->is_action_pressed("ui_left")) { motion.x -= SPEED_T; }
-	
+	// 4-key combinations
+	if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) {}
+	// 3-key combinations
+	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) { motion.z -= SPEED_T; }
+	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_left"))) { motion.z += SPEED_T; }
+	else if ((i->is_action_pressed("ui_right")) && (i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) { motion.x += SPEED_T; }
+	else if ((i->is_action_pressed("ui_left")) && (i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) { motion.x -= SPEED_T; }
+	// 2-key combinations
+	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_down"))) {}
+	else if ((i->is_action_pressed("ui_left")) && (i->is_action_pressed("ui_right"))) {}
+	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_right"))) {
+		motion.z -= SPEED_T / (sqrt(2));
+		motion.x += SPEED_T / (sqrt(2));
+	}
+	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_right"))) {
+		motion.z += SPEED_T / (sqrt(2));
+		motion.x += SPEED_T / (sqrt(2));
+	}
+	else if ((i->is_action_pressed("ui_up")) && (i->is_action_pressed("ui_left"))) {
+		motion.z -= SPEED_T / (sqrt(2));
+		motion.x -= SPEED_T / (sqrt(2));
+	}
+	else if ((i->is_action_pressed("ui_down")) && (i->is_action_pressed("ui_left"))) {
+		motion.z += SPEED_T / (sqrt(2));
+		motion.x -= SPEED_T / (sqrt(2));
+	}
+	// 1-key combinations
+	else if (i->is_action_pressed("ui_up")) { motion.z -= SPEED_T; }
+	else if (i->is_action_pressed("ui_down")) { motion.z += SPEED_T; }
+	else if (i->is_action_pressed("ui_right")) { motion.x += SPEED_T; }
+	else if (i->is_action_pressed("ui_left")) { motion.x -= SPEED_T; }
 
 }
 

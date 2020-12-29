@@ -27,14 +27,11 @@ namespace godot {
 		const double MinHeight{ 20 };
 		//WorldEnvironment* Env;
 		
-		bool movable;
+		bool movable{ true };
 		
 
 	public:
 		
-		//void _on_MenuShop_visibility_changed();
-		//void _on_PoliciesInput_visibility_changed();
-
 		int counter;
 		
 		static void _register_methods();

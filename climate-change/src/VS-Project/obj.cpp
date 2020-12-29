@@ -111,24 +111,32 @@ void Structure::_input(InputEvent* e)
 
     if (i->is_action_pressed("ui_select") && Clickable) {
 
-        std::cout << "DEBUG: STRUCTURE OBJECT CLICKED" << std::endl;
-
-        ((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->set("time_speed", 0);
+        // RECORD MOUSE POSITION
 
         Vector2 mousePos = this->get_viewport()->get_mouse_position();
 
+        // PAUSE GAME
+
+        ((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->set("time_speed", 0);
+
+        // PLAYER SHOULD NOT BE MOVABLE
+
         ((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", false);
-        std::cout << "PLAYER SHOULD NOT BE MOVABLE" << std::endl;
+
+        // SET INFO BOX SIZE AND POSITION
 
         ((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 260));
 
-        if (mousePos.x > (get_viewport()->get_size().x) / 2) {
+        if (mousePos.x > (get_viewport()->get_size().x) / 2) 
+        {
             (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(60, 200));
         }
         else {
             real_t AdaptedWidth = ((Vector2)(((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->get("rect_size"))).x;
             (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x - AdaptedWidth - 60, 200));
         }
+
+        // AJUST POSITION OF MENU TO ENSURE IT IS VISIBLE
 
         if (get_viewport()->get_size().x - mousePos.x <= MenuSize)
         {
@@ -143,8 +151,8 @@ void Structure::_input(InputEvent* e)
             mousePos.x = MenuSize;
         }
 
-        if (get_viewport()->get_size().y - mousePos.y <= MenuSize) {
-
+        if (get_viewport()->get_size().y - mousePos.y <= MenuSize) 
+        {
             if (mousePos.x > (get_viewport()->get_size().x / 2)) { mousePos.x -= MenuSize - (get_viewport()->get_size().y - mousePos.y); }
             else { mousePos.x += MenuSize - (get_viewport()->get_size().y - mousePos.y); }
             mousePos.y = get_viewport()->get_size().y - MenuSize;
@@ -158,22 +166,18 @@ void Structure::_input(InputEvent* e)
 
         (this->get_tree()->get_root()->get_node("Main/2Dworld/Menus"))->set("position", mousePos);
 
+
         show_menu();
     }
 }
 
 void Structure::show_menu()
 {
-
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", get_object_info());
-
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
 
     godot::String MenuPath = "Main/2Dworld/Menus/Menu" + this->get_main_type();
-    Godot::print(MenuPath);
-
     this->get_tree()->get_root()->get_node((NodePath)MenuPath)->set("visible", true);
-
 }
 
 template<typename T> String to_godot_string(T s)

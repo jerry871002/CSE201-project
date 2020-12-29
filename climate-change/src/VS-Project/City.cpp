@@ -89,7 +89,7 @@ we update `day_tick` and execute simulation()
 */
 void City::_physics_process(float delta) {
 
-	counter += delta * time_speed;
+	counter += (double)delta * time_speed;
 	if (counter > 1)
 	{
 		simulation();
@@ -103,8 +103,6 @@ void City::_input(InputEvent*)
 
 	Input* i = Input::get_singleton();
 
-
-	// VERTICAL MOTION
 
 	if (i->is_action_pressed("ui_test"))
 	{
@@ -175,11 +173,8 @@ void City::set_initial_visible_components()
 
 void City::_ready()
 {
-
 	this->generate_initial_city_graphics();
-
 	this->set_initial_visible_components();
-
 }
 
 void godot::City::_on_MenuShop_pressed(String name)
@@ -244,7 +239,7 @@ void City::add_car() {
 
 void City::simulation()
 {
-	std::cout << "Simulation" << std::endl;
+	// std::cout << "Simulation" << std::endl;
 	/*
 	day_tick++;
 	//write the old values in a file 
