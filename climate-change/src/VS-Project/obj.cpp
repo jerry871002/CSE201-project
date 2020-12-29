@@ -109,7 +109,7 @@ void Structure::_input(InputEvent* e)
     Input* i = Input::get_singleton();
 
 
-    if (i->is_action_pressed("ui_select") && Clickable) {
+    if (i->is_action_just_pressed("ui_select") && Clickable) {
 
         // RECORD MOUSE POSITION
 
