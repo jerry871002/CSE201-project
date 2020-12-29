@@ -31,7 +31,7 @@ then run:
 
 namespace godot {
 
-	//class Transport;
+	class Transport;
 
 	class City : public Spatial {
 
@@ -120,6 +120,15 @@ namespace godot {
 		double healthcare;
 		double needs;
 		double totalSatisfaction;
+
+
+
+		ResourceLoader* ResLo = ResourceLoader::get_singleton();
+		Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
+		Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
+		Ref<PackedScene> MallScene = ResLo->load("res://Resources/Mall.tscn", "PackedScene");
+		Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
+		Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
 
 	};
 };

@@ -101,7 +101,12 @@ bool Structure::is_other_structure_within_distance(Vector3 other, double distanc
 
 void Structure::_process(float delta)
 {
-
+    /*
+    if (this->get("updatable")) {
+        this->simulate_step(); // will run the lowest level simulate step function
+        this->set("updatable", false);
+    }
+    */
 }
 
 void Structure::_input(InputEvent* e)
