@@ -181,8 +181,18 @@ void Structure::show_menu()
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", get_object_info());
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
 
-    godot::String MenuPath = "Main/2Dworld/Menus/Menu" + this->get_main_type();
-    this->get_tree()->get_root()->get_node((NodePath)MenuPath)->set("visible", true);
+    godot::String MenuPathString = "Main/2Dworld/Menus/Menu" + this->get_main_type();
+    NodePath MenuPath = (NodePath)MenuPathString;
+
+    if (this->get_tree()->get_root()->has_node(MenuPath)) {
+        this->get_tree()->get_root()->get_node(MenuPath)->set("visible", true);
+    }
+    else {
+        Godot::print("A node was not found at the following path: ");
+        Godot::print(MenuPathString);
+    }
+
+    
 }
 
 template<typename T> String to_godot_string(T s)
