@@ -137,9 +137,9 @@ void City::generate_initial_city_graphics()
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = 0; x < 2; x++)
+		for (int x = 0; x < 1; x++)
 		{
-			for (int z = 0; z < 3; z++)
+			for (int z = 0; z < 1; z++)
 			{
 				int type = rand() % 2;
 				Node* node;
@@ -176,10 +176,6 @@ void City::_ready()
 	this->generate_initial_city_graphics();
 	this->set_initial_visible_components();
 	int children_count = this->get_child_count();
-	for (std::vector<Structure*>::iterator it = all_structures.begin(); it != all_structures.end(); ++it)
-	{
-		(*it)->set("updatable", true);
-	}
 }
 
 void godot::City::_on_MenuShop_pressed(String name)
@@ -255,9 +251,30 @@ void City::simulation()
 	energySupply = 0;
     healthcare = 0;
 	*/
-	
+
+
+	for (std::vector<Structure*>::iterator it = all_structures.begin(); it != all_structures.end(); ++it)
+	{
+		(*it)->set("updatable", true);
+	}
 
 	
+
+	//for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
+	//{
+		/*
+		commented out until we know what variables to call in every structure
+
+		income += (*it)->income;
+		std::cout << "in LOOP income " << (*it)->income << std::endl;
+		numberOfEmployees += (*it)->numberOfEmployees;
+		carbonEmission += (*it)->carbonEmission;
+		energyDemand += (*it)->energyDemand;
+		energySupply += (*it)->energySupply;
+        healthcare += (*it)->healthcare;
+		(*it)->simulate_step(); //function that updates the building
+		
+		*/
 
 	//}
 	/*

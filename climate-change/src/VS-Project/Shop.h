@@ -14,6 +14,9 @@ namespace godot {
 
         Shop();
         ~Shop();
+
+        static void _register_methods();
+        virtual void _ready();
         
         virtual String get_object_type() { return "Shop"; };
         String get_main_type() { return "Shop"; };
@@ -29,15 +32,14 @@ namespace godot {
         virtual double get_energyuse();
         virtual double get_environmentalcost();
 
-        void simulate_step(double days);
+        virtual void simulate_step(double days);
         virtual String get_object_info();
 
         void panels_get_added(); // function to add the panels, both in simulation and visually
         int panels_age{ 0 }; // int to track the panels_age once they are installed - ticks down every day, when it reaches 0 the panels dissapear
-        bool ArePanelsDisplayed(); // method just to check whether the panels are on visually (mostly for debug)
 
         // double supposed to represent yearly probability of panel appearing - this will be changed by policies
-        double panel_probability{ 0.05 };  // will likely be changed to a more complex function soon 
+        double panel_probability{ 0.75 };  // will likely be changed to a more complex function soon 
 
 
     };

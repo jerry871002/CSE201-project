@@ -14,11 +14,22 @@ using namespace godot;
 // ######################     SHOP SUPERCLASS     ##############################
 
 
+void Shop::_register_methods() 
+{
+    register_method((char*)"_ready", &Shop::_ready);
+}
+
+void Shop::_ready() 
+{
+    this->Structure::_ready();
+    this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
+}
 
 Shop::Shop()
 {
     Clickable = false;
     PanelsOn = false;
+    
 }
 
 Shop::~Shop()
@@ -109,6 +120,12 @@ String Shop::get_object_info()
 {
     String info = this->Structure::get_object_info();
     info += "Employement: " + to_godot_string(this->employment) + String("\n");
+    if (this->PanelsOn) {
+        info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string(this->panels_age) + String("\n");
+    }
+    else {
+        info += "Panels are not displayed";
+    }
     return info;
 }
 
@@ -131,7 +148,9 @@ double Shop::get_environmentalcost() {
 
 void Shop::simulate_step(double days) {
 
-    std::cout << "DEBUG: SHOP SIMULATION" << std::endl;
+    std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
+
+    this->Structure::simulate_step(days);
 
     /*
     Godot::print("DEBUG: PANELS_AGE = ");
@@ -140,16 +159,17 @@ void Shop::simulate_step(double days) {
     Godot::print(to_godot_string(double(((Node*)this)->get("panel_probability"))));
     */
 
-    if (int(((Node*)this)->get("panels_age")) == 0) {
+    if (int(this->panels_age) == 0) {
 
         // TESTING STUFF LIKELY TO BE REMOVED SOON
 
-        double temp1 = double(1.0 - double(((Node*)this)->get("panel_probability")));
+        double temp1 = double(1.0 - this->panel_probability);
         double temp2 = double(days / 365.0);
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(((Node*)this)->get("panel_probability"))), double(days / 365.0))) << std::endl; //double(days / 365.0)
+        std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->panels_age) << " AND PANEL PROBABILITY = " << std::to_string(this->panel_probability) << std::endl;
+        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->panel_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             panels_get_added();
@@ -160,16 +180,18 @@ void Shop::simulate_step(double days) {
 
     }
 
-    else if (int(((Node*)this)->get("panels_age")) > days)
+    else if (int(this->panels_age) > days)
     {
-        ((Node*)this)->set("panels_age", int(((Node*)this)->get("panels_age")) - int(days));
+        this->panels_age -= int(days);
     }
     else {
-        ((Node*)this)->set("panels_age", 0);
+        this->panels_age = 0;
         PanelsOn = false;
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
         std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
+
+    std::cout << "DEBUG: SHOP SIMULATION DONE" << std::endl;
 
 }
 
@@ -247,6 +269,11 @@ Restaurant::Restaurant() {
 Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days) {
+    
+    std::cout << "DEBUG: RESTAURANT SIMULATION CALLED" << std::endl;
+
+    this->Shop::simulate_step(days);
+    
     age += days;
     double shock = 0;
     std::random_device rd;
@@ -260,6 +287,8 @@ void Restaurant::simulate_step(double days) {
         }
         firstYearShock = true; //so that this if statement is only run once, after a full year has passed
     }
+
+    std::cout << "DEBUG: RESTAURANT SIMULATION DONE" << std::endl;
 
 }
 

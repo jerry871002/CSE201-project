@@ -106,16 +106,24 @@ void Structure::_process(float delta)
 {
     
     if (this->get("updatable")) {
-        this->test_update(); // will run the lowest level simulate step function
+        Godot::print("This is a: " + this->get_object_type());
+        this->simulate_step(1); // will run the lowest level simulate step function
         this->set("updatable", false);
     }
     
 }
 
+void Structure::simulate_step(double days) {
+    std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
+    std::cout << "DEBUG: STRUCTURE SIMULATION DONE" << std::endl;
+}
+
+/*
 void Structure::test_update() {
     Godot::print("The TEST UPDATE function is running");
     Godot::print("This is a structure but also a " + this->get_object_type());
 }
+*/
 
 void Structure::_input(InputEvent* e)
 {

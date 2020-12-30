@@ -45,9 +45,9 @@ namespace godot {
         virtual void show_menu();
         virtual String get_object_info();
 
-        virtual void simulate_step() {};
+        virtual void simulate_step(double days);
         bool updatable{ false };
-        void test_update();
+        //void test_update();
 
         real_t MenuSize{ 300 };
         real_t InfoBoxWidth{ 300 };
