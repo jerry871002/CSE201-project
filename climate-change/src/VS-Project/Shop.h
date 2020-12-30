@@ -14,6 +14,7 @@ namespace godot {
 
         Shop();
         ~Shop();
+        
         virtual String get_object_type() { return "Shop"; };
         String get_main_type() { return "Shop"; };
 

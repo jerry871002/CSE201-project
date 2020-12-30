@@ -83,6 +83,9 @@ void Structure::_register_methods()
     register_method((char*)"_ready", &Structure::_ready);
     register_method((char*)"_on_Area_mouse_entered", &Structure::_on_Area_mouse_entered);
     register_method((char*)"_on_Area_mouse_exited", &Structure::_on_Area_mouse_exited);
+
+    register_property<Structure, bool>("updatable", &Structure::updatable, false);
+
 }
 
 void Structure::_init()
@@ -101,12 +104,17 @@ bool Structure::is_other_structure_within_distance(Vector3 other, double distanc
 
 void Structure::_process(float delta)
 {
-    /*
+    
     if (this->get("updatable")) {
-        this->simulate_step(); // will run the lowest level simulate step function
+        this->test_update(); // will run the lowest level simulate step function
         this->set("updatable", false);
     }
-    */
+    
+}
+
+void Structure::test_update() {
+    Godot::print("The TEST UPDATE function is running");
+    Godot::print("This is a structure but also a " + this->get_object_type());
 }
 
 void Structure::_input(InputEvent* e)

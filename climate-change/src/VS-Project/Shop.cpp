@@ -13,6 +13,8 @@ using namespace godot;
 
 // ######################     SHOP SUPERCLASS     ##############################
 
+
+
 Shop::Shop()
 {
     Clickable = false;
@@ -127,8 +129,47 @@ double Shop::get_environmentalcost() {
 }
 
 
-void Shop::simulate_step(double days)
-{
+void Shop::simulate_step(double days) {
+
+    std::cout << "DEBUG: SHOP SIMULATION" << std::endl;
+
+    /*
+    Godot::print("DEBUG: PANELS_AGE = ");
+    Godot::print(to_godot_string(int(((Node*)this)->get("panels_age"))));
+    Godot::print("DEBUG: PANEL_PROBABILITY = ");
+    Godot::print(to_godot_string(double(((Node*)this)->get("panel_probability"))));
+    */
+
+    if (int(((Node*)this)->get("panels_age")) == 0) {
+
+        // TESTING STUFF LIKELY TO BE REMOVED SOON
+
+        double temp1 = double(1.0 - double(((Node*)this)->get("panel_probability")));
+        double temp2 = double(days / 365.0);
+        double temp3 = pow(temp1, temp2);
+
+        double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
+        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(((Node*)this)->get("panel_probability"))), double(days / 365.0))) << std::endl; //double(days / 365.0)
+        if (r > temp3)
+        {
+            panels_get_added();
+            this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
+            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+        }
+        else {}
+
+    }
+
+    else if (int(((Node*)this)->get("panels_age")) > days)
+    {
+        ((Node*)this)->set("panels_age", int(((Node*)this)->get("panels_age")) - int(days));
+    }
+    else {
+        ((Node*)this)->set("panels_age", 0);
+        PanelsOn = false;
+        this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
+        std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+    }
 
 }
 

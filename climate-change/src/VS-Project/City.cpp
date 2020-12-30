@@ -148,6 +148,7 @@ void City::generate_initial_city_graphics()
 				node->set("scale", Vector3(10, 10, 10));
 				node->set("translation", Vector3(30 * x, 0, 30 * z));
 				this->add_child(node);
+				all_structures.push_back((Shop*)node);
 			}
 		}
 	}
@@ -174,6 +175,11 @@ void City::_ready()
 {
 	this->generate_initial_city_graphics();
 	this->set_initial_visible_components();
+	int children_count = this->get_child_count();
+	for (std::vector<Structure*>::iterator it = all_structures.begin(); it != all_structures.end(); ++it)
+	{
+		(*it)->set("updatable", true);
+	}
 }
 
 void godot::City::_on_MenuShop_pressed(String name)
@@ -249,24 +255,9 @@ void City::simulation()
 	energySupply = 0;
     healthcare = 0;
 	*/
-
 	
 
-	//for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
-	//{
-		/*
-		commented out until we know what variables to call in every structure
-
-		income += (*it)->income;
-		std::cout << "in LOOP income " << (*it)->income << std::endl;
-		numberOfEmployees += (*it)->numberOfEmployees;
-		carbonEmission += (*it)->carbonEmission;
-		energyDemand += (*it)->energyDemand;
-		energySupply += (*it)->energySupply;
-        healthcare += (*it)->healthcare;
-		(*it)->simulate_step(); //function that updates the building
-		
-		*/
+	
 
 	//}
 	/*

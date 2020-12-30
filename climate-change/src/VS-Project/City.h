@@ -1,7 +1,7 @@
 #pragma once
 
 #include "obj.h"
-
+#include "Shop.h"
 
 #include <core/Godot.hpp>
 #include <Spatial.hpp>
@@ -74,7 +74,7 @@ namespace godot {
 
 		// ARRAYS CONTAINING ALL ACTIVE ELEMENTS
 
-
+		std::vector<Structure*> all_structures;
 
 		String active_button;
 
@@ -92,6 +92,8 @@ namespace godot {
 		double return_healthcare();
 		double return_needs();
 		double return_totalSatisfaction();
+
+		
 		
 
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
