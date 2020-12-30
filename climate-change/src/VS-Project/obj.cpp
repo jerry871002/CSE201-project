@@ -85,6 +85,8 @@ void Structure::_register_methods()
     register_method((char*)"_on_Area_mouse_exited", &Structure::_on_Area_mouse_exited);
 
     register_property<Structure, bool>("updatable", &Structure::updatable, false);
+    register_property<Structure, double>("CO2Emission", &Structure::CO2Emission, 1);
+    register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
 
 }
 

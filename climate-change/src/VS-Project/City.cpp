@@ -139,7 +139,7 @@ void City::generate_initial_city_graphics()
 	{
 		for (int x = 0; x < 1; x++)
 		{
-			for (int z = 0; z < 1; z++)
+			for (int z = 0; z < 2; z++)
 			{
 				int type = rand() % 2;
 				Node* node;
@@ -148,7 +148,7 @@ void City::generate_initial_city_graphics()
 				node->set("scale", Vector3(10, 10, 10));
 				node->set("translation", Vector3(30 * x, 0, 30 * z));
 				this->add_child(node);
-				all_structures.push_back((Shop*)node);
+				all_shops.push_back((Shop*)node);
 			}
 		}
 	}
@@ -195,12 +195,31 @@ void godot::City::_on_Validate_pressed()
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 	String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
-	Godot::print(mytext);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
 	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 	this->_on_Game_Speed_changed();
 
+	this->implement_policies((double)mytext.to_float());
+
+}
+
+void City::implement_policies(double value) {
+
+	Godot::print(active_button);
+
+	if (active_button == String("ChangePanelProbability")) {
+
+		Godot::print(value);
+
+		if (value >= 0 && value < 1) {
+			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
+			{
+				(*it)->set("panel_probability", value);
+			}
+		}
+		
+	}
 }
 
 void godot::City::_on_Game_Speed_changed()
@@ -252,12 +271,14 @@ void City::simulation()
     healthcare = 0;
 	*/
 
-
-	for (std::vector<Structure*>::iterator it = all_structures.begin(); it != all_structures.end(); ++it)
+	this->carbonEmission = 0;
+	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
 		(*it)->set("updatable", true);
+		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 	}
-
+	
+	std::cout << "DEBUG: TOTAL CARBON EMISSION = " << this->carbonEmission << std::endl;
 	
 
 	//for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)

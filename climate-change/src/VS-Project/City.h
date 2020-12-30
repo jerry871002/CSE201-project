@@ -74,9 +74,10 @@ namespace godot {
 
 		// ARRAYS CONTAINING ALL ACTIVE ELEMENTS
 
-		std::vector<Structure*> all_structures;
+		std::vector<Shop*> all_shops;
 
 		String active_button;
+		void implement_policies(double);
 
 		void add_car();
 		                

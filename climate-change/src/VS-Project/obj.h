@@ -60,7 +60,7 @@ namespace godot {
         double cost = 0; // cost in euros to build a new building
         double energyUse = 0; //amount of energy used by the building in kWh
         double maintenance = 0; //maintenace and working cost in euros
-        double CO2Emission = 0; // kg of CO2 emitted
+        double CO2Emission{ 1 }; // kg of CO2 emitted
         double buildingTime = 0; // years needed to build a new building
         double satisfaction = 0; // on scale of 10
         double environmentalCost = 0; // environmental and health costs in euros 

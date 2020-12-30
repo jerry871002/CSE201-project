@@ -17,6 +17,7 @@ using namespace godot;
 void Shop::_register_methods() 
 {
     register_method((char*)"_ready", &Shop::_ready);
+    register_property<Shop, double>("panel_probability", &Shop::panel_probability, 0.75);
 }
 
 void Shop::_ready() 
@@ -134,7 +135,9 @@ double Shop::get_satisfaction() {
 }
 
 double Shop::get_co2emissions() {
-    return this->CO2Emission;
+    double factor = 1;
+    if (this->PanelsOn) { factor = 0.5; };
+    return (double)(this->get("CO2Emission"))*factor;
 }
 
 double Shop::get_energyuse() {
