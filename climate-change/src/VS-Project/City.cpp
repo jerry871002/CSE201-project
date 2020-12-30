@@ -41,7 +41,6 @@ City::City() {
 	energyDemand = 0;
 	energySupply = 0;
 	healthcare = 0;
-	needs = 0;
 	totalSatisfaction = 100;
 
 	time_speed = 1;
@@ -249,7 +248,6 @@ void City::simulation()
 	energyDemand = 0;
 	energySupply = 0;
     healthcare = 0;
-    needs = 0;
 	*/
 
 	
@@ -266,7 +264,6 @@ void City::simulation()
 		energyDemand += (*it)->energyDemand;
 		energySupply += (*it)->energySupply;
         healthcare += (*it)->healthcare;
-        needs += (*it)->needs;
 		(*it)->simulate_step(); //function that updates the building
 		
 		*/
@@ -379,11 +376,6 @@ double City::return_energySupply() {
 double City::return_healthcare() {
 	return healthcare;
 }
-
-double City::return_needs() {
-	return needs;
-}
-
 
 std::string City::return_game_date() {
 	std::string date = "Year ";

@@ -8,6 +8,7 @@
 #include "obj.h"
 #include "City.h"
 #include "edit_text_files.cpp"
+#include "Shop.h"
 
 // Sleep(miliseconds) on Windows and sleep(seconds) on linux/mac
 #ifdef _WIN32

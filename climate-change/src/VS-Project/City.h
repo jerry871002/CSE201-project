@@ -118,7 +118,6 @@ namespace godot {
 		double energyDemand;
 		double energySupply;
 		double healthcare;
-		double needs;
 		double totalSatisfaction;
 
 
