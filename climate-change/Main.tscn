@@ -366,7 +366,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/ChangePanelProbability" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/ChangePanelProbability" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ChangePanelProbability" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
