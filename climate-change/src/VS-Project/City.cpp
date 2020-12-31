@@ -94,6 +94,14 @@ void City::_physics_process(float delta) {
 		simulation();
 		counter -= 1;
 	}
+	if (this->notification_active) {
+		(this->notification_timeout)++;
+		if (this->notification_timeout > 200) {
+			this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
+			this->notification_active = false;
+			this->notification_timeout = 0;
+		}
+	}
 }
 
 
@@ -167,6 +175,7 @@ void City::set_initial_visible_components()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	// Repeat for all menus
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("position", Vector2(20, 20));
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("visible", true);
@@ -200,10 +209,20 @@ void godot::City::_on_MenuShop_pressed(String name)
 }
 
 String City::get_button_info_text() {
-	if (this->active_button == String("ChangePanelProbabilityForAllShops")) {
+
+	// This method returns text giving information about the various policies 
+	// The placeholder text for the input box changed to correpsond to the old value of the "policy"
+
+	// I DON'T KNOW HOW TO DO THE SECOND PART YET 
+	// I GUESS THESE VALUES SHOULD BE STORED IN CITY AND NOT FETCHED FROM RANDOM OBJECTS
+
+	if (this->active_button == String("ChangePanelProbabilityForAllShops")) 
+	{
+		//this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
 		return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for all shops. Ultimately, this policy will be implemented as a subsidy, and thus the input will refer to a certain amount that the city will be willing to contribute to the installation of solar panels on shops. Hence, this amount will be subtracted from the budget as soon as solar panels are installed on a shop.");
 	} 
-	else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) { 
+	else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) 
+	{ 
 		return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for restaurants in the city.");
 	}
 	else {
@@ -225,7 +244,16 @@ void godot::City::_on_Validate_pressed()
 	if (mytext.is_valid_float()) {
 		this->implement_shop_policies((double)mytext.to_float());
 	}
-	else { std::cout << "INVALID INPUT: EXPECTED FLOAT" << std::endl; }
+	else { 
+		this->trigger_notification(String("You did not enter an appropriate value for the policy."));
+	}
+}
+
+void City::trigger_notification(String text = String("Seems like there was a mistake. Please try again.")) {
+	std::cout << "INVALID INPUT: EXPECTED FLOAT IN SPECIFIED RANGE" << std::endl;
+	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("text", text);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", true);
+	this->notification_active = true;
 }
 
 void City::implement_shop_policies(double value) {
@@ -240,7 +268,9 @@ void City::implement_shop_policies(double value) {
 				(*it)->set("panel_probability", value);
 			}
 		}
-		else { std::cout << "INPUT IS OUT OF EXPECTED RANGE" << std::endl; }
+		else { 
+			this->trigger_notification(String("The value you provided was not in the specified range."));
+		}
 	}
 	else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) {
 		if (value >= 0 && value < 1) {
@@ -252,7 +282,9 @@ void City::implement_shop_policies(double value) {
 				}
 			}
 		}
-		else { std::cout << "INPUT IS OUT OF EXPECTED RANGE" << std::endl; }
+		else { 
+			this->trigger_notification();
+		}
 	}
 }
 
@@ -307,7 +339,7 @@ void City::simulation()
 	energySupply = 0;
     healthcare = 0;
 	*/
-
+	
 	this->carbonEmission = 0;
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{

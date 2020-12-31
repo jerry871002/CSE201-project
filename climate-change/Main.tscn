@@ -310,6 +310,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="InvalidInputNotification" type="Label" parent="2Dworld"]
+margin_left = 525.0
+margin_top = 400.0
+margin_right = 1425.0
+margin_bottom = 550.0
+theme = SubResource( 2 )
+custom_styles/normal = ExtResource( 13 )
+custom_fonts/font = ExtResource( 12 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="PoliciesInput" type="Node2D" parent="2Dworld"]
 position = Vector2( 17.6389, 1.25995 )
 
