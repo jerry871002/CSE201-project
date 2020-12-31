@@ -225,8 +225,11 @@ void City::implement_policies(double value) {
 void godot::City::_on_Game_Speed_changed()
 {
 	time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
+	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 }
-;
+
 
 void City::add_car() {
 
