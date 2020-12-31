@@ -14,7 +14,7 @@
 #include <HSlider.hpp>
 #include <TextureProgress.hpp>
 
-
+#include <PoolArrays.hpp>
 
 #include <string>
 #include <fstream>
@@ -200,8 +200,10 @@ void godot::City::_on_Validate_pressed()
 	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 	this->_on_Game_Speed_changed();
 
-	this->implement_shop_policies((double)mytext.to_float());
-
+	if (mytext.is_valid_float()) {
+		this->implement_shop_policies((double)mytext.to_float());
+	}
+	else { std::cout << "INVALID INPUT: EXPECTED FLOAT" << std::endl; }
 }
 
 void City::implement_shop_policies(double value) {
@@ -216,6 +218,7 @@ void City::implement_shop_policies(double value) {
 				(*it)->set("panel_probability", value);
 			}
 		}
+		else { std::cout << "INPUT IS OUT OF EXPECTED RANGE" << std::endl; }
 	}
 	else if (active_button == String("ChangePanelProbabilityForRestaurants")) {
 		if (value >= 0 && value < 1) {
@@ -227,6 +230,7 @@ void City::implement_shop_policies(double value) {
 				}
 			}
 		}
+		else { std::cout << "INPUT IS OUT OF EXPECTED RANGE" << std::endl; }
 	}
 }
 
