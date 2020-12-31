@@ -79,6 +79,8 @@ namespace godot {
 		String active_button;
 		void implement_shop_policies(double);
 
+		String get_button_info_text();
+
 		void add_car();
 		                
 		void write_stat_history_to_file();    //writes all the stats to a file so that the interface team can make graphs 

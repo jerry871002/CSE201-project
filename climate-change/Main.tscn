@@ -295,14 +295,29 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="2Dworld/Menus"]
 shape = SubResource( 8 )
 
+[node name="ButtonInfoBox" type="Label" parent="2Dworld"]
+margin_left = 375.0
+margin_top = 270.0
+margin_right = 1575.0
+margin_bottom = 470.0
+theme = SubResource( 2 )
+custom_styles/normal = ExtResource( 13 )
+custom_fonts/font = ExtResource( 12 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="PoliciesInput" type="Node2D" parent="2Dworld"]
 position = Vector2( 17.6389, 1.25995 )
 
 [node name="TextEdit" type="LineEdit" parent="2Dworld/PoliciesInput"]
 margin_left = 500.0
-margin_top = 420.0
+margin_top = 580.0
 margin_right = 1420.0
-margin_bottom = 520.0
+margin_bottom = 680.0
 theme = ExtResource( 8 )
 custom_fonts/font = SubResource( 9 )
 align = 1
@@ -319,9 +334,9 @@ __meta__ = {
 
 [node name="Button" type="Button" parent="2Dworld/PoliciesInput"]
 margin_left = 800.0
-margin_top = 544.0
+margin_top = 720.0
 margin_right = 1120.0
-margin_bottom = 624.0
+margin_bottom = 800.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CONFIRM"

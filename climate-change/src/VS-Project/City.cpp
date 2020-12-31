@@ -165,6 +165,8 @@ void City::set_initial_visible_components()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+	// Repeat for all menus
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("position", Vector2(20, 20));
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("visible", true);
@@ -180,14 +182,33 @@ void City::_ready()
 
 void godot::City::_on_MenuShop_pressed(String name)
 {
+	
+	active_button = name;
+
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
+
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
+
+	String ButtonInfo = this->get_button_info_text();
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
+
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
-	active_button = name;
+}
 
+String City::get_button_info_text() {
+	if (this->active_button == String("ChangePanelProbabilityForAllShops")) {
+		return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for all shops. Ultimately, this policy will be implemented as a subsidy, and thus the input will refer to a certain amount that the city will be willing to contribute to the installation of solar panels on shops. Hence, this amount will be subtracted from the budget as soon as solar panels are installed on a shop.");
+	} 
+	else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) { 
+		return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for restaurants in the city.");
+	}
+	else {
+		return String("No information has been specified for this policy.");
+	}
 }
 
 void godot::City::_on_Validate_pressed()
@@ -196,6 +217,7 @@ void godot::City::_on_Validate_pressed()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 	String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
 	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 	this->_on_Game_Speed_changed();
@@ -210,7 +232,7 @@ void City::implement_shop_policies(double value) {
 
 	Godot::print(this->active_button);
 
-	if (active_button == String("ChangePanelProbabilityForAllShops")) {
+	if (this->active_button == String("ChangePanelProbabilityForAllShops")) {
 		if (value >= 0 && value < 1) {
 			Godot::print("PANEL PROBABILITY WILL BE CHANGED FOR ALL SHOPS");
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
@@ -220,7 +242,7 @@ void City::implement_shop_policies(double value) {
 		}
 		else { std::cout << "INPUT IS OUT OF EXPECTED RANGE" << std::endl; }
 	}
-	else if (active_button == String("ChangePanelProbabilityForRestaurants")) {
+	else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) {
 		if (value >= 0 && value < 1) {
 			Godot::print("PANEL PROBABILITY WILL BE CHANGED ONLY FOR RESTAURANTS");
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
