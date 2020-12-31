@@ -79,7 +79,8 @@ namespace godot {
 		String active_button;
 		void implement_shop_policies(double);
 		bool notification_active{ false };
-		int notification_timeout{ 0 };
+		int notification_counter{ 0 };
+		int notification_timeout{ 180 };
 		void trigger_notification(String);
 		String get_button_info_text();
 

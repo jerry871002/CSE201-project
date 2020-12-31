@@ -94,12 +94,14 @@ void City::_physics_process(float delta) {
 		simulation();
 		counter -= 1;
 	}
-	if (this->notification_active) {
-		(this->notification_timeout)++;
-		if (this->notification_timeout > 200) {
+	if (this->notification_active) 
+	{
+		(this->notification_counter)++;
+		if (this->notification_counter > this->notification_timeout) 
+		{
 			this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 			this->notification_active = false;
-			this->notification_timeout = 0;
+			this->notification_counter = 0;
 		}
 	}
 }
@@ -249,7 +251,8 @@ void godot::City::_on_Validate_pressed()
 	}
 }
 
-void City::trigger_notification(String text = String("Seems like there was a mistake. Please try again.")) {
+void City::trigger_notification(String text = String("Seems like there was a mistake. Please try again.")) 
+{
 	std::cout << "INVALID INPUT: EXPECTED FLOAT IN SPECIFIED RANGE" << std::endl;
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("text", text);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", true);
