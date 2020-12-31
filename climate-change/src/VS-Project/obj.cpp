@@ -49,7 +49,7 @@ double Structure::get_satisfaction() {
 }
 
 double Structure::get_co2emissions() {
-    std::cout << "DEBUG: STRUCTURE GET EMISSIONS" << std::endl;
+    //std::cout << "DEBUG: STRUCTURE GET EMISSIONS" << std::endl;
     return this->CO2Emission;
 }
 
@@ -89,6 +89,8 @@ void Structure::_register_methods()
     register_method((char*)"_on_Area_mouse_entered", &Structure::_on_Area_mouse_entered);
     register_method((char*)"_on_Area_mouse_exited", &Structure::_on_Area_mouse_exited);
 
+    register_property<Structure, String>("object_type", &Structure::set_object_type, &Structure::get_type, "Structure");
+
     register_property<Structure, bool>("updatable", &Structure::updatable, false);
     register_property<Structure, double>("CO2Emission", &Structure::set_co2emissions, &Structure::get_co2emissions, 1);
     //register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
@@ -121,8 +123,8 @@ void Structure::_process(float delta)
 }
 
 void Structure::simulate_step(double days) {
-    std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
-    std::cout << "DEBUG: STRUCTURE SIMULATION DONE" << std::endl;
+    //std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
+    //std::cout << "DEBUG: STRUCTURE SIMULATION DONE" << std::endl;
 }
 
 /*

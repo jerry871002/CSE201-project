@@ -40,7 +40,12 @@ namespace godot {
         void _on_Area_mouse_entered();
         void _on_Area_mouse_exited();
 
+        String object_type;
+
         virtual String get_object_type() { return "Structure"; };
+        virtual String get_type() { return this->get_object_type(); };
+        virtual void set_object_type(String type) { object_type = type; };
+
         virtual String get_main_type() { return "Default"; };
         virtual void show_menu();
         virtual String get_object_info();

@@ -136,7 +136,7 @@ double Shop::get_satisfaction() {
 }
 
 double Shop::get_co2emissions() {
-    std::cout << "DEBUG: SHOP GET EMISSIONS" << std::endl;
+    //std::cout << "DEBUG: SHOP GET EMISSIONS" << std::endl;
     double factor = 1;
     if (this->PanelsOn) { factor = 0.5; };
     return (double)(this->CO2Emission)*factor;
@@ -153,7 +153,7 @@ double Shop::get_environmentalcost() {
 
 void Shop::simulate_step(double days) {
 
-    std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
+    //std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
 
     this->Structure::simulate_step(days);
 
@@ -196,7 +196,7 @@ void Shop::simulate_step(double days) {
         std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
 
-    std::cout << "DEBUG: SHOP SIMULATION DONE" << std::endl;
+    //std::cout << "DEBUG: SHOP SIMULATION DONE" << std::endl;
 
 }
 
@@ -275,7 +275,7 @@ Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days) {
     
-    std::cout << "DEBUG: RESTAURANT SIMULATION CALLED" << std::endl;
+    //std::cout << "DEBUG: RESTAURANT SIMULATION CALLED" << std::endl;
 
     this->Shop::simulate_step(days);
     
@@ -293,7 +293,7 @@ void Restaurant::simulate_step(double days) {
         firstYearShock = true; //so that this if statement is only run once, after a full year has passed
     }
 
-    std::cout << "DEBUG: RESTAURANT SIMULATION DONE" << std::endl;
+    //std::cout << "DEBUG: RESTAURANT SIMULATION DONE" << std::endl;
 
 }
 

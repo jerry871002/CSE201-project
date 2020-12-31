@@ -77,7 +77,7 @@ namespace godot {
 		std::vector<Shop*> all_shops;
 
 		String active_button;
-		void implement_policies(double);
+		void implement_shop_policies(double);
 
 		void add_car();
 		                

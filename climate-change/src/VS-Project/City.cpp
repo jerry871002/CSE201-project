@@ -200,25 +200,33 @@ void godot::City::_on_Validate_pressed()
 	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 	this->_on_Game_Speed_changed();
 
-	this->implement_policies((double)mytext.to_float());
+	this->implement_shop_policies((double)mytext.to_float());
 
 }
 
-void City::implement_policies(double value) {
+void City::implement_shop_policies(double value) {
 
-	Godot::print(active_button);
+	Godot::print(this->active_button);
 
-	if (active_button == String("ChangePanelProbability")) {
-
-		Godot::print(value);
-
+	if (active_button == String("ChangePanelProbabilityForAllShops")) {
 		if (value >= 0 && value < 1) {
+			Godot::print("PANEL PROBABILITY WILL BE CHANGED FOR ALL SHOPS");
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 			{
 				(*it)->set("panel_probability", value);
 			}
 		}
-		
+	}
+	else if (active_button == String("ChangePanelProbabilityForRestaurants")) {
+		if (value >= 0 && value < 1) {
+			Godot::print("PANEL PROBABILITY WILL BE CHANGED ONLY FOR RESTAURANTS");
+			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
+			{
+				if ((String)(*it)->get("object_type") == (String)("Restaurant")) {
+					(*it)->set("panel_probability", value);
+				}
+			}
+		}
 	}
 }
 
@@ -277,6 +285,8 @@ void City::simulation()
 	this->carbonEmission = 0;
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
+		//Godot::print( "DEBUG: THIS OBJECT IS A ");
+		//Godot::print((String)(*it)->get("object_type"));
 		(*it)->set("updatable", true);
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 	}
