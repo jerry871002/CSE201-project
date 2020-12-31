@@ -125,8 +125,9 @@ String Shop::get_object_info()
         info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string(this->panels_age) + String("\n");
     }
     else {
-        info += "Panels are not displayed";
+        info += "Panels are not displayed" + String("\n");
     }
+    info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission")));
     return info;
 }
 
@@ -135,9 +136,10 @@ double Shop::get_satisfaction() {
 }
 
 double Shop::get_co2emissions() {
+    std::cout << "DEBUG: SHOP GET EMISSIONS" << std::endl;
     double factor = 1;
     if (this->PanelsOn) { factor = 0.5; };
-    return (double)(this->get("CO2Emission"))*factor;
+    return (double)(this->CO2Emission)*factor;
 }
 
 double Shop::get_energyuse() {

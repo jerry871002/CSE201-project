@@ -116,6 +116,7 @@ namespace godot {
         virtual double get_employment();
         virtual double get_energyuse();
         virtual double get_co2emissions();
+        virtual void set_co2emissions(double);
         virtual double get_satisfaction();
         virtual double get_environmentalcost();
 
