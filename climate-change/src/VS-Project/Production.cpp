@@ -15,6 +15,55 @@ Production::Production() {
 Production::~Production() {
 }
 
+double Production::get_PMEemission()
+{
+	return this->PMEmission;
+}
+
+double Production::get_NH3emission()
+{
+	return this->NH3Emission;
+}
+
+double Production::get_SO2emission()
+{
+	return this->SO2Emission;
+}
+
+double Production::get_NOxemission()
+{
+	return this->NOxEmission;
+}
+
+double Production::get_VOCsemission()
+{
+	return this->VOCsEmission;
+}
+
+double Production::get_mercury_emission()
+{
+	return this->mercuryEmission;
+}
+
+double Production::get_arsenic_emission()
+{
+	return this->arsenicEmission;
+}
+
+double Production::get_cadmium_emission()
+{
+	return this->cadmiumEmission;
+}
+
+double Production::get_lead_emission()
+{
+	return this->leadEmission;
+}
+
+double Production::get_nickel_emission()
+{
+	return this->nickelEmission;
+}
 
 /// <summary>
 /// AGRICULTURAL PRODUCTION

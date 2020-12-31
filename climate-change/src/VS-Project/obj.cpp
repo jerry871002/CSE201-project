@@ -259,9 +259,17 @@ void godot::Structure::_on_Area_mouse_exited()
 
 
 bool Structure::efficiency_cogeneration() {
-    return false; //need to add possibility of turning true (then definitive) if clicked, adding the cost in maintenace needed for this upgrade
+    return false; 
+    /* need to add possibility of turning true (then definitive) if clicked
+    if () {
+    return true;
+    }*/
 }
 
 bool Structure::efficiency_supercritical() {
-    return false; //need to add possibility of turning true (then definitive) if clicked, adding the cost in maintenace needed for this upgrade
+    return false;
+    /* need to add possibility of turning true (then definitive) if clicked
+    if () {
+    return true;
+    }*/
 }

@@ -31,6 +31,21 @@ namespace godot {
 		double cadmiumEmission = 0;
 		double leadEmission = 0;
 		double nickelEmission = 0;
+
+		//All harmful chemicals emitted which have a negative impact on the environment 
+		virtual double get_PMEemission();
+		virtual double get_NH3emission();
+		virtual double get_SO2emission();
+		virtual double get_NOxemission();
+		virtual double get_VOCsemission();
+
+		//All heavy metals emitted which have a negative impact on the environment 
+		virtual double get_mercury_emission();
+		virtual double get_arsenic_emission();
+		virtual double get_lead_emission();
+		virtual double get_cadmium_emission();
+		virtual double get_nickel_emission();
+
 	};
 
 	/// <summary>

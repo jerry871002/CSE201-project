@@ -91,15 +91,15 @@ namespace godot {
 
         double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
 
-        // All of our policies have to go in the City class !! Look at City.h 
+        
+        // POLICIES (all booleans for now with possible input, will have to be moved give the sim team's decisions) :
 
-        // virtual void simulate_step();
         // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
         bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
-        // need to add a cost for their implementation in the maintenance variable once
+        //
 
-        /* SOLAR PANEL VARIABLES
+        /* SOLAR PANEL VARIABLES (add randomization for your own use)
         They describe the characteristics of one single average solar panel, taking as a model the most used one : The Canadian Solar
         CS3U-345P model of 1x2m in size.
         */
@@ -108,7 +108,9 @@ namespace godot {
         double solarEnergy = 7.45; //average kWh produced per day
         double solarLifetime = 25; //years of energy production warranty
 
-        /// ROOFTOP WIND TURBINE VARIABLES - They describe the characteristics of one single average rooftop turbine
+        /* ROOFTOP WIND TURBINE VARIABLES (add randomization for your own use)
+        They describe the characteristics of one single average rooftop turbine
+        */
 
         double windSatisfaction = 6; //public opinion on rooftop wind turbines
         double windCost = 800; //cost in euros for a new turbine with its tower

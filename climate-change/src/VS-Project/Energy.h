@@ -44,12 +44,13 @@ namespace godot {
 		//All emissions caused by the plants which have a negative impact on the environment 
 		//(I am not having you deal with the waste such as ash for the moment)
 		virtual double get_radiation();
+		virtual double get_PMEemission();
 		virtual double get_H2Semission();
 		virtual double get_CH4emission();
 		virtual double get_NH3emission();
 		virtual double get_SO2emission();
 		virtual double get_NOxemission();
-		virtual double get_mercuryemission();
+		virtual double get_mercury_emission();
 
 		//Inputs needed for the different plants to work (important for the econ simulation aspect)
 		virtual double get_uranium();

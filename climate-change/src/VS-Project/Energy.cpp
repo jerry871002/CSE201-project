@@ -35,6 +35,11 @@ double Energy::get_radiation()
 	return this->radiation;
 }
 
+double Energy::get_PMEemission()
+{
+	return this->PMEmission;
+}
+
 double Energy::get_H2Semission()
 {
 	return this->H2SEmission;
@@ -60,7 +65,7 @@ double Energy::get_NOxemission()
 	return this->NOxEmission;
 }
 
-double Energy::get_mercuryemission()
+double Energy::get_mercury_emission()
 {
 	return this->mercuryEmission;
 }
@@ -127,6 +132,13 @@ void NuclearPowerPlant::simulate_step(double days)
 	age += days;
 	std::normal_distribution <double> energy(20000000, 300000);
 	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
+
+	if (age >= 127890) {
+		// 35 years is the average lifetime of a nuclear power plant, it then has to be replaced by a new plant or different power plant
+		energyPerDay = 0;
+		//send message on screen for closure
+	}
+
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
 
 	fissileMaterial += 1.4E-7 * energyPerDay * days;
@@ -142,10 +154,6 @@ void NuclearPowerPlant::simulate_step(double days)
 	if (age >= 10950) {
 		maintenance += 0.04; // after 30 years the maintenance and working costs double
 	}
-	/*
-	if age >= 127890{
-		// 35 years is the average lifetime of a nuclear power plant, it then has to be replaced by a new plant or different power plant
-	}*/
 }
 
 void godot::NuclearPowerPlant::_process(float delta)
@@ -197,15 +205,18 @@ void Windmill::simulate_step(double days)
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(25000, 5000);
 	energyPerDay = energy(gen); //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
+	
+	if (age >= 7300) {
+		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
+		energyPerDay = 0;
+		//send message on screen for closure
+	}
+
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
 
 	CO2Emission += 0.011 * energyPerDay * days;
 	environmentalCost = 0.0009 * energyPerDay * days;
 	maintenance += 7.45E-4 * energyPerDay * days;
-	/*
-	if age >= 7300{
-		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
-	}*/
 }
 
 /// <summary>
@@ -256,6 +267,13 @@ void GeothermalPowerPlant::simulate_step(double days)
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(32800, 1500);
 	energyPerDay = energy(gen); //kWh produced by in one day
+	
+	if (age >= 10950){
+		// 30 years is the average lifetime of a geothermal plant, it then has to be replaced by a new plant or different power plant
+		energyPerDay = 0;
+		//send message on screen for closure
+	}
+	
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
 
 	maintenance += 0.08 * energyPerDay * days;
@@ -271,11 +289,6 @@ void GeothermalPowerPlant::simulate_step(double days)
 	H2SEmission += 8.2E-5 * energyPerDay * days;
 
 	environmentalCost = 0.0015 * energyPerDay * days;
-
-	/*
-	if age >= 10950{
-		// 30 years is the average lifetime of a geothermal plant, it then has to be replaced by a new plant or different power plant
-	}*/
 }
 
 
@@ -329,13 +342,30 @@ void CoalPowerPlant::simulate_step(double days)
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(9589041, 500000);
 	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
+	
+	if (age >= 18250){
+		// 50 years is the average lifetime of a coal fired plant, it then has to be replaced by a new coal plant or different power plant
+		energyPerDay = 0;
+		//send message on screen for closure
+	}
+	
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
+	bool efficiencySup = true;
+	bool efficiencyCo = true;
 	
 	if (efficiency_supercritical() == true) {
+		if (efficiencySup == true) {
+			maintenance += 10E6;
+			efficiencySup = false;
+		}
 		energyPerDay = 9589041 * (1 - 0.04);
 		maintenance += 0.054 * energyPerDay * days;
 	}
 	if (efficiency_cogeneration() == true) {
+		if (efficiencyCo == true) {
+			maintenance += 20E6;
+			efficiencyCo = false;
+		}
 		energyPerDay = 9589041 * (1 - 0.09);
 		maintenance += 0.058 * energyPerDay * days;
 	}
@@ -357,9 +387,4 @@ void CoalPowerPlant::simulate_step(double days)
 	ashOutput += 0.0619 * energyPerDay * days;
 	mercuryEmission += 1.137E-8 * energyPerDay * days;
 	environmentalCost = 0.06 * energyPerDay * days;
-
-	/*
-	if age >= 18250{
-		// 50 years is the average lifetime of a coal fired plant, it then has to be replaced by a new coal plant or different power plant
-	}*/
 }
