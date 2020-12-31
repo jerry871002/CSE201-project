@@ -92,12 +92,33 @@ namespace godot {
         double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
 
         
-        // POLICIES (all booleans for now with possible input, will have to be moved give the sim team's decisions) :
+        // POLICIES (all booleans for now, with possible input, will have to be moved given the sim team's decisions) :
 
-        // Coal power plant (constructor creates subcritical plant of 38% efficiency) :
+        // Changing the coal power plant efficiency (constructor creates subcritical plant of 38% efficiency) :
         bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
-        //
+        //Law prohibiting coal power plants :
+        bool coal_prohibited();
+        //Law prohibiting nuclear power plants :
+        bool nuclear_prohibited();
+        //Law imposing maximum amount of chemicals or heavy metals emissions for each factory (Goods factories class) :
+        // 'maxi' is in kg per day and per factory
+        //chemicals :
+        bool maximum_CO2(double maxi); //should be between 0-4250 kg
+        bool maximum_SO2(double maxi); //should be between 0-4 kg
+        bool maximum_NH3(double maxi); //should be between 0-5 kg
+        bool maximum_NOx(double maxi); //should be between 0-5 kg
+        bool maximum_VOCs(double maxi); //should be between 0-7.5 kg
+        bool maximum_PM(double maxi); //should be between 0-50 kg
+        //metals :
+        bool maximum_mercury(double maxi); //should be between 0-2.3E-5 kg
+        bool maximum_cadmium(double maxi); //should be between 0-1.4E-5 kg
+        bool maximum_arsenic(double maxi); //should be between 0-2.4E-5 kg
+        bool maximum_nickel(double maxi); //should be between 0-1.9E-4 kg
+        bool maximum_lead(double maxi); //should be between 0-3.7E-4 kg
+
+
+
 
         /* SOLAR PANEL VARIABLES (add randomization for your own use)
         They describe the characteristics of one single average solar panel, taking as a model the most used one : The Canadian Solar

@@ -139,6 +139,23 @@ void NuclearPowerPlant::simulate_step(double days)
 		//send message on screen for closure
 	}
 
+	bool newBuilt = false;
+
+	if (nuclear_prohibited() == true) {
+		energyPerDay = 0; //forced closure of the plant
+		if (newBuilt == false) {
+			newBuilt = true;
+			srand((int)time(0));
+			double probability = (rand() % (4));
+			if (probability <= 2 && coal_prohibited() == false) {
+				//build coal power plant
+			}
+			else {
+				//build geothermal power plant
+			}
+		}
+	}
+
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
 
 	fissileMaterial += 1.4E-7 * energyPerDay * days;
@@ -347,6 +364,23 @@ void CoalPowerPlant::simulate_step(double days)
 		// 50 years is the average lifetime of a coal fired plant, it then has to be replaced by a new coal plant or different power plant
 		energyPerDay = 0;
 		//send message on screen for closure
+	}
+
+	bool newBuilt = false;
+
+	if (coal_prohibited() == true) {
+		energyPerDay = 0; //forced closure of the plant
+		if (newBuilt == false) {
+			newBuilt = true;
+			srand((int)time(0));
+			double probability = (rand() % (4));
+			if (probability <= 2 && nuclear_prohibited() == false) {
+				//build coal power plant
+			}
+			else {
+				//build geothermal power plant
+			}
+		}
 	}
 	
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 

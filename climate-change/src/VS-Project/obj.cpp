@@ -257,6 +257,7 @@ void godot::Structure::_on_Area_mouse_exited()
 
 }
 
+//POLICIES (interface team needs to make them usable from screen)
 
 bool Structure::efficiency_cogeneration() {
     return false; 
@@ -269,6 +270,102 @@ bool Structure::efficiency_cogeneration() {
 bool Structure::efficiency_supercritical() {
     return false;
     /* need to add possibility of turning true (then definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::coal_prohibited() {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::nuclear_prohibited() {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::maximum_CO2(double maxi) {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::maximum_SO2(double maxi) {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::maximum_NOx(double maxi) {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::maximum_VOCs(double maxi) {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::maximum_PM(double maxi) {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::maximum_mercury(double maxi) {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::maximum_cadmium(double maxi) {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::maximum_arsenic(double maxi) {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::maximum_nickel(double maxi) {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::maximum_lead(double maxi) {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
     if () {
     return true;
     }*/
