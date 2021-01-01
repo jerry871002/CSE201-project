@@ -193,12 +193,9 @@ void GoodsFactories::simulate_step(double days)
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
-	std::normal_distribution <double> energy(2E6, 100000);
-	energyUse += energy(gen); 
-
-	if (maximum_CO2() < 10E6) {
-		double maxi = maximum_CO2();
-		std::normal_distribution <double> co2(maxi, 100);
+	if (maxi < 10E6 && policy_change == true) {
+		policy_change = false;
+		std::normal_distribution <double> co2(maxi, 10);
 		int big = 0;
 		int medium = 0;
 		int small = 0;
@@ -239,8 +236,8 @@ void GoodsFactories::simulate_step(double days)
 		CO2Emission += factories * co2(gen);
 	}
 	else {
-		std::normal_distribution <double> co2(850000, 10000);
-		CO2Emission += co2(gen);
+		std::normal_distribution <double> co2(4250, 50);
+		CO2Emission += (co2(gen)*factories);
 	}
 	std::normal_distribution <double> mercury(2.3E-5, 1E-6);
 	mercuryEmission += (mercury(gen)*factories); 
@@ -262,6 +259,9 @@ void GoodsFactories::simulate_step(double days)
 	VOCsEmission += (vocs(gen)*factories);
 	std::normal_distribution <double> pm(50, 1.5);
 	PMEmission += (pm(gen)*factories);
+
+	std::normal_distribution <double> energy(10000, 300);
+	energyUse += (energy(gen)*factories);
 }
 
 /// <summary>

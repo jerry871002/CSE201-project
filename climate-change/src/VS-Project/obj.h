@@ -97,12 +97,20 @@ namespace godot {
         // Changing the coal power plant efficiency (constructor creates subcritical plant of 38% efficiency) :
         bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
         bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
+
         //Law prohibiting coal power plants :
         bool coal_prohibited();
+
         //Law prohibiting nuclear power plants :
         bool nuclear_prohibited();
-        //Law imposing maximum amount of CO2 emitted for each factory per day (Goods factories class), the return value is in kg per day and per factory :
-        double maximum_CO2(); //should be between 0-4250 kg
+
+        //Law imposing maximum amount of CO2 emitted for each factory per day (Goods factories class), the imput value is in kg per day and per factory :
+        void maximum_CO2(); 
+        double maxi = 10E6; //should be between 0-4250 kg when policy implemented
+        bool policy_change = false; //needed to check if the above policy has just been implemented/modified
+
+        //Subsidies to "green" factories, so those which have a low emission of harmful chemicals and heavy metals : 
+        double subsidy_green(); //should be between 1000-1E6 euros per factory
 
         /* SOLAR PANEL VARIABLES (add randomization for your own use)
         They describe the characteristics of one single average solar panel, taking as a model the most used one : The Canadian Solar
