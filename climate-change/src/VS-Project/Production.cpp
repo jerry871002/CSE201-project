@@ -166,6 +166,10 @@ GoodsFactories::GoodsFactories() {
 	std::normal_distribution <double> employees(8000, 200);
 	employment = employees(gen); // number of employees of the whole city in the manufacturing/industry sector 
 
+	/*We model 200 factories on average with approximately 8000 employees overall. We approximate for the constructor 100 small factories with 0-20 
+	employees each, 90 medium ones with 20-100 employees each and 10 big ones with 100-220 employees each, for the policies' implementation 
+	*/
+
 	energyUse = 2E6; //amount of kWh needed throughout the sector per day
 
 	CO2Emission = 850000; //kg of CO2 emitted per day across the manufacturing/industry sector per day
@@ -187,32 +191,68 @@ void GoodsFactories::simulate_step(double days)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
+	double factories = 200;
 
 	std::normal_distribution <double> energy(2E6, 100000);
 	energyUse += energy(gen); 
 
-	std::normal_distribution <double> co2(850000, 10000);
-	CO2Emission += co2(gen); 
-	std::normal_distribution <double> mercury(0.0046, 0.0002);
-	mercuryEmission += mercury(gen); 
-	std::normal_distribution <double> arsenic(0.0048, 0.0002);
-	arsenicEmission += arsenic(gen); 
-	std::normal_distribution <double> cadmium(0.0028, 0.0001);
-	cadmiumEmission += cadmium(gen); 
-	std::normal_distribution <double> nickel(0.037, 0.001);
-	nickelEmission += nickel(gen); 
-	std::normal_distribution <double> lead(0.074, 0.001);
-	leadEmission += lead(gen); 
-	std::normal_distribution <double> so2(800, 20);
-	SO2Emission += so2(gen); 
-	std::normal_distribution <double> nh3(1000, 50);
-	NH3Emission += nh3(gen); 
-	std::normal_distribution <double> nox(1000, 50);
-	NOxEmission += nox(gen); 
-	std::normal_distribution <double> vocs(1500, 100);
-	VOCsEmission += vocs(gen);
-	std::normal_distribution <double> pm(10000, 300);
-	PMEmission += pm(gen);
+	if (maximum_CO2() < 10E6) {
+		double maxi = maximum_CO2();
+		std::normal_distribution <double> co2(maxi, 100);
+		int big = 0;
+		int medium = 0;
+		if (3000 <= maxi <= 4250) {
+			big = 3; //maximum number of big factories possibly closing
+			medium = 10; //maximum number of medium factories possibly closing
+		}
+		if (1500 <= maxi < 3000) {
+			big = 6; //maximum number of big factories possibly closing
+			medium = 30; //maximum number of medium factories possibly closing
+		}
+		if (3000 <= maxi <= 4250) {
+			big = 10; //maximum number of big factories possibly closing
+			medium = 60; //maximum number of medium factories possibly closing
+		}
+		srand((int)time(0));
+		double probability1 = (rand() % (big)); //number of big factories closing
+		while (probability1 > 0) {
+			srand((int)time(0));
+			employment -= 100 + (rand() % (120));
+			probability1 -= 1;
+		}
+		double probability2 = (rand() % (medium)); //number of medium factories closing
+		while (probability2 > 0) {
+			srand((int)time(0));
+			employment -= 20 + (rand() % (80));
+			probability2 -= 1;
+		}
+		factories = 200 - (probability1 + probability2);
+		CO2Emission += factories * co2(gen);
+	}
+	else {
+		std::normal_distribution <double> co2(850000, 10000);
+		CO2Emission += co2(gen);
+	}
+	std::normal_distribution <double> mercury(2.3E-5, 1E-6);
+	mercuryEmission += (mercury(gen)*factories); 
+	std::normal_distribution <double> arsenic(2.4E-5, 1E-6);
+	arsenicEmission += (arsenic(gen)*factories); 
+	std::normal_distribution <double> cadmium(1.E-5, 5E-7);
+	cadmiumEmission += (cadmium(gen)*factories); 
+	std::normal_distribution <double> nickel(1.85E-4, 5E-6);
+	nickelEmission += (nickel(gen)*factories); 
+	std::normal_distribution <double> lead(3.7E-4, 5E-6);
+	leadEmission += (lead(gen)*factories); 
+	std::normal_distribution <double> so2(4, 0.1);
+	SO2Emission += (so2(gen)*factories); 
+	std::normal_distribution <double> nh3(5, 0.25);
+	NH3Emission += (nh3(gen)*factories); 
+	std::normal_distribution <double> nox(5, 0.25);
+	NOxEmission += (nox(gen)*factories); 
+	std::normal_distribution <double> vocs(7.5, 0.5);
+	VOCsEmission += (vocs(gen)*factories);
+	std::normal_distribution <double> pm(50, 1.5);
+	PMEmission += (pm(gen)*factories);
 }
 
 /// <summary>
