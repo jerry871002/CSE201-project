@@ -16,6 +16,8 @@ namespace godot {
 		Production();
 		~Production();
 
+		double factories = 0; //total number of factories in the Goods factories class
+
 		// Harmful chemicals emitted :
 
 		double SO2Emission = 0; //kg of sulfure dioxide emitted 

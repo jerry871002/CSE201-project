@@ -165,6 +165,7 @@ GoodsFactories::GoodsFactories() {
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> employees(8000, 200);
 	employment = employees(gen); // number of employees of the whole city in the manufacturing/industry sector 
+	double factories = 200;
 
 	/*We model 200 factories on average with approximately 8000 employees overall. We approximate for the constructor 100 small factories with 0-20 
 	employees each, 90 medium ones with 20-100 employees each and 10 big ones with 100-220 employees each, for the policies' implementation 
@@ -191,7 +192,6 @@ void GoodsFactories::simulate_step(double days)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	double factories = 200;
 
 	std::normal_distribution <double> energy(2E6, 100000);
 	energyUse += energy(gen); 
@@ -201,6 +201,7 @@ void GoodsFactories::simulate_step(double days)
 		std::normal_distribution <double> co2(maxi, 100);
 		int big = 0;
 		int medium = 0;
+		int small = 0;
 		if (3000 <= maxi <= 4250) {
 			big = 3; //maximum number of big factories possibly closing
 			medium = 10; //maximum number of medium factories possibly closing
@@ -208,10 +209,12 @@ void GoodsFactories::simulate_step(double days)
 		if (1500 <= maxi < 3000) {
 			big = 6; //maximum number of big factories possibly closing
 			medium = 30; //maximum number of medium factories possibly closing
+			small = 10;
 		}
-		if (3000 <= maxi <= 4250) {
+		else {
 			big = 10; //maximum number of big factories possibly closing
 			medium = 60; //maximum number of medium factories possibly closing
+			small = 30; //maximum number of small factories possibly closing
 		}
 		srand((int)time(0));
 		double probability1 = (rand() % (big)); //number of big factories closing
@@ -226,7 +229,13 @@ void GoodsFactories::simulate_step(double days)
 			employment -= 20 + (rand() % (80));
 			probability2 -= 1;
 		}
-		factories = 200 - (probability1 + probability2);
+		double probability3 = (rand() % (small)); //number of small factories closing
+		while (probability3 > 0) {
+			srand((int)time(0));
+			employment -= (rand() % (20));
+			probability2 -= 1;
+		}
+		factories = 200 - (probability1 + probability2 + probability3);
 		CO2Emission += factories * co2(gen);
 	}
 	else {
