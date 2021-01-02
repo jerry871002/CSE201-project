@@ -120,6 +120,8 @@ namespace godot {
         double solarCost = 450; //cost in euros for one new solar panel (product and installation)
         double solarEnergy = 7.45; //average kWh produced per day
         double solarLifetime = 25; //years of energy production warranty
+        // I think this solarLifeTime variable should be in days i.e. 9125
+
 
         /* ROOFTOP WIND TURBINE VARIABLES (add randomization for your own use)
         They describe the characteristics of one single average rooftop turbine
@@ -129,6 +131,16 @@ namespace godot {
         double windCost = 800; //cost in euros for a new turbine with its tower
         double windEnergy = 1.1; //average kWh produced per day
         double windLifetime = 5; // years of energy production warranty
+
+
+
+
+
+
+
+
+
+
 
         virtual double get_maintenance();
         virtual double get_building_time();
