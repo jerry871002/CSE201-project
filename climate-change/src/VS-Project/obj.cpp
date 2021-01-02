@@ -309,3 +309,29 @@ double Structure::subsidy_green() {
     return euros; //euros is between 1000 and 1E6
     }*/
 }
+
+bool Structure::solar_panel_subsidies() {
+    return false;
+    //possibility to change this and have: if true set solarPanelSubsidy to a number
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+bool Structure::wind_turbine_subsidies() {
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}
+
+
+bool Structure::double_glazing_subsidies(){
+    return false;
+    /* need to add possibility of turning true (not definitive) if clicked
+    if () {
+    return true;
+    }*/
+}

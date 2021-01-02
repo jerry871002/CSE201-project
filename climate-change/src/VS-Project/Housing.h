@@ -18,11 +18,13 @@ namespace godot {
 		int minIncome=53; // min income per day, I put values for now so that it compiles
 		int solarPanelAge = 0;
 		int doubleGlazingAge = 0;
-		double get_satisfaction();
-		double get_co2emissions();
-		double get_energyuse();
-		double get_environmentalcost();	
-
+		int rooftopWindTurbineAge = 0;
+		double set_max_income();
+		double set_min_income();
+		double get_max_income();
+		double get_min_income();
+		double get_solar_panel_age();
+		double get_double_glazing_age();	
     };
 
 	class House : public Housing {
@@ -34,7 +36,8 @@ namespace godot {
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 		bool solar_panel(); 
 		bool double_glazing(); // improve insulation
-		bool roof_turbines();
+		bool rooftop_wind_turbines();
+		
 
 		int houseType;
 		double houseIncome = 0;
@@ -51,7 +54,7 @@ namespace godot {
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 		bool solar_panel(); 
 		bool double_glazing(); // improve insulation
-		bool roof_turbines();
+		bool rooftop_wind_turbines();
 		
 		int buildingType;
 		double coOwnershipBudget = 0;

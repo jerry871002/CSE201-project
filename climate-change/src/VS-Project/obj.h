@@ -112,6 +112,22 @@ namespace godot {
         //Subsidies to "green" factories, so those which have a low emission of harmful chemicals and heavy metals : 
         double subsidy_green(); //should be between 1000-1E6 euros per factory
 
+        //Subsidies for helping households, buildings to install solar panels (these help poorer households to have less environmental impact)
+        bool solar_panel_subsidies();
+        //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if solar panels can be installed
+
+         //Subsidies for helping households, buildings to install rooftop wind turbines  (these help poorer households to have less environmental impact)
+        bool wind_turbine_subsidies(); 
+        //could be changed to a function thatreturns the amount of money the subsididy gives which will be compared to an income to decide if wind turbines can be installed
+
+         //Subsidies for helping households, buildings to change their windows to double glazing (these help poorer households to have less environmental impact)
+        bool double_glazing_subsidies();
+        //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if it is possible
+
+        /*
+        //Ads to promote vegetarianism, and reduce meat production in the city
+        bool ad_vegetarian(); //not sure what form ads should take */
+
         /* SOLAR PANEL VARIABLES (add randomization for your own use)
         They describe the characteristics of one single average solar panel, taking as a model the most used one : The Canadian Solar
         CS3U-345P model of 1x2m in size.
@@ -119,8 +135,9 @@ namespace godot {
         double solarSatisfaction = 9; //ratings of these solar panels by surveys
         double solarCost = 450; //cost in euros for one new solar panel (product and installation)
         double solarEnergy = 7.45; //average kWh produced per day
-        double solarLifetime = 25; //years of energy production warranty
-        // I think this solarLifeTime variable should be in days i.e. 9125
+        double solarLifetime = 9125; //years of energy production warranty
+        // I think this solarLifeTime variable should be in days i.e. 9125 instead of 25. Can be changed back if you don't agree.
+
 
 
         /* ROOFTOP WIND TURBINE VARIABLES (add randomization for your own use)
@@ -131,15 +148,6 @@ namespace godot {
         double windCost = 800; //cost in euros for a new turbine with its tower
         double windEnergy = 1.1; //average kWh produced per day
         double windLifetime = 5; // years of energy production warranty
-
-
-
-
-
-
-
-
-
 
 
         virtual double get_maintenance();
