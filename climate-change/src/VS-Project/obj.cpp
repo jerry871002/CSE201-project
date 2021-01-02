@@ -245,7 +245,7 @@ void godot::Structure::_on_Area_mouse_entered()
     Clickable = true;
     Input* i = Input::get_singleton();
     i->set_default_cursor_shape(i->CURSOR_POINTING_HAND);
-
+    this->set("scale", Vector3(Vector3(this->get("scale")).x, 1.05 * Vector3(this->get("scale")).y, Vector3(this->get("scale")).z));
 
 }
 
@@ -254,6 +254,7 @@ void godot::Structure::_on_Area_mouse_exited()
     Clickable = false;
     Input* i = Input::get_singleton();
     i->set_default_cursor_shape(i->CURSOR_ARROW);
+    this->set("scale", Vector3(Vector3(this->get("scale")).x, (1/1.05) * Vector3(this->get("scale")).y, Vector3(this->get("scale")).z));
 
 }
 
