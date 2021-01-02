@@ -144,12 +144,13 @@ void City::generate_initial_city_graphics()
 	Ref<PackedScene> MallScene = ResLo->load("res://Resources/Mall.tscn", "PackedScene");
 	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
 	Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
+	Ref<PackedScene> WindmillScene = ResLo->load("res://Resources/Windmill.tscn", "PackedScene");
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = 0; x < 1; x++)
+		for (int x = 0; x < 2; x++)
 		{
-			for (int z = 0; z < 2; z++)
+			for (int z = 0; z < 3; z++)
 			{
 				int type = rand() % 2;
 				Node* node;
@@ -165,8 +166,16 @@ void City::generate_initial_city_graphics()
 	if (MallScene.is_valid())
 	{
 		Node* node = MallScene->instance();
-		node->set("translation", Vector3(75, 0, 45));
+		node->set("translation", Vector3(75, 0, 0));
 		this->add_child(node);
+		all_shops.push_back((Shop*)node);
+	}
+	if (WindmillScene.is_valid())
+	{
+		Node* node = WindmillScene->instance();
+		node->set("translation", Vector3(60, 0, -30));
+		this->add_child(node);
+		all_shops.push_back((Shop*)node);
 	}
 }
 

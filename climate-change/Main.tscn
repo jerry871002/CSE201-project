@@ -1,10 +1,9 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
 [ext_resource path="res://Resources/PowerPlant.tscn" type="PackedScene" id=3]
 [ext_resource path="res://KinematicBody.gdns" type="Script" id=4]
-[ext_resource path="res://Resources/WindMill.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Ressources/Icons/RoofWindTurb1.png" type="Texture" id=6]
 [ext_resource path="res://Ressources/Icons/RoofWindTurb2.png" type="Texture" id=7]
 [ext_resource path="res://MyTheme.tres" type="Theme" id=8]
@@ -95,9 +94,6 @@ shape = SubResource( 1 )
 
 [node name="NuclearPowerPlant" parent="3Dworld" instance=ExtResource( 3 )]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 15, 0, -45 )
-
-[node name="Windmill" parent="3Dworld" instance=ExtResource( 5 )]
-transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
 
 [node name="Pedestrian1" parent="3Dworld" instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.02275, 0, -9 )
