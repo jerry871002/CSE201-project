@@ -52,16 +52,16 @@ void test_agriculture_constructor() {
     try {
         AgriculturalProduction A = AgriculturalProduction();
         AgriculturalProduction B = AgriculturalProduction();
-        //Here can add code to check attributes of constructor
+        AgriculturalProduction D = AgriculturalProduction();
         int type1 = 0;
         int type2 = 0;
         for (int i = 0; i < 100; i++){
             AgriculturalProduction C = AgriculturalProduction();
-            if (C.agricultureType == 1){type1 +=1;}
-            if (C.agricultureType == 2){type2 +=1;}
+            if (C.agricultureType == 0){type1 +=1;}
+            if (C.agricultureType == 1){type2 +=1;}
             
         }
-        //std::cout << "Number of type 1, type 2, type 3: " << type1 << ", " << type2 << ", " << type3 << std::endl;
+        //std::cout << "Number of type 0, type 1, type 2: " << type1 << ", " << type2 << ", " << type3 << std::endl;
     } catch (...){
         std::cout << "Error with the Houses's Constructor" << std::endl;
     }
