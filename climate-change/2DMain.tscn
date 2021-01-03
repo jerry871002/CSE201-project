@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/easy_charts/LineChart2D/LineChart2D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Node2D_linechart2d.gd" type="Script" id=2]
+[ext_resource path="res://Node2D_lc3.gd" type="Script" id=3]
+[ext_resource path="res://Node2D_lc2.gd" type="Script" id=4]
 
 [node name="Node2D" type="Node2D"]
 
@@ -29,29 +31,17 @@ script = ExtResource( 2 )
 [node name="LineChart2D" parent="TabContainer/Tabs/Node2D" instance=ExtResource( 1 )]
 position = Vector2( 40.0122, 19.799 )
 SIZE = Vector2( 1000, 550 )
-source = "res://addons/easy_charts/file.samples/datas2.csv"
-delimiter = ";"
-origin_at_zero = true
-are_values_columns = false
-x_values_index = 0
-show_x_values_as_labels = true
-x_decim = 5.0
-y_decim = 5.0
-point_shape = 0
+source = "res://addons/easy_charts/file.samples/datas.csv"
+are_values_columns = true
 function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
 v_lines_color = Color( 1, 1, 1, 0.392157 )
 h_lines_color = Color( 1, 1, 1, 0.392157 )
-boxed = true
 box_color = Color( 1, 1, 1, 0.392157 )
-font = null
-bold_font = null
 font_color = Color( 1, 1, 1, 0.392157 )
 template = 2
 drawing_duration = 1.0
-invert_chart = false
 
 [node name="Tabs2" type="Tabs" parent="TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -59,11 +49,41 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
+[node name="Node2D" type="Node2D" parent="TabContainer/Tabs2"]
+position = Vector2( 14.1422, 14.1422 )
+script = ExtResource( 4 )
+
+[node name="LineChart2D" parent="TabContainer/Tabs2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 24.4559, 7.07108 )
+SIZE = Vector2( 1000, 550 )
+source = "res://addons/easy_charts/file.samples/datas2.csv"
+are_values_columns = true
+function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
+v_lines_color = Color( 1, 1, 1, 0.392157 )
+h_lines_color = Color( 1, 1, 1, 0.392157 )
+box_color = Color( 1, 1, 1, 0.392157 )
+font_color = Color( 1, 1, 1, 0.392157 )
+template = 2
+
 [node name="Tabs3" type="Tabs" parent="TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+
+[node name="Node2D" type="Node2D" parent="TabContainer/Tabs3"]
+script = ExtResource( 3 )
+
+[node name="LineChart2D" parent="TabContainer/Tabs3/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 40.0122, 19.799 )
+SIZE = Vector2( 1000, 550 )
+source = "res://addons/easy_charts/file.samples/datas_on_columns.csv"
+are_values_columns = true
+function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
+v_lines_color = Color( 1, 1, 1, 0.392157 )
+h_lines_color = Color( 1, 1, 1, 0.392157 )
+box_color = Color( 1, 1, 1, 0.392157 )
+font_color = Color( 1, 1, 1, 0.392157 )
+template = 2

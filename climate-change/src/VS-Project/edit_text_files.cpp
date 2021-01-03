@@ -20,7 +20,7 @@ using namespace std;
 // Ideally, all csv files should be stored in the "data" folder.
 
 string get_path(string documentName) {
-    return "data/" + documentName + ".csv";
+    return "../../addons/easy_charts/file.samples/" + documentName + ".csv";
 }
 
 // Function to add a line of the form "2015;76" to the csv file named documentName.
@@ -33,11 +33,29 @@ void add_data(string documentName, string year, string value) {
     file.close();
 }
 
-// Suppresses all data stored in the file documentName.
-void clear(string documentName) {
+// Suppresses all data stored in the file documentName
+void clear_completely(string documentName) {
     fstream file;
     string path = get_path(documentName);
     file.open(path, ios::out | ios::trunc);
+    file.close();
+}
+
+// Suppresses all data stored in the file documentName except the first line.
+void clear(string documentName) {
+    fstream file;
+    string path = get_path(documentName);
+
+    file.open(path);
+    string line;
+    getline(file, line);
+    file.close();
+
+    file.open(path, ios::out | ios::trunc);
+    file.close();
+
+    file.open(path);
+    file << line << '\n';
     file.close();
 }
 
@@ -69,7 +87,7 @@ void change_data(string documentName, string dataToChange, string newValue) {
     fstream temp;
     string path = get_path(documentName);
     file.open(path);
-    temp.open("data/tmp.csv");
+    temp.open("../../addons/easy_charts/file.samples/datas_on_rows.csv");
 
     while (file.good()) {
         string line;
@@ -88,10 +106,10 @@ void change_data(string documentName, string dataToChange, string newValue) {
     file.close();
     temp.close();
 
-    clear(documentName);
+    clear_completely(documentName);
 
-    copy("tmp", documentName);
-    clear("tmp");
+    copy("datas_on_rows", documentName);
+    clear_completely("datas_on_rows");
 }
 
 // Function to delete a line of the csv file named documentName.
@@ -102,7 +120,7 @@ void delete_line(string documentName, string dataToDelete) {
     fstream temp;
     string path = get_path(documentName);
     file.open(path);
-    temp.open("data/tmp.csv");
+    temp.open("../../addons/easy_charts/file.samples/datas_on_rows.csv");
 
     while (file.good()) {
         string line;
@@ -119,10 +137,10 @@ void delete_line(string documentName, string dataToDelete) {
     file.close();
     temp.close();
 
-    clear(documentName);
+    clear_completely(documentName);
 
-    copy("tmp", documentName);
-    clear("tmp");
+    copy("datas_on_rows", documentName);
+    clear_completely("datas_on_rows");
 }
 
 
@@ -173,15 +191,16 @@ double find_avg(double array[],int leap) {
 int main() {
     // More examples on how to use the above functions:
     
-    clear("pollution");
-    change_data("pollution", "2013", "01");
-    copy("pollution", "tmp");
-    add_data("pollution", "2015", "76");
-    delete_line("pollution", "2013");
+    //clear("datas");
+    change_data("datas", "2010", "37001");
+    //copy("pollution", "tmp");
+    //add_data("datas", "2015", "76");
+    //delete_line("datas", "2010");
+    //clear_completely("datas");
     
 
 
-
+    
     double stat = 0;
     int day_tick = 0;
     double stats[366];
@@ -228,6 +247,7 @@ int main() {
         int yeardaysbef=*(daysbef+2);
         delete_line("statsyear" + to_string(year), return_string_date(daydaysbef,monthdaysbef,yeardaysbef));
         
-     }
+    }
+    
 }
 */
