@@ -17,6 +17,7 @@ using namespace godot;
 void Shop::_register_methods() 
 {
     register_method((char*)"_ready", &Shop::_ready);
+
     register_property<Shop, double>("panel_probability", &Shop::panel_probability, 0.75);
 }
 
@@ -120,6 +121,7 @@ template<typename T> String to_godot_string(T s)
 String Shop::get_object_info()
 {
     String info = this->Structure::get_object_info();
+
     info += "Employement: " + to_godot_string(this->employment) + String("\n");
     if (this->PanelsOn) {
         info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string(this->panels_age) + String("\n");

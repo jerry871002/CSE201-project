@@ -88,7 +88,8 @@ we update `day_tick` and execute simulation()
 */
 void City::_physics_process(float delta) {
 
-	counter += (double)delta * time_speed;
+	if (bool(time_speed)) { counter += (double)delta; } //* time_speed;
+	 
 	if (counter > 1)
 	{
 		simulation();
@@ -197,7 +198,7 @@ void City::_ready()
 {
 	this->generate_initial_city_graphics();
 	this->set_initial_visible_components();
-	int children_count = this->get_child_count();
+	
 }
 
 void godot::City::_on_MenuShop_pressed(String name)
@@ -342,7 +343,7 @@ void City::simulation()
 {
 	// std::cout << "Simulation" << std::endl;
 	/*
-	day_tick++;
+	
 	//write the old values in a file 
 	income = 0;
 	numberOfEmployees = 0;
@@ -351,8 +352,12 @@ void City::simulation()
 	energySupply = 0;
     healthcare = 0;
 	*/
+
+	day_tick += this->time_speed;
+	std::cout << return_game_date() << std::endl;
 	
 	this->carbonEmission = 0;
+
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
 		//Godot::print( "DEBUG: THIS OBJECT IS A ");

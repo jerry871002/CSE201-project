@@ -116,7 +116,7 @@ void Structure::_process(float delta)
     
     if (this->get("updatable")) {
         Godot::print("This is a: " + this->get_object_type());
-        this->simulate_step(1); // will run the lowest level simulate step function
+        this->simulate_step((double)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("time_speed"))); // will run the lowest level simulate step function
         this->set("updatable", false);
     }
     
