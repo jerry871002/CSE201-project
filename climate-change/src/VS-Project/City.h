@@ -67,9 +67,12 @@ namespace godot {
 		// TIME AND OVERALL SIMULATION
 
 		float time_speed = 1; // 1 for regular speed (1 in-game day per second)
-		double counter{ 0 }; // counter used to cast per-frame processing to a time_speed related frequency
-		int day_tick; // keeps track of the in-game days, incremented when simulation() is called
-		std::string return_game_date(); // returns the date :day/month/year as a string
+		double simulation_counter{ 0 }; // counter used to cast per-frame processing to a time_speed related frequency
+		double date_counter{ 0 };
+		int day_tick; // keeps track of the in-game days
+		int days_since_last_simulation;
+		void update_date();
+		String return_game_date(); // returns the date :day/month/year as a string
 		void simulation(); // updates all the stats and calls the simulation for the buildings
 
 		// ARRAYS CONTAINING ALL ACTIVE ELEMENTS

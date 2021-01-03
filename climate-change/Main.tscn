@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -52,6 +52,8 @@ region_rect = Rect2( 0, 0, 100, 100 )
 size = 60
 use_mipmaps = true
 font_data = ExtResource( 10 )
+
+[sub_resource type="Theme" id=10]
 
 [node name="Main" type="Spatial"]
 
@@ -391,6 +393,34 @@ tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="GUI" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_right = -1672.0
+margin_bottom = 38.0
+theme = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GUIComponents" type="HBoxContainer" parent="GUI"]
+margin_right = 248.0
+margin_bottom = 38.0
+
+[node name="TimeControls" type="VBoxContainer" parent="GUI/GUIComponents"]
+margin_right = 244.0
+margin_bottom = 38.0
+
+[node name="Date" type="Label" parent="GUI/GUIComponents/TimeControls"]
+margin_right = 244.0
+margin_bottom = 38.0
+custom_fonts/font = ExtResource( 12 )
+text = "Year 1, January 1"
+
+[node name="Indices" type="HBoxContainer" parent="GUI/GUIComponents"]
+margin_left = 248.0
+margin_right = 248.0
+margin_bottom = 38.0
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Button1" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ChangePanelProbabilityForAllShops" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Button2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ChangePanelProbabilityForRestaurants" ]]

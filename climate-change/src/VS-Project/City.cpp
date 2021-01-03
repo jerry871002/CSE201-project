@@ -48,6 +48,8 @@ City::City() {
 
 	//timer = 0;
 	day_tick = 0;
+	days_since_last_simulation = 0;
+
 	srand((int)time(0));
 }
 
@@ -88,13 +90,25 @@ we update `day_tick` and execute simulation()
 */
 void City::_physics_process(float delta) {
 
-	if (bool(time_speed)) { counter += (double)delta; } //* time_speed;
+	if (bool(time_speed)) 
+	{ 
+		simulation_counter += (double)delta; 
+		date_counter += double(delta) * time_speed;
+	} 
 	 
-	if (counter > 1)
+	if (simulation_counter > 1)
 	{
 		simulation();
-		counter -= 1;
+		simulation_counter -= 1;
 	}
+
+	if (date_counter > 1)
+	{
+		(this->days_since_last_simulation)++;
+		this->update_date();
+		date_counter -= 1;
+	}
+
 	if (this->notification_active) 
 	{
 		(this->notification_counter)++;
@@ -107,6 +121,11 @@ void City::_physics_process(float delta) {
 	}
 }
 
+void City::update_date() {
+	this->day_tick += days_since_last_simulation;
+	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_game_date());
+	this->day_tick -= days_since_last_simulation;
+}
 
 void City::_input(InputEvent*)
 {
@@ -339,6 +358,8 @@ void City::add_car() {
 	}
 }
 
+
+
 void City::simulation()
 {
 	// std::cout << "Simulation" << std::endl;
@@ -354,8 +375,9 @@ void City::simulation()
 	*/
 
 	day_tick += this->time_speed;
-	std::cout << return_game_date() << std::endl;
-	
+	this->days_since_last_simulation = 0;
+	Godot::print(return_game_date());
+	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_game_date());
 	this->carbonEmission = 0;
 
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
@@ -494,70 +516,91 @@ double City::return_healthcare() {
 	return healthcare;
 }
 
-std::string City::return_game_date() {
-	std::string date = "Year ";
-	date += std::to_string((day_tick / 365) + 1) + ", ";
-	int temp = day_tick % 365;
-	if (day_tick % 365 == 0) { temp = 365; }
+
+template<typename T> String to_godot_string(T s)
+{
+	std::string standardString = std::to_string(s);
+	godot::String godotString = godot::String(standardString.c_str());
+	return godotString;
+}
+
+String City::return_game_date() {
+	String date = String("Year ");
+	date += to_godot_string(int(int(this->day_tick / 365) + 1));
+	date += String(", ");
+	int temp = int(this->day_tick) % 365;
+	if (this->day_tick % 365 == 0) { temp = 365; }
 	if (temp <= 31) {
-		date += "January " + std::to_string(temp);
+		date += String("January ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 31;
 	if (temp <= 28) {
-		date += "February " + std::to_string(temp);
+		date += String("February ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 28;
 	if (temp <= 31) {
-		date += "March " + std::to_string(temp);
+		date += String("March ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 31;
 	if (temp <= 30) {
-		date += "April " + std::to_string(temp);
+		date += String("April ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 30;
 	if (temp <= 31) {
-		date += "May " + std::to_string(temp);
+		date += String("May ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 31;
 	if (temp <= 30) {
-		date += "June " + std::to_string(temp);
+		date += String("June ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 30;
 	if (temp <= 31) {
-		date += "July " + std::to_string(temp);
+		date += String("July ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 31;
 	if (temp <= 31) {
-		date += "August " + std::to_string(temp);
+		date += String("August ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 31;
 	if (temp <= 30) {
-		date += "September " + std::to_string(temp);
+		date += String("September ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 30;
 	if (temp <= 31) {
-		date += "October " + std::to_string(temp);
+		date += String("October ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 31;
 
 	if (temp <= 30) {
-		date += "November " + std::to_string(temp);
+		date += String("November ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	temp -= 30;
 
 	if (temp <= 31) {
-		date += "December " + std::to_string(temp);
+		date += String("December ");
+		date += to_godot_string(int(temp));
 		return date;
 	}
 	return "Time Representation Error";

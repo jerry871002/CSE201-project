@@ -16,6 +16,8 @@
 #include <Math.hpp>
 
 
+
+
 using namespace godot;
 
 Structure::Structure() {
@@ -118,6 +120,17 @@ void Structure::_process(float delta)
         Godot::print("This is a: " + this->get_object_type());
         this->simulate_step((double)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("time_speed"))); // will run the lowest level simulate step function
         this->set("updatable", false);
+    }
+
+    if (this->hover_animation_active) {
+        ++(this->hover_animation_counter);
+        this->set("scale", Vector3(object_scale.x, object_scale.y * float(1 + 0.25 * sin(M_PI *  hover_animation_counter / 5)), object_scale.z));
+
+        if (this->hover_animation_counter == 5) {
+            this->set("scale", object_scale);
+            hover_animation_active = false;
+            hover_animation_counter = 0;
+        }
     }
     
 }
@@ -236,7 +249,7 @@ String Structure::get_object_info()
 
 void Structure::_ready()
 {
-
+    object_scale = this->get("scale");
 }
 
 void godot::Structure::_on_Area_mouse_entered()
@@ -245,7 +258,8 @@ void godot::Structure::_on_Area_mouse_entered()
     Clickable = true;
     Input* i = Input::get_singleton();
     i->set_default_cursor_shape(i->CURSOR_POINTING_HAND);
-    this->set("scale", Vector3(Vector3(this->get("scale")).x, 1.05 * Vector3(this->get("scale")).y, Vector3(this->get("scale")).z));
+    this->hover_animation_active = true;
+    //this->set("scale", Vector3(Vector3(this->get("scale")).x, 1.25 * Vector3(this->get("scale")).y, Vector3(this->get("scale")).z));
 
 }
 
@@ -254,8 +268,10 @@ void godot::Structure::_on_Area_mouse_exited()
     Clickable = false;
     Input* i = Input::get_singleton();
     i->set_default_cursor_shape(i->CURSOR_ARROW);
-    this->set("scale", Vector3(Vector3(this->get("scale")).x, (1/1.05) * Vector3(this->get("scale")).y, Vector3(this->get("scale")).z));
-
+    //this->set("scale", Vector3(Vector3(this->get("scale")).x, (1/1.25) * Vector3(this->get("scale")).y, Vector3(this->get("scale")).z));
+    this->set("scale", object_scale);
+    hover_animation_active = false;
+    hover_animation_counter = 0;
 }
 
 //POLICIES (interface team needs to make them usable from screen)

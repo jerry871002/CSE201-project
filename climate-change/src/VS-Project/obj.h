@@ -15,7 +15,7 @@
 #include <random>
 #include <Math.hpp>
 
-//# define M_PI 3.14159265358979323846  /* pi */
+# define M_PI 3.14159265358979323846  /* pi */
 
 namespace godot {
     class Structure : public StaticBody {
@@ -49,6 +49,9 @@ namespace godot {
         virtual String get_main_type() { return "Default"; };
         virtual void show_menu();
         virtual String get_object_info();
+        bool hover_animation_active{ false };
+        int hover_animation_counter{ 0 };
+        Vector3 object_scale;
 
         virtual void simulate_step(double days);
         bool updatable{ false };
@@ -103,7 +106,7 @@ namespace godot {
 
         //Law prohibiting nuclear power plants :
         bool nuclear_prohibited();
-
+        
         //Law imposing maximum amount of CO2 emitted for each factory per day (Goods factories class), the imput value is in kg per day and per factory :
         void maximum_CO2(); 
         double maxi = 10E6; //should be between 0-4250 kg when policy implemented
