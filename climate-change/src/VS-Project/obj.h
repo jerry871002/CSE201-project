@@ -154,15 +154,20 @@ namespace godot {
 
 
         virtual double get_maintenance();
+        virtual void set_maintenance(double maintenance);
         virtual double get_building_time();
+        virtual void set_building_time(double buildingTime);
         virtual double get_cost();
+        virtual void set_cost(double cost);
         virtual double get_employment();
+        virtual void set_employment(double employment);
+        virtual void set_energyuse(double energyUse);
         virtual double get_energyuse();
         virtual double get_co2emissions();
         virtual void set_co2emissions(double);
         virtual double get_satisfaction();
         virtual void set_satisfaction(double sat);
-        virtual double get_environmentalcost();
-
+        virtual double get_environmental_cost();
+        virtual void set_environmental_cost(double environmentalCost);
     };
 }

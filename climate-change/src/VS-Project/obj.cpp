@@ -58,7 +58,6 @@ double Structure::get_co2emissions() {
     //std::cout << "DEBUG: STRUCTURE GET EMISSIONS" << std::endl;
     return this->CO2Emission;
 }
-
 void Structure::set_co2emissions(double emission) {
     this->CO2Emission = emission;
 }
@@ -66,25 +65,43 @@ void Structure::set_co2emissions(double emission) {
 double Structure::get_energyuse() {
     return this->energyUse;
 }
+void Structure::set_energyuse(double energyUse) {
+    this->energyUse = energyUse;
+}
 
-double Structure::get_environmentalcost() {
+double Structure::get_environmental_cost() {
     return this->environmentalCost;
+}
+void Structure::set_environmental_cost(double environmentalCost) {
+    this->environmentalCost = environmentalCost;
 }
 
 double Structure::get_cost() {
     return this->cost;
 }
+void Structure::set_cost(double cost) {
+    this->cost = cost;
+}
 
 double Structure::get_employment() {
     return this->employment;
+}
+void Structure::set_employment(double employment) {
+    this->employment = employment;
 }
 
 double Structure::get_building_time() {
     return this->buildingTime;
 }
+void Structure::set_building_time(double buildingTime) {
+    this->buildingTime = buildingTime;
+}
 
 double Structure::get_maintenance() {
     return this->maintenance;
+}
+void Structure::set_maintenance(double maintenance) {
+    this->maintenance = maintenance;
 }
 
 void Structure::_register_methods()
@@ -100,6 +117,12 @@ void Structure::_register_methods()
     register_property<Structure, bool>("updatable", &Structure::updatable, false);
     register_property<Structure, double>("CO2Emission", &Structure::set_co2emissions, &Structure::get_co2emissions, 1);
     register_property<Structure, double>("satisfaction", &Structure::set_satisfaction, &Structure::get_satisfaction, 1);
+    register_property<Structure, double>("energyUse", &Structure::set_energyuse, &Structure::get_energyuse, 1);
+    register_property<Structure, double>("maintenance", &Structure::set_maintenance, &Structure::get_maintenance, 1);
+    register_property<Structure, double>("employment", &Structure::set_employment, &Structure::get_employment, 1);
+    register_property<Structure, double>("cost", &Structure::set_cost, &Structure::get_cost, 1);
+    register_property<Structure, double>("environmentalCost", &Structure::set_environmental_cost, &Structure::get_environmental_cost, 1);
+
     //register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
 
 }
