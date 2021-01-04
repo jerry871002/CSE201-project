@@ -144,7 +144,7 @@ void delete_line(string documentName, string dataToDelete) {
 }
 
 
-
+/* defined in City.cpp
 int* return_date(int day_tick) {
     static int date[3];
 
@@ -184,7 +184,7 @@ double find_avg(double array[],int leap) {
     }
     return sum/size;
 }
-
+*/
 
 /*
 //uncomment to run

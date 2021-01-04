@@ -10,7 +10,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
-#include <string>
 #include <Input.hpp>
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
@@ -74,6 +73,10 @@ namespace godot {
 		int days_since_last_simulation;
 		void update_date();
 		String return_game_date(); // returns the date :day/month/year as a string
+		// alternative with leap years
+		int* return_date(int day_tick);
+		String return_string_date(int day, int month, int year);
+		double find_avg(double array[],int leap);
 		void simulation(); // updates all the stats and calls the simulation for the buildings
 		bool ClickActive{ false };
 		
