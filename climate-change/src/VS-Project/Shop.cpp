@@ -274,6 +274,9 @@ Restaurant::Restaurant() {
 Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
+
+    this->Shop::simulate_step(days);
+
 	age += days;
 	//double shock;
 	std::random_device rd; 
@@ -355,7 +358,7 @@ SmallShop::~SmallShop(){}
 
 
 void SmallShop::simulate_step(double days){
-       
+    this->Shop::simulate_step(days);
 }
 
 // ################   Mall              ####################
