@@ -76,35 +76,8 @@ String godot::AgriculturalProduction::class_name() {
 AgriculturalProduction::AgriculturalProduction() {
 	int type = rand()%3;
 	agriculture_type(type);
-	employment = 50;
-	switch (agricultureType){
-	case 0:{ //wheat
-			// random device class instance, source of 'true' randomness for initializing random seed
-    		std::random_device rd;
-    		std::mt19937 gen(rd());
-			std::normal_distribution <double> wheatfieldsize(1.74, 0.04);
-			requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
-			std::normal_distribution <double> wheatferltility(449000, 50000);
-			fertility = wheatferltility(gen); //production of wheat per km^2
-			production = fertility *requiredLand; //output of wheat in kg per day
-			waterConsumption = 1500*production; //water litres per day
-			CO2Emission =0.59*production; //co2 kg per day
-			pesticide = false;
-			fertilizer = false;
-			GMO = false;
-
 	}
-	case 1: { 
-        CO2Emission = 27144; // co2 output per day for meat production in city
-		waterConsumption = 31135; //liters per day
-		production = 1415; //in kg of meat every day
-		energyUse = 0;
-		environmentalCost = 0;   
-		break;
-		}
 
-	 }
-}
 
 AgriculturalProduction::~AgriculturalProduction() {
 
@@ -138,6 +111,7 @@ AgriculturalProduction::AgriculturalProduction(int type){
 }
 void AgriculturalProduction::agriculture_type(int type){
 	agricultureType= type; // 0 - wheat, 1 - meat, 2 - vegetables
+	employment = 50;
 	switch(agricultureType){
 		case(0):{ // wheat
 		    std::random_device rd;
@@ -156,7 +130,11 @@ void AgriculturalProduction::agriculture_type(int type){
 		}
 
 		case 1: { // meat
-			
+		CO2Emission = 27144; // co2 output per day for meat production in city
+		waterConsumption = 31135; //liters per day
+		production = 1415; //in kg of meat every day
+		energyUse = 0;
+		environmentalCost = 0;   
 			break;
 		}
 	}
