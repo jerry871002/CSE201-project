@@ -362,7 +362,6 @@ void City::add_car() {
 	}
 }
 
-
 void City::add_shop( Vector3 pos, Ref<PackedScene> scene) {
 	if (scene.is_valid()) {
 		Node* node;
@@ -390,6 +389,7 @@ void City::add_shop( Vector3 pos, Ref<PackedScene> scene) {
 				positionOfBuildings[int(x)][int(y) + 1] = 5;
 			}
 			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
+
 		}
 	}
 }
