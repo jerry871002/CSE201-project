@@ -74,6 +74,7 @@ void City::_register_methods()
 	register_method((char*)"add_shop", &City::add_shop);
 
 	register_property<City, float>("time_speed", &City::time_speed, 1.0);
+	register_property<City, int>("day_tick", &City::day_tick, 0);
 
 };
 
@@ -463,7 +464,7 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 	}
 }
 
-
+/*
 int* City::building_coordinates_identification(int x, int y, int number) {
 	//returns coordinates of a center for the upper left square of any buiding  
 	if (number == 1) {
@@ -562,10 +563,16 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 			}
 		}
 		else { // the case when it's a 2 by 2 building 
-			int* a = building_coordinates_identification(x, y, number);
-			x = a[0];
-			y = a[1];
-
+			if (number == 3) {
+				x =  x - 1;
+			}
+			if (number == 4) {
+				x = x - 1;
+				y = y - 1;
+			}
+			if (number == 5) {
+				y = y - 1;
+			}
 			traffic[x][y][0][1] = 1;
 			if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
 				traffic[x][y][0][0] = 1;
@@ -682,8 +689,14 @@ void City::simulation()
 		(*it)->set("updatable", true);
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 	}
-	
-	std::cout << "DEBUG: TOTAL CARBON EMISSION = " << this->carbonEmission << std::endl;
+
+	//std::cout << "DEBUG: TOTAL CARBON EMISSION = " << this->carbonEmission << std::endl; 
+	for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+	{
+		(*it)->set("updatable", true);
+		this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
+	}
+	totalSatisfaction /= all_houses.size();
 	
 
 	//for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
@@ -706,57 +719,193 @@ void City::simulation()
 	/*
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
 	{
-	
 		    // count up all the vehicle stuff
-		
-
 	}
 	*/
 }
 
+
+
 template<typename T> String to_godot_string(T s)
 {
-	std::string standardString = std::to_string(s);
-	godot::String godotString = godot::String(standardString.c_str());
-	return godotString;
+    std::string standardString = std::to_string(s);
+    godot::String godotString = godot::String(standardString.c_str());
+    return godotString;
 }
 
 int * return_date(int day_tick) {
-	int date[3];
-	int Y=1,M=1,D=1;
-	int julian = (1461 * (Y + 4800 + (M - 14)/12))/4 +(367 * (M - 2 - 12 / ((M - 14)/12)))/12 - (3 * ((Y + 4900 + (M - 14)/12)/100))/4 + D - 32075+day_tick+35;
-	int gregorian = julian + 1401 + (int)((((int)(4*day_tick+274277) / 146097)*3) / 4) -38;
-	int e = 4*gregorian+3;
-	int h = 5*((int)(e%1461)/4)+2;
-	int day = ((int)(h%153)/5)+1;
-	int month = (((int)h/153)+2)%12+1;
-	int year = (int)(e/1461) - 4716 + (int)((14-month)/12);
-	date[0]= day;
-	date[1] = month;
-	date[2] = year;
-	return date;
+    int static date[3];
+    int Y=1,M=1,D=1;
+    int julian = (1461 * (Y + 4800 + (M - 14)/12))/4 +(367 * (M - 2 - 12 / ((M - 14)/12)))/12 - (3 * ((Y + 4900 + (M - 14)/12)/100))/4 + D - 32075+day_tick+35;
+    int gregorian = julian + 1401 + (int)((((int)(4*day_tick+274277) / 146097)*3) / 4) -38;
+    int e = 4*gregorian+3;
+    int h = 5*((int)(e%1461)/4)+2;
+    int day = ((int)(h%153)/5)+1;
+    int month = (((int)h/153)+2)%12+1;
+    int year = (int)(e/1461) - 4716 + (int)((14-month)/12);
+    date[0]= day;
+    date[1] = month;
+    date[2] = year;
+    return date;
 }
 
 
 String return_string_date(int day, int month, int year) {
-	return to_godot_string(day) + String(", ") + to_godot_string(month) + String(", ") + to_godot_string(year);
+    return to_godot_string(day) + String(", ") + to_godot_string(month) + String(", ") + to_godot_string(year);
 }
 
 
 double find_avg(double array[],int leap) {
-	int size;
-	double sum=0;
-	if (leap==0) {
-		size=366;
-	}
-	else {
-		size=365;
-	}
-	for (int i=0; i<size; i++) {
-		sum+=array[i];
-	}
-	return sum/size;
+    int size;
+    double sum=0;
+    if (leap==0) {
+        size=366;
+    }
+    else {
+        size=365;
+    }
+    for (int i=0; i<size; i++) {
+        sum+=array[i];
+    }
+    return sum/size;
 }
+
+
+String City::return_game_date() {
+
+    int* datenumber = return_date(int(this->day_tick));
+    int year=datenumber[2];
+    String date = String("Year ");
+    date += to_godot_string(datenumber[2]);
+    date += String(", ");
+
+    if (datenumber[1] == 1) {
+        date += String("January ");
+    }
+    if (datenumber[1] == 2) {
+        date += String("February ");
+    }
+    if (datenumber[1] == 3) {
+        date += String("March ");
+    }
+    if (datenumber[1] == 4) {
+        date += String("April ");
+    }
+    if (datenumber[1] == 5) {
+        date += String("May ");
+    }
+    if (datenumber[1] == 6) {
+        date += String("June ");
+    }
+    if (datenumber[1] == 7) {
+        date += String("July ");
+    }
+    if (datenumber[1] == 8) {
+        date += String("August ");
+    }
+    if (datenumber[1] == 9) {
+        date += String("September ");
+    }
+    if (datenumber[1] == 10) {
+        date += String("October ");
+    }
+    if (datenumber[1] == 11) {
+        date += String("November ");
+    }
+    if (datenumber[1] == 12) {
+        date += String("December ");
+    }
+
+    date += to_godot_string(datenumber[0]);
+    return date;
+}
+
+/*
+String City::return_game_date2() {
+    String date = String("Year ");
+    date += to_godot_string(int(int(this->day_tick / 365) + 1));
+    date += String(", ");
+    int temp = int(this->day_tick) % 365;
+    if (this->day_tick % 365 == 0) { temp = 365; }
+    if (temp <= 31) {
+        date += String("January ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 31;
+    if (temp <= 28) {
+        date += String("February ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 28;
+    if (temp <= 31) {
+        date += String("March ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 31;
+    if (temp <= 30) {
+        date += String("April ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 30;
+    if (temp <= 31) {
+        date += String("May ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 31;
+    if (temp <= 30) {
+        date += String("June ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 30;
+    if (temp <= 31) {
+        date += String("July ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 31;
+    if (temp <= 31) {
+        date += String("August ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 31;
+    if (temp <= 30) {
+        date += String("September ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 30;
+    if (temp <= 31) {
+        date += String("October ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 31;
+
+    if (temp <= 30) {
+        date += String("November ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    temp -= 30;
+
+    if (temp <= 31) {
+        date += String("December ");
+        date += to_godot_string(int(temp));
+        return date;
+    }
+    return "Time Representation Error";
+
+}
+*/
+
+
 
 
 void City::write_stat_history_to_file() {
@@ -816,90 +965,3 @@ double City::return_energySupply() {
 double City::return_healthcare() {
 	return healthcare;
 }
-
-
-String City::return_game_date() {
-	String date = String("Year ");
-	date += to_godot_string(int(int(this->day_tick / 365) + 1));
-	date += String(", ");
-	int temp = int(this->day_tick) % 365;
-	if (this->day_tick % 365 == 0) { temp = 365; }
-	if (temp <= 31) {
-		date += String("January ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 31;
-	if (temp <= 28) {
-		date += String("February ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 28;
-	if (temp <= 31) {
-		date += String("March ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 31;
-	if (temp <= 30) {
-		date += String("April ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 30;
-	if (temp <= 31) {
-		date += String("May ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 31;
-	if (temp <= 30) {
-		date += String("June ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 30;
-	if (temp <= 31) {
-		date += String("July ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 31;
-	if (temp <= 31) {
-		date += String("August ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 31;
-	if (temp <= 30) {
-		date += String("September ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 30;
-	if (temp <= 31) {
-		date += String("October ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 31;
-
-	if (temp <= 30) {
-		date += String("November ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	temp -= 30;
-
-	if (temp <= 31) {
-		date += String("December ");
-		date += to_godot_string(int(temp));
-		return date;
-	}
-	return "Time Representation Error";
-
-}
-
-
-

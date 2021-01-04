@@ -10,6 +10,13 @@ namespace godot {
     public:
         Housing();
         ~Housing();
+
+
+
+		static void _register_methods();
+		virtual void _ready();
+
+
 		int windowCost = 200;
 		int windowNumber;
 		int solarPanelCost = 1500;
@@ -25,6 +32,8 @@ namespace godot {
 		double get_min_income();
 		double get_solar_panel_age();
 		double get_double_glazing_age();	
+
+
     };
 
 	class House : public Housing {
@@ -42,11 +51,10 @@ namespace godot {
 		int houseType;
 		double houseIncome = 0;
 		
-        
 	};
 
 	class Building : public Housing {
-		GODOT_SUBCLASS(House, Housing)
+		GODOT_SUBCLASS(Building, Housing)
 	public:
 		Building();
 		~Building();

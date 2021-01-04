@@ -3,6 +3,8 @@
 #include "obj.h"
 #include "Shop.h"
 #include "Housing.h"
+#include "Energy.h"
+#include "Production.h"
 
 #include <core/Godot.hpp>
 #include <Spatial.hpp>
@@ -72,15 +74,14 @@ namespace godot {
 		double date_counter{ 0 };
 		int day_tick; // keeps track of the in-game days
 		int days_since_last_simulation;
-		void update_date();
-		String return_game_date(); // returns the date :day/month/year as a string
-		// alternative with leap years
-		int* return_date(int day_tick);
-		String return_string_date(int day, int month, int year);
-		double find_avg(double array[],int leap);
-		void simulation(); // updates all the stats and calls the simulation for the buildings
-		bool ClickActive{ false };
-		
+		void update_date();		
+        // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
+        // date leap years implementation
+        String return_game_date(); // returns the date :day/month/year as a string with words
+        String return_string_date(int day, int month, int year); // returns the date :day/month/year as a string with numbers
+        void simulation(); // updates all the stats and calls the simulation for the buildings
+        bool ClickActive{ false };
+        
 		//TRAFFIC
 		int sizeOfCity = 10; // buildings are placed only on a square sizeOfCity * sizeOfCity
 		int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 
@@ -92,13 +93,15 @@ namespace godot {
 		void add_house(Vector3 pos, Ref<PackedScene> scene); // adds a house and updates the traffic array with the shop
 
 
-		int* building_coordinates_identification(int x, int y, int number);//returns coordinates of a center for the upper left square of any buiding  
+		//int* building_coordinates_identification(int x, int y, int number);//returns coordinates of a center for the upper left square of any buiding  
 		void update_traffic(int x, int y, bool newBuilding, int number);// updates the traffic array 
 
 		// ARRAYS CONTAINING ALL ACTIVE ELEMENTS
 
 		std::vector<Shop*> all_shops;
 		std::vector<Housing*> all_houses;
+		std::vector<Energy*> all_energies;
+		std::vector<Production*> all_production;
 
 		String active_button;
 		void implement_shop_policies(double);
