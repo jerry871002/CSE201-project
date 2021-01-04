@@ -361,12 +361,11 @@ void City::add_car() {
 
 void City::add_shop(Shop* shop) {
 	all_shops.push_back(shop);
+
+	// traffic stuff
 	double x = shop->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
 	double y = shop->get_position()[1] / 30; // can be int only for small building 
 
-
-
-	//traffic stuff
 	if (x < sizeOfCity && y < sizeOfCity) {
 		if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
 			positionOfBuildings[int(x)][int(y)] = 1;
