@@ -458,7 +458,7 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 	}
 }
 
-
+/*
 int* City::building_coordinates_identification(int x, int y, int number) {
 	//returns coordinates of a center for the upper left square of any buiding  
 	if (number == 1) {
@@ -481,7 +481,7 @@ int* City::building_coordinates_identification(int x, int y, int number) {
 		int a[] = { x , y - 1 };
 		return a;
 	}
-}
+}*/
 
 void City::update_traffic(int x, int y, bool newBuilding, int number) {
 	if (positionOfBuildings[x][y] != 0) { // nothing happens if the building isn't there
@@ -544,10 +544,16 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 			}
 		}
 		else { // the case when it's a 2 by 2 building 
-			int* a = building_coordinates_identification(x, y, number);
-			x = a[0];
-			y = a[1];
-
+			if (number == 3) {
+				x =  x - 1;
+			}
+			if (number == 4) {
+				x = x - 1;
+				y = y - 1;
+			}
+			if (number == 5) {
+				y = y - 1;
+			}
 			traffic[x][y][0][1] = 1;
 			if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
 				traffic[x][y][0][0] = 1;
