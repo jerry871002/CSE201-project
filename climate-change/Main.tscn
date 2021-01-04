@@ -15,8 +15,6 @@
 
 [sub_resource type="SphereShape" id=1]
 
-[sub_resource type="Theme" id=2]
-
 [sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
 
@@ -31,6 +29,8 @@ void fragment()
 [sub_resource type="ShaderMaterial" id=4]
 shader = SubResource( 3 )
 shader_param/blur_amount = 3.0
+
+[sub_resource type="Theme" id=2]
 
 [sub_resource type="StyleBoxTexture" id=5]
 texture = ExtResource( 7 )
@@ -96,6 +96,20 @@ shape = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.02275, 0, -9 )
 
 [node name="2Dworld" type="Node2D" parent="."]
+
+[node name="Blur" type="Node2D" parent="2Dworld"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="2Dworld/Blur"]
+material = SubResource( 4 )
+margin_left = -47.1433
+margin_top = -26.9391
+margin_right = 2019.86
+margin_bottom = 1115.06
+rect_pivot_offset = Vector2( 536.625, 1828.64 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="InfoBox" type="Label" parent="2Dworld"]
 margin_left = 60.0
@@ -206,20 +220,6 @@ custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
 text = "X8
 "
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Blur" type="Node2D" parent="2Dworld"]
-visible = false
-
-[node name="ColorRect" type="ColorRect" parent="2Dworld/Blur"]
-material = SubResource( 4 )
-margin_left = -47.1433
-margin_top = -26.9391
-margin_right = 2019.86
-margin_bottom = 1115.06
-rect_pivot_offset = Vector2( 536.625, 1828.64 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

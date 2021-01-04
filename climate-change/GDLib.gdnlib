@@ -8,7 +8,7 @@ reloadable=true
 [entry]
 
 OSX.64="res://src/VS-Project/DLLExport/osx/libproject_mac.dylib"
-Windows.64="res://src/VS-Project/DLLExport/LibVS-Project-x64-Debug.dll"
+Windows.64="res://src/VS-Project/DLLExport/LibVS-Project-x64-Release.dll"
 
 [dependencies]
 

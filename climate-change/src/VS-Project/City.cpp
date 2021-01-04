@@ -149,6 +149,7 @@ void City::_input(InputEvent*)
 	{
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 		this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
+		this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 		if (!(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) {
 			((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 		}
@@ -217,6 +218,7 @@ void City::set_initial_visible_components()
 {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	// Repeat for all menus
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
@@ -249,6 +251,7 @@ void godot::City::_on_MenuShop_pressed(String name)
 	String ButtonInfo = this->get_button_info_text();
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
@@ -301,6 +304,7 @@ void City::trigger_notification(String text = String("Seems like there was a mis
 	std::cout << "INVALID INPUT: EXPECTED FLOAT IN SPECIFIED RANGE" << std::endl;
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("text", text);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", true);
+
 	this->notification_active = true;
 }
 
@@ -341,6 +345,7 @@ void godot::City::_on_Game_Speed_changed()
 	time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 }
 
