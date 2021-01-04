@@ -284,19 +284,18 @@ void godot::City::_on_Game_Speed_changed()
 
 void City::add_shop(Shop* shop) {
 	all_shops.push_back(shop);
-	double x = shop->get_position()[0]/30;
-	double y = shop->get_position()[1]/30;
-
+	double x = shop->get_position()[0]/30; // needs to be double for identifying a 2 by 2 building 
+	double y = shop->get_position()[1]/30; // can be int only for small building 
 
 
 
 	//traffic stuff
 	if (x < sizeOfCity && y < sizeOfCity) {
-		if (x > int(x)-0.1 && x < int(x) + 0.1) {
+		if (x > int(x)-0.1 && x < int(x) + 0.1) { // check that it's a small building
 			positionOfBuildings[int(x)][int(y)] = 1;
 		}	
 		else {
-			positionOfBuildings[int(x)][int(y)] = 2;
+			positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
 			positionOfBuildings[int(x) + 1][int(y)]  = 3;
 			positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
 			positionOfBuildings[int(x)][int(y) + 1] = 5;
@@ -305,7 +304,8 @@ void City::add_shop(Shop* shop) {
 	}
 }
 
-int* City::building_coordinates_identification(int x, int y, int number) { //returns coordinates of a center for the upper left square of any buiding  
+int* City::building_coordinates_identification(int x, int y, int number) { 
+	//returns coordinates of a center for the upper left square of any buiding  
 	if (number == 1) {
 		int a[] = { x, y };
 		return a;
@@ -361,6 +361,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 			}
 
 			if (newBuilding == true) {  // update all the possible buildings around 
+				// no need to check if they exist since if they don't the function checks that with the first line 
 				if (x - 1 >= 0) {
 					if (y - 1 >= 0) {
 						update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
@@ -445,6 +446,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 			}
 			
 			if (newBuilding == true) {  // update all the possible buildings around 
+				// no need to check if they exist since if they don't the function checks that with the first line 
 				if (x - 1 >= 0) {
 					if (y - 1 >= 0) {
 						update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
