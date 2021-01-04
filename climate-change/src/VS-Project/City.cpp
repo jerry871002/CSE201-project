@@ -24,7 +24,11 @@
 
 
 
+
+
 using namespace godot;
+
+int traffic_system[10][10][4][3] = { 1 };
 
 City::City() {
 
@@ -49,7 +53,7 @@ City::City() {
 
 	// in order to write stats to csv files
 	double stat = 0;
-	double stats[366] ;
+	//double stats[366] ;
 
 	srand((int)time(0));
 }
@@ -389,7 +393,7 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 		all_shops.push_back((Shop*)node);
 
 
-		std::cout << "DEBUG: trafic stuff called" << std::endl;
+		std::cout << "DEBUG: traffic stuff called" << std::endl;
 		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
 		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
 
@@ -407,6 +411,8 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 				positionOfBuildings[int(x)][int(y) + 1] = 5;
 			}
 			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
+			
+
 
 		}
 		std::cout << "DEBUG: add shop done" << std::endl;
@@ -462,7 +468,7 @@ int* City::building_coordinates_identification(int x, int y, int number) {
 	//returns coordinates of a center for the upper left square of any buiding  
 	if (number == 1) {
 		int a[] = { x, y };
-		return a;
+		return a; // LOCAL VARIABLE NEEDS FIXING - SEE WARNING MESSAGE
 	}
 	if (number == 2) {
 		int a[] = { x , y };
@@ -480,6 +486,7 @@ int* City::building_coordinates_identification(int x, int y, int number) {
 		int a[] = { x , y - 1 };
 		return a;
 	}
+	return NULL;
 }
 
 void City::update_traffic(int x, int y, bool newBuilding, int number) {
@@ -489,29 +496,41 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 			traffic[x][y][1][2] = 1;
 			traffic[x][y][2][2] = 1;
 			traffic[x][y][3][2] = 1;
+			traffic_system[x][y][0][2] = 1;
+			traffic_system[x][y][1][2] = 1;
+			traffic_system[x][y][2][2] = 1;
+			traffic_system[x][y][3][2] = 1;
 			if (x + 1 < sizeOfCity && y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 3)) {
 				traffic[x][y][3][0] = 1;
+				traffic_system[x][y][3][0] = 1;
 			}
 			if (y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y + 1] == 1 || positionOfBuildings[x + 1][y + 1] == 2 || positionOfBuildings[x + 1][y] == 5)) {
 				traffic[x][y][3][1] = 1;
+				traffic_system[x][y][3][1] = 1;
 			}
 			if (x - 1 >= 0 && y + 1 > sizeOfCity && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 3 || positionOfBuildings[x - 1][y + 1] == 4)) {
 				traffic[x][y][2][0] = 1;
+				traffic_system[x][y][2][0] = 1;
 			}
 			if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
 				traffic[x][y][2][1] = 1;
+				traffic_system[x][y][2][1] = 1;
 			}
 			if (x - 1 >= 0 && y - 1 > 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
 				traffic[x][y][1][0] = 1;
+				traffic_system[x][y][1][0] = 1;
 			}
 			if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
 				traffic[x][y][1][1] = 1;
+				traffic_system[x][y][1][1] = 1;
 			}
 			if (x + 1 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
 				traffic[x][y][0][0] = 1;
+				traffic_system[x][y][0][0] = 1;
 			}
 			if (x + 1 < sizeOfCity && (positionOfBuildings[x + 1][y] == 1 || positionOfBuildings[x + 1][y] == 2 || positionOfBuildings[x + 1][y] == 3)) {
 				traffic[x][y][0][1] = 1;
+				traffic_system[x][y][0][1] = 1;
 			}
 
 			if (newBuilding == true) {  // update all the possible buildings around 

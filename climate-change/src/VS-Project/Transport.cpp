@@ -11,12 +11,9 @@
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
-using namespace std;
 
-String godot::Transport::class_name()
-{
-    return "Transport";
-}
+
+extern int traffic_system[10][10][4][3];
 
 // helper functions
 void compute_speed(double& Speed, double &Acc, float delta, Vector3 prevPos, Vector3 pos) {
@@ -463,17 +460,35 @@ void Transport::straight(float ratioDelta) {
 
 int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90) + 4) % 4;
-    vector<int> out;
-    
-    std::cout << "TRAFFIC FROM TRANSPORT: " << myCity->traffic << std::endl;
+    std::vector<int> out;
 
-    if ((int)round(pos.x / 30) >= sizeof(myCity->traffic) or (int)round(pos.z / 30) >= sizeof((myCity->traffic)[0])) {
+    std::cout << "TRAFFIC FROM TRANSPORT: " << std::endl;
+
+    // output each element's value 
+    for (int i = 0; i < 10; ++i)
+    {
+        for (int j = 0; j < 10; ++j)
+        {
+            for (int k = 0; k < 4; ++k)
+            {
+                for (int l = 0; l < 3; ++l)
+                {
+                    
+                    std::cout << "Element at traffic_system[" << i << "][" << j
+                        << "][" << k << "][" << l << "] = " << traffic_system[i][j][k][l]
+                        << std::endl;
+                }
+            }
+        }
+    }
+
+    if ((int)round(pos.x / 30) >= sizeof(traffic_system) or (int)round(pos.z / 30) >= sizeof((traffic_system[0]))) {
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         return(0);
     }
     
     int i = -1;
-    for (const int& n : (myCity->traffic)[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
+    for (const int& n : (traffic_system)[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
             out.push_back(i);
         }

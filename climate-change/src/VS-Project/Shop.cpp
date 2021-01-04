@@ -280,7 +280,7 @@ Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
 	age += days;
-	double shock;
+	//double shock;
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 
 	
@@ -369,7 +369,7 @@ Mall::Mall(){
     std::random_device rd; 
 	std::mt19937 gen(rd()); 
 
-    std::uniform_real_distribution <double> mediancost(50000000, 25000000);  //Median cost of opening medium sized shopping mall, between 50-250 million 
+    std::uniform_real_distribution <double> mediancost(25000000, 50000000);  //Median cost of opening medium sized shopping mall, between 50-250 million 
     cost = mediancost(gen);
     
     satisfaction = 7;
