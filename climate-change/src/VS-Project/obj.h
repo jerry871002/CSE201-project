@@ -70,7 +70,7 @@ namespace godot {
         double maintenance = 0; //maintenace and working cost in euros
         double CO2Emission{ 1 }; // kg of CO2 emitted
         double buildingTime = 0; // years needed to build a new building
-        double satisfaction = 0; // on scale of 10
+        double satisfaction{ 1 }; // on scale of 10
         double environmentalCost = 0; // environmental and health costs in euros 
         double age = 0; //age of each particular object in days
 
@@ -161,6 +161,7 @@ namespace godot {
         virtual double get_co2emissions();
         virtual void set_co2emissions(double);
         virtual double get_satisfaction();
+        virtual void set_satisfaction(double sat);
         virtual double get_environmentalcost();
 
     };

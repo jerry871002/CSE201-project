@@ -50,6 +50,10 @@ double Structure::get_satisfaction() {
     return this->satisfaction;
 }
 
+void Structure::set_satisfaction(double sat) {
+    this->satisfaction = sat;
+}
+
 double Structure::get_co2emissions() {
     //std::cout << "DEBUG: STRUCTURE GET EMISSIONS" << std::endl;
     return this->CO2Emission;
@@ -95,6 +99,7 @@ void Structure::_register_methods()
 
     register_property<Structure, bool>("updatable", &Structure::updatable, false);
     register_property<Structure, double>("CO2Emission", &Structure::set_co2emissions, &Structure::get_co2emissions, 1);
+    register_property<Structure, double>("satisfaction", &Structure::set_satisfaction, &Structure::get_satisfaction, 1);
     //register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
 
 }

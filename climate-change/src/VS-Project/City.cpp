@@ -168,32 +168,36 @@ void City::generate_initial_city_graphics()
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = 0; x < 2; x++)
+		for (int x = -3; x < 4; x++)
 		{
-			for (int z = 0; z < 3; z++)
+			for (int z = -3; z < 4; z++)
 			{
+				
 				int type = rand() % 2;
-				Node* node;
-				if (type == 0) { node = RestaurantScene->instance(); }
+				if (type == 0) { add_shop(Vector3(30 * x, 0, 30 * z), RestaurantScene); }
+				else { add_shop(Vector3(30 * x, 0, 30 * z), ShopScene); }
+				
+				/*{ node = RestaurantScene->instance(); }
 				else { node = ShopScene->instance(); }
 				node->set("scale", Vector3(10, 10, 10));
 				node->set("translation", Vector3(30 * x, 0, 30 * z));
 				this->add_child(node);
 				all_shops.push_back((Shop*)node);
+				*/
 			}
 		}
 	}
 	if (MallScene.is_valid())
 	{
 		Node* node = MallScene->instance();
-		node->set("translation", Vector3(75, 0, 0));
+		node->set("translation", Vector3(225, 0, 105));
 		this->add_child(node);
 		all_shops.push_back((Shop*)node);
 	}
 	if (WindmillScene.is_valid())
 	{
 		Node* node = WindmillScene->instance();
-		node->set("translation", Vector3(60, 0, -30));
+		node->set("translation", Vector3(120, 0, -150));
 		this->add_child(node);
 		all_shops.push_back((Shop*)node);
 	}
@@ -358,26 +362,35 @@ void City::add_car() {
 	}
 }
 
+void City::add_shop( Vector3 pos, Ref<PackedScene> scene) {
+	if (scene.is_valid()) {
+		Node* node;
+		node = scene->instance();
+		node->set("scale", Vector3(10, 9 + ((double(rand()) / RAND_MAX) * 2), 10));
+		node->set("translation", pos);
+		this->add_child(node);
+		all_shops.push_back((Shop*)node);
 
-void City::add_shop(Shop* shop) {
-	all_shops.push_back(shop);
-	double x = shop->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
-	double y = shop->get_position()[1] / 30; // can be int only for small building 
+
+		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
+		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
 
 
 
-	//traffic stuff
-	if (x < sizeOfCity && y < sizeOfCity) {
-		if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
-			positionOfBuildings[int(x)][int(y)] = 1;
+		//traffic stuff
+		if (x < sizeOfCity && y < sizeOfCity) {
+			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
+				positionOfBuildings[int(x)][int(y)] = 1;
+			}
+			else {
+				positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
+				positionOfBuildings[int(x) + 1][int(y)] = 3;
+				positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
+				positionOfBuildings[int(x)][int(y) + 1] = 5;
+			}
+			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
+
 		}
-		else {
-			positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
-			positionOfBuildings[int(x) + 1][int(y)] = 3;
-			positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
-			positionOfBuildings[int(x)][int(y) + 1] = 5;
-		}
-		update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
 	}
 }
 
