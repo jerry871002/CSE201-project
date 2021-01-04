@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <string>
 #include <vector>
 #include <Input.hpp>
 #include <InputEventMouse.hpp>
