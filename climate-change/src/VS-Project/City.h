@@ -120,7 +120,8 @@ namespace godot {
 		int sizeOfCity; // buildings are placed on a square sizeOfCity * sizeOfCity
 		int positionOfBuildings[10][10] = { 0 };
 		int traffic[10][10][4][3] = { 0 };
-		void update_traffic(int x, int y, bool newBuilding);
+		void update_traffic(int x, int y, bool newBuilding, int number);
+		int* building_coordinates_identification(int x, int y, int number);
 
 		bool ClickActive{ false };
 		float time_speed = 1; // 1 for regular speed (1 in-game day per second)
