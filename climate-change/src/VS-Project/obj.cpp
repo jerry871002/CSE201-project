@@ -115,6 +115,7 @@ void Structure::_register_methods()
     register_property<Structure, String>("object_type", &Structure::set_object_type, &Structure::get_type, "Structure");
 
     register_property<Structure, bool>("updatable", &Structure::updatable, false);
+
     register_property<Structure, double>("CO2Emission", &Structure::set_co2emissions, &Structure::get_co2emissions, 1);
     register_property<Structure, double>("satisfaction", &Structure::set_satisfaction, &Structure::get_satisfaction, 1);
     register_property<Structure, double>("energyUse", &Structure::set_energyuse, &Structure::get_energyuse, 1);
@@ -122,6 +123,7 @@ void Structure::_register_methods()
     register_property<Structure, double>("employment", &Structure::set_employment, &Structure::get_employment, 1);
     register_property<Structure, double>("cost", &Structure::set_cost, &Structure::get_cost, 1);
     register_property<Structure, double>("environmentalCost", &Structure::set_environmental_cost, &Structure::get_environmental_cost, 1);
+    register_property<Structure, double>("buildingTime", &Structure::set_building_time, &Structure::get_building_time, 1);
 
     //register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
 
