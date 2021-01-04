@@ -274,10 +274,10 @@ Restaurant::Restaurant() {
     }
 }
 
-String Restaurant::class_name()
+/*String Restaurant::class_name()
 {
 	return "Restaurant";
-}
+}*/
 
 Restaurant::~Restaurant() {}
 
