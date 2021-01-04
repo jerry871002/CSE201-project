@@ -217,11 +217,12 @@ void Shop::panels_get_added() {
 
 //  #################################   RESTAURANT      ###############################
 
+
 Restaurant::Restaurant() {
     energyUsePerSize = 38;          //On average 38kWh per square feet 
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
+    
+    std::random_device rd; 
+    std::mt19937 gen(rd());	
 
     std::normal_distribution <double> mediancost(350000, 100000);  //Median cost of opening restaurant 375K $, including owning the building
     cost = mediancost(gen);
@@ -237,7 +238,7 @@ Restaurant::Restaurant() {
         diningSize = diningSize1(gen);
         // maintenance = 0.34;  	Not sure yet
         satisfaction = 4;	//Smaller sized not very refined restaurant
-        averageWage = 11;		// Euros per hour , Slightly above minimum wage in france
+        averageWage = 11*8;		// Euros per hour , Slightly above minimum wage in france
         std::normal_distribution <double> totalemployees1(25, 8);	// 9 out 10 restaurants have less than 50 employees
         employment = totalemployees1(gen) * (1 + ((diningSize - 12.5) / 12.5)); // number of employees influenced by size of restaurent
         CO2Emission = 825 * ((1 + ((diningSize - 13 / 13))) / 10); //on average 301 tons of CO2 per year, hence 825kg per day. 
@@ -250,7 +251,7 @@ Restaurant::Restaurant() {
         diningSize = diningSizeg2(gen);
         // maintenance = 0.34;  	Not sure yet
         satisfaction = 6;	//Full service normal quality restaurant
-        averageWage = 12.5;		// Euros per hour, Slightly above minimum wage in france
+        averageWage = 12.5*8;		// Euros per hour, Slightly above minimum wage in france
         std::normal_distribution <double> totalemployees2(30, 10);	// 9 out 10 restaurants have less than 50 employees
         employment = totalemployees2(gen) * (1 + ((diningSize - 13.5) / 13.5)); // number of employees influenced by size of restaurent
         CO2Emission = 825 * ((1 + ((diningSize - 13 / 13))) / 10); // need to find more info on this
@@ -262,7 +263,7 @@ Restaurant::Restaurant() {
         diningSize = diningSizeg3(gen);
         // maintenance = 0.34;  	Not sure yet
         satisfaction = 7;	//Luxury aimed restaurant - High quality
-        averageWage = 14;		// Higher than other types as more luxurious 
+        averageWage = 14*8;		// Higher than other types as more luxurious 
         std::normal_distribution <double> totalemployees3(35, 7);	// 9 out 10 restaurants have less than 50 employees
         employment = totalemployees3(gen) * (1 + ((diningSize - 12.5) / 12.5)); // number of employees influenced by size of restaurent
         CO2Emission = 825 * ((1 + ((diningSize - 13 / 13))) / 10); // need to find more info on this
@@ -273,47 +274,112 @@ Restaurant::Restaurant() {
     }
 }
 
+
+
 Restaurant::~Restaurant() {}
 
-void Restaurant::simulate_step(double days) {
-    
-    //std::cout << "DEBUG: RESTAURANT SIMULATION CALLED" << std::endl;
-
-    this->Shop::simulate_step(days);
-    
-    age += days;
-    double shock = 0;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-
-    if ((age >= 365) and (firstYearShock == false)) {
-        std::uniform_real_distribution <double> firstYearShockGen(0, 100);
-        double shockgen = firstYearShockGen(gen);
-        if (shockgen <= 17) {
-            shopStatus = false;		//On average restaurants have a 17% chance of closing in the first year.
-        }
-        firstYearShock = true; //so that this if statement is only run once, after a full year has passed
-    }
-
-    //std::cout << "DEBUG: RESTAURANT SIMULATION DONE" << std::endl;
-
+void Restaurant::simulate_step(double days){
+	age += days;
+	double shock;
+	std::random_device rd; 
+	std::mt19937 gen(rd()); 
+	
+	if ((age >= 365) and (firstYearShock == false)){
+		std::uniform_real_distribution <double> firstYearShockGen(0,100);
+		double shockgen = firstYearShockGen(gen);
+		if (shockgen <= 17){
+			shopStatus = false;		//On average restaurants have a 17% chance of closing in the first year.
+		}
+		firstYearShock = true; //so that this if statement is only run once, after a full year has passed
+	}
+	
 }
 
-double Restaurant::get_energyuse() {
-    return (this->energyUsePerSize) * (this->diningSize);
+double Restaurant::get_energyuse(){
+	return (this->energyUsePerSize)*(this->diningSize);
 }
-
 
 // #############    Small Shop          ####################
 
-SmallShop::SmallShop() {}
+SmallShop::SmallShop(){
 
-SmallShop::~SmallShop() {}
+    std::random_device rd; 
+	std::mt19937 gen(rd()); 
+
+    std::normal_distribution <double> mediancost(35000, 10000);  //Median cost of opening small retail store around 35K $
+    cost = mediancost(gen);
+
+    if (cost < 28000) { smallShopType = 1; }
+    else if ((28000 <= cost) && (cost <= 40000)) { smallShopType = 2; }
+    else { smallShopType = 3; }
+    
+    std::uniform_real_distribution <double> averageWageperyear(30000,100000);
+    averageWage = averageWageperyear(gen)/365; //gives average wage per day of employees. 
+
+    double energyuseperyear;
+
+    //Consider 3 types of Small Shops, 1 - Micro Business , 2 - Small business, 3 - Medium business
+    switch (smallShopType) {
+        case 1: {
+            std::uniform_real_distribution <double> energyusepeyear1(5000, 15000); // Micro business have an average energy consumption between 5000-15000 KWh per year
+            energyuseperyear = energyusepeyear1(gen);
+            energyUse = energyuseperyear/365;
+            satisfaction = 6;
+
+            CO2Emission = 500;
+            std::uniform_real_distribution <double> totalemployees1(1, 5);	
+            employment = totalemployees1(gen);
+        }
+        break;
+        case 2: {
+            std::uniform_real_distribution <double> energyusepeyear2(15000, 30000); // Micro business have an average energy consumption between 5000-15000 KWh per year
+            energyuseperyear = energyusepeyear2(gen);
+            energyUse = energyuseperyear/365;
+            satisfaction = 6;
+            CO2Emission = 600;
+            std::uniform_real_distribution <double> totalemployees2(5, 15);	
+            employment = totalemployees2(gen);
+            }
+            break;
+        case 3: {
+            std::uniform_real_distribution <double> energyusepeyear3(30000, 45000); // Micro business have an average energy consumption between 5000-15000 KWh per year
+            energyuseperyear = energyusepeyear3(gen);
+            energyUse = energyuseperyear/365;
+            satisfaction = 6;
+
+            CO2Emission = 700;
+            std::uniform_real_distribution <double> totalemployees3(10,20);	
+            employment = totalemployees3(gen);
+            }
+        break;
+    }
+}
+
+SmallShop::~SmallShop(){}
 
 
+
+void SmallShop::simulate_step(double days){
+       
+}
 
 // ################   Mall              ####################
 
-Mall::Mall() {}
+Mall::Mall(){
+    std::random_device rd; 
+	std::mt19937 gen(rd()); 
 
-Mall::~Mall() {}
+    std::uniform_real_distribution <double> mediancost(50000000, 25000000);  //Median cost of opening medium sized shopping mall, between 50-250 million 
+    cost = mediancost(gen);
+    
+    satisfaction = 7;
+    CO2Emission = 0;
+
+    buildingTime = 365*3; //Around 3 years, but can vary a lot
+    environmentalCost = 0; 
+
+    energyUse = 0;
+}
+
+Mall::~Mall(){}
+
