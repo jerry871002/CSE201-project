@@ -3,6 +3,8 @@
 #include "obj.h"
 #include "Shop.h"
 #include "Housing.h"
+#include "Energy.h"
+#include "Production.h"
 
 #include <core/Godot.hpp>
 #include <Spatial.hpp>
@@ -99,6 +101,8 @@ namespace godot {
 
 		std::vector<Shop*> all_shops;
 		std::vector<Housing*> all_houses;
+		std::vector<Energy*> all_energies;
+		std::vector<Production*> all_production;
 
 		String active_button;
 		void implement_shop_policies(double);

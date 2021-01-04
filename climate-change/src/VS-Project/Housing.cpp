@@ -4,6 +4,8 @@
 #include <Math.hpp>
 #include <cstdlib>
 #include <ctime>
+#include <Viewport.hpp>
+#include <SceneTree.hpp>
 
 using namespace godot;
 
@@ -12,7 +14,7 @@ Also is there a variable name for no solar panels. Because after 25 years, solar
 I would like to know how this is translated in the code, because right now I only know how to make them appear.
 */
 
-
+// yes we can work on this , send us a text if theirs anything specific bothering you in the meanwhile
 
 
 
@@ -20,12 +22,26 @@ I would like to know how this is translated in the code, because right now I onl
 /// This is the super class that contains classes for houses and buildings of our city.
 
 Housing::Housing() {
+
 	environmentalCost = 0;
+
 }
 
 Housing::~Housing() {
 
 }
+
+
+void Housing::_register_methods()
+{
+	register_method((char*)"_ready", &Housing::_ready);
+}
+
+void Housing::_ready()
+{
+	this->Structure::_ready();
+}
+
 
 double Housing::get_max_income() {
     return this->maxIncome;
@@ -123,7 +139,6 @@ House::House() {
         age = 0;
 		break;
 	}
-	
 	}
 }
 
@@ -132,14 +147,18 @@ House::~House() {
 }
 
 void House::simulate_step(double days) {
+	if ((int)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) % 25 == 0) {
+		satisfaction = 0;
+
+	}
+
 	if (solar_panel() == true) {
-		solarPanelAge += 1; //or should it be + days?
+		solarPanelAge += days; //or should it be + days?
 		
 	}
 	
 	if (double_glazing() == true) {
 		doubleGlazingAge += 1;
-		
 	} 
 
 	if (rooftop_wind_turbines() == true) {

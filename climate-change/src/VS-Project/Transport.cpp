@@ -545,7 +545,7 @@ void Pedestrian::_process(float delta) {
     if (rot >= (M_PI / 2)) {
 
         if ( ((int)(myCity->get("time_speed"))) != 0) { straight(delta); }
-        /*
+
         Vector3 p = this->get_global_transform().get_origin();
         switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the pedestrian on the road if problems
         case 0: this->set("translation", Vector3(p.x, 0, p.z + 24 - fmod(p.z + 24, 30) - 9)); break;
@@ -554,7 +554,7 @@ void Pedestrian::_process(float delta) {
         case 1: this->set("translation", Vector3(p.x + 24 - fmod(p.x + 24, 30) - 9, 0, p.z)); break;
         default: break;
         }
-        */
+
 
         if (position >= 2*9 - 2 * Turn_R) {
             rot = 0;
