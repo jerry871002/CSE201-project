@@ -24,6 +24,7 @@
 #include <PackedScene.hpp>
 #include <ResourceLoader.hpp>
 #include <String.hpp>
+// #include <edit_text_files.hpp>
 
 
 
@@ -80,8 +81,8 @@ namespace godot {
 		void update_date();		
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation
-        String return_game_date(); // returns the date :day/month/year as a string with words
-        String return_string_date(int day, int month, int year); // returns the date :day/month/year as a string with numbers
+        String return_word_date(); // returns the date :day/month/year as a string with words
+        String return_number_date(int day, int month, int year); // returns the date :day/month/year as a string with numbers
         void simulation(); // updates all the stats and calls the simulation for the buildings
         bool ClickActive{ false };
         

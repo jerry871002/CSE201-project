@@ -130,7 +130,7 @@ void City::_physics_process(float delta) {
 
 void City::update_date() {
 	this->day_tick += days_since_last_simulation;
-	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_game_date());
+	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date());
 	this->day_tick -= days_since_last_simulation;
 }
 
@@ -674,8 +674,8 @@ void City::simulation()
 
 	day_tick += this->time_speed;
 	this->days_since_last_simulation = 0;
-	Godot::print(return_game_date());
-	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_game_date());
+	Godot::print(return_word_date());
+	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date());
 	this->income = 0;
 	this->population = 50000;
 	this->carbonEmission = 0;
@@ -760,7 +760,7 @@ int * return_date(int day_tick) {
 }
 
 
-String return_string_date(int day, int month, int year) {
+String return_number_date(int day, int month, int year) {
     return to_godot_string(day) + String(", ") + to_godot_string(month) + String(", ") + to_godot_string(year);
 }
 
@@ -781,7 +781,7 @@ double find_avg(double array[],int leap) {
 }
 
 
-String City::return_game_date() {
+String City::return_word_date() {
 
     int* datenumber = return_date(int(this->day_tick));
     int year=datenumber[2];
@@ -830,120 +830,43 @@ String City::return_game_date() {
     return date;
 }
 
-/*
-String City::return_game_date2() {
-    String date = String("Year ");
-    date += to_godot_string(int(int(this->day_tick / 365) + 1));
-    date += String(", ");
-    int temp = int(this->day_tick) % 365;
-    if (this->day_tick % 365 == 0) { temp = 365; }
-    if (temp <= 31) {
-        date += String("January ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 31;
-    if (temp <= 28) {
-        date += String("February ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 28;
-    if (temp <= 31) {
-        date += String("March ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 31;
-    if (temp <= 30) {
-        date += String("April ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 30;
-    if (temp <= 31) {
-        date += String("May ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 31;
-    if (temp <= 30) {
-        date += String("June ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 30;
-    if (temp <= 31) {
-        date += String("July ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 31;
-    if (temp <= 31) {
-        date += String("August ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 31;
-    if (temp <= 30) {
-        date += String("September ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 30;
-    if (temp <= 31) {
-        date += String("October ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 31;
-
-    if (temp <= 30) {
-        date += String("November ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    temp -= 30;
-
-    if (temp <= 31) {
-        date += String("December ");
-        date += to_godot_string(int(temp));
-        return date;
-    }
-    return "Time Representation Error";
-
-}
-*/
-
-
-
 
 void City::write_stat_history_to_file() {
 	/*
-		int *date;
-		date = return_date(day_tick);
-		int day = *date;
-		int month = *(date+1);
-		int year = *(date+2);
+	
+	double stat = 0;
+    int day_tick = 0;
+    double stats[366];
+    int daycount=0;
 
-		if (day==1 && month==1 && year!=1) {
-			daycount=0;
-			int leap = (year-1)%4;
-			add_data("alltimestats", to_string(year-1), to_string(find_avg(stats,leap)));
-			double stats[366];
-			remove(get_path("statsyear" + to_string(year-1)).c_str());
-		}
+    int *date; 
+    date = return_word_date(day_tick);
+    int day = *date;
+    int month = *(date+1);
+    int year = *(date+2);
 
-		stats[daycount]=stat;
-		daycount+=1;
-		add_data("statsyear" + to_string(year), return_string_date(day,month,year), to_string(stat));
+    
+    if (day==1 && month==1 && year!=1 && year!=2) {
+        daycount=0;
+	    int leap = (year-1)%4;
+        add_data("alltimestats", to_godot_string(year-1), to_godot_string(find_avg(stats,leap)));
+        double stats[366];
+        remove(get_path("statsyear" + to_godot_string(year-2)).c_str());
+    }
+        
 
-		int *daysbef;
-		daysbef = return_date(day_tick-30);
-		int daydaysbef=*daysbef;
-		int monthdaysbef=*(daysbef+1);
-		int yeardaysbef=*(daysbef+2);
-		delete_line("statsyear" + to_string(year), return_string_date(daydaysbef,monthdaysbef,yeardaysbef));
+    stats[daycount]=stat;
+    daycount+=1;
+    add_data("statsyear" + to_godot_string(year), return_number_date(day,month,year), to_godot_string(stat));
+
+        
+    int *daysbef;
+    daysbef = return_date(day_tick-300);
+    int daydaysbef=*daysbef;
+    int monthdaysbef=*(daysbef+1);
+    int yeardaysbef=*(daysbef+2);
+    delete_line("statsyear" + to_godot_string(year), return_number_date(daydaysbef,monthdaysbef,yeardaysbef));
+	
 	*/
 }
 
