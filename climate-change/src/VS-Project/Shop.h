@@ -65,7 +65,7 @@ namespace godot {
 
         double get_energyuse();
 
-        void simulate_step(double days);
+        virtual void simulate_step(double days);
     };
 
     //####################################   Small Shop   ################################
@@ -82,7 +82,7 @@ namespace godot {
         int smallShopType;
         double averageWage;
 
-        void simulate_step(double days);
+        virtual void simulate_step(double days);
     };
 
     //####################################   Mall   ################################
@@ -94,6 +94,8 @@ namespace godot {
         Mall();
         ~Mall();
         virtual String get_object_type() { return "Mall"; };
+
+        virtual void simulate_step(double days);
 
     };
 

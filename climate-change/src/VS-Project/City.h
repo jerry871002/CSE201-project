@@ -6,6 +6,7 @@
 #include "Energy.h"
 #include "Production.h"
 
+
 #include <core/Godot.hpp>
 #include <Spatial.hpp>
 
@@ -124,8 +125,7 @@ namespace godot {
 		double return_carbonEmission();
 		double return_energyDemand();
 		double return_energySupply();
-		double return_healthcare();
-		double return_needs();
+		double return_environmentalCost();
 		double return_totalSatisfaction();
 
 		
@@ -154,7 +154,7 @@ namespace godot {
 		double carbonEmission;
 		double energyDemand;
 		double energySupply;
-		double healthcare;
+		double environmentalCost;
 		double totalSatisfaction;
 
 
