@@ -69,6 +69,7 @@ void City::_register_methods()
 	register_method((char*)"add_shop", &City::add_shop);
 
 	register_property<City, float>("time_speed", &City::time_speed, 1.0);
+	register_property<City, int>("day_tick", &City::day_tick, 0);
 
 };
 
@@ -661,8 +662,14 @@ void City::simulation()
 		(*it)->set("updatable", true);
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 	}
-	
-	std::cout << "DEBUG: TOTAL CARBON EMISSION = " << this->carbonEmission << std::endl;
+
+	//std::cout << "DEBUG: TOTAL CARBON EMISSION = " << this->carbonEmission << std::endl; 
+	for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+	{
+		(*it)->set("updatable", true);
+		this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
+	}
+	totalSatisfaction /= all_houses.size();
 	
 
 	//for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
@@ -685,16 +692,12 @@ void City::simulation()
 	/*
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
 	{
-	
 		    // count up all the vehicle stuff
-		
-
 	}
 	*/
 }
 
-template<typename T> String to_godot_string(T s)
-{
+template<typename T> String to_godot_string(T s){
 	std::string standardString = std::to_string(s);
 	godot::String godotString = godot::String(standardString.c_str());
 	return godotString;
