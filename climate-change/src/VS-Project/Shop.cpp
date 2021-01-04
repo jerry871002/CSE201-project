@@ -17,21 +17,19 @@ using namespace godot;
 void Shop::_register_methods() 
 {
     register_method((char*)"_ready", &Shop::_ready);
-
     register_property<Shop, double>("panel_probability", &Shop::panel_probability, 0.75);
 }
 
 void Shop::_ready() 
 {
     this->Structure::_ready();
-    this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
+    this->get_node("MeshComponents/SolarPanels")->set("visible", false);
 }
 
 Shop::Shop()
 {
     Clickable = false;
     PanelsOn = false;
-    
 }
 
 Shop::~Shop()
@@ -129,7 +127,8 @@ String Shop::get_object_info()
     else {
         info += "Panels are not displayed" + String("\n");
     }
-    info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission")));
+    info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
+    info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
     return info;
 }
 
@@ -168,8 +167,7 @@ void Shop::simulate_step(double days) {
 
     if (int(this->panels_age) == 0) {
 
-        // TESTING STUFF LIKELY TO BE REMOVED SOON
-
+        //
         double temp1 = double(1.0 - this->panel_probability);
         double temp2 = double(days / 365.0);
         double temp3 = pow(temp1, temp2);
@@ -179,14 +177,13 @@ void Shop::simulate_step(double days) {
         std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->panel_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
-            panels_get_added();
+            PanelsOn = true;
+            panels_age = 100;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
             std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
-
     }
-
     else if (int(this->panels_age) > days)
     {
         this->panels_age -= int(days);
@@ -205,8 +202,6 @@ void Shop::simulate_step(double days) {
 void Shop::panels_get_added() {
     PanelsOn = true;
     panels_age = 100;   // set the panels age here ! when they are just built
-
-
     // std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
 }
 
