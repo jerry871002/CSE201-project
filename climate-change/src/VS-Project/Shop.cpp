@@ -381,3 +381,7 @@ Mall::Mall(){
 
 Mall::~Mall(){}
 
+void Mall::simulate_step(double days) {
+    this->Shop::simulate_step(days);
+}
+
