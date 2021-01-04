@@ -359,6 +359,205 @@ void City::add_car() {
 }
 
 
+void City::add_shop(Shop* shop) {
+	all_shops.push_back(shop);
+	double x = shop->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
+	double y = shop->get_position()[1] / 30; // can be int only for small building 
+
+
+
+	//traffic stuff
+	if (x < sizeOfCity && y < sizeOfCity) {
+		if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
+			positionOfBuildings[int(x)][int(y)] = 1;
+		}
+		else {
+			positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
+			positionOfBuildings[int(x) + 1][int(y)] = 3;
+			positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
+			positionOfBuildings[int(x)][int(y) + 1] = 5;
+		}
+		update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
+	}
+}
+
+int* City::building_coordinates_identification(int x, int y, int number) {
+	//returns coordinates of a center for the upper left square of any buiding  
+	if (number == 1) {
+		int a[] = { x, y };
+		return a;
+	}
+	if (number == 2) {
+		int a[] = { x , y };
+		return a;
+	}
+	if (number == 3) {
+		int a[] = { x - 1, y };
+		return a;
+	}
+	if (number == 4) {
+		int a[] = { x - 1, y - 1 };
+		return a;
+	}
+	if (number == 5) {
+		int a[] = { x , y - 1 };
+		return a;
+	}
+}
+
+void City::update_traffic(int x, int y, bool newBuilding, int number) {
+	if (positionOfBuildings[x][y] != 0) { // nothing happens if the building isn't there
+		if (number == 1) {  // the case when it's a 1 by 1 buidling
+			traffic[x][y][0][2] = 1;
+			traffic[x][y][1][2] = 1;
+			traffic[x][y][2][2] = 1;
+			traffic[x][y][3][2] = 1;
+			if (x + 1 < sizeOfCity && y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 3)) {
+				traffic[x][y][3][0] = 1;
+			}
+			if (y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y + 1] == 1 || positionOfBuildings[x + 1][y + 1] == 2 || positionOfBuildings[x + 1][y] == 5)) {
+				traffic[x][y][3][1] = 1;
+			}
+			if (x - 1 >= 0 && y + 1 > sizeOfCity && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 3 || positionOfBuildings[x - 1][y + 1] == 4)) {
+				traffic[x][y][2][0] = 1;
+			}
+			if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
+				traffic[x][y][2][1] = 1;
+			}
+			if (x - 1 >= 0 && y - 1 > 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
+				traffic[x][y][1][0] = 1;
+			}
+			if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
+				traffic[x][y][1][1] = 1;
+			}
+			if (x + 1 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
+				traffic[x][y][0][0] = 1;
+			}
+			if (x + 1 < sizeOfCity && (positionOfBuildings[x + 1][y] == 1 || positionOfBuildings[x + 1][y] == 2 || positionOfBuildings[x + 1][y] == 3)) {
+				traffic[x][y][0][1] = 1;
+			}
+
+			if (newBuilding == true) {  // update all the possible buildings around 
+				// no need to check if they exist since if they don't the function checks that with the first line 
+				if (x - 1 >= 0) {
+					if (y - 1 >= 0) {
+						update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
+					}
+					update_traffic(x - 1, y, false, positionOfBuildings[x - 1][y]);
+					if (y + 1 < sizeOfCity) {
+						update_traffic(x - 1, y + 1, false, positionOfBuildings[x - 1][y + 1]);
+					}
+				}
+				if (y - 1 >= 0) {
+					update_traffic(x, y - 1, false, positionOfBuildings[x][y - 1]);
+				}
+				if (y + 1 < sizeOfCity) {
+					update_traffic(x, y + 1, false, positionOfBuildings[x][y + 1]);
+				}
+				if (x + 1 < sizeOfCity) {
+					if (y - 1 >= 0) {
+						update_traffic(x + 1, y - 1, false, positionOfBuildings[x + 1][y - 1]);
+					}
+					update_traffic(x + 1, y, false, positionOfBuildings[x + 1][y]);
+					if (y + 1 < sizeOfCity) {
+						update_traffic(x + 1, y + 1, false, positionOfBuildings[x + 1][y + 1]);
+					}
+				}
+			}
+		}
+		else { // the case when it's a 2 by 2 building 
+			int* a = building_coordinates_identification(x, y, number);
+			x = a[0];
+			y = a[1];
+
+			traffic[x][y][0][1] = 1;
+			if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
+				traffic[x][y][0][0] = 1;
+			}
+
+			traffic[x + 1][y][0][2] = 1;
+			if (x + 2 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 2][y - 1] == 1 || positionOfBuildings[x + 2][y - 1] == 2 || positionOfBuildings[x + 2][y - 1] == 5)) {
+				traffic[x + 1][y][0][0] = 1;
+			}
+			if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 2 || positionOfBuildings[x + 2][y] == 3)) {
+				traffic[x + 1][y][0][1] = 1;
+			}
+
+			traffic[x + 1][y][3][1] = 1;
+			if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 1] == 1 || positionOfBuildings[x + 2][y + 1] == 2 || positionOfBuildings[x + 2][y + 1] == 3)) {
+				traffic[x + 1][y][3][0] = 1;
+			}
+
+			traffic[x + 1][y + 1][3][2] = 1;
+			if (x + 2 < sizeOfCity && y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 2] == 1 || positionOfBuildings[x + 2][y + 2] == 2 || positionOfBuildings[x + 2][y + 2] == 3)) {
+				traffic[x + 1][y + 1][3][0] = 1;
+			}
+			if (y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 3 || positionOfBuildings[x + 2][y] == 4)) {
+				traffic[x + 1][y + 1][3][1] = 1;
+			}
+
+			traffic[x + 1][y][2][1] = 1;
+			if (y + 2 < sizeOfCity && (positionOfBuildings[x][y + 2] == 1 || positionOfBuildings[x][y + 2] == 3 || positionOfBuildings[x][y + 2] == 4)) {
+				traffic[x + 1][y][2][0] = 1;
+			}
+
+			traffic[x][y + 1][2][2] = 1;
+			if (x - 1 >= 0 && y + 2 < sizeOfCity && (positionOfBuildings[x - 1][y + 2] == 1 || positionOfBuildings[x - 1][y + 2] == 3 || positionOfBuildings[x - 1][y + 2] == 4)) {
+				traffic[x][y + 1][2][0] = 1;
+			}
+			if (x - 1 >= 0 && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 4 || positionOfBuildings[x - 1][y + 1] == 5)) {
+				traffic[x][y + 1][2][1] = 1;
+			}
+
+			traffic[x + 1][y][1][1] = 1;
+			if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
+				traffic[x + 1][y][1][0] = 1;
+			}
+
+			traffic[x][y][1][2] = 1;
+			if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
+				traffic[x][y][1][0] = 1;
+			}
+			if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
+				traffic[x][y][1][1] = 1;
+			}
+
+			if (newBuilding == true) {  // update all the possible buildings around 
+				// no need to check if they exist since if they don't the function checks that with the first line 
+				if (x - 1 >= 0) {
+					if (y - 1 >= 0) {
+						update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
+					}
+					update_traffic(x - 1, y, false, positionOfBuildings[x - 1][y]);
+					update_traffic(x - 1, y + 1, false, positionOfBuildings[x - 1][y + 1]);
+					if (y + 2 < sizeOfCity) {
+						update_traffic(x - 1, y + 2, false, positionOfBuildings[x - 1][y + 2]);
+					}
+				}
+				if (y - 1 >= 0) {
+					update_traffic(x, y - 1, false, positionOfBuildings[x][y - 1]);
+					update_traffic(x + 1, y - 1, false, positionOfBuildings[x + 1][y - 1]);
+				}
+				if (y + 2 < sizeOfCity) {
+					update_traffic(x, y + 2, false, positionOfBuildings[x][y + 2]);
+					update_traffic(x + 1, y + 2, false, positionOfBuildings[x + 1][y + 2]);
+				}
+				if (x + 2 < sizeOfCity) {
+					if (y - 1 >= 0) {
+						update_traffic(x + 2, y - 1, false, positionOfBuildings[x + 2][y - 1]);
+					}
+					update_traffic(x + 2, y, false, positionOfBuildings[x + 2][y]);
+					update_traffic(x + 2, y + 1, false, positionOfBuildings[x + 2][y + 1]);
+					if (y + 2 < sizeOfCity) {
+						update_traffic(x + 2, y + 2, false, positionOfBuildings[x + 2][y + 2]);
+					}
+				}
+			}
+		}
+	}
+}
+
+
 
 void City::simulation()
 {

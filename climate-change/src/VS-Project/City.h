@@ -74,6 +74,16 @@ namespace godot {
 		void update_date();
 		String return_game_date(); // returns the date :day/month/year as a string
 		void simulation(); // updates all the stats and calls the simulation for the buildings
+		bool ClickActive{ false };
+		
+		//TRAFFICCC
+		int sizeOfCity = 10; // buildings are placed only on a square sizeOfCity * sizeOfCity
+		int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 
+		int traffic[10][10][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
+				 // the third coornidate indicates the side of the building and the forth one which way the car can turn
+		void add_shop(Shop* shop); // adds a shop and updates the traffic array with the shop
+		int* building_coordinates_identification(int x, int y, int number);//returns coordinates of a center for the upper left square of any buiding  
+		void update_traffic(int x, int y, bool newBuilding, int number);// updates the traffic array 
 
 		// ARRAYS CONTAINING ALL ACTIVE ELEMENTS
 
