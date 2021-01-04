@@ -128,7 +128,6 @@ void AgriculturalProduction::agriculture_type(int type){
 			GMO = false;
 		break;
 		}
-
 		case 1: { // meat
 		CO2Emission = 27144; // co2 output per day for meat production in city
 		waterConsumption = 31135; //liters per day
@@ -151,7 +150,24 @@ double AgriculturalProduction::get_energyuse(){
 double AgriculturalProduction::get_environmentalcost(){
 	return 0;
 }
-
+void AgriculturalProduction::fertilizer_on(){
+	fertilizer = true;
+}
+void AgriculturalProduction::fertilizer_off(){
+	fertilizer = true;
+}
+void AgriculturalProduction::GMO_on(){
+	GMO = true;
+}
+void AgriculturalProduction::GMO_off(){
+	GMO = true;
+}
+void AgriculturalProduction::pesticide_on(){
+	pesticide = true;
+}
+void AgriculturalProduction::pesticide_off(){
+	pesticide  = true;
+}
 
 
 /// <summary>

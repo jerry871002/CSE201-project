@@ -18,16 +18,15 @@ using namespace godot;
 //Declare All the test functions:
 
 
-//Test Functions for meat production:
+//Test Functions for wheat and meat production:
 void test_agriculture_constructor();
 void test_agriculture_simulate_step();
 void test_agriculture_get_attributes();
+void test_agriculture_on_off();
 
 //Test Functions :
 void test_production_constructor();
 void test_production_simulate_step();
-void test_production_get_attributes();
-
 
 
 int main() {
@@ -36,7 +35,7 @@ int main() {
     //Checking through the House:
     test_agriculture_constructor();
     test_agriculture_simulate_step();
-
+    test_agriculture_on_off();
    
 
 
@@ -101,3 +100,17 @@ void test_agriculture_get_attributes(){
     }
 }
 
+void test_agriculture_on_off(){
+    AgriculturalProduction A = AgriculturalProduction();
+        try{
+        A.fertilizer_on();
+        A.fertilizer_off();
+        A.GMO_on();
+        A.GMO_off();
+        A.pesticide_on();
+        A.pesticide_off();
+
+    } catch (...){
+        std::cout << "Error with one of the turn on and turn off functions in agriculture" << std::endl;
+    }
+}
