@@ -219,7 +219,7 @@ void Transport::transport_type(int type) {
 
 void Transport::_register_methods() {
     register_method((char*)"_init", &Transport::_init);
-    register_method((char*)"_process", &Transport::_process);
+    register_method((char*)"_physics_process", &Transport::_physics_process);
     register_method((char*)"_ready", &Transport::_ready);
 }
 
@@ -235,14 +235,19 @@ void Transport::_ready() {
 }
 
 
-void Transport::_process(float delta) {
+void Transport::_physics_process(float delta) {
+
+
+
+    std::cout << delta << std::endl;
+
     prevPositionVec = this->get_global_transform().get_origin();
    
    
     if (rot >= (M_PI / 2)) {
         
         int gameSpeed = myCity->get("time_speed");
-        if (gameSpeed != 0) { straight(delta); }
+        if (gameSpeed != 0) { straight(fmin(0.04, delta) / delta); }
        
         Vector3 p = this->get_global_transform().get_origin();
         switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the car on the road if problems
@@ -273,23 +278,23 @@ void Transport::_process(float delta) {
     else if (position >= 22) {
 
 
-        Vector3 globalSpeed = Vector3((SPEED_T * 10 *delta), 0, 0);
+        Vector3 globalSpeed = Vector3((SPEED_T * 10 * fmin(0.04, delta)), 0, 0);
         globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
         
 
         if (this->move_and_collide(globalSpeed, true, true, true) == NULL) { //No collision
-            turn(dir, delta);
+            turn(dir, fmin(0.04, delta));
         }
         else {
             
             Vector3 colliderVelocity = this->move_and_collide(globalSpeed, true, true, true)->get_collider_velocity();
             if (fmod(((Transport*)(this->move_and_collide(globalSpeed, true, true, true)->get_collider()))->get_rotation_degrees().y + 360, 90) != 0) { //Car not on a straight line
                 if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
-                    turn(dir, delta);
+                    turn(dir, fmin(0.04, delta));
                 }
             }
             else if (colliderVelocity.dot(colliderVelocity) == 0) {
-                turn(dir, delta);
+                turn(dir, fmin(0.04, delta));
             }
 
         }
@@ -314,7 +319,7 @@ void Transport::_process(float delta) {
         }
     }
 
-    compute_speed(SPEED_T, Acc, delta, prevPositionVec, this->get_global_transform().get_origin());
+    compute_speed(SPEED_T, Acc, fmin(0.04, delta), prevPositionVec, this->get_global_transform().get_origin());
 }
 
 void Transport::simulate_step(double days) {
@@ -435,10 +440,10 @@ void Transport::turn(int dir, float delta) {
     }
 }
 
-void Transport::straight(float delta) {
+void Transport::straight(float ratioDelta) {
     
 
-    Vector3 globalSpeed = Vector3((SPEED_T * 5 * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))), 0, 0);
+    Vector3 globalSpeed = Vector3((ratioDelta * SPEED_T * 5 * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))), 0, 0);
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
 
     switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {
