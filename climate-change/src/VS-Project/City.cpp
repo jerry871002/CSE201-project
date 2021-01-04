@@ -23,6 +23,7 @@
 #endif
 
 
+
 using namespace godot;
 
 City::City() {
@@ -48,7 +49,7 @@ City::City() {
 
 	// in order to write stats to csv files
 	double stat = 0;
-	double stats[366];
+	double stats[366] ;
 
 	srand((int)time(0));
 }
@@ -170,9 +171,9 @@ void City::generate_initial_city_graphics()
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = -3; x < 4; x++)
+		for (int x = 0; x < 4; x++)
 		{
-			for (int z = -3; z < 4; z++)
+			for (int z = 0; z < 4; z++)
 			{
 
 				std::cout << "DEBUG: About to create a random shop" << std::endl;
@@ -203,6 +204,7 @@ void City::generate_initial_city_graphics()
 		node->set("translation", Vector3(120, 0, -150));
 		this->add_child(node);
 		all_shops.push_back((Shop*)node);
+
 	}
 }
 
@@ -367,7 +369,7 @@ void City::add_car() {
 	}
 }
 
-void City::add_shop( Vector3 pos, Ref<PackedScene> scene) {
+void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 
 	std::cout << "DEBUG: add shop called" << std::endl;
 
@@ -378,7 +380,7 @@ void City::add_shop( Vector3 pos, Ref<PackedScene> scene) {
 		std::cout << "DEBUG: instanciating" << std::endl;
 		node = scene->instance();
 		std::cout << "DEBUG: setting scale and translation" << std::endl;
-		node->set("scale", Vector3(10, 10 , 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
+		node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
 		node->set("translation", pos);
 
 		std::cout << "DEBUG: add child" << std::endl;
@@ -410,6 +412,51 @@ void City::add_shop( Vector3 pos, Ref<PackedScene> scene) {
 		std::cout << "DEBUG: add shop done" << std::endl;
 	}
 }
+
+
+void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
+
+	std::cout << "DEBUG: add house called" << std::endl;
+
+	std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
+	if (scene.is_valid()) {
+		std::cout << "DEBUG: creating node" << std::endl;
+		Node* node;
+		std::cout << "DEBUG: instanciating" << std::endl;
+		node = scene->instance();
+		std::cout << "DEBUG: setting scale and translation" << std::endl;
+		node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
+		node->set("translation", pos);
+
+		std::cout << "DEBUG: add child" << std::endl;
+		this->add_child(node);
+		std::cout << "DEBUG: add house to vector" << std::endl;
+		all_houses.push_back((Housing*)node);
+
+
+
+		std::cout << "DEBUG: traffic stuff called" << std::endl;
+		//traffic stuff
+		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
+		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
+		
+		if (x < sizeOfCity && y < sizeOfCity) {
+			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
+				positionOfBuildings[int(x)][int(y)] = 1;
+			}
+			else {
+				positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
+				positionOfBuildings[int(x) + 1][int(y)] = 3;
+				positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
+				positionOfBuildings[int(x)][int(y) + 1] = 5;
+			}
+			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
+
+		}
+		std::cout << "DEBUG: add shop done" << std::endl;
+	}
+}
+
 
 int* City::building_coordinates_identification(int x, int y, int number) {
 	//returns coordinates of a center for the upper left square of any buiding  

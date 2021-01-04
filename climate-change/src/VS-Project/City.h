@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <string>
 #include <vector>
 #include <Input.hpp>
 #include <InputEventMouse.hpp>
@@ -80,7 +81,7 @@ namespace godot {
 		void simulation(); // updates all the stats and calls the simulation for the buildings
 		bool ClickActive{ false };
 		
-		//TRAFFICCC
+		//TRAFFIC
 		int sizeOfCity = 10; // buildings are placed only on a square sizeOfCity * sizeOfCity
 		int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 
 		int traffic[10][10][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
@@ -88,7 +89,7 @@ namespace godot {
 
 		// following functions handle adding structures to the city, takes a position and the required scene
 		void add_shop( Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
-
+		void add_house(Vector3 pos, Ref<PackedScene> scene); // adds a house and updates the traffic array with the shop
 
 
 		int* building_coordinates_identification(int x, int y, int number);//returns coordinates of a center for the upper left square of any buiding  
