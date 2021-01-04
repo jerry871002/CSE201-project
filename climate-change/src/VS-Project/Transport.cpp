@@ -234,9 +234,15 @@ void Transport::_ready() {
 
 void Transport::_physics_process(float delta) {
 
-
-
     std::cout << delta << std::endl;
+
+    (this->physics_counter)++;
+
+    if (this->physics_counter == 2) {
+        this->physics_counter == 0;
+        //delta = delta / 2;
+
+    }
 
     prevPositionVec = this->get_global_transform().get_origin();
    
