@@ -16,13 +16,6 @@
 
 #include <PoolArrays.hpp>
 
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <stdio.h>
-#include "edit_text_files.cpp"
-
 #ifdef _WIN32
 #include <Windows.h>
 #else
@@ -47,8 +40,15 @@ City::City() {
 
 
 	//timer = 0;
-	day_tick = 0;
+	int day_tick = 0;
 	days_since_last_simulation = 0;
+
+	// in order to find date
+	int daycount=0;
+
+	// in order to write stats to csv files
+	double stat = 0;
+	double stats[366];
 
 	srand((int)time(0));
 }
@@ -693,7 +693,13 @@ void City::simulation()
 	*/
 }
 
-/*
+template<typename T> String to_godot_string(T s)
+{
+	std::string standardString = std::to_string(s);
+	godot::String godotString = godot::String(standardString.c_str());
+	return godotString;
+}
+
 int * return_date(int day_tick) {
 	int date[3];
 	int Y=1,M=1,D=1;
@@ -709,9 +715,13 @@ int * return_date(int day_tick) {
 	date[2] = year;
 	return date;
 }
-string return_string_date(int day, int month, int year) {
-	return to_string(day) + ", " + to_string(month) + ", " + to_string(year);
+
+
+String return_string_date(int day, int month, int year) {
+	return to_godot_string(day) + String(", ") + to_godot_string(month) + String(", ") + to_godot_string(year);
 }
+
+
 double find_avg(double array[],int leap) {
 	int size;
 	double sum=0;
@@ -726,11 +736,7 @@ double find_avg(double array[],int leap) {
 	}
 	return sum/size;
 }
-double stat = 0;
-int day_tick = 0;
-double stats[366];
-int daycount=0;
-/*/
+
 
 void City::write_stat_history_to_file() {
 	/*
@@ -790,13 +796,6 @@ double City::return_healthcare() {
 	return healthcare;
 }
 
-
-template<typename T> String to_godot_string(T s)
-{
-	std::string standardString = std::to_string(s);
-	godot::String godotString = godot::String(standardString.c_str());
-	return godotString;
-}
 
 String City::return_game_date() {
 	String date = String("Year ");
