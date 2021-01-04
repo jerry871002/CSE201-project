@@ -74,15 +74,14 @@ namespace godot {
 		double date_counter{ 0 };
 		int day_tick; // keeps track of the in-game days
 		int days_since_last_simulation;
-		void update_date();
-		String return_game_date(); // returns the date :day/month/year as a string
-		// alternative with leap years
-		int* return_date(int day_tick);
-		String return_string_date(int day, int month, int year);
-		double find_avg(double array[],int leap);
-		void simulation(); // updates all the stats and calls the simulation for the buildings
-		bool ClickActive{ false };
-		
+		void update_date();		
+        // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
+        // date leap years implementation
+        String return_game_date(); // returns the date :day/month/year as a string with words
+        String return_string_date(int day, int month, int year); // returns the date :day/month/year as a string with numbers
+        void simulation(); // updates all the stats and calls the simulation for the buildings
+        bool ClickActive{ false };
+        
 		//TRAFFIC
 		int sizeOfCity = 10; // buildings are placed only on a square sizeOfCity * sizeOfCity
 		int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 

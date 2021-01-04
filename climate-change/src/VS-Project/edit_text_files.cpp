@@ -143,8 +143,8 @@ void delete_line(string documentName, string dataToDelete) {
     clear_completely("datas_on_rows");
 }
 
-
-/* defined in City.cpp
+/*
+// defined in City.cpp
 int* return_date(int day_tick) {
     static int date[3];
 
@@ -184,7 +184,59 @@ double find_avg(double array[],int leap) {
     }
     return sum/size;
 }
+
+string return_game_date(int day_tick) {
+
+	int* datenumber = return_date(day_tick);
+	int year=datenumber[2];
+	string date = "Year ";
+	date += to_string(datenumber[2]);
+	date += ", ";
+
+	if (datenumber[1] == 1) {
+		date += string("January ");
+	}
+	if (datenumber[1] == 2) {
+		date += string("February ");
+	}
+	if (datenumber[1] == 3) {
+		date += string("March ");
+	}
+	if (datenumber[1] == 4) {
+		date += string("April ");
+	}
+	if (datenumber[1] == 5) {
+		date += string("May ");
+	}
+	if (datenumber[1] == 6) {
+		date += string("June ");
+	}
+	if (datenumber[1] == 7) {
+		date += string("July ");
+	}
+	if (datenumber[1] == 8) {
+		date += string("August ");
+	}
+	if (datenumber[1] == 9) {
+		date += string("September ");
+	}
+	if (datenumber[1] == 10) {
+		date += string("October ");
+	}
+	if (datenumber[1] == 11) {
+		date += string("November ");
+	}
+	if (datenumber[1] == 12) {
+		date += string("December ");
+	}
+
+	date += to_string(datenumber[0]);
+    
+	return date;
+}
+
 */
+
 
 /*
 //uncomment to run
@@ -192,12 +244,12 @@ int main() {
     // More examples on how to use the above functions:
     
     //clear("datas");
-    change_data("datas", "2010", "37001");
+    //change_data("datas", "2010", "37001");
     //copy("pollution", "tmp");
     //add_data("datas", "2015", "76");
     //delete_line("datas", "2010");
     //clear_completely("datas");
-    
+
 
 
     
@@ -217,7 +269,8 @@ int main() {
         day_tick += 1;
         stat+=25;
         
-
+        string date2 = return_game_date(day_tick);
+        std::cout<<date2<<std::endl;
 
         int *date; 
         date = return_date(day_tick);
@@ -250,4 +303,5 @@ int main() {
     }
     
 }
+
 */
