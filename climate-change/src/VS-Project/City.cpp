@@ -66,6 +66,7 @@ void City::_register_methods()
 	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
 	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
 	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
+	register_method((char*)"add_shop", &City::add_shop);
 
 	register_property<City, float>("time_speed", &City::time_speed, 1.0);
 
@@ -158,6 +159,7 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
+	std::cout << "DEBUG: generate city graphics started" << std::endl;
 	ResourceLoader* ResLo = ResourceLoader::get_singleton();
 	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
 	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
@@ -172,7 +174,8 @@ void City::generate_initial_city_graphics()
 		{
 			for (int z = -3; z < 4; z++)
 			{
-				
+
+				std::cout << "DEBUG: About to create a random shop" << std::endl;
 				int type = rand() % 2;
 				if (type == 0) { add_shop(Vector3(30 * x, 0, 30 * z), RestaurantScene); }
 				else { add_shop(Vector3(30 * x, 0, 30 * z), ShopScene); }
@@ -219,6 +222,8 @@ void City::set_initial_visible_components()
 
 void City::_ready()
 {
+
+	std::cout << "DEBUG: Ready started" << std::endl;
 	this->generate_initial_city_graphics();
 	this->set_initial_visible_components();
 	
@@ -363,15 +368,26 @@ void City::add_car() {
 }
 
 void City::add_shop( Vector3 pos, Ref<PackedScene> scene) {
+
+	std::cout << "DEBUG: add shop called" << std::endl;
+
+	std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
 	if (scene.is_valid()) {
+		std::cout << "DEBUG: creating node" << std::endl;
 		Node* node;
+		std::cout << "DEBUG: instanciating" << std::endl;
 		node = scene->instance();
-		node->set("scale", Vector3(10, 9 + ((double(rand()) / RAND_MAX) * 2), 10));
+		std::cout << "DEBUG: setting scale and translation" << std::endl;
+		node->set("scale", Vector3(10, 10 , 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
 		node->set("translation", pos);
+
+		std::cout << "DEBUG: add child" << std::endl;
 		this->add_child(node);
+		std::cout << "DEBUG: add shop to vector" << std::endl;
 		all_shops.push_back((Shop*)node);
 
 
+		std::cout << "DEBUG: trafic stuff called" << std::endl;
 		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
 		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
 
@@ -391,6 +407,7 @@ void City::add_shop( Vector3 pos, Ref<PackedScene> scene) {
 			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
 
 		}
+		std::cout << "DEBUG: add shop done" << std::endl;
 	}
 }
 
