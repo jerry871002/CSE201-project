@@ -23,6 +23,7 @@
 #endif
 
 
+
 using namespace godot;
 
 City::City() {
@@ -48,7 +49,7 @@ City::City() {
 
 	// in order to write stats to csv files
 	double stat = 0;
-	double stats[366];
+	double stats[366] ;
 
 	srand((int)time(0));
 }
@@ -171,9 +172,9 @@ void City::generate_initial_city_graphics()
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = -3; x < 4; x++)
+		for (int x = 0; x < 4; x++)
 		{
-			for (int z = -3; z < 4; z++)
+			for (int z = 0; z < 4; z++)
 			{
 
 				std::cout << "DEBUG: About to create a random shop" << std::endl;
@@ -204,6 +205,7 @@ void City::generate_initial_city_graphics()
 		node->set("translation", Vector3(120, 0, -150));
 		this->add_child(node);
 		all_shops.push_back((Shop*)node);
+
 	}
 }
 
