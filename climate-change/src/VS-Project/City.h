@@ -2,6 +2,7 @@
 
 #include "obj.h"
 #include "Shop.h"
+#include "Housing.h"
 
 #include <core/Godot.hpp>
 #include <Spatial.hpp>
@@ -88,6 +89,7 @@ namespace godot {
 		// ARRAYS CONTAINING ALL ACTIVE ELEMENTS
 
 		std::vector<Shop*> all_shops;
+		std::vector<Housing*> all_houses;
 
 		String active_button;
 		void implement_shop_policies(double);
