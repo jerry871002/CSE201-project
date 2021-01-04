@@ -82,7 +82,12 @@ namespace godot {
 		int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 
 		int traffic[10][10][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
 				 // the third coornidate indicates the side of the building and the forth one which way the car can turn
-		void add_shop(Shop* shop); // adds a shop and updates the traffic array with the shop
+
+		// following functions handle adding structures to the city, takes a position and the required scene
+		void add_shop( Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
+
+
+
 		int* building_coordinates_identification(int x, int y, int number);//returns coordinates of a center for the upper left square of any buiding  
 		void update_traffic(int x, int y, bool newBuilding, int number);// updates the traffic array 
 
