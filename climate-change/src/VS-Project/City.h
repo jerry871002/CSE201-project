@@ -26,8 +26,10 @@
 
 
 
-/* current test fct using main_loop.cpp on mac:
-g++ -std=c++17 main_loop.cpp obj.cpp edit_text_files.cpp City.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
+/* use main fct defined in City.cpp for mac
+
+current test fct using main_loop.cpp on mac:
+g++ -std=c++17 City.cpp obj.cpp edit_text_files.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
 then run:
 ./a.out
 */
@@ -165,4 +167,4 @@ namespace godot {
 		Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
 
 	};
-};
+}

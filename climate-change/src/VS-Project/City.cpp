@@ -681,6 +681,7 @@ void City::simulation()
 	Godot::print(return_game_date());
 	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_game_date());
 	this->carbonEmission = 0;
+	this->numberOfEmployees = 0;
 
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
@@ -688,9 +689,10 @@ void City::simulation()
 		//Godot::print((String)(*it)->get("object_type"));
 		(*it)->set("updatable", true);
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
+		this->numberOfEmployees += (double)((*it)->get("employment"));
 	}
 
-	//std::cout << "DEBUG: TOTAL CARBON EMISSION = " << this->carbonEmission << std::endl; 
+	std::cout << "DEBUG: TOTAL CARBON EMISSION = " << this->carbonEmission << std::endl; 
 	for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
 	{
 		(*it)->set("updatable", true);
@@ -965,3 +967,13 @@ double City::return_energySupply() {
 double City::return_healthcare() {
 	return healthcare;
 }
+
+/*
+//in order to check for errors on mac
+int main() {
+	City c=City();
+	c.simulation();
+	std::cout << "DEBUG: TOTAL CARBON EMISSION = " << c.return_carbonEmission() << std::endl; 
+	return 0;
+}
+*/
