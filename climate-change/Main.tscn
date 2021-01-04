@@ -73,8 +73,7 @@ directional_shadow_max_distance = 1000.0
 
 [node name="DirectionalLight2" type="DirectionalLight" parent="3Dworld/WorldEnvironment"]
 transform = Transform( -0.208031, 0.692626, -0.690646, 0, 0.706094, 0.708118, 0.978122, 0.147311, -0.14689, -3.895, 0, -3.493 )
-light_color = Color( 0.101961, 0.329412, 0.568627, 1 )
-light_energy = 0.15
+light_color = Color( 0.137255, 0.101961, 0.568627, 1 )
 light_indirect_energy = 0.0
 light_specular = 0.0
 shadow_bias = 0.0
