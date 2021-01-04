@@ -2,6 +2,8 @@
 #include "Housing.h"
 //This file is just to catch compiling errors for those working on Mac
 
+
+
 /*
 If on Mac, use this to test in terminal:
 
@@ -15,6 +17,8 @@ enter this in terminal:
 ./test_Housing
 */
 
+
+/*
 using namespace godot;
 
 //Declare All the test functions:
@@ -159,4 +163,4 @@ void test_building_get_attributes(){
 }
 
 
-
+*/
