@@ -16,8 +16,6 @@
 #include <Math.hpp>
 
 
-
-
 using namespace godot;
 
 Structure::Structure() {
@@ -37,7 +35,6 @@ Structure::Structure() {
     energyDemand = 0;
     energySupply = 0;
      */
-
 }
 /*
 Structure::Structure(double cost, double energyUse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply) :
@@ -148,6 +145,7 @@ void Structure::_process(float delta)
     
     if (this->get("updatable")) {
         Godot::print("This is a: " + this->get_object_type());
+        std::cout << "DEBUG: simulate step should be called now " << std::endl;
         this->simulate_step((double)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("time_speed"))); // will run the lowest level simulate step function
         this->set("updatable", false);
     }
