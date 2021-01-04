@@ -489,7 +489,7 @@ int* City::building_coordinates_identification(int x, int y, int number) {
 	}
 	return NULL;
 }
-
+*/
 void City::update_traffic(int x, int y, bool newBuilding, int number) {
 	if (positionOfBuildings[x][y] != 0) { // nothing happens if the building isn't there
 		if (number == 1) {  // the case when it's a 1 by 1 buidling
