@@ -274,10 +274,7 @@ Restaurant::Restaurant() {
     }
 }
 
-/*String Restaurant::class_name()
-{
-	return "Restaurant";
-}*/
+
 
 Restaurant::~Restaurant() {}
 
@@ -360,10 +357,7 @@ SmallShop::SmallShop(){
 
 SmallShop::~SmallShop(){}
 
-String SmallShop::class_name()
-{
-	return "Small Shop";
-}
+
 
 void SmallShop::simulate_step(double days){
        
@@ -389,7 +383,3 @@ Mall::Mall(){
 
 Mall::~Mall(){}
 
-String Mall::class_name()
-{
-	return "Mall";
-}

@@ -79,8 +79,6 @@ namespace godot {
         ~SmallShop();
         virtual String get_object_type() { return "SmallShop"; };
 
-        String class_name();
-
         int smallShopType;
         double averageWage;
 
@@ -97,7 +95,6 @@ namespace godot {
         ~Mall();
         virtual String get_object_type() { return "Mall"; };
 
-        String class_name();
     };
 
 }
