@@ -67,7 +67,9 @@ namespace godot {
         double employment = 0; // approximate number of employees per building
         double cost = 0; // cost in euros to build a new building
         double energyUse = 0; //amount of energy used by the building in kWh
+        double energyperDay = 0; //amount of energy used by the building in kWh
         double maintenance = 0; //maintenace and working cost in euros
+        double averageWage = 0; //average wage of the people in the building
         double CO2Emission{ 1 }; // kg of CO2 emitted
         double buildingTime = 0; // years needed to build a new building
         double satisfaction{ 1 }; // on scale of 10
@@ -155,6 +157,8 @@ namespace godot {
 
         virtual double get_maintenance();
         virtual void set_maintenance(double maintenance);
+        virtual double get_averageWage();
+        virtual void set_averageWage(double averageWage);
         virtual double get_building_time();
         virtual void set_building_time(double buildingTime);
         virtual double get_cost();
@@ -163,6 +167,8 @@ namespace godot {
         virtual void set_employment(double employment);
         virtual void set_energyuse(double energyUse);
         virtual double get_energyuse();
+        virtual void set_energyperDay(double energyperDay);
+        virtual double get_energyperDay();
         virtual double get_co2emissions();
         virtual void set_co2emissions(double);
         virtual double get_satisfaction();
