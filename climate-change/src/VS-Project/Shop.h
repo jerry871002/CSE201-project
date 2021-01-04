@@ -79,13 +79,6 @@ namespace godot {
         ~SmallShop();
         virtual String get_object_type() { return "SmallShop"; };
 
-        String class_name();
-
-        int smallShopType;
-        double averageWage;
-
-        void simulate_step(double days);
-        
     };
 
     //####################################   Mall   ################################
