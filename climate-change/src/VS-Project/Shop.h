@@ -4,7 +4,6 @@
 #include <core/Godot.hpp>
 
 
-
 namespace godot{
     class Shop : public Structure {
         GODOT_SUBCLASS(Shop, Structure)
@@ -63,6 +62,13 @@ namespace godot{
         SmallShop();
         ~SmallShop();
 
+        String class_name();
+
+        int smallShopType;
+        double averageWage;
+
+        void simulate_step(double days);
+        
     };
 
     //####################################   Mall   ################################
@@ -72,6 +78,8 @@ namespace godot{
 	public:
         Mall();
         ~Mall();
+
+        String class_name();
     };
 
 }

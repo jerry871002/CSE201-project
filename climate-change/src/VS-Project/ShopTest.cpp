@@ -128,4 +128,5 @@ void test_smallshop_constructor(){
 
 void test_mall_constructor(){
     Mall A = Mall();
+    
 }
