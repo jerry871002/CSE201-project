@@ -66,6 +66,13 @@ void Structure::set_energyuse(double energyUse) {
     this->energyUse = energyUse;
 }
 
+double Structure::get_energyperDay() {
+    return this->energyperDay;
+}
+void Structure::set_energyperDay(double energyperDay) {
+    this->energyperDay = energyperDay;
+}
+
 double Structure::get_environmental_cost() {
     return this->environmentalCost;
 }
@@ -101,6 +108,13 @@ void Structure::set_maintenance(double maintenance) {
     this->maintenance = maintenance;
 }
 
+double Structure::get_averageWage() {
+    return this->averageWage;
+}
+void Structure::set_averageWage(double averageWage) {
+    this->averageWage = averageWage;
+}
+
 void Structure::_register_methods()
 {
     register_method((char*)"_process", &Structure::_process);
@@ -116,6 +130,7 @@ void Structure::_register_methods()
     register_property<Structure, double>("CO2Emission", &Structure::set_co2emissions, &Structure::get_co2emissions, 1);
     register_property<Structure, double>("satisfaction", &Structure::set_satisfaction, &Structure::get_satisfaction, 1);
     register_property<Structure, double>("energyUse", &Structure::set_energyuse, &Structure::get_energyuse, 1);
+    register_property<Structure, double>("averageWage", &Structure::set_averageWage, &Structure::get_averageWage, 1);
     register_property<Structure, double>("maintenance", &Structure::set_maintenance, &Structure::get_maintenance, 1);
     register_property<Structure, double>("employment", &Structure::set_employment, &Structure::get_employment, 1);
     register_property<Structure, double>("cost", &Structure::set_cost, &Structure::get_cost, 1);

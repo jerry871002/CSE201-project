@@ -38,8 +38,8 @@ City::City() {
 	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
-	healthcare = 0;
-	totalSatisfaction = 100;
+	environmentalCost = 0;
+	totalSatisfaction = 50;
 
 	time_speed = 1;
 
@@ -665,23 +665,19 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 void City::simulation()
 {
 	// std::cout << "Simulation" << std::endl;
-	/*
-	
-	//write the old values in a file 
-	income = 0;
-	numberOfEmployees = 0;
-	carbonEmission = 0;
-	energyDemand = 0;
-	energySupply = 0;
-    healthcare = 0;
-	*/
+
 
 	day_tick += this->time_speed;
 	this->days_since_last_simulation = 0;
 	Godot::print(return_game_date());
 	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_game_date());
+	this->income = 0;
+	this->population = 50000;
 	this->carbonEmission = 0;
 	this->numberOfEmployees = 0;
+	this->energyDemand = 0;
+	this->energySupply = 0;
+	this->totalSatisfaction = 50;
 
 	for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 	{
@@ -690,34 +686,41 @@ void City::simulation()
 		((Structure*)(*it))->set("updatable", true);
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 		this->numberOfEmployees += (double)((*it)->get("employment"));
+		this->income += (double)((*it)->get("employment"))*(double)((*it)->get("averageWage"));
+		this->energyDemand += (double)((*it)->get("energyUse"));
+		this->environmentalCost += (double)((*it)->get("environmentalCost"));
 	}
 
 	std::cout << "DEBUG: TOTAL CARBON EMISSION = " << this->carbonEmission << std::endl; 
 	for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
 	{
 		(*it)->set("updatable", true);
+		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 		this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
 	}
-	totalSatisfaction /= all_houses.size();
+	//totalSatisfaction /= all_houses.size();
+
+	for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
+	{
+		(*it)->set("updatable", true);
+		this->carbonEmission += (double)((*it)->get("CO2Emission"));
+		this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
+		this->energySupply += (double)((*it)->get("energyperDay"));
+		this->numberOfEmployees += (double)((*it)->get("employment"));
+		this->income += (double)((*it)->get("employment"))*(double)((*it)->get("averageWage"));
+	}
 	
+	for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+	{
+		(*it)->set("updatable", true);
+		this->carbonEmission += (double)((*it)->get("CO2Emission"));
+		this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
+		this->energyDemand += (double)((*it)->get("energyUse"));
+		this->environmentalCost += (double)((*it)->get("environmentalCost"));
+		this->numberOfEmployees += (double)((*it)->get("employment"));
+		this->income += (double)((*it)->get("employment"))*(double)((*it)->get("averageWage"));
+	}
 
-	//for (std::vector<Structure*>::iterator it = buildings.begin(); it != buildings.end(); ++it)
-	//{
-		/*
-		commented out until we know what variables to call in every structure
-
-		income += (*it)->income;
-		std::cout << "in LOOP income " << (*it)->income << std::endl;
-		numberOfEmployees += (*it)->numberOfEmployees;
-		carbonEmission += (*it)->carbonEmission;
-		energyDemand += (*it)->energyDemand;
-		energySupply += (*it)->energySupply;
-        healthcare += (*it)->healthcare;
-		(*it)->simulate_step(); //function that updates the building
-		
-		*/
-
-	//}
 	/*
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
 	{
@@ -964,9 +967,6 @@ double City::return_energySupply() {
 	return energySupply;
 }
 
-double City::return_healthcare() {
-	return healthcare;
-}
 
 /*
 //in order to check for errors on mac
