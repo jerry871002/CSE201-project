@@ -465,13 +465,15 @@ int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90) + 4) % 4;
     vector<int> out;
     
-    if ((int)round(pos.x / 30) >= sizeof(traffic) or (int)round(pos.z / 30) >= sizeof(traffic[0])) {
+    std::cout << "TRAFFIC FROM TRANSPORT: " << myCity->traffic << std::endl;
+
+    if ((int)round(pos.x / 30) >= sizeof(myCity->traffic) or (int)round(pos.z / 30) >= sizeof((myCity->traffic)[0])) {
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         return(0);
     }
     
     int i = -1;
-    for (const int& n : traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
+    for (const int& n : (myCity->traffic)[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
             out.push_back(i);
         }
