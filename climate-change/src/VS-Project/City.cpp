@@ -683,7 +683,7 @@ void City::simulation()
 	{
 		//Godot::print( "DEBUG: THIS OBJECT IS A ");
 		//Godot::print((String)(*it)->get("object_type"));
-		(*it)->set("updatable", true);
+		((Structure*)(*it))->set("updatable", true);
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 		this->numberOfEmployees += (double)((*it)->get("employment"));
 		this->income += (double)((*it)->get("employment"))*(double)((*it)->get("averageWage"));
