@@ -42,11 +42,10 @@ namespace godot {
 		int houseType;
 		double houseIncome = 0;
 		
-        
 	};
 
 	class Building : public Housing {
-		GODOT_SUBCLASS(House, Housing)
+		GODOT_SUBCLASS(Building, Housing)
 	public:
 		Building();
 		~Building();
