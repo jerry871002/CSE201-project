@@ -175,6 +175,7 @@ void NuclearPowerPlant::simulate_step(double days)
 
 void godot::NuclearPowerPlant::_process(float delta)
 {
+	this->Structure::_process(delta); 
 	this->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
 }
 
@@ -211,6 +212,7 @@ Windmill::~Windmill() {}
 
 void Windmill::_process(float delta)
 {
+	this->Structure::_process(delta);
 	rot -= delta * turnSpeed * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"));
 	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
 }

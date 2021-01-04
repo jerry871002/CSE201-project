@@ -19,7 +19,8 @@ namespace godot {
         static void _register_methods();
         void _init();
         void _ready();
-        void _process(float delta);
+        void _physics_process(float delta);
+        int frame_counter{ 0 };
 
         // simulation function
         void simulate_step(double days);
