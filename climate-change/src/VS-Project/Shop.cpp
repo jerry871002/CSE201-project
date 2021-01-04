@@ -224,36 +224,41 @@ SmallShop::SmallShop(){
     std::uniform_real_distribution <double> averageWageperyear(30000,100000);
     averageWage = averageWageperyear(gen)/365; //gives average wage per day of employees. 
 
+    double energyuseperyear;
+
     //Consider 3 types of Small Shops, 1 - Micro Business , 2 - Small business, 3 - Medium business
     switch (smallShopType) {
-        case 1: 
+        case 1: {
             std::uniform_real_distribution <double> energyusepeyear1(5000, 15000); // Micro business have an average energy consumption between 5000-15000 KWh per year
-            double energyuseperyear = energyusepeyear1(gen);
+            energyuseperyear = energyusepeyear1(gen);
             energyUse = energyuseperyear/365;
             satisfaction = 6;
 
             CO2Emission = 500;
             std::uniform_real_distribution <double> totalemployees1(1, 5);	
             employment = totalemployees1(gen);
+        }
         break;
-        case 2: 
+        case 2: {
             std::uniform_real_distribution <double> energyusepeyear2(15000, 30000); // Micro business have an average energy consumption between 5000-15000 KWh per year
-            double energyuseperyear = energyusepeyear2(gen);
+            energyuseperyear = energyusepeyear2(gen);
             energyUse = energyuseperyear/365;
             satisfaction = 6;
             CO2Emission = 600;
             std::uniform_real_distribution <double> totalemployees2(5, 15);	
-            employment = totalemployees1(gen);
-        break;
-        case 3: 
-            std::uniform_real_distribution <double> energyusepeyear1(15000, 30000); // Micro business have an average energy consumption between 5000-15000 KWh per year
-            double energyuseperyear = energyusepeyear1(gen);
+            employment = totalemployees2(gen);
+            }
+            break;
+        case 3: {
+            std::uniform_real_distribution <double> energyusepeyear3(30000, 45000); // Micro business have an average energy consumption between 5000-15000 KWh per year
+            energyuseperyear = energyusepeyear3(gen);
             energyUse = energyuseperyear/365;
             satisfaction = 6;
 
             CO2Emission = 700;
-            std::uniform_real_distribution <double> totalemployees1(10,20);	
-            employment = totalemployees1(gen);
+            std::uniform_real_distribution <double> totalemployees3(10,20);	
+            employment = totalemployees3(gen);
+            }
         break;
     }
 }
