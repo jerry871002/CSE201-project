@@ -383,6 +383,8 @@ Mall::Mall(){
 
     buildingTime = 365*3; //Around 3 years, but can vary a lot
     environmentalCost = 0; 
+
+    energyUse = 0;
 }
 
 Mall::~Mall(){}
