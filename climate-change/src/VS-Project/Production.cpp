@@ -88,7 +88,10 @@ void AgriculturalProduction::simulate_step(double days) {
 		case(0):{ // wheat
 		production+=requiredLand*fertility*days; //output over the time period
 		waterConsumption+=requiredLand*fertility*days*1500;
-		CO2Emission=0.59*requiredLand*fertility*days;
+		CO2Emission+=0.59*requiredLand*fertility*days;
+		if (pesticide==true){
+			CO2Emission+=9400*requiredLand*days;
+			}
 			break;
 		}
 
@@ -118,7 +121,7 @@ void AgriculturalProduction::agriculture_type(int type){
     		std::mt19937 gen(rd());
 			std::normal_distribution <double> wheatfieldsize(1.74, 0.04);
 			requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
-			std::normal_distribution <double> wheatferltility(449000, 50000);
+			std::normal_distribution <double> wheatferltility(404000, 35000);
 			fertility = wheatferltility(gen); //production of wheat per km^2
 			production = fertility *requiredLand; //output of wheat in kg per day
 			waterConsumption = 1500*production; //water litres per day
@@ -126,6 +129,7 @@ void AgriculturalProduction::agriculture_type(int type){
 			pesticide = false;
 			fertilizer = false;
 			GMO = false;
+			satisfaction = 6;
 		break;
 		}
 		case 1: { // meat
@@ -154,19 +158,27 @@ void AgriculturalProduction::fertilizer_on(){
 	fertilizer = true;
 }
 void AgriculturalProduction::fertilizer_off(){
-	fertilizer = true;
+	fertilizer = false;
 }
 void AgriculturalProduction::GMO_on(){
 	GMO = true;
 }
 void AgriculturalProduction::GMO_off(){
-	GMO = true;
+	GMO = false;
 }
 void AgriculturalProduction::pesticide_on(){
+	if (pesticide==false){
+		fertility*=1.15;
+		satisfaction*=0.85;
+	}
 	pesticide = true;
 }
 void AgriculturalProduction::pesticide_off(){
-	pesticide  = true;
+	if (pesticide==true){
+		fertility/=1.15;
+		satisfaction/=0.85;
+	}
+	pesticide  = false;
 }
 
 
