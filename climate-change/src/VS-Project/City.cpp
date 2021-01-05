@@ -202,12 +202,12 @@ void City::generate_initial_city_graphics()
 						for (int z1 = 0; z1 < 2; z1++) {
 							int type = rand() % 25;
 							Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-							if (type < 3) { add_shop(pos + pos1, RestaurantScene); break; }
-							else if (type < 8) { add_shop(pos + pos1, ShopScene); break; }
-							else if (type < 14) { add_house(pos + pos1, LowHouseScene); break; }
-							else if (type < 20) { add_house(pos + pos1, BuildingScene); break; }
-							else if (type == 20) { add_energy(pos + pos1, WindmillScene); break; }
-							else { add_house(pos + pos1, HighHouseScene); break; }
+							if (type < 3) { add_shop(pos + pos1, RestaurantScene); }
+							else if (type < 8) { add_shop(pos + pos1, ShopScene);  }
+							else if (type < 14) { add_house(pos + pos1, LowHouseScene); }
+							else if (type < 20) { add_house(pos + pos1, BuildingScene); }
+							else if (type == 20) { add_energy(pos + pos1, WindmillScene);  }
+							else { add_house(pos + pos1, HighHouseScene); }
 						}
 					}
 				}
