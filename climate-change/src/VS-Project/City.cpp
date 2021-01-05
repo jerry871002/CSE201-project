@@ -1,6 +1,6 @@
 #include "City.h"
 #include "Transport.h"
-#include "Player.h"
+
 #include "edit_text_files.h"
 
 #include <Resource.hpp>
@@ -155,7 +155,7 @@ void City::_input(InputEvent*)
 		this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 		if (!(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) {
-			((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
+			(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
 		}
 		this->_on_Game_Speed_changed();
 		this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
@@ -185,31 +185,29 @@ void City::_input(InputEvent*)
 void City::generate_initial_city_graphics()
 {
 	
-	
-	
 
-		for (int x = 0; x < 2; x++)
+		for (int x = 0; x < 3; x++)
 		{
-			for (int z = 0; z < 2; z++)
+			for (int z = 0; z < 3; z++)
 			{
 				Vector3 pos = Vector3(60 * x, 0, 60 * z);
 				std::cout << "DEBUG: About to create a random shop" << std::endl;
 
 				int bigbuildingmaybe = rand() % 10;
 				if (bigbuildingmaybe == 0) { add_shop(pos + Vector3(15,0,15), MallScene); }
-				if (bigbuildingmaybe == 1) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
+				else if (bigbuildingmaybe == 1) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
 				else {
 					for (int x1 = 0; x1 < 2; x1++)
 					{
 						for (int z1 = 0; z1 < 2; z1++) {
 							int type = rand() % 25;
 							Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-							if (type < 3) { add_shop(pos+pos1, RestaurantScene); }
-							else if (type < 8) { add_shop(pos+pos1, ShopScene); }
-							else if (type < 14) { add_house(pos+pos1, LowHouseScene); }
-							else if (type < 20) { add_house(pos + pos1, BuildingScene); }
-							else if (type == 20) { add_energy(pos + pos1, WindmillScene); }
-							else { add_house(pos+pos1, HighHouseScene); }
+							if (type < 3) { add_shop(pos + pos1, RestaurantScene); break; }
+							else if (type < 8) { add_shop(pos + pos1, ShopScene); break; }
+							else if (type < 14) { add_house(pos + pos1, LowHouseScene); break; }
+							else if (type < 20) { add_house(pos + pos1, BuildingScene); break; }
+							else if (type == 20) { add_energy(pos + pos1, WindmillScene); break; }
+							else { add_house(pos + pos1, HighHouseScene); break; }
 						}
 					}
 				}
@@ -357,7 +355,7 @@ void godot::City::_on_Validate_pressed()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
-	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
+	(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
 	this->_on_Game_Speed_changed();
 
 	if (mytext.is_valid_float()) {
@@ -415,7 +413,7 @@ void godot::City::_on_Game_Speed_changed()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
-	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
+	(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
 }
 
 
@@ -863,12 +861,12 @@ void City::simulation()
 		this->environmentalCost += (double)((*it)->get("environmentalCost"));
 	}
 
-	std::cout << "DEBUG: TOTAL CARBON EMISSION = " << this->carbonEmission << std::endl; 
+	// std::cout << "DEBUG: TOTAL CARBON EMISSION = " << this->carbonEmission << std::endl; 
 	for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
 	{
 		(*it)->set("updatable", true);
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
-		this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
+		// this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;        satisfaction should be changed in the function below, with the day tick %4
 	}
 	//totalSatisfaction /= all_houses.size();
 
@@ -876,7 +874,7 @@ void City::simulation()
 	{
 		(*it)->set("updatable", true);
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
-		this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
+		//this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
 		this->energySupply += (double)((*it)->get("energyperDay"));
 		this->numberOfEmployees += (double)((*it)->get("employment"));
 		this->income += (double)((*it)->get("employment"))*(double)((*it)->get("averageWage"));
@@ -886,7 +884,7 @@ void City::simulation()
 	{
 		(*it)->set("updatable", true);
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
-		this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
+		//this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
 		this->energyDemand += (double)((*it)->get("energyUse"));
 		this->environmentalCost += (double)((*it)->get("environmentalCost"));
 		this->numberOfEmployees += (double)((*it)->get("employment"));
@@ -899,6 +897,46 @@ void City::simulation()
 		    // count up all the vehicle stuff
 	}
 	*/
+
+
+	if (day_tick % 4 == 0) {
+		//   function which looks at a single random house at gives it the correct satisfaction then updates the total satisfaction
+		Housing* h = all_houses.at(rand() % all_houses.size());
+		double initialval = (double) (h->get("satisfaction"));
+		Vector3 pos = ((Structure*)h)->get_position();
+		double dist = 300;   // the distance where houses take into account the satisfaction
+		int obj_count = 0;
+		double tothouseSat = 0.0;
+
+		this->totalSatisfaction = (totalSatisfaction*all_houses.size() - initialval);
+
+		for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
+		{
+			if (((Structure*)(*it))->is_other_structure_within_distance(pos,dist)){
+				tothouseSat += (double)((*it)->get("satisfaction"))*10;
+				obj_count++;
+			}
+		}
+		for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
+		{
+			if (((Structure*)(*it))->is_other_structure_within_distance(pos, dist)) {
+				tothouseSat += (double)((*it)->get("satisfaction"))*10;
+				obj_count++;
+			}
+		}
+		for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+		{
+			if (((Structure*)(*it))->is_other_structure_within_distance(pos, dist)) {
+				tothouseSat += (double)((*it)->get("satisfaction"))*10;
+				obj_count++;
+			}
+		}
+		tothouseSat /= obj_count;
+		this->totalSatisfaction = (totalSatisfaction + tothouseSat) / all_houses.size();
+
+	}
+
+
 }
 
 
