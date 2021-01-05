@@ -203,11 +203,11 @@ void Structure::_input(InputEvent* e)
         // PAUSE GAME
 
         this->get_tree()->get_root()->get_node("Main/3Dworld")->set("time_speed", 0);
-        this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
         // PLAYER SHOULD NOT BE MOVABLE
 
         ((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", false);
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
         // SET INFO BOX SIZE AND POSITION
 

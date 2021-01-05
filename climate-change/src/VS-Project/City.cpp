@@ -260,6 +260,7 @@ void City::_ready()
 
 void City::_on_ResetButton_pressed() {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", true);
+	this->time_speed = 0;
 }
 
 void City::_on_Reset_confirmed() {
