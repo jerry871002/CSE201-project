@@ -116,7 +116,7 @@ namespace godot {
         double maximum_CO2 = -1; //default when there is no policy, should be between 0-42 kg when policy is implemented
 
         //Subsidies to "green" factories, so those which have a low emission of harmful chemicals and heavy metals : 
-        double subsidy_green = -1; //default when policy is not on, should be between 1000-1E6 euros per factory
+        double subsidy_green = -1; //default when policy is not on, should be between 1000 - 100 000 euros per factory
 
         //Subsidies for helping households, buildings to install solar panels (these help poorer households to have less environmental impact)
         bool solar_panel_subsidies();
