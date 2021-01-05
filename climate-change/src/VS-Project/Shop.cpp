@@ -374,6 +374,7 @@ void Restaurant::panel_added_probability(double solarSubsidies, double income, d
 // #############    Small Shop          ####################
 
 SmallShop::SmallShop(){
+    shopType = 2;
 
     std::random_device rd; 
 	std::mt19937 gen(rd()); 
@@ -438,6 +439,8 @@ void SmallShop::simulate_step(double days){
 // ################   Mall              ####################
 
 Mall::Mall(){
+    shopType = 3;
+
     std::random_device rd; 
 	std::mt19937 gen(rd()); 
 
