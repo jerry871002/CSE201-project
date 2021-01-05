@@ -230,6 +230,28 @@ void GoodsFactories::simulate_step(double days)
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
+	double green = 1; //needed for the green_subsidy policy
+
+	if (subsidy_green > -1) {
+		int value = 10;
+		if (subsidy_green <= 30000) {
+			value = 10;
+		}
+		if (60000 >= subsidy_green >= 30000) {
+			value = 7;
+		}
+		if (maximum_CO2 > 60000) {
+			value = 5;
+		}
+		srand((int)time(0));
+		double chance = (rand() % (value));
+		if (chance < 6) {
+			std::normal_distribution <double> employees(150, 60);
+			employment = employees(gen); // number of employees in the factory 
+			green = 1 - (employment * 0.02);
+		}
+	}
+
 	if (maximum_CO2 > -1) {
 		int maxi = 10;
 		if (maximum_CO2 >= 30) {
@@ -253,39 +275,36 @@ void GoodsFactories::simulate_step(double days)
 			employment = 0;
 		}
 		std::normal_distribution <double> co2(maximum_CO2, 0.5);
-		CO2Emission += (co2(gen) * employment);
+		CO2Emission += (co2(gen) * employment) * green;
 	}
 	else {
 		std::normal_distribution <double> co2(42.5, 0.5);
-		CO2Emission += (co2(gen) * employment);
+		CO2Emission += (co2(gen) * employment) * green;
 	}
-	if (subsidy_green > -1) {
-		
-		
-	}
+
 	std::normal_distribution <double> mercury(2.3E-7, 1E-8);
-	mercuryEmission += (mercury(gen)* employment);
+	mercuryEmission += (mercury(gen)* employment)*green;
 	std::normal_distribution <double> arsenic(2.4E-7, 1E-8);
-	arsenicEmission += (arsenic(gen)* employment);
+	arsenicEmission += (arsenic(gen)* employment)* green;
 	std::normal_distribution <double> cadmium(1.E-7, 5E-9);
-	cadmiumEmission += (cadmium(gen)* employment);
+	cadmiumEmission += (cadmium(gen)* employment) * green;
 	std::normal_distribution <double> nickel(1.85E-6, 5E-8);
-	nickelEmission += (nickel(gen)* employment);
+	nickelEmission += (nickel(gen)* employment) * green;
 	std::normal_distribution <double> lead(3.7E-6, 5E-8);
-	leadEmission += (lead(gen)* employment);
+	leadEmission += (lead(gen)* employment) * green;
 	std::normal_distribution <double> so2(0.04, 0.001);
-	SO2Emission += (so2(gen)* employment);
+	SO2Emission += (so2(gen)* employment) * green;
 	std::normal_distribution <double> nh3(0.05, 0.0025);
-	NH3Emission += (nh3(gen)* employment);
+	NH3Emission += (nh3(gen)* employment) * green;
 	std::normal_distribution <double> nox(0.05, 0.0025);
-	NOxEmission += (nox(gen)* employment);
+	NOxEmission += (nox(gen)* employment) * green;
 	std::normal_distribution <double> vocs(0.075, 0.005);
-	VOCsEmission += (vocs(gen)* employment);
+	VOCsEmission += (vocs(gen)* employment) * green;
 	std::normal_distribution <double> pm(0.5, 0.15);
-	PMEmission += (pm(gen)* employment);
+	PMEmission += (pm(gen)* employment) * green;
 
 	std::normal_distribution <double> energy(100, 10);
-	energyUse += energy(gen)* employment;
+	energyUse += energy(gen)* employment * green;
 }
 
 /// <summary>
