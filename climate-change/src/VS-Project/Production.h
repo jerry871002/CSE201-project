@@ -16,8 +16,6 @@ namespace godot {
 		Production();
 		~Production();
 
-		double factories = 0; //total number of factories in the Goods factories class
-
 		// Harmful chemicals emitted :
 
 		double SO2Emission = 0; //kg of sulfure dioxide emitted 
@@ -98,6 +96,8 @@ namespace godot {
 		virtual String class_name();
 		GoodsFactories();
 		~GoodsFactories();
+
+		double factoryGDP; //Total money made by the factory over one year in euros
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 	};
