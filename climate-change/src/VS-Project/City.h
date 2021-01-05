@@ -5,7 +5,7 @@
 #include "Housing.h"
 #include "Energy.h"
 #include "Production.h"
-
+#include "edit_text_files.h"
 
 #include <core/Godot.hpp>
 #include <Spatial.hpp>
@@ -24,8 +24,11 @@
 #include <PackedScene.hpp>
 #include <ResourceLoader.hpp>
 #include <String.hpp>
-// #include <edit_text_files.hpp>
 
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <stdio.h>
 
 
 /* use main fct defined in City.cpp for mac
@@ -78,6 +81,9 @@ namespace godot {
 		double date_counter{ 0 };
 		int day_tick; // keeps track of the in-game days
 		int days_since_last_simulation;
+		int daycount=0; //keeps track of the in-game days per year
+		double stat = 0; //stat example
+		double stats[366]; //stats array
 		void update_date();		
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation
@@ -157,7 +163,6 @@ namespace godot {
 		double energySupply;
 		double environmentalCost;
 		double totalSatisfaction;
-
 
 
 		ResourceLoader* ResLo = ResourceLoader::get_singleton();
