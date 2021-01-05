@@ -1,6 +1,6 @@
 #include "City.h"
 #include "Transport.h"
-#include "Player.h"
+
 #include "edit_text_files.h"
 
 #include <Resource.hpp>
@@ -155,7 +155,7 @@ void City::_input(InputEvent*)
 		this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 		if (!(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) {
-			((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
+			(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
 		}
 		this->_on_Game_Speed_changed();
 		this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
@@ -368,7 +368,7 @@ void godot::City::_on_Validate_pressed()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
-	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
+	(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
 	this->_on_Game_Speed_changed();
 
 	if (mytext.is_valid_float()) {
@@ -426,7 +426,7 @@ void godot::City::_on_Game_Speed_changed()
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
-	((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
+	(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
 }
 
 
