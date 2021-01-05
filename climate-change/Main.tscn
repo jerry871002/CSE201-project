@@ -353,6 +353,7 @@ __meta__ = {
 }
 
 [node name="Infographics" type="Node2D" parent="2Dworld"]
+visible = false
 position = Vector2( 1658.04, 38.8548 )
 
 [node name="Satisfaction" type="TextureProgress" parent="2Dworld/Infographics"]
@@ -385,6 +386,35 @@ texture_progress = ExtResource( 15 )
 fill_mode = 4
 tint_under = Color( 0.403922, 0.403922, 0.403922, 1 )
 tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResetButton" type="Button" parent="2Dworld"]
+margin_left = 1500.0
+margin_right = 1548.0
+margin_bottom = 20.0
+rect_scale = Vector2( 2, 2 )
+text = "RESET"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResetConfirmationBox" type="Control" parent="2Dworld"]
+margin_left = 1500.0
+margin_right = 1540.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfirmReset" type="Button" parent="2Dworld/ResetConfirmationBox"]
+margin_left = -250.0
+margin_top = 100.0
+margin_right = -137.0
+margin_bottom = 120.0
+rect_scale = Vector2( 2, 2 )
+text = "CONFIRM RESET"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -422,3 +452,5 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]
+[connection signal="pressed" from="2Dworld/ResetButton" to="3Dworld" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="2Dworld/ResetConfirmationBox/ConfirmReset" to="3Dworld" method="_on_Reset_confirmed"]

@@ -71,6 +71,8 @@ void City::_register_methods()
 	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
 	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
 	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
+	register_method((char*)"_on_ResetButton_pressed", &City::_on_ResetButton_pressed);
+	register_method((char*)"_on_Reset_confirmed", &City::_on_Reset_confirmed);
 	register_method((char*)"add_shop", &City::add_shop);
 
 	register_property<City, float>("time_speed", &City::time_speed, 1.0);
@@ -154,12 +156,17 @@ void City::_input(InputEvent*)
 			((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 		}
 		this->_on_Game_Speed_changed();
-
+		this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
+		this->notification_active = false;
+		this->notification_counter = 0;
 	}
 
 	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))
 	{
 		_on_Validate_pressed();
+		this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
+		this->notification_active = false;
+		this->notification_counter = 0;
 	}
 };
 
@@ -232,6 +239,11 @@ void City::set_initial_visible_components()
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("position", Vector2(20, 20));
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("visible", true);
+
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetButton")->set("visible", true);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
+
+
 }
 
 
@@ -243,6 +255,51 @@ void City::_ready()
 	this->set_initial_visible_components();
 	
 }
+
+
+
+void City::_on_ResetButton_pressed() {
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", true);
+}
+
+void City::_on_Reset_confirmed() {
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
+	int city_child_count = this->get_child_count();
+	for (int i = city_child_count - 1; i >= 0; --i) {
+		if (this->get_child(i)->get("name") != String("WorldEnvironment") && this->get_child(i)->get("name") != String("Player")) {
+			this->remove_child(this->get_child(i));
+		}
+	}
+
+	income = 0;
+	population = 50000;
+	numberOfEmployees = 0;
+	carbonEmission = 0;
+	energyDemand = 0;
+	energySupply = 0;
+	environmentalCost = 0;
+	totalSatisfaction = 50;
+
+	time_speed = 1;
+
+
+	//timer = 0;
+	day_tick = 0;
+	days_since_last_simulation = 0;
+
+	// in order to find date
+	daycount = 0;
+
+	// in order to write stats to csv files
+	stat = 0;
+
+	srand((int)time(0));
+
+	this->_init();
+	this->_ready();
+}
+
+
 
 void godot::City::_on_MenuShop_pressed(String name)
 {
@@ -257,7 +314,7 @@ void godot::City::_on_MenuShop_pressed(String name)
 	String ButtonInfo = this->get_button_info_text();
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
-	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
+	
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);

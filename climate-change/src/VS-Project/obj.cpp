@@ -202,7 +202,8 @@ void Structure::_input(InputEvent* e)
 
         // PAUSE GAME
 
-        ((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->set("time_speed", 0);
+        this->get_tree()->get_root()->get_node("Main/3Dworld")->set("time_speed", 0);
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
         // PLAYER SHOULD NOT BE MOVABLE
 

@@ -68,6 +68,8 @@ namespace godot {
 		void _on_MenuShop_pressed(String Name);
 		void _on_Validate_pressed();
 		void _on_Game_Speed_changed();
+		void _on_ResetButton_pressed();
+		void _on_Reset_confirmed();
 
 		// INITIAL GRAPHICAL SETUP
 
