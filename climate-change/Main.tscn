@@ -10,7 +10,7 @@
 [ext_resource path="res://Ressources/Roboto/Roboto-Black.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://Font.tres" type="DynamicFont" id=12]
 [ext_resource path="res://Box.tres" type="StyleBox" id=13]
-[ext_resource path="res://Resources/Pedestrian1.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Resources/Pedestrian.tscn" type="PackedScene" id=14]
 [ext_resource path="res://RingTexture.png" type="Texture" id=15]
 
 [sub_resource type="SphereShape" id=1]
