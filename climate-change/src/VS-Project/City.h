@@ -70,6 +70,7 @@ namespace godot {
 		void _on_Game_Speed_changed();
 		void _on_ResetButton_pressed();
 		void _on_Reset_confirmed();
+		void _on_Reset_cancelled();
 
 		// INITIAL GRAPHICAL SETUP
 

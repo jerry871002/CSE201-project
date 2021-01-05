@@ -419,6 +419,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="CancelReset" type="Button" parent="2Dworld/ResetConfirmationBox"]
+margin_left = 24.0
+margin_top = 98.0
+margin_right = 85.0
+margin_bottom = 118.0
+rect_scale = Vector2( 2, 2 )
+text = "CANCEL"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="GUI" type="MarginContainer" parent="."]
 anchor_right = 1.0
 margin_right = -1672.0
@@ -454,3 +465,4 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]
 [connection signal="pressed" from="2Dworld/ResetButton" to="3Dworld" method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="2Dworld/ResetConfirmationBox/ConfirmReset" to="3Dworld" method="_on_Reset_confirmed"]
+[connection signal="pressed" from="2Dworld/ResetConfirmationBox/CancelReset" to="3Dworld" method="_on_Reset_cancelled"]

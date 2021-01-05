@@ -73,6 +73,8 @@ void City::_register_methods()
 	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
 	register_method((char*)"_on_ResetButton_pressed", &City::_on_ResetButton_pressed);
 	register_method((char*)"_on_Reset_confirmed", &City::_on_Reset_confirmed);
+	register_method((char*)"_on_Reset_cancelled", &City::_on_Reset_cancelled);
+
 	register_method((char*)"add_shop", &City::add_shop);
 
 	register_property<City, float>("time_speed", &City::time_speed, 1.0);
@@ -105,10 +107,10 @@ void City::_physics_process(float delta) {
 		date_counter += double(delta) * time_speed;
 	} 
 	 
-	if (simulation_counter > 1)
+	if (simulation_counter > 5)
 	{
 		simulation();
-		simulation_counter -= 1;
+		simulation_counter -= 5;
 	}
 
 	if (date_counter > 1)
@@ -156,17 +158,26 @@ void City::_input(InputEvent*)
 			((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
 		}
 		this->_on_Game_Speed_changed();
+		this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
 		this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 		this->notification_active = false;
 		this->notification_counter = 0;
 	}
 
-	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))
-	{
-		_on_Validate_pressed();
+	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->get("visible")) {
 		this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 		this->notification_active = false;
 		this->notification_counter = 0;
+	}	
+
+	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))
+	{
+		this->_on_Validate_pressed();
+	}
+
+	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/")->get("visible"))
+	{
+		this->_on_Reset_cancelled();
 	}
 };
 
@@ -261,6 +272,11 @@ void City::_ready()
 void City::_on_ResetButton_pressed() {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", true);
 	this->time_speed = 0;
+}
+
+void City::_on_Reset_cancelled() {
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
+	this->_on_Game_Speed_changed();
 }
 
 void City::_on_Reset_confirmed() {
@@ -736,7 +752,7 @@ void City::simulation()
 	// std::cout << "Simulation" << std::endl;
 
 
-	day_tick += this->time_speed;
+	day_tick += this->time_speed * 5;
 	this->days_since_last_simulation = 0;
 	Godot::print(return_word_date());
 	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date());
