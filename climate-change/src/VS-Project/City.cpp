@@ -1,6 +1,6 @@
 #include "City.h"
 #include "Transport.h"
-
+#include "Player.h"
 #include "edit_text_files.h"
 
 #include <Resource.hpp>
@@ -274,6 +274,10 @@ void City::_on_Reset_confirmed() {
 			this->remove_child(this->get_child(i));
 		}
 	}
+
+	Node* PlayerNode = this->get_node("Player");
+	this->remove_child(PlayerNode);
+	this->add_child(PlayerNode);
 
 	income = 0;
 	population = 50000;
