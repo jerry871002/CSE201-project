@@ -144,7 +144,9 @@ double Shop::get_co2emissions() {
 }
 
 double Shop::get_energyuse() {
-    return 0;
+    double panels = 1;
+    if (this->PanelsOn) { panels = 0.5; };
+    return (double)(this->energyUse)*panels;
 }
 
 double Shop::get_environmentalcost() {
@@ -205,7 +207,14 @@ void Shop::panels_get_added() {
     // std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
 }
 
+void Shop::panel_added_probability (double solarCost, double unemployment, double setUpCost, double solarSatisfaction ){
+    //unemployment 
+    double panelCost;
+    double panel_subsidies; // input from user of how much are the subsidies
+    panelCost = solarCost - panel_subsidies;  
+    if (panelCost < 0) {panelCost = 0;}
 
+}
 
 
 
