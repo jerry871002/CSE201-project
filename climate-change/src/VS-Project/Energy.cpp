@@ -252,7 +252,7 @@ GeothermalPowerPlant::GeothermalPowerPlant()
 	srand((int)time(0));
 	double probability = (rand() % (10));
 	if (probability < 2) {
-		cost = 7E6; // when drilling the wells (accounts for 2 million euros approx) ther is a 20% chance of failure 
+		cost = 7E6; // when drilling the wells (accounts for 2 million euros approx) there is a 20% chance of failure 
 	}
 	else {
 		cost = 5E6; // cost in euros to build a new plant (plus all the research needed)
