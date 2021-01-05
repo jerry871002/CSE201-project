@@ -167,16 +167,26 @@ void AgriculturalProduction::GMO_off(){
 	GMO = false;
 }
 void AgriculturalProduction::pesticide_on(){
-	if (pesticide==false){
+	switch (agricultureType)
+	{
+	case 0: //wheat
+		if (pesticide==false){
 		fertility*=1.15;
 		satisfaction*=0.85;
+	}
+		break;
 	}
 	pesticide = true;
 }
 void AgriculturalProduction::pesticide_off(){
-	if (pesticide==true){
+	switch (agricultureType)
+	{
+	case 0: //wheat
+		if (pesticide==true){
 		fertility/=1.15;
 		satisfaction/=0.85;
+	}
+		break;
 	}
 	pesticide  = false;
 }
@@ -194,27 +204,23 @@ String godot::GoodsFactories::class_name()
 GoodsFactories::GoodsFactories() {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::normal_distribution <double> employees(8000, 200);
-	employment = employees(gen); // number of employees of the whole city in the manufacturing/industry sector 
-	double factories = 200;
+	std::normal_distribution <double> employees(100, 60);
+	employment = employees(gen); // number of employees in the factory 
+	factoryGDP = employment * 90; //in euros per year
 
-	/*We model 200 factories on average with approximately 8000 employees overall. We approximate for the constructor 100 small factories with 0-20 
-	employees each, 90 medium ones with 20-100 employees each and 10 big ones with 100-220 employees each, for the policies' implementation 
-	*/
+	energyUse = 100*employment; //amount of kWh needed for one factory per day
 
-	energyUse = 2E6; //amount of kWh needed throughout the sector per day
-
-	CO2Emission = 850000; //kg of CO2 emitted per day across the manufacturing/industry sector per day
-	mercuryEmission = 0.0046; //kg of mercury per day 
-	arsenicEmission = 0.0048; //kg of arsenic per day
-	cadmiumEmission = 0.0028; //kg of cadmium per day
-	nickelEmission = 0.037; //kg of nickel per day
-	leadEmission = 0.074; //kg of lead per day
-	SO2Emission = 800; //kg of sulfure dioxide emitted per day
-	NH3Emission = 1000; // kg of NH3 emitted per day
-	NOxEmission = 1000; //kg of nitrogen oxides emitted per day
-	VOCsEmission = 1500; // kg of volatile organic compounds emitted
-	PMEmission = 10000; //kg of particulate matter emitted per day
+	CO2Emission = 42.5*employment; //kg of CO2 emitted per day 
+	mercuryEmission = 2.3E-7*employment; //kg of mercury per day 
+	arsenicEmission = 2.4E-7*employment; //kg of arsenic per day
+	cadmiumEmission = 1.E-7*employment; //kg of cadmium per day
+	nickelEmission = 1.85E-6*employment; //kg of nickel per day
+	leadEmission = 3.7E-6*employment; //kg of lead per day
+	SO2Emission = 0.04*employment; //kg of sulfure dioxide emitted per day
+	NH3Emission = 0.05*employment; // kg of NH3 emitted per day
+	NOxEmission = 0.05*employment; //kg of nitrogen oxides emitted per day
+	VOCsEmission = 0.075*employment; // kg of volatile organic compounds emitted
+	PMEmission = 0.5*employment; //kg of particulate matter emitted per day
 }
 
 GoodsFactories::~GoodsFactories() {}
@@ -224,75 +230,62 @@ void GoodsFactories::simulate_step(double days)
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
-	if (maxi < 10E6 && policy_change == true) {
-		policy_change = false;
-		std::normal_distribution <double> co2(maxi, 10);
-		int big = 0;
-		int medium = 0;
-		int small = 0;
-		if (3000 <= maxi <= 4250) {
-			big = 3; //maximum number of big factories possibly closing
-			medium = 10; //maximum number of medium factories possibly closing
+	if (maximum_CO2 > -1) {
+		int maxi = 10;
+		if (maximum_CO2 >= 30) {
+			maxi = 10;
 		}
-		if (1500 <= maxi < 3000) {
-			big = 6; //maximum number of big factories possibly closing
-			medium = 30; //maximum number of medium factories possibly closing
-			small = 10;
+		if (30 > maximum_CO2 >= 20) {
+			maxi = 8;
 		}
-		else {
-			big = 10; //maximum number of big factories possibly closing
-			medium = 60; //maximum number of medium factories possibly closing
-			small = 30; //maximum number of small factories possibly closing
+		if (maximum_CO2 < 20) {
+			maxi = 6;
 		}
 		srand((int)time(0));
-		double probability1 = (rand() % (big)); //number of big factories closing
-		while (probability1 > 0) {
-			srand((int)time(0));
-			employment -= 100 + (rand() % (120));
-			probability1 -= 1;
+		double chance = (rand() % (maxi));
+		if (employment<=60 && chance < 1) {
+			employment = 0;
 		}
-		double probability2 = (rand() % (medium)); //number of medium factories closing
-		while (probability2 > 0) {
-			srand((int)time(0));
-			employment -= 20 + (rand() % (80));
-			probability2 -= 1;
+		if (60 < employment <= 120 && chance < 2) {
+			employment = 0;
 		}
-		double probability3 = (rand() % (small)); //number of small factories closing
-		while (probability3 > 0) {
-			srand((int)time(0));
-			employment -= (rand() % (20));
-			probability2 -= 1;
+		if (employment > 120 && chance < 5) {
+			employment = 0;
 		}
-		factories = 200 - (probability1 + probability2 + probability3);
-		CO2Emission += factories * co2(gen);
+		std::normal_distribution <double> co2(maximum_CO2, 0.5);
+		CO2Emission += (co2(gen) * employment);
 	}
 	else {
-		std::normal_distribution <double> co2(4250, 50);
-		CO2Emission += (co2(gen)*factories);
+		std::normal_distribution <double> co2(42.5, 0.5);
+		CO2Emission += (co2(gen) * employment);
 	}
-	std::normal_distribution <double> mercury(2.3E-5, 1E-6);
-	mercuryEmission += (mercury(gen)*factories); 
-	std::normal_distribution <double> arsenic(2.4E-5, 1E-6);
-	arsenicEmission += (arsenic(gen)*factories); 
-	std::normal_distribution <double> cadmium(1.E-5, 5E-7);
-	cadmiumEmission += (cadmium(gen)*factories); 
-	std::normal_distribution <double> nickel(1.85E-4, 5E-6);
-	nickelEmission += (nickel(gen)*factories); 
-	std::normal_distribution <double> lead(3.7E-4, 5E-6);
-	leadEmission += (lead(gen)*factories); 
-	std::normal_distribution <double> so2(4, 0.1);
-	SO2Emission += (so2(gen)*factories); 
-	std::normal_distribution <double> nh3(5, 0.25);
-	NH3Emission += (nh3(gen)*factories); 
-	std::normal_distribution <double> nox(5, 0.25);
-	NOxEmission += (nox(gen)*factories); 
-	std::normal_distribution <double> vocs(7.5, 0.5);
-	VOCsEmission += (vocs(gen)*factories);
-	std::normal_distribution <double> pm(50, 1.5);
-	PMEmission += (pm(gen)*factories);
+	if (subsidy_green > -1) {
+		
+		
+	}
+	std::normal_distribution <double> mercury(2.3E-7, 1E-8);
+	mercuryEmission += (mercury(gen)* employment);
+	std::normal_distribution <double> arsenic(2.4E-7, 1E-8);
+	arsenicEmission += (arsenic(gen)* employment);
+	std::normal_distribution <double> cadmium(1.E-7, 5E-9);
+	cadmiumEmission += (cadmium(gen)* employment);
+	std::normal_distribution <double> nickel(1.85E-6, 5E-8);
+	nickelEmission += (nickel(gen)* employment);
+	std::normal_distribution <double> lead(3.7E-6, 5E-8);
+	leadEmission += (lead(gen)* employment);
+	std::normal_distribution <double> so2(0.04, 0.001);
+	SO2Emission += (so2(gen)* employment);
+	std::normal_distribution <double> nh3(0.05, 0.0025);
+	NH3Emission += (nh3(gen)* employment);
+	std::normal_distribution <double> nox(0.05, 0.0025);
+	NOxEmission += (nox(gen)* employment);
+	std::normal_distribution <double> vocs(0.075, 0.005);
+	VOCsEmission += (vocs(gen)* employment);
+	std::normal_distribution <double> pm(0.5, 0.15);
+	PMEmission += (pm(gen)* employment);
 
-	std::normal_distribution <double> energy(10000, 300);
-	energyUse += (energy(gen)*factories);
+	std::normal_distribution <double> energy(100, 10);
+	energyUse += energy(gen)* employment;
 }
 
 /// <summary>

@@ -353,24 +353,6 @@ bool Structure::nuclear_prohibited() {
     }*/
 }
 
-void Structure::maximum_CO2() {
-    maxi = 10E6; //basic value to compare with when the policy is not implemented
-    /* need to add possibility of turning true (not definitive) if clicked with given input which is the "maxi" possible value emitted the function returns
-    if () {
-    maxi = ...; //maxi is an input between 0 and 4250 
-    policy_change = true; //very important to have the change in the policy taken into account !
-    }*/
-}
-
-double Structure::subsidy_green() {
-    return 0; //basic return value to compare with when the policy is not implemented
-    /* need to add possibility of turning true (not definitive) if clicked with given input which is the "euros" given to the factories which
-    this function returns as a double between 1000 and 1 million 
-    if () {
-    return euros; //euros is between 1000 and 1E6
-    }*/
-}
-
 bool Structure::solar_panel_subsidies() {
     return false;
     //possibility to change this and have: if true set solarPanelSubsidy to a number
