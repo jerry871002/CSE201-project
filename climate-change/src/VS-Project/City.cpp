@@ -174,18 +174,23 @@ void City::generate_initial_city_graphics()
 	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
 	Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
 	Ref<PackedScene> WindmillScene = ResLo->load("res://Resources/Windmill.tscn", "PackedScene");
+	Ref<PackedScene> LowHouseScene = ResLo->load("res://Resources/LowHouse.tscn", "PackedScene");
+	Ref<PackedScene> HighHouseScene = ResLo->load("res://Resources/HighHouse.tscn", "PackedScene");
+	Ref<PackedScene> ParkScene = ResLo->load("res://Resources/Park.tscn", "PackedScene");
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = 0; x < 4; x++)
+		for (int x = 0; x < 8; x++)
 		{
-			for (int z = 0; z < 4; z++)
+			for (int z = 0; z < 9; z++)
 			{
-
+				Vector3 pos = Vector3(30 * x, 0, 30 * z);
 				std::cout << "DEBUG: About to create a random shop" << std::endl;
-				int type = rand() % 2;
-				if (type == 0) { add_shop(Vector3(30 * x, 0, 30 * z), RestaurantScene); }
-				else { add_shop(Vector3(30 * x, 0, 30 * z), ShopScene); }
+				int type = rand() % 8;
+				if (type == 0) { add_shop(pos, RestaurantScene); }
+				else if (type == 1) { add_shop(pos, ShopScene); }
+				else if (type <= 5) { add_house(pos, LowHouseScene); }
+				else { add_house(pos, HighHouseScene); }
 				
 				/*{ node = RestaurantScene->instance(); }
 				else { node = ShopScene->instance(); }
@@ -194,6 +199,7 @@ void City::generate_initial_city_graphics()
 				this->add_child(node);
 				all_shops.push_back((Shop*)node);
 				*/
+				
 			}
 		}
 	}
