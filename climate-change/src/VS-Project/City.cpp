@@ -198,9 +198,9 @@ void City::generate_initial_city_graphics()
 
 	if (RestaurantScene.is_valid() && ShopScene.is_valid())
 	{
-		for (int x = 0; x < 8; x++)
+		for (int x = 0; x < 3; x++)
 		{
-			for (int z = 0; z < 9; z++)
+			for (int z = 0; z < 3; z++)
 			{
 				Vector3 pos = Vector3(60 * x, 0, 60 * z);
 				//std::cout << "DEBUG: About to create a random shop" << std::endl;
@@ -223,33 +223,10 @@ void City::generate_initial_city_graphics()
 						}
 					}
 				}
-
-				/*{ node = RestaurantScene->instance(); }
-				else { node = ShopScene->instance(); }
-				node->set("scale", Vector3(10, 10, 10));
-				node->set("translation", Vector3(30 * x, 0, 30 * z));
-				this->add_child(node);
-				all_shops.push_back((Shop*)node);
-				*/
-				
 			}
 		}
 	}
-	if (MallScene.is_valid())
-	{
-		Node* node = MallScene->instance();
-		node->set("translation", Vector3(225, 0, 105));
-		this->add_child(node);
-		all_shops.push_back((Shop*)node);
-	}
-	if (WindmillScene.is_valid())
-	{
-		Node* node = WindmillScene->instance();
-		node->set("translation", Vector3(120, 0, -150));
-		this->add_child(node);
-		all_shops.push_back((Shop*)node);
 
-	}
 }
 
 void City::set_initial_visible_components()
