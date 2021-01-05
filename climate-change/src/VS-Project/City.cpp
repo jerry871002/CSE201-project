@@ -479,13 +479,18 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 		all_shops.push_back((Shop*)node);
 
 
-		std::cout << "DEBUG: traffic stuff called" << std::endl;
-		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
-		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
-
-
+		
 
 		//traffic stuff
+		std::cout << "DEBUG: traffic stuff called" << std::endl;
+		//double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building 
+		//double y = ((Structure*)node)->get_position().z / 30; // can be int only for small building 
+		double x = pos.x / 30; // needs to be double for identifying a 2 by 2 building 
+		double y = pos.z / 30; // can be int only for small building 
+
+		std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
+		std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
+		std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
 		if (x < sizeOfCity && y < sizeOfCity) {
 			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
 				positionOfBuildings[int(x)][int(y)] = 1;
@@ -496,8 +501,22 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 				positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
 				positionOfBuildings[int(x)][int(y) + 1] = 5;
 			}
+			std::cout << "DEBUG: call the function update traffic" << std::endl;
 			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
 			
+			//for (int k = 0; k < 4; k++) {
+			//	std::cout << "start :" << x << " " << y << " " << traffic[int(x)][int(y)][0][0] << " " << traffic[int(x)][int(y)][k][1] << " " << traffic[int(x)][int(y)][k][2] << " " << std::endl;
+			//}
+
+		    //for(int i = 0; i < 10; i++){
+			//	for (int j = 0; j < 10; j++) {
+			//		for (int k = 0; k < 4; k++) {
+			//				std::cout << "start :" << x << " " << y << traffic[i][j][k][0] << '   ' << traffic[i][j][k][1] << '   ' << traffic[i][j][k][2] << '  ' << std::endl;
+			//		}
+			//	}
+			//}
+			
+			std::cout << std::endl;
 
 
 		}
@@ -529,9 +548,15 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 
 		std::cout << "DEBUG: traffic stuff called" << std::endl;
 		//traffic stuff
-		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
-		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
-		
+		std::cout << "DEBUG: traffic stuff called" << std::endl;
+		//double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building 
+		//double y = ((Structure*)node)->get_position().z / 30; // can be int only for small building 
+		double x = pos.x / 30; // needs to be double for identifying a 2 by 2 building 
+		double y = pos.z / 30; // can be int only for small building 
+
+		std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
+		std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
+		std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
 		if (x < sizeOfCity && y < sizeOfCity) {
 			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
 				positionOfBuildings[int(x)][int(y)] = 1;
@@ -542,7 +567,23 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 				positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
 				positionOfBuildings[int(x)][int(y) + 1] = 5;
 			}
+			std::cout << "DEBUG: call the function update traffic" << std::endl;
 			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
+
+			//for (int k = 0; k < 4; k++) {
+			//	std::cout << "start :" << x << " " << y << " " << traffic[int(x)][int(y)][0][0] << " " << traffic[int(x)][int(y)][k][1] << " " << traffic[int(x)][int(y)][k][2] << " " << std::endl;
+			//}
+
+			//for(int i = 0; i < 10; i++){
+			//	for (int j = 0; j < 10; j++) {
+			//		for (int k = 0; k < 4; k++) {
+			//				std::cout << "start :" << x << " " << y << traffic[i][j][k][0] << '   ' << traffic[i][j][k][1] << '   ' << traffic[i][j][k][2] << '  ' << std::endl;
+			//		}
+			//	}
+			//}
+
+			std::cout << std::endl;
+
 
 		}
 		std::cout << "DEBUG: add shop done" << std::endl;
