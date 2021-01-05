@@ -191,7 +191,7 @@ void City::generate_initial_city_graphics()
 			for (int z = 0; z < 3; z++)
 			{
 				Vector3 pos = Vector3(60 * x, 0, 60 * z);
-				std::cout << "DEBUG: About to create a random shop" << std::endl;
+				//std::cout << "DEBUG: About to create a random shop" << std::endl;
 
 				int bigbuildingmaybe = rand() % 10;
 				if (bigbuildingmaybe == 0) { add_shop(pos + Vector3(15,0,15), MallScene); }
@@ -202,12 +202,12 @@ void City::generate_initial_city_graphics()
 						for (int z1 = 0; z1 < 2; z1++) {
 							int type = rand() % 25;
 							Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-							if (type < 3) { add_shop(pos + pos1, RestaurantScene); break; }
-							else if (type < 8) { add_shop(pos + pos1, ShopScene); break; }
-							else if (type < 14) { add_house(pos + pos1, LowHouseScene); break; }
-							else if (type < 20) { add_house(pos + pos1, BuildingScene); break; }
-							else if (type == 20) { add_energy(pos + pos1, WindmillScene); break; }
-							else { add_house(pos + pos1, HighHouseScene); break; }
+							if (type < 3) { add_shop(pos + pos1, RestaurantScene);  }
+							else if (type < 8) { add_shop(pos + pos1, ShopScene);  }
+							else if (type < 14) { add_house(pos + pos1, LowHouseScene);  }
+							else if (type < 20) { add_house(pos + pos1, BuildingScene);  }
+							else if (type == 20) { add_energy(pos + pos1, WindmillScene);  }
+							else { add_house(pos + pos1, HighHouseScene);  }
 						}
 					}
 				}
@@ -419,12 +419,6 @@ void godot::City::_on_Game_Speed_changed()
 
 void City::add_car() {
 
-
-	ResourceLoader* ResLo = ResourceLoader::get_singleton();
-	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
-	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
-	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
-	Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
 
 	if (BugattiScene.is_valid() && ChironScene.is_valid())
 	{
