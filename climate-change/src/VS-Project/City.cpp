@@ -188,16 +188,16 @@ void City::generate_initial_city_graphics()
 	
 	
 
-		for (int x = 0; x < 6; x++)
+		for (int x = 0; x < 2; x++)
 		{
-			for (int z = 0; z < 6; z++)
+			for (int z = 0; z < 2; z++)
 			{
 				Vector3 pos = Vector3(60 * x, 0, 60 * z);
 				std::cout << "DEBUG: About to create a random shop" << std::endl;
 
 				int bigbuildingmaybe = rand() % 10;
 				if (bigbuildingmaybe == 0) { add_shop(pos + Vector3(15,0,15), MallScene); }
-				if (bigbuildingmaybe == 1) { add_shop(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
+				if (bigbuildingmaybe == 1) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
 				else {
 					for (int x1 = 0; x1 < 2; x1++)
 					{
@@ -208,7 +208,7 @@ void City::generate_initial_city_graphics()
 							else if (type < 8) { add_shop(pos+pos1, ShopScene); }
 							else if (type < 14) { add_house(pos+pos1, LowHouseScene); }
 							else if (type < 20) { add_house(pos + pos1, BuildingScene); }
-							else if (type == 20) { add_shop(pos + pos1, WindmillScene); }
+							else if (type == 20) { add_energy(pos + pos1, WindmillScene); }
 							else { add_house(pos+pos1, HighHouseScene); }
 						}
 					}
@@ -468,7 +468,6 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 		//std::cout << "DEBUG: add shop to vector" << std::endl;
 		all_shops.push_back((Shop*)node);
 
-
 		//std::cout << "DEBUG: traffic stuff called" << std::endl;
 		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
 		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
@@ -538,6 +537,102 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 		std::cout << "DEBUG: add shop done" << std::endl;
 	}
 }
+
+
+void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
+
+	//std::cout << "DEBUG: add shop called" << std::endl;
+
+	//std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
+	if (scene.is_valid()) {
+		//std::cout << "DEBUG: creating node" << std::endl;
+		Node* node;
+		//std::cout << "DEBUG: instanciating" << std::endl;
+		node = scene->instance();
+		//std::cout << "DEBUG: setting scale and translation" << std::endl;
+		node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
+		node->set("translation", pos);
+		node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0));
+		//std::cout << "DEBUG: add child" << std::endl;
+		this->add_child(node);
+		//std::cout << "DEBUG: add shop to vector" << std::endl;
+		all_energies.push_back((Energy*)node);
+
+
+		//std::cout << "DEBUG: traffic stuff called" << std::endl;
+		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
+		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
+
+
+
+		//traffic stuff
+		if (x < sizeOfCity && y < sizeOfCity) {
+			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
+				positionOfBuildings[int(x)][int(y)] = 1;
+			}
+			else {
+				positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
+				positionOfBuildings[int(x) + 1][int(y)] = 3;
+				positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
+				positionOfBuildings[int(x)][int(y) + 1] = 5;
+			}
+			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
+
+
+
+		}
+		std::cout << "DEBUG: add shop done" << std::endl;
+	}
+}
+
+
+void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
+
+	//std::cout << "DEBUG: add shop called" << std::endl;
+
+	//std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
+	if (scene.is_valid()) {
+		//std::cout << "DEBUG: creating node" << std::endl;
+		Node* node;
+		//std::cout << "DEBUG: instanciating" << std::endl;
+		node = scene->instance();
+		//std::cout << "DEBUG: setting scale and translation" << std::endl;
+		node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
+		node->set("translation", pos);
+		node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0));
+		//std::cout << "DEBUG: add child" << std::endl;
+		this->add_child(node);
+		//std::cout << "DEBUG: add shop to vector" << std::endl;
+		all_production.push_back((Production*)node);
+
+
+		//std::cout << "DEBUG: traffic stuff called" << std::endl;
+		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
+		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
+
+
+
+		//traffic stuff
+		if (x < sizeOfCity && y < sizeOfCity) {
+			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
+				positionOfBuildings[int(x)][int(y)] = 1;
+			}
+			else {
+				positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
+				positionOfBuildings[int(x) + 1][int(y)] = 3;
+				positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
+				positionOfBuildings[int(x)][int(y) + 1] = 5;
+			}
+			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
+
+
+
+		}
+		std::cout << "DEBUG: add shop done" << std::endl;
+	}
+}
+
+
 
 /*
 int* City::building_coordinates_identification(int x, int y, int number) {

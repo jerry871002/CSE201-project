@@ -104,6 +104,8 @@ namespace godot {
 		// following functions handle adding structures to the city, takes a position and the required scene
 		void add_shop( Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
 		void add_house(Vector3 pos, Ref<PackedScene> scene); // adds a house and updates the traffic array with the shop
+		void add_energy(Vector3 pos, Ref<PackedScene> scene);
+		void add_production(Vector3 pos, Ref<PackedScene> scene);
 
 
 		//int* building_coordinates_identification(int x, int y, int number);//returns coordinates of a center for the upper left square of any buiding  
