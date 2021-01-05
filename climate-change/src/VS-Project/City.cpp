@@ -184,32 +184,36 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-	std::cout << "DEBUG: generate city graphics started" << std::endl;
-	ResourceLoader* ResLo = ResourceLoader::get_singleton();
-	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
-	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
-	Ref<PackedScene> MallScene = ResLo->load("res://Resources/Mall.tscn", "PackedScene");
-	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
-	Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
-	Ref<PackedScene> WindmillScene = ResLo->load("res://Resources/Windmill.tscn", "PackedScene");
-	Ref<PackedScene> LowHouseScene = ResLo->load("res://Resources/LowHouse.tscn", "PackedScene");
-	Ref<PackedScene> HighHouseScene = ResLo->load("res://Resources/HighHouse.tscn", "PackedScene");
-	Ref<PackedScene> ParkScene = ResLo->load("res://Resources/Park.tscn", "PackedScene");
+	
+	
+	
 
-	if (RestaurantScene.is_valid() && ShopScene.is_valid())
-	{
-		for (int x = 0; x < 8; x++)
+		for (int x = 0; x < 6; x++)
 		{
-			for (int z = 0; z < 9; z++)
+			for (int z = 0; z < 6; z++)
 			{
-				Vector3 pos = Vector3(30 * x, 0, 30 * z);
+				Vector3 pos = Vector3(60 * x, 0, 60 * z);
 				std::cout << "DEBUG: About to create a random shop" << std::endl;
-				int type = rand() % 8;
-				if (type == 0) { add_shop(pos, RestaurantScene); }
-				else if (type == 1) { add_shop(pos, ShopScene); }
-				else if (type <= 5) { add_house(pos, LowHouseScene); }
-				else { add_house(pos, HighHouseScene); }
-				
+
+				int bigbuildingmaybe = rand() % 10;
+				if (bigbuildingmaybe == 0) { add_shop(pos + Vector3(15,0,15), MallScene); }
+				if (bigbuildingmaybe == 1) { add_shop(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
+				else {
+					for (int x1 = 0; x1 < 2; x1++)
+					{
+						for (int z1 = 0; z1 < 2; z1++) {
+							int type = rand() % 25;
+							Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+							if (type < 3) { add_shop(pos+pos1, RestaurantScene); }
+							else if (type < 8) { add_shop(pos+pos1, ShopScene); }
+							else if (type < 14) { add_house(pos+pos1, LowHouseScene); }
+							else if (type < 20) { add_house(pos + pos1, BuildingScene); }
+							else if (type == 20) { add_shop(pos + pos1, WindmillScene); }
+							else { add_house(pos+pos1, HighHouseScene); }
+						}
+					}
+				}
+
 				/*{ node = RestaurantScene->instance(); }
 				else { node = ShopScene->instance(); }
 				node->set("scale", Vector3(10, 10, 10));
@@ -220,22 +224,7 @@ void City::generate_initial_city_graphics()
 				
 			}
 		}
-	}
-	if (MallScene.is_valid())
-	{
-		Node* node = MallScene->instance();
-		node->set("translation", Vector3(225, 0, 105));
-		this->add_child(node);
-		all_shops.push_back((Shop*)node);
-	}
-	if (WindmillScene.is_valid())
-	{
-		Node* node = WindmillScene->instance();
-		node->set("translation", Vector3(120, 0, -150));
-		this->add_child(node);
-		all_shops.push_back((Shop*)node);
-
-	}
+	
 }
 
 void City::set_initial_visible_components()
@@ -450,6 +439,7 @@ void City::add_car() {
 		else { node = (Transport*)ChironScene->instance(); }
 		node->set("scale", Vector3(10, 10, 10));
 		node->set("translation", Vector3(-13, 0, -13 + 30 * (0 + 1)));
+
 		this->add_child((Node*)node);
 
 
@@ -461,25 +451,25 @@ void City::add_car() {
 
 void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 
-	std::cout << "DEBUG: add shop called" << std::endl;
+	//std::cout << "DEBUG: add shop called" << std::endl;
 
-	std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
+	//std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
 	if (scene.is_valid()) {
-		std::cout << "DEBUG: creating node" << std::endl;
+		//std::cout << "DEBUG: creating node" << std::endl;
 		Node* node;
-		std::cout << "DEBUG: instanciating" << std::endl;
+		//std::cout << "DEBUG: instanciating" << std::endl;
 		node = scene->instance();
-		std::cout << "DEBUG: setting scale and translation" << std::endl;
+		//std::cout << "DEBUG: setting scale and translation" << std::endl;
 		node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
 		node->set("translation", pos);
-
-		std::cout << "DEBUG: add child" << std::endl;
+		node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0));
+		//std::cout << "DEBUG: add child" << std::endl;
 		this->add_child(node);
-		std::cout << "DEBUG: add shop to vector" << std::endl;
+		//std::cout << "DEBUG: add shop to vector" << std::endl;
 		all_shops.push_back((Shop*)node);
 
 
-		std::cout << "DEBUG: traffic stuff called" << std::endl;
+		//std::cout << "DEBUG: traffic stuff called" << std::endl;
 		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
 		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
 
@@ -508,26 +498,26 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 
 void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 
-	std::cout << "DEBUG: add house called" << std::endl;
+	//std::cout << "DEBUG: add house called" << std::endl;
 
-	std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
+	//std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
 	if (scene.is_valid()) {
-		std::cout << "DEBUG: creating node" << std::endl;
+		//std::cout << "DEBUG: creating node" << std::endl;
 		Node* node;
-		std::cout << "DEBUG: instanciating" << std::endl;
+		//std::cout << "DEBUG: instanciating" << std::endl;
 		node = scene->instance();
-		std::cout << "DEBUG: setting scale and translation" << std::endl;
+		//std::cout << "DEBUG: setting scale and translation" << std::endl;
 		node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
 		node->set("translation", pos);
-
-		std::cout << "DEBUG: add child" << std::endl;
+		node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0));
+		//std::cout << "DEBUG: add child" << std::endl;
 		this->add_child(node);
-		std::cout << "DEBUG: add house to vector" << std::endl;
+		//std::cout << "DEBUG: add house to vector" << std::endl;
 		all_houses.push_back((Housing*)node);
 
 
 
-		std::cout << "DEBUG: traffic stuff called" << std::endl;
+		//std::cout << "DEBUG: traffic stuff called" << std::endl;
 		//traffic stuff
 		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
 		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
