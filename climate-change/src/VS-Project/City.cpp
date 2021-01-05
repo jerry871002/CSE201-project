@@ -576,7 +576,9 @@ int* City::building_coordinates_identification(int x, int y, int number) {
 }
 */
 void City::update_traffic(int x, int y, bool newBuilding, int number) {
+	std::cout << "DEBUG: UPDATE TRAFFIC STARTED for coordinates" << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
 	if (positionOfBuildings[x][y] != 0) { // nothing happens if the building isn't there
+		std::cout << "DEBUG: updating traffic for coordinates"<< x << " " <<y << " "<< positionOfBuildings[x][y] << std::endl;
 		if (number == 1) {  // the case when it's a 1 by 1 buidling
 			traffic[x][y][0][2] = 1;
 			traffic[x][y][1][2] = 1;

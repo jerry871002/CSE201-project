@@ -138,9 +138,6 @@ namespace godot {
 		double return_environmentalCost();
 		double return_totalSatisfaction();
 
-		
-		
-
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
 
