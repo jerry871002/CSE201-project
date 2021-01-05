@@ -1,26 +1,4 @@
-## Godot related ##
-# Godot-specific ignores
-.import/
-export.cfg
-export_presets.cfg
-
-# Imported translations (automatically generated from CSV files)
-*.translation
-
-# Mono-specific ignores
-.mono/
-data_*/
-
-## File system related ##
 .DS_Store
-
-## Editor related ##
 .vscode/
 .vs/
-
-## scons ##
-climate-change/src/.sconsign.dblite
-
-## object file ##
-*.o
 *.os

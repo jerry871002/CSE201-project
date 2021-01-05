@@ -4,14 +4,26 @@
 #include <Math.hpp>
 #include <cstdlib>
 #include <ctime>
+#include <Viewport.hpp>
+#include <SceneTree.hpp>
 
 using namespace godot;
 
-/// <summary>
+/* For sim team: Can you make a function for double glazing making windows be changed, same for wind turbines. 
+Also is there a variable name for no solar panels. Because after 25 years, solar panels are removed automatically
+I would like to know how this is translated in the code, because right now I only know how to make them appear.
+*/
+
+// yes we can work on this , send us a text if theirs anything specific bothering you in the meanwhile
+
+
+
 /// HOUSING SUPER CLASS
-/// </summary>
+/// This is the super class that contains classes for houses and buildings of our city.
 
 Housing::Housing() {
+
+	environmentalCost = 0;
 
 }
 
@@ -19,30 +31,47 @@ Housing::~Housing() {
 
 }
 
-double Housing::get_satisfaction() {
-    return this->satisfaction;
+
+void Housing::_register_methods()
+{
+	register_method((char*)"_ready", &Housing::_ready);
 }
 
-double Housing::get_co2emissions() {
-    return this->CO2Emission;
-}
-
-double Housing::get_energyuse() {
-    return this->energyUse;
-}
-
-double Housing::get_environmentalcost() {
-    return 0;
+void Housing::_ready()
+{
+	this->Structure::_ready();
 }
 
 
-/// <summary>
+double Housing::get_max_income() {
+    return this->maxIncome;
+}
+
+double Housing::get_min_income() {
+    return this->minIncome;
+}
+
+double Housing::get_solar_panel_age() {
+    return this->solarPanelAge;
+}
+
+double Housing::get_double_glazing_age() {
+    return this->doubleGlazingAge;
+}
+
+
+
+
 ///	HOUSE CLASS
-/// </summary>
-
+/* This is the class that represents the houses in the city. There are two typed of houses : 
+--> low-level houses: houses with bad insulation, that consume a lot of energy because of that 
+--> high-level houses: houses with either solar panels or rooftop wind turbine (one or the other is chosen randomly when building a new house
+*/
 
 House::House() {
-	if (solar_panel() == true and double_glazing() == true) {
+	//how should i build a house ?
+
+	if (double_glazing() == true) {
         houseType = 2; //High level House
     }
 
@@ -52,6 +81,9 @@ House::House() {
 
     switch (houseType){
 	case 1: { //Low level house
+		/*solar_panel() = false;
+		double_glazing() = false;
+		rooftop_wind_turbines() = false;*/
 		srand((int)time(0));
         //minimum wage 53 € per day - get money even on saturday and saturday 
         // i take max to be 333€
@@ -59,11 +91,12 @@ House::House() {
         numberOfInhabitants = (rand() % (6) + 1);
         if (numberOfInhabitants >= 2) {
             //have two salaries 
-            houseIncome = (rand() % (333-53)) + 53 + (rand() % (333-53)) + 53;  //random number in [53,333]
-        }
+            //houseIncome = (rand() % (333-53)) + 53 + (rand() % (333-53)) + 53;  //random number in [53,333]
+			houseIncome = (rand() % (maxIncome-minIncome)) + minIncome + (rand() % (maxIncome-minIncome)) + minIncome;
+		}
 
         else {
-            houseIncome = (rand() % (333-53)) + 53;
+            houseIncome = (rand() % (maxIncome-minIncome)) + minIncome;
         }
         
         
@@ -81,15 +114,20 @@ House::House() {
 		break;
 	}
 	case 2:  {
+		/*solar_panel() = true;
+		double_glazing() = true;
+		rooftop_wind_turbines() = true;*/
+
 		srand((int)time(0));
         //minimum wage 53 € per day - get money even on saturday and saturday but assuming working only for 
         // i take max to be 333€
         numberOfInhabitants = (rand() % (6) + 1);
         if (numberOfInhabitants >= 2) {
             //have two salaries 
-            houseIncome = (rand() % (333-53)) + 53 + (rand() % (333-53)) + 53;  //random number in [53,333]
+            houseIncome = (rand() % (maxIncome-minIncome)) + minIncome + (rand() % (maxIncome-minIncome)) + minIncome;
+			// houseIncome = (rand() % (333-53)) + 53 + (rand() % (333-53)) + 53;  //random number in [53,333]
         } else {
-            houseIncome = (rand() % (333-53)) + 53;
+            houseIncome = (rand() % (maxIncome-minIncome)) + minIncome;
         }
         //attributes from structure class
         cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
@@ -101,7 +139,6 @@ House::House() {
         age = 0;
 		break;
 	}
-	
 	}
 }
 
@@ -110,53 +147,176 @@ House::~House() {
 }
 
 void House::simulate_step(double days) {
-	if (houseType == 1) {
-        if (solar_panel() == true) {
-			maintenance += solarPanelCost;
-		}
-		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
-			satisfaction += 1;
-		}
-	
+	if ((int)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) % 25 == 0) {
+		satisfaction = 0;
 
-	//assuming this is a button to change all windows at once i.e. you cannot call this function more than once on this house	
+	}
+
+	if (solar_panel() == true) {
+		solarPanelAge += days; //or should it be + days?
+		
+	}
+	
 	if (double_glazing() == true) {
-		energyUse *= 0.75 ; //when having better insulation of windows, you don't have the 25% loss of heat anymore
-		maintenance += windowCost * windowNumber; //200€ per window, if function adds one window at a time
-		}
-		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
-			satisfaction += 2;
-		}
+		doubleGlazingAge += 1;
 	} 
 
-	maintenance += 0.1765 * energyUse * days;
-	CO2Emission += 0.0065 * energyUse * days;  
+	if (rooftop_wind_turbines() == true) {
+		rooftopWindTurbineAge += 1;
+	}
+
+	/*         
+	if (solarPanelAge >= solarLifetime) {
+		//Then the solar panels are removed and we have 
+		solar_panel() = false;
+		solarPanelAge = 0;
+	}
+
+	if (doubleGlazingAge >= 18250) {
+		//remove windows, they need to be changed - add a message that says that windows need to be changed, becaue can't leave house without windows
+		double_glazing() = false;
+		doubleGlazingAge = 0;
+	} 
+
+	if rooftopWindTurbineAge >= windLifetime {
+		rooftop_wind_turbines() = false;
+		rooftopWindTurbineAge = 0;
+	} 
+	
+	
+	*/
+
+
+	switch (houseType){
+		case 1: {
+			if (solar_panel() == true) {
+				energyUse -= solarEnergy;
+				//maintenance += solarPanelCost;
+			}
+			
+			if (double_glazing() == true) {
+				energyUse -= energyUse * 0.25 ; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
+				//maintenance += windowCost * windowNumber; //200€ per window, if function adds one window at a time
+			}
+
+			if (rooftop_wind_turbines() == true) {
+				energyUse -= windEnergy;
+			}
+
+			maintenance += 0.1765 * energyUse * days;
+			CO2Emission += 0.0065 * energyUse * days; 
+		}
+
+		case 2: {
+			maintenance += 0.1765 * energyUse * days;
+			CO2Emission += 0.0065 * energyUse * days; 
+		}
+
+		break;
+	}
+	 
 	age += days; //age is an attribute from the Structure class
 	
 }
 
-//For the interface team
 bool House::solar_panel() {
-	if (houseIncome > 200) {
-		return PanelsOn;	
+	if (rooftop_wind_turbines() == true) {
+		//we cannot have solar panels and wind turbines on the same house
+		//a message should appear, saying that the solar_panels cannot be installed 
+		return false;
+		//return PanelsOff
 	}
 
-	// else {
-	// 	//check if policy from state is giving money
-	// 	//in which case you can add solar panels
-	// 	//otherwise 
-		
-	// }
-	
+	else {
+		if (houseIncome > 25) { //the people that live in the house have enough money to install solar panels so they can 
+			solarPanelAge = 0; 
+			if (satisfaction < 10) {
+				satisfaction += 1;
+			}
+
+			return PanelsOn;
+		}
+
+		else {
+			if (solar_panel_subsidies() == true) {
+				//then the household gets financial help and can install the solar_panels
+				solarPanelAge = 0; 
+				if (satisfaction < 10) {
+					satisfaction += 1;
+				}
+
+				return PanelsOn;
+			}
+
+			else {
+				//return PanelsOff;
+				return false;
+			}
+		}
+	}
+	                            
 }
 
+//placeholder must change 
+
 bool House::double_glazing() {
-	// if (houseIncome > 100) {
-	// 	return true;	
-	// }
-	
-	// placeholder must change
-	return false;
+	if (houseIncome > 150) {
+		doubleGlazingAge = 0;
+		return true;	
+	}
+
+	else {
+		if (double_glazing_subsidies() == true) {
+				//then the household gets financial help
+				doubleGlazingAge = 0; 
+				if (satisfaction < 10) {
+					satisfaction += 1;
+				}
+
+				return true;
+			}
+
+			else {
+				return false;
+			}
+	}
+} 
+
+bool House::rooftop_wind_turbines() {
+	if (solar_panel() == true) {
+		//we cannot have solar panels and wind turbines on the same house
+		//a message should appear, saying that the turbines cannot be installed 
+		return false;
+		//return PanelsOff
+	}
+
+	else {
+		if (houseIncome > 280) { //the people that live in the house have enough money to install wind turbines so they can 
+			rooftopWindTurbineAge = 0; 
+			if (satisfaction < 10) {
+				satisfaction += 1;
+			}
+
+			return true;
+		}
+
+		else {
+			if (wind_turbine_subsidies() == true) {
+				//then the household gets financial help and can install the wind turbines
+				rooftopWindTurbineAge = 0; 
+				if (satisfaction < 10) {
+					satisfaction += 1;
+				}
+
+				return true;
+			}
+
+			else {
+				//return PanelsOff;
+				return false;
+			}
+		}
+	}
 }
 
 /// <summary>
@@ -164,7 +324,7 @@ bool House::double_glazing() {
 /// </summary>
 
 Building::Building() {
-	if (solar_panel() == true and double_glazing() == true) {
+	if (double_glazing() == true) {
         buildingType = 2; //High level Building
     }
 
@@ -174,6 +334,10 @@ Building::Building() {
 
     switch (buildingType){
 	case 1: { //Low level house
+		/*solar_panel() = false;
+		rooftop_wind_turbines() = false;
+		double_glazing() = false;*/
+
 		srand((int)time(0));
 		//5 appartments pay between 200-400 € per month
 		coOwnershipBudget = (rand() % (66-33) + 33);
@@ -190,6 +354,10 @@ Building::Building() {
 	}
 
 	case 2:  {
+		/*solar_panel() = true;
+		double_glazing() = true;
+		rooftop_wind_turbines() = true;*/
+
 		//We consider a 500 m^2 building 
 		srand((int)time(0));
 		//5 appartments pay between 300-500 € per month
@@ -213,55 +381,171 @@ Building::~Building() {
 }
 
 void Building::simulate_step(double days) {
-	if (buildingType == 1) { // if it doesn't already have solar panels because it is high level 
-        if (solar_panel() == true) {
-			maintenance += solarPanelCost;
-		}
-			
-		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
-			satisfaction += 1;
-		}
-	
-
-		//assuming this is a button to change all windows at once i.e. you cannot call this function more than once on this house	
-		if (double_glazing() == true) {
-			energyUse *= 0.75 ; //when having better insulation of windows, you don't have the 25% loss of heat anymore
-			maintenance += windowCost * windowNumber; //200€ per window, if function adds one window at a time
-		}
-		if (satisfaction < 10) { //so that we do not end up with a satisfaction above 10
-			satisfaction += 2;
-		}
+	if (solar_panel() == true) {
+		solarPanelAge += 1;
 	}
+			
+	//assuming this is a button to change all windows at once i.e. you cannot call this function more than once on this house	
+	if (double_glazing() == true) {
+		doubleGlazingAge += 1;
+		
+	}
+
+	if (rooftop_wind_turbines() == true) {
+		rooftopWindTurbineAge += 1;
+	}
+	
+	/*
+	if (solarPanelAge >= solarLifetime) {
+		//Then the solar panels are removed and we have 
+		solar_panel() = false;
+		solarPanelAge = 0;
+	}
+
+	if (doubleGlazingAge >= 18250) {
+		//remove windows, they need to be changed 
+		double_glazing() = false;
+		doubleGlazingAge = 0;
+	}
+	
+	if (rooftopWindTurbineAge >= windLifetime) {
+		rooftop_wind_turbines() = false;
+		rooftopWindTurbineAge = 0;
+	} 
+	*/
     
-	maintenance += 0.1765 * energyUse * days;
-	CO2Emission += 0.0065 * energyUse * days;  
+	switch (buildingType){
+	case 1: { //Low level house
+		if (double_glazing() == true) {
+			energyUse *= 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore
+		}
+
+		if (solar_panel() == true) {
+			energyUse -= solarEnergy;
+		}
+
+		if (rooftop_wind_turbines() == true) {
+			energyUse -= windEnergy;
+		}
+
+		maintenance += 0.1765 * energyUse * days;
+		CO2Emission += 0.0065 * energyUse * days;  
+
+		break;
+	}
+
+	case 2:  {
+		maintenance += 0.1765 * energyUse * days;
+		CO2Emission += 0.0065 * energyUse * days;  
+		break;
+	}
+	
+	}
+	
 	age += days; //age is an attribute from the Structure class
 	
 }
 
 bool Building::solar_panel() {
-	if (coOwnershipBudget > 50) {
-		return PanelsOn;	
+	if (rooftop_wind_turbines() == true) {
+		//we cannot have solar panels and wind turbines on the same house
+		//a message should appear, saying that the solar_panels cannot be installed 
+		return false;
+		//return PanelsOff
 	}
 
-	// else {
-	// 	//check if policy from state is giving money
-	// 	//in which case you can add solar panels
-	// 	//otherwise 
-		
-	// }
+	else {
+		if (coOwnershipBudget > 25) { //the people that live in the house have enough money to install solar panels so they can 
+			solarPanelAge = 0; 
+			if (satisfaction < 10) {
+				satisfaction += 1;
+			}
 
-	return PanelsOn;
+			return PanelsOn;
+		}
+
+		else {
+			if (solar_panel_subsidies() == true) {
+				//then the household gets financial help and can install the solar_panels
+				solarPanelAge = 0; 
+				if (satisfaction < 10) {
+					satisfaction += 1;
+				}
+
+				return PanelsOn;
+			}
+
+			else {
+				//return PanelsOff;
+				return false;
+			}
+		}
+	}
+
+	
 }
 
 bool Building::double_glazing() {
-	// if (coOwnershipBudget > 40) {
-	// 	return true;	
-	// }
+	if (coOwnershipBudget > 20) {
+		doubleGlazingAge = 0;
+		return true;	
+	}
 
+	else {
+		if (double_glazing_subsidies() == true) {
+				//then the household gets financial help
+				doubleGlazingAge = 0; 
+				if (satisfaction < 10) {
+					satisfaction += 1;
+				}
 
-	// placeholder must change
-	return false;
+				return true;
+			}
+
+			else {
+				return false;
+			}
+	}
 
 }
+
+
+bool Building::rooftop_wind_turbines() {
+	if (solar_panel() == true) {
+		//we cannot have solar panels and wind turbines on the same house
+		//a message should appear, saying that the turbines cannot be installed 
+		return false;
+		//return PanelsOff
+	}
+
+	else {
+		if (coOwnershipBudget > 50) { //the people that live in the house have enough money to install wind turbines so they can 
+			rooftopWindTurbineAge = 0; 
+			if (satisfaction < 10) {
+				satisfaction += 1;
+			}
+
+			return true;
+		}
+
+		else {
+			if (wind_turbine_subsidies() == true) {
+				//then the household gets financial help and can install the wind turbines
+				rooftopWindTurbineAge = 0; 
+				if (satisfaction < 10) {
+					satisfaction += 1;
+				}
+
+				return true;
+			}
+
+			else {
+				//return PanelsOff;
+				return false;
+			}
+		}
+	}
+}
+
+
 

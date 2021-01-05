@@ -7,6 +7,7 @@
 #include "Production.h"
 #include "Energy.h"
 
+
 using namespace godot;
 
 extern "C" void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options * o) {
@@ -31,6 +32,9 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<House>();
 	register_class<Windmill>();
 	register_class<NuclearPowerPlant>();
+	register_class<SmallShop>();
+	register_class<Mall>();
+	register_class<Pedestrian>();
 
 }
 

@@ -203,8 +203,9 @@ surfaces/8 = {
 "vertex_count": 92
 }
 
-[sub_resource type="BoxShape" id=5]
-extents = Vector3( 0.178695, 0.109, 0.18 )
+[sub_resource type="CapsuleShape" id=5]
+radius = 0.15
+height = 0.35
 
 [node name="Chiron" type="KinematicBody"]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
@@ -246,5 +247,5 @@ material/8 = null
 [node name="Timer" type="Timer" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 1, 0.192491, 0.095, 0 )
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.1, 0.1, 0 )
 shape = SubResource( 5 )

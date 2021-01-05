@@ -1,27 +1,58 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
-[ext_resource path="res://Resources/PowerPlant.tscn" type="PackedScene" id=3]
 [ext_resource path="res://KinematicBody.gdns" type="Script" id=4]
-[ext_resource path="res://Resources/WindMill.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Ressources/Icons/RoofWindTurb1.png" type="Texture" id=6]
 [ext_resource path="res://Ressources/Icons/RoofWindTurb2.png" type="Texture" id=7]
+[ext_resource path="res://MyTheme.tres" type="Theme" id=8]
+[ext_resource path="res://integerLineEdit.gd" type="Script" id=9]
+[ext_resource path="res://Ressources/Roboto/Roboto-Black.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Font.tres" type="DynamicFont" id=12]
+[ext_resource path="res://Box.tres" type="StyleBox" id=13]
+[ext_resource path="res://Resources/Pedestrian.tscn" type="PackedScene" id=14]
+[ext_resource path="res://RingTexture.png" type="Texture" id=15]
 
 [sub_resource type="SphereShape" id=1]
 
-[sub_resource type="StyleBoxTexture" id=2]
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform float blur_amount = 3.0;
+
+void fragment()
+{
+	COLOR = textureLod(SCREEN_TEXTURE, SCREEN_UV, blur_amount);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/blur_amount = 3.0
+
+[sub_resource type="Theme" id=4]
+
+[sub_resource type="StyleBoxTexture" id=5]
 texture = ExtResource( 7 )
 region_rect = Rect2( 0, 0, 347, 100 )
 expand_margin_left = 247.0
 
-[sub_resource type="StyleBoxTexture" id=3]
+[sub_resource type="StyleBoxTexture" id=6]
 texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 100, 100 )
 
-[sub_resource type="StyleBoxTexture" id=4]
+[sub_resource type="StyleBoxTexture" id=7]
 texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 100, 100 )
+
+[sub_resource type="RectangleShape2D" id=8]
+
+[sub_resource type="DynamicFont" id=9]
+size = 60
+use_mipmaps = true
+font_data = ExtResource( 10 )
+
+[sub_resource type="Theme" id=10]
 
 [node name="Main" type="Spatial"]
 
@@ -32,46 +63,362 @@ script = ExtResource( 1 )
 environment = ExtResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="3Dworld/WorldEnvironment"]
-transform = Transform( 0.737796, -0.477997, 0.47663, 0, 0.706094, 0.708118, -0.675024, -0.522447, 0.520953, 0, 30.4054, 0 )
+transform = Transform( 0.737796, -0.477997, 0.47663, 0, 0.706094, 0.708118, -0.675024, -0.522447, 0.520953, 0, 136.034, 0 )
+light_color = Color( 1, 0.882353, 0.85098, 1 )
+light_energy = 2.0
 shadow_enabled = true
 shadow_bias = 0.0
 directional_shadow_max_distance = 1000.0
 
-[node name="KinematicBody" type="KinematicBody" parent="3Dworld"]
+[node name="DirectionalLight2" type="DirectionalLight" parent="3Dworld/WorldEnvironment"]
+transform = Transform( -0.208031, 0.692626, -0.690646, 0, 0.706094, 0.708118, 0.978122, 0.147311, -0.14689, -3.895, 0, -3.493 )
+light_color = Color( 0.137255, 0.101961, 0.568627, 1 )
+light_indirect_energy = 0.0
+light_specular = 0.0
+shadow_bias = 0.0
+directional_shadow_max_distance = 1000.0
+
+[node name="Player" type="KinematicBody" parent="3Dworld"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5638, 33.7579, 82.5155 )
 script = ExtResource( 4 )
 
-[node name="ClippedCamera" type="ClippedCamera" parent="3Dworld/KinematicBody"]
+[node name="ClippedCamera" type="ClippedCamera" parent="3Dworld/Player"]
 transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0 )
 environment = ExtResource( 2 )
 fov = 35.0
 far = 1000.0
 
-[node name="CollisionShape" type="CollisionShape" parent="3Dworld/KinematicBody"]
+[node name="CollisionShape" type="CollisionShape" parent="3Dworld/Player"]
 transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, -1.5638, -0.58039, -6.59145 )
 shape = SubResource( 1 )
 
-[node name="Spatial" parent="3Dworld" instance=ExtResource( 3 )]
-transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 15, 0, -45 )
+[node name="Pedestrian1" parent="3Dworld" instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.02275, 0, -9 )
 
-[node name="Windmill" parent="3Dworld" instance=ExtResource( 5 )]
-transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 60, 0, -30 )
+[node name="2Dworld" type="Node2D" parent="."]
 
-[node name="2D layer" type="Spatial" parent="."]
+[node name="Blur" type="Node2D" parent="2Dworld"]
+visible = false
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="ColorRect" type="ColorRect" parent="2Dworld/Blur"]
+material = SubResource( 3 )
+margin_left = -47.1433
+margin_top = -26.9391
+margin_right = 2019.86
+margin_bottom = 1115.06
+rect_pivot_offset = Vector2( 536.625, 1828.64 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="RoofWindTurbines" type="Button" parent="Node2D"]
-margin_left = 931.054
-margin_top = 488.576
-margin_right = 1031.05
-margin_bottom = 588.576
+[node name="InfoBox" type="Label" parent="2Dworld"]
+margin_left = 60.0
+margin_top = 90.0
+margin_right = 410.0
+margin_bottom = 990.0
+theme = SubResource( 4 )
+custom_styles/normal = ExtResource( 13 )
+custom_fonts/font = ExtResource( 12 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slider" type="Node2D" parent="2Dworld"]
+position = Vector2( 500, 10 )
+
+[node name="HSlider" type="HSlider" parent="2Dworld/Slider"]
+margin_left = 250.0
+margin_right = 926.0
+margin_bottom = 72.0
+focus_mode = 0
 mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 2 )
-custom_styles/pressed = SubResource( 3 )
-custom_styles/normal = SubResource( 4 )
+theme = ExtResource( 8 )
+max_value = 4.0
+value = 1.0
+rounded = true
+scrollable = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="2Dworld/Slider"]
+margin_left = 20.0801
+margin_top = 4.19507
+margin_right = 221.08
+margin_bottom = 74.1951
+rect_pivot_offset = Vector2( 108.465, 27.7958 )
+custom_fonts/font = ExtResource( 12 )
+text = "GAME SPEED "
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="2Dworld/Slider"]
+margin_left = 225.0
+margin_top = 80.0
+margin_right = 297.0
+margin_bottom = 150.0
+custom_fonts/font = ExtResource( 12 )
+custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
+text = "II"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="2Dworld/Slider"]
+margin_left = 362.5
+margin_top = 78.502
+margin_right = 467.5
+margin_bottom = 148.502
+custom_fonts/font = ExtResource( 12 )
+custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
+text = "X1"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="2Dworld/Slider"]
+margin_left = 550.0
+margin_top = 80.0
+margin_right = 622.0
+margin_bottom = 150.0
+custom_fonts/font = ExtResource( 12 )
+custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
+text = "X2"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="2Dworld/Slider"]
+margin_left = 712.5
+margin_top = 78.502
+margin_right = 784.5
+margin_bottom = 148.502
+custom_fonts/font = ExtResource( 12 )
+custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
+text = "X4"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label6" type="Label" parent="2Dworld/Slider"]
+margin_left = 875.0
+margin_top = 80.0
+margin_right = 947.0
+margin_bottom = 159.0
+custom_fonts/font = ExtResource( 12 )
+custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
+text = "X8
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menus" type="KinematicBody2D" parent="2Dworld"]
+
+[node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
+position = Vector2( -1, 0 )
+
+[node name="Button1" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -140.0
+margin_top = -50.0
+margin_right = -40.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
 action_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="Node2D/RoofWindTurbines" to="3Dworld" method="_on_RoofWindTurbines_pressed"]
+
+[node name="Button2" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -46.0
+margin_top = -156.0
+margin_right = 54.0
+margin_bottom = -56.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoofWindTurbines4" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = 52.0
+margin_top = -52.0
+margin_right = 152.0
+margin_bottom = 48.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoofWindTurbines5" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -44.0
+margin_top = 56.0
+margin_right = 56.0
+margin_bottom = 156.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="2Dworld/Menus"]
+shape = SubResource( 8 )
+
+[node name="ButtonInfoBox" type="Label" parent="2Dworld"]
+margin_left = 375.0
+margin_top = 270.0
+margin_right = 1575.0
+margin_bottom = 470.0
+theme = SubResource( 4 )
+custom_styles/normal = ExtResource( 13 )
+custom_fonts/font = ExtResource( 12 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InvalidInputNotification" type="Label" parent="2Dworld"]
+margin_left = 525.0
+margin_top = 400.0
+margin_right = 1425.0
+margin_bottom = 550.0
+theme = SubResource( 4 )
+custom_styles/normal = ExtResource( 13 )
+custom_fonts/font = ExtResource( 12 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PoliciesInput" type="Node2D" parent="2Dworld"]
+position = Vector2( 17.6389, 1.25995 )
+
+[node name="TextEdit" type="LineEdit" parent="2Dworld/PoliciesInput"]
+margin_left = 500.0
+margin_top = 580.0
+margin_right = 1420.0
+margin_bottom = 680.0
+theme = ExtResource( 8 )
+custom_fonts/font = SubResource( 9 )
+align = 1
+max_length = 7
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+placeholder_text = "0"
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="2Dworld/PoliciesInput"]
+margin_left = 800.0
+margin_top = 720.0
+margin_right = 1120.0
+margin_bottom = 800.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "CONFIRM"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Infographics" type="Node2D" parent="2Dworld"]
+position = Vector2( 1658.04, 38.8548 )
+
+[node name="Satisfaction" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 109.844
+margin_top = -38.2587
+margin_right = 609.844
+margin_bottom = 461.741
+rect_scale = Vector2( 0.3, 0.3 )
+min_value = 1.0
+value = 44.0
+rounded = true
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 0.403922, 0.403922, 0.403922, 1 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CO2" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 109.8
+margin_top = 121.201
+margin_right = 609.8
+margin_bottom = 621.201
+rect_scale = Vector2( 0.3, 0.3 )
+value = 20.0
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 0.403922, 0.403922, 0.403922, 1 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GUI" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_right = -1672.0
+margin_bottom = 38.0
+theme = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GUIComponents" type="HBoxContainer" parent="GUI"]
+margin_right = 248.0
+margin_bottom = 38.0
+
+[node name="TimeControls" type="VBoxContainer" parent="GUI/GUIComponents"]
+margin_right = 244.0
+margin_bottom = 38.0
+
+[node name="Date" type="Label" parent="GUI/GUIComponents/TimeControls"]
+margin_right = 244.0
+margin_bottom = 38.0
+custom_fonts/font = ExtResource( 12 )
+text = "Year 1, January 1"
+
+[node name="Indices" type="HBoxContainer" parent="GUI/GUIComponents"]
+margin_left = 248.0
+margin_right = 248.0
+margin_bottom = 38.0
+[connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button1" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ChangePanelProbabilityForAllShops" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ChangePanelProbabilityForRestaurants" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
+[connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]

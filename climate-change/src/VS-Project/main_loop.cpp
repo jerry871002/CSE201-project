@@ -3,8 +3,12 @@
 #include <cstdlib>
 #include <set>
 #include "Restaurant.h"
+#include "Player.h"
+#include "Transport.h"
 #include "obj.h"
 #include "City.h"
+#include "edit_text_files.cpp"
+#include "Shop.h"
 
 // Sleep(miliseconds) on Windows and sleep(seconds) on linux/mac
 #ifdef _WIN32
@@ -13,12 +17,26 @@
 #include <unistd.h>
 #endif
 
-int main()
-{
+using namespace godot;
+
+int main() {
     City c = City();
 
     while (true) {
-/*
+ 	//check if writing to files works
+
+ 	/* current test fct on mac:
+
+ 	g++ -std=c++17 main_loop.cpp obj.cpp edit_text_files.cpp City.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
+
+ 	then run:
+ 	./a.out
+
+ 	*/
+
+ 	c.simulation();
+
+        /*
         // run simulation (one day tick) , and then print out date and income
         c.simulation();
         std::cout << c.return_game_date()<< std::endl;

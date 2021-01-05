@@ -1,6 +1,10 @@
 #pragma once
 
 #include "obj.h"
+#include "Shop.h"
+#include "Housing.h"
+#include "Energy.h"
+#include "Production.h"
 
 
 #include <core/Godot.hpp>
@@ -8,8 +12,8 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <vector>
 #include <string>
+#include <vector>
 #include <Input.hpp>
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
@@ -19,29 +23,35 @@
 
 #include <PackedScene.hpp>
 #include <ResourceLoader.hpp>
+#include <String.hpp>
+// #include <edit_text_files.hpp>
 
 
 
-/* current test fct using main_loop.cpp on mac:
+/* use main fct defined in City.cpp for mac
 
-g++ -std=c++17 main_loop.cpp Restaurant.cpp obj.cpp City.cpp -ILibraries/godot-cpp-bindings/godot_headers
--ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen
--LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
-
+current test fct using main_loop.cpp on mac:
+g++ -std=c++17 City.cpp obj.cpp edit_text_files.cpp -ILibraries/godot-cpp-bindings/godot_headers -ILibraries/godot-cpp-bindings/include -ILibraries/godot-cpp-bindings/include/core -ILibraries/godot-cpp-bindings/include/gen -LLibraries/godot-cpp-bindings/bin -lgodot-cpp.osx.debug.64
 then run:
 ./a.out
-
 */
 
 namespace godot {
 
+	class Transport;
+
 	class City : public Spatial {
+
 		GODOT_CLASS(City, Spatial)
+
 	public:
+
+		// CONSTRUCTOR, DESTRUCTOR
 
 		City();
 		~City();
 
+		// GODOT FUNCTIONAL METHODS
 
 		static void _register_methods();
 		void _init();
@@ -49,25 +59,78 @@ namespace godot {
 		void _physics_process(float);
 		void _input(InputEvent*);
 		void _ready();
-		void _on_RoofWindTurbines_pressed();
+
+		// SIGNALS
+
+		void _on_MenuShop_pressed(String Name);
+		void _on_Validate_pressed();
+		void _on_Game_Speed_changed();
+
+		// INITIAL GRAPHICAL SETUP
+
+		void generate_initial_city_graphics();
+		void set_initial_visible_components();
+
+		// TIME AND OVERALL SIMULATION
+
+		float time_speed = 1; // 1 for regular speed (1 in-game day per second)
+		double simulation_counter{ 0 }; // counter used to cast per-frame processing to a time_speed related frequency
+		double date_counter{ 0 };
+		int day_tick; // keeps track of the in-game days
+		int days_since_last_simulation;
+		void update_date();		
+        // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
+        // date leap years implementation
+        String return_word_date(); // returns the date :day/month/year as a string with words
+        String return_number_date(int day, int month, int year); // returns the date :day/month/year as a string with numbers
+        void simulation(); // updates all the stats and calls the simulation for the buildings
+        bool ClickActive{ false };
+        
+		//TRAFFIC
+		int sizeOfCity = 10; // buildings are placed only on a square sizeOfCity * sizeOfCity
+		int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 
+		int traffic[10][10][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
+				 // the third coornidate indicates the side of the building and the forth one which way the car can turn
+
+		// following functions handle adding structures to the city, takes a position and the required scene
+		void add_shop( Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
+		void add_house(Vector3 pos, Ref<PackedScene> scene); // adds a house and updates the traffic array with the shop
 
 
+		//int* building_coordinates_identification(int x, int y, int number);//returns coordinates of a center for the upper left square of any buiding  
+		void update_traffic(int x, int y, bool newBuilding, int number);// updates the traffic array 
 
-		std::vector<Structure*> buildings;
+		// ARRAYS CONTAINING ALL ACTIVE ELEMENTS
 
-		void add_building(Structure*);
+		std::vector<Shop*> all_shops;
+		std::vector<Housing*> all_houses;
+		std::vector<Energy*> all_energies;
+		std::vector<Production*> all_production;
+
+		String active_button;
+		void implement_shop_policies(double);
+		bool notification_active{ false };
+		int notification_counter{ 0 };
+		int notification_timeout{ 180 };
+		void trigger_notification(String);
+		String get_button_info_text();
+
 		void add_car();
-		void simulation();                    //updates all the stats abd the building
+		                
 		void write_stat_history_to_file();    //writes all the stats to a file so that the interface team can make graphs 
-		double return_income();               //returns the income of the city
+		
+											  
 		// getter functions for city indices
+		double return_income();
 		double return_numberOfEmployees();
 		double return_carbonEmission();
 		double return_energyDemand();
 		double return_energySupply();
-		double return_healthcare();
-		double return_needs();
-		std::string return_game_date();       //returns the date :day/month/year as a string
+		double return_environmentalCost();
+		double return_totalSatisfaction();
+
+		
+		
 
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
@@ -82,6 +145,8 @@ namespace godot {
 		float energySupply_array[3];
 		*/
 
+		
+
 	private:
 		// city indices
 		double income;
@@ -90,26 +155,17 @@ namespace godot {
 		double carbonEmission;
 		double energyDemand;
 		double energySupply;
-		double healthcare;
-		double needs;
-		// used for caculating in-game time
-		float time_speed; // 1 for regular speed (1 in-game day per second)
-		float delta_counter; // accumulate delta from `_physics_process` function
-		int64_t timer;       // helper data to see if `delta_counter` have carry on units digit
-		int day_tick; // this variable keeps track of the in-game days, 
-		// one day added every time simulation() is called
+		double environmentalCost;
+		double totalSatisfaction;
 
-		/*
-		Ref<PackedScene> RestaurantScene;
-		Ref<PackedScene> ShopScene;
-		Ref<PackedScene> BugattiScene;
-		Ref<PackedScene> ChironScene;
-		*/
+
+
 		ResourceLoader* ResLo = ResourceLoader::get_singleton();
 		Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
 		Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
+		Ref<PackedScene> MallScene = ResLo->load("res://Resources/Mall.tscn", "PackedScene");
 		Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
 		Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
-	};
-};
 
+	};
+}

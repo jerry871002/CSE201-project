@@ -1,16 +1,16 @@
 #pragma once
 
-#include "City.h"
 #include "obj.h"
 
 #include <core/Godot.hpp>
 #include <KinematicBody.hpp>
+#include <AnimationPlayer.hpp>
+#include "City.h"
 
 namespace godot {
     class Transport : public KinematicBody {
         GODOT_CLASS(Transport, KinematicBody)
     public:
-
         Transport();
 
         void transport_type(int type);
@@ -19,7 +19,8 @@ namespace godot {
         static void _register_methods();
         void _init();
         void _ready();
-        void _process(float delta);
+        void _physics_process(float delta);
+        int physics_counter{ 0 };
 
         // simulation function
         void simulate_step(double days);
@@ -45,7 +46,6 @@ namespace godot {
 		double get_co2emissions();
 		double get_energyuse();
 		double get_environmentalcost();
-        virtual String class_name();
 
     private:
         // simulation variables
@@ -69,11 +69,42 @@ namespace godot {
         double SPEED_T;
         int Turn_R = 4;
         int dir;
-        Vector3 prevPosition = Vector3(0, 0, 0);
+        double prevPosition = 0;
+        Vector3 prevPositionVec = Vector3();
         double Acc = 0.5;
         Vector3 center;
-        City* myCity;
-        int traffic[2][3][4][3] = { {{{0, 1, 0},{0, 0, 1},{0, 0, 1},{0, 0, 1}},		{{0, 0, 1},{0, 1, 0},{0, 0, 1},{0, 0, 1}},		{ {0, 1, 1},{0, 1, 1},{0, 0, 1},{0, 0, 1}}},
-                                    { {{0, 0, 1},{0, 0, 1},{0, 0, 1},{0, 1, 0}}	,		{{0, 0, 1},{0, 0, 1},{1, 1, 0},{0, 1, 1}},		 { {0, 0, 1},{0, 0, 1},{0, 1, 1},{0, 0, 1}}} };
+
+        City* myCity = new City();
+        //int traffic[2][3][4][3] = { {{{0, 1, 0},{0, 0, 1},{0, 0, 1},{0, 0, 1}},		{{0, 0, 1},{0, 1, 0},{0, 0, 1},{0, 0, 1}},		{ {0, 1, 1},{0, 1, 1},{0, 0, 1},{0, 0, 1}}},
+        //                            { {{0, 0, 1},{0, 0, 1},{0, 0, 1},{0, 1, 0}}	,		{{0, 0, 1},{0, 0, 1},{1, 1, 0},{0, 1, 1}},		 { {0, 0, 1},{0, 0, 1},{0, 1, 1},{0, 0, 1}}} };
+    };
+
+    class Pedestrian : public KinematicBody {
+        GODOT_CLASS(Pedestrian, KinematicBody)
+    public:
+        Pedestrian();
+
+        // godot functions
+        static void _register_methods();
+        void _init();
+        void _ready();
+        void _process(float delta);
+
+    private:
+        AnimationPlayer* player = new AnimationPlayer();
+
+        Vector3 motion;
+        double position;
+        double rot;
+        double SPEED_T;
+        int Turn_R = 4;
+        int dir;
+        double prevPosition = 0;
+        Vector3 prevPositionVec = Vector3();
+        double Acc = 0.5;
+        Vector3 center;
+        City* myCity = new City();
+        void turn(int dir, float delta);
+        void straight(float delta);
     };
 }

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "City.h"
 #include <Math.hpp>
 #include <GodotGlobal.hpp>
 #include <Math.hpp>
@@ -6,6 +7,7 @@
 #include <Viewport.hpp>
 #include <WorldEnvironment.hpp>
 #include <Environment.hpp>
+#include <iostream>
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
@@ -14,6 +16,7 @@ Player::Player() {
 	// INITIALIZE MOTION AND ROTATION VECTORS USED FOR PLAYER CONTROL
 	motion = Vector3(0, 0, 0);
 	rotation = Vector3(0, 0, 0);
+	counter = 0;
 }
 
 Player::~Player() {
@@ -23,10 +26,11 @@ void Player::_register_methods() {
 	register_method((char*)"_process", &Player::_process);
 	register_method((char*)"_input", &Player::_input);
 	register_method((char*)"_ready", &Player::_ready);
+	register_property<Player, bool>("movable", &Player::movable, true);
 }
 
 void Player::_init() {
-
+	movable = true;
 }
 
 void Player::_ready() {
@@ -35,61 +39,71 @@ void Player::_ready() {
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
 	worldEnv->get_environment()->set_dof_blur_far_enabled(true);
 	worldEnv->get_environment()->set_dof_blur_near_enabled(true);
-	//delete(this);
+	
 }
 
-void Player::_process(float delta) {
-	UpdateMotionFromInput(delta);
-	this->translate(motion);
+void Player::_process(float delta) 
+{
+	if (movable) { UpdateMotionFromInput(delta); }
+	
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
-	worldEnv->get_environment()->set_dof_blur_far_distance(2 * (this->get_global_transform().get_origin().y));
+	worldEnv->get_environment()->set_dof_blur_far_distance(4 * (this->get_global_transform().get_origin().y));
 	worldEnv->get_environment()->set_dof_blur_far_amount(0.1 * pow((1 - (this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight - MinHeight)), 3) );
+	
+	this->translate(motion); 
 	set_rotation_degrees(rotation);
 }
 
-void Player::_physics_process(float delta) {
+void Player::_physics_process(float delta)
+{
 	
 }
 
 void Player::_input(InputEvent* e)
 {
-	
 	motion = Vector3(0, 0, 0);
 	
 	// MOUSE MOTION EVENTS
 	
-	if (e->get_class() == "InputEventMouseMotion") {
-		UpdateRotationFromInput((InputEventMouseMotion*)e); // Rotation and vertical motion using relative mouse coordinates
+	if (e->get_class() == "InputEventMouseMotion") 
+	{
+		// Rotation and vertical motion using relative mouse coordinates
+		if (movable) { UpdateRotationFromInput((InputEventMouseMotion*)e); }
 	}
 	
 	Input* i = Input::get_singleton();
 
-	if (e->is_action_pressed("ui_turn")) {
-		
+	if (e->is_action_pressed("ui_turn")) 
+	{
 		mouse_p = this->get_viewport()->get_mouse_position();
 		i->set_mouse_mode(i->MOUSE_MODE_CAPTURED);
 	}
 
-	if (e->is_action_released("ui_turn")) {
+	if (e->is_action_released("ui_turn")) 
+	{
 		i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
 		this->get_viewport()->warp_mouse(mouse_p);
 	}
 
 	this->translate(motion);
 
-	if (e->is_action_pressed("ui_cancel")) {
-		get_tree()->quit();								// EXIT GAME
+	if (e->is_action_pressed("ui_cancel")) 
+	{
+		// EXIT GAME
+		get_tree()->quit();								
 	}
 	
 }
 
-void Player::UpdateMotionFromInput(float delta) {
-	motion = Vector3(0, 0, 0);							// RESET MOTION VECTOR TO ZERO
+void Player::UpdateMotionFromInput(float delta) 
+{
+	// RESET MOTION VECTOR TO ZERO
+	motion = Vector3(0, 0, 0);							
 
 	// INPUT USED FOR KEY CONTROLS
 	Input* i = Input::get_singleton();
 
-	SPEED_T = 2*get_global_transform().get_origin().y *delta ;
+	SPEED_T = 2 * get_global_transform().get_origin().y * delta;
 
 	// VERTICAL MOTION
 

@@ -5,20 +5,27 @@
 #include <KinematicCollision.hpp>
 #include <Mesh.hpp>
 #include <Timer.hpp>
-
 #include <random>
+#include <AnimationPlayer.hpp>
 
 # define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
-using namespace std;
+
+
+extern int traffic_system[10][10][4][3];
 
 // helper functions
-void compute_speed(double& Speed, double Acc, float delta) {
+void compute_speed(double& Speed, double &Acc, float delta, Vector3 prevPos, Vector3 pos) {
+    //Speed = (pos - prevPos).dot((pos - prevPos).normalized()) / (10 * delta);
     if ((Speed <= 0.8 && Acc > 0) or (Acc < 0 and Speed + Acc * delta > 0.2)) {
-        // Define max speed and min speed
         Speed += Acc * delta;
     }
+    else if (Acc < 0 && Speed < 0.2) {
+        Acc = 0.1;
+        Speed += Acc * delta;
+    }
+
 }
 
 void ComputeAcceleration(double& Acc, double Speed0, double Speed1, double d) {
@@ -35,10 +42,9 @@ template <typename T> void align_on_axis(T obj) {
     obj->set_rotation_degrees(Vector3(round(obj->get_rotation_degrees().x / 90) * 90, round(obj->get_rotation_degrees().y / 90) * 90, round(obj->get_rotation_degrees().z / 90) * 90));
 }
 
-// Constructors
+
 Transport::Transport() {
-    int type = rand()%8;
-    transport_type(type);
+    transport_type(0);
 }
 
 void Transport::transport_type(int type) {
@@ -73,10 +79,7 @@ void Transport::transport_type(int type) {
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
         std::normal_distribution <double> satisfactiont(9.7, 0.2); //very high satisfaction
-        satisfaction = satisfactiont(gen);
-        if (satisfaction > 10) {
-            satisfaction = 10;
-        }
+        satisfaction = fmax(satisfactiont(gen), 10);
         energyUse = 0.119 * kmPerDay;
         break;
     }
@@ -85,7 +88,6 @@ void Transport::transport_type(int type) {
         fuelPerKm = 0.24;
         std::normal_distribution <double> costg(85000, 12000);
         cost = costg(gen); // cost of 1 car in euros, randomised using gaussian
-        cost = 25;
         capacity = 8;
         std::normal_distribution <double> kmg(85, 15);
         kmPerDay = kmg(gen); // average km per day for this car using gaussian
@@ -214,7 +216,7 @@ void Transport::transport_type(int type) {
 
 void Transport::_register_methods() {
     register_method((char*)"_init", &Transport::_init);
-    register_method((char*)"_process", &Transport::_process);
+    register_method((char*)"_physics_process", &Transport::_physics_process);
     register_method((char*)"_ready", &Transport::_ready);
 }
 
@@ -223,14 +225,40 @@ void Transport::_init() {
 }
 
 void Transport::_ready() {
-    prevPosition = this->get_global_transform().get_origin();
-    myCity = (City*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"));
+    prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
+    prevPositionVec = this->get_global_transform().get_origin();
+    myCity = (City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")));
+
 }
 
-void Transport::_process(float delta) {
+
+void Transport::_physics_process(float delta) {
+
+    std::cout << delta << std::endl;
+
+    (this->physics_counter)++;
+
+    if (this->physics_counter == 2) {
+        this->physics_counter == 0;
+        //delta = delta / 2;
+
+    }
+
+    prevPositionVec = this->get_global_transform().get_origin();
+   
+   
     if (rot >= (M_PI / 2)) {
-        straight(delta);
-        prevPosition = this->get_global_transform().get_origin();
+        
+        int gameSpeed = myCity->get("time_speed");
+        if (gameSpeed != 0) { straight(fmin(0.04, delta) / delta); }
+       
+        Vector3 p = this->get_global_transform().get_origin();
+        switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the car on the road if problems
+        case 0: this->set("translation", Vector3(p.x, 0, p.z + 28 - fmod(p.z + 28, 30) - 13)); break;
+        case 2: this->set("translation", Vector3(p.x, 0, p.z + 2 - fmod(p.z + 2, 30) + 13)); break;
+        case 3: this->set("translation", Vector3(p.x + 2 - fmod(p.x + 2, 30) + 13, 0, p.z)); break;
+        case 1: this->set("translation", Vector3(p.x + 28 - fmod(p.x + 28, 30) - 13, 0, p.z)); break;
+        default: break; }
 
         int real_rot = round(this->get_rotation_degrees().y / 90);
 
@@ -242,58 +270,59 @@ void Transport::_process(float delta) {
             ComputeAcceleration(Acc, SPEED_T, 0.7, 4);
         }
 
-        compute_speed(SPEED_T, Acc, delta);
+        
 
-        if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
+        if (position >= 22 ) {
             Acc = 0.5;	rot = 0;
             round_position(this, motion);
             center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z) * Turn_R * dir;
         }
     }
-    else if (position >= 22 && dir == 1 or position >= 18 && dir == -1 or position >= 22 && dir == 0) {
+    else if (position >= 22) {
 
-        compute_speed(SPEED_T, Acc, delta);
-        Vector3 globalSpeed = Vector3((SPEED_T * 10), 0, 0);
+
+        Vector3 globalSpeed = Vector3((SPEED_T * 10 * fmin(0.04, delta)), 0, 0);
         globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
+        
 
-        if (this->move_and_collide(globalSpeed, true, true, true) == NULL) {
-            turn(dir, delta);
+        if (this->move_and_collide(globalSpeed, true, true, true) == NULL) { //No collision
+            turn(dir, fmin(0.04, delta));
         }
         else {
-            Vector3 colliderVelocity = this->move_and_collide(Vector3(0, 0, 0), true, true, true)->get_collider_velocity();
-            if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
-                // turn(dir, delta);
+            
+            Vector3 colliderVelocity = this->move_and_collide(globalSpeed, true, true, true)->get_collider_velocity();
+            if (fmod(((Transport*)(this->move_and_collide(globalSpeed, true, true, true)->get_collider()))->get_rotation_degrees().y + 360, 90) != 0) { //Car not on a straight line
+                if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
+                    turn(dir, fmin(0.04, delta));
+                }
             }
+            else if (colliderVelocity.dot(colliderVelocity) == 0) {
+                turn(dir, fmin(0.04, delta));
+            }
+
         }
-        prevPosition = this->get_global_transform().get_origin();
 
         if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
             rot = M_PI / 2;
             align_on_axis(this);
             round_position(this, motion);
-
+            
             switch (dir) {
-            case -1: position = 8; break;
             case 0: position = -8; break;
             default: position = 4; break;
             }
 
+            prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - position;
             dir = get_direction(this->get_global_transform().get_origin() + Vector3(12, 0, 0).rotated(Vector3(0, 1, 0), this->get_rotation_degrees().y * (M_PI / 180)), this->get_rotation_degrees().y);
 
             switch (dir) {
-            case -1: Turn_R = 12; break;
+            case -1: Turn_R = 8; break;
             default: Turn_R = 4; break;
-
-                switch ((int)(round(this->get_rotation_degrees().y / 90) + 4) % 4) {
-                case 0: this->set_axis_lock(0, true);  break;
-                case 1: this->set_axis_lock(2, true);  break;
-                case 2: this->set_axis_lock(0, true);  break;
-                case 3: this->set_axis_lock(2, true);  break;
-                default:  this->set_axis_lock(0, true); break;
-                }
             }
         }
     }
+
+    compute_speed(SPEED_T, Acc, fmin(0.04, delta), prevPositionVec, this->get_global_transform().get_origin());
 }
 
 void Transport::simulate_step(double days) {
@@ -393,7 +422,7 @@ void Transport::simulate_step(double days) {
 }
 
 void Transport::turn(int dir, float delta) {
-    double drot = (SPEED_T * delta) * 10;
+    double drot = (SPEED_T * delta * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))) * 5 ;
     if (dir == 1) { drot /= 4; }
     else { drot /= 12; }
     rot += drot;
@@ -414,23 +443,21 @@ void Transport::turn(int dir, float delta) {
     }
 }
 
-void Transport::straight(float delta) {
-    //Vector3 globalSpeed = Vector3((SPEED_T * delta*10), 0, 0);
-    Vector3 globalSpeed = Vector3((SPEED_T * 10), 0, 0);
+void Transport::straight(float ratioDelta) {
+    
+
+    Vector3 globalSpeed = Vector3((ratioDelta * SPEED_T * 5 * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))), 0, 0);
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
-    //this->move_and_collide(globalSpeed, true, true, false);
-    if ((int)((rot / 90) + 4) % 2 == 0) {
-        this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(1, 0, 0), true);
-    }
-    else {
-        this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 1, 0), true);
+
+    switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {
+    case 0: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(-1, 0, 0), true).z; break;
+    case 2: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(1, 0, 0), true).z; break;
+    case 1: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 0, 1), true).x; break;
+    case 3: this->move_and_slide_with_snap(globalSpeed, Vector3(), Vector3(0, 0, -1), true).x; break;
+    default:     break;
     }
 
-    //position += SPEED_T * delta * 10;
-    Vector3 pos = this->get_global_transform().get_origin() - prevPosition;
-    position += pos.normalized().dot(pos);				//Get the norm....
-    //position += SPEED_T * delta * 10;
-    prevPosition = this->get_global_transform().get_origin();
+    position = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - prevPosition;
 
     ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
     ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
@@ -439,31 +466,48 @@ void Transport::straight(float delta) {
 
 int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90) + 4) % 4;
-    vector<int> out;
+    std::vector<int> out;
 
-    if ((int)round(pos.x / 30) >= sizeof(traffic) or (int)round(pos.z / 30) >= sizeof(traffic[0])) {
-        myCity->add_car();
-        this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
-        myCity->add_car();
-        return(0);
+    std::cout << "TRAFFIC FROM TRANSPORT: " << std::endl;
+
+    // output each element's value 
+    for (int i = 0; i < 10; ++i)
+    {
+        for (int j = 0; j < 10; ++j)
+        {
+            for (int k = 0; k < 4; ++k)
+            {
+                for (int l = 0; l < 3; ++l)
+                {
+                    
+                    std::cout << "Element at traffic_system[" << i << "][" << j
+                        << "][" << k << "][" << l << "] = " << traffic_system[i][j][k][l]
+                        << std::endl;
+                }
+            }
+        }
     }
 
+    if ((int)round(pos.x / 30) >= sizeof(traffic_system) or (int)round(pos.z / 30) >= sizeof((traffic_system[0]))) {
+        this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
+        return(0);
+    }
+    
     int i = -1;
-    for (const int& n : traffic[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
+    for (const int& n : (traffic_system)[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
             out.push_back(i);
         }
         i++;
     }
-
+    
     if (out.size() == 0) {
 
         myCity->add_car();
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
-        myCity->add_car();
         return(0);
     }
-
+    
     return(out[rand() % out.size()]);
 }
 
@@ -483,6 +527,91 @@ double Transport::get_environmentalcost(){
     return 0; //at least for now
 }
 
-String Transport::class_name(){
-    return "Transport";
+Pedestrian::Pedestrian() {
+    motion = Vector3(0, 0, 0);
+    rot = (M_PI / 2);
+    center = Vector3(0, 0, 0);
+    dir = 1;
+    position = 6;
+    SPEED_T = 2;
+    Turn_R = 2;
+}
+
+
+
+void Pedestrian::_register_methods() {
+    register_method((char*)"_init", &Pedestrian::_init);
+    register_method((char*)"_process", &Pedestrian::_process);
+    register_method((char*)"_ready", &Pedestrian::_ready);
+}
+
+void Pedestrian::_init() {
+    
+    
+}
+
+void Pedestrian::_ready() {
+    player = (AnimationPlayer*)(this->get_child(0));
+    player->play("Walk");
+
+    prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
+    prevPositionVec = this->get_global_transform().get_origin();
+    myCity = (City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")));
+}
+
+void Pedestrian::_process(float delta) {
+    //std::cout << position << endl;
+    player->set_speed_scale(int(myCity->get("time_speed"))); //TO BE CHANGED
+
+    if (rot >= (M_PI / 2)) {
+
+        if ( ((int)(myCity->get("time_speed"))) != 0) { straight(delta); }
+
+        Vector3 p = this->get_global_transform().get_origin();
+        switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the pedestrian on the road if problems
+        case 0: this->set("translation", Vector3(p.x, 0, p.z + 24 - fmod(p.z + 24, 30) - 9)); break;
+        case 2: this->set("translation", Vector3(p.x, 0, p.z + 6 - fmod(p.z + 6, 30) + 9)); break;
+        case 3: this->set("translation", Vector3(p.x + 6 - fmod(p.x + 6, 30) + 9, 0, p.z)); break;
+        case 1: this->set("translation", Vector3(p.x + 24 - fmod(p.x + 24, 30) - 9, 0, p.z)); break;
+        default: break;
+        }
+
+
+        if (position >= 2*9 - 2 * Turn_R) {
+            rot = 0;
+            round_position(this, motion);
+            center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z) * Turn_R * dir;
+        }
+    }
+    else if (position >= 2*9 - 2 * Turn_R) {
+        turn(dir, delta);
+
+        if (rot >= (M_PI / 2)) {
+            rot = M_PI / 2;
+            align_on_axis(this);
+            round_position(this, motion);
+
+            prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
+        }
+    }   
+}
+
+void Pedestrian::turn(int dir, float delta) {
+    double drot = (SPEED_T * delta * int(myCity->get("time_speed"))) / Turn_R;
+    rot += drot;
+
+    this->global_translate(-center);			//define the center of rotation
+    this->set_transform(this->get_transform().rotated(Vector3(0, 1, 0), -drot * dir));
+    this->global_translate(center);				//reset the center of rotation
+
+
+}
+
+void Pedestrian::straight(float delta) {
+    Vector3 globalSpeed = Vector3(SPEED_T * delta * int(myCity->get("time_speed")), 0, 0);
+    globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
+
+    this->move_and_collide(globalSpeed);
+    position = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - prevPosition;
+
 }
