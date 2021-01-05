@@ -102,13 +102,14 @@ namespace godot {
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 	};
 
+/*
 	/// <summary>
 	/// SERVICES
 	/// </summary>
 
-	/* This class models to the following sectors : education and health services, trade, professional and business services, leisure 
+	This class models the following sectors : education and health services, trade, professional and business services, leisure 
 	and hospitality, financial activities, public administration, information and other services.
-	Its purpose is to model primarly the employment, emissions and energy usage of this sector in an overall way */
+	Its purpose is to model primarly the employment, emissions and energy usage of this sector in an overall way 
 
 	class Services : public Production {
 		GODOT_SUBCLASS(Services, Production)
@@ -118,19 +119,6 @@ namespace godot {
 		~Services();
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
-	};
+	}; */
 
-	/// <summary>
-	/// RECYCLING FACTORIES
-	/// </summary>
-
-	class RecyclingFactories : public Production {
-		GODOT_SUBCLASS(RecyclingFactories, Production)
-	public:
-		virtual String class_name();
-		RecyclingFactories();
-		~RecyclingFactories();
-
-		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
-	};
 }
