@@ -179,8 +179,7 @@ void Structure::_process(float delta)
 }
 
 void Structure::simulate_step(double days) {
-    //std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
-    //std::cout << "DEBUG: STRUCTURE SIMULATION DONE" << std::endl;
+    std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
 }
 
 /*

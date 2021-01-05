@@ -154,7 +154,7 @@ double Shop::get_environmentalcost() {
 
 void Shop::simulate_step(double days) {
 
-    //std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
+    std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
 
     this->Structure::simulate_step(days);
 
@@ -194,8 +194,6 @@ void Shop::simulate_step(double days) {
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
         std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
-
-    //std::cout << "DEBUG: SHOP SIMULATION DONE" << std::endl;
 
 }
 
@@ -274,6 +272,8 @@ Restaurant::Restaurant() {
 Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
+
+    std::cout << "DEBUG: RESTAURANT SIMULATION CALLED" << std::endl;
 
     this->Shop::simulate_step(days);
 
@@ -358,6 +358,7 @@ SmallShop::~SmallShop(){}
 
 
 void SmallShop::simulate_step(double days){
+    std::cout << "DEBUG: SMALLSHOP SIMULATION CALLED" << std::endl;
     this->Shop::simulate_step(days);
 }
 
@@ -382,6 +383,7 @@ Mall::Mall(){
 Mall::~Mall(){}
 
 void Mall::simulate_step(double days) {
+    std::cout << "DEBUG: MALL SIMULATION CALLED" << std::endl;
     this->Shop::simulate_step(days);
 }
 
