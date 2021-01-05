@@ -167,16 +167,26 @@ void AgriculturalProduction::GMO_off(){
 	GMO = false;
 }
 void AgriculturalProduction::pesticide_on(){
-	if (pesticide==false){
+	switch (agricultureType)
+	{
+	case 0: //wheat
+		if (pesticide==false){
 		fertility*=1.15;
 		satisfaction*=0.85;
+	}
+		break;
 	}
 	pesticide = true;
 }
 void AgriculturalProduction::pesticide_off(){
-	if (pesticide==true){
+	switch (agricultureType)
+	{
+	case 0: //wheat
+		if (pesticide==true){
 		fertility/=1.15;
 		satisfaction/=0.85;
+	}
+		break;
 	}
 	pesticide  = false;
 }
