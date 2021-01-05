@@ -234,6 +234,7 @@ void Transport::_ready() {
 
 void Transport::_physics_process(float delta) {
 
+    std::cout << delta << std::endl;
 
     (this->physics_counter)++;
 
@@ -468,15 +469,24 @@ int Transport::get_direction(Vector3 pos, double rot) {
     std::vector<int> out;
 
     std::cout << "TRAFFIC FROM TRANSPORT: " << std::endl;
-    
-    for(int i = 0; i < 10; i++){
-    	for (int j = 0; j < 10; j++) {
-    		for (int k = 0; k < 4; k++) {
-    				std::cout << "From transport :" << i << "  " << j << "  " << traffic_system[i][j][k][0] << "   " << traffic_system[i][j][k][1] << "  " << traffic_system[i][j][k][2] << "  " << std::endl;
-    		}
-    	}
+
+    // output each element's value 
+    for (int i = 0; i < 10; ++i)
+    {
+        for (int j = 0; j < 10; ++j)
+        {
+            for (int k = 0; k < 4; ++k)
+            {
+                for (int l = 0; l < 3; ++l)
+                {
+                    
+                    std::cout << "Element at traffic_system[" << i << "][" << j
+                        << "][" << k << "][" << l << "] = " << traffic_system[i][j][k][l]
+                        << std::endl;
+                }
+            }
+        }
     }
-    
 
     if ((int)round(pos.x / 30) >= sizeof(traffic_system) or (int)round(pos.z / 30) >= sizeof((traffic_system[0]))) {
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
@@ -487,13 +497,10 @@ int Transport::get_direction(Vector3 pos, double rot) {
     for (const int& n : (traffic_system)[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
             out.push_back(i);
-            std::cout << i << std::endl;
         }
         i++;
     }
     
-   
-
     if (out.size() == 0) {
 
         myCity->add_car();
