@@ -41,7 +41,7 @@ namespace godot {
         // double supposed to represent yearly probability of panel appearing - this will be changed by policies
         double panel_probability{ 0.75 };  // will likely be changed to a more complex function soon 
 
-        void panel_added_probability(double panelCost, double unemployment, double setUpCost, double solarSatisfaction );   //Function to determine the probablility of adding a solar panel
+        virtual void panel_added_probability(double panelCost, double unemployment, double setUpCost, double solarSatisfaction ){}   //Function to determine the probablility of adding a solar panel
     };
 
 
@@ -66,6 +66,8 @@ namespace godot {
         double get_energyuse();
 
         virtual void simulate_step(double days);
+
+        void panel_added_probability(double panelCost, double unemployment, double setUpCost, double solarSatisfaction);
     };
 
     //####################################   Small Shop   ################################

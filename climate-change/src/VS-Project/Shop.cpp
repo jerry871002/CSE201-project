@@ -207,16 +207,6 @@ void Shop::panels_get_added() {
     // std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
 }
 
-void Shop::panel_added_probability (double solarCost, double unemployment, double setUpCost, double solarSatisfaction ){
-    //unemployment 
-    double panelCost;
-    double panel_subsidies; // input from user of how much are the subsidies
-    panelCost = solarCost - panel_subsidies;  
-    if (panelCost < 0) {panelCost = 0;}
-
-}
-
-
 
 
 //  #################################   RESTAURANT      ###############################
@@ -276,6 +266,7 @@ Restaurant::Restaurant() {
         break;
     }
     }
+
 }
 
 
@@ -305,6 +296,25 @@ void Restaurant::simulate_step(double days){
 double Restaurant::get_energyuse(){
 	return (this->energyUsePerSize)*(this->diningSize);
 }
+
+void Restaurant::panel_added_probability(double solarSubsidies, double income, double setUpCost, double solarSatisfaction ){
+    //income represents how the economy is doing in general, need to convert it to index between 0-1 
+    double panelCost;
+    double panel_subsidies = 100; // input from user of how much are the subsidies
+    double income_indexed = 0.5;
+    panelCost = this->solarCost - panel_subsidies;  
+    if (panelCost < 0) {panelCost = 0;}
+
+    double initial_investment;  //Give a value between 0-1 to have an idea of the initial investment into the shop and hence the 
+    // size of the shop and average wealth. If closer to 1 means more investment and hence more high end and more likely to invest in panels
+    if (this->restaurantType == 1) {initial_investment = 0.3;}
+    else if (this->restaurantType == 2) {initial_investment = 0.6;}
+    else {initial_investment = 0.8;}
+
+    this->panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + ((initial_investment+ solarSatisfaction)/2)*25 + income_indexed*25)/100;
+
+}
+
 
 // #############    Small Shop          ####################
 
