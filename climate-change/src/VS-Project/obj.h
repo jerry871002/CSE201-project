@@ -113,7 +113,7 @@ namespace godot {
         bool nuclear_prohibited();
         
         //Law imposing maximum amount of CO2 emitted for each factory per day (Goods factories class), the imput value is in kg per day and per factory :
-        double maximum_CO2 = -1; //default when there is no policy, should be between 0-4250 kg when policy is implemented
+        double maximum_CO2 = -1; //default when there is no policy, should be between 0-42 kg when policy is implemented
 
         //Subsidies to "green" factories, so those which have a low emission of harmful chemicals and heavy metals : 
         double subsidy_green = -1; //default when policy is not on, should be between 1000-1E6 euros per factory

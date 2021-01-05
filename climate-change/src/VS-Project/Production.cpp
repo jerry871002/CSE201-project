@@ -231,11 +231,33 @@ void GoodsFactories::simulate_step(double days)
 	std::mt19937 gen(rd());
 
 	if (maximum_CO2 > -1) {
-	
+		int maxi = 10;
+		if (maximum_CO2 >= 30) {
+			maxi = 10;
+		}
+		if (30 > maximum_CO2 >= 20) {
+			maxi = 8;
+		}
+		if (maximum_CO2 < 20) {
+			maxi = 6;
+		}
+		srand((int)time(0));
+		double chance = (rand() % (maxi));
+		if (employment<=60 && chance < 1) {
+			employment = 0;
+		}
+		if (60 < employment <= 120 && chance < 2) {
+			employment = 0;
+		}
+		if (employment > 120 && chance < 5) {
+			employment = 0;
+		}
+		std::normal_distribution <double> co2(maximum_CO2, 0.5);
+		CO2Emission += (co2(gen) * employment);
 	}
 	else {
 		std::normal_distribution <double> co2(42.5, 0.5);
-		CO2Emission += (co2(gen)* employment);
+		CO2Emission += (co2(gen) * employment);
 	}
 	if (subsidy_green > -1) {
 		
