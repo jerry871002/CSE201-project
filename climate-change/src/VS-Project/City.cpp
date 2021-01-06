@@ -185,7 +185,7 @@ void City::generate_initial_city_graphics()
 
 	// SIMPLER CITY FOR TESTING PURPOSES ON SAD COMPUTERS
 
-	/*
+	
 	
 	for (int x = 0; x < 2; x++)
 	{
@@ -218,11 +218,12 @@ void City::generate_initial_city_graphics()
 		}
 	}
 	
-	*/
+	
 	
 
 	// ACTUAL CITY
 	
+	/*
 	
 	for (int x = 0; x < 4; x++)
 	{
@@ -328,7 +329,7 @@ void City::generate_initial_city_graphics()
 		}
 	}
 
-
+	*/
 	
 }
 
@@ -363,7 +364,8 @@ void City::_ready()
 
 
 
-void City::_on_ResetButton_pressed() {
+void City::_on_ResetButton_pressed() 
+{
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", true);
 	this->time_speed = 0;
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
@@ -376,13 +378,18 @@ void City::_on_ResetButton_pressed() {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 }
 
-void City::_on_Reset_cancelled() {
+void City::_on_Reset_cancelled() 
+{
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
 	this->_on_Game_Speed_changed();
 }
 
-void City::_on_Reset_confirmed() {
+void City::_on_Reset_confirmed() 
+{
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
+
+	/*
+	* 
 	int city_child_count = this->get_child_count();
 	for (int i = city_child_count - 1; i >= 0; --i) {
 		if (this->get_child(i)->get("name") != String("WorldEnvironment") && this->get_child(i)->get("name") != String("Player")) {
@@ -420,6 +427,9 @@ void City::_on_Reset_confirmed() {
 
 	this->_init();
 	this->_ready();
+	*/
+
+	this->get_tree()->reload_current_scene();
 }
 
 
