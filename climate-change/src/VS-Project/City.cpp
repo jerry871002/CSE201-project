@@ -50,7 +50,7 @@ City::City() {
 	days_since_last_simulation = 0;
 
 	// in order to find date
-	daycount=0;
+	daycount = 0;
 
 	// in order to write stats to csv files
 	stat = 0;
@@ -101,12 +101,12 @@ we update `day_tick` and execute simulation()
 */
 void City::_physics_process(float delta) {
 
-	if (bool(time_speed)) 
-	{ 
-		simulation_counter += (double)delta; 
+	if (bool(time_speed))
+	{
+		simulation_counter += (double)delta;
 		date_counter += double(delta) * time_speed;
-	} 
-	 
+	}
+
 	if (simulation_counter > 5)
 	{
 		simulation();
@@ -120,10 +120,10 @@ void City::_physics_process(float delta) {
 		date_counter -= 1;
 	}
 
-	if (this->notification_active) 
+	if (this->notification_active)
 	{
 		(this->notification_counter)++;
-		if (this->notification_counter > this->notification_timeout) 
+		if (this->notification_counter > this->notification_timeout)
 		{
 			this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 			this->notification_active = false;
@@ -156,16 +156,8 @@ void City::_input(InputEvent*)
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
 		if (!(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 			(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
-			
-=======
-			((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
->>>>>>> parent of c155634... Merge branch 'master' of https://github.com/jerry871002/CSE201-project
-=======
-			(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
->>>>>>> parent of 344ebea... Merge branch 'master' of https://github.com/jerry871002/CSE201-project
+
 		}
 		this->_on_Game_Speed_changed();
 		this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
@@ -178,7 +170,7 @@ void City::_input(InputEvent*)
 		this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 		this->notification_active = false;
 		this->notification_counter = 0;
-	}	
+	}
 
 	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))
 	{
@@ -194,8 +186,6 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
 	for (int x = 0; x < 3; x++)
 	{
 		for (int z = 0; z < 3; z++)
@@ -204,7 +194,7 @@ void City::generate_initial_city_graphics()
 			std::cout << "DEBUG: About to create a random shop" << std::endl;
 
 			int bigbuildingmaybe = rand() % 10;
-			if (bigbuildingmaybe == 0) { add_shop(pos + Vector3(15,0,15), MallScene); }
+			if (bigbuildingmaybe == 0) { add_shop(pos + Vector3(15, 0, 15), MallScene); }
 			else if (bigbuildingmaybe == 1) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
 			else {
 				for (int x1 = 0; x1 < 2; x1++)
@@ -229,100 +219,10 @@ void City::generate_initial_city_graphics()
 			this->add_child(node);
 			all_shops.push_back((Shop*)node);
 			*/
-=======
-	std::cout << "DEBUG: generate city graphics started" << std::endl;
-	ResourceLoader* ResLo = ResourceLoader::get_singleton();
-	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
-	Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
-	Ref<PackedScene> MallScene = ResLo->load("res://Resources/Mall.tscn", "PackedScene");
-	Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
-	Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
-	Ref<PackedScene> WindmillScene = ResLo->load("res://Resources/Windmill.tscn", "PackedScene");
-	Ref<PackedScene> LowHouseScene = ResLo->load("res://Resources/LowHouse.tscn", "PackedScene");
-	Ref<PackedScene> HighHouseScene = ResLo->load("res://Resources/HighHouse.tscn", "PackedScene");
-	Ref<PackedScene> ParkScene = ResLo->load("res://Resources/Park.tscn", "PackedScene");
 
-	if (RestaurantScene.is_valid() && ShopScene.is_valid())
-	{
-		for (int x = 0; x < 8; x++)
-=======
-	
-
-		for (int x = 0; x < 3; x++)
->>>>>>> parent of 344ebea... Merge branch 'master' of https://github.com/jerry871002/CSE201-project
-		{
-			for (int z = 0; z < 9; z++)
-			{
-<<<<<<< HEAD
-				Vector3 pos = Vector3(30 * x, 0, 30 * z);
-				std::cout << "DEBUG: About to create a random shop" << std::endl;
-				int type = rand() % 8;
-				if (type == 0) { add_shop(pos, RestaurantScene); }
-				else if (type == 1) { add_shop(pos, ShopScene); }
-				else if (type <= 5) { add_house(pos, LowHouseScene); }
-				else { add_house(pos, HighHouseScene); }
-				
-=======
-				Vector3 pos = Vector3(60 * x, 0, 60 * z);
-				std::cout << "DEBUG: About to create a random shop" << std::endl;
-
-				int bigbuildingmaybe = rand() % 10;
-				if (bigbuildingmaybe == 0) { add_shop(pos + Vector3(15,0,15), MallScene); }
-				else if (bigbuildingmaybe == 1) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
-				else {
-					for (int x1 = 0; x1 < 2; x1++)
-					{
-						for (int z1 = 0; z1 < 2; z1++) {
-							int type = rand() % 25;
-							Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-							if (type < 3) { add_shop(pos + pos1, RestaurantScene); break; }
-							else if (type < 8) { add_shop(pos + pos1, ShopScene); break; }
-							else if (type < 14) { add_house(pos + pos1, LowHouseScene); break; }
-							else if (type < 20) { add_house(pos + pos1, BuildingScene); break; }
-							else if (type == 20) { add_energy(pos + pos1, WindmillScene); break; }
-							else { add_house(pos + pos1, HighHouseScene); break; }
-						}
-					}
-				}
-
->>>>>>> parent of 344ebea... Merge branch 'master' of https://github.com/jerry871002/CSE201-project
-				/*{ node = RestaurantScene->instance(); }
-				else { node = ShopScene->instance(); }
-				node->set("scale", Vector3(10, 10, 10));
-				node->set("translation", Vector3(30 * x, 0, 30 * z));
-				this->add_child(node);
-				all_shops.push_back((Shop*)node);
-				*/
-<<<<<<< HEAD
->>>>>>> parent of c155634... Merge branch 'master' of https://github.com/jerry871002/CSE201-project
-				
 		}
 	}
-<<<<<<< HEAD
-	
-=======
-	if (MallScene.is_valid())
-	{
-		Node* node = MallScene->instance();
-		node->set("translation", Vector3(225, 0, 105));
-		this->add_child(node);
-		all_shops.push_back((Shop*)node);
-	}
-	if (WindmillScene.is_valid())
-	{
-		Node* node = WindmillScene->instance();
-		node->set("translation", Vector3(120, 0, -150));
-		this->add_child(node);
-		all_shops.push_back((Shop*)node);
 
-	}
->>>>>>> parent of c155634... Merge branch 'master' of https://github.com/jerry871002/CSE201-project
-=======
-				
-			}
-		}
-	
->>>>>>> parent of 344ebea... Merge branch 'master' of https://github.com/jerry871002/CSE201-project
 }
 
 void City::set_initial_visible_components()
@@ -351,7 +251,7 @@ void City::_ready()
 	std::cout << "DEBUG: Ready started" << std::endl;
 	this->generate_initial_city_graphics();
 	this->set_initial_visible_components();
-	
+
 }
 
 
@@ -374,6 +274,10 @@ void City::_on_Reset_confirmed() {
 			this->remove_child(this->get_child(i));
 		}
 	}
+
+	Node* PlayerNode = this->get_node("Player");
+	this->remove_child(PlayerNode);
+	this->add_child(PlayerNode);
 
 	income = 0;
 	population = 50000;
@@ -407,7 +311,7 @@ void City::_on_Reset_confirmed() {
 
 void godot::City::_on_MenuShop_pressed(String name)
 {
-	
+
 	active_button = name;
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
@@ -418,7 +322,7 @@ void godot::City::_on_MenuShop_pressed(String name)
 	String ButtonInfo = this->get_button_info_text();
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
-	
+
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
@@ -433,13 +337,13 @@ String City::get_button_info_text() {
 	// I DON'T KNOW HOW TO DO THE SECOND PART YET 
 	// I GUESS THESE VALUES SHOULD BE STORED IN CITY AND NOT FETCHED FROM RANDOM OBJECTS
 
-	if (this->active_button == String("ChangePanelProbabilityForAllShops")) 
+	if (this->active_button == String("ChangePanelProbabilityForAllShops"))
 	{
 		//this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
 		return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for all shops. Ultimately, this policy will be implemented as a subsidy, and thus the input will refer to a certain amount that the city will be willing to contribute to the installation of solar panels on shops. Hence, this amount will be subtracted from the budget as soon as solar panels are installed on a shop.");
-	} 
-	else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) 
-	{ 
+	}
+	else if (this->active_button == String("ChangePanelProbabilityForRestaurants"))
+	{
 		return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for restaurants in the city.");
 	}
 	else {
@@ -461,12 +365,12 @@ void godot::City::_on_Validate_pressed()
 	if (mytext.is_valid_float()) {
 		this->implement_shop_policies((double)mytext.to_float());
 	}
-	else { 
+	else {
 		this->trigger_notification(String("You did not enter an appropriate value for the policy."));
 	}
 }
 
-void City::trigger_notification(String text = String("Seems like there was a mistake. Please try again.")) 
+void City::trigger_notification(String text = String("Seems like there was a mistake. Please try again."))
 {
 	std::cout << "INVALID INPUT: EXPECTED FLOAT IN SPECIFIED RANGE" << std::endl;
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("text", text);
@@ -487,7 +391,7 @@ void City::implement_shop_policies(double value) {
 				(*it)->set("panel_probability", value);
 			}
 		}
-		else { 
+		else {
 			this->trigger_notification(String("The value you provided was not in the specified range."));
 		}
 	}
@@ -501,7 +405,7 @@ void City::implement_shop_policies(double value) {
 				}
 			}
 		}
-		else { 
+		else {
 			this->trigger_notification();
 		}
 	}
@@ -584,7 +488,7 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 				positionOfBuildings[int(x)][int(y) + 1] = 5;
 			}
 			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
-			
+
 
 
 		}
@@ -618,7 +522,7 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 		//traffic stuff
 		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
 		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
-		
+
 		if (x < sizeOfCity && y < sizeOfCity) {
 			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
 				positionOfBuildings[int(x)][int(y)] = 1;
@@ -734,7 +638,7 @@ void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
 
 /*
 int* City::building_coordinates_identification(int x, int y, int number) {
-	//returns coordinates of a center for the upper left square of any buiding  
+	//returns coordinates of a center for the upper left square of any buiding
 	if (number == 1) {
 		int a[] = { x, y };
 		return a; // LOCAL VARIABLE NEEDS FIXING - SEE WARNING MESSAGE
@@ -761,7 +665,7 @@ int* City::building_coordinates_identification(int x, int y, int number) {
 void City::update_traffic(int x, int y, bool newBuilding, int number) {
 	std::cout << "DEBUG: UPDATE TRAFFIC STARTED for coordinates" << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
 	if (positionOfBuildings[x][y] != 0) { // nothing happens if the building isn't there
-		std::cout << "DEBUG: updating traffic for coordinates"<< x << " " <<y << " "<< positionOfBuildings[x][y] << std::endl;
+		std::cout << "DEBUG: updating traffic for coordinates" << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
 		if (number == 1) {  // the case when it's a 1 by 1 buidling
 			traffic[x][y][0][2] = 1;
 			traffic[x][y][1][2] = 1;
@@ -834,7 +738,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 		}
 		else { // the case when it's a 2 by 2 building 
 			if (number == 3) {
-				x =  x - 1;
+				x = x - 1;
 			}
 			if (number == 4) {
 				x = x - 1;
@@ -956,7 +860,7 @@ void City::simulation()
 		((Structure*)(*it))->set("updatable", true);
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 		this->numberOfEmployees += (double)((*it)->get("employment"));
-		this->income += (double)((*it)->get("employment"))*(double)((*it)->get("averageWage"));
+		this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
 		this->energyDemand += (double)((*it)->get("energyUse"));
 		this->environmentalCost += (double)((*it)->get("environmentalCost"));
 	}
@@ -977,9 +881,9 @@ void City::simulation()
 		//this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
 		this->energySupply += (double)((*it)->get("energyperDay"));
 		this->numberOfEmployees += (double)((*it)->get("employment"));
-		this->income += (double)((*it)->get("employment"))*(double)((*it)->get("averageWage"));
+		this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
 	}
-	
+
 	for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
 	{
 		(*it)->set("updatable", true);
@@ -988,13 +892,13 @@ void City::simulation()
 		this->energyDemand += (double)((*it)->get("energyUse"));
 		this->environmentalCost += (double)((*it)->get("environmentalCost"));
 		this->numberOfEmployees += (double)((*it)->get("employment"));
-		this->income += (double)((*it)->get("employment"))*(double)((*it)->get("averageWage"));
+		this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
 	}
 
 	/*
 	for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
 	{
-		    // count up all the vehicle stuff
+			// count up all the vehicle stuff
 	}
 	*/
 
@@ -1002,32 +906,32 @@ void City::simulation()
 	if (day_tick % 4 == 0) {
 		//   function which looks at a single random house at gives it the correct satisfaction then updates the total satisfaction
 		Housing* h = all_houses.at(rand() % all_houses.size());
-		double initialval = (double) (h->get("satisfaction"));
+		double initialval = (double)(h->get("satisfaction"));
 		Vector3 pos = ((Structure*)h)->get_position();
 		double dist = 300;   // the distance where houses take into account the satisfaction
 		int obj_count = 0;
 		double tothouseSat = 0.0;
 
-		this->totalSatisfaction = (totalSatisfaction*all_houses.size() - initialval);
+		this->totalSatisfaction = (totalSatisfaction * all_houses.size() - initialval);
 
 		for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 		{
-			if (((Structure*)(*it))->is_other_structure_within_distance(pos,dist)){
-				tothouseSat += (double)((*it)->get("satisfaction"))*10;
+			if (((Structure*)(*it))->is_other_structure_within_distance(pos, dist)) {
+				tothouseSat += (double)((*it)->get("satisfaction")) * 10;
 				obj_count++;
 			}
 		}
 		for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
 		{
 			if (((Structure*)(*it))->is_other_structure_within_distance(pos, dist)) {
-				tothouseSat += (double)((*it)->get("satisfaction"))*10;
+				tothouseSat += (double)((*it)->get("satisfaction")) * 10;
 				obj_count++;
 			}
 		}
 		for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
 		{
 			if (((Structure*)(*it))->is_other_structure_within_distance(pos, dist)) {
-				tothouseSat += (double)((*it)->get("satisfaction"))*10;
+				tothouseSat += (double)((*it)->get("satisfaction")) * 10;
 				obj_count++;
 			}
 		}
@@ -1043,96 +947,96 @@ void City::simulation()
 
 template<typename T> String to_godot_string(T s)
 {
-    std::string standardString = std::to_string(s);
-    godot::String godotString = godot::String(standardString.c_str());
-    return godotString;
+	std::string standardString = std::to_string(s);
+	godot::String godotString = godot::String(standardString.c_str());
+	return godotString;
 }
 
-int * return_date(int day_tick) {
-    int static date[3];
-    int Y=1,M=1,D=1;
-    int julian = (1461 * (Y + 4800 + (M - 14)/12))/4 +(367 * (M - 2 - 12 / ((M - 14)/12)))/12 - (3 * ((Y + 4900 + (M - 14)/12)/100))/4 + D - 32075+day_tick+35;
-    int gregorian = julian + 1401 + (int)((((int)(4*day_tick+274277) / 146097)*3) / 4) -38;
-    int e = 4*gregorian+3;
-    int h = 5*((int)(e%1461)/4)+2;
-    int day = ((int)(h%153)/5)+1;
-    int month = (((int)h/153)+2)%12+1;
-    int year = (int)(e/1461) - 4716 + (int)((14-month)/12);
-    date[0]= day;
-    date[1] = month;
-    date[2] = year;
-    return date;
+int* return_date(int day_tick) {
+	int static date[3];
+	int Y = 1, M = 1, D = 1;
+	int julian = (1461 * (Y + 4800 + (M - 14) / 12)) / 4 + (367 * (M - 2 - 12 / ((M - 14) / 12))) / 12 - (3 * ((Y + 4900 + (M - 14) / 12) / 100)) / 4 + D - 32075 + day_tick + 35;
+	int gregorian = julian + 1401 + (int)((((int)(4 * day_tick + 274277) / 146097) * 3) / 4) - 38;
+	int e = 4 * gregorian + 3;
+	int h = 5 * ((int)(e % 1461) / 4) + 2;
+	int day = ((int)(h % 153) / 5) + 1;
+	int month = (((int)h / 153) + 2) % 12 + 1;
+	int year = (int)(e / 1461) - 4716 + (int)((14 - month) / 12);
+	date[0] = day;
+	date[1] = month;
+	date[2] = year;
+	return date;
 }
 
 
 String return_number_date(int day, int month, int year) {
-    return to_godot_string(day) + String(", ") + to_godot_string(month) + String(", ") + to_godot_string(year);
+	return to_godot_string(day) + String(", ") + to_godot_string(month) + String(", ") + to_godot_string(year);
 }
 
 
-double find_avg(double array[],int leap) {
-    int size;
-    double sum=0;
-    if (leap==0) {
-        size=366;
-    }
-    else {
-        size=365;
-    }
-    for (int i=0; i<size; i++) {
-        sum+=array[i];
-    }
-    return sum/size;
+double find_avg(double array[], int leap) {
+	int size;
+	double sum = 0;
+	if (leap == 0) {
+		size = 366;
+	}
+	else {
+		size = 365;
+	}
+	for (int i = 0; i < size; i++) {
+		sum += array[i];
+	}
+	return sum / size;
 }
 
 
 String City::return_word_date() {
 
-    int* datenumber = return_date(int(this->day_tick));
-    int year=datenumber[2];
-    String date = String("Year ");
-    date += to_godot_string(datenumber[2]);
-    date += String(", ");
+	int* datenumber = return_date(int(this->day_tick));
+	int year = datenumber[2];
+	String date = String("Year ");
+	date += to_godot_string(datenumber[2]);
+	date += String(", ");
 
-    if (datenumber[1] == 1) {
-        date += String("January ");
-    }
-    if (datenumber[1] == 2) {
-        date += String("February ");
-    }
-    if (datenumber[1] == 3) {
-        date += String("March ");
-    }
-    if (datenumber[1] == 4) {
-        date += String("April ");
-    }
-    if (datenumber[1] == 5) {
-        date += String("May ");
-    }
-    if (datenumber[1] == 6) {
-        date += String("June ");
-    }
-    if (datenumber[1] == 7) {
-        date += String("July ");
-    }
-    if (datenumber[1] == 8) {
-        date += String("August ");
-    }
-    if (datenumber[1] == 9) {
-        date += String("September ");
-    }
-    if (datenumber[1] == 10) {
-        date += String("October ");
-    }
-    if (datenumber[1] == 11) {
-        date += String("November ");
-    }
-    if (datenumber[1] == 12) {
-        date += String("December ");
-    }
+	if (datenumber[1] == 1) {
+		date += String("January ");
+	}
+	if (datenumber[1] == 2) {
+		date += String("February ");
+	}
+	if (datenumber[1] == 3) {
+		date += String("March ");
+	}
+	if (datenumber[1] == 4) {
+		date += String("April ");
+	}
+	if (datenumber[1] == 5) {
+		date += String("May ");
+	}
+	if (datenumber[1] == 6) {
+		date += String("June ");
+	}
+	if (datenumber[1] == 7) {
+		date += String("July ");
+	}
+	if (datenumber[1] == 8) {
+		date += String("August ");
+	}
+	if (datenumber[1] == 9) {
+		date += String("September ");
+	}
+	if (datenumber[1] == 10) {
+		date += String("October ");
+	}
+	if (datenumber[1] == 11) {
+		date += String("November ");
+	}
+	if (datenumber[1] == 12) {
+		date += String("December ");
+	}
 
-    date += to_godot_string(datenumber[0]);
-    return date;
+	date += to_godot_string(datenumber[0]);
+	return date;
 }
 
 
@@ -1143,163 +1047,142 @@ String City::return_word_date() {
 
 /*
 string get_path(tring documentName) {
-    return "../../addons/easy_charts/file.samples/" + documentName + ".csv";
+	return "../../addons/easy_charts/file.samples/" + documentName + ".csv";
 }
-
 // Function to add a line of the form "2015;76" to the csv file named documentName.
 // To do so, call add_data("pollution", "2015", "76");
 void add_data(string documentName, String year, String value) {
-    std::fstream file;
-    String path = get_path(documentName);
-    file.open(path, std::ios::out | std::ios::app);
-    file << year << ";" << value << '\n';
-    file.close();
+	std::fstream file;
+	String path = get_path(documentName);
+	file.open(path, std::ios::out | std::ios::app);
+	file << year << ";" << value << '\n';
+	file.close();
 }
-
 // Suppresses all data stored in the file documentName
 void clear_completely(String documentName) {
-    std::fstream file;
-    String path = get_path(documentName);
-    file.open(path, ios::out | ios::trunc);
-    file.close();
+	std::fstream file;
+	String path = get_path(documentName);
+	file.open(path, ios::out | ios::trunc);
+	file.close();
 }
-
 // Suppresses all data stored in the file documentName except the first line.
 void clear(String documentName) {
-    std::fstream file;
-    String path = get_path(documentName);
-
-    file.open(path);
-    String line;
-    getline(file, line);
-    file.close();
-
-    file.open(path, std::ios::out | std::ios::trunc);
-    file.close();
-
-    file.open(path);
-    file << line << '\n';
-    file.close();
+	std::fstream file;
+	String path = get_path(documentName);
+	file.open(path);
+	String line;
+	getline(file, line);
+	file.close();
+	file.open(path, std::ios::out | std::ios::trunc);
+	file.close();
+	file.open(path);
+	file << line << '\n';
+	file.close();
 }
-
 // Copies the data stored in documentNameFrom to an empty file documentNameTo.
 void copy(String documentNameFrom, String documentNameTo) {
-    std::fstream fileFrom;
-    std::fstream fileTo;
-    String path1 = get_path(documentNameFrom);
-    String path2 = get_path(documentNameTo);
-    fileFrom.open(path1);
-    fileTo.open(path2);
-    while (fileFrom.good()) {
-        String line;
-        getline(fileFrom, line, '\n');
-        if (line.length() > 0) {
-            fileTo << line << '\n';
-        }
-    }
-    fileFrom.close();
-    fileTo.close();
+	std::fstream fileFrom;
+	std::fstream fileTo;
+	String path1 = get_path(documentNameFrom);
+	String path2 = get_path(documentNameTo);
+	fileFrom.open(path1);
+	fileTo.open(path2);
+	while (fileFrom.good()) {
+		String line;
+		getline(fileFrom, line, '\n');
+		if (line.length() > 0) {
+			fileTo << line << '\n';
+		}
+	}
+	fileFrom.close();
+	fileTo.close();
 }
-
 // Function to modify a line of the csv file named documentName.
 // For example, if you want to change the line "2015;76" into "2015;01" of the pollution.csv file, call change_data("pollution", "2015", "01");
 // By calling change_data("pollution", "2015", "01");, you will change all lines of the form "2015;**" into "2015;01".
 // If no line in the file is of the form "2015;**", calling change_data("pollution", "2015", "01") won't do anything.
 void change_data(String documentName, String dataToChange, String newValue) {
-    std::fstream file;
-    std::fstream temp;
-    String path = get_path(documentName);
-    file.open(path);
-    temp.open("../../addons/easy_charts/file.samples/datas_on_rows.csv");
-
-    while (file.good()) {
-        String line;
-        getline(file, line, '\n');
-        if (line.length() > 0) {
-            int pos = line.find(";");
-            String sub = line.substr(0, pos);
-            if (sub == dataToChange) {
-                temp << sub << ";" << newValue << '\n';
-            } else {
-                temp << line << '\n';
-            }
-        }
-    }
-
-    file.close();
-    temp.close();
-
-    clear_completely(documentName);
-
-    copy("datas_on_rows", documentName);
-    clear_completely("datas_on_rows");
+	std::fstream file;
+	std::fstream temp;
+	String path = get_path(documentName);
+	file.open(path);
+	temp.open("../../addons/easy_charts/file.samples/datas_on_rows.csv");
+	while (file.good()) {
+		String line;
+		getline(file, line, '\n');
+		if (line.length() > 0) {
+			int pos = line.find(";");
+			String sub = line.substr(0, pos);
+			if (sub == dataToChange) {
+				temp << sub << ";" << newValue << '\n';
+			} else {
+				temp << line << '\n';
+			}
+		}
+	}
+	file.close();
+	temp.close();
+	clear_completely(documentName);
+	copy("datas_on_rows", documentName);
+	clear_completely("datas_on_rows");
 }
-
 // Function to delete a line of the csv file named documentName.
 // By calling delete_line("pollution", "2015");, you will delete all lines of the form "2015;**".
 // If no line in the file is of the form "2015;**", calling delete_line("pollution", "2015") won't do anything.
 void delete_line(String documentName, String dataToDelete) {
-    std::fstream file;
-    std::fstream temp;
-    String path = get_path(documentName);
-    file.open(path);
-    temp.open("../../addons/easy_charts/file.samples/datas_on_rows.csv");
-
-    while (file.good()) {
-        String line;
-        getline(file, line, '\n');
-        if (line.length() > 0) {
-            int pos = line.find(";");
-            String sub = line.substr(0, pos);
-            if (sub != dataToDelete) {
-                temp << line << '\n';
-            }
-        }
-    }
-
-    file.close();
-    temp.close();
-
-    clear_completely(documentName);
-
-    copy("datas_on_rows", documentName);
-    clear_completely("datas_on_rows");
+	std::fstream file;
+	std::fstream temp;
+	String path = get_path(documentName);
+	file.open(path);
+	temp.open("../../addons/easy_charts/file.samples/datas_on_rows.csv");
+	while (file.good()) {
+		String line;
+		getline(file, line, '\n');
+		if (line.length() > 0) {
+			int pos = line.find(";");
+			String sub = line.substr(0, pos);
+			if (sub != dataToDelete) {
+				temp << line << '\n';
+			}
+		}
+	}
+	file.close();
+	temp.close();
+	clear_completely(documentName);
+	copy("datas_on_rows", documentName);
+	clear_completely("datas_on_rows");
 }
-
 */
 
 void City::write_stat_history_to_file() {
 
 	/*
-    int *date; 
-    date = return_date(day_tick);
-    int day = *date;
-    int month = *(date+1);
-    int year = *(date+2);
+	int *date;
+	date = return_date(day_tick);
+	int day = *date;
+	int month = *(date+1);
+	int year = *(date+2);
 
-    
-    if (day==1 && month==1 && year!=1 && year!=2) {
-        daycount=0;
-	    int leap = (year-1)%4;
-        edit_text_files::add_data(String("alltimestats"), to_godot_string(year-1), to_godot_string(find_avg(stats,leap)));
-        double stats[366];
-        remove(get_path(String("statsyear") + to_godot_string(year-2)).c_str());
-    }
-        
+	if (day==1 && month==1 && year!=1 && year!=2) {
+		daycount=0;
+		int leap = (year-1)%4;
+		edit_text_files::add_data(String("alltimestats"), to_godot_string(year-1), to_godot_string(find_avg(stats,leap)));
+		double stats[366];
+		remove(get_path(String("statsyear") + to_godot_string(year-2)).c_str());
+	}
 
-    stats[daycount]=stat;
-    daycount+=1;
-    edit_text_files::add_data(String("statsyear") + to_godot_string(year), return_number_date(day,month,year), to_godot_string(stat));
+	stats[daycount]=stat;
+	daycount+=1;
+	edit_text_files::add_data(String("statsyear") + to_godot_string(year), return_number_date(day,month,year), to_godot_string(stat));
 
-        
-    int *daysbef;
-    daysbef = return_date(day_tick-300);
-    int daydaysbef=*daysbef;
-    int monthdaysbef=*(daysbef+1);
-    int yeardaysbef=*(daysbef+2);
-    edit_text_files::delete_line(String("statsyear") + to_godot_string(year), return_number_date(daydaysbef,monthdaysbef,yeardaysbef));
+	int *daysbef;
+	daysbef = return_date(day_tick-300);
+	int daydaysbef=*daysbef;
+	int monthdaysbef=*(daysbef+1);
+	int yeardaysbef=*(daysbef+2);
+	edit_text_files::delete_line(String("statsyear") + to_godot_string(year), return_number_date(daydaysbef,monthdaysbef,yeardaysbef));
 	*/
-	
+
 }
 
 
@@ -1331,8 +1214,8 @@ double City::return_energySupply() {
 
 //in order to check for errors on mac
 int main() {
-	City c=City();
+	City c = City();
 	c.simulation();
-	std::cout << "DEBUG: TOTAL CARBON EMISSION = " << c.return_carbonEmission() << std::endl; 
+	std::cout << "DEBUG: TOTAL CARBON EMISSION = " << c.return_carbonEmission() << std::endl;
 	return 0;
 }
