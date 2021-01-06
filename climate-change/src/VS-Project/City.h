@@ -30,6 +30,8 @@
 #include <iostream>
 #include <stdio.h>
 
+using namespace std;
+
 
 /* use main fct defined in City.cpp for mac
 
@@ -143,6 +145,9 @@ namespace godot {
 		double return_environmentalCost();
 		double return_totalSatisfaction();
 
+		//computes probailities for each type of transport that this type will be added
+		void transport_probabilities(double* incomes, int incomesLen, double airQuality);
+
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
 
@@ -168,6 +173,10 @@ namespace godot {
 		double energySupply;
 		double environmentalCost;
 		double totalSatisfaction;
+
+		//probability that a certain type of car will be added
+ 		double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
+ 		double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;
 
 
 		const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");
