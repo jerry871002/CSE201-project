@@ -1,15 +1,4 @@
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <stdio.h>
-
-#ifdef _WIN32
-#include <Windows.h>
-#else
-#include <unistd.h>
-#endif
-
+#include "edit_text_files.h"
 
 using namespace std;
 
