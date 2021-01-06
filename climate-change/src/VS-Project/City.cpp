@@ -186,16 +186,17 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-	for (int x = 0; x < 3; x++)
+
+	for (int x = 0; x < 4; x++)
 	{
 		for (int z = 0; z < 3; z++)
 		{
 			Vector3 pos = Vector3(60 * x, 0, 60 * z);
 			std::cout << "DEBUG: About to create a random shop" << std::endl;
 
-			int bigbuildingmaybe = rand() % 10;
-			if (bigbuildingmaybe == 0) { add_shop(pos + Vector3(15, 0, 15), MallScene); }
-			else if (bigbuildingmaybe == 1) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
+			int bigbuildingmaybe = rand() % 30;
+			if (bigbuildingmaybe < 5) { add_shop(pos + Vector3(15, 0, 15), MallScene); }
+			else if (bigbuildingmaybe < 7) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
 			else {
 				for (int x1 = 0; x1 < 2; x1++)
 				{
@@ -212,13 +213,23 @@ void City::generate_initial_city_graphics()
 				}
 			}
 
-			/*{ node = RestaurantScene->instance(); }
-			else { node = ShopScene->instance(); }
-			node->set("scale", Vector3(10, 10, 10));
-			node->set("translation", Vector3(30 * x, 0, 30 * z));
-			this->add_child(node);
-			all_shops.push_back((Shop*)node);
-			*/
+
+
+		}
+	}
+
+	for (int x = 8; x < 12; x++)
+	{
+		for (int z = 0; z < 7; z++)
+		{
+			int type = rand() % 25;
+			Vector3 pos = Vector3(30 * x, 0, 30 * z);
+			if (type < 7) { add_production(pos, SheepPastureScene); }
+			else if (type < 14) { add_production(pos, PigsPastureScene); }
+			else if (type < 16) { add_production(pos, WindmillScene); }
+			else { add_house(pos, FieldScene); }
+
+
 
 		}
 	}
