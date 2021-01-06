@@ -23,13 +23,11 @@ namespace godot {
 		const double VSPEED_POWER = 1.2;
 
 		const double MaxCameraAngle{ 40 };
-		const double MinCameraAngle{ 15 };
-		const double InitialCameraAngle{ 18 };
+		const double MinCameraAngle{ 25 };
 		double CameraAngleDeg;
-		Vector3 AngleQuadraticCoefficients;
-		const Vector3 StartPosition{ Vector3(0, 50, 100) };
-		const double MaxHeight{ 175 };
-		const double MinHeight{ 30 };
+		const Vector3 StartPosition{ Vector3(0, 70, 100) };
+		const double MaxHeight{ 200 };
+		const double MinHeight{ 40 };
 		void update_camera_angle();
 
 		//WorldEnvironment* Env;
