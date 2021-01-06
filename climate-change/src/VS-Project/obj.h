@@ -160,6 +160,8 @@ namespace godot {
 
         virtual double get_maintenance();
         virtual void set_maintenance(double maintenance);
+        virtual double get_age();
+        virtual void set_age(double age);
         virtual double get_averageWage();
         virtual void set_averageWage(double averageWage);
         virtual double get_building_time();

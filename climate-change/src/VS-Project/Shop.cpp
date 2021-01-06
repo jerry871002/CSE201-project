@@ -120,6 +120,7 @@ String Shop::get_object_info()
 {
     String info = this->Structure::get_object_info();
 
+    info += "Age of the building in years: " + to_godot_string((double)(this->get("age"))) + String("\n");
     info += "Employement: " + to_godot_string(this->employment) + String("\n");
     if (this->PanelsOn) {
         info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string(this->panels_age) + String("\n");

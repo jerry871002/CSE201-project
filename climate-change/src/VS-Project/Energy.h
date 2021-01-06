@@ -47,6 +47,7 @@ namespace godot {
 		double nuclearWaste = 0;
 
 		virtual double get_energy_output();
+		virtual void set_energy_output(double energyOutput);
 
 		//All emissions caused by the plants which have a negative impact on the environment 
 		//(I am not having you deal with the waste such as ash for the moment)
