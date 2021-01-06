@@ -30,6 +30,8 @@
 #include <iostream>
 #include <stdio.h>
 
+using namespace std;
+
 
 /* use main fct defined in City.cpp for mac
 
