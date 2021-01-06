@@ -321,37 +321,6 @@ void godot::Structure::_on_Area_mouse_exited()
 
 //POLICIES (interface team needs to make them usable from screen)
 
-bool Structure::efficiency_cogeneration() {
-    return false; 
-    /* need to add possibility of turning true (then definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
-
-bool Structure::efficiency_supercritical() {
-    return false;
-    /* need to add possibility of turning true (then definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
-
-bool Structure::coal_prohibited() {
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
-
-bool Structure::nuclear_prohibited() {
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
 
 bool Structure::solar_panel_subsidies() {
     return false;
