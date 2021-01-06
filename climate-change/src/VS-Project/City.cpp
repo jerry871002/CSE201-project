@@ -243,7 +243,7 @@ void City::generate_initial_city_graphics()
 			}
 		}
 	}
-	for (int x = 0; x < 8; x++)
+	for (int x = 0; x < 4; x++)
 	{
 		for (int z = 4; z < 8; z++)
 		{
