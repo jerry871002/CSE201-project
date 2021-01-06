@@ -22,6 +22,8 @@ namespace godot {
 		static void _register_methods();
 		virtual String get_object_info();
 
+		bool subsidy = false; //needed to check whether the subsidy is given to the factory in the info display
+
 		// Harmful chemicals emitted :
 
 		double SO2Emission = 0; //kg of sulfure dioxide emitted 
