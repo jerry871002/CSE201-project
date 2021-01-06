@@ -607,8 +607,8 @@ void City::add_car() {
 
 		// randomly choose between bugatti and chiron
 
-		//int type = rand() % 3;
-		int type = 3;
+		int type = rand() % 3;
+
 		Node* node;
 
 		switch (type) {
@@ -620,9 +620,10 @@ void City::add_car() {
 		node->set("scale", Vector3(10, 10, 10));
 		node->set("translation", Vector3(-13, 0, -13 + 30 * (0 + 1)));
 		
-		((Transport*)node)->set_transportType(3);
-		this->add_child((Node*)node);
 		
+		this->add_child((Node*)node);
+		((Transport*)node)->set("transportType", 3);
+
 		//((Transport*)node)->transport_type();
 
 
