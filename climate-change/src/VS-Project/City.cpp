@@ -154,8 +154,10 @@ void City::_input(InputEvent*)
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 		this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
+
 		if (!(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) {
 			(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
+			
 		}
 		this->_on_Game_Speed_changed();
 		this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
@@ -184,44 +186,42 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-	
-
-		for (int x = 0; x < 3; x++)
+	for (int x = 0; x < 3; x++)
+	{
+		for (int z = 0; z < 3; z++)
 		{
-			for (int z = 0; z < 3; z++)
-			{
-				Vector3 pos = Vector3(60 * x, 0, 60 * z);
-				std::cout << "DEBUG: About to create a random shop" << std::endl;
+			Vector3 pos = Vector3(60 * x, 0, 60 * z);
+			std::cout << "DEBUG: About to create a random shop" << std::endl;
 
-				int bigbuildingmaybe = rand() % 10;
-				if (bigbuildingmaybe == 0) { add_shop(pos + Vector3(15,0,15), MallScene); }
-				else if (bigbuildingmaybe == 1) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
-				else {
-					for (int x1 = 0; x1 < 2; x1++)
-					{
-						for (int z1 = 0; z1 < 2; z1++) {
-							int type = rand() % 25;
-							Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-							if (type < 3) { add_shop(pos + pos1, RestaurantScene); }
-							else if (type < 8) { add_shop(pos + pos1, ShopScene); }
-							else if (type < 14) { add_house(pos + pos1, LowHouseScene); }
-							else if (type < 20) { add_house(pos + pos1, BuildingScene); }
-							else if (type == 20) { add_energy(pos + pos1, WindmillScene); }
-							else { add_house(pos + pos1, HighHouseScene); }
-						}
+			int bigbuildingmaybe = rand() % 10;
+			if (bigbuildingmaybe == 0) { add_shop(pos + Vector3(15,0,15), MallScene); }
+			else if (bigbuildingmaybe == 1) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
+			else {
+				for (int x1 = 0; x1 < 2; x1++)
+				{
+					for (int z1 = 0; z1 < 2; z1++) {
+						int type = rand() % 25;
+						Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+						if (type < 3) { add_shop(pos + pos1, RestaurantScene); }
+						else if (type < 8) { add_shop(pos + pos1, ShopScene); }
+						else if (type < 14) { add_house(pos + pos1, LowHouseScene); }
+						else if (type < 20) { add_house(pos + pos1, BuildingScene); }
+						else if (type == 20) { add_energy(pos + pos1, WindmillScene); }
+						else { add_house(pos + pos1, HighHouseScene); }
 					}
 				}
-
-				/*{ node = RestaurantScene->instance(); }
-				else { node = ShopScene->instance(); }
-				node->set("scale", Vector3(10, 10, 10));
-				node->set("translation", Vector3(30 * x, 0, 30 * z));
-				this->add_child(node);
-				all_shops.push_back((Shop*)node);
-				*/
-				
 			}
+
+			/*{ node = RestaurantScene->instance(); }
+			else { node = ShopScene->instance(); }
+			node->set("scale", Vector3(10, 10, 10));
+			node->set("translation", Vector3(30 * x, 0, 30 * z));
+			this->add_child(node);
+			all_shops.push_back((Shop*)node);
+			*/
+				
 		}
+	}
 	
 }
 
