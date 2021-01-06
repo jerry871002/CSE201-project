@@ -403,10 +403,10 @@ __meta__ = {
 }
 
 [node name="ResetConfirmationBox" type="Control" parent="2Dworld"]
-margin_left = 762.94
-margin_top = 144.649
-margin_right = 802.94
-margin_bottom = 184.649
+margin_left = 806.94
+margin_top = 260.649
+margin_right = 846.94
+margin_bottom = 300.649
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -424,10 +424,10 @@ __meta__ = {
 }
 
 [node name="CancelReset" type="Button" parent="2Dworld/ResetConfirmationBox"]
-margin_left = 258.118
-margin_top = 25.4455
-margin_right = 356.118
-margin_bottom = 62.4455
+margin_left = 106.118
+margin_top = 101.445
+margin_right = 204.118
+margin_bottom = 138.445
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CANCEL"
@@ -457,10 +457,10 @@ __meta__ = {
 }
 
 [node name="ConfirmExit" type="Button" parent="2Dworld/ExitConfirmationBox"]
-margin_left = 48.0
-margin_top = 23.0
-margin_right = 237.0
-margin_bottom = 60.0
+margin_left = 102.0
+margin_top = 79.0
+margin_right = 291.0
+margin_bottom = 116.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CONFIRM EXIT"
@@ -469,10 +469,10 @@ __meta__ = {
 }
 
 [node name="CancelExit" type="Button" parent="2Dworld/ExitConfirmationBox"]
-margin_left = 258.118
-margin_top = 25.4455
-margin_right = 356.118
-margin_bottom = 62.4455
+margin_left = 144.118
+margin_top = 149.445
+margin_right = 242.118
+margin_bottom = 186.445
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CANCEL"

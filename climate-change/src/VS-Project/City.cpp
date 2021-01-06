@@ -164,6 +164,7 @@ void City::_input(InputEvent*)
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
 		this->_on_Reset_cancelled();
+		this->_on_Exit_cancelled();
 
 		this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 		this->notification_active = false;
@@ -373,6 +374,7 @@ void City::_ready()
 void City::_on_ExitButton_pressed()
 {
 	
+	this->_on_Reset_cancelled();
 	this->time_speed = 0;
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", true);
@@ -403,16 +405,19 @@ void City::_on_Exit_confirmed()
 
 void City::_on_ResetButton_pressed() 
 {
+	
+	this->_on_Exit_cancelled();
+	this->time_speed = 0;
+
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", true);
 	this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
-	this->time_speed = 0;
+	
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
-
 	
 }
 
