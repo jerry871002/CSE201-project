@@ -3,6 +3,7 @@
 #include <core/Godot.hpp>
 #include <Math.hpp>
 #include <random>
+#include <string>
 using namespace godot;
 
 String godot::Production::class_name() {
@@ -76,6 +77,8 @@ String godot::AgriculturalProduction::class_name() {
 AgriculturalProduction::AgriculturalProduction() {
 	int type = rand()%3;
 	agriculture_type(type);
+
+	subsidy = false;
 	}
 
 
@@ -221,6 +224,8 @@ GoodsFactories::GoodsFactories() {
 	NOxEmission = 0.05*employment; //kg of nitrogen oxides emitted per day
 	VOCsEmission = 0.075*employment; // kg of volatile organic compounds emitted
 	PMEmission = 0.5*employment; //kg of particulate matter emitted per day
+
+	subsidy = false;
 }
 
 GoodsFactories::~GoodsFactories() {}
@@ -234,6 +239,7 @@ void GoodsFactories::simulate_step(double days)
 
 	if (subsidy_green > -1) {
 		int value = 10;
+		subsidy = true;
 		if (subsidy_green <= 30000) {
 			value = 10;
 		}
@@ -328,6 +334,8 @@ Services::Services() {
 	arsenicEmission = 0.002; //kg of arsenic per day
 	nickelEmission = 0.012; //kg of nickel per day
 	leadEmission = 0.021; //kg of lead per day
+
+	subsidy = false;
 }
 
 Services::~Services() {}
@@ -353,20 +361,29 @@ void Services::simulate_step(double days)
 	leadEmission += lead(gen); 
 }
 
-/// <summary>
-/// RECYCLING FACTORIES
-/// </summary>
+// INOFRMATION DISPLAY
 
-String godot::RecyclingFactories::class_name()
+void Production::_register_methods()
 {
-	return "RecyclingFactories";
 }
 
-RecyclingFactories::RecyclingFactories() {
+template<typename T> String to_godot_string(T s)
+{
+	std::string standardString = std::to_string(s);
+	godot::String godotString = godot::String(standardString.c_str());
+	return godotString;
 }
 
-RecyclingFactories::~RecyclingFactories() {}
-
-void RecyclingFactories::simulate_step(double days)
+String Production::get_object_info()
 {
+	String info = this->Structure::get_object_info();
+
+	info += "Employment: " + to_godot_string(this->employment) + String("\n");
+	info += "Energy used by the building in kWh: " + to_godot_string(this->energyUse) + String("\n");
+	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
+	if (subsidy == true) {
+		info += "This factory receives a green subsidy" + String("\n");
+	}
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+	return info;
 }

@@ -16,6 +16,14 @@ namespace godot {
 		Production();
 		~Production();
 
+		virtual String get_object_type() { return "Production"; };
+		String get_main_type() { return "Production"; };
+
+		static void _register_methods();
+		virtual String get_object_info();
+
+		bool subsidy = false; //needed to check whether the subsidy is given to the factory in the info display
+
 		// Harmful chemicals emitted :
 
 		double SO2Emission = 0; //kg of sulfure dioxide emitted 
@@ -56,6 +64,8 @@ namespace godot {
 		GODOT_SUBCLASS(AgriculturalProduction, Production)
 	public:
 		virtual String class_name();
+		virtual String get_object_type() { return "Agricultural Production"; };
+
 		AgriculturalProduction();
 		~AgriculturalProduction();
         AgriculturalProduction(int type);
@@ -96,6 +106,7 @@ namespace godot {
 		virtual String class_name();
 		GoodsFactories();
 		~GoodsFactories();
+		virtual String get_object_type() { return "Goods Factory"; };
 
 		double factoryGDP; //Total money made by the factory over one year in euros
 
@@ -116,21 +127,10 @@ namespace godot {
 		virtual String class_name();
 		Services();
 		~Services();
+		virtual String get_object_type() { return "Services"; };
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 	};
 
-	/// <summary>
-	/// RECYCLING FACTORIES
-	/// </summary>
-
-	class RecyclingFactories : public Production {
-		GODOT_SUBCLASS(RecyclingFactories, Production)
-	public:
-		virtual String class_name();
-		RecyclingFactories();
-		~RecyclingFactories();
-
-		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
-	};
 }
+

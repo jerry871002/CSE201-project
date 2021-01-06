@@ -1490,8 +1490,208 @@ double City::return_energySupply() {
 	return energySupply;
 }
 
+void City::transport_probabilities(double* incomes, int incomesLen, double airQuality){
+	        /*
+        * 0 - electic car
+        * 1 - big american car
+        * 2 - normal car
+        * 3 - old collection car
+        * 4 - bike
+        * 5 - motorcycle
+        * 6 - bus
+        * 7 - sports car
+        */
+double satisfactions[8] = {9.7, 8.5,6.8, 9.3, 9, 7, 8, 9.5};
+		double satisfactionsSum = 67.8;
+		double alpha[8];
+		for(int i=0;i<8;i++){
+			alpha[i] = satisfactions[i]/satisfactionsSum*incomesLen;
+			if ((i==4)||(i==5)){
+				alpha[i]*=sqrt(airQuality);
+			}
+		}
+		double lifetimes[8] = {15, 10, 15, 20, 20, 12, 10, 10};
+		double capacities[8]={5, 8, 4, 2, 1, 1, 45, 2};
+		double costs[8] = {42000, 85000, 14000,40000, 370, 6200, 262500, 52000};
+		double pricesPerMonth[8];
+		double probabilities[8];
+		double quantities[8] = {0,0,0,0,0,0,0,0};
+		for (int i = 0;i<8; i++){
+			pricesPerMonth[i] = costs[i]/(12*lifetimes[i]);
+			alpha[i] =0.01*alpha[i]/incomesLen;
+		}
+		double alphaSum = 0;
+		for (int i=0;i<8;i++){
+			alphaSum+=alpha[i];
+		}
+		for (int n=0;n<incomesLen;n++){
+			double choice[8]={0,0,0,0,0,0,0,0};
+			for (int i=0;i<8;i++){
+				probabilities[i]=alpha[i]*(incomes[n]/pricesPerMonth[i])/alphaSum;
+				if (probabilities[i]>1){
+				    choice[i] = alpha[i];
+				}
+				else {
+				    choice[i]=0;
+				}			}
+			int maxIndex = 0;
+			double maxChoice = choice[0];
+			for (int i=1;i<8;i++){
+				if (choice[i]>maxChoice){
+					maxChoice = choice[i];
+					maxIndex = i;
+				}
+			}
+			quantities[maxIndex]+=1;
+		}
+		for (int i=0;i<8;i++){
+		    quantities[i]/=capacities[i];
+		}
+		double quantitiesSum=0;
+		for (int i=0;i<8;i++ ){
+			quantitiesSum+=quantities[i];
+		}
+		probabilityElectricCar = quantities[0]/quantitiesSum;
+		probabilityBigCar = quantities[1]/quantitiesSum;
+		probabilityCar = quantities[2]/quantitiesSum;
+		probabilityCollectionCar = quantities[3]/quantitiesSum;
+		probabilityBike = quantities[4]/quantitiesSum;
+		probabilityMotorcycle = quantities[5]/quantitiesSum;
+		probabilityBus = quantities[6]/quantitiesSum;
+		probabilitySportsCar = quantities[7]/quantitiesSum;
+
+}
+
+// All inputs are strings for the functions below.
+// The documentName for the file pollution.csv that is located in the "data" folder is "pollution".
+// Ideally, all csv files should be stored in the "data" folder.
+
+string get_path(string documentName) {
+    return "../../addons/easy_charts/file.samples/" + documentName + ".csv";
+}
+
+// Function to add a line of the form "2015;76" to the csv file named documentName.
+// To do so, call add_data("pollution", "2015", "76");
+void add_data(string documentName, string year, string value) {
+    fstream file;
+    string path = get_path(documentName);
+    file.open(path, ios::out | ios::app);
+    file << year << ";" << value << '\n';
+    file.close();
+}
+
+// Suppresses all data stored in the file documentName
+void clear_completely(string documentName) {
+    fstream file;
+    string path = get_path(documentName);
+    file.open(path, ios::out | ios::trunc);
+    file.close();
+}
+
+// Suppresses all data stored in the file documentName except the first line.
+void clear(string documentName) {
+    fstream file;
+    string path = get_path(documentName);
+
+    file.open(path);
+    string line;
+    getline(file, line);
+    file.close();
+
+    file.open(path, ios::out | ios::trunc);
+    file.close();
+
+    file.open(path);
+    file << line << '\n';
+    file.close();
+}
+
+// Copies the data stored in documentNameFrom to an empty file documentNameTo.
+void copy(string documentNameFrom, string documentNameTo) {
+    fstream fileFrom;
+    fstream fileTo;
+    string path1 = get_path(documentNameFrom);
+    string path2 = get_path(documentNameTo);
+    fileFrom.open(path1);
+    fileTo.open(path2);
+    while (fileFrom.good()) {
+        string line;
+        getline(fileFrom, line, '\n');
+        if (line.length() > 0) {
+            fileTo << line << '\n';
+        }
+    }
+    fileFrom.close();
+    fileTo.close();
+}
+
+// Function to modify a line of the csv file named documentName.
+// For example, if you want to change the line "2015;76" into "2015;01" of the pollution.csv file, call change_data("pollution", "2015", "01");
+// By calling change_data("pollution", "2015", "01");, you will change all lines of the form "2015;**" into "2015;01".
+// If no line in the file is of the form "2015;**", calling change_data("pollution", "2015", "01") won't do anything.
+void change_data(string documentName, string dataToChange, string newValue) {
+    fstream file;
+    fstream temp;
+    string path = get_path(documentName);
+    file.open(path);
+    temp.open("../../addons/easy_charts/file.samples/datas_on_rows.csv");
+
+    while (file.good()) {
+        string line;
+        getline(file, line, '\n');
+        if (line.length() > 0) {
+            int pos = line.find(";");
+            string sub = line.substr(0, pos);
+            if (sub == dataToChange) {
+                temp << sub << ";" << newValue << '\n';
+            } else {
+                temp << line << '\n';
+            }
+        }
+    }
+
+    file.close();
+    temp.close();
+
+    clear_completely(documentName);
+
+    copy("datas_on_rows", documentName);
+    clear_completely("datas_on_rows");
+}
+
+// Function to delete a line of the csv file named documentName.
+// By calling delete_line("pollution", "2015");, you will delete all lines of the form "2015;**".
+// If no line in the file is of the form "2015;**", calling delete_line("pollution", "2015") won't do anything.
+void delete_line(string documentName, string dataToDelete) {
+    fstream file;
+    fstream temp;
+    string path = get_path(documentName);
+    file.open(path);
+    temp.open("../../addons/easy_charts/file.samples/datas_on_rows.csv");
+
+    while (file.good()) {
+        string line;
+        getline(file, line, '\n');
+        if (line.length() > 0) {
+            int pos = line.find(";");
+            string sub = line.substr(0, pos);
+            if (sub != dataToDelete) {
+                temp << line << '\n';
+            }
+        }
+    }
+
+    file.close();
+    temp.close();
+
+    clear_completely(documentName);
+
+    copy("datas_on_rows", documentName);
+    clear_completely("datas_on_rows");
+}
 
 
+/*
 //in order to check for errors on mac
 int main() {
 	City c = City();
@@ -1499,3 +1699,4 @@ int main() {
 	std::cout << "DEBUG: TOTAL CARBON EMISSION = " << c.return_carbonEmission() << std::endl;
 	return 0;
 }
+*/

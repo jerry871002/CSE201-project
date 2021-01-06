@@ -30,6 +30,10 @@ double Energy::get_energy_output() {
 	return this->energyOutput;
 }
 
+void Energy::set_energy_output(double energyOutput) {
+	this->energyOutput = energyOutput;
+}
+
 double Energy::get_radiation()
 {
 	return this->radiation;
@@ -429,7 +433,7 @@ void CoalPowerPlant::simulate_step(double days)
 
 void Energy::_register_methods()
 {
-	register_property<Energy, double>("energyPerDay", &Energy::set_energyperDay, &Energy::get_energyperDay, 1);
+	register_property<Energy, double>("energyOutput", &Energy::set_energy_output, &Energy::get_energy_output, 1);
 	register_property<Energy, double>("environmentalCost", &Energy::set_environmental_cost, &Energy::get_environmental_cost, 1);
 }
 
@@ -444,9 +448,10 @@ String Energy::get_object_info()
 {
 	String info = this->Structure::get_object_info();
 
-	info += "Employement: " + to_godot_string(this->employment) + String("\n");
+	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
+	info += "Employment: " + to_godot_string(this->employment) + String("\n");
 	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy produced per day in kWh: " + to_godot_string((int)this->get("energyPerDay")) + String("\n");
+	info += "Energy produced in kWh: " + to_godot_string((int)this->get("energyOutput")) + String("\n");
 	info += "Environmental and health costs induced in euros: " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	return info;
