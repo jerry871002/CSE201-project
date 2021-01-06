@@ -28,7 +28,7 @@ namespace godot {
 		const Vector3 StartPosition{ Vector3(200, 100, 200) };
 		const Vector3 StartRotation{ Vector3(0, 0, 0) };
 		const double MaxHeight{ 250 };
-		const double MinHeight{ 40 };
+		const double MinHeight{ 20 };
 		void update_camera_angle();
 
 		//WorldEnvironment* Env;
