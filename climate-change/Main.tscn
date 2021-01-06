@@ -391,40 +391,45 @@ __meta__ = {
 }
 
 [node name="ResetButton" type="Button" parent="2Dworld"]
-margin_left = 1500.0
-margin_right = 1548.0
-margin_bottom = 20.0
-rect_scale = Vector2( 2, 2 )
+margin_left = 1459.15
+margin_top = 28.0
+margin_right = 1549.15
+margin_bottom = 65.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
 text = "RESET"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ResetConfirmationBox" type="Control" parent="2Dworld"]
-margin_left = 1500.0
-margin_right = 1540.0
-margin_bottom = 40.0
+margin_left = 1498.94
+margin_top = 2.64865
+margin_right = 1538.94
+margin_bottom = 42.6487
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ConfirmReset" type="Button" parent="2Dworld/ResetConfirmationBox"]
-margin_left = -250.0
-margin_top = 100.0
-margin_right = -137.0
-margin_bottom = 120.0
-rect_scale = Vector2( 2, 2 )
+margin_left = 60.0
+margin_top = 25.0
+margin_right = 249.0
+margin_bottom = 62.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
 text = "CONFIRM RESET"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CancelReset" type="Button" parent="2Dworld/ResetConfirmationBox"]
-margin_left = 24.0
-margin_top = 98.0
-margin_right = 85.0
-margin_bottom = 118.0
-rect_scale = Vector2( 2, 2 )
+margin_left = 258.118
+margin_top = 25.4455
+margin_right = 356.118
+margin_bottom = 62.4455
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
 text = "CANCEL"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -444,18 +449,18 @@ margin_right = 248.0
 margin_bottom = 38.0
 
 [node name="TimeControls" type="VBoxContainer" parent="GUI/GUIComponents"]
-margin_right = 244.0
+margin_right = 153.0
 margin_bottom = 38.0
 
 [node name="Date" type="Label" parent="GUI/GUIComponents/TimeControls"]
-margin_right = 244.0
-margin_bottom = 38.0
+margin_right = 153.0
+margin_bottom = 24.0
 custom_fonts/font = ExtResource( 12 )
 text = "Year 1, January 1"
 
 [node name="Indices" type="HBoxContainer" parent="GUI/GUIComponents"]
-margin_left = 248.0
-margin_right = 248.0
+margin_left = 157.0
+margin_right = 157.0
 margin_bottom = 38.0
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Button1" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ChangePanelProbabilityForAllShops" ]]
