@@ -840,55 +840,75 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 				y = y - 1;
 			}
 			traffic[x][y][0][1] = 1;
+			traffic_system[x][y][0][1] = 1;
 			if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
 				traffic[x][y][0][0] = 1;
+				traffic_system[x][y][0][0] = 1;
 			}
 
 			traffic[x + 1][y][0][2] = 1;
+			traffic_system[x + 1][y][0][2] = 1;
 			if (x + 2 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 2][y - 1] == 1 || positionOfBuildings[x + 2][y - 1] == 2 || positionOfBuildings[x + 2][y - 1] == 5)) {
 				traffic[x + 1][y][0][0] = 1;
+				traffic_system[x + 1][y][0][0] = 1;
 			}
 			if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 2 || positionOfBuildings[x + 2][y] == 3)) {
 				traffic[x + 1][y][0][1] = 1;
+				traffic_system[x + 1][y][0][1] = 1;
 			}
 
 			traffic[x + 1][y][3][1] = 1;
+			traffic_system[x + 1][y][3][1] = 1;
 			if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 1] == 1 || positionOfBuildings[x + 2][y + 1] == 2 || positionOfBuildings[x + 2][y + 1] == 3)) {
 				traffic[x + 1][y][3][0] = 1;
+				traffic_system[x + 1][y][3][0] = 1;
 			}
 
 			traffic[x + 1][y + 1][3][2] = 1;
+			traffic_system[x + 1][y + 1][3][2] = 1;
 			if (x + 2 < sizeOfCity && y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 2] == 1 || positionOfBuildings[x + 2][y + 2] == 2 || positionOfBuildings[x + 2][y + 2] == 3)) {
 				traffic[x + 1][y + 1][3][0] = 1;
+				traffic_system[x + 1][y + 1][3][0] = 1;
 			}
 			if (y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 3 || positionOfBuildings[x + 2][y] == 4)) {
 				traffic[x + 1][y + 1][3][1] = 1;
+				traffic_system[x + 1][y + 1][3][1] = 1;
 			}
 
 			traffic[x + 1][y][2][1] = 1;
+			traffic_system[x + 1][y][2][1] = 1;
 			if (y + 2 < sizeOfCity && (positionOfBuildings[x][y + 2] == 1 || positionOfBuildings[x][y + 2] == 3 || positionOfBuildings[x][y + 2] == 4)) {
 				traffic[x + 1][y][2][0] = 1;
+				traffic_system[x + 1][y][2][0] = 1;
 			}
 
 			traffic[x][y + 1][2][2] = 1;
+			traffic_system[x][y + 1][2][2] = 1;
 			if (x - 1 >= 0 && y + 2 < sizeOfCity && (positionOfBuildings[x - 1][y + 2] == 1 || positionOfBuildings[x - 1][y + 2] == 3 || positionOfBuildings[x - 1][y + 2] == 4)) {
 				traffic[x][y + 1][2][0] = 1;
+				traffic_system[x][y + 1][2][0] = 1;
 			}
 			if (x - 1 >= 0 && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 4 || positionOfBuildings[x - 1][y + 1] == 5)) {
 				traffic[x][y + 1][2][1] = 1;
+				traffic_system[x][y + 1][2][1] = 1;
 			}
 
 			traffic[x + 1][y][1][1] = 1;
+			traffic_system[x + 1][y][1][1] = 1;
 			if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
 				traffic[x + 1][y][1][0] = 1;
+				traffic_system[x + 1][y][1][0] = 1;
 			}
 
 			traffic[x][y][1][2] = 1;
+			traffic_system[x][y][1][2] = 1;
 			if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
 				traffic[x][y][1][0] = 1;
+				traffic_system[x][y][1][0] = 1;
 			}
 			if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
 				traffic[x][y][1][1] = 1;
+				traffic_system[x][y][1][1] = 1;
 			}
 
 			if (newBuilding == true) {  // update all the possible buildings around
