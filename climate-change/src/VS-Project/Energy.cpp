@@ -424,3 +424,30 @@ void CoalPowerPlant::simulate_step(double days)
 	mercuryEmission += 1.137E-8 * energyPerDay * days;
 	environmentalCost = 0.06 * energyPerDay * days;
 }
+
+//INFORMATION DISPLAY 
+
+void Energy::_register_methods()
+{
+	register_property<Energy, double>("energyPerDay", &Energy::set_energyperDay, &Energy::get_energyperDay, 1);
+	register_property<Energy, double>("environmentalCost", &Energy::set_environmental_cost, &Energy::get_environmental_cost, 1);
+}
+
+template<typename T> String to_godot_string(T s)
+{
+	std::string standardString = std::to_string(s);
+	godot::String godotString = godot::String(standardString.c_str());
+	return godotString;
+}
+
+String Energy::get_object_info()
+{
+	String info = this->Structure::get_object_info();
+
+	info += "Employement: " + to_godot_string(this->employment) + String("\n");
+	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy produced per day in kWh: " + to_godot_string((int)this->get("energyPerDay")) + String("\n");
+	info += "Environmental and health costs induced in euros: " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+	return info;
+}

@@ -950,7 +950,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 				traffic_system[x][y][1][1] = 1;
 			}
 			if (x + 1 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
-				//std::cout << "DEBUG: statement : " << x << " " << y << " " << positionOfBuildings[x + 1][y - 1] << std::endl;
+				std::cout << "DEBUG: statement : " << x << " " << y << " " << positionOfBuildings[x + 1][y - 1] << std::endl;
 				traffic[x][y][0][0] = 1;
 				traffic_system[x][y][0][0] = 1;
 			}
@@ -999,6 +999,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 				y = y - 1;
 			}
 			traffic[x][y][0][1] = 1;
+			traffic_system[x][y][0][1] = 1;
 			if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
 				traffic[x][y][0][0] = 1;
 				traffic_system[x][y][0][0] = 1;
