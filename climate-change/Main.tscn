@@ -403,10 +403,10 @@ __meta__ = {
 }
 
 [node name="ResetConfirmationBox" type="Control" parent="2Dworld"]
-margin_left = 1498.94
-margin_top = 2.64865
-margin_right = 1538.94
-margin_bottom = 42.6487
+margin_left = 806.94
+margin_top = 260.649
+margin_right = 846.94
+margin_bottom = 300.649
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -424,10 +424,55 @@ __meta__ = {
 }
 
 [node name="CancelReset" type="Button" parent="2Dworld/ResetConfirmationBox"]
-margin_left = 258.118
-margin_top = 25.4455
-margin_right = 356.118
-margin_bottom = 62.4455
+margin_left = 106.118
+margin_top = 101.445
+margin_right = 204.118
+margin_bottom = 138.445
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "CANCEL"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="Button" parent="2Dworld"]
+margin_left = 1571.0
+margin_top = 28.0
+margin_right = 1708.0
+margin_bottom = 65.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "EXIT GAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitConfirmationBox" type="Control" parent="2Dworld"]
+margin_left = 768.94
+margin_top = 208.649
+margin_right = 808.94
+margin_bottom = 248.649
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfirmExit" type="Button" parent="2Dworld/ExitConfirmationBox"]
+margin_left = 102.0
+margin_top = 79.0
+margin_right = 291.0
+margin_bottom = 116.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "CONFIRM EXIT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CancelExit" type="Button" parent="2Dworld/ExitConfirmationBox"]
+margin_left = 144.118
+margin_top = 149.445
+margin_right = 242.118
+margin_bottom = 186.445
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CANCEL"
@@ -471,3 +516,6 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/ResetButton" to="3Dworld" method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="2Dworld/ResetConfirmationBox/ConfirmReset" to="3Dworld" method="_on_Reset_confirmed"]
 [connection signal="pressed" from="2Dworld/ResetConfirmationBox/CancelReset" to="3Dworld" method="_on_Reset_cancelled"]
+[connection signal="pressed" from="2Dworld/ExitButton" to="3Dworld" method="_on_ExitButton_pressed"]
+[connection signal="pressed" from="2Dworld/ExitConfirmationBox/ConfirmExit" to="3Dworld" method="_on_Exit_confirmed"]
+[connection signal="pressed" from="2Dworld/ExitConfirmationBox/CancelExit" to="3Dworld" method="_on_Exit_cancelled"]

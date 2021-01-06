@@ -74,6 +74,9 @@ void City::_register_methods()
 	register_method((char*)"_on_ResetButton_pressed", &City::_on_ResetButton_pressed);
 	register_method((char*)"_on_Reset_confirmed", &City::_on_Reset_confirmed);
 	register_method((char*)"_on_Reset_cancelled", &City::_on_Reset_cancelled);
+	register_method((char*)"_on_ExitButton_pressed", &City::_on_ExitButton_pressed);
+	register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
+	register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
 
 	register_method((char*)"add_shop", &City::add_shop);
 
@@ -161,6 +164,7 @@ void City::_input(InputEvent*)
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
 		this->_on_Reset_cancelled();
+		this->_on_Exit_cancelled();
 
 		this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 		this->notification_active = false;
@@ -337,19 +341,23 @@ void City::generate_initial_city_graphics()
 void City::set_initial_visible_components()
 {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+
 	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
+
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
+
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	// Repeat for all menus
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 
-	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("position", Vector2(20, 20));
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->set("visible", true);
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetButton")->set("visible", true);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
 
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ExitButton")->set("visible", true);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", false);
 
 }
 
@@ -363,34 +371,72 @@ void City::_ready()
 
 }
 
-
-
-void City::_on_ResetButton_pressed() 
+void City::_on_ExitButton_pressed()
 {
-	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", true);
+	
+	this->_on_Reset_cancelled();
 	this->time_speed = 0;
+
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", true);
+	this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
+	
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+	
+}
 
+void City::_on_Exit_cancelled()
+{
 	this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", false);
+	this->_on_Game_Speed_changed();
+}
+
+void City::_on_Exit_confirmed()
+{
+	this->get_tree()->quit();
+}
+
+
+void City::_on_ResetButton_pressed() 
+{
+	
+	this->_on_Exit_cancelled();
+	this->time_speed = 0;
+
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", true);
+	this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
+	
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
+
+	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+	
 }
 
 void City::_on_Reset_cancelled() 
 {
+	this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
 	this->_on_Game_Speed_changed();
 }
 
 void City::_on_Reset_confirmed() 
 {
+	
+	/*
+	
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
 
-	/*
-	* 
+
 	int city_child_count = this->get_child_count();
 	for (int i = city_child_count - 1; i >= 0; --i) {
 		if (this->get_child(i)->get("name") != String("WorldEnvironment") && this->get_child(i)->get("name") != String("Player")) {
