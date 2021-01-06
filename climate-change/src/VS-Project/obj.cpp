@@ -139,6 +139,8 @@ void Structure::_register_methods()
 
     //register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
 
+    register_property<Structure, double>("solar_panel_subsidies", &Structure::solar_panel_subsidies, 0);
+
 }
 
 void Structure::_init()
@@ -369,14 +371,7 @@ double Structure::subsidy_green() {
     }*/
 }
 
-bool Structure::solar_panel_subsidies() {
-    return false;
-    //possibility to change this and have: if true set solarPanelSubsidy to a number
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
+
 
 bool Structure::wind_turbine_subsidies() {
     return false;

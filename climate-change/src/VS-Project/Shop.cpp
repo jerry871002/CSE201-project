@@ -127,8 +127,11 @@ String Shop::get_object_info()
     else {
         info += "Panels are not displayed" + String("\n");
     }
+    info += "SUBSIDY: " + to_godot_string((int)this->get("solar_panel_subsidies")) + String("\n");
+    info += "PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
     info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
     info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+    
     return info;
 }
 
@@ -214,7 +217,7 @@ void Shop::panel_added_probability(){
 
     //income represents how the economy is doing in general, need to convert it to index between 0-1 
     double panelCost;
-    double panel_subsidies = 100; // input from user of how much are the subsidies
+    double panel_subsidies = this->get("solar_panel_subsidies"); // input from user of how much are the subsidies
     double income_indexed = 0.5;
     panelCost = this->solarCost - panel_subsidies;  
     if (panelCost < 0) {panelCost = 0;}
@@ -255,7 +258,7 @@ void Shop::panel_added_probability(){
         std::cout << "DEBUG: SHOP set initial investment error" << std::endl;
         break;
     }
-    panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + ((initial_investment+ this->solarSatisfaction)/2)*25 + income_indexed*25)/100;
+    panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + ((initial_investment + this->solarSatisfaction/10)/2)*25 + income_indexed*25)/100;
 
     if(PanelsOn == true){panel_probability = 0;}
 
