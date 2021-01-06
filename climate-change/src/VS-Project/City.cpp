@@ -335,8 +335,8 @@ void City::generate_initial_city_graphics()
 					for (int z1 = 0; z1 < 2; z1++) {
 						int type = rand() % 25;
 						Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-						if (type < 20) { add_shop(pos + pos1, BuildingScene); }
-						else { add_house(pos + pos1, ShopScene); }
+						if (type < 20) { add_shop(pos + pos1, ShopScene); }
+						else { add_house(pos + pos1, BuildingScene); }
 					}
 				}
 			}
