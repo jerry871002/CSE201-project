@@ -563,19 +563,21 @@ void City::add_car() {
 
 		//int type = rand() % 3;
 		int type = 3;
-		Transport* node;
+		Node* node;
 
 		switch (type) {
-		case 0: node = (Transport*)BugattiScene->instance(); break;
-		case 1: node = (Transport*)ChironScene->instance(); break;
-		default: node = (Transport*)MotoScene->instance(); break;
+		case 0: node = BugattiScene->instance(); break;
+		case 1: node = ChironScene->instance(); break;
+		default: node = MotoScene->instance(); break;
 		}
 		
 		node->set("scale", Vector3(10, 10, 10));
 		node->set("translation", Vector3(-13, 0, -13 + 30 * (0 + 1)));
 		
+		((Transport*)node)->set_transportType(3);
 		this->add_child((Node*)node);
 		
+		//((Transport*)node)->transport_type();
 
 
 		//income -= node->cost;

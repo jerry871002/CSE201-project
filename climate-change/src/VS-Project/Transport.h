@@ -47,6 +47,9 @@ namespace godot {
 		double get_energyuse();
 		double get_environmentalcost();
 
+        void set_transportType(int type);
+        int get_transportType();
+
         /*
         * 0 - electic car
         * 1 - big american car

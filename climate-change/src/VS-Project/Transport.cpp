@@ -44,6 +44,7 @@ template <typename T> void align_on_axis(T obj) {
 
 
 Transport::Transport() {
+    transportType = 0;
     transport_type();
 }
 
@@ -219,7 +220,9 @@ void Transport::_register_methods() {
     register_method((char*)"_ready", &Transport::_ready);
     register_method((char*)"transport_type", &Transport::transport_type);
 
+    register_property<Transport, int>("transportType", &Transport::set_transportType, &Transport::get_transportType, 0);
 }
+
 
 void Transport::_init() {
     
@@ -235,14 +238,14 @@ void Transport::_ready() {
 
 void Transport::_physics_process(float delta) {
 
-    std::cout << delta << std::endl;
+    
 
     (this->physics_counter)++;
 
     if (this->physics_counter == 2) {
         this->physics_counter == 0;
         //delta = delta / 2;
-
+        std::cout << "Value of transport type : " << transportType << std::endl;
     }
 
     prevPositionVec = this->get_global_transform().get_origin();
@@ -507,6 +510,17 @@ double Transport::get_energyuse(){
 
 double Transport::get_environmentalcost(){
     return 0; //at least for now
+}
+
+void Transport::set_transportType(int type)
+{
+    transportType = type;
+    std::cout << "setter is used for transport type value : " << transportType << std::endl;
+}
+
+int Transport::get_transportType()
+{
+    return transportType;
 }
 
 Pedestrian::Pedestrian() {
