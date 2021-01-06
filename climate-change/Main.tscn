@@ -52,7 +52,7 @@ size = 60
 use_mipmaps = true
 font_data = ExtResource( 10 )
 
-[sub_resource type="Theme" id=10]
+[sub_resource type="Theme" id=12]
 
 [node name="Main" type="Spatial"]
 
@@ -106,6 +106,19 @@ margin_left = -47.1433
 margin_top = -26.9391
 margin_right = 2019.86
 margin_bottom = 1115.06
+rect_pivot_offset = Vector2( 536.625, 1828.64 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Blur2" type="Node2D" parent="2Dworld"]
+
+[node name="ColorRect" type="ColorRect" parent="2Dworld/Blur2"]
+material = SubResource( 3 )
+margin_left = -47.0
+margin_top = -27.0
+margin_right = 2020.0
+margin_bottom = 122.0
 rect_pivot_offset = Vector2( 536.625, 1828.64 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -439,7 +452,7 @@ __meta__ = {
 anchor_right = 1.0
 margin_right = -1672.0
 margin_bottom = 38.0
-theme = SubResource( 10 )
+theme = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
