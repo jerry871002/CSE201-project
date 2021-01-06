@@ -71,6 +71,9 @@ namespace godot {
 		void _on_ResetButton_pressed();
 		void _on_Reset_confirmed();
 		void _on_Reset_cancelled();
+		void _on_ExitButton_pressed();
+		void _on_Exit_confirmed();
+		void _on_Exit_cancelled();
 
 		// INITIAL GRAPHICAL SETUP
 
