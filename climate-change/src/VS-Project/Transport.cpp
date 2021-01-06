@@ -494,21 +494,25 @@ int Transport::get_direction(Vector3 pos, double rot) {
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         return(0);
     }
-    
+    std::cout << "Car direction possible " << std::endl;
     int i = -1;
     for (const int& n : (traffic_system)[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
             out.push_back(i);
+            std::cout << i << " ";
         }
         i++;
     }
     
+
     if (out.size() == 0) {
         myCity->add_car();
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         return(0);
     }
-    
+
+
+
     return(out[rand() % out.size()]);
 }
 
