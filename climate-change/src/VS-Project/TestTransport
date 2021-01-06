@@ -1,0 +1,10 @@
+#include <iostream>
+#include "City.h"
+
+using namespace godot;
+
+int main(){
+    City A = City();
+    A.transport_probabilities();
+    std::cout<<"went well";
+}

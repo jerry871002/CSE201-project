@@ -1486,7 +1486,7 @@ void City::transport_probabilities(double* incomes, int incomesLen, double airQu
         * 6 - bus
         * 7 - sports car
         */
-	   	double satisfactions[8] = {9.7, 8.5,6.8, 9.3, 9, 7, 8, 9.5};
+double satisfactions[8] = {9.7, 8.5,6.8, 9.3, 9, 7, 8, 9.5};
 		double satisfactionsSum = 67.8;
 		double alpha[8];
 		for(int i=0;i<8;i++){
@@ -1497,19 +1497,15 @@ void City::transport_probabilities(double* incomes, int incomesLen, double airQu
 		}
 		double lifetimes[8] = {15, 10, 15, 20, 20, 12, 10, 10};
 		double capacities[8]={5, 8, 4, 2, 1, 1, 45, 2};
-		double costs[8] = {4200, 85000, 14000,40000, 370, 6200, 262500, 52000};
+		double costs[8] = {42000, 85000, 14000,40000, 370, 6200, 262500, 52000};
 		double pricesPerMonth[8];
 		double probabilities[8];
 		double quantities[8] = {0,0,0,0,0,0,0,0};
-		double alphaSum = 0;
-		for (int i=0;i<8;i++){
-			alphaSum+=alpha[i];
-		}
 		for (int i = 0;i<8; i++){
 			pricesPerMonth[i] = costs[i]/(12*lifetimes[i]);
-			alpha[i] = 0.01*alpha[i]/alphaSum;
+			alpha[i] =0.01*alpha[i]/incomesLen;
 		}
-		 alphaSum = 0;
+		double alphaSum = 0;
 		for (int i=0;i<8;i++){
 			alphaSum+=alpha[i];
 		}
@@ -1517,13 +1513,12 @@ void City::transport_probabilities(double* incomes, int incomesLen, double airQu
 			double choice[8]={0,0,0,0,0,0,0,0};
 			for (int i=0;i<8;i++){
 				probabilities[i]=alpha[i]*(incomes[n]/pricesPerMonth[i])/alphaSum;
-			if (probabilities[i]>1){
-				choice[i] = alpha[i];
-			}
-			else{
-				choice[i]=0;
-			}
-			}
+				if (probabilities[i]>1){
+				    choice[i] = alpha[i];
+				}
+				else {
+				    choice[i]=0;
+				}			}
 			int maxIndex = 0;
 			double maxChoice = choice[0];
 			for (int i=1;i<8;i++){
@@ -1534,7 +1529,10 @@ void City::transport_probabilities(double* incomes, int incomesLen, double airQu
 			}
 			quantities[maxIndex]+=1;
 		}
-		int quantitiesSum=0;
+		for (int i=0;i<8;i++){
+		    quantities[i]/=capacities[i];
+		}
+		double quantitiesSum=0;
 		for (int i=0;i<8;i++ ){
 			quantitiesSum+=quantities[i];
 		}
