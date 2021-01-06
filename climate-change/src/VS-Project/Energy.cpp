@@ -433,7 +433,7 @@ void CoalPowerPlant::simulate_step(double days)
 
 void Energy::_register_methods()
 {
-	register_property<Energy, double>("energyPerDay", &Energy::set_energyperDay, &Energy::get_energyperDay, 1);
+	register_property<Energy, double>("energyOutput", &Energy::set_energy_output, &Energy::get_energy_output, 1);
 	register_property<Energy, double>("environmentalCost", &Energy::set_environmental_cost, &Energy::get_environmental_cost, 1);
 }
 
