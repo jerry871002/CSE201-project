@@ -412,10 +412,10 @@ __meta__ = {
 }
 
 [node name="ConfirmReset" type="Button" parent="2Dworld/ResetConfirmationBox"]
-margin_left = 60.0
-margin_top = 25.0
-margin_right = 249.0
-margin_bottom = 62.0
+margin_left = 6.0
+margin_top = 15.0
+margin_right = 311.0
+margin_bottom = 74.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CONFIRM RESET"
@@ -436,10 +436,10 @@ __meta__ = {
 }
 
 [node name="ExitButton" type="Button" parent="2Dworld"]
-margin_left = 1571.0
-margin_top = 28.0
-margin_right = 1708.0
-margin_bottom = 65.0
+margin_left = 435.781
+margin_top = 29.9966
+margin_right = 572.781
+margin_bottom = 66.9966
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "EXIT GAME"
@@ -457,10 +457,10 @@ __meta__ = {
 }
 
 [node name="ConfirmExit" type="Button" parent="2Dworld/ExitConfirmationBox"]
-margin_left = 102.0
-margin_top = 79.0
-margin_right = 291.0
-margin_bottom = 116.0
+margin_left = 45.0
+margin_top = 68.0
+margin_right = 349.0
+margin_bottom = 127.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CONFIRM EXIT"
@@ -470,9 +470,9 @@ __meta__ = {
 
 [node name="CancelExit" type="Button" parent="2Dworld/ExitConfirmationBox"]
 margin_left = 144.118
-margin_top = 149.445
+margin_top = 153.191
 margin_right = 242.118
-margin_bottom = 186.445
+margin_bottom = 190.191
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CANCEL"
