@@ -65,6 +65,8 @@ void Player::_process(float delta)
 	worldEnv->get_environment()->set_dof_blur_far_distance(4 * (this->get_global_transform().get_origin().y));
 	worldEnv->get_environment()->set_dof_blur_far_amount(0.1 * pow((1 - (this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight - MinHeight)), 3) );
 	
+	this->get_child(0)->set("far", sqrt(get_global_transform().get_origin().y)*30);
+
 	this->translate(motion); 
 	this->set_rotation_degrees(rotation);
 	this->update_camera_angle();
