@@ -1,8 +1,7 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
-[ext_resource path="res://Resources/Restaurant.tscn" type="PackedScene" id=3]
 [ext_resource path="res://KinematicBody.gdns" type="Script" id=4]
 [ext_resource path="res://Ressources/Icons/RoofWindTurb1.png" type="Texture" id=6]
 [ext_resource path="res://Ressources/Icons/RoofWindTurb2.png" type="Texture" id=7]
@@ -95,9 +94,6 @@ shape = SubResource( 1 )
 
 [node name="Pedestrian1" parent="3Dworld" instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.02275, 0, -9 )
-
-[node name="Restaurant" parent="3Dworld" instance=ExtResource( 3 )]
-transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 
 [node name="2Dworld" type="Node2D" parent="."]
 
