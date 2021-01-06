@@ -1475,7 +1475,79 @@ double City::return_energySupply() {
 	return energySupply;
 }
 
+void City::transport_probabilities(double* incomes, int incomesLen, double airQuality){
+	        /*
+        * 0 - electic car
+        * 1 - big american car
+        * 2 - normal car
+        * 3 - old collection car
+        * 4 - bike
+        * 5 - motorcycle
+        * 6 - bus
+        * 7 - sports car
+        */
+	   	double satisfactions[8] = {9.7, 8.5,6.8, 9.3, 9, 7, 8, 9.5};
+		double satisfactionsSum = 67.8;
+		double alpha[8];
+		for(int i=0;i<8;i++){
+			alpha[i] = satisfactions[i]/satisfactionsSum*incomesLen;
+			if ((i==4)||(i==5)){
+				alpha[i]*=sqrt(airQuality);
+			}
+		}
+		double lifetimes[8] = {15, 10, 15, 20, 20, 12, 10, 10};
+		double capacities[8]={5, 8, 4, 2, 1, 1, 45, 2};
+		double costs[8] = {4200, 85000, 14000,40000, 370, 6200, 262500, 52000};
+		double pricesPerMonth[8];
+		double probabilities[8];
+		double quantities[8] = {0,0,0,0,0,0,0,0};
+		double alphaSum = 0;
+		for (int i=0;i<8;i++){
+			alphaSum+=alpha[i];
+		}
+		for (int i = 0;i<8; i++){
+			pricesPerMonth[i] = costs[i]/(12*lifetimes[i]);
+			alpha[i] = 0.01*alpha[i]/alphaSum;
+		}
+		 alphaSum = 0;
+		for (int i=0;i<8;i++){
+			alphaSum+=alpha[i];
+		}
+		for (int n=0;n<incomesLen;n++){
+			double choice[8]={0,0,0,0,0,0,0,0};
+			for (int i=0;i<8;i++){
+				probabilities[i]=alpha[i]*(incomes[n]/pricesPerMonth[i])/alphaSum;
+			if (probabilities[i]>1){
+				choice[i] = alpha[i];
+			}
+			else{
+				choice[i]=0;
+			}
+			}
+			int maxIndex = 0;
+			double maxChoice = choice[0];
+			for (int i=1;i<8;i++){
+				if (choice[i]>maxChoice){
+					maxChoice = choice[i];
+					maxIndex = i;
+				}
+			}
+			quantities[maxIndex]+=1;
+		}
+		int quantitiesSum=0;
+		for (int i=0;i<8;i++ ){
+			quantitiesSum+=quantities[i];
+		}
+		probabilityElectricCar = quantities[0]/quantitiesSum;
+		probabilityBigCar = quantities[1]/quantitiesSum;
+		probabilityCar = quantities[2]/quantitiesSum;
+		probabilityCollectionCar = quantities[3]/quantitiesSum;
+		probabilityBike = quantities[4]/quantitiesSum;
+		probabilityMotorcycle = quantities[5]/quantitiesSum;
+		probabilityBus = quantities[6]/quantitiesSum;
+		probabilitySportsCar = quantities[7]/quantitiesSum;
 
+}
 
 //in order to check for errors on mac
 int main() {
