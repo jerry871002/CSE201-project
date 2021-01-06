@@ -1,6 +1,5 @@
 #include "City.h"
 #include "Transport.h"
-#include "Player.h"
 #include "edit_text_files.h"
 
 #include <Resource.hpp>
@@ -153,14 +152,15 @@ void City::_input(InputEvent*)
 	{
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
 		this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
+		this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
+
+		this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+
+		this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
-		if (!(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) {
-			(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
+		this->_on_Reset_cancelled();
 
-		}
-		this->_on_Game_Speed_changed();
-		this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
 		this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 		this->notification_active = false;
 		this->notification_counter = 0;
@@ -176,17 +176,54 @@ void City::_input(InputEvent*)
 	{
 		this->_on_Validate_pressed();
 	}
-
-	if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/")->get("visible"))
-	{
-		this->_on_Reset_cancelled();
-	}
 };
 
 
 void City::generate_initial_city_graphics()
 {
 
+
+	// SIMPLER CITY FOR TESTING PURPOSES ON SAD COMPUTERS
+
+	/*
+	
+	for (int x = 0; x < 2; x++)
+	{
+		for (int z = 0; z < 2; z++)
+		{
+			Vector3 pos = Vector3(60 * x, 0, 60 * z);
+			//std::cout << "DEBUG: About to create a random shop" << std::endl;
+
+			int bigbuildingmaybe = rand() % 30;
+			if (bigbuildingmaybe < 5) { add_shop(pos + Vector3(15, 0, 15), MallScene); }
+			else if (bigbuildingmaybe < 7) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
+			else {
+				for (int x1 = 0; x1 < 2; x1++)
+				{
+					for (int z1 = 0; z1 < 2; z1++) {
+						int type = rand() % 25;
+						Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+						if (type < 3) { add_shop(pos + pos1, RestaurantScene); }
+						else if (type < 8) { add_shop(pos + pos1, ShopScene); }
+						else if (type < 14) { add_house(pos + pos1, LowHouseScene); }
+						else if (type < 20) { add_house(pos + pos1, BuildingScene); }
+						else if (type == 20) { add_energy(pos + pos1, WindmillScene); }
+						else { add_house(pos + pos1, HighHouseScene); }
+					}
+				}
+			}
+
+
+
+		}
+	}
+	
+	*/
+	
+
+	// ACTUAL CITY
+	
+	
 	for (int x = 0; x < 4; x++)
 	{
 		for (int z = 0; z < 4; z++)
@@ -217,6 +254,7 @@ void City::generate_initial_city_graphics()
 
 		}
 	}
+	
 
 	for (int x = 4; x < 8; x++)
 	{
@@ -291,7 +329,7 @@ void City::generate_initial_city_graphics()
 	}
 
 
-
+	
 }
 
 void City::set_initial_visible_components()
@@ -328,6 +366,14 @@ void City::_ready()
 void City::_on_ResetButton_pressed() {
 	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", true);
 	this->time_speed = 0;
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
+
+	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+
+	this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
+	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 }
 
 void City::_on_Reset_cancelled() {
@@ -395,6 +441,8 @@ void godot::City::_on_MenuShop_pressed(String name)
 
 	this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
 	this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
+
+	this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
 
 }
 
