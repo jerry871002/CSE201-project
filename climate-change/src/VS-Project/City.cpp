@@ -1516,11 +1516,15 @@ double satisfactions[8] = {9.7, 8.5,6.8, 9.3, 9, 7, 8, 9.5};
 		double pricesPerMonth[8];
 		double probabilities[8];
 		double quantities[8] = {0,0,0,0,0,0,0,0};
+		double alphaSum = 0;
+		for (int i=0;i<8;i++){
+			alphaSum+=alpha[i];
+		}
 		for (int i = 0;i<8; i++){
 			pricesPerMonth[i] = costs[i]/(12*lifetimes[i]);
-			alpha[i] =0.01*alpha[i]/incomesLen;
+			alpha[i] =0.01*alpha[i]/alphaSum;
 		}
-		double alphaSum = 0;
+		alphaSum = 0;
 		for (int i=0;i<8;i++){
 			alphaSum+=alpha[i];
 		}
