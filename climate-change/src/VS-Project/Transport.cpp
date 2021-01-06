@@ -44,10 +44,10 @@ template <typename T> void align_on_axis(T obj) {
 
 
 Transport::Transport() {
-    transport_type(0);
+    transport_type();
 }
 
-void Transport::transport_type(int type) {
+void Transport::transport_type() {
     // initialize graphical variables
     motion = Vector3(0, 0, 0);
     rot = (M_PI / 2);
@@ -56,7 +56,6 @@ void Transport::transport_type(int type) {
     position = 0;
     SPEED_T = 0;
     kmPerDay = 0;
-    transportType = type;
     maintenance = 0; // maintenance cost for the whole duration of simulation
     energyUse = 0; //energy per day
     passengers = 0; //total number of passengers that used the car
@@ -218,17 +217,19 @@ void Transport::_register_methods() {
     register_method((char*)"_init", &Transport::_init);
     register_method((char*)"_physics_process", &Transport::_physics_process);
     register_method((char*)"_ready", &Transport::_ready);
+    register_method((char*)"transport_type", &Transport::transport_type);
+
 }
 
 void Transport::_init() {
-
+    
 }
 
 void Transport::_ready() {
     prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
     prevPositionVec = this->get_global_transform().get_origin();
     myCity = (City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")));
-
+    
 }
 
 
@@ -458,35 +459,16 @@ void Transport::straight(float ratioDelta) {
     }
 
     position = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - prevPosition;
-
-    ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
-    ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
-    ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
+    if (transportType != 3) {
+        ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
+        ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
+        ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
+    }
 }
 
 int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90) + 4) % 4;
     std::vector<int> out;
-
-    std::cout << "TRAFFIC FROM TRANSPORT: " << std::endl;
-
-    // output each element's value 
-    for (int i = 0; i < 10; ++i)
-    {
-        for (int j = 0; j < 10; ++j)
-        {
-            for (int k = 0; k < 4; ++k)
-            {
-                for (int l = 0; l < 3; ++l)
-                {
-                    
-                    std::cout << "Element at traffic_system[" << i << "][" << j
-                        << "][" << k << "][" << l << "] = " << traffic_system[i][j][k][l]
-                        << std::endl;
-                }
-            }
-        }
-    }
 
     if ((int)round(pos.x / 30) >= sizeof(traffic_system) or (int)round(pos.z / 30) >= sizeof((traffic_system[0]))) {
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);

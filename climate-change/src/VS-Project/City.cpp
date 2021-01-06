@@ -65,6 +65,7 @@ City::~City()
 void City::_register_methods()
 {
 	register_method((char*)"_physics_process", &City::_physics_process);
+	register_method((char*)"_physics_process", &City::_physics_process);
 	register_method((char*)"_input", &City::_input);
 	register_method((char*)"_ready", &City::_ready);
 	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
@@ -553,20 +554,28 @@ void City::add_car() {
 
 	const Ref<PackedScene> BugattiScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
 	const Ref<PackedScene> ChironScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
+	const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
 
-	if (BugattiScene.is_valid() && ChironScene.is_valid())
+	if (BugattiScene.is_valid() && ChironScene.is_valid() && MotoScene.is_valid())
 	{
 
 		// randomly choose between bugatti and chiron
 
-		int type = rand() % 2;
+		//int type = rand() % 3;
+		int type = 3;
 		Transport* node;
-		if (type == 0) { node = (Transport*)BugattiScene->instance(); }
-		else { node = (Transport*)ChironScene->instance(); }
+
+		switch (type) {
+		case 0: node = (Transport*)BugattiScene->instance(); break;
+		case 1: node = (Transport*)ChironScene->instance(); break;
+		default: node = (Transport*)MotoScene->instance(); break;
+		}
+		
 		node->set("scale", Vector3(10, 10, 10));
 		node->set("translation", Vector3(-13, 0, -13 + 30 * (0 + 1)));
-
+		
 		this->add_child((Node*)node);
+		
 
 
 		//income -= node->cost;
