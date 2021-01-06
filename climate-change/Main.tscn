@@ -79,14 +79,14 @@ shadow_bias = 0.0
 directional_shadow_max_distance = 1000.0
 
 [node name="Player" type="KinematicBody" parent="3Dworld"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 82.515 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5638, 33.7579, 82.5155 )
 script = ExtResource( 4 )
 
 [node name="ClippedCamera" type="ClippedCamera" parent="3Dworld/Player"]
-transform = Transform( 1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0 )
 environment = ExtResource( 2 )
 fov = 35.0
-far = 400.0
+far = 1000.0
 
 [node name="CollisionShape" type="CollisionShape" parent="3Dworld/Player"]
 transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, -1.5638, -0.58039, -6.59145 )
