@@ -11,13 +11,13 @@ namespace godot {
         Housing();
         ~Housing();
 
+		static void _register_methods();
+		virtual void _ready();
+
 		virtual String get_object_type() { return "Housing"; };
 		String get_main_type() { return "Housing"; };
 
 		virtual String get_object_info();
-
-		static void _register_methods();
-		virtual void _ready();
 
 
 		int windowCost = 200;
