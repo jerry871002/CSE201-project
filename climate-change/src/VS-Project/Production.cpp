@@ -251,11 +251,7 @@ void GoodsFactories::simulate_step(double days)
 			green = 1 - (employment * 0.02);
 		}
 	}
-	if (subsidy_green == -1) { //set back the simulation if the policy is removed
-		green = 1;
-		std::normal_distribution <double> employees(100, 60);
-		employment = employees(gen); // number of employees in the factory 
-	}
+
 	if (maximum_CO2 > -1) {
 		int maxi = 10;
 		if (maximum_CO2 >= 30) {
@@ -311,7 +307,6 @@ void GoodsFactories::simulate_step(double days)
 	energyUse += energy(gen)* employment * green;
 }
 
-/*
 /// <summary>
 /// SERVICES
 /// </summary>
@@ -357,5 +352,21 @@ void Services::simulate_step(double days)
 	std::normal_distribution <double> lead(0.021, 0.002);
 	leadEmission += lead(gen); 
 }
-*/ 
 
+/// <summary>
+/// RECYCLING FACTORIES
+/// </summary>
+
+String godot::RecyclingFactories::class_name()
+{
+	return "RecyclingFactories";
+}
+
+RecyclingFactories::RecyclingFactories() {
+}
+
+RecyclingFactories::~RecyclingFactories() {}
+
+void RecyclingFactories::simulate_step(double days)
+{
+}
