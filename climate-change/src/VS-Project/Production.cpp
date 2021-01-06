@@ -3,6 +3,8 @@
 #include <core/Godot.hpp>
 #include <Math.hpp>
 #include <random>
+#include <string>
+
 using namespace godot;
 
 String godot::Production::class_name() {
