@@ -189,7 +189,7 @@ void City::generate_initial_city_graphics()
 
 	for (int x = 0; x < 4; x++)
 	{
-		for (int z = 0; z < 3; z++)
+		for (int z = 0; z < 4; z++)
 		{
 			Vector3 pos = Vector3(60 * x, 0, 60 * z);
 			//std::cout << "DEBUG: About to create a random shop" << std::endl;
@@ -218,9 +218,9 @@ void City::generate_initial_city_graphics()
 		}
 	}
 
-	for (int x = 8; x < 12; x++)
+	for (int x = 4; x < 8; x++)
 	{
-		for (int z = 0; z < 7; z++)
+		for (int z = 0; z < 8; z++)
 		{
 			Vector3 pos = Vector3(60 * x, 0, 60 * z);
 			int fieldmaybe = rand() % 30;
@@ -241,11 +241,56 @@ void City::generate_initial_city_graphics()
 					}
 				}
 			}
-
-
-
 		}
 	}
+	for (int x = 0; x < 8; x++)
+	{
+		for (int z = 4; z < 8; z++)
+		{
+			Vector3 pos = Vector3(60 * x, 0, 60 * z);
+			int fieldmaybe = rand() % 30;
+			if (fieldmaybe < 7) { add_production(pos + Vector3(15, 0, 15), FieldScene); }
+			else if (fieldmaybe < 14) { add_production(pos + Vector3(15, 0, 15), SheepPastureScene); }
+			else if (fieldmaybe < 21) { add_production(pos + Vector3(15, 0, 15), PigsPastureScene); }
+			else {
+				for (int x1 = 0; x1 < 2; x1++)
+				{
+					for (int z1 = 0; z1 < 2; z1++) {
+						int type = rand() % 25;
+						Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+						if (type < 1) { add_shop(pos + pos1, RestaurantScene); }
+						else if (type < 2) { add_shop(pos + pos1, ShopScene); }
+						else if (type < 17) { add_house(pos + pos1, LowHouseScene); }
+						else if (type < 23) { add_energy(pos + pos1, WindmillScene); }
+						else { add_house(pos + pos1, HighHouseScene); }
+					}
+				}
+			}
+		}
+	}
+	for (int x = 8; x < 12; x++)
+	{
+		for (int z = 0; z < 8; z++)
+		{
+			Vector3 pos = Vector3(60 * x, 0, 60 * z);
+			int fieldmaybe = rand() % 30;
+			if (fieldmaybe < 5) { add_production(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }
+			else if (fieldmaybe < 8) { add_production(pos + Vector3(15, 0, 15), MallScene); }
+			else {
+				for (int x1 = 0; x1 < 2; x1++)
+				{
+					for (int z1 = 0; z1 < 2; z1++) {
+						int type = rand() % 25;
+						Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+						if (type < 20) { add_shop(pos + pos1, BuildingScene); }
+						else { add_house(pos + pos1, ShopScene); }
+					}
+				}
+			}
+		}
+	}
+
+
 
 }
 
@@ -495,12 +540,17 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 		all_shops.push_back((Shop*)node);
 
 		//std::cout << "DEBUG: traffic stuff called" << std::endl;
-		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
-		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
+		
+		// traffic stuff
+		std::cout << "DEBUG: traffic stuff called" << std::endl;
+		//double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building
+		//double y = ((Structure*)node)->get_position().z / 30; // can be int only for small building
+		double x = pos.x / 30; // needs to be double for identifying a 2 by 2 building
+		double y = pos.z / 30; // can be int only for small building
 
-
-
-		//traffic stuff
+		std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
+		std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
+		std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
 		if (x < sizeOfCity && y < sizeOfCity) {
 			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
 				positionOfBuildings[int(x)][int(y)] = 1;
@@ -511,12 +561,23 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 				positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
 				positionOfBuildings[int(x)][int(y) + 1] = 5;
 			}
+			std::cout << "DEBUG: call the function update traffic" << std::endl;
 			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
 
+			//for (int k = 0; k < 4; k++) {
+			//	std::cout << "start :" << x << " " << y << " " << traffic[int(x)][int(y)][0][0] << " " << traffic[int(x)][int(y)][k][1] << " " << traffic[int(x)][int(y)][k][2] << " " << std::endl;
+			//}
 
+			//for(int i = 0; i < 10; i++){
+			//	for (int j = 0; j < 10; j++) {
+			//		for (int k = 0; k < 4; k++) {
+			//				std::cout << "start :" << x << " " << y << traffic[i][j][k][0] << '   ' << traffic[i][j][k][1] << '   ' << traffic[i][j][k][2] << '  ' << std::endl;
+			//		}
+			//	}
+			//}
 
+			std::cout << std::endl;
 		}
-		std::cout << "DEBUG: add shop done" << std::endl;
 	}
 }
 
@@ -542,11 +603,16 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 
 
 
-		//std::cout << "DEBUG: traffic stuff called" << std::endl;
-		//traffic stuff
-		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
-		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
+		// traffic stuff
+		std::cout << "DEBUG: traffic stuff called" << std::endl;
+		//double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building
+		//double y = ((Structure*)node)->get_position().z / 30; // can be int only for small building
+		double x = pos.x / 30; // needs to be double for identifying a 2 by 2 building
+		double y = pos.z / 30; // can be int only for small building
 
+		std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
+		std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
+		std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
 		if (x < sizeOfCity && y < sizeOfCity) {
 			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
 				positionOfBuildings[int(x)][int(y)] = 1;
@@ -557,10 +623,24 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 				positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
 				positionOfBuildings[int(x)][int(y) + 1] = 5;
 			}
+			std::cout << "DEBUG: call the function update traffic" << std::endl;
 			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
 
+			//for (int k = 0; k < 4; k++) {
+			//	std::cout << "start :" << x << " " << y << " " << traffic[int(x)][int(y)][0][0] << " " << traffic[int(x)][int(y)][k][1] << " " << traffic[int(x)][int(y)][k][2] << " " << std::endl;
+			//}
+
+			//for(int i = 0; i < 10; i++){
+			//	for (int j = 0; j < 10; j++) {
+			//		for (int k = 0; k < 4; k++) {
+			//				std::cout << "start :" << x << " " << y << traffic[i][j][k][0] << '   ' << traffic[i][j][k][1] << '   ' << traffic[i][j][k][2] << '  ' << std::endl;
+			//		}
+			//	}
+			//}
+
+			std::cout << std::endl;
 		}
-		std::cout << "DEBUG: add shop done" << std::endl;
+		std::cout << "DEBUG: add house done" << std::endl;
 	}
 }
 
@@ -586,12 +666,16 @@ void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
 
 
 		//std::cout << "DEBUG: traffic stuff called" << std::endl;
-		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
-		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
+		// traffic stuff
+		std::cout << "DEBUG: traffic stuff called" << std::endl;
+		//double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building
+		//double y = ((Structure*)node)->get_position().z / 30; // can be int only for small building
+		double x = pos.x / 30; // needs to be double for identifying a 2 by 2 building
+		double y = pos.z / 30; // can be int only for small building
 
-
-
-		//traffic stuff
+		std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
+		std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
+		std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
 		if (x < sizeOfCity && y < sizeOfCity) {
 			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
 				positionOfBuildings[int(x)][int(y)] = 1;
@@ -602,12 +686,24 @@ void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
 				positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
 				positionOfBuildings[int(x)][int(y) + 1] = 5;
 			}
+			std::cout << "DEBUG: call the function update traffic" << std::endl;
 			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
 
+			//for (int k = 0; k < 4; k++) {
+			//	std::cout << "start :" << x << " " << y << " " << traffic[int(x)][int(y)][0][0] << " " << traffic[int(x)][int(y)][k][1] << " " << traffic[int(x)][int(y)][k][2] << " " << std::endl;
+			//}
 
+			//for(int i = 0; i < 10; i++){
+			//	for (int j = 0; j < 10; j++) {
+			//		for (int k = 0; k < 4; k++) {
+			//				std::cout << "start :" << x << " " << y << traffic[i][j][k][0] << '   ' << traffic[i][j][k][1] << '   ' << traffic[i][j][k][2] << '  ' << std::endl;
+			//		}
+			//	}
+			//}
 
+			std::cout << std::endl;
 		}
-		std::cout << "DEBUG: add shop done" << std::endl;
+		std::cout << "DEBUG: add energy done" << std::endl;
 	}
 }
 
@@ -632,13 +728,18 @@ void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
 		all_production.push_back((Production*)node);
 
 
-		//std::cout << "DEBUG: traffic stuff called" << std::endl;
-		double x = ((Structure*)node)->get_position()[0] / 30; // needs to be double for identifying a 2 by 2 building 
-		double y = ((Structure*)node)->get_position()[1] / 30; // can be int only for small building 
+		
 
+		// traffic stuff
+		std::cout << "DEBUG: traffic stuff called" << std::endl;
+		//double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building
+		//double y = ((Structure*)node)->get_position().z / 30; // can be int only for small building
+		double x = pos.x / 30; // needs to be double for identifying a 2 by 2 building
+		double y = pos.z / 30; // can be int only for small building
 
-
-		//traffic stuff
+		std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
+		std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
+		std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
 		if (x < sizeOfCity && y < sizeOfCity) {
 			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
 				positionOfBuildings[int(x)][int(y)] = 1;
@@ -649,12 +750,24 @@ void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
 				positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
 				positionOfBuildings[int(x)][int(y) + 1] = 5;
 			}
+			std::cout << "DEBUG: call the function update traffic" << std::endl;
 			update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
 
+			//for (int k = 0; k < 4; k++) {
+			//	std::cout << "start :" << x << " " << y << " " << traffic[int(x)][int(y)][0][0] << " " << traffic[int(x)][int(y)][k][1] << " " << traffic[int(x)][int(y)][k][2] << " " << std::endl;
+			//}
 
+			//for(int i = 0; i < 10; i++){
+			//	for (int j = 0; j < 10; j++) {
+			//		for (int k = 0; k < 4; k++) {
+			//				std::cout << "start :" << x << " " << y << traffic[i][j][k][0] << '   ' << traffic[i][j][k][1] << '   ' << traffic[i][j][k][2] << '  ' << std::endl;
+			//		}
+			//	}
+			//}
 
+			std::cout << std::endl;
 		}
-		std::cout << "DEBUG: add shop done" << std::endl;
+		std::cout << "DEBUG: add production done" << std::endl;
 	}
 }
 
@@ -699,7 +812,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 			traffic_system[x][y][1][2] = 1;
 			traffic_system[x][y][2][2] = 1;
 			traffic_system[x][y][3][2] = 1;
-			if (x + 1 < sizeOfCity && y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 3)) {
+			if (x + 1 < sizeOfCity && y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y + 1] == 1 || positionOfBuildings[x + 1][y + 1] == 2 || positionOfBuildings[x + 1][y + 1] == 3)) {
 				traffic[x][y][3][0] = 1;
 				traffic_system[x][y][3][0] = 1;
 			}
@@ -707,7 +820,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 				traffic[x][y][3][1] = 1;
 				traffic_system[x][y][3][1] = 1;
 			}
-			if (x - 1 >= 0 && y + 1 > sizeOfCity && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 3 || positionOfBuildings[x - 1][y + 1] == 4)) {
+			if (x - 1 >= 0 && y + 1 < sizeOfCity && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 3 || positionOfBuildings[x - 1][y + 1] == 4)) {
 				traffic[x][y][2][0] = 1;
 				traffic_system[x][y][2][0] = 1;
 			}
@@ -732,8 +845,8 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 				traffic_system[x][y][0][1] = 1;
 			}
 
-			if (newBuilding == true) {  // update all the possible buildings around 
-				// no need to check if they exist since if they don't the function checks that with the first line 
+			if (newBuilding == true) {  // update all the possible buildings around
+				// no need to check if they exist since if they don't the function checks that with the first line
 				if (x - 1 >= 0) {
 					if (y - 1 >= 0) {
 						update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
@@ -760,7 +873,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 				}
 			}
 		}
-		else { // the case when it's a 2 by 2 building 
+		else { // the case when it's a 2 by 2 building
 			if (number == 3) {
 				x = x - 1;
 			}
@@ -823,8 +936,8 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 				traffic[x][y][1][1] = 1;
 			}
 
-			if (newBuilding == true) {  // update all the possible buildings around 
-				// no need to check if they exist since if they don't the function checks that with the first line 
+			if (newBuilding == true) {  // update all the possible buildings around
+				// no need to check if they exist since if they don't the function checks that with the first line
 				if (x - 1 >= 0) {
 					if (y - 1 >= 0) {
 						update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
@@ -857,6 +970,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 		}
 	}
 }
+
 
 
 
