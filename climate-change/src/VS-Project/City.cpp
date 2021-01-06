@@ -3,7 +3,6 @@
 #include "Player.h"
 #include "edit_text_files.h"
 
-#include <random>
 #include <Resource.hpp>
 #include <ResourceLoader.hpp>
 #include <SceneTree.hpp>
@@ -157,12 +156,12 @@ void City::_input(InputEvent*)
 		this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
 		if (!(this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))) {
-
+<<<<<<< HEAD
 			(this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
 			
-
+=======
 			((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", true);
-
+>>>>>>> parent of 4aeaa91... Revert "Merge branch 'master' of https://github.com/jerry871002/CSE201-project"
 		}
 		this->_on_Game_Speed_changed();
 		this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
@@ -191,7 +190,7 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-
+<<<<<<< HEAD
 	for (int x = 0; x < 3; x++)
 	{
 		for (int z = 0; z < 3; z++)
@@ -229,7 +228,7 @@ void City::generate_initial_city_graphics()
 		}
 	}
 	
-
+=======
 	std::cout << "DEBUG: generate city graphics started" << std::endl;
 	ResourceLoader* ResLo = ResourceLoader::get_singleton();
 	Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
@@ -272,6 +271,8 @@ void City::generate_initial_city_graphics()
 			}
 		}
 	}
+
+>>>>>>> parent of 4aeaa91... Revert "Merge branch 'master' of https://github.com/jerry871002/CSE201-project"
 }
 
 void City::set_initial_visible_components()
