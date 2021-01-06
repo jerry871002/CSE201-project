@@ -28,7 +28,7 @@
 
 using namespace godot;
 
-int traffic_system[10][10][4][3] = { 1 };
+int traffic_system[10][10][4][3] = { 0};
 
 City::City() {
 
@@ -190,11 +190,11 @@ void City::generate_initial_city_graphics()
 
 	// SIMPLER CITY FOR TESTING PURPOSES ON SAD COMPUTERS
 
-	/*
+
 	
-	for (int x = 0; x < 2; x++)
+	for (int x = 0; x < 1; x++)
 	{
-		for (int z = 0; z < 2; z++)
+		for (int z = 0; z < 1; z++)
 		{
 			Vector3 pos = Vector3(60 * x, 0, 60 * z);
 			//std::cout << "DEBUG: About to create a random shop" << std::endl;
@@ -214,6 +214,15 @@ void City::generate_initial_city_graphics()
 						else if (type < 20) { add_house(pos + pos1, BuildingScene); }
 						else if (type == 20) { add_energy(pos + pos1, WindmillScene); }
 						else { add_house(pos + pos1, HighHouseScene); }
+						/*
+						for (int i = 0; i < 2; i++) {
+							for (int j = 0; j < 2; j++) {
+								for (int k = 0; k < 4; k++) {
+									std::cout << "TRAFFIC SYSTEM : " << i << " " << j << "  " << traffic_system[i][j][k][0] << "   " << traffic_system[i][j][k][1] << "   " << traffic_system[i][j][k][2] << "  " << std::endl;
+								}
+							}
+						}
+						*/
 					}
 				}
 			}
@@ -222,13 +231,13 @@ void City::generate_initial_city_graphics()
 
 		}
 	}
-	*/
+	
 	
 	
 
 	// ACTUAL CITY
 	
-	
+	/*
 	
 	for (int x = 0; x < 4; x++)
 	{
@@ -334,7 +343,7 @@ void City::generate_initial_city_graphics()
 		}
 	}
 
-	
+	*/
 	
 }
 
@@ -856,6 +865,7 @@ void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
 		if (x < sizeOfCity && y < sizeOfCity) {
 			if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
 				positionOfBuildings[int(x)][int(y)] = 1;
+				std::cout << " SMALL BUILDING CREATED" << std::endl;
 			}
 			else {
 				positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
@@ -958,7 +968,6 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 				traffic[x][y][0][1] = 1;
 				traffic_system[x][y][0][1] = 1;
 			}
-
 			if (newBuilding == true) {  // update all the possible buildings around
 				// no need to check if they exist since if they don't the function checks that with the first line
 				if (x - 1 >= 0) {
@@ -1069,7 +1078,6 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 				traffic[x][y][1][1] = 1;
 				traffic_system[x][y][1][1] = 1;
 			}
-
 			if (newBuilding == true) {  // update all the possible buildings around
 				// no need to check if they exist since if they don't the function checks that with the first line
 				if (x - 1 >= 0) {
