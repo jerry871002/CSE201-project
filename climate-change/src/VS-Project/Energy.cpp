@@ -141,13 +141,13 @@ void NuclearPowerPlant::simulate_step(double days)
 
 	bool newBuilt = false;
 
-	if (nuclear_prohibited() == true) {
+	if (nuclear_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
 			double probability = (rand() % (4));
-			if (probability <= 2 && coal_prohibited() == false) {
+			if (probability <= 2 && coal_prohibited == 0) {
 				//build coal power plant
 			}
 			else {
@@ -370,13 +370,13 @@ void CoalPowerPlant::simulate_step(double days)
 
 	bool newBuilt = false;
 
-	if (coal_prohibited() == true) {
+	if (coal_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
 			double probability = (rand() % (4));
-			if (probability <= 2 && nuclear_prohibited() == false) {
+			if (probability <= 2 && nuclear_prohibited == 0) {
 				//build coal power plant
 			}
 			else {
@@ -389,7 +389,7 @@ void CoalPowerPlant::simulate_step(double days)
 	bool efficiencySup = true;
 	bool efficiencyCo = true;
 	
-	if (efficiency_supercritical() == true) {
+	if (efficiency_supercritical == 1) {
 		if (efficiencySup == true) {
 			maintenance += 10E6;
 			efficiencySup = false;
@@ -397,7 +397,7 @@ void CoalPowerPlant::simulate_step(double days)
 		energyPerDay = 9589041 * (1 - 0.04);
 		maintenance += 0.054 * energyPerDay * days;
 	}
-	if (efficiency_cogeneration() == true) {
+	if (efficiency_cogeneration == 1) {
 		if (efficiencyCo == true) {
 			maintenance += 20E6;
 			efficiencyCo = false;

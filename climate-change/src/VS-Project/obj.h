@@ -100,17 +100,19 @@ namespace godot {
         double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
 
         
-        // POLICIES (mostly booleans, others giving a rturn value wich is the player's input, will have to be moved given the sim team's decisions) :
+        // POLICIES (need to not be functions !) :
 
         // Changing the coal power plant efficiency (constructor creates subcritical plant of 38% efficiency) :
-        bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-        bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
+        bool efficiency_supercritical = 0; // set to false when equals 0, true when given 1
+                                          // improve efficiency to supercritical type of plant (42% energy converted to electricity)
+        bool efficiency_cogeneration = 0; // set to false when equals 0, true when given 1
+                                          //improve efficiency to cogeneration type of plant (47% energy converted to electricity)
 
         //Law prohibiting coal power plants :
-        bool coal_prohibited();
+        double coal_prohibited = 0; //set to false when equals 0, true when given 1
 
         //Law prohibiting nuclear power plants :
-        bool nuclear_prohibited();
+        double nuclear_prohibited = 0; //set to false when equals 0, true when given 1
         
         //Law imposing maximum amount of CO2 emitted for each factory per day (Goods factories class), the imput value is in kg per day and per factory :
         double maximum_CO2 = -1; //default when there is no policy, should be between 0-42 kg when policy is implemented
