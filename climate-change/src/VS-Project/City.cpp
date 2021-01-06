@@ -192,7 +192,7 @@ void City::generate_initial_city_graphics()
 		for (int z = 0; z < 3; z++)
 		{
 			Vector3 pos = Vector3(60 * x, 0, 60 * z);
-			std::cout << "DEBUG: About to create a random shop" << std::endl;
+			//std::cout << "DEBUG: About to create a random shop" << std::endl;
 
 			int bigbuildingmaybe = rand() % 30;
 			if (bigbuildingmaybe < 5) { add_shop(pos + Vector3(15, 0, 15), MallScene); }
@@ -222,12 +222,25 @@ void City::generate_initial_city_graphics()
 	{
 		for (int z = 0; z < 7; z++)
 		{
-			int type = rand() % 25;
-			Vector3 pos = Vector3(30 * x, 0, 30 * z);
-			if (type < 7) { add_production(pos, SheepPastureScene); }
-			else if (type < 14) { add_production(pos, PigsPastureScene); }
-			else if (type < 16) { add_production(pos, WindmillScene); }
-			else { add_house(pos, FieldScene); }
+			Vector3 pos = Vector3(60 * x, 0, 60 * z);
+			int fieldmaybe = rand() % 30;
+			if (fieldmaybe < 7) { add_production(pos + Vector3(15, 0, 15), FieldScene); }
+			else if (fieldmaybe < 14) { add_production(pos + Vector3(15, 0, 15), SheepPastureScene); }   
+			else if (fieldmaybe < 21) { add_production(pos + Vector3(15, 0, 15), PigsPastureScene); }
+			else {
+				for (int x1 = 0; x1 < 2; x1++)
+				{
+					for (int z1 = 0; z1 < 2; z1++) {
+						int type = rand() % 25;
+						Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+						if (type < 1) { add_shop(pos + pos1, RestaurantScene); }
+						else if (type < 2) { add_shop(pos + pos1, ShopScene); }
+						else if (type < 17) { add_house(pos + pos1, LowHouseScene); }
+						else if (type < 23) { add_energy(pos + pos1, WindmillScene); }
+						else { add_house(pos + pos1, HighHouseScene); }
+					}
+				}
+			}
 
 
 
