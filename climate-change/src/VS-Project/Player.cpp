@@ -42,20 +42,18 @@ void Player::_ready()
 	worldEnv->get_environment()->set_dof_blur_near_enabled(true);
 	
 	this->set("translation", StartPosition);
+	this->set("rotation_degrees", StartRotation);
 
-	CameraAngleDeg = InitialCameraAngle;
-	this->get_node("ClippedCamera")->set("rotation_degrees", Vector3(-CameraAngleDeg, 0, 0));
-
-	double a = ((MaxCameraAngle - MinCameraAngle) * (StartPosition.y - MinHeight) - (InitialCameraAngle - MinCameraAngle) * (MaxHeight - MinHeight)) / ((MaxHeight * MaxHeight - MinHeight * MinHeight) * (StartPosition.y - MinHeight) - (StartPosition.y * StartPosition.y - MinHeight * MinHeight) * (MaxHeight - MinHeight));
-	double b = ((MaxCameraAngle - MinCameraAngle) - a * (MaxHeight * MaxHeight - MinHeight * MinHeight)) / (MaxHeight - MinHeight);
-	double c = MinCameraAngle - a * MinHeight * MinHeight - b * MinHeight;
-
-	AngleQuadraticCoefficients = Vector3(a, b, c);
+	this->update_camera_angle();
+	
 }
 
-void Player::update_camera_angle() {
+void Player::update_camera_angle() 
+{
 	double h = ((Vector3)(this->get("translation"))).y;
-	CameraAngleDeg = AngleQuadraticCoefficients.x * h * h + AngleQuadraticCoefficients.y * h + AngleQuadraticCoefficients.z;
+
+	CameraAngleDeg = ((MaxCameraAngle - MinCameraAngle) / (MaxHeight - MinHeight)) * (h - MinHeight) + MinCameraAngle;
+
 	this->get_node("ClippedCamera")->set("rotation_degrees", Vector3(-CameraAngleDeg, 0, 0));
 }
 
@@ -69,7 +67,7 @@ void Player::_process(float delta)
 	
 	this->translate(motion); 
 	this->set_rotation_degrees(rotation);
-	// this->update_camera_angle();
+	this->update_camera_angle();
 
 }
 
