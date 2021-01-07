@@ -121,7 +121,6 @@ void City::_physics_process(float delta) {
 		}
 		else if (this->rolling_simulation_counter == 1) {
 			this->simulation_housing();
-
 		}
 		else if (this->rolling_simulation_counter == 2) {
 			this->simulation_energy();
@@ -1218,6 +1217,7 @@ void City::simulation_transport()
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 		this->numberOfEmployees += (double)((*it)->get("employment"));
 		this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
+
 		this->energyDemand += (double)((*it)->get("energyUse"));
 		this->environmentalCost += (double)((*it)->get("environmentalCost"));
 	}
@@ -1225,6 +1225,7 @@ void City::simulation_transport()
 	for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
 	{
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
+		
 		// this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;        satisfaction should be changed in the function below, with the day tick %4
 	}
 
@@ -1516,7 +1517,7 @@ double City::return_energySupply() {
 	return energySupply;
 }
 
-void City::transport_probabilities(double* incomes, int incomesLen, double airQuality){
+void City::transport_probabilities(){
 	        /*
         * 0 - electic car
         * 1 - big american car
