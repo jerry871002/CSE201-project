@@ -1293,7 +1293,7 @@ void City::simulation_transport()
         this->carbonEmission += (double)((*it)->get("CO2Emission"));
         this->numberOfEmployees += (double)((*it)->get("employment"));
         this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
-
+		// this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10; 
         this->energyDemand += (double)((*it)->get("energyUse"));
         this->environmentalCost += (double)((*it)->get("environmentalCost"));
     }
@@ -1303,6 +1303,7 @@ void City::simulation_transport()
         this->carbonEmission += (double)((*it)->get("CO2Emission"));
         
         // this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;        satisfaction should be changed in the function below, with the day tick %4
+		//max/min income
     }
 
     for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
@@ -1322,6 +1323,7 @@ void City::simulation_transport()
         this->environmentalCost += (double)((*it)->get("environmentalCost"));
         this->numberOfEmployees += (double)((*it)->get("employment"));
         this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
+		//factoryGDP
     }
 
 }
