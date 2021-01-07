@@ -97,15 +97,24 @@ namespace godot {
         // date leap years implementation
         String return_word_date(); // returns the date :day/month/year as a string with words
         String return_number_date(int day, int month, int year); // returns the date :day/month/year as a string with numbers
-        void simulation(); // updates all the stats and calls the simulation for the buildings
+        //void simulation(); // updates all the stats and calls the simulation for the buildings
+
+		int rolling_simulation_counter{ -1 };
+
+		void simulation_shops();
+		void simulation_housing();
+		void simulation_energy();
+		void simulation_production();
+		void simulation_transport();
+
+		void change_pie_chart(int totalCo2Emissions, NodePath name);
+
         bool ClickActive{ false };
         
 		//TRAFFIC
 		int sizeOfCity = 10; // buildings are placed only on a square sizeOfCity * sizeOfCity
 		int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 
-		int traffic[10][10][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
-				 // the third coornidate indicates the side of the building and the forth one which way the car can turn
-
+		
 		// following functions handle adding structures to the city, takes a position and the required scene
 		void add_shop( Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
 		void add_house(Vector3 pos, Ref<PackedScene> scene); // adds a house and updates the traffic array with the shop
@@ -122,6 +131,7 @@ namespace godot {
 		std::vector<Housing*> all_houses;
 		std::vector<Energy*> all_energies;
 		std::vector<Production*> all_production;
+		std::vector<Transport*> all_transports;
 
 		String active_button;
 		void implement_shop_policies(double);
@@ -146,7 +156,7 @@ namespace godot {
 		double return_totalSatisfaction();
 
 		//computes probailities for each type of transport that this type will be added
-		void transport_probabilities(double* incomes, int incomesLen, double airQuality);
+		void transport_probabilities();
 
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
@@ -172,11 +182,15 @@ namespace godot {
 		double energyDemand;
 		double energySupply;
 		double environmentalCost;
-		double totalSatisfaction;
+		int totalSatisfaction;
+		int totalCo2Emissions;
 
 		//probability that a certain type of car will be added
  		double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
  		double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;
+		double airQuality;
+		double* incomes; 
+		int incomesLen; 
 
 
 		const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");

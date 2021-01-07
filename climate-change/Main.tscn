@@ -353,10 +353,9 @@ __meta__ = {
 }
 
 [node name="Infographics" type="Node2D" parent="2Dworld"]
-visible = false
 position = Vector2( 1658.04, 38.8548 )
 
-[node name="Satisfaction" type="TextureProgress" parent="2Dworld/Infographics"]
+[node name="PieSatisfaction" type="TextureProgress" parent="2Dworld/Infographics"]
 margin_left = 109.844
 margin_top = -38.2587
 margin_right = 609.844
@@ -374,7 +373,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CO2" type="TextureProgress" parent="2Dworld/Infographics"]
+[node name="PieCO2" type="TextureProgress" parent="2Dworld/Infographics"]
 margin_left = 109.8
 margin_top = 121.201
 margin_right = 609.8
@@ -508,7 +507,7 @@ margin_left = 157.0
 margin_right = 157.0
 margin_bottom = 38.0
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button1" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ChangePanelProbabilityForAllShops" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button1" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "PanelSubsidyForShops" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Button2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ChangePanelProbabilityForRestaurants" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
