@@ -47,6 +47,7 @@ void Housing::simulate_step(double days) {
 
 	std::cout << "DEBUG: HOUSING SIMULATION CALLED" << std::endl;
 	this->Structure::simulate_step(days); 
+	age += days; // age is an attribute from the Structure class
 };
 
 
@@ -154,6 +155,13 @@ House::~House() {
 }
 
 void House::simulate_step(double days) {
+
+	std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
+
+	this->Housing::simulate_step(days);
+
+	/*
+
 	if ((int)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) % 25 == 0) {
 		satisfaction = 0;
 
@@ -165,14 +173,14 @@ void House::simulate_step(double days) {
 	}
 	
 	if (double_glazing() == true) {
-		doubleGlazingAge += 1;
+		doubleGlazingAge += days;
 	} 
 
 	if (rooftop_wind_turbines() == true) {
-		rooftopWindTurbineAge += 1;
+		rooftopWindTurbineAge += days;
 	}
 
-	/*         
+	
 	if (solarPanelAge >= solarLifetime) {
 		//Then the solar panels are removed and we have 
 		solar_panel() = false;
@@ -191,11 +199,16 @@ void House::simulate_step(double days) {
 	} 
 	
 	
+	
 	*/
+
+	std::cout << "DEBUG HOUSE 0" << std::endl;
 
 
 	switch (houseType){
 		case 1: {
+
+			std::cout << "DEBUG HOUSE 1" << std::endl;
 			if (solar_panel() == true) {
 				energyUse -= solarEnergy;
 				//maintenance += solarPanelCost;
@@ -215,6 +228,8 @@ void House::simulate_step(double days) {
 		}
 
 		case 2: {
+
+			std::cout << "DEBUG HOUSE 2" << std::endl;
 			maintenance += 0.1765 * energyUse * days;
 			CO2Emission += 0.0065 * energyUse * days; 
 		}
@@ -222,29 +237,38 @@ void House::simulate_step(double days) {
 		break;
 	}
 	
-	age += days; // age is an attribute from the Structure class
 	
+
+	
+	
+
 }
 
 bool House::solar_panel() {
+	/*
 	if (rooftop_wind_turbines() == true) {
 		//we cannot have solar panels and wind turbines on the same house
 		//a message should appear, saying that the solar_panels cannot be installed 
 		return false;
 		//return PanelsOff
 	}
+	*/
 
-	else {
+	//else {
+		std::cout << "DEBUG HOUSE 10" << std::endl;
 		if (houseIncome > 25) { //the people that live in the house have enough money to install solar panels so they can 
 			solarPanelAge = 0; 
+			std::cout << "DEBUG HOUSE 20" << std::endl;
 			if (satisfaction < 10) {
 				satisfaction += 1;
 			}
-
+			std::cout << "DEBUG HOUSE 30" << std::endl;
 			return PanelsOn;
 		}
 
 		else {
+			std::cout << "DEBUG HOUSE 40" << std::endl;
+			/*
 			if (solar_panel_subsidies() == true) {
 				//then the household gets financial help and can install the solar_panels
 				solarPanelAge = 0; 
@@ -259,8 +283,9 @@ bool House::solar_panel() {
 				//return PanelsOff;
 				return false;
 			}
+			*/
 		}
-	}
+	//}
 	                            
 }
 
@@ -290,14 +315,16 @@ bool House::double_glazing() {
 } 
 
 bool House::rooftop_wind_turbines() {
+	/*
 	if (solar_panel() == true) {
 		//we cannot have solar panels and wind turbines on the same house
 		//a message should appear, saying that the turbines cannot be installed 
 		return false;
 		//return PanelsOff
 	}
+	*/
 
-	else {
+	//else {
 		if (houseIncome > 280) { //the people that live in the house have enough money to install wind turbines so they can 
 			rooftopWindTurbineAge = 0; 
 			if (satisfaction < 10) {
@@ -323,7 +350,7 @@ bool House::rooftop_wind_turbines() {
 				return false;
 			}
 		}
-	}
+	//}
 }
 
 /// <summary>
@@ -429,9 +456,14 @@ void Building::simulate_step(double days) {
 		rooftopWindTurbineAge = 0;
 	} 
 	
+	*/
+
+	std::cout << "DEBUG BUILDING 0" << std::endl;
     
 	switch (buildingType){
 	case 1: { //Low level house
+		
+		std::cout << "DEBUG BUILDING 1" << std::endl;
 		if (double_glazing() == true) {
 			energyUse *= 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore
 		}
@@ -451,6 +483,8 @@ void Building::simulate_step(double days) {
 	}
 
 	case 2:  {
+		
+		std::cout << "DEBUG BUILDING 2" << std::endl;
 		maintenance += 0.1765 * energyUse * days;
 		CO2Emission += 0.0065 * energyUse * days;  
 		break;
@@ -458,19 +492,19 @@ void Building::simulate_step(double days) {
 	
 	}
 	
-	age += days; //age is an attribute from the Structure class
-	*/
 }
 
 bool Building::solar_panel() {
+	/*
 	if (rooftop_wind_turbines() == true) {
 		//we cannot have solar panels and wind turbines on the same house
 		//a message should appear, saying that the solar_panels cannot be installed 
 		return false;
 		//return PanelsOff
 	}
+	*/
 
-	else {
+	//else {
 		if (coOwnershipBudget > 25) { //the people that live in the house have enough money to install solar panels so they can 
 			solarPanelAge = 0; 
 			if (satisfaction < 10) {
@@ -481,6 +515,7 @@ bool Building::solar_panel() {
 		}
 
 		else {
+			/*
 			if (solar_panel_subsidies() == true) {
 				//then the household gets financial help and can install the solar_panels
 				solarPanelAge = 0; 
@@ -495,8 +530,9 @@ bool Building::solar_panel() {
 				//return PanelsOff;
 				return false;
 			}
+			*/
 		}
-	}
+	//}
 
 	
 }
