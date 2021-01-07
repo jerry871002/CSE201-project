@@ -114,9 +114,7 @@ namespace godot {
 		//TRAFFIC
 		int sizeOfCity = 10; // buildings are placed only on a square sizeOfCity * sizeOfCity
 		int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 
-		int traffic[10][10][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
-				 // the third coornidate indicates the side of the building and the forth one which way the car can turn
-
+		
 		// following functions handle adding structures to the city, takes a position and the required scene
 		void add_shop( Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
 		void add_house(Vector3 pos, Ref<PackedScene> scene); // adds a house and updates the traffic array with the shop
