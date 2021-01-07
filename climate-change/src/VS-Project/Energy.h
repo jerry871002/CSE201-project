@@ -17,6 +17,8 @@ namespace godot {
 		Energy();
 		~Energy();
 
+		int running_plant = 3;
+
 		virtual String get_object_type() { return "Energy"; };
 		String get_main_type() { return "Energy"; };
 
@@ -67,7 +69,7 @@ namespace godot {
 	};
 
 	/// <summary>
-	/// NUCLEAR POWER PLANT CLASS
+	/// NUCLEAR POWER PLANT CLASS (1)
 	/// </summary>
 
 	class NuclearPowerPlant : public Energy {
@@ -81,10 +83,12 @@ namespace godot {
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 
 		void _process(float delta);
+		double running = 0;
+		bool newBuilt = false;
 	};
 
 	/// <summary>
-	/// WINDMILL CLASS
+	/// WINDMILL CLASS (2)
 	/// </summary>
 
 	class Windmill : public Energy {
@@ -97,6 +101,8 @@ namespace godot {
 
 		void _process(float delta);
 
+		double running = 0;
+
 		//This class gives the functionnalities for one single onshore windmill, 
 		//the sim team can use it in order to simulate a wind farm of the size it chooses
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
@@ -106,7 +112,7 @@ namespace godot {
 	};
 
 	/// <summary>
-	/// COAL POWER PLANT CLASS
+	/// COAL POWER PLANT CLASS (3)
 	/// </summary>
 
 	class CoalPowerPlant : public Energy {
@@ -118,10 +124,12 @@ namespace godot {
 		virtual String get_object_type() { return "Coal Power Plant"; };
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
+		double running = 1;
+		bool newBuilt = false;
 	};
 
 	/// </summary>
-	/// GEOTHERMAL POWER PLANT CLASS
+	/// GEOTHERMAL POWER PLANT CLASS (4)
 	/// </summary>
 
 	class GeothermalPowerPlant : public Energy {
@@ -133,5 +141,7 @@ namespace godot {
 		virtual String get_object_type() { return "Geothermal Power Plant"; };
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
+		double running = 0;
+		bool newBuilt = false;
 	};
 }
