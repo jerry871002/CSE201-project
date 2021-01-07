@@ -99,18 +99,14 @@ void AgriculturalProduction::simulate_step(double days) {
 		}
 
 		case(1):{ 
-
-			production+=requiredLand*fertility*days; //output over the time period
-			waterConsumption+=requiredLand*fertility*days*22;
-			CO2Emission=19.18*requiredLand*fertility*days;
-			/*std::random_device rd;
+			std::random_device rd;
     		std::mt19937 gen(rd());
 			std::normal_distribution <double> foodformeatfieldsize(1.2, 0.04);
 			requiredLand = foodformeatfieldsize(gen);
 			CO2Emission += 27144;
 			waterConsumption += 31135; 
 			production += 1415; 
-			break;*/
+			break;
 		}
 	}
 }
@@ -140,27 +136,11 @@ void AgriculturalProduction::agriculture_type(int type){
 		break;
 		}
 		case 1: { // meat
-
-			std::random_device rd;
-    		std::mt19937 gen(rd());
-			std::normal_distribution <double> foodformeatfieldsize(2, 0.1);
-			requiredLand = foodformeatfieldsize(gen); // size
-			std::normal_distribution <double> cropsfertility(200000, 50000); //need to find the numbers
-			fertility = cropsfertility(gen); 
-			production = fertility * requiredLand; //output of wheat in kg per day
-			waterConsumption = 22 * production; //22L of water per 1 kg of production
-			CO2Emission = 19.18 * production; //co2 kg per day
-			energyUse = 0;
-			environmentalCost = 0;   
-			pesticide = false;
-			fertilizer = false;
-			GMO = false;
-
-		/*CO2Emission = 27144; // co2 output per day for meat production in city
+		CO2Emission = 27144; // co2 output per day for meat production in city
 		waterConsumption = 31135; //liters per day
 		production = 1415; //in kg of meat every day
 		energyUse = 0;
-		environmentalCost = 0; */  
+		environmentalCost = 0;   
 			break;
 		}
 	}

@@ -66,7 +66,7 @@ namespace godot {
 		~Building();
 		virtual String get_object_type() { return "Building"; };
 
-		virtual void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
+		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 		bool solar_panel(); 
 		bool double_glazing(); // improve insulation
 		bool rooftop_wind_turbines();

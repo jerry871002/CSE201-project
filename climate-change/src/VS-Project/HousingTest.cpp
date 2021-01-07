@@ -94,7 +94,7 @@ void test_house_get_attributes(){
     try{
         double a = A.get_satisfaction();
         double b = A.get_co2emissions();
-        double c = A.get_environmental_cost();
+        double c = A.get_environmentalcost();
         double d = A.get_energyuse();
 
 
@@ -147,7 +147,7 @@ void test_building_get_attributes(){
     try{
         double a = A.get_satisfaction();
         double b = A.get_co2emissions();
-        double c = A.get_environmental_cost();
+        double c = A.get_environmentalcost();
         double d = A.get_energyuse();
 
 
