@@ -217,7 +217,7 @@ void City::generate_initial_city_graphics()
 	// SIMPLER CITY FOR TESTING PURPOSES ON SAD COMPUTERS
 
 
-	/*
+	
 	for (int x = 0; x < 1; x++)
 	{
 		for (int z = 0; z < 1; z++)
@@ -256,12 +256,12 @@ void City::generate_initial_city_graphics()
 		}
 	}
 	
-	*/
+	
 	
 
 	// ACTUAL CITY
 	
-	
+	/*
 	
 	for (int x = 0; x < 4; x++)
 	{
@@ -367,7 +367,7 @@ void City::generate_initial_city_graphics()
 		}
 	}
 
-	
+	*/
 	
 }
 

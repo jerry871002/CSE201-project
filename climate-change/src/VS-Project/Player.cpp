@@ -68,6 +68,7 @@ void Player::_process(float delta)
 	//this->get_child(0)->set("far", pow(get_global_transform().get_origin().y, 0.2)*30);
 
 	this->translate(motion); 
+	//this->move_and_collide(motion);
 	this->set_rotation_degrees(rotation);
 	this->update_camera_angle();
 
