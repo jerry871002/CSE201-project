@@ -233,20 +233,20 @@ void City::generate_initial_city_graphics()
 
                 //  probability functions for buildings
 
-                float mallprob = float(min(0, maxdist - 2 * dist));
+                float mallprob = float(min((double)0, (double)(maxdist - 2 * dist)));
                 float nuclearprob = float(min(double(0), double(((0.01920) * (-1) * pow((20 * dist / citysize), 2) + (-1) * ((8.640) * (20 * dist / citysize) * 672.0)))));
-                float fieldprob = float(min(0, -4 * maxdist + 6 * dist));
-                float pastureprob = float(min(0, -4 * maxdist + 6 * dist));
-                float factoryprob = float(min(0, -0.1020 * pow((20 * dist / citysize), 2) + 63.27 * (20 * dist / citysize) - 9306));
+                float fieldprob = float(min((double)0, (double)(-4 * maxdist + 6 * dist)));
+                float pastureprob = float(min((double)0, (double)(-4 * maxdist + 6 * dist)));
+                float factoryprob = float(min((double)0,(double)( -0.1020 * pow((20 * dist / citysize), 2) + 63.27 * (20 * dist / citysize) - 9306)));
 
 
                 float restaurantprob = float(2000 / (20 * dist / citysize));
                 float shopprob = float(2500 / (20 * dist / citysize));
-                float buildingprob = float((min(0, (-0.02000) * pow((20 * dist / citysize), 2) + 7 * (20 * dist / citysize) - 300.0)));
-                float windmillprob = float(min(0, (-0.08333) * pow((20 * dist / citysize), 2) + 60.00 * (20 * dist / citysize) - 10500));
+                float buildingprob = float((min((double)0, (double)((-0.02000) * pow((20 * dist / citysize), 2) + 7 * (20 * dist / citysize) - 300.0))));
+                float windmillprob = float(min((double)0, (double)((-0.08333) * pow((20 * dist / citysize), 2) + 60.00 * (20 * dist / citysize) - 10500)));
 
-                float lowhouseprob = float(min(0, -0.2000 * pow((20 * dist / citysize), 2) + 160.0 * (20 * dist / citysize) - 3.150e+4));
-                float highhouseprob = float(min(0, 0.1250 * pow((20 * dist / citysize), 2) - 17.5 * (20 * dist / citysize)));
+                float lowhouseprob = float(min((double)0, (double)(-0.2000 * pow((20 * dist / citysize), 2) + 160.0 * (20 * dist / citysize) - 3.150e+4)));
+                float highhouseprob = float(min((double)0, (double)(0.1250 * pow((20 * dist / citysize), 2) - 17.5 * (20 * dist / citysize))));
 
                 float smallerprob = restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob;
                 //std::cout << "DEBUG: About to create a random shop" << std::endl;
@@ -319,7 +319,7 @@ void City::generate_initial_city_graphics()
                 }
 
                 // ACTUAL CITY
-                /*
+                
                 for (int x = 0; x < 4; x++)
                 {
                     for (int z = 0; z < 4; z++)
@@ -1728,7 +1728,7 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
         std::cout << "DEBUG: VALUE PIE CHARTS= " << value << "     " << min((double)value / 5, 1.0) << std::endl;
     }
     else {
-        node->set_tint_progress(Color(min(2 - (double)value / 5, 1.0), min((double)value / 5, 1), 0, 1.0));
+        node->set_tint_progress(Color(min(2 - (double)value / 5, 1.0), min((double)value / 5, 1.0), 0, 1.0));
     }
     node->set("value", value);
 }
