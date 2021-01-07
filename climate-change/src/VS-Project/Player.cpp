@@ -33,22 +33,22 @@ void Player::_init() {
 	movable = true;
 }
 
-void Player::_ready() 
+void Player::_ready()
 {
 	Input* i = Input::get_singleton();
 	i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
 	worldEnv->get_environment()->set_dof_blur_far_enabled(true);
 	worldEnv->get_environment()->set_dof_blur_near_enabled(true);
-	
+
 	this->set("translation", StartPosition);
 	this->set("rotation_degrees", StartRotation);
 
 	this->update_camera_angle();
-	
+
 }
 
-void Player::update_camera_angle() 
+void Player::update_camera_angle()
 {
 	double h = ((Vector3)(this->get("translation"))).y;
 
@@ -57,17 +57,18 @@ void Player::update_camera_angle()
 	this->get_node("ClippedCamera")->set("rotation_degrees", Vector3(-CameraAngleDeg, 0, 0));
 }
 
-void Player::_process(float delta) 
+void Player::_process(float delta)
 {
 	if (movable) { UpdateMotionFromInput(delta); }
-	
-	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
-	worldEnv->get_environment()->set_dof_blur_far_distance(4 * (this->get_global_transform().get_origin().y));
-	worldEnv->get_environment()->set_dof_blur_far_amount(0.2 * pow((1 - (this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight - MinHeight)), 0.2) );
-	
-	//this->get_child(0)->set("far", pow(get_global_transform().get_origin().y, 0.2)*30);
 
-	this->translate(motion); 
+	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
+	worldEnv->get_environment()->set_dof_blur_far_distance(2 * (this->get_global_transform().get_origin().y));
+	worldEnv->get_environment()->set_dof_blur_far_amount(0.1 * pow((1 - (this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight - MinHeight)), 0.2));
+
+	this->get_child(0)->set("far", pow(get_global_transform().get_origin().y / MaxHeight, 0.4) * 460);
+
+	this->translate(motion);
+	//this->move_and_collide(motion);
 	this->set_rotation_degrees(rotation);
 	this->update_camera_angle();
 
@@ -75,30 +76,30 @@ void Player::_process(float delta)
 
 void Player::_physics_process(float delta)
 {
-	
+
 }
 
 void Player::_input(InputEvent* e)
 {
 	motion = Vector3(0, 0, 0);
-	
+
 	// MOUSE MOTION EVENTS
-	
-	if (e->get_class() == "InputEventMouseMotion") 
+
+	if (e->get_class() == "InputEventMouseMotion")
 	{
 		// Rotation and vertical motion using relative mouse coordinates
 		if (movable) { UpdateRotationFromInput((InputEventMouseMotion*)e); }
 	}
-	
+
 	Input* i = Input::get_singleton();
 
-	if (e->is_action_pressed("ui_turn")) 
+	if (e->is_action_pressed("ui_turn"))
 	{
 		mouse_p = this->get_viewport()->get_mouse_position();
 		i->set_mouse_mode(i->MOUSE_MODE_CAPTURED);
 	}
 
-	if (e->is_action_released("ui_turn")) 
+	if (e->is_action_released("ui_turn"))
 	{
 		i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
 		this->get_viewport()->warp_mouse(mouse_p);
@@ -106,18 +107,18 @@ void Player::_input(InputEvent* e)
 
 	this->translate(motion);
 
-	if (e->is_action_pressed("ui_cancel")) 
+	if (e->is_action_pressed("ui_cancel"))
 	{
 		// EXIT GAME
-		get_tree()->quit();								
+		get_tree()->quit();
 	}
-	
+
 }
 
-void Player::UpdateMotionFromInput(float delta) 
+void Player::UpdateMotionFromInput(float delta)
 {
 	// RESET MOTION VECTOR TO ZERO
-	motion = Vector3(0, 0, 0);							
+	motion = Vector3(0, 0, 0);
 
 	// INPUT USED FOR KEY CONTROLS
 	Input* i = Input::get_singleton();
@@ -172,23 +173,23 @@ void Player::UpdateMotionFromInput(float delta)
 void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
 	Vector2 rot = e->get_relative();						// RELATIVE ROTATION VECTOR OBTAINED FROM MOUSE MOTION
 	Input* i = Input::get_singleton();						// INPUT USED FOR MOUSE MODE
-	
+
 	if (i->get_mouse_mode() == i->MOUSE_MODE_CAPTURED)		// CHANGE PLAYER ROTATION ONLY IF MOUSE IS CAPTURED
 	{
 		// LOOK LEFT/RIGHT
 		rotation.y -= rot.x * (SPEED_R / 360);				//Must depends on the screen size to avoid slower rotation on high def screens
-		
+
 		// ZOOM-IN MOTION 
 		if (rot.y <= 0) {
 			if (this->get_global_transform().get_origin().y <= MaxHeight)	// Set maximum height
 			{
-				motion.z -= (rot.y * cos(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight/2, VSPEED_POWER));
+				motion.z -= (rot.y * cos(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
 				motion.y -= (rot.y * sin(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
 			}
 		}
 		else {
 			// Set minimum height
-			if (this->get_global_transform().get_origin().y >= MinHeight) 
+			if (this->get_global_transform().get_origin().y >= MinHeight)
 			{
 				motion.z -= (rot.y * cos(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
 				motion.y -= (rot.y * sin(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
@@ -202,7 +203,7 @@ void Player::ChangeMouseMode() {
 	Input* i = Input::get_singleton();
 
 	// CHANGE MOUSE MODE
-	if (i->get_mouse_mode() == i->MOUSE_MODE_CAPTURED) 
+	if (i->get_mouse_mode() == i->MOUSE_MODE_CAPTURED)
 	{
 		i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
 	}
