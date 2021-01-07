@@ -121,7 +121,7 @@ namespace godot {
         double subsidy_green = -1; //default when policy is not on, should be between 1000 - 100 000 euros per factory
 
         //Subsidies for helping households, buildings to install solar panels (these help poorer households to have less environmental impact)
-        bool solar_panel_subsidies();
+        double solar_panel_subsidies;
         //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if solar panels can be installed
 
          //Subsidies for helping households, buildings to install rooftop wind turbines  (these help poorer households to have less environmental impact)
