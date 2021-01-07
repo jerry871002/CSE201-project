@@ -13,6 +13,7 @@
 #include <Viewport.hpp>
 #include <HSlider.hpp>
 #include <TextureProgress.hpp>
+#include <Color.hpp>
 
 #include <PoolArrays.hpp>
 
@@ -28,7 +29,9 @@
 
 using namespace godot;
 
-int traffic_system[10][10][4][3] = { 0};
+int traffic_system[10][10][4][3] = { 0}; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
+				 // the third coornidate indicates the side of the building and the forth one which way the car can turn
+
 
 City::City() {
 
@@ -39,7 +42,8 @@ City::City() {
 	energyDemand = 0;
 	energySupply = 0;
 	environmentalCost = 0;
-	totalSatisfaction = 50;
+	totalSatisfaction = 100;
+	totalCo2Emissions = 100;
 
 	time_speed = 1;
 
@@ -77,6 +81,8 @@ void City::_register_methods()
 	register_method((char*)"_on_ExitButton_pressed", &City::_on_ExitButton_pressed);
 	register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
 	register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
+	register_method((char*)"change_pie_chart", &City::change_pie_chart);
+
 
 	register_method((char*)"add_shop", &City::add_shop);
 
@@ -116,6 +122,8 @@ void City::_physics_process(float delta) {
 
 		if (this->rolling_simulation_counter == 0) {
 			this->simulation_shops();
+			change_pie_chart(carbonEmission, "PieSatisfaction");
+			change_pie_chart(carbonEmission, "PieCO2");
 		}
 		else if (this->rolling_simulation_counter == 1) {
 			this->simulation_housing();
@@ -943,45 +951,32 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 	if (positionOfBuildings[x][y] != 0) { // nothing happens if the building isn't there
 		std::cout << "DEBUG: updating traffic for coordinates : " << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
 		if (number == 1) {  // the case when it's a 1 by 1 buidling
-			traffic[x][y][0][2] = 1;
-			traffic[x][y][1][2] = 1;
-			traffic[x][y][2][2] = 1;
-			traffic[x][y][3][2] = 1;
 			traffic_system[x][y][0][2] = 1;
 			traffic_system[x][y][1][2] = 1;
 			traffic_system[x][y][2][2] = 1;
 			traffic_system[x][y][3][2] = 1;
 			if (x + 1 < sizeOfCity && y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y + 1] == 1 || positionOfBuildings[x + 1][y + 1] == 2 || positionOfBuildings[x + 1][y + 1] == 3)) {
-				traffic[x][y][3][0] = 1;
 				traffic_system[x][y][3][0] = 1;
 			}
 			if (y + 1 < sizeOfCity && (positionOfBuildings[x][y + 1] == 1 || positionOfBuildings[x][y + 1] == 2 || positionOfBuildings[x][y + 1] == 5)) {
-				traffic[x][y][3][1] = 1;
 				traffic_system[x][y][3][1] = 1;
 			}
 			if (x - 1 >= 0 && y + 1 < sizeOfCity && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 3 || positionOfBuildings[x - 1][y + 1] == 4)) {
-				traffic[x][y][2][0] = 1;
 				traffic_system[x][y][2][0] = 1;
 			}
 			if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
-				traffic[x][y][2][1] = 1;
 				traffic_system[x][y][2][1] = 1;
 			}
 			if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
-				traffic[x][y][1][0] = 1;
 				traffic_system[x][y][1][0] = 1;
 			}
 			if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
-				traffic[x][y][1][1] = 1;
 				traffic_system[x][y][1][1] = 1;
 			}
 			if (x + 1 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
-				std::cout << "DEBUG: statement : " << x << " " << y << " " << positionOfBuildings[x + 1][y - 1] << std::endl;
-				traffic[x][y][0][0] = 1;
 				traffic_system[x][y][0][0] = 1;
 			}
 			if (x + 1 < sizeOfCity && (positionOfBuildings[x + 1][y] == 1 || positionOfBuildings[x + 1][y] == 2 || positionOfBuildings[x + 1][y] == 3)) {
-				traffic[x][y][0][1] = 1;
 				traffic_system[x][y][0][1] = 1;
 			}
 			if (newBuilding == true) {  // update all the possible buildings around
@@ -1023,75 +1018,55 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 			if (number == 5) {
 				y = y - 1;
 			}
-			traffic[x][y][0][1] = 1;
 			traffic_system[x][y][0][1] = 1;
 			if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
-				traffic[x][y][0][0] = 1;
 				traffic_system[x][y][0][0] = 1;
 			}
 
-			traffic[x + 1][y][0][2] = 1;
 			traffic_system[x + 1][y][0][2] = 1;
 			if (x + 2 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 2][y - 1] == 1 || positionOfBuildings[x + 2][y - 1] == 2 || positionOfBuildings[x + 2][y - 1] == 5)) {
-				traffic[x + 1][y][0][0] = 1;
 				traffic_system[x + 1][y][0][0] = 1;
 			}
 			if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 2 || positionOfBuildings[x + 2][y] == 3)) {
-				traffic[x + 1][y][0][1] = 1;
 				traffic_system[x + 1][y][0][1] = 1;
 			}
 
-			traffic[x + 1][y][3][1] = 1;
 			traffic_system[x + 1][y][3][1] = 1;
 			if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 1] == 1 || positionOfBuildings[x + 2][y + 1] == 2 || positionOfBuildings[x + 2][y + 1] == 3)) {
-				traffic[x + 1][y][3][0] = 1;
 				traffic_system[x + 1][y][3][0] = 1;
 			}
 
-			traffic[x + 1][y + 1][3][2] = 1;
 			traffic_system[x + 1][y + 1][3][2] = 1;
 			if (x + 2 < sizeOfCity && y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 2] == 1 || positionOfBuildings[x + 2][y + 2] == 2 || positionOfBuildings[x + 2][y + 2] == 3)) {
-				traffic[x + 1][y + 1][3][0] = 1;
 				traffic_system[x + 1][y + 1][3][0] = 1;
 			}
 			if (y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 3 || positionOfBuildings[x + 2][y] == 4)) {
-				traffic[x + 1][y + 1][3][1] = 1;
 				traffic_system[x + 1][y + 1][3][1] = 1;
 			}
 
-			traffic[x + 1][y][2][1] = 1;
 			traffic_system[x + 1][y][2][1] = 1;
 			if (y + 2 < sizeOfCity && (positionOfBuildings[x][y + 2] == 1 || positionOfBuildings[x][y + 2] == 3 || positionOfBuildings[x][y + 2] == 4)) {
-				traffic[x + 1][y][2][0] = 1;
 				traffic_system[x + 1][y][2][0] = 1;
 			}
 
-			traffic[x][y + 1][2][2] = 1;
 			traffic_system[x][y + 1][2][2] = 1;
 			if (x - 1 >= 0 && y + 2 < sizeOfCity && (positionOfBuildings[x - 1][y + 2] == 1 || positionOfBuildings[x - 1][y + 2] == 3 || positionOfBuildings[x - 1][y + 2] == 4)) {
-				traffic[x][y + 1][2][0] = 1;
 				traffic_system[x][y + 1][2][0] = 1;
 			}
 			if (x - 1 >= 0 && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 4 || positionOfBuildings[x - 1][y + 1] == 5)) {
-				traffic[x][y + 1][2][1] = 1;
 				traffic_system[x][y + 1][2][1] = 1;
 			}
 
-			traffic[x + 1][y][1][1] = 1;
 			traffic_system[x + 1][y][1][1] = 1;
 			if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
-				traffic[x + 1][y][1][0] = 1;
 				traffic_system[x + 1][y][1][0] = 1;
 			}
 
-			traffic[x][y][1][2] = 1;
 			traffic_system[x][y][1][2] = 1;
 			if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
-				traffic[x][y][1][0] = 1;
 				traffic_system[x][y][1][0] = 1;
 			}
 			if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
-				traffic[x][y][1][1] = 1;
 				traffic_system[x][y][1][1] = 1;
 			}
 			if (newBuilding == true) {  // update all the possible buildings around
@@ -1248,6 +1223,7 @@ void City::simulation_transport()
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 		this->numberOfEmployees += (double)((*it)->get("employment"));
 		this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
+
 		this->energyDemand += (double)((*it)->get("energyUse"));
 		this->environmentalCost += (double)((*it)->get("environmentalCost"));
 	}
@@ -1255,6 +1231,7 @@ void City::simulation_transport()
 	for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
 	{
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
+		
 		// this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;        satisfaction should be changed in the function below, with the day tick %4
 	}
 
@@ -1546,7 +1523,7 @@ double City::return_energySupply() {
 	return energySupply;
 }
 
-void City::transport_probabilities(double* incomes, int incomesLen, double airQuality){
+void City::transport_probabilities(){
 	        /*
         * 0 - electic car
         * 1 - big american car
@@ -1760,3 +1737,19 @@ int main() {
 	return 0;
 }
 */
+
+void City::change_pie_chart(int totalSatisfaction, NodePath name)
+{
+	Color green = Color(0, 1, 0, 1);
+	Color orange = Color(1, 0.65, 0, 1);
+	Color red = Color(1, 0, 0, 1);
+	TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
+	node->set_tint_progress(green);
+	if (totalSatisfaction < 70) {
+		node->set_tint_progress(green);
+	}
+	if (totalSatisfaction < 33) {
+		node->set_tint_progress(green);
+	}
+	node->set("value", totalSatisfaction);
+}
