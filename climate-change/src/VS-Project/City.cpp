@@ -209,7 +209,7 @@ void City::generate_initial_city_graphics()
 	// SIMPLER CITY FOR TESTING PURPOSES ON SAD COMPUTERS
 
 
-	
+	/*
 	for (int x = 0; x < 1; x++)
 	{
 		for (int z = 0; z < 1; z++)
@@ -233,7 +233,7 @@ void City::generate_initial_city_graphics()
 						else if (type < 20) { add_house(pos + pos1, BuildingScene); }
 						else if (type == 20) { add_energy(pos + pos1, WindmillScene); }
 						else { add_house(pos + pos1, HighHouseScene); }
-						/*
+						
 						for (int i = 0; i < 2; i++) {
 							for (int j = 0; j < 2; j++) {
 								for (int k = 0; k < 4; k++) {
@@ -241,19 +241,19 @@ void City::generate_initial_city_graphics()
 								}
 							}
 						}
-						*/
+						
 					}
 				}
 			}
 		}
 	}
 	
-	
+	*/
 	
 
 	// ACTUAL CITY
 	
-	/*
+	
 	
 	for (int x = 0; x < 4; x++)
 	{
@@ -359,7 +359,7 @@ void City::generate_initial_city_graphics()
 		}
 	}
 
-	*/
+	
 	
 }
 
@@ -1136,7 +1136,7 @@ void City::simulation_shops()
 {
 	std::cout << "Simulation SHOPS" << std::endl;
 
-	day_tick += this->time_speed;
+	day_tick += this->time_speed * 5;
 	this->days_since_last_simulation = 0;
 	Godot::print(return_word_date());
 	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date());
@@ -1153,12 +1153,6 @@ void City::simulation_production()
 {
 	std::cout << "Simulation PRODUCTION" << std::endl;
 
-	day_tick += this->time_speed;
-	this->days_since_last_simulation = 0;
-	Godot::print(return_word_date());
-	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date());
-
-
 	for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
 	{
 		(*it)->set("updatable", true);
@@ -1169,11 +1163,6 @@ void City::simulation_production()
 void City::simulation_energy()
 {
 	std::cout << "Simulation ENERGY" << std::endl;
-
-	day_tick += this->time_speed;
-	this->days_since_last_simulation = 0;
-	Godot::print(return_word_date());
-	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date());
 
 
 	for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
@@ -1188,19 +1177,12 @@ void City::simulation_housing()
 
 	std::cout << "Simulation HOUSING" << std::endl;
 
-	day_tick += this->time_speed;
-	this->days_since_last_simulation = 0;
-	Godot::print(return_word_date());
-	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date());
-
-
-
 	for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
 	{
 		(*it)->set("updatable", true);
 	}
 
-	
+	/*
 
 	//   function which looks at a single random house at gives it the correct satisfaction then updates the total satisfaction
 	Housing* h = all_houses.at(rand() % all_houses.size());
@@ -1236,17 +1218,14 @@ void City::simulation_housing()
 	tothouseSat /= obj_count;
 	this->totalSatisfaction = (totalSatisfaction + tothouseSat) / all_houses.size();
 
+	*/
+
 }
 
 void City::simulation_transport() 
 {
 
 	std::cout << "Simulation TRANSPORT" << std::endl;
-
-	day_tick += this->time_speed;
-	this->days_since_last_simulation = 0;
-	Godot::print(return_word_date());
-	this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date());
 
 	this->income = 0;
 	this->population = 50000;
