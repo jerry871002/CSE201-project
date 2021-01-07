@@ -245,6 +245,7 @@ bool House::solar_panel() {
 		}
 
 		else {
+			/*
 			if (solar_panel_subsidies() == true) {
 				//then the household gets financial help and can install the solar_panels
 				solarPanelAge = 0; 
@@ -259,6 +260,7 @@ bool House::solar_panel() {
 				//return PanelsOff;
 				return false;
 			}
+			*/
 		}
 	}
 	                            
@@ -481,6 +483,7 @@ bool Building::solar_panel() {
 		}
 
 		else {
+			/*
 			if (solar_panel_subsidies() == true) {
 				//then the household gets financial help and can install the solar_panels
 				solarPanelAge = 0; 
@@ -495,6 +498,7 @@ bool Building::solar_panel() {
 				//return PanelsOff;
 				return false;
 			}
+			*/
 		}
 	}
 
