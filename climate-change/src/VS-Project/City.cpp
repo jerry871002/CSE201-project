@@ -467,6 +467,7 @@ void City::_ready()
 {
 
 	std::cout << "DEBUG: Ready started" << std::endl;
+	citysize = 1;
 	this->generate_initial_city_graphics();
 	this->set_initial_visible_components();
 
