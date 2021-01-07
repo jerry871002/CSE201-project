@@ -84,6 +84,7 @@ namespace godot {
 
         // TIME AND OVERALL SIMULATION
 
+        bool loopbegin {false}; // loop begin in order to set counters to 0 again
         float time_speed = 1; // 1 for regular speed (1 in-game day per second)
         double simulation_counter{ 0 }; // counter used to cast per-frame processing to a time_speed related frequency
         double date_counter{ 0 };
@@ -91,12 +92,13 @@ namespace godot {
         int days_since_last_simulation;
         int daycount = 0; //keeps track of the in-game days per year
         double stat = 0; //stat example
-        double stats[366]; //stats array
-        void update_date();
+        double stats[10][366]; //stats array
+        void update_date();     
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation
-        String return_word_date(); // returns the date :day/month/year as a string with words
-        //String return_number_date(int day, int month, int year); // returns the date :day/month/year as a string with numbers
+        string return_word_date(int days); // returns the date from days :day/month/year as a string with words
+        String return_word_date_godot(); // returns date from day_tick in godot string
+        string return_number_date(int day, int month, int year); // returns the date :day/month/year as a string with numbers
         //void simulation(); // updates all the stats and calls the simulation for the buildings
 
         int rolling_simulation_counter{ -1 };

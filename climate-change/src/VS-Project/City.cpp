@@ -117,12 +117,12 @@ void City::_physics_process(float delta) {
     }
 
     if (simulation_counter > 5)
-    {
+    {   
         (this->rolling_simulation_counter)++;
 
         if (this->rolling_simulation_counter == 0) {
+            write_stat_history_to_file();
             this->simulation_shops();
-
         }
         else if (this->rolling_simulation_counter == 1) {
             this->simulation_housing();
@@ -162,7 +162,7 @@ void City::_physics_process(float delta) {
 
 void City::update_date() {
     this->day_tick += days_since_last_simulation;
-    this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date());
+    this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date_godot());
     this->day_tick -= days_since_last_simulation;
 }
 
@@ -211,7 +211,7 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-    /*
+
     Vector3 center = Vector3(15 * citysize, 0, 15 * citysize);
     float maxdist = pow(pow(center.x, 2) + pow(center.z, 2), 1 / 2);
 
@@ -283,7 +283,7 @@ void City::generate_initial_city_graphics()
                 // SIMPLER CITY FOR TESTING PURPOSES ON SAD COMPUTERS
 
 
-                
+                /*
                 for (int x = 0; x < 1; x++)
                 {
                     for (int z = 0; z < 1; z++)
@@ -417,11 +417,11 @@ void City::generate_initial_city_graphics()
                         }
                     }
                 }
-                
+                */
 
             }
-        }*/
-
+        }
+	
 }
 
 void City::set_initial_visible_components()
@@ -1158,8 +1158,8 @@ void City::simulation_shops()
 
     day_tick += this->time_speed * 5;
     this->days_since_last_simulation = 0;
-    Godot::print(return_word_date());
-    this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date());
+    Godot::print(return_word_date_godot());
+    this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date_godot());
 
 
     for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
@@ -1300,7 +1300,6 @@ void City::simulation_transport()
 }
 
 
-
 template<typename T> String to_godot_string(T s)
 {
     std::string standardString = std::to_string(s);
@@ -1324,8 +1323,8 @@ int* return_date(int day_tick) {
     return date;
 }
 
-string return_string_date(int day, int month, int year) {
-    return to_string(day) + ", " + to_string(month) + ", " + to_string(year);
+std::string return_number_date(int day, int month, int year) {
+    return std::to_string(day) + ", " + std::to_string(month) + ", " + std::to_string(year);
 }
 
 /*
@@ -1349,61 +1348,58 @@ double find_avg(double array[], int leap) {
     return sum / size;
 }
 
-/*
-string return_word_date(int day_tick) {
-    int* datenumber = return_date(day_tick);
-    int year=datenumber[2];
-    string date = "Year ";
-    date += to_string(datenumber[2]);
+ std::string City::return_word_date(int days) {
+
+    int* datenumber = return_date(int(days));
+    std::string date = "Year ";
+    date += std::to_string(datenumber[2]);
     date += ", ";
+
     if (datenumber[1] == 1) {
-        date += string("January ");
+        date += "January ";
     }
     if (datenumber[1] == 2) {
-        date += string("February ");
+        date += "February ";
     }
     if (datenumber[1] == 3) {
-        date += string("March ");
+        date += "March ";
     }
     if (datenumber[1] == 4) {
-        date += string("April ");
+        date += "April ";
     }
     if (datenumber[1] == 5) {
-        date += string("May ");
+        date += "May ";
     }
     if (datenumber[1] == 6) {
-        date += string("June ");
+        date += "June ";
     }
     if (datenumber[1] == 7) {
-        date += string("July ");
+        date += "July ";
     }
     if (datenumber[1] == 8) {
-        date += string("August ");
+        date += "August ";
     }
     if (datenumber[1] == 9) {
-        date += string("September ");
+        date += "September ";
     }
     if (datenumber[1] == 10) {
-        date += string("October ");
+        date += "October ";
     }
     if (datenumber[1] == 11) {
-        date += string("November ");
+        date += "November ";
     }
     if (datenumber[1] == 12) {
-        date += string("December ");
+        date += "December ";
     }
 
-    date += to_string(datenumber[0]);
-
+    date += std::to_string(datenumber[0]);
     return date;
 }
-*/
 
 
-String City::return_word_date() {
+String City::return_word_date_godot() {
 
     int* datenumber = return_date(int(this->day_tick));
-    int year = datenumber[2];
     String date = String("Year ");
     date += to_godot_string(datenumber[2]);
     date += String(", ");
@@ -1451,40 +1447,37 @@ String City::return_word_date() {
 
 
 
-
-
 /// edit text files found in /addons/file.samples
 
-string get_path(string documentName) {
+std::string get_path(std::string documentName) {
     return "../../addons/easy_charts/file.samples/" + documentName + ".csv";
 }
 
-
 // Function to add a line of the form "2015;76" to the csv file named documentName.
 // To do so, call add_data("pollution", "2015", "76");
-void add_data(string documentName, string year, string value) {
+void add_data(std::string documentName, std::string year, std::string value) {
     fstream file;
-    string path = get_path(documentName);
+    std::string path = get_path(documentName);
     file.open(path, ios::out | ios::app);
     file << year << ";" << value << '\n';
     file.close();
 }
 
 // Suppresses all data stored in the file documentName
-void clear_completely(string documentName) {
+void clear_completely(std::string documentName) {
     fstream file;
-    string path = get_path(documentName);
+    std::string path = get_path(documentName);
     file.open(path, ios::out | ios::trunc);
     file.close();
 }
 
 // Suppresses all data stored in the file documentName except the first line.
-void clear(string documentName) {
+void clear(std::string documentName) {
     fstream file;
-    string path = get_path(documentName);
+    std::string path = get_path(documentName);
 
     file.open(path);
-    string line;
+    std::string line;
     getline(file, line);
     file.close();
 
@@ -1497,15 +1490,15 @@ void clear(string documentName) {
 }
 
 // Copies the data stored in documentNameFrom to an empty file documentNameTo.
-void copy(string documentNameFrom, string documentNameTo) {
+void copy(std::string documentNameFrom, std::string documentNameTo) {
     fstream fileFrom;
     fstream fileTo;
-    string path1 = get_path(documentNameFrom);
-    string path2 = get_path(documentNameTo);
+    std::string path1 = get_path(documentNameFrom);
+    std::string path2 = get_path(documentNameTo);
     fileFrom.open(path1);
     fileTo.open(path2);
     while (fileFrom.good()) {
-        string line;
+        std::string line;
         getline(fileFrom, line, '\n');
         if (line.length() > 0) {
             fileTo << line << '\n';
@@ -1519,23 +1512,22 @@ void copy(string documentNameFrom, string documentNameTo) {
 // For example, if you want to change the line "2015;76" into "2015;01" of the pollution.csv file, call change_data("pollution", "2015", "01");
 // By calling change_data("pollution", "2015", "01");, you will change all lines of the form "2015;**" into "2015;01".
 // If no line in the file is of the form "2015;**", calling change_data("pollution", "2015", "01") won't do anything.
-void change_data(string documentName, string dataToChange, string newValue) {
+void change_data(std::string documentName, std::string dataToChange, std::string newValue) {
     fstream file;
     fstream temp;
-    string path = get_path(documentName);
+    std::string path = get_path(documentName);
     file.open(path);
     temp.open("../../addons/easy_charts/file.samples/datas_on_rows.csv");
 
     while (file.good()) {
-        string line;
+        std::string line;
         getline(file, line, '\n');
         if (line.length() > 0) {
             int pos = line.find(";");
-            string sub = line.substr(0, pos);
+            std::string sub = line.substr(0, pos);
             if (sub == dataToChange) {
                 temp << sub << ";" << newValue << '\n';
-            }
-            else {
+            } else {
                 temp << line << '\n';
             }
         }
@@ -1553,19 +1545,19 @@ void change_data(string documentName, string dataToChange, string newValue) {
 // Function to delete a line of the csv file named documentName.
 // By calling delete_line("pollution", "2015");, you will delete all lines of the form "2015;**".
 // If no line in the file is of the form "2015;**", calling delete_line("pollution", "2015") won't do anything.
-void delete_line(string documentName, string dataToDelete) {
+void delete_line(std::string documentName, std::string dataToDelete) {
     fstream file;
     fstream temp;
-    string path = get_path(documentName);
+    std::string path = get_path(documentName);
     file.open(path);
     temp.open("../../addons/easy_charts/file.samples/datas_on_rows.csv");
 
     while (file.good()) {
-        string line;
+        std::string line;
         getline(file, line, '\n');
         if (line.length() > 0) {
             int pos = line.find(";");
-            string sub = line.substr(0, pos);
+            std::string sub = line.substr(0, pos);
             if (sub != dataToDelete) {
                 temp << line << '\n';
             }
@@ -1584,36 +1576,32 @@ void delete_line(string documentName, string dataToDelete) {
 
 
 void City::write_stat_history_to_file() {
-
-    int* date;
+    
+    stat+=50;
+    int *date; 
     date = return_date(day_tick);
     int day = *date;
-    int month = *(date + 1);
-    int year = *(date + 2);
+    int month = *(date+1);
+    int year = *(date+2);
 
-
-    if (day == 1 && month == 1 && year != 1 && year != 2) {
-        daycount = 0;
-        int leap = (year - 1) % 4;
-        add_data("alltimestats", std::to_string(year - 1), std::to_string(find_avg(stats, leap)));
-        double stats[366];
-        remove(::get_path("statsyear" + std::to_string(year - 2)).c_str());
+    
+    if (day==1 && month==1 && year!=1 && year!=2) {
+        daycount=0;
+        int leap = (year-1)%4;
+        add_data("alltimestats", std::to_string(year-1), std::to_string(find_avg(stats[0],leap)));
+        double stats[10][366];
+        remove(::get_path("statsyear" + std::to_string(year-2)).c_str());
     }
+        
 
+    add_data("statsyear" + std::to_string(year), return_word_date(day_tick), std::to_string(stat));
 
-    stats[daycount] = stat;
-    daycount += 1;
-    add_data("statsyear" + std::to_string(year), return_string_date(day, month, year), std::to_string(stat));
-
-
-    int* daysbef;
-    daysbef = return_date(day_tick - 365);
-    int daydaysbef = *daysbef;
-    int monthdaysbef = *(daysbef + 1);
-    int yeardaysbef = *(daysbef + 2);
-    delete_line("statsyear" + std::to_string(year), return_string_date(daydaysbef, monthdaysbef, yeardaysbef));
-
+    delete_line("statsyear" + std::to_string(year), return_word_date(day_tick-365));
+    
+    stats[0][daycount]=stat;
+    daycount+=1;
 }
+
 
 
 double City::return_income() {
@@ -1725,6 +1713,7 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
 
     if (isPositive) {
         node->set_tint_progress(Color(min((double)value / 5, 1.0), min(2 - (double)value / 5, 1.0), 0, 1.0));
+        std::cout << "DEBUG: VALUE PIE CHARTS= " << value << "     " << min((double)value / 5, 1.0) << std::endl;
     }
     else {
         node->set_tint_progress(Color(min(2 - (double)value / 5, 1.0), min((double)value / 5, 1.0), 0, 1.0));
@@ -1736,9 +1725,9 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
 //in order to check for errors on mac
 int main() {
     City c = City();
-    while (true) {
-        c.write_stat_history_to_file();
-    }
+	while (true) {
+    	c._physics_process(1);
+	}
     std::cout << "DEBUG: TOTAL CARBON EMISSION = " << c.return_carbonEmission() << std::endl;
     return 0;
 }
