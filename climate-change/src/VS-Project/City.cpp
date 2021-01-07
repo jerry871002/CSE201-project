@@ -536,10 +536,10 @@ String City::get_button_info_text() {
 	// I DON'T KNOW HOW TO DO THE SECOND PART YET 
 	// I GUESS THESE VALUES SHOULD BE STORED IN CITY AND NOT FETCHED FROM RANDOM OBJECTS
 
-	if (this->active_button == String("ChangePanelProbabilityForAllShops"))
+	if (this->active_button == String("PanelSubsidyForShops"))
 	{
 		//this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
-		return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for all shops. Ultimately, this policy will be implemented as a subsidy, and thus the input will refer to a certain amount that the city will be willing to contribute to the installation of solar panels on shops. Hence, this amount will be subtracted from the budget as soon as solar panels are installed on a shop.");
+		return String("Please input a value between 0 and 450. This will be a sola panel subsidy for shops.");
 	}
 	else if (this->active_button == String("ChangePanelProbabilityForRestaurants"))
 	{
@@ -582,12 +582,12 @@ void City::implement_shop_policies(double value) {
 
 	Godot::print(this->active_button);
 
-	if (this->active_button == String("ChangePanelProbabilityForAllShops")) {
-		if (value >= 0 && value < 1) {
-			Godot::print("PANEL PROBABILITY WILL BE CHANGED FOR ALL SHOPS");
+	if (this->active_button == String("PanelSubsidyForShops")) {
+		if (value >= 0 && value <= 450) {
+			Godot::print("PANEL SUBSIDY WILL BE CHANGED FOR ALL SHOPS");
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 			{
-				(*it)->set("panel_probability", value);
+				(*it)->set("solar_panel_subsidies", value);
 			}
 		}
 		else {
