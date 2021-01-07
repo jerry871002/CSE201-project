@@ -17,7 +17,11 @@ namespace godot {
 		Energy();
 		~Energy();
 
+		//Need to find a way of making this static or putting it in city
 		int running_plant = 3;
+
+		double running = 0;
+		bool newBuilt = false;
 
 		virtual String get_object_type() { return "Energy"; };
 		String get_main_type() { return "Energy"; };
@@ -83,8 +87,6 @@ namespace godot {
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 
 		void _process(float delta);
-		double running = 0;
-		bool newBuilt = false;
 	};
 
 	/// <summary>
@@ -100,8 +102,6 @@ namespace godot {
 		virtual String get_object_type() { return "Windmill"; };
 
 		void _process(float delta);
-
-		double running = 0;
 
 		//This class gives the functionnalities for one single onshore windmill, 
 		//the sim team can use it in order to simulate a wind farm of the size it chooses
@@ -124,8 +124,6 @@ namespace godot {
 		virtual String get_object_type() { return "Coal Power Plant"; };
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
-		double running = 1;
-		bool newBuilt = false;
 	};
 
 	/// </summary>
@@ -141,7 +139,5 @@ namespace godot {
 		virtual String get_object_type() { return "Geothermal Power Plant"; };
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
-		double running = 0;
-		bool newBuilt = false;
 	};
 }

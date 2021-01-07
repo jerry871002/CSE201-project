@@ -134,10 +134,14 @@ void NuclearPowerPlant::simulate_step(double days)
 	std::mt19937 gen(rd());
 
 	age += days;
+
+	/*Comment this out until we find a solution for the running_plant variable
 	if (running_plant == 1) {
 		running = 1;
 		newBuilt = false;
-	}
+	}*/ 
+	running = 1;
+
 	std::normal_distribution <double> energy(20000000, 300000);
 	energyPerDay = energy(gen)*running; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 
@@ -147,12 +151,15 @@ void NuclearPowerPlant::simulate_step(double days)
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
-			double probability = (rand() % (4));
-			if (probability <= 3 && coal_prohibited == 0) {
+			double probability = (rand() % (10));
+			if (probability <= 7 && coal_prohibited == 0) {
 				running_plant = 3;
 			}
-			else {
+			if(probability == 8) {
 				running_plant = 4;
+			}
+			else {
+				running_plant = 2;
 			}
 		}
 	}
@@ -177,7 +184,9 @@ void NuclearPowerPlant::simulate_step(double days)
 void godot::NuclearPowerPlant::_process(float delta)
 {
 	this->Structure::_process(delta); 
-	this->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	if ((bool)this->running) {
+		this->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	}
 }
 
 /// <summary>
@@ -214,8 +223,10 @@ Windmill::~Windmill() {}
 void Windmill::_process(float delta)
 {
 	this->Structure::_process(delta);
-	rot -= delta * turnSpeed * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"));
-	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
+	if ((bool)this->running) {
+		rot -= delta * turnSpeed * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"));
+		((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
+	}
 }
 
 void Windmill::simulate_step(double days)
@@ -224,9 +235,13 @@ void Windmill::simulate_step(double days)
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
-	if (running_plant == 2) {
+	/* Comment this out until we find a solution for the running_plant variable
+		if (running_plant == 2) {
 		running = 1;
-	}
+		newBuilt = false;
+	}*/
+	running = 1;
+
 	std::normal_distribution <double> energy(25000, 5000);
 	energyPerDay = energy(gen)*running; //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
 	
@@ -234,6 +249,20 @@ void Windmill::simulate_step(double days)
 		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
 		energyPerDay = 0;
 		//send message on screen for closure
+		if (newBuilt == false) {
+			newBuilt = true;
+			srand((int)time(0));
+			double probability = (rand() % (10));
+			if (probability <= 6 && coal_prohibited == 0) {
+				running_plant = 3;
+			}
+			if (6 < probability <= 8 && nuclear_prohibited == 0) {
+				running_plant = 1;
+			}
+			else {
+				running_plant = 4;
+			}
+		}
 	}
 
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
@@ -286,10 +315,12 @@ GeothermalPowerPlant::~GeothermalPowerPlant() {}
 void GeothermalPowerPlant::simulate_step(double days)
 {
 	age += days;
+	/*Comment this out until we find a solution for the running_plant variable
 	if (running_plant == 4) {
 		running = 1;
 		newBuilt = false;
-	}
+	}*/
+	running = 1;
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -302,12 +333,15 @@ void GeothermalPowerPlant::simulate_step(double days)
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
-			double probability = (rand() % (4));
-			if (probability <= 2 && coal_prohibited == 0) {
+			double probability = (rand() % (10));
+			if (probability <= 6 && coal_prohibited == 0) {
 				running_plant = 3;
 			}
-			else {
+			if (6<probability<=8 && nuclear_prohibited == 0) {
 				running_plant = 1;
+			}
+			else {
+				running_plant = 2;
 			}
 		}
 	}
@@ -376,10 +410,13 @@ void CoalPowerPlant::simulate_step(double days)
 {
 	age += days;
 
+	/* Comment this out until we find a solution for the running_plant variable
 	if (running_plant == 3) {
 		running = 1;
 		newBuilt = false;
-	}
+	}*/
+	running = 1;
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(9589041, 500000);
@@ -391,12 +428,15 @@ void CoalPowerPlant::simulate_step(double days)
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
-			double probability = (rand() % (4));
-			if (probability <= 3 && nuclear_prohibited == 0) {
+			double probability = (rand() % (10));
+			if (probability <= 7 && nuclear_prohibited == 0) {
 				running_plant = 1;
 			}
-			else {
+			if (probability == 8) {
 				running_plant = 4;
+			}
+			else {
+				running_plant = 2;
 			}
 		}
 	}
