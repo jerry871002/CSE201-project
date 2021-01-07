@@ -18,7 +18,6 @@
 #include <random>
 #include <Math.hpp>
 
-# define M_PI 3.14159265358979323846  /* pi */
 
 namespace godot {
     class Structure : public StaticBody {
