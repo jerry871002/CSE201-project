@@ -43,7 +43,6 @@ City::City() {
 	energySupply = 0;
 	environmentalCost = 0;
 	totalSatisfaction = 100;
-	totalCo2Emissions = 100;
 
 	time_speed = 1;
 
@@ -124,6 +123,10 @@ void City::_physics_process(float delta) {
 			this->simulation_shops();
 			change_pie_chart(carbonEmission, "PieSatisfaction");
 			change_pie_chart(carbonEmission, "PieCO2");
+			change_pie_chart(carbonEmission, "PieCO2");
+			change_pie_chart(carbonEmission, "PieCO2");
+			change_pie_chart(carbonEmission, "PieCO2");
+
 		}
 		else if (this->rolling_simulation_counter == 1) {
 			this->simulation_housing();
