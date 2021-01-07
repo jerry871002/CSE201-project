@@ -47,6 +47,7 @@ void Housing::simulate_step(double days) {
 
 	std::cout << "DEBUG: HOUSING SIMULATION CALLED" << std::endl;
 	this->Structure::simulate_step(days); 
+	age += days; // age is an attribute from the Structure class
 };
 
 
@@ -154,6 +155,13 @@ House::~House() {
 }
 
 void House::simulate_step(double days) {
+
+	std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
+
+	this->Housing::simulate_step(days);
+
+	/*
+
 	if ((int)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) % 25 == 0) {
 		satisfaction = 0;
 
@@ -172,7 +180,7 @@ void House::simulate_step(double days) {
 		rooftopWindTurbineAge += 1;
 	}
 
-	/*         
+	
 	if (solarPanelAge >= solarLifetime) {
 		//Then the solar panels are removed and we have 
 		solar_panel() = false;
@@ -191,7 +199,7 @@ void House::simulate_step(double days) {
 	} 
 	
 	
-	*/
+	
 
 
 	switch (houseType){
@@ -222,8 +230,12 @@ void House::simulate_step(double days) {
 		break;
 	}
 	
-	age += days; // age is an attribute from the Structure class
 	
+
+	
+	
+	*/
+
 }
 
 bool House::solar_panel() {
