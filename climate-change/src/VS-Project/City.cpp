@@ -5,6 +5,32 @@
 #include <SceneTree.hpp>
 #include <PackedScene.hpp>
 #include <Node.hpp>
+<<<<<<< Updated upstream
+=======
+#include <ctime>
+#include <Input.hpp>
+#include <Button.hpp>
+#include <Viewport.hpp>
+#include <HSlider.hpp>
+#include <TextureProgress.hpp>
+#include <Color.hpp>
+
+
+
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <stdio.h>
+#include "edit_text_files.cpp"
+
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
+>>>>>>> Stashed changes
 
 using namespace godot;
 
@@ -16,6 +42,14 @@ City::City() {
 	carbonEmission = 0;
 	energyDemand = 0;
 	energySupply = 0;
+<<<<<<< Updated upstream
+=======
+	healthcare = 0;
+    needs = 0;
+	timer = 0;
+	totalSatisfaction = 100;
+	totalCo2Emissions = 100;
+>>>>>>> Stashed changes
 
 	time_speed = 1;
 	delta_counter = 0.0;
@@ -34,6 +68,17 @@ void City::_register_methods()
 	register_method((char*)"_process", &City::_process);
 	register_method((char*)"_input", &City::_input);
 	register_method((char*)"_ready", &City::_ready);
+<<<<<<< Updated upstream
+=======
+	register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
+	register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
+	register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
+	register_method((char*)"_on_Satisfaction_value_changed", &City::_on_Satisfaction_value_changed);
+	register_method((char*)"_on_CO2_value_changed", &City::_on_CO2_value_changed);
+
+	register_property<City, float>("time_speed", &City::time_speed, 1.0);
+
+>>>>>>> Stashed changes
 };
 
 void City::_init() 
@@ -146,7 +191,37 @@ double City::return_income() {
 	return income;
 }
 
+<<<<<<< Updated upstream
+=======
+double City::return_numberOfEmployees() {
+    return numberOfEmployees;
+}
 
+double City::return_carbonEmission() {
+    return carbonEmission;
+}
+
+double City::return_energyDemand() {
+    return energyDemand;
+}
+
+double City::return_energySupply() {
+    return energySupply;
+}
+
+double City::return_healthcare() {
+    return healthcare;
+}
+>>>>>>> Stashed changes
+
+
+double City::return_totalSatisfaction() {
+    return totalSatisfaction;
+}
+
+double City::return_totalCo2Emissions() {
+	return totalCo2Emissions;
+}
 
 
 std::string City::return_game_date() {
@@ -218,3 +293,35 @@ std::string City::return_game_date() {
 	return "Time Representation Error";
 
 }
+<<<<<<< Updated upstream
+=======
+
+void City::_on_Satisfaction_value_changed(totalSatisfaction)
+{
+	Color green = Color( 0, 1, 0, 1 );
+	Color orange =  Color( 1, 0.65, 0, 1 );
+	Color red = Color( 1, 0, 0, 1 );
+	this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(green);
+	if (totalSatisfaction < 70){
+			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(orange);
+	}
+	if (totalSatisfaction < 33){
+			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(red);
+	}
+}
+
+void City::_on_C02_value_changed(totalCo2Emissions)
+{
+	Color green = Color( 0, 1, 0, 1 );
+	Color orange =  Color( 1, 0.65, 0, 1 );
+	Color red = Color( 1, 0, 0, 1 );
+	this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(green);
+	if (totalCo2Emissions < 70){
+			this->get_parent()->get_child(1)->get_child(5)->get_child(0)->set_tint_progress(orange);
+	}
+	if (totalCo2Emissions < 33){
+			this->get_parent()->get_child(1)->get_child(5)->get_child(1)->set_tint_progress(red);
+	}
+}
+
+>>>>>>> Stashed changes
