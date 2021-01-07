@@ -79,14 +79,14 @@ shadow_bias = 0.0
 directional_shadow_max_distance = 1000.0
 
 [node name="Player" type="KinematicBody" parent="3Dworld"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5638, 33.7579, 82.5155 )
+transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 100, 0 )
 script = ExtResource( 4 )
 
 [node name="ClippedCamera" type="ClippedCamera" parent="3Dworld/Player"]
-transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 0, 0 )
 environment = ExtResource( 2 )
 fov = 35.0
-far = 1000.0
+far = 500.0
 
 [node name="CollisionShape" type="CollisionShape" parent="3Dworld/Player"]
 transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, -1.5638, -0.58039, -6.59145 )
@@ -353,6 +353,7 @@ __meta__ = {
 }
 
 [node name="Infographics" type="Node2D" parent="2Dworld"]
+visible = false
 position = Vector2( 1658.04, 38.8548 )
 
 [node name="Satisfaction" type="TextureProgress" parent="2Dworld/Infographics"]
@@ -389,6 +390,96 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ResetButton" type="Button" parent="2Dworld"]
+margin_left = 1459.15
+margin_top = 28.0
+margin_right = 1549.15
+margin_bottom = 65.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "RESET"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResetConfirmationBox" type="Control" parent="2Dworld"]
+margin_left = 806.94
+margin_top = 260.649
+margin_right = 846.94
+margin_bottom = 300.649
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfirmReset" type="Button" parent="2Dworld/ResetConfirmationBox"]
+margin_left = 6.0
+margin_top = 15.0
+margin_right = 311.0
+margin_bottom = 74.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "CONFIRM RESET"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CancelReset" type="Button" parent="2Dworld/ResetConfirmationBox"]
+margin_left = 106.118
+margin_top = 101.445
+margin_right = 204.118
+margin_bottom = 138.445
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "CANCEL"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="Button" parent="2Dworld"]
+margin_left = 435.781
+margin_top = 29.9966
+margin_right = 572.781
+margin_bottom = 66.9966
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "EXIT GAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitConfirmationBox" type="Control" parent="2Dworld"]
+margin_left = 768.94
+margin_top = 208.649
+margin_right = 808.94
+margin_bottom = 248.649
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfirmExit" type="Button" parent="2Dworld/ExitConfirmationBox"]
+margin_left = 45.0
+margin_top = 68.0
+margin_right = 349.0
+margin_bottom = 127.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "CONFIRM EXIT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CancelExit" type="Button" parent="2Dworld/ExitConfirmationBox"]
+margin_left = 144.118
+margin_top = 153.191
+margin_right = 242.118
+margin_bottom = 190.191
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "CANCEL"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="GUI" type="MarginContainer" parent="."]
 anchor_right = 1.0
 margin_right = -1672.0
@@ -403,18 +494,18 @@ margin_right = 248.0
 margin_bottom = 38.0
 
 [node name="TimeControls" type="VBoxContainer" parent="GUI/GUIComponents"]
-margin_right = 244.0
+margin_right = 153.0
 margin_bottom = 38.0
 
 [node name="Date" type="Label" parent="GUI/GUIComponents/TimeControls"]
-margin_right = 244.0
-margin_bottom = 38.0
+margin_right = 153.0
+margin_bottom = 24.0
 custom_fonts/font = ExtResource( 12 )
 text = "Year 1, January 1"
 
 [node name="Indices" type="HBoxContainer" parent="GUI/GUIComponents"]
-margin_left = 248.0
-margin_right = 248.0
+margin_left = 157.0
+margin_right = 157.0
 margin_bottom = 38.0
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Button1" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ChangePanelProbabilityForAllShops" ]]
@@ -422,3 +513,9 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
 [connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]
+[connection signal="pressed" from="2Dworld/ResetButton" to="3Dworld" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="2Dworld/ResetConfirmationBox/ConfirmReset" to="3Dworld" method="_on_Reset_confirmed"]
+[connection signal="pressed" from="2Dworld/ResetConfirmationBox/CancelReset" to="3Dworld" method="_on_Reset_cancelled"]
+[connection signal="pressed" from="2Dworld/ExitButton" to="3Dworld" method="_on_ExitButton_pressed"]
+[connection signal="pressed" from="2Dworld/ExitConfirmationBox/ConfirmExit" to="3Dworld" method="_on_Exit_confirmed"]
+[connection signal="pressed" from="2Dworld/ExitConfirmationBox/CancelExit" to="3Dworld" method="_on_Exit_cancelled"]

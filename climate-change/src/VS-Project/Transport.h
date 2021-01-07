@@ -13,7 +13,7 @@ namespace godot {
     public:
         Transport();
 
-        void transport_type(int type);
+        void transport_type();
 
         // godot functions
         static void _register_methods();
@@ -47,8 +47,8 @@ namespace godot {
 		double get_energyuse();
 		double get_environmentalcost();
 
-    private:
-        // simulation variables
+        void set_transportType(int type);
+        int get_transportType();
 
         /*
         * 0 - electic car
@@ -61,6 +61,11 @@ namespace godot {
         * 7 - sports car
         */
         int transportType;
+
+    private:
+        // simulation variables
+
+        
 
         // graphical variables
         Vector3 motion;

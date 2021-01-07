@@ -30,6 +30,10 @@ double Energy::get_energy_output() {
 	return this->energyOutput;
 }
 
+void Energy::set_energy_output(double energyOutput) {
+	this->energyOutput = energyOutput;
+}
+
 double Energy::get_radiation()
 {
 	return this->radiation;
@@ -141,13 +145,13 @@ void NuclearPowerPlant::simulate_step(double days)
 
 	bool newBuilt = false;
 
-	if (nuclear_prohibited() == true) {
+	if (nuclear_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
 			double probability = (rand() % (4));
-			if (probability <= 2 && coal_prohibited() == false) {
+			if (probability <= 2 && coal_prohibited == 0) {
 				//build coal power plant
 			}
 			else {
@@ -252,7 +256,7 @@ GeothermalPowerPlant::GeothermalPowerPlant()
 	srand((int)time(0));
 	double probability = (rand() % (10));
 	if (probability < 2) {
-		cost = 7E6; // when drilling the wells (accounts for 2 million euros approx) ther is a 20% chance of failure 
+		cost = 7E6; // when drilling the wells (accounts for 2 million euros approx) there is a 20% chance of failure 
 	}
 	else {
 		cost = 5E6; // cost in euros to build a new plant (plus all the research needed)
@@ -370,13 +374,13 @@ void CoalPowerPlant::simulate_step(double days)
 
 	bool newBuilt = false;
 
-	if (coal_prohibited() == true) {
+	if (coal_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
 			double probability = (rand() % (4));
-			if (probability <= 2 && nuclear_prohibited() == false) {
+			if (probability <= 2 && nuclear_prohibited == 0) {
 				//build coal power plant
 			}
 			else {
@@ -389,7 +393,7 @@ void CoalPowerPlant::simulate_step(double days)
 	bool efficiencySup = true;
 	bool efficiencyCo = true;
 	
-	if (efficiency_supercritical() == true) {
+	if (efficiency_supercritical == 1) {
 		if (efficiencySup == true) {
 			maintenance += 10E6;
 			efficiencySup = false;
@@ -397,7 +401,7 @@ void CoalPowerPlant::simulate_step(double days)
 		energyPerDay = 9589041 * (1 - 0.04);
 		maintenance += 0.054 * energyPerDay * days;
 	}
-	if (efficiency_cogeneration() == true) {
+	if (efficiency_cogeneration == 1) {
 		if (efficiencyCo == true) {
 			maintenance += 20E6;
 			efficiencyCo = false;
@@ -423,4 +427,32 @@ void CoalPowerPlant::simulate_step(double days)
 	ashOutput += 0.0619 * energyPerDay * days;
 	mercuryEmission += 1.137E-8 * energyPerDay * days;
 	environmentalCost = 0.06 * energyPerDay * days;
+}
+
+//INFORMATION DISPLAY 
+
+void Energy::_register_methods()
+{
+	register_property<Energy, double>("energyOutput", &Energy::set_energy_output, &Energy::get_energy_output, 1);
+	register_property<Energy, double>("environmentalCost", &Energy::set_environmental_cost, &Energy::get_environmental_cost, 1);
+}
+
+template<typename T> String to_godot_string(T s)
+{
+	std::string standardString = std::to_string(s);
+	godot::String godotString = godot::String(standardString.c_str());
+	return godotString;
+}
+
+String Energy::get_object_info()
+{
+	String info = this->Structure::get_object_info();
+
+	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
+	info += "Employment: " + to_godot_string(this->employment) + String("\n");
+	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy produced in kWh: " + to_godot_string((int)this->get("energyOutput")) + String("\n");
+	info += "Environmental and health costs induced in euros: " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+	return info;
 }

@@ -17,6 +17,13 @@ namespace godot {
 		Energy();
 		~Energy();
 
+		virtual String get_object_type() { return "Energy"; };
+		String get_main_type() { return "Energy"; };
+
+		static void _register_methods();
+
+		virtual String get_object_info();
+
 		//inputs::
 		double naturalUranium = 0;
 		double fissileMaterial = 0;
@@ -40,6 +47,7 @@ namespace godot {
 		double nuclearWaste = 0;
 
 		virtual double get_energy_output();
+		virtual void set_energy_output(double energyOutput);
 
 		//All emissions caused by the plants which have a negative impact on the environment 
 		//(I am not having you deal with the waste such as ash for the moment)
@@ -68,6 +76,7 @@ namespace godot {
 		virtual String class_name();
 		NuclearPowerPlant();
 		~NuclearPowerPlant();
+		virtual String get_object_type() { return "Nuclear Power Plant"; };
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 
@@ -84,6 +93,7 @@ namespace godot {
 		virtual String class_name();
 		Windmill();
 		~Windmill();
+		virtual String get_object_type() { return "Windmill"; };
 
 		void _process(float delta);
 
@@ -105,6 +115,7 @@ namespace godot {
 		virtual String class_name();
 		CoalPowerPlant();
 		~CoalPowerPlant();
+		virtual String get_object_type() { return "Coal Power Plant"; };
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 	};
@@ -119,6 +130,7 @@ namespace godot {
 		virtual String class_name();
 		GeothermalPowerPlant();
 		~GeothermalPowerPlant();
+		virtual String get_object_type() { return "Geothermal Power Plant"; };
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 	};

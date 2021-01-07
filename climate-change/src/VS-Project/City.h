@@ -30,6 +30,8 @@
 #include <iostream>
 #include <stdio.h>
 
+using namespace std;
+
 
 /* use main fct defined in City.cpp for mac
 
@@ -68,6 +70,12 @@ namespace godot {
 		void _on_MenuShop_pressed(String Name);
 		void _on_Validate_pressed();
 		void _on_Game_Speed_changed();
+		void _on_ResetButton_pressed();
+		void _on_Reset_confirmed();
+		void _on_Reset_cancelled();
+		void _on_ExitButton_pressed();
+		void _on_Exit_confirmed();
+		void _on_Exit_cancelled();
 
 		// INITIAL GRAPHICAL SETUP
 
@@ -89,7 +97,16 @@ namespace godot {
         // date leap years implementation
         String return_word_date(); // returns the date :day/month/year as a string with words
         String return_number_date(int day, int month, int year); // returns the date :day/month/year as a string with numbers
-        void simulation(); // updates all the stats and calls the simulation for the buildings
+        //void simulation(); // updates all the stats and calls the simulation for the buildings
+
+		int rolling_simulation_counter{ -1 };
+
+		void simulation_shops();
+		void simulation_housing();
+		void simulation_energy();
+		void simulation_production();
+		void simulation_transport();
+
         bool ClickActive{ false };
         
 		//TRAFFIC
@@ -101,6 +118,8 @@ namespace godot {
 		// following functions handle adding structures to the city, takes a position and the required scene
 		void add_shop( Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
 		void add_house(Vector3 pos, Ref<PackedScene> scene); // adds a house and updates the traffic array with the shop
+		void add_energy(Vector3 pos, Ref<PackedScene> scene);
+		void add_production(Vector3 pos, Ref<PackedScene> scene);
 
 
 		//int* building_coordinates_identification(int x, int y, int number);//returns coordinates of a center for the upper left square of any buiding  
@@ -112,6 +131,7 @@ namespace godot {
 		std::vector<Housing*> all_houses;
 		std::vector<Energy*> all_energies;
 		std::vector<Production*> all_production;
+		std::vector<Transport*> all_transports;
 
 		String active_button;
 		void implement_shop_policies(double);
@@ -135,8 +155,8 @@ namespace godot {
 		double return_environmentalCost();
 		double return_totalSatisfaction();
 
-		
-		
+		//computes probailities for each type of transport that this type will be added
+		void transport_probabilities(double* incomes, int incomesLen, double airQuality);
 
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
@@ -164,13 +184,31 @@ namespace godot {
 		double environmentalCost;
 		double totalSatisfaction;
 
+		//probability that a certain type of car will be added
+ 		double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
+ 		double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;
 
-		ResourceLoader* ResLo = ResourceLoader::get_singleton();
-		Ref<PackedScene> RestaurantScene = ResLo->load("res://Resources/Restaurant.tscn", "PackedScene");
-		Ref<PackedScene> ShopScene = ResLo->load("res://Resources/Shop.tscn", "PackedScene");
-		Ref<PackedScene> MallScene = ResLo->load("res://Resources/Mall.tscn", "PackedScene");
-		Ref<PackedScene> BugattiScene = ResLo->load("res://Resources/Bugatti.tscn", "PackedScene");
-		Ref<PackedScene> ChironScene = ResLo->load("res://Resources/Chiron.tscn", "PackedScene");
 
+		const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");
+		const Ref<PackedScene> ShopScene = ResourceLoader::get_singleton()->load("res://Resources/Shop.tscn", "PackedScene");
+		const Ref<PackedScene> MallScene = ResourceLoader::get_singleton()->load("res://Resources/Mall.tscn", "PackedScene");
+
+
+		const Ref<PackedScene> BugattiScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
+		const Ref<PackedScene> ChironScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
+		const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
+
+
+		const Ref<PackedScene> WindmillScene = ResourceLoader::get_singleton()->load("res://Resources/Windmill.tscn", "PackedScene");
+		const Ref<PackedScene> LowHouseScene = ResourceLoader::get_singleton()->load("res://Resources/LowHouse.tscn", "PackedScene");
+		const Ref<PackedScene> HighHouseScene = ResourceLoader::get_singleton()->load("res://Resources/HighHouse.tscn", "PackedScene");
+		const Ref<PackedScene> ParkScene = ResourceLoader::get_singleton()->load("res://Resources/Park.tscn", "PackedScene");
+		const Ref<PackedScene> CoalPowerPlantScene = ResourceLoader::get_singleton()->load("res://Resources/CoalPowerPlant.tscn", "PackedScene");
+		const Ref<PackedScene> NuclearPowerPlantScene = ResourceLoader::get_singleton()->load("res://Resources/NuclearPowerPlant.tscn", "PackedScene");
+		const Ref<PackedScene> FactoryScene = ResourceLoader::get_singleton()->load("res://Resources/Factory.tscn", "PackedScene");
+		const Ref<PackedScene> PigsPastureScene = ResourceLoader::get_singleton()->load("res://Resources/PasturePigs.tscn", "PackedScene");
+		const Ref<PackedScene> SheepPastureScene = ResourceLoader::get_singleton()->load("res://Resources/PastureSheeps.tscn", "PackedScene");
+		const Ref<PackedScene> FieldScene = ResourceLoader::get_singleton()->load("res://Resources/Field.tscn", "PackedScene");
+		const Ref<PackedScene> BuildingScene = ResourceLoader::get_singleton()->load("res://Resources/Building.tscn", "PackedScene");
 	};
 }

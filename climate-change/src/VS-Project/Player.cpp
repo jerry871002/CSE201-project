@@ -33,13 +33,28 @@ void Player::_init() {
 	movable = true;
 }
 
-void Player::_ready() {
+void Player::_ready() 
+{
 	Input* i = Input::get_singleton();
 	i->set_mouse_mode(i->MOUSE_MODE_VISIBLE);
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
 	worldEnv->get_environment()->set_dof_blur_far_enabled(true);
 	worldEnv->get_environment()->set_dof_blur_near_enabled(true);
 	
+	this->set("translation", StartPosition);
+	this->set("rotation_degrees", StartRotation);
+
+	this->update_camera_angle();
+	
+}
+
+void Player::update_camera_angle() 
+{
+	double h = ((Vector3)(this->get("translation"))).y;
+
+	CameraAngleDeg = ((MaxCameraAngle - MinCameraAngle) / (MaxHeight - MinHeight)) * (h - MinHeight) + MinCameraAngle;
+
+	this->get_node("ClippedCamera")->set("rotation_degrees", Vector3(-CameraAngleDeg, 0, 0));
 }
 
 void Player::_process(float delta) 
@@ -48,10 +63,14 @@ void Player::_process(float delta)
 	
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
 	worldEnv->get_environment()->set_dof_blur_far_distance(4 * (this->get_global_transform().get_origin().y));
-	worldEnv->get_environment()->set_dof_blur_far_amount(0.1 * pow((1 - (this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight - MinHeight)), 3) );
+	worldEnv->get_environment()->set_dof_blur_far_amount(0.2 * pow((1 - (this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight - MinHeight)), 0.2) );
 	
+	//this->get_child(0)->set("far", pow(get_global_transform().get_origin().y, 0.2)*30);
+
 	this->translate(motion); 
-	set_rotation_degrees(rotation);
+	this->set_rotation_degrees(rotation);
+	this->update_camera_angle();
+
 }
 
 void Player::_physics_process(float delta)

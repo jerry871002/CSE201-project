@@ -6,6 +6,7 @@
 #include <ctime>
 #include <Viewport.hpp>
 #include <SceneTree.hpp>
+#include <string>
 
 using namespace godot;
 
@@ -41,6 +42,12 @@ void Housing::_ready()
 {
 	this->Structure::_ready();
 }
+
+void Housing::simulate_step(double days) {
+
+	std::cout << "DEBUG: HOUSING SIMULATION CALLED" << std::endl;
+	this->Structure::simulate_step(days); 
+};
 
 
 double Housing::get_max_income() {
@@ -214,8 +221,8 @@ void House::simulate_step(double days) {
 
 		break;
 	}
-	 
-	age += days; //age is an attribute from the Structure class
+	
+	age += days; // age is an attribute from the Structure class
 	
 }
 
@@ -324,6 +331,8 @@ bool House::rooftop_wind_turbines() {
 /// </summary>
 
 Building::Building() {
+
+	
 	if (double_glazing() == true) {
         buildingType = 2; //High level Building
     }
@@ -381,6 +390,13 @@ Building::~Building() {
 }
 
 void Building::simulate_step(double days) {
+
+	std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
+
+	this->Housing::simulate_step(days);
+
+	/*
+
 	if (solar_panel() == true) {
 		solarPanelAge += 1;
 	}
@@ -395,7 +411,7 @@ void Building::simulate_step(double days) {
 		rooftopWindTurbineAge += 1;
 	}
 	
-	/*
+	
 	if (solarPanelAge >= solarLifetime) {
 		//Then the solar panels are removed and we have 
 		solar_panel() = false;
@@ -412,7 +428,7 @@ void Building::simulate_step(double days) {
 		rooftop_wind_turbines() = false;
 		rooftopWindTurbineAge = 0;
 	} 
-	*/
+	
     
 	switch (buildingType){
 	case 1: { //Low level house
@@ -443,7 +459,7 @@ void Building::simulate_step(double days) {
 	}
 	
 	age += days; //age is an attribute from the Structure class
-	
+	*/
 }
 
 bool Building::solar_panel() {
@@ -547,5 +563,23 @@ bool Building::rooftop_wind_turbines() {
 	}
 }
 
+//INFORMATION DISPLAY 
 
+template<typename T> String to_godot_string(T s)
+{
+	std::string standardString = std::to_string(s);
+	godot::String godotString = godot::String(standardString.c_str());
+	return godotString;
+}
+
+String Housing::get_object_info()
+{
+	String info = this->Structure::get_object_info();
+
+	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
+	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy used by the building in kWh: " + to_godot_string(this->energyUse) + String("\n");
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+	return info;
+}
 

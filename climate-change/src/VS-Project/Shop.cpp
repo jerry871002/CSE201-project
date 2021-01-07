@@ -120,6 +120,7 @@ String Shop::get_object_info()
 {
     String info = this->Structure::get_object_info();
 
+    info += "Age of the building in years: " + to_godot_string((double)(this->get("age"))) + String("\n");
     info += "Employement: " + to_godot_string(this->employment) + String("\n");
     if (this->PanelsOn) {
         info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string(this->panels_age) + String("\n");
@@ -156,7 +157,7 @@ double Shop::get_environmentalcost() {
 
 void Shop::simulate_step(double days) {
 
-    //std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
+    std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
 
     this->Structure::simulate_step(days);
 
@@ -196,8 +197,6 @@ void Shop::simulate_step(double days) {
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
         std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
-
-    //std::cout << "DEBUG: SHOP SIMULATION DONE" << std::endl;
 
 }
 
@@ -284,6 +283,8 @@ Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
 
+    std::cout << "DEBUG: RESTAURANT SIMULATION CALLED" << std::endl;
+
     this->Shop::simulate_step(days);
 
 	age += days;
@@ -367,6 +368,7 @@ SmallShop::~SmallShop(){}
 
 
 void SmallShop::simulate_step(double days){
+    std::cout << "DEBUG: SMALLSHOP SIMULATION CALLED" << std::endl;
     this->Shop::simulate_step(days);
 }
 
@@ -391,6 +393,7 @@ Mall::Mall(){
 Mall::~Mall(){}
 
 void Mall::simulate_step(double days) {
+    std::cout << "DEBUG: MALL SIMULATION CALLED" << std::endl;
     this->Shop::simulate_step(days);
 }
 

@@ -100,25 +100,25 @@ namespace godot {
         double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
 
         
-        // POLICIES (mostly booleans, others giving a rturn value wich is the player's input, will have to be moved given the sim team's decisions) :
+        // POLICIES (need to not be functions !) :
 
         // Changing the coal power plant efficiency (constructor creates subcritical plant of 38% efficiency) :
-        bool efficiency_supercritical(); // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-        bool efficiency_cogeneration(); // improve efficiency to cogeneration type of plant (47% energy converted to electricity)
+        bool efficiency_supercritical = 0; // set to false when equals 0, true when given 1
+                                          // improve efficiency to supercritical type of plant (42% energy converted to electricity)
+        bool efficiency_cogeneration = 0; // set to false when equals 0, true when given 1
+                                          //improve efficiency to cogeneration type of plant (47% energy converted to electricity)
 
         //Law prohibiting coal power plants :
-        bool coal_prohibited();
+        double coal_prohibited = 0; //set to false when equals 0, true when given 1
 
         //Law prohibiting nuclear power plants :
-        bool nuclear_prohibited();
+        double nuclear_prohibited = 0; //set to false when equals 0, true when given 1
         
         //Law imposing maximum amount of CO2 emitted for each factory per day (Goods factories class), the imput value is in kg per day and per factory :
-        void maximum_CO2(); 
-        double maxi = 10E6; //should be between 0-4250 kg when policy implemented
-        bool policy_change = false; //needed to check if the above policy has just been implemented/modified
+        double maximum_CO2 = -1; //default when there is no policy, should be between 0-42 kg when policy is implemented
 
         //Subsidies to "green" factories, so those which have a low emission of harmful chemicals and heavy metals : 
-        double subsidy_green(); //should be between 1000-1E6 euros per factory
+        double subsidy_green = -1; //default when policy is not on, should be between 1000 - 100 000 euros per factory
 
         //Subsidies for helping households, buildings to install solar panels (these help poorer households to have less environmental impact)
         bool solar_panel_subsidies();
@@ -160,6 +160,8 @@ namespace godot {
 
         virtual double get_maintenance();
         virtual void set_maintenance(double maintenance);
+        virtual double get_age();
+        virtual void set_age(double age);
         virtual double get_averageWage();
         virtual void set_averageWage(double averageWage);
         virtual double get_building_time();

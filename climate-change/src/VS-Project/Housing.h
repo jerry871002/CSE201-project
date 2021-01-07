@@ -11,10 +11,15 @@ namespace godot {
         Housing();
         ~Housing();
 
-
-
 		static void _register_methods();
 		virtual void _ready();
+
+		virtual String get_object_type() { return "Housing"; };
+		String get_main_type() { return "Housing"; };
+
+		virtual String get_object_info();
+
+		virtual void simulate_step(double days);
 
 
 		int windowCost = 200;
@@ -41,8 +46,9 @@ namespace godot {
 	public:
 		House();
 		~House();
+		virtual String get_object_type() { return "House"; };
 
-		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
+		virtual void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 		bool solar_panel(); 
 		bool double_glazing(); // improve insulation
 		bool rooftop_wind_turbines();
@@ -58,6 +64,7 @@ namespace godot {
 	public:
 		Building();
 		~Building();
+		virtual String get_object_type() { return "Building"; };
 
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 		bool solar_panel(); 

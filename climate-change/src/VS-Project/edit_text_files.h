@@ -1,3 +1,4 @@
+/*
 #pragma once
 
 #include <string>
@@ -27,3 +28,5 @@ void copy(string documentNameFrom, string documentNameTo);
 void change_data(string documentName, string dataToChange, string newValue);
 
 void delete_line(string documentName, string dataToDelete);
+
+*/

@@ -51,6 +51,14 @@ void Structure::set_satisfaction(double sat) {
     this->satisfaction = sat;
 }
 
+double Structure::get_age() {
+    return this->age;
+}
+
+void Structure::set_age(double age) {
+    this->age = age;
+}
+
 double Structure::get_co2emissions() {
     //std::cout << "DEBUG: STRUCTURE GET EMISSIONS" << std::endl;
     return this->CO2Emission;
@@ -136,6 +144,7 @@ void Structure::_register_methods()
     register_property<Structure, double>("cost", &Structure::set_cost, &Structure::get_cost, 1);
     register_property<Structure, double>("environmentalCost", &Structure::set_environmental_cost, &Structure::get_environmental_cost, 1);
     register_property<Structure, double>("buildingTime", &Structure::set_building_time, &Structure::get_building_time, 1);
+    register_property<Structure, double>("age", &Structure::set_age, &Structure::get_age, 1);
 
     //register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
 
@@ -161,7 +170,7 @@ void Structure::_process(float delta)
     if (this->get("updatable")) {
         Godot::print("This is a: " + this->get_object_type());
         std::cout << "DEBUG: simulate step should be called now " << std::endl;
-        this->simulate_step((double)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("time_speed"))); // will run the lowest level simulate step function
+        this->simulate_step((double)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("time_speed"))*5); // will run the lowest level simulate step function
         this->set("updatable", false);
     }
 
@@ -179,8 +188,9 @@ void Structure::_process(float delta)
 }
 
 void Structure::simulate_step(double days) {
-    //std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
-    //std::cout << "DEBUG: STRUCTURE SIMULATION DONE" << std::endl;
+
+    std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
+
 }
 
 /*
@@ -203,11 +213,12 @@ void Structure::_input(InputEvent* e)
 
         // PAUSE GAME
 
-        ((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->set("time_speed", 0);
+        this->get_tree()->get_root()->get_node("Main/3Dworld")->set("time_speed", 0);
 
         // PLAYER SHOULD NOT BE MOVABLE
 
         ((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", false);
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
         // SET INFO BOX SIZE AND POSITION
 
@@ -319,55 +330,6 @@ void godot::Structure::_on_Area_mouse_exited()
 
 //POLICIES (interface team needs to make them usable from screen)
 
-bool Structure::efficiency_cogeneration() {
-    return false; 
-    /* need to add possibility of turning true (then definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
-
-bool Structure::efficiency_supercritical() {
-    return false;
-    /* need to add possibility of turning true (then definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
-
-bool Structure::coal_prohibited() {
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
-
-bool Structure::nuclear_prohibited() {
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
-
-void Structure::maximum_CO2() {
-    maxi = 10E6; //basic value to compare with when the policy is not implemented
-    /* need to add possibility of turning true (not definitive) if clicked with given input which is the "maxi" possible value emitted the function returns
-    if () {
-    maxi = ...; //maxi is an input between 0 and 4250 
-    policy_change = true; //very important to have the change in the policy taken into account !
-    }*/
-}
-
-double Structure::subsidy_green() {
-    return 0; //basic return value to compare with when the policy is not implemented
-    /* need to add possibility of turning true (not definitive) if clicked with given input which is the "euros" given to the factories which
-    this function returns as a double between 1000 and 1 million 
-    if () {
-    return euros; //euros is between 1000 and 1E6
-    }*/
-}
 
 bool Structure::solar_panel_subsidies() {
     return false;
