@@ -197,6 +197,7 @@ void City::generate_initial_city_graphics()
 		for (int z = 0; z < 1; z++)
 		{
 			Vector3 pos = Vector3(60 * x, 0, 60 * z);
+
 			//std::cout << "DEBUG: About to create a random shop" << std::endl;
 
 			int bigbuildingmaybe = rand() % 30;
@@ -226,9 +227,6 @@ void City::generate_initial_city_graphics()
 					}
 				}
 			}
-
-
-
 		}
 	}
 	
