@@ -211,7 +211,7 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-
+    /*
     Vector3 center = Vector3(15 * citysize, 0, 15 * citysize);
     float maxdist = pow(pow(center.x, 2) + pow(center.z, 2), 1 / 2);
 
@@ -283,7 +283,7 @@ void City::generate_initial_city_graphics()
                 // SIMPLER CITY FOR TESTING PURPOSES ON SAD COMPUTERS
 
 
-                /*
+                
                 for (int x = 0; x < 1; x++)
                 {
                     for (int z = 0; z < 1; z++)
@@ -417,10 +417,10 @@ void City::generate_initial_city_graphics()
                         }
                     }
                 }
-                */
+                
 
             }
-        }
+        }*/
 
 }
 
