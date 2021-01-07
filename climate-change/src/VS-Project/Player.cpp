@@ -65,7 +65,7 @@ void Player::_process(float delta)
 	worldEnv->get_environment()->set_dof_blur_far_distance(2 * (this->get_global_transform().get_origin().y));
 	worldEnv->get_environment()->set_dof_blur_far_amount(0.1 * pow((1 - (this->get_global_transform().get_origin().y - MinHeight) / (MaxHeight - MinHeight)), 0.2) );
 	
-	this->get_child(0)->set("far", pow(get_global_transform().get_origin().y, 0.2)*300);
+	this->get_child(0)->set("far", pow(get_global_transform().get_origin().y / MaxHeight, 0.4)*460);
 
 	this->translate(motion); 
 	//this->move_and_collide(motion);

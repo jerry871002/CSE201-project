@@ -42,8 +42,8 @@ City::City() {
     energyDemand = 0;
     energySupply = 0;
     environmentalCost = 0;
-    totalSatisfaction = 100;
-    totalCo2Emissions = 100;
+    totalSatisfaction = 10;
+    totalCo2Emissions = 10;
 
     time_speed = 1;
 
@@ -122,8 +122,7 @@ void City::_physics_process(float delta) {
 
         if (this->rolling_simulation_counter == 0) {
             this->simulation_shops();
-            change_pie_chart(carbonEmission, "PieSatisfaction", true);
-            change_pie_chart(carbonEmission, "PieCO2", false);
+            
         }
         else if (this->rolling_simulation_counter == 1) {
             this->simulation_housing();
@@ -688,13 +687,15 @@ void City::implement_shop_policies(double value) {
     }
 }
 
-void godot::City::_on_Game_Speed_changed()
+void City::_on_Game_Speed_changed()
 {
     time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
+    change_pie_chart(time_speed, "PieSatisfaction", true);
+    change_pie_chart(time_speed, "PieCO2", false);
 }
 
 
@@ -1748,17 +1749,18 @@ double satisfactions[8] = {9.7, 8.5,6.8, 9.3, 9, 7, 8, 9.5};
 
 
 
-void City::change_pie_chart(int totalSatisfaction, NodePath name, bool isPositive)
+void City::change_pie_chart(int value, NodePath name, bool isPositive)
 {
     TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
 
     if (isPositive) {
-        node->set_tint_progress(Color(fmax(totalSatisfaction / 50 , 1), fmax(2 + totalSatisfaction / 50, 1), 0, 1));
+        node->set_tint_progress(Color(min((double)value / 5 , 1.0), min(2 - (double)value / 5, 1.0), 0, 1.0));
+        std::cout << "DEBUG: VALUE PIE CHARTS= " << value << "     " << min((double)value / 5, 1.0) << std::endl ;
     }
     else{
-        node->set_tint_progress(Color( fmax(2 + totalSatisfaction / 50, 1), fmax(totalSatisfaction / 50, 1), 0, 1));
+        node->set_tint_progress(Color(min(2 - (double)value / 5, 1.0), min((double)value / 5, 1), 0, 1.0));
     }
-    node->set("value", totalSatisfaction);
+    node->set("value", value);
 }
 
 
