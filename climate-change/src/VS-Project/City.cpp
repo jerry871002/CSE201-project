@@ -13,6 +13,7 @@
 #include <Viewport.hpp>
 #include <HSlider.hpp>
 #include <TextureProgress.hpp>
+#include <Color.hpp>
 
 #include <PoolArrays.hpp>
 
@@ -39,7 +40,8 @@ City::City() {
 	energyDemand = 0;
 	energySupply = 0;
 	environmentalCost = 0;
-	totalSatisfaction = 50;
+	totalSatisfaction = 100;
+	totalCo2Emissions = 100;
 
 	time_speed = 1;
 
@@ -77,6 +79,8 @@ void City::_register_methods()
 	register_method((char*)"_on_ExitButton_pressed", &City::_on_ExitButton_pressed);
 	register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
 	register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
+	register_method((char*)"change_pie_chart", &City::change_pie_chart);
+
 
 	register_method((char*)"add_shop", &City::add_shop);
 
@@ -116,6 +120,8 @@ void City::_physics_process(float delta) {
 
 		if (this->rolling_simulation_counter == 0) {
 			this->simulation_shops();
+			change_pie_chart(carbonEmission, "PieSatisfaction");
+			change_pie_chart(carbonEmission, "PieCO2");
 		}
 		else if (this->rolling_simulation_counter == 1) {
 			this->simulation_housing();
@@ -1760,3 +1766,19 @@ int main() {
 	return 0;
 }
 */
+
+void City::change_pie_chart(int totalSatisfaction, NodePath name)
+{
+	Color green = Color(0, 1, 0, 1);
+	Color orange = Color(1, 0.65, 0, 1);
+	Color red = Color(1, 0, 0, 1);
+	TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
+	node->set_tint_progress(green);
+	if (totalSatisfaction < 70) {
+		node->set_tint_progress(green);
+	}
+	if (totalSatisfaction < 33) {
+		node->set_tint_progress(green);
+	}
+	node->set("value", totalSatisfaction);
+}

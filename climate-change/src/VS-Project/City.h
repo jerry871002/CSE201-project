@@ -107,6 +107,8 @@ namespace godot {
 		void simulation_production();
 		void simulation_transport();
 
+		void change_pie_chart(int totalCo2Emissions, NodePath name);
+
         bool ClickActive{ false };
         
 		//TRAFFIC
@@ -182,7 +184,8 @@ namespace godot {
 		double energyDemand;
 		double energySupply;
 		double environmentalCost;
-		double totalSatisfaction;
+		int totalSatisfaction;
+		int totalCo2Emissions;
 
 		//probability that a certain type of car will be added
  		double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
