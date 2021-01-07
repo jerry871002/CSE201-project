@@ -13,6 +13,7 @@
 #include <Viewport.hpp>
 #include <HSlider.hpp>
 #include <TextureProgress.hpp>
+#include <Color.hpp>
 
 #include <PoolArrays.hpp>
 
@@ -41,7 +42,8 @@ City::City() {
 	energyDemand = 0;
 	energySupply = 0;
 	environmentalCost = 0;
-	totalSatisfaction = 50;
+	totalSatisfaction = 100;
+	totalCo2Emissions = 100;
 
 	time_speed = 1;
 
@@ -79,6 +81,8 @@ void City::_register_methods()
 	register_method((char*)"_on_ExitButton_pressed", &City::_on_ExitButton_pressed);
 	register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
 	register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
+	register_method((char*)"change_pie_chart", &City::change_pie_chart);
+
 
 	register_method((char*)"add_shop", &City::add_shop);
 
@@ -118,10 +122,11 @@ void City::_physics_process(float delta) {
 
 		if (this->rolling_simulation_counter == 0) {
 			this->simulation_shops();
+			change_pie_chart(carbonEmission, "PieSatisfaction");
+			change_pie_chart(carbonEmission, "PieCO2");
 		}
 		else if (this->rolling_simulation_counter == 1) {
 			this->simulation_housing();
-
 		}
 		else if (this->rolling_simulation_counter == 2) {
 			this->simulation_energy();
@@ -539,10 +544,10 @@ String City::get_button_info_text() {
 	// I DON'T KNOW HOW TO DO THE SECOND PART YET 
 	// I GUESS THESE VALUES SHOULD BE STORED IN CITY AND NOT FETCHED FROM RANDOM OBJECTS
 
-	if (this->active_button == String("ChangePanelProbabilityForAllShops"))
+	if (this->active_button == String("PanelSubsidyForShops"))
 	{
 		//this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
-		return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for all shops. Ultimately, this policy will be implemented as a subsidy, and thus the input will refer to a certain amount that the city will be willing to contribute to the installation of solar panels on shops. Hence, this amount will be subtracted from the budget as soon as solar panels are installed on a shop.");
+		return String("Please input a value between 0 and 450. This will be a sola panel subsidy for shops.");
 	}
 	else if (this->active_button == String("ChangePanelProbabilityForRestaurants"))
 	{
@@ -585,12 +590,12 @@ void City::implement_shop_policies(double value) {
 
 	Godot::print(this->active_button);
 
-	if (this->active_button == String("ChangePanelProbabilityForAllShops")) {
-		if (value >= 0 && value < 1) {
-			Godot::print("PANEL PROBABILITY WILL BE CHANGED FOR ALL SHOPS");
+	if (this->active_button == String("PanelSubsidyForShops")) {
+		if (value >= 0 && value <= 450) {
+			Godot::print("PANEL SUBSIDY WILL BE CHANGED FOR ALL SHOPS");
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 			{
-				(*it)->set("panel_probability", value);
+				(*it)->set("solar_panel_subsidies", value);
 			}
 		}
 		else {
@@ -1218,6 +1223,7 @@ void City::simulation_transport()
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
 		this->numberOfEmployees += (double)((*it)->get("employment"));
 		this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
+
 		this->energyDemand += (double)((*it)->get("energyUse"));
 		this->environmentalCost += (double)((*it)->get("environmentalCost"));
 	}
@@ -1225,6 +1231,7 @@ void City::simulation_transport()
 	for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
 	{
 		this->carbonEmission += (double)((*it)->get("CO2Emission"));
+		
 		// this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;        satisfaction should be changed in the function below, with the day tick %4
 	}
 
@@ -1516,7 +1523,7 @@ double City::return_energySupply() {
 	return energySupply;
 }
 
-void City::transport_probabilities(double* incomes, int incomesLen, double airQuality){
+void City::transport_probabilities(){
 	        /*
         * 0 - electic car
         * 1 - big american car
@@ -1730,3 +1737,19 @@ int main() {
 	return 0;
 }
 */
+
+void City::change_pie_chart(int totalSatisfaction, NodePath name)
+{
+	Color green = Color(0, 1, 0, 1);
+	Color orange = Color(1, 0.65, 0, 1);
+	Color red = Color(1, 0, 0, 1);
+	TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
+	node->set_tint_progress(green);
+	if (totalSatisfaction < 70) {
+		node->set_tint_progress(green);
+	}
+	if (totalSatisfaction < 33) {
+		node->set_tint_progress(green);
+	}
+	node->set("value", totalSatisfaction);
+}

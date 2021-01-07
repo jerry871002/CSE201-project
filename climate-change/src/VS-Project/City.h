@@ -107,6 +107,8 @@ namespace godot {
 		void simulation_production();
 		void simulation_transport();
 
+		void change_pie_chart(int totalCo2Emissions, NodePath name);
+
         bool ClickActive{ false };
         
 		//TRAFFIC
@@ -154,7 +156,7 @@ namespace godot {
 		double return_totalSatisfaction();
 
 		//computes probailities for each type of transport that this type will be added
-		void transport_probabilities(double* incomes, int incomesLen, double airQuality);
+		void transport_probabilities();
 
 		/* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
 		and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
@@ -180,11 +182,15 @@ namespace godot {
 		double energyDemand;
 		double energySupply;
 		double environmentalCost;
-		double totalSatisfaction;
+		int totalSatisfaction;
+		int totalCo2Emissions;
 
 		//probability that a certain type of car will be added
  		double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
  		double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;
+		double airQuality;
+		double* incomes; 
+		int incomesLen; 
 
 
 		const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");
