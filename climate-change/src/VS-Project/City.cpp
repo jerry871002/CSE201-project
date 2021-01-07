@@ -122,8 +122,8 @@ void City::_physics_process(float delta) {
 
         if (this->rolling_simulation_counter == 0) {
             this->simulation_shops();
-            change_pie_chart(carbonEmission, "PieSatisfaction");
-            change_pie_chart(carbonEmission, "PieCO2");
+            change_pie_chart(carbonEmission, "PieSatisfaction", true);
+            change_pie_chart(carbonEmission, "PieCO2", false);
         }
         else if (this->rolling_simulation_counter == 1) {
             this->simulation_housing();
@@ -218,14 +218,14 @@ void City::generate_initial_city_graphics()
 
 
     // city dynamically generated based on city size
-	/*
+	
 
     for (int x = 0; x < citysize; x++)
 
         // SIMPLER CITY FOR TESTING PURPOSES ON SAD COMPUTERS
 		
 
-        for (int x = 0; x < 1; x++) {
+        for (int x = 0; x < citysize; x++) {
             for (int z = 0; z < citysize; z++) {
                 Vector3 pos = Vector3(60 * x, 0, 60 * z);
 
@@ -323,7 +323,7 @@ void City::generate_initial_city_graphics()
                     }
                 }
 
-                */
+                
 
 
                 // ACTUAL CITY
@@ -434,10 +434,10 @@ void City::generate_initial_city_graphics()
                     }
                 }
                 */
-/*
+
             }
         }
-		*/
+		
 }
 
 void City::set_initial_visible_components()
@@ -1748,18 +1748,15 @@ double satisfactions[8] = {9.7, 8.5,6.8, 9.3, 9, 7, 8, 9.5};
 
 
 
-void City::change_pie_chart(int totalSatisfaction, NodePath name)
+void City::change_pie_chart(int totalSatisfaction, NodePath name, bool isPositive)
 {
-    Color green = Color(0, 1, 0, 1);
-    Color orange = Color(1, 0.65, 0, 1);
-    Color red = Color(1, 0, 0, 1);
     TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
-    node->set_tint_progress(green);
-    if (totalSatisfaction < 70) {
-        node->set_tint_progress(green);
+
+    if (isPositive) {
+        node->set_tint_progress(Color(fmax(totalSatisfaction / 50 , 1), fmax(2 + totalSatisfaction / 50, 1), 0, 1));
     }
-    if (totalSatisfaction < 33) {
-        node->set_tint_progress(green);
+    else{
+        node->set_tint_progress(Color( fmax(2 + totalSatisfaction / 50, 1), fmax(totalSatisfaction / 50, 1), 0, 1));
     }
     node->set("value", totalSatisfaction);
 }

@@ -107,7 +107,7 @@ namespace godot {
         void simulation_production();
         void simulation_transport();
 
-        void change_pie_chart(int totalCo2Emissions, NodePath name);
+        void change_pie_chart(int totalCo2Emissions, NodePath name, bool isPositive);
 
         bool ClickActive{ false };
         
