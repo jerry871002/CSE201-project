@@ -629,7 +629,7 @@ void City::add_car() {
 		
 		
 		this->add_child((Node*)node);
-		((Transport*)node)->set("transportType", 3);
+		((Transport*)node)->set("transportType", type);
 
 		//((Transport*)node)->transport_type();
 

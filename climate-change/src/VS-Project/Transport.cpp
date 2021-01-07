@@ -436,7 +436,7 @@ void Transport::turn(int dir, float delta) {
 
     if (dir == 1) {
         
-        if (transportType == 3) {
+        if (transportType == 2) {
             ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3((90 / M_PI) * sin(rot * 2), 0, -(180 / M_PI) * rot * 4));
             ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3((90 / M_PI) * sin(rot * 2), 0, -(180 / M_PI) * rot * 4));
             ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3((90 / M_PI) * sin(rot * 2), 0, 0));
@@ -449,7 +449,7 @@ void Transport::turn(int dir, float delta) {
 
     }
     else {
-        if (transportType == 3) {
+        if (transportType == 2) {
             ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(-(90 / M_PI) * sin(rot * 2), 0, -(180 / M_PI) * rot * 4));
             ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(-(90 / M_PI) * sin(rot * 2), 0, -(180 / M_PI) * rot * 4));
             ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(-(90 / M_PI) * sin(rot * 2), 0, 0));
@@ -480,7 +480,7 @@ void Transport::straight(float ratioDelta) {
     position = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - prevPosition;
     ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
     ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
-    if (transportType != 3) { // not a two wheels
+    if (transportType != 2) { // not a two wheels
         ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
     }
 }
