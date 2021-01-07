@@ -134,28 +134,32 @@ void NuclearPowerPlant::simulate_step(double days)
 	std::mt19937 gen(rd());
 
 	age += days;
+
+	/*Comment this out until we find a solution for the running_plant variable
+	if (running_plant == 1) {
+		running = 1;
+		newBuilt = false;
+	}*/ 
+	running = 1;
+
 	std::normal_distribution <double> energy(20000000, 300000);
-	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
+	energyPerDay = energy(gen)*running; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 
-	if (age >= 127890) {
+	if (nuclear_prohibited == 1 || age >= 127890) {
 		// 35 years is the average lifetime of a nuclear power plant, it then has to be replaced by a new plant or different power plant
-		energyPerDay = 0;
-		//send message on screen for closure
-	}
-
-	bool newBuilt = false;
-
-	if (nuclear_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
-			double probability = (rand() % (4));
-			if (probability <= 2 && coal_prohibited == 0) {
-				//build coal power plant
+			double probability = (rand() % (10));
+			if (probability <= 7 && coal_prohibited == 0) {
+				running_plant = 3;
+			}
+			if(probability == 8) {
+				running_plant = 4;
 			}
 			else {
-				//build geothermal power plant
+				running_plant = 2;
 			}
 		}
 	}
@@ -180,7 +184,9 @@ void NuclearPowerPlant::simulate_step(double days)
 void godot::NuclearPowerPlant::_process(float delta)
 {
 	this->Structure::_process(delta); 
-	this->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	if ((bool)this->running) {
+		this->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	}
 }
 
 /// <summary>
@@ -217,8 +223,10 @@ Windmill::~Windmill() {}
 void Windmill::_process(float delta)
 {
 	this->Structure::_process(delta);
-	rot -= delta * turnSpeed * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"));
-	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
+	if ((bool)this->running) {
+		rot -= delta * turnSpeed * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"));
+		((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
+	}
 }
 
 void Windmill::simulate_step(double days)
@@ -226,13 +234,35 @@ void Windmill::simulate_step(double days)
 	age += days;
 	std::random_device rd;
 	std::mt19937 gen(rd());
+
+	/* Comment this out until we find a solution for the running_plant variable
+		if (running_plant == 2) {
+		running = 1;
+		newBuilt = false;
+	}*/
+	running = 1;
+
 	std::normal_distribution <double> energy(25000, 5000);
-	energyPerDay = energy(gen); //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
+	energyPerDay = energy(gen)*running; //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
 	
 	if (age >= 7300) {
 		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
 		energyPerDay = 0;
 		//send message on screen for closure
+		if (newBuilt == false) {
+			newBuilt = true;
+			srand((int)time(0));
+			double probability = (rand() % (10));
+			if (probability <= 6 && coal_prohibited == 0) {
+				running_plant = 3;
+			}
+			if (6 < probability <= 8 && nuclear_prohibited == 0) {
+				running_plant = 1;
+			}
+			else {
+				running_plant = 4;
+			}
+		}
 	}
 
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
@@ -285,16 +315,35 @@ GeothermalPowerPlant::~GeothermalPowerPlant() {}
 void GeothermalPowerPlant::simulate_step(double days)
 {
 	age += days;
+	/*Comment this out until we find a solution for the running_plant variable
+	if (running_plant == 4) {
+		running = 1;
+		newBuilt = false;
+	}*/
+	running = 1;
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(32800, 1500);
-	energyPerDay = energy(gen); //kWh produced by in one day
-	
-	if (age >= 10950){
+	energyPerDay = energy(gen)*running; //kWh produced by in one day
+
+	if ( age >= 10950) {
 		// 30 years is the average lifetime of a geothermal plant, it then has to be replaced by a new plant or different power plant
-		energyPerDay = 0;
-		//send message on screen for closure
+		energyPerDay = 0; //forced closure of the plant
+		if (newBuilt == false) {
+			newBuilt = true;
+			srand((int)time(0));
+			double probability = (rand() % (10));
+			if (probability <= 6 && coal_prohibited == 0) {
+				running_plant = 3;
+			}
+			if (6<probability<=8 && nuclear_prohibited == 0) {
+				running_plant = 1;
+			}
+			else {
+				running_plant = 2;
+			}
+		}
 	}
 	
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
@@ -361,30 +410,33 @@ void CoalPowerPlant::simulate_step(double days)
 {
 	age += days;
 
+	/* Comment this out until we find a solution for the running_plant variable
+	if (running_plant == 3) {
+		running = 1;
+		newBuilt = false;
+	}*/
+	running = 1;
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(9589041, 500000);
-	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
-	
-	if (age >= 18250){
+	energyPerDay = energy(gen)*running; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
+
+	if (coal_prohibited == 1 || age >= 18250) {
 		// 50 years is the average lifetime of a coal fired plant, it then has to be replaced by a new coal plant or different power plant
-		energyPerDay = 0;
-		//send message on screen for closure
-	}
-
-	bool newBuilt = false;
-
-	if (coal_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
-			double probability = (rand() % (4));
-			if (probability <= 2 && nuclear_prohibited == 0) {
-				//build coal power plant
+			double probability = (rand() % (10));
+			if (probability <= 7 && nuclear_prohibited == 0) {
+				running_plant = 1;
+			}
+			if (probability == 8) {
+				running_plant = 4;
 			}
 			else {
-				//build geothermal power plant
+				running_plant = 2;
 			}
 		}
 	}

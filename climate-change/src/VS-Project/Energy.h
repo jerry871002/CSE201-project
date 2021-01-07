@@ -17,6 +17,12 @@ namespace godot {
 		Energy();
 		~Energy();
 
+		//Need to find a way of making this static or putting it in city
+		int running_plant = 3;
+
+		double running = 0;
+		bool newBuilt = false;
+
 		virtual String get_object_type() { return "Energy"; };
 		String get_main_type() { return "Energy"; };
 
@@ -67,7 +73,7 @@ namespace godot {
 	};
 
 	/// <summary>
-	/// NUCLEAR POWER PLANT CLASS
+	/// NUCLEAR POWER PLANT CLASS (1)
 	/// </summary>
 
 	class NuclearPowerPlant : public Energy {
@@ -84,7 +90,7 @@ namespace godot {
 	};
 
 	/// <summary>
-	/// WINDMILL CLASS
+	/// WINDMILL CLASS (2)
 	/// </summary>
 
 	class Windmill : public Energy {
@@ -106,7 +112,7 @@ namespace godot {
 	};
 
 	/// <summary>
-	/// COAL POWER PLANT CLASS
+	/// COAL POWER PLANT CLASS (3)
 	/// </summary>
 
 	class CoalPowerPlant : public Energy {
@@ -121,7 +127,7 @@ namespace godot {
 	};
 
 	/// </summary>
-	/// GEOTHERMAL POWER PLANT CLASS
+	/// GEOTHERMAL POWER PLANT CLASS (4)
 	/// </summary>
 
 	class GeothermalPowerPlant : public Energy {
