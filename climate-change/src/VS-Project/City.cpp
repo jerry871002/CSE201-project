@@ -1,4 +1,4 @@
-#include "City.h"
+﻿#include "City.h"
 #include "Transport.h"
 #include "edit_text_files.h"
 
@@ -186,46 +186,75 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-
-
-	// SIMPLER CITY FOR TESTING PURPOSES ON SAD COMPUTERS
-
-
+	Vector3 center = Vector3(15*citysize, 0, 15*citysize);
+	float maxdist = pow(pow(center.x , 2) + pow(center.z , 2), 1 / 2);
 	
-	for (int x = 0; x < 1; x++)
+
+	// city dynamically generated based on city size
+
+	for (int x = 0; x < citysize; x++)
 	{
-		for (int z = 0; z < 1; z++)
+		for (int z = 0; z < citysize; z++)
 		{
 			Vector3 pos = Vector3(60 * x, 0, 60 * z);
+			Vector3 bigbuildingpos = pos + Vector3(15, 0, 15);
+			double dist = pow(pow(center.x - bigbuildingpos.x, 2) + pow(center.z - bigbuildingpos.z, 2), (1 / 2));
 
-			//std::cout << "DEBUG: About to create a random shop" << std::endl;
+			 //  probability functions for buildings
 
-			int bigbuildingmaybe = rand() % 30;
-			if (bigbuildingmaybe < 5) { add_shop(pos + Vector3(15, 0, 15), MallScene); }
-			else if (bigbuildingmaybe < 7) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !! 
-			else {
-				for (int x1 = 0; x1 < 2; x1++)
-				{
-					for (int z1 = 0; z1 < 2; z1++) {
-						int type = rand() % 25;
-						Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-						if (type < 3) { add_shop(pos + pos1, RestaurantScene); }
-						else if (type < 8) { add_shop(pos + pos1, ShopScene); }
-						else if (type < 14) { add_house(pos + pos1, LowHouseScene); }
-						else if (type < 20) { add_house(pos + pos1, BuildingScene); }
-						else if (type == 20) { add_energy(pos + pos1, WindmillScene); }
-						else { add_house(pos + pos1, HighHouseScene); }
-						/*
-						for (int i = 0; i < 2; i++) {
-							for (int j = 0; j < 2; j++) {
-								for (int k = 0; k < 4; k++) {
-									std::cout << "TRAFFIC SYSTEM : " << i << " " << j << "  " << traffic_system[i][j][k][0] << "   " << traffic_system[i][j][k][1] << "   " << traffic_system[i][j][k][2] << "  " << std::endl;
+				float mallprob = float(min(0, maxdist - 2 * dist));
+				float nuclearprob = float(min(double(0), double(((0.01920) * (-1) * pow((20 * dist / citysize), 2) + (-1) * ((8.640) * (20 * dist / citysize) * 672.0)))));
+				float fieldprob = float(min(0, -4 * maxdist + 6 * dist));
+				float pastureprob = float(min(0, -4 * maxdist + 6 * dist));
+				float factoryprob = float(min( 0, -0.1020 * pow((20 * dist / citysize), 2) + 63.27 * (20 * dist / citysize) - 9306));
+
+
+				float restaurantprob = float(2000 / (20 * dist / citysize));
+				float shopprob = float(2500 / (20 * dist / citysize));
+				float buildingprob = float((min(0, (-0.02000) * pow((20 * dist / citysize), 2) + 7 * (20 * dist / citysize) - 300.0)));
+				float windmillprob = float(min(0, (-0.08333) * pow((20 * dist / citysize), 2) + 60.00 * (20 * dist / citysize) - 10500));
+				
+				float lowhouseprob = float(min(0, -0.2000 * pow((20 * dist / citysize), 2) + 160.0 * (20 * dist / citysize) - 3.150e+4));
+				float highhouseprob = float(min(0, 0.1250 * pow((20 * dist / citysize),2) -  17.5 * (20 * dist / citysize)));
+
+				float smallerprob = restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob;
+				//std::cout << "DEBUG: About to create a random shop" << std::endl;
+
+				int bigbuildingmaybe = (rand() % int((mallprob+ nuclearprob + fieldprob + factoryprob + smallerprob)));
+				
+				if (bigbuildingmaybe < mallprob) { add_shop(bigbuildingpos, MallScene); }
+				else if (bigbuildingmaybe < mallprob+nuclearprob) { add_energy(bigbuildingpos, NuclearPowerPlantScene); }   
+				else if (bigbuildingmaybe < mallprob + nuclearprob + fieldprob) { add_production(bigbuildingpos, FieldScene);}
+				else if (bigbuildingmaybe < mallprob + nuclearprob + fieldprob + pastureprob/2) { add_production(bigbuildingpos, SheepPastureScene); }
+				else if (bigbuildingmaybe < mallprob + nuclearprob + fieldprob + pastureprob) { add_production(bigbuildingpos, PigsPastureScene); }
+				else if (bigbuildingmaybe < mallprob + nuclearprob + fieldprob + pastureprob + factoryprob) { add_production(bigbuildingpos, FactoryScene); }
+				else {
+					for (int x1 = 0; x1 < 2; x1++)
+					{
+						for (int z1 = 0; z1 < 2; z1++) {
+							
+							Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+							
+							int type = rand() %  int(smallerprob);
+
+							if (type < restaurantprob) { add_shop(pos + pos1, RestaurantScene); }
+							else if (type < restaurantprob+shopprob) { add_shop(pos + pos1, ShopScene); }
+							else if (type < restaurantprob + shopprob + lowhouseprob) { add_house(pos + pos1, LowHouseScene); }
+							else if (type < restaurantprob + shopprob + lowhouseprob + buildingprob) { add_house(pos + pos1, BuildingScene); }
+							else if (type < restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob) { add_energy(pos + pos1, WindmillScene); }
+							else { add_house(pos + pos1, HighHouseScene); }
+							/*
+							for (int i = 0; i < 2; i++) {
+								for (int j = 0; j < 2; j++) {
+									for (int k = 0; k < 4; k++) {
+										std::cout << "TRAFFIC SYSTEM : " << i << " " << j << "  " << traffic_system[i][j][k][0] << "   " << traffic_system[i][j][k][1] << "   " << traffic_system[i][j][k][2] << "  " << std::endl;
+									}
 								}
 							}
+							*/
 						}
-						*/
 					}
-				}
+				
 			}
 		}
 	}
