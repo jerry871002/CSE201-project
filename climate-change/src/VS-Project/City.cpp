@@ -116,7 +116,7 @@ void City::_physics_process(float delta) {
         this->date_counter += double(delta) * this->time_speed;
     }
 
-    if (simulation_counter > 5)
+    if (simulation_counter > 1)
     {
         (this->rolling_simulation_counter)++;
 
