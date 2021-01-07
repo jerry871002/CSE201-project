@@ -22,7 +22,7 @@ namespace godot {
         String get_main_type() { return "Shop"; };
 
         bool PanelsOn; // whether the building has solar panels or not. delfault at false, only possible to set to true for certain classes
-
+        bool WindTurbineOn;
 
         bool shopStatus = true;   //True if open, False if closed
         double employment = 0;
@@ -38,11 +38,14 @@ namespace godot {
 
         void panels_get_added(); // function to add the panels, both in simulation and visually
         int panels_age{ 0 }; // int to track the panels_age once they are installed - ticks down every day, when it reaches 0 the panels dissapear
+        double panel_probability{ 0.75 };  //0.75 is just a basic value, this is changed once simulate step is called
 
-        // double supposed to represent yearly probability of panel appearing - this will be changed by policies
-        double panel_probability{ 0.75 };  // will likely be changed to a more complex function soon 
+        void windTurbine_get_added();
+        int windTurbineAge{ 0 };
+        double windTurbine_probability { 0.25 };
 
         virtual void panel_added_probability();  //Function to determine the probablility of adding a solar panel
+        virtual void windTurbine_added_probability();  //Function to determine the probablility of adding a wind turbine 
     };
 
 

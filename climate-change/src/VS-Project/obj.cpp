@@ -149,7 +149,7 @@ void Structure::_register_methods()
     //register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
 
     register_property<Structure, double>("solar_panel_subsidies", &Structure::solar_panel_subsidies, 0);
-
+    register_property<Structure, double>("wind_turbine_subsidies", &Structure::wind_turbine_subsidies, 0);
 }
 
 void Structure::_init()
@@ -333,15 +333,6 @@ void godot::Structure::_on_Area_mouse_exited()
 //POLICIES (interface team needs to make them usable from screen)
 
 
-
-
-bool Structure::wind_turbine_subsidies() {
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
 
 
 bool Structure::double_glazing_subsidies(){

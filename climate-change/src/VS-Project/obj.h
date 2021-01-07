@@ -125,7 +125,7 @@ namespace godot {
         //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if solar panels can be installed
 
          //Subsidies for helping households, buildings to install rooftop wind turbines  (these help poorer households to have less environmental impact)
-        bool wind_turbine_subsidies(); 
+        double wind_turbine_subsidies; 
         //could be changed to a function thatreturns the amount of money the subsididy gives which will be compared to an income to decide if wind turbines can be installed
 
          //Subsidies for helping households, buildings to change their windows to double glazing (these help poorer households to have less environmental impact)

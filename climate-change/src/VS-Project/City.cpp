@@ -615,11 +615,11 @@ String City::get_button_info_text() {
 	if (this->active_button == String("PanelSubsidyForShops"))
 	{
 		//this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
-		return String("Please input a value between 0 and 450. This will be a sola panel subsidy for shops.");
+		return String("Please input a value between 0 and 450. This will be a solar panel subsidy for shops.");
 	}
-	else if (this->active_button == String("ChangePanelProbabilityForRestaurants"))
+	else if (this->active_button == String("WindTurbineSubsidyForShops"))  // Changed the name here as well
 	{
-		return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for restaurants in the city.");
+		return String("Please input a value between 0 and 800. This will be a wind Turbine subsidy for shops.");
 	}
 	else {
 		return String("No information has been specified for this policy.");
@@ -670,14 +670,14 @@ void City::implement_shop_policies(double value) {
 			this->trigger_notification(String("The value you provided was not in the specified range."));
 		}
 	}
-	else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) {
-		if (value >= 0 && value < 1) {
-			Godot::print("PANEL PROBABILITY WILL BE CHANGED ONLY FOR RESTAURANTS");
+	else if (this->active_button == String("WindTurbineSubsidyForShops")) {    ///I Changed the name here
+		if (value >= 0 && value < 800) {
+			Godot::print("PANEL PROBABILITY WILL BE CHANGED ONLY FOR SHOPS");
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
 			{
-				if ((String)(*it)->get("object_type") == (String)("Restaurant")) {
-					(*it)->set("panel_probability", value);
-				}
+				//if ((String)(*it)->get("object_type") == (String)("Restaurant")) {}
+				(*it)->set("wind_turbine_subsidies", value);
+				
 			}
 		}
 		else {
