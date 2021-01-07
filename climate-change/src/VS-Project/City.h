@@ -185,6 +185,7 @@ namespace godot {
 		int totalSatisfaction;
 		int totalCo2Emissions;
 
+		int citysize;
 		//probability that a certain type of car will be added
  		double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
  		double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;

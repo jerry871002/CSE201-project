@@ -173,11 +173,11 @@ void House::simulate_step(double days) {
 	}
 	
 	if (double_glazing() == true) {
-		doubleGlazingAge += 1;
+		doubleGlazingAge += days;
 	} 
 
 	if (rooftop_wind_turbines() == true) {
-		rooftopWindTurbineAge += 1;
+		rooftopWindTurbineAge += days;
 	}
 
 	
