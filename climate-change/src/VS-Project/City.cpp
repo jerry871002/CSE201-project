@@ -1725,7 +1725,6 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
 
     if (isPositive) {
         node->set_tint_progress(Color(min((double)value / 5, 1.0), min(2 - (double)value / 5, 1.0), 0, 1.0));
-        std::cout << "DEBUG: VALUE PIE CHARTS= " << value << "     " << min((double)value / 5, 1.0) << std::endl;
     }
     else {
         node->set_tint_progress(Color(min(2 - (double)value / 5, 1.0), min((double)value / 5, 1), 0, 1.0));
