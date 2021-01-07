@@ -97,7 +97,16 @@ namespace godot {
         // date leap years implementation
         String return_word_date(); // returns the date :day/month/year as a string with words
         String return_number_date(int day, int month, int year); // returns the date :day/month/year as a string with numbers
-        void simulation(); // updates all the stats and calls the simulation for the buildings
+        //void simulation(); // updates all the stats and calls the simulation for the buildings
+
+		int rolling_simulation_counter{ -1 };
+
+		void simulation_shops();
+		void simulation_housing();
+		void simulation_energy();
+		void simulation_production();
+		void simulation_transport();
+
         bool ClickActive{ false };
         
 		//TRAFFIC
@@ -122,6 +131,7 @@ namespace godot {
 		std::vector<Housing*> all_houses;
 		std::vector<Energy*> all_energies;
 		std::vector<Production*> all_production;
+		std::vector<Transport*> all_transports;
 
 		String active_button;
 		void implement_shop_policies(double);

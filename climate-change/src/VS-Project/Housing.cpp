@@ -43,6 +43,12 @@ void Housing::_ready()
 	this->Structure::_ready();
 }
 
+void Housing::simulate_step(double days) {
+
+	std::cout << "DEBUG: HOUSING SIMULATION CALLED" << std::endl;
+	this->Structure::simulate_step(days); 
+};
+
 
 double Housing::get_max_income() {
     return this->maxIncome;
@@ -215,8 +221,8 @@ void House::simulate_step(double days) {
 
 		break;
 	}
-	 
-	age += days; //age is an attribute from the Structure class
+	
+	age += days; // age is an attribute from the Structure class
 	
 }
 
@@ -325,6 +331,8 @@ bool House::rooftop_wind_turbines() {
 /// </summary>
 
 Building::Building() {
+
+	
 	if (double_glazing() == true) {
         buildingType = 2; //High level Building
     }
@@ -382,6 +390,13 @@ Building::~Building() {
 }
 
 void Building::simulate_step(double days) {
+
+	std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
+
+	this->Housing::simulate_step(days);
+
+	/*
+
 	if (solar_panel() == true) {
 		solarPanelAge += 1;
 	}
@@ -396,7 +411,7 @@ void Building::simulate_step(double days) {
 		rooftopWindTurbineAge += 1;
 	}
 	
-	/*
+	
 	if (solarPanelAge >= solarLifetime) {
 		//Then the solar panels are removed and we have 
 		solar_panel() = false;
@@ -413,7 +428,7 @@ void Building::simulate_step(double days) {
 		rooftop_wind_turbines() = false;
 		rooftopWindTurbineAge = 0;
 	} 
-	*/
+	
     
 	switch (buildingType){
 	case 1: { //Low level house
@@ -444,7 +459,7 @@ void Building::simulate_step(double days) {
 	}
 	
 	age += days; //age is an attribute from the Structure class
-	
+	*/
 }
 
 bool Building::solar_panel() {
