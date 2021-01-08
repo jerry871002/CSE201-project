@@ -1455,7 +1455,9 @@ String City::return_word_date_godot() {
 /// edit text files found in /addons/file.samples
 
 std::string get_path(std::string documentName) {
-    return "../../addons/easy_charts/file.samples/" + documentName + ".csv";
+    //std::ofstream log("C:\\logs\\performance.log", std::ofstream::app | std::ofstream::out);
+    return "user://" + documentName + ".csv";
+    //return "../../addons/easy_charts/file.samples/" + documentName + ".csv";
 }
 
 // Function to add a line of the form "2015;76" to the csv file named documentName.
