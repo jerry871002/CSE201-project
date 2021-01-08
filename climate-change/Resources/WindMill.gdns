@@ -4,5 +4,5 @@
 
 [resource]
 resource_name = "Windmill"
-class_name = "Windmill"
+class_name = "GoodsFactories"
 library = ExtResource( 1 )

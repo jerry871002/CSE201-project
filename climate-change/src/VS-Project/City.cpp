@@ -211,24 +211,24 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-    Vector3 center = Vector3(15 * citysize, 0, 15 * citysize);
+    Vector3 center = Vector3(15.0 * citysize, 0, 15.0 * citysize);
 
 
     for (int x = 0; x < (citysize/2); x++)
     {
         for (int z = 0; z < (citysize/2); z++)
         {
-            Vector3 pos = Vector3(60 * x, 0, 60 * z);
+            Vector3 pos = Vector3(60.0 * x, 0, 60.0 * z);
             
 
-            Vector3 bigbuildingpos = pos + Vector3(15, 0, 15);
-            double dist = pow(pow(center.x - bigbuildingpos.x, 2) + pow(center.z - bigbuildingpos.z, 2), (1 / 2));
+            Vector3 bigbuildingpos = pos + Vector3(15.0, 0, 15.0);
+            double dist = pow(pow(center.x - bigbuildingpos.x, 2) + pow(center.z - bigbuildingpos.z, 2), 0.5);
 
             //  probability functions for buildings
             // calculate building prob takes the first appearance of the building, last appearance of the building, proprtion and distance
             // values are calibrated for a citysize of 20 but adjusts to any size
 
-
+            std::cout << "DEBUG: about to calculate probability" << std::endl;
             // 2x2 buildings
             float mallprob = calculate_building_prob(20, 160, 0.75, dist);
             float nuclearprob = calculate_building_prob(120, 320, 0.5, dist);
@@ -236,7 +236,9 @@ void City::generate_initial_city_graphics()
             float pastureprob = calculate_building_prob(280, 500, 2, dist);
             float factoryprob = calculate_building_prob(150, 350, 2, dist);
 
-
+            std::cout << "DEBUG: distance : " << dist << std::endl;
+            
+            
             // 1 x 1 buildings
 
             dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), (1 / 2));
@@ -245,37 +247,46 @@ void City::generate_initial_city_graphics()
             float shopprob = calculate_building_prob(0, 160, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
             float buildingprob = calculate_building_prob(180, 240, 2, dist) + calculate_building_prob(-30, 100, 0.2, dist);
 
+
+
             float windmillprob = calculate_building_prob(0, 160, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
 
             float lowhouseprob = calculate_building_prob(300, 500, 4, dist);
             float highhouseprob = calculate_building_prob(-200, 200, 4, dist);
 
+            std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
+            std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
+            std::cout << "DEBUG: restaurantprob  : " << restaurantprob << std::endl;
+
+
             float smallerprob = restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob;
 
             //std::cout << "DEBUG: About to create a random shop" << std::endl;
 
-            double bigbuildingmaybe = (double(rand()/RAND_MAX) * double((mallprob + nuclearprob + fieldprob + factoryprob + smallerprob)));
+            std::cout << "DEBUG: done calculate probability" << std::endl;
 
-            if (bigbuildingmaybe < mallprob) { add_shop(bigbuildingpos, MallScene); }
-            else if (bigbuildingmaybe < mallprob + nuclearprob) { add_energy(bigbuildingpos, NuclearPowerPlantScene); }
-            else if (bigbuildingmaybe < mallprob + nuclearprob + fieldprob) { add_production(bigbuildingpos, FieldScene); }
-            else if (bigbuildingmaybe < mallprob + nuclearprob + fieldprob + pastureprob / 2) { add_production(bigbuildingpos, SheepPastureScene); }
-            else if (bigbuildingmaybe < mallprob + nuclearprob + fieldprob + pastureprob) { add_production(bigbuildingpos, PigsPastureScene); }
-            else if (bigbuildingmaybe < mallprob + nuclearprob + fieldprob + pastureprob + factoryprob) { add_production(bigbuildingpos, FactoryScene); }
+            double bigbuildingmaybe = (double((double)rand()/(double)RAND_MAX) * double((mallprob + nuclearprob + fieldprob + factoryprob + smallerprob)));
+            std::cout << "DEBUG: Add buildings" << std::endl;
+            if (bigbuildingmaybe < (double)(mallprob)) { std::cout << "DEBUG: Add mall" << std::endl;  add_shop(bigbuildingpos, MallScene); }
+            else if (bigbuildingmaybe < (double)(mallprob + nuclearprob)) { std::cout << "DEBUG: Add NuclearPowerPlantScene" << std::endl;  add_energy(bigbuildingpos, NuclearPowerPlantScene); }
+            else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob)) { std::cout << "DEBUG: Add FieldScene" << std::endl;  add_production(bigbuildingpos, FieldScene); }
+            else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob / 2)) { std::cout << "DEBUG: Add SheepPastureScene" << std::endl;  add_production(bigbuildingpos, SheepPastureScene); }
+            else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob)) { std::cout << "DEBUG: Add PigsPastureScene" << std::endl;  add_production(bigbuildingpos, PigsPastureScene); }
+            else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob)) { std::cout << "DEBUG: Add FactoryScene" << std::endl;  add_production(bigbuildingpos, FactoryScene); }
             else {
+                std::cout << "DEBUG: Add else" << std::endl;
                 for (int x1 = 0; x1 < 2; x1++)
                 {
                     for (int z1 = 0; z1 < 2; z1++) {
 
                         Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+                        double type = (double((double)rand() / (double)RAND_MAX) * double(smallerprob));
 
-                        int type = rand() % int(smallerprob);
-
-                        if (type < restaurantprob) { add_shop(pos + pos1, RestaurantScene); }
-                        else if (type < restaurantprob + shopprob) { add_shop(pos + pos1, ShopScene); }
-                        else if (type < restaurantprob + shopprob + lowhouseprob) { add_house(pos + pos1, LowHouseScene); }
-                        else if (type < restaurantprob + shopprob + lowhouseprob + buildingprob) { add_house(pos + pos1, BuildingScene); }
-                        else if (type < restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob) { add_energy(pos + pos1, WindmillScene); }
+                        if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
+                        else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
+                        else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos + pos1, LowHouseScene); }
+                        else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos + pos1, BuildingScene); }
+                        else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos + pos1, WindmillScene); }
                         else { add_house(pos + pos1, HighHouseScene); }
 
 
@@ -1831,7 +1842,7 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
         double c = double(a * roota * rootb);
 
         // returns specific probability 
-        return float(a * pow(((20*dist/citysize)), 2) + b * (20 * dist / citysize) + c);
+        return float(a * pow(((20*dist/(this->citysize))), 2) + b * (20 * dist / (this->citysize)) + c);
 
 
         // test line to verify that the integral is the proportion
