@@ -212,6 +212,107 @@ void City::_input(InputEvent*)
 void City::generate_initial_city_graphics()
 {
 
+    for (int x = 0; x < 4; x++)
+    {
+        for (int z = 0; z < 4; z++)
+        {
+            Vector3 pos = Vector3(60 * x, 0, 60 * z);
+            //std::cout << "DEBUG: About to create a random shop" << std::endl;
+            int bigbuildingmaybe = rand() % 30;
+            if (bigbuildingmaybe < 5) { add_shop(pos + Vector3(15, 0, 15), MallScene); }
+            else if (bigbuildingmaybe < 7) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !!
+            else {
+                for (int x1 = 0; x1 < 2; x1++)
+                {
+                    for (int z1 = 0; z1 < 2; z1++) {
+                        int type = rand() % 25;
+                        Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+                        if (type < 3) { add_shop(pos + pos1, RestaurantScene); }
+                        else if (type < 8) { add_shop(pos + pos1, ShopScene); }
+                        else if (type < 14) { add_house(pos + pos1, LowHouseScene); }
+                        else if (type < 20) { add_house(pos + pos1, BuildingScene); }
+                        else if (type == 20) { add_energy(pos + pos1, WindmillScene); }
+                        else { add_house(pos + pos1, HighHouseScene); }
+                    }
+                }
+            }
+        }
+    }
+    for (int x = 4; x < 8; x++)
+    {
+        for (int z = 0; z < 8; z++)
+        {
+            Vector3 pos = Vector3(60 * x, 0, 60 * z);
+            int fieldmaybe = rand() % 30;
+            if (fieldmaybe < 7) { add_production(pos + Vector3(15, 0, 15), FieldScene); }
+            else if (fieldmaybe < 14) { add_production(pos + Vector3(15, 0, 15), SheepPastureScene); }
+            else if (fieldmaybe < 21) { add_production(pos + Vector3(15, 0, 15), PigsPastureScene); }
+            else {
+                for (int x1 = 0; x1 < 2; x1++)
+                {
+                    for (int z1 = 0; z1 < 2; z1++) {
+                        int type = rand() % 25;
+                        Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+                        if (type < 1) { add_shop(pos + pos1, RestaurantScene); }
+                        else if (type < 2) { add_shop(pos + pos1, ShopScene); }
+                        else if (type < 17) { add_house(pos + pos1, LowHouseScene); }
+                        else if (type < 23) { add_energy(pos + pos1, WindmillScene); }
+                        else { add_house(pos + pos1, HighHouseScene); }
+                    }
+                }
+            }
+        }
+    }
+    for (int x = 0; x < 4; x++)
+    {
+        for (int z = 4; z < 8; z++)
+        {
+            Vector3 pos = Vector3(60 * x, 0, 60 * z);
+            int fieldmaybe = rand() % 30;
+            if (fieldmaybe < 7) { add_production(pos + Vector3(15, 0, 15), FieldScene); }
+            else if (fieldmaybe < 14) { add_production(pos + Vector3(15, 0, 15), SheepPastureScene); }
+            else if (fieldmaybe < 21) { add_production(pos + Vector3(15, 0, 15), PigsPastureScene); }
+            else {
+                for (int x1 = 0; x1 < 2; x1++)
+                {
+                    for (int z1 = 0; z1 < 2; z1++) {
+                        int type = rand() % 25;
+                        Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+                        if (type < 1) { add_shop(pos + pos1, RestaurantScene); }
+                        else if (type < 2) { add_shop(pos + pos1, ShopScene); }
+                        else if (type < 17) { add_house(pos + pos1, LowHouseScene); }
+                        else if (type < 23) { add_energy(pos + pos1, WindmillScene); }
+                        else { add_house(pos + pos1, HighHouseScene); }
+                    }
+                }
+            }
+        }
+    }
+    for (int x = 8; x < 12; x++)
+    {
+        for (int z = 0; z < 8; z++)
+        {
+            Vector3 pos = Vector3(60 * x, 0, 60 * z);
+            int fieldmaybe = rand() % 30;
+            if (fieldmaybe < 5) { add_production(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }
+            else if (fieldmaybe < 8) { add_production(pos + Vector3(15, 0, 15), MallScene); }
+            else {
+                for (int x1 = 0; x1 < 2; x1++)
+                {
+                    for (int z1 = 0; z1 < 2; z1++) {
+                        int type = rand() % 25;
+                        Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+                        if (type < 20) { add_shop(pos + pos1, ShopScene); }
+                        else { add_house(pos + pos1, BuildingScene); }
+                    }
+                }
+            }
+        }
+    }
+
+
+    /*
+
     Vector3 center = Vector3(15 * citysize, 0, 15 * citysize);
     float maxdist = pow(pow(center.x, 2) + pow(center.z, 2), 1 / 2);
 
@@ -320,108 +421,12 @@ void City::generate_initial_city_graphics()
 
                 // ACTUAL CITY
                 
-                for (int x = 0; x < 4; x++)
-                {
-                    for (int z = 0; z < 4; z++)
-                    {
-                        Vector3 pos = Vector3(60 * x, 0, 60 * z);
-                        //std::cout << "DEBUG: About to create a random shop" << std::endl;
-                        int bigbuildingmaybe = rand() % 30;
-                        if (bigbuildingmaybe < 5) { add_shop(pos + Vector3(15, 0, 15), MallScene); }
-                        else if (bigbuildingmaybe < 7) { add_energy(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }   // Make it something other than a shop !!
-                        else {
-                            for (int x1 = 0; x1 < 2; x1++)
-                            {
-                                for (int z1 = 0; z1 < 2; z1++) {
-                                    int type = rand() % 25;
-                                    Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-                                    if (type < 3) { add_shop(pos + pos1, RestaurantScene); }
-                                    else if (type < 8) { add_shop(pos + pos1, ShopScene); }
-                                    else if (type < 14) { add_house(pos + pos1, LowHouseScene); }
-                                    else if (type < 20) { add_house(pos + pos1, BuildingScene); }
-                                    else if (type == 20) { add_energy(pos + pos1, WindmillScene); }
-                                    else { add_house(pos + pos1, HighHouseScene); }
-                                }
-                            }
-                        }
-                    }
-                }
-                for (int x = 4; x < 8; x++)
-                {
-                    for (int z = 0; z < 8; z++)
-                    {
-                        Vector3 pos = Vector3(60 * x, 0, 60 * z);
-                        int fieldmaybe = rand() % 30;
-                        if (fieldmaybe < 7) { add_production(pos + Vector3(15, 0, 15), FieldScene); }
-                        else if (fieldmaybe < 14) { add_production(pos + Vector3(15, 0, 15), SheepPastureScene); }
-                        else if (fieldmaybe < 21) { add_production(pos + Vector3(15, 0, 15), PigsPastureScene); }
-                        else {
-                            for (int x1 = 0; x1 < 2; x1++)
-                            {
-                                for (int z1 = 0; z1 < 2; z1++) {
-                                    int type = rand() % 25;
-                                    Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-                                    if (type < 1) { add_shop(pos + pos1, RestaurantScene); }
-                                    else if (type < 2) { add_shop(pos + pos1, ShopScene); }
-                                    else if (type < 17) { add_house(pos + pos1, LowHouseScene); }
-                                    else if (type < 23) { add_energy(pos + pos1, WindmillScene); }
-                                    else { add_house(pos + pos1, HighHouseScene); }
-                                }
-                            }
-                        }
-                    }
-                }
-                for (int x = 0; x < 4; x++)
-                {
-                    for (int z = 4; z < 8; z++)
-                    {
-                        Vector3 pos = Vector3(60 * x, 0, 60 * z);
-                        int fieldmaybe = rand() % 30;
-                        if (fieldmaybe < 7) { add_production(pos + Vector3(15, 0, 15), FieldScene); }
-                        else if (fieldmaybe < 14) { add_production(pos + Vector3(15, 0, 15), SheepPastureScene); }
-                        else if (fieldmaybe < 21) { add_production(pos + Vector3(15, 0, 15), PigsPastureScene); }
-                        else {
-                            for (int x1 = 0; x1 < 2; x1++)
-                            {
-                                for (int z1 = 0; z1 < 2; z1++) {
-                                    int type = rand() % 25;
-                                    Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-                                    if (type < 1) { add_shop(pos + pos1, RestaurantScene); }
-                                    else if (type < 2) { add_shop(pos + pos1, ShopScene); }
-                                    else if (type < 17) { add_house(pos + pos1, LowHouseScene); }
-                                    else if (type < 23) { add_energy(pos + pos1, WindmillScene); }
-                                    else { add_house(pos + pos1, HighHouseScene); }
-                                }
-                            }
-                        }
-                    }
-                }
-                for (int x = 8; x < 12; x++)
-                {
-                    for (int z = 0; z < 8; z++)
-                    {
-                        Vector3 pos = Vector3(60 * x, 0, 60 * z);
-                        int fieldmaybe = rand() % 30;
-                        if (fieldmaybe < 5) { add_production(pos + Vector3(15, 0, 15), NuclearPowerPlantScene); }
-                        else if (fieldmaybe < 8) { add_production(pos + Vector3(15, 0, 15), MallScene); }
-                        else {
-                            for (int x1 = 0; x1 < 2; x1++)
-                            {
-                                for (int z1 = 0; z1 < 2; z1++) {
-                                    int type = rand() % 25;
-                                    Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-                                    if (type < 20) { add_shop(pos + pos1, ShopScene); }
-                                    else { add_house(pos + pos1, BuildingScene); }
-                                }
-                            }
-                        }
-                    }
-                }
-                */
+                
+               
 
             }
-        }
-	
+        } */
+
 }
 
 void City::set_initial_visible_components()

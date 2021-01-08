@@ -89,6 +89,36 @@ double Energy::get_coal()
 	return this->coal;
 }
 
+
+//INFORMATION DISPLAY 
+
+void Energy::_register_methods()
+{
+	register_property<Energy, double>("energyOutput", &Energy::set_energy_output, &Energy::get_energy_output, 1);
+	register_property<Energy, double>("environmentalCost", &Energy::set_environmental_cost, &Energy::get_environmental_cost, 1);
+}
+
+template<typename T> String to_godot_string(T s)
+{
+	std::string standardString = std::to_string(s);
+	godot::String godotString = godot::String(standardString.c_str());
+	return godotString;
+}
+
+String Energy::get_object_info()
+{
+	String info = this->Structure::get_object_info();
+
+	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
+	info += "Employment: " + to_godot_string(this->employment) + String("\n");
+	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy produced in kWh: " + to_godot_string((int)this->get("energyOutput")) + String("\n");
+	info += "Environmental and health costs induced in euros: " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+	return info;
+}
+
+
 /// <summary>
 /// NUCLEAR POWERPLANT CLASS
 /// </summary>
@@ -218,7 +248,7 @@ void Windmill::_process(float delta)
 {
 	this->Structure::_process(delta);
 	rot -= delta * turnSpeed * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"));
-	((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
+	((Mesh*)this->get_node("MeshComponents/Blades"))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
 }
 
 void Windmill::simulate_step(double days)
@@ -427,32 +457,4 @@ void CoalPowerPlant::simulate_step(double days)
 	ashOutput += 0.0619 * energyPerDay * days;
 	mercuryEmission += 1.137E-8 * energyPerDay * days;
 	environmentalCost = 0.06 * energyPerDay * days;
-}
-
-//INFORMATION DISPLAY 
-
-void Energy::_register_methods()
-{
-	register_property<Energy, double>("energyOutput", &Energy::set_energy_output, &Energy::get_energy_output, 1);
-	register_property<Energy, double>("environmentalCost", &Energy::set_environmental_cost, &Energy::get_environmental_cost, 1);
-}
-
-template<typename T> String to_godot_string(T s)
-{
-	std::string standardString = std::to_string(s);
-	godot::String godotString = godot::String(standardString.c_str());
-	return godotString;
-}
-
-String Energy::get_object_info()
-{
-	String info = this->Structure::get_object_info();
-
-	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
-	info += "Employment: " + to_godot_string(this->employment) + String("\n");
-	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy produced in kWh: " + to_godot_string((int)this->get("energyOutput")) + String("\n");
-	info += "Environmental and health costs induced in euros: " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
-	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
-	return info;
 }
