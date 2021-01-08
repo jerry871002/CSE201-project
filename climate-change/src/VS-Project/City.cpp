@@ -254,7 +254,7 @@ void City::generate_initial_city_graphics()
 
             //std::cout << "DEBUG: About to create a random shop" << std::endl;
 
-            int bigbuildingmaybe = (rand() % int((mallprob + nuclearprob + fieldprob + factoryprob + smallerprob)));
+            double bigbuildingmaybe = (double(rand()/RAND_MAX) * double((mallprob + nuclearprob + fieldprob + factoryprob + smallerprob)));
 
             if (bigbuildingmaybe < mallprob) { add_shop(bigbuildingpos, MallScene); }
             else if (bigbuildingmaybe < mallprob + nuclearprob) { add_energy(bigbuildingpos, NuclearPowerPlantScene); }
