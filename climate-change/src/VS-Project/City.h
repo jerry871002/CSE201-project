@@ -157,6 +157,8 @@ namespace godot {
         double return_environmentalCost();
         double return_totalSatisfaction();
 
+        float calculate_building_prob(float, float, float, double);
+
         //computes probailities for each type of transport that this type will be added
         void transport_probabilities();
 
