@@ -302,7 +302,7 @@ surfaces/3 = {
 "vertex_count": 4
 }
 
-[node name="WindMill" type="Spatial"]
+[node name="Windmill" type="Spatial"]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 script = ExtResource( 10 )
 
