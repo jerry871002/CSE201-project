@@ -1577,6 +1577,8 @@ void delete_line(std::string documentName, std::string dataToDelete) {
 
 void City::write_stat_history_to_file() {
     
+    std::cout << "DEBUG: WRITE STAT FUNC "  << std::endl;
+
     stat+=50;
     int *date; 
     date = return_date(day_tick);
