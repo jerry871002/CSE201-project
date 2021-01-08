@@ -1591,8 +1591,8 @@ void City::write_stat_history_to_file() {
         double stats[10][366];
         remove(::get_path("statsyear" + std::to_string(year-2)).c_str());
     }
-        
-    add_data("statsyear" + std::to_string(year), return_word_date(day_tick), std::to_string(0));
+    
+    add_data("datas" + std::to_string(year), return_word_date(day_tick), std::to_string(0));
 
     delete_line("statsyear" + std::to_string(year), return_word_date(day_tick-365));
     
