@@ -88,7 +88,7 @@ void City::_register_methods()
 
     register_property<City, float>("time_speed", &City::time_speed, 1.0);
     register_property<City, int>("day_tick", &City::day_tick, 0);
-
+    register_property<City, double>("budget", &City::budget, 10000);
 };
 
 void City::_init()
@@ -159,11 +159,30 @@ void City::_physics_process(float delta) {
         }
     }
 }
+int* return_date(int day_tick) {
+    int static date[3];
+    int Y = 1, M = 1, D = 1;
+    int julian = (1461 * (Y + 4800 + (M - 14) / 12)) / 4 + (367 * (M - 2 - 12 / ((M - 14) / 12))) / 12 - (3 * ((Y + 4900 + (M - 14) / 12) / 100)) / 4 + D - 32075 + day_tick + 35;
+    int gregorian = julian + 1401 + (int)((((int)(4 * day_tick + 274277) / 146097) * 3) / 4) - 38;
+    int e = 4 * gregorian + 3;
+    int h = 5 * ((int)(e % 1461) / 4) + 2;
+    int day = ((int)(h % 153) / 5) + 1;
+    int month = (((int)h / 153) + 2) % 12 + 1;
+    int year = (int)(e / 1461) - 4716 + (int)((14 - month) / 12);
+    date[0] = day;
+    date[1] = month;
+    date[2] = year;
+    return date;
+}
 
 void City::update_date() {
     this->day_tick += days_since_last_simulation;
     this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date_godot());
     this->day_tick -= days_since_last_simulation;
+    int* datenumber = return_date(int(this->day_tick) + days_since_last_simulation);
+    if (datenumber[0] == 1 && datenumber[1] == 1) { // resets the budget to initial value
+        budget = 10000; // needs to be updated for every year somehow
+    }
 }
 
 void City::_input(InputEvent*)
@@ -1404,21 +1423,7 @@ template<typename T> String to_godot_string(T s)
     return godotString;
 }
 
-int* return_date(int day_tick) {
-    int static date[3];
-    int Y = 1, M = 1, D = 1;
-    int julian = (1461 * (Y + 4800 + (M - 14) / 12)) / 4 + (367 * (M - 2 - 12 / ((M - 14) / 12))) / 12 - (3 * ((Y + 4900 + (M - 14) / 12) / 100)) / 4 + D - 32075 + day_tick + 35;
-    int gregorian = julian + 1401 + (int)((((int)(4 * day_tick + 274277) / 146097) * 3) / 4) - 38;
-    int e = 4 * gregorian + 3;
-    int h = 5 * ((int)(e % 1461) / 4) + 2;
-    int day = ((int)(h % 153) / 5) + 1;
-    int month = (((int)h / 153) + 2) % 12 + 1;
-    int year = (int)(e / 1461) - 4716 + (int)((14 - month) / 12);
-    date[0] = day;
-    date[1] = month;
-    date[2] = year;
-    return date;
-}
+
 
 std::string return_number_date(int day, int month, int year) {
     return std::to_string(day) + ", " + std::to_string(month) + ", " + std::to_string(year);

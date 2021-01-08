@@ -209,6 +209,10 @@ void Shop::panels_get_added() {
     PanelsOn = true;
     panels_age = 100;   // set the panels age here ! when they are just built
     // std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
+    double budget = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget");
+    this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", budget - (double)(this->get("solar_panel_subsidies")));
+    // set the panels age here ! when they are just built
+
 }
 
 
