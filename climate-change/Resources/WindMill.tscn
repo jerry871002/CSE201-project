@@ -322,7 +322,6 @@ transform = Transform( 0.6, 0, 0, 0, 0.15, 0, 0, 0, 0.6, 0, 0.0206043, 0 )
 shape = SubResource( 3 )
 
 [node name="MeshComponents" type="Spatial" parent="."]
-visible = false
 
 [node name="Blades" type="Spatial" parent="MeshComponents"]
 script = ExtResource( 2 )
@@ -335,6 +334,7 @@ material/1 = null
 
 [node name="Blades-lod1" type="MeshInstance" parent="MeshComponents/Blades"]
 transform = Transform( -0.0642788, 0, -0.0766045, 0, 0.1, 0, 0.0766045, 0, -0.0642788, 0.95238, 2.7, 0.895682 )
+visible = false
 mesh = SubResource( 5 )
 material/0 = null
 material/1 = null
@@ -353,6 +353,7 @@ material/4 = null
 
 [node name="Mesh-lod1" type="MeshInstance" parent="MeshComponents/MainMesh"]
 transform = Transform( 0.0321394, -0.0556671, -0.0766045, -0.0866026, -0.05, 0, -0.0383022, 0.0663414, -0.0642788, 0.95238, 2.7, 0.895682 )
+visible = false
 mesh = SubResource( 7 )
 material/0 = null
 material/1 = null
@@ -371,6 +372,7 @@ material/2 = null
 material/3 = null
 
 [node name="Ground-lod1" type="MeshInstance" parent="MeshComponents/Ground"]
+visible = false
 mesh = SubResource( 9 )
 material/0 = null
 material/1 = null
