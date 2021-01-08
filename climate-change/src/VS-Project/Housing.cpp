@@ -263,6 +263,7 @@ bool House::solar_panel() {
 			*/
 		}
 	}
+	return false;
 	                            
 }
 
@@ -501,7 +502,7 @@ bool Building::solar_panel() {
 			*/
 		}
 	}
-
+	return false;
 	
 }
 

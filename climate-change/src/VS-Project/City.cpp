@@ -23,7 +23,7 @@
 #include <unistd.h>
 #endif
 
-
+# define M_PI 3.14159265358979323846  /* pi */
 
 using namespace godot;
 
@@ -1583,7 +1583,6 @@ void City::write_stat_history_to_file() {
     int day = *date;
     int month = *(date+1);
     int year = *(date+2);
-
     
     if (day==1 && month==1 && year!=1 && year!=2) {
         daycount=0;
@@ -1593,8 +1592,7 @@ void City::write_stat_history_to_file() {
         remove(::get_path("statsyear" + std::to_string(year-2)).c_str());
     }
         
-
-    add_data("statsyear" + std::to_string(year), return_word_date(day_tick), std::to_string(stat));
+    add_data("statsyear" + std::to_string(year), return_word_date(day_tick), std::to_string(0));
 
     delete_line("statsyear" + std::to_string(year), return_word_date(day_tick-365));
     
