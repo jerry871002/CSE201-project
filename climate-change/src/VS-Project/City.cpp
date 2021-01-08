@@ -249,11 +249,11 @@ void City::generate_initial_city_graphics()
 
             std::cout << "DEBUG: about to calculate probability" << std::endl;
             // 2x2 buildings
-            float mallprob = calculate_building_prob(20, 160, 0.75, dist);
-            float nuclearprob = calculate_building_prob(120, 320, 0.5, dist);
-            float fieldprob = calculate_building_prob(300, 450, 0.5, dist);
-            float pastureprob = calculate_building_prob(280, 500, 2, dist);
-            float factoryprob = calculate_building_prob(150, 350, 2, dist);
+            float mallprob = calculate_building_prob(20, 160, 0.5, dist);
+            float nuclearprob = calculate_building_prob(170, 320, 0.05, dist);
+            float fieldprob = calculate_building_prob(280, 450, 1, dist);
+            float pastureprob = calculate_building_prob(280, 430, 2, dist);
+            float factoryprob = calculate_building_prob(170, 300, 0.1, dist);
 
             std::cout << "DEBUG: distance : " << dist << std::endl;
             
@@ -262,16 +262,16 @@ void City::generate_initial_city_graphics()
 
             dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), (1 / 2));
 
-            float restaurantprob = calculate_building_prob(0, 160, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-            float shopprob = calculate_building_prob(0, 160, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-            float buildingprob = calculate_building_prob(180, 240, 2, dist) + calculate_building_prob(-30, 100, 0.2, dist);
+            float restaurantprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+            float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+            float buildingprob = calculate_building_prob(150, 250, 2.5, dist) + calculate_building_prob(-100, 100, 1, dist);
 
 
 
-            float windmillprob = calculate_building_prob(0, 160, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+            float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(300, 500, 1, dist);
 
-            float lowhouseprob = calculate_building_prob(300, 500, 4, dist);
-            float highhouseprob = calculate_building_prob(-200, 200, 4, dist);
+            float lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
+            float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(380, 500, 0.2, dist);
 
             std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
             std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
@@ -284,7 +284,7 @@ void City::generate_initial_city_graphics()
 
             std::cout << "DEBUG: done calculate probability" << std::endl;
 
-            double bigbuildingmaybe = (double((double)rand()/(double)RAND_MAX) * double((mallprob + nuclearprob + fieldprob + factoryprob + smallerprob)));
+            double bigbuildingmaybe = (double((double)rand()/(double)RAND_MAX) * double((mallprob + nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
             std::cout << "DEBUG: Add buildings" << std::endl;
             if (bigbuildingmaybe < (double)(mallprob)) { std::cout << "DEBUG: Add mall" << std::endl;  add_shop(bigbuildingpos, MallScene); }
             else if (bigbuildingmaybe < (double)(mallprob + nuclearprob)) { std::cout << "DEBUG: Add NuclearPowerPlantScene" << std::endl;  add_energy(bigbuildingpos, NuclearPowerPlantScene); }
@@ -1836,7 +1836,7 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
 // auxiliary function to simplify ring city generation
 
 float City::calculate_building_prob(float roota, float rootb, float proportion, double dist) {
-    if (dist < roota || dist > rootb) { return 0; }
+    if (dist < (citysize*roota/20) || dist > (citysize*rootb/20)) { return 0; }
     else {
 
         // function which calculates coefficients of quadratic equation for a building distribution
