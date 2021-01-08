@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
+[ext_resource path="res://Resources/HighHouse.tscn" type="PackedScene" id=3]
 [ext_resource path="res://KinematicBody.gdns" type="Script" id=4]
 [ext_resource path="res://Ressources/Icons/RoofWindTurb1.png" type="Texture" id=6]
 [ext_resource path="res://Ressources/Icons/RoofWindTurb2.png" type="Texture" id=7]
@@ -77,6 +78,9 @@ light_indirect_energy = 0.0
 light_specular = 0.0
 shadow_bias = 0.0
 directional_shadow_max_distance = 1000.0
+
+[node name="HighHouse" parent="3Dworld/WorldEnvironment" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 27.0467, 24.4957, 25.9573 )
 
 [node name="Player" type="KinematicBody" parent="3Dworld"]
 transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 100, 0 )
