@@ -227,14 +227,7 @@ void House::simulate_step(double days) {
 }
 
 bool House::solar_panel() {
-	if (rooftop_wind_turbines() == true) {
-		//we cannot have solar panels and wind turbines on the same house
-		//a message should appear, saying that the solar_panels cannot be installed 
-		return false;
-		//return PanelsOff
-	}
-
-	else {
+	/*
 		if (houseIncome > 25) { //the people that live in the house have enough money to install solar panels so they can 
 			solarPanelAge = 0; 
 			if (satisfaction < 10) {
@@ -245,7 +238,7 @@ bool House::solar_panel() {
 		}
 
 		else {
-			/*
+			
 			if (solar_panel_subsidies() == true) {
 				//then the household gets financial help and can install the solar_panels
 				solarPanelAge = 0; 
@@ -260,11 +253,11 @@ bool House::solar_panel() {
 				//return PanelsOff;
 				return false;
 			}
-			*/
+			
 		}
-	}
+		*/
 	return false;
-	                            
+	             
 }
 
 //placeholder must change 
@@ -293,15 +286,8 @@ bool House::double_glazing() {
 } 
 
 bool House::rooftop_wind_turbines() {
-	if (solar_panel() == true) {
-		//we cannot have solar panels and wind turbines on the same house
-		//a message should appear, saying that the turbines cannot be installed 
-		return false;
-		//return PanelsOff
-	}
-
-	else {
-		if (houseIncome > 280) { //the people that live in the house have enough money to install wind turbines so they can 
+	
+		/*if (houseIncome > 280) { //the people that live in the house have enough money to install wind turbines so they can 
 			rooftopWindTurbineAge = 0; 
 			if (satisfaction < 10) {
 				satisfaction += 1;
@@ -323,10 +309,11 @@ bool House::rooftop_wind_turbines() {
 
 			else {
 				//return PanelsOff;
-				return false;
+				
 			}
 		}
-	}
+		*/
+	return false;
 }
 
 /// <summary>
