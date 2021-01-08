@@ -367,8 +367,8 @@ rounded = true
 texture_under = ExtResource( 15 )
 texture_progress = ExtResource( 15 )
 fill_mode = 4
-tint_under = Color( 0.403922, 0.403922, 0.403922, 1 )
-tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+tint_under = Color( 1, 1, 1, 0.12549 )
+tint_progress = Color( 0.329412, 0.811765, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -383,7 +383,7 @@ value = 20.0
 texture_under = ExtResource( 15 )
 texture_progress = ExtResource( 15 )
 fill_mode = 4
-tint_under = Color( 0.403922, 0.403922, 0.403922, 1 )
+tint_under = Color( 1, 1, 1, 0.12549 )
 tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
