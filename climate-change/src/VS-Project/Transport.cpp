@@ -44,6 +44,12 @@ template <typename T> void align_on_axis(T obj) {
 
 
 Transport::Transport() {
+    transportType = rand()%8;
+    transport_type();
+}
+
+Transport::Transport(int type){
+    transportType = type;
     transport_type();
 }
 
@@ -80,6 +86,7 @@ void Transport::transport_type() {
         std::normal_distribution <double> satisfactiont(9.7, 0.2); //very high satisfaction
         satisfaction = fmax(satisfactiont(gen), 10);
         energyUse = 0.119 * kmPerDay;
+        lifetime = 15;
         break;
     }
     case 1: {  // big american car
@@ -96,6 +103,7 @@ void Transport::transport_type() {
         buildingTime = timeg(gen); // building time of 1 car, very fast
         std::normal_distribution <double> satisfactiong(8.5, 0.4); // high satisfaction
         satisfaction = satisfactiong(gen);
+        lifetime = 10;
         break;
     }
     case 2: { //normal family car 
@@ -112,6 +120,7 @@ void Transport::transport_type() {
         buildingTime = timeg(gen); // building time of 1 car, very fast
         std::normal_distribution <double> satisfactiong(6.8, 0.5); // medium satisfaction
         satisfaction = satisfactiong(gen);
+        lifetime = 15;
         break;
     }
     case 3: { //old collection car 
@@ -128,6 +137,7 @@ void Transport::transport_type() {
         buildingTime = timeo(gen); // building time of 1 collection (replica i think) car car, not so fast
         std::normal_distribution <double> satisfactiono(9.3, 0.5); // very high satisfaction
         satisfaction = satisfactiono(gen);
+        lifetime = 20;
         break;
     }
     case 4: { //bike
@@ -138,10 +148,11 @@ void Transport::transport_type() {
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.04; //really fast, in days (1 hour )
-        std::normal_distribution <double> satisfactionbike(9, 1);
-        satisfaction = satisfactionbike(gen); //high satisfaction
+        std::normal_distribution <double> satisfactionbike(6.5, 1);
+        satisfaction = satisfactionbike(gen); //meduim satisfaction
         std::normal_distribution <double> kmbike(18, 7);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
+        lifetime = 20;
         break;
     }
     case 5: { //motorcycle 
@@ -156,6 +167,7 @@ void Transport::transport_type() {
         satisfaction = satisfactionm(gen); // not very high satisfaction
         std::normal_distribution <double> kmbike(30, 10);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
+        lifetime = 12;
         break;
     }
     case 6: { // bus
@@ -187,6 +199,7 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmb(225, 75);
         kmPerDay = kmb(gen); // kilometres per day,  randomised for each bus
         employment = 1 + round(alpha * 2);
+        lifetime = 12;
         break;
     }
     case 7: { //sports car
@@ -206,9 +219,11 @@ void Transport::transport_type() {
         }
         std::normal_distribution <double> kmsp(80, 20);
         kmPerDay = kmsp(gen); // kilometres per day,  randomised for each car
+        lifetime = 10;
         break;
     }
     }
+    pricePerMonth = cost / (12 * lifetime);
     fuelInput = fuelPerKm*kmPerDay; //in 1 day
     CO2Emission = co2PerKm*kmPerDay; //in 1 day
 }
