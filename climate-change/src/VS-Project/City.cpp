@@ -260,7 +260,7 @@ void City::generate_initial_city_graphics()
             
             // 1 x 1 buildings
 
-            dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), (1 / 2));
+            dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), 0.5);
 
             float restaurantprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
             float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
@@ -294,6 +294,7 @@ void City::generate_initial_city_graphics()
             else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob)) { std::cout << "DEBUG: Add FactoryScene" << std::endl;  add_production(bigbuildingpos, FactoryScene); }
             else {
                 std::cout << "DEBUG: Add else" << std::endl;
+                srand((int)time(0));
                 for (int x1 = 0; x1 < 2; x1++)
                 {
                     for (int z1 = 0; z1 < 2; z1++) {
@@ -568,7 +569,7 @@ void City::_ready()
 {
 
     std::cout << "DEBUG: Ready started" << std::endl;
-    citysize = 20;
+    citysize = 50;
     this->generate_initial_city_graphics();
     this->set_initial_visible_components();
 
