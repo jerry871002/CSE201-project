@@ -240,7 +240,7 @@ void City::generate_initial_city_graphics()
 
     for (int x = 0; x < (citysize/2); x++)
     {
-        for (int z = 0; z < (citysize/2); z++)
+        for (int z = (int(pow(pow(citysize,2)-pow(x-citysize/2,2),0.5)) - citysize/2)/2; z < (int(pow(pow(citysize, 2) - pow(x - citysize / 2, 2), 0.5)) + citysize / 2)/2; z++)
         {
             Vector3 pos = Vector3(60.0 * x, 0, 60.0 * z);
             
@@ -251,14 +251,15 @@ void City::generate_initial_city_graphics()
             //  probability functions for buildings
             // calculate building prob takes the first appearance of the building, last appearance of the building, proprtion and distance
             // values are calibrated for a citysize of 20 but adjusts to any size
+            // maximum possible distance from center is 300
 
             std::cout << "DEBUG: about to calculate probability" << std::endl;
             // 2x2 buildings
-            float mallprob = calculate_building_prob(20, 160, 0.5, dist);
+            float mallprob = calculate_building_prob(20, 90, 0.15, dist);
             float nuclearprob = calculate_building_prob(170, 320, 0.05, dist);
-            float fieldprob = calculate_building_prob(280, 450, 1, dist);
-            float pastureprob = calculate_building_prob(280, 430, 2, dist);
-            float factoryprob = calculate_building_prob(170, 300, 0.1, dist);
+            float fieldprob = calculate_building_prob(260, 450, 1, dist);
+            float pastureprob = calculate_building_prob(240, 400, 2, dist);
+            float factoryprob = calculate_building_prob(170, 200, 0.01, dist);
 
             std::cout << "DEBUG: distance : " << dist << std::endl;
             
@@ -267,16 +268,16 @@ void City::generate_initial_city_graphics()
 
             dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), 0.5);
 
-            float restaurantprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+            float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
             float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-            float buildingprob = calculate_building_prob(150, 250, 2.5, dist) + calculate_building_prob(-100, 100, 1, dist);
+            float buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
 
 
 
-            float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(300, 500, 1, dist);
+            float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
 
             float lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
-            float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(380, 500, 0.2, dist);
+            float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
 
             std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
             std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
