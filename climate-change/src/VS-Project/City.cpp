@@ -1497,8 +1497,20 @@ void City::transport_probabilities() {
 * 6 - bus
 * 7 - sports car
 */
-    double satisfactions[8] = { 9.7, 8.5,6.8, 9.3, 9, 7, 8, 9.5 };
-    double satisfactionsSum = 67.8;
+	Transport electicCar = Transport(0);
+	Transport bigCar = Transport(1);
+	Transport car = Transport(2);
+	Transport collectionCar = Transport(3);
+	Transport bike = Transport(4);
+	Transport motorcycle = Transport(5);
+	Transport bus = Transport(6);
+	Transport sportsCar = Transport(7);
+
+    double satisfactions[8] = { electicCar.satisfaction, bigCar.satisfaction, car.satisfaction, collectionCar.satisfaction, bike.satisfaction, motorcycle.satisfaction, bus.satisfaction, sportsCar.satisfaction };
+    double satisfactionsSum = 0;
+	for (int i =0 ;i<8;i++){
+		satisfactionsSum += satisfactions[i];
+	}
     double alpha[8];
     for (int i = 0; i < 8; i++) {
         alpha[i] = satisfactions[i] / satisfactionsSum * incomesLen;
@@ -1506,20 +1518,17 @@ void City::transport_probabilities() {
             alpha[i] *= sqrt(airQuality);
         }
     }
-    double lifetimes[8] = { 15, 10, 15, 20, 20, 12, 10, 10 };
-    double capacities[8] = { 5, 8, 4, 2, 1, 1, 45, 2 };
-    double costs[8] = { 42000, 85000, 14000,40000, 370, 6200, 262500, 52000 };
-    double pricesPerMonth[8];
+    double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
+    double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth, car.pricePerMonth,collectionCar.pricePerMonth, bike.pricePerMonth, motorcycle.pricePerMonth, bus.pricePerMonth/(bus.capacity*bus.occupancyRate), sportsCar.pricePerMonth};
     double probabilities[8];
     double quantities[8] = { 0,0,0,0,0,0,0,0 };
     double alphaSum = 0;
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
     }
-    for (int i = 0; i < 8; i++) {
-        pricesPerMonth[i] = costs[i] / (12 * lifetimes[i]);
-        alpha[i] = 0.01 * alpha[i] / alphaSum;
-    }
+	for (int i = 0;i<8; i++){
+   		alpha[i] =0.01*alpha[i]/alphaSum;
+	}
     alphaSum = 0;
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
@@ -1545,9 +1554,6 @@ void City::transport_probabilities() {
         }
         quantities[maxIndex] += 1;
     }
-    for (int i = 0; i < 8; i++) {
-        quantities[i] /= capacities[i];
-    }
     double quantitiesSum = 0;
     for (int i = 0; i < 8; i++) {
         quantitiesSum += quantities[i];
@@ -1560,7 +1566,6 @@ void City::transport_probabilities() {
     probabilityMotorcycle = quantities[5] / quantitiesSum;
     probabilityBus = quantities[6] / quantitiesSum;
     probabilitySportsCar = quantities[7] / quantitiesSum;
-
 }
 
 // auxiliary function to be able to have values between 1 and 100 in the pie charts

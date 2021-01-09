@@ -12,7 +12,7 @@ namespace godot {
         GODOT_CLASS(Transport, KinematicBody)
     public:
         Transport();
-
+        Transport(int type);
         void transport_type();
 
         // godot functions
@@ -46,6 +46,8 @@ namespace godot {
 		double get_co2emissions();
 		double get_energyuse();
 		double get_environmentalcost();
+        double lifetime; //in years
+        double pricePerMonth; // in euros
 
         void set_transportType(int type);
         int get_transportType();
