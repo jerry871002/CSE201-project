@@ -387,7 +387,7 @@ void City::_ready()
 {
 
     //std::cout << "DEBUG: Ready started" << std::endl;
-    citysize = 10;
+    citysize = 9;
     this->generate_initial_city_graphics();
     structures_iterator = all_structures.begin();
     this->set_initial_visible_components();
@@ -917,6 +917,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
             }
         }
         else { // the case when it's a 2 by 2 building
+             std::cout << "DEBUG: updating traffic for BIG building coordinates : " << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
             if (number == 3) {
                 x = x - 1;
             }
@@ -1564,8 +1565,8 @@ void City::transport_probabilities() {
 
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
 int City::value_pie_chart(int value) {
-	int newvalue = 100*(1-(1/value+1));
-	return newvalue;
+    int newvalue = (int)(100 * (1 - (1 / (value + 1))));
+    return newvalue;
 }
 
 void City::change_pie_chart(int value, NodePath name, bool isPositive)
