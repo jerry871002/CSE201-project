@@ -242,6 +242,9 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
+   
+     
+    
     Vector3 center = Vector3(15.0 * citysize, 0, 15.0 * citysize);
 
 
@@ -395,6 +398,9 @@ void City::_ready()
 
     //std::cout << "DEBUG: Ready started" << std::endl;
     citysize = 9;
+    for (int i = 0; i < 8; i++) {
+        current_car_quantities.push_back(0);
+    }
     this->generate_initial_city_graphics();
     structures_iterator = all_structures.begin();
     this->set_initial_visible_components();
@@ -633,15 +639,15 @@ void City::add_car() {
     {
 
         // randomly choose between bugatti and chiron
-
-        int type = rand() % 3;
+        int type = rand() % 3; 
+        //int type = transport_to_add(); // doesn't work
 
         Node* node;
 
         switch (type) {
-        case 0: node = BugattiScene->instance(); break;
-        case 1: node = ChironScene->instance(); break;
-        default: node = MotoScene->instance(); break;
+        case 0: node = BugattiScene->instance(); current_car_quantities[3] += 1; break;
+        case 1: node = ChironScene->instance(); current_car_quantities[7] += 1;  break;
+        default: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
         }
 
         node->set("scale", Vector3(10, 10, 10));
@@ -1493,7 +1499,7 @@ double City::return_energySupply() {
     return energySupply;
 }
 
-void City::transport_probabilities() {
+int City::transport_to_add() {
     /*
 * 0 - electic car
 * 1 - big american car
@@ -1573,6 +1579,20 @@ void City::transport_probabilities() {
     probabilityMotorcycle = quantities[5] / quantitiesSum;
     probabilityBus = quantities[6] / quantitiesSum;
     probabilitySportsCar = quantities[7] / quantitiesSum;
+
+    for (int i = 0; i < 8; i++) {
+        quantities[i] = quantities[i] / quantitiesSum;
+    }
+    int min = 0;
+    double min_value = current_car_quantities[0] - quantities[0];
+    for (int i = 1; i < 8; i++) {
+        if (min_value > current_car_quantities[i] - quantities[i]) {
+            min = i;
+            min_value = current_car_quantities[i] - quantities[i];
+        }
+    }
+    return min;
+
 }
 
 // auxiliary function to be able to have values between 1 and 100 in the pie charts

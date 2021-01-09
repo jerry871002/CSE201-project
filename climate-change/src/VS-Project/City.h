@@ -166,7 +166,7 @@ namespace godot {
         float calculate_building_prob(float, float, float, double);
 
         //computes probailities for each type of transport that this type will be added
-        void transport_probabilities();
+        int transport_to_add();
 
         /* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
         and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
@@ -204,7 +204,8 @@ namespace godot {
         double airQuality;
         double* incomes;
         int incomesLen;
-
+        std::vector<int> current_car_quantities;
+        
 
         const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");
         const Ref<PackedScene> ShopScene = ResourceLoader::get_singleton()->load("res://Resources/Shop.tscn", "PackedScene");
