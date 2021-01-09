@@ -92,7 +92,7 @@ void AgriculturalProduction::simulate_step(double days) {
 		production+=requiredLand*fertility*days; //output over the time period
 		waterConsumption+=requiredLand*fertility*days*1500;
 		CO2Emission+=0.59*requiredLand*fertility*days;
-		if (pesticide==true){
+		if (pesticideProhibited==false){
 			CO2Emission+=9400*requiredLand*days;
 			}
 			break;
@@ -124,15 +124,15 @@ void AgriculturalProduction::agriculture_type(int type){
     		std::mt19937 gen(rd());
 			std::normal_distribution <double> wheatfieldsize(1.74, 0.04);
 			requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
-			std::normal_distribution <double> wheatferltility(404000, 35000);
+			std::normal_distribution <double> wheatferltility(464000, 40000);
 			fertility = wheatferltility(gen); //production of wheat per km^2
 			production = fertility *requiredLand; //output of wheat in kg per day
 			waterConsumption = 1500*production; //water litres per day
 			CO2Emission =0.59*production; //co2 kg per day
-			pesticide = false;
-			fertilizer = false;
-			GMO = false;
-			satisfaction = 6;
+			pesticideProhibited = false;
+			fertilizerProhibited = false;
+			GMOProhibited = false;
+			satisfaction = 5.1;
 		break;
 		}
 		case 1: { // meat
@@ -156,42 +156,6 @@ double AgriculturalProduction::get_energyuse(){
 }
 double AgriculturalProduction::get_environmentalcost(){
 	return 0;
-}
-void AgriculturalProduction::fertilizer_on(){
-	fertilizer = true;
-}
-void AgriculturalProduction::fertilizer_off(){
-	fertilizer = false;
-}
-void AgriculturalProduction::GMO_on(){
-	GMO = true;
-}
-void AgriculturalProduction::GMO_off(){
-	GMO = false;
-}
-void AgriculturalProduction::pesticide_on(){
-	switch (agricultureType)
-	{
-	case 0: //wheat
-		if (pesticide==false){
-		fertility*=1.15;
-		satisfaction*=0.85;
-	}
-		break;
-	}
-	pesticide = true;
-}
-void AgriculturalProduction::pesticide_off(){
-	switch (agricultureType)
-	{
-	case 0: //wheat
-		if (pesticide==true){
-		fertility/=1.15;
-		satisfaction/=0.85;
-	}
-		break;
-	}
-	pesticide  = false;
 }
 
 
