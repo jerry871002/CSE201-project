@@ -1499,8 +1499,11 @@ double City::return_energySupply() {
     return energySupply;
 }
 
-int City::transport_to_add() {
-    /*
+int City::transport_to_add() { //now the old finction transport_probabilities returns the type of car that is missing the most
+                                //the income might be computed as a gaussian around the average, but that is not sure
+                                //otherwise the generation of a car might take a lot of time - going through 1000 buildings to get the array of incomes
+                                // but we might just be updating the array in the simulation step for every building - it happens for 1 or 2 per frame, so the array isn't exactly real time
+                            /*
 * 0 - electic car
 * 1 - big american car
 * 2 - normal car
