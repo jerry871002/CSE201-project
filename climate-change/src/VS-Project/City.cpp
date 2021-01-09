@@ -110,14 +110,19 @@ we update `day_tick` and execute simulation()
 */
 void City::_physics_process(float delta) {
 
+    (*structures_iterator)->set("updatable", true);
+    ++structures_iterator;
+    if (structures_iterator == all_structures.end()) { structures_iterator = all_structures.begin(); };
+
     if (bool(this->time_speed))
     {
         this->simulation_counter += (double)delta;
         this->date_counter += double(delta) * this->time_speed;
     }
-
+    
     if (simulation_counter > 1)
     {   
+        /*
         (this->rolling_simulation_counter)++;
 
         if (this->rolling_simulation_counter == 0) {
@@ -137,7 +142,7 @@ void City::_physics_process(float delta) {
             this->simulation_transport();
             (this->rolling_simulation_counter) -= 5;
         }
-
+        */
         (this->simulation_counter)--;
     }
 
@@ -572,7 +577,9 @@ void City::_ready()
     //std::cout << "DEBUG: Ready started" << std::endl;
     citysize = 10;
     this->generate_initial_city_graphics();
+    structures_iterator = all_structures.begin();
     this->set_initial_visible_components();
+
 
 }
 

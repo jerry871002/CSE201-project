@@ -129,6 +129,7 @@ namespace godot {
 
         // ARRAYS CONTAINING ALL ACTIVE ELEMENTS
 
+        std::vector<Structure*>::iterator structures_iterator;
         std::vector<Structure*> all_structures;
 
         std::vector<Shop*> all_shops;
