@@ -78,18 +78,13 @@ namespace godot {
 		void agriculture_type(int type);
 		double waterConsumption; // per day 
 		int agricultureType; // 0 - wheat, 1 - meat, 2 - vegetables
-		bool pesticide; // true if pesticides are used
-		bool GMO; // true if GMO is used
-		bool fertilizer; // true if fertilizer is used
 		double requiredLand; //size of the field in km^2
 		double fertility; //per km^2 output in kg
 		double production; //how much output per day in kg
-		void fertilizer_on(); // puts fertilizer to true 
-		void fertilizer_off(); // puts fertilizer to false
-		void GMO_on(); // puts GMO to true 
-		void GMO_off(); // puts GMO to false
-		void pesticide_on(); // puts pesticide to true 
-		void pesticide_off(); // puts pesticide to false
+		// policies
+		double pesticideProhibited; // 0 if pestices are allowed, 1 if pesticides are prohibited
+		double GMOProhibited; // 0 if GMO is allowed, 1 if pesticides GMO prohibited
+		double fertilizerProhibited; // 0 if fertilizers are allowed, 1 if fertilizers are prohibited
 	};
 
 	/// <summary>
