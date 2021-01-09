@@ -238,100 +238,102 @@ void City::generate_initial_city_graphics()
     Vector3 center = Vector3(15.0 * citysize, 0, 15.0 * citysize);
 
 
-    for (int x = 0; x < (citysize/2); x++)
+    for (int x = 0; x < (citysize / 2); x++)
     {
-        for (int z = (int(pow(pow(citysize,2)-pow(x-citysize/2,2),0.5)) - citysize/2)/2; z < (int(pow(pow(citysize, 2) - pow(x - citysize / 2, 2), 0.5)) + citysize / 2)/2; z++)
+        for (int z = 0; z < (citysize / 2); z++)
         {
             Vector3 pos = Vector3(60.0 * x, 0, 60.0 * z);
-            
+
 
             Vector3 bigbuildingpos = pos + Vector3(15.0, 0, 15.0);
             double dist = pow(pow(center.x - bigbuildingpos.x, 2) + pow(center.z - bigbuildingpos.z, 2), 0.5);
 
-            //  probability functions for buildings
-            // calculate building prob takes the first appearance of the building, last appearance of the building, proprtion and distance
-            // values are calibrated for a citysize of 20 but adjusts to any size
-            // maximum possible distance from center is 300
+            if (dist <= citysize * 15.0) {
 
-            std::cout << "DEBUG: about to calculate probability" << std::endl;
-            // 2x2 buildings
-            float mallprob = calculate_building_prob(20, 90, 0.15, dist);
-            float nuclearprob = calculate_building_prob(170, 320, 0.05, dist);
-            float fieldprob = calculate_building_prob(260, 450, 1, dist);
-            float pastureprob = calculate_building_prob(240, 400, 2, dist);
-            float factoryprob = calculate_building_prob(170, 200, 0.01, dist);
+                //  probability functions for buildings
+                // calculate building prob takes the first appearance of the building, last appearance of the building, proprtion and distance
+                // values are calibrated for a citysize of 20 but adjusts to any size
+                // maximum possible distance from center is 300
 
-            std::cout << "DEBUG: distance : " << dist << std::endl;
-            
-            
-            // 1 x 1 buildings
+                std::cout << "DEBUG: about to calculate probability" << std::endl;
+                // 2x2 buildings
+                float mallprob = calculate_building_prob(20, 90, 0.15, dist);
+                float nuclearprob = calculate_building_prob(170, 320, 0.05, dist);
+                float fieldprob = calculate_building_prob(260, 450, 1, dist);
+                float pastureprob = calculate_building_prob(240, 400, 2, dist);
+                float factoryprob = calculate_building_prob(170, 200, 0.01, dist);
 
-            dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), 0.5);
-
-            float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-            float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-            float buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
+                std::cout << "DEBUG: distance : " << dist << std::endl;
 
 
+                // 1 x 1 buildings
 
-            float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
+                dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), 0.5);
 
-            float lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
-            float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
-
-            std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
-            std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
-            std::cout << "DEBUG: restaurantprob  : " << restaurantprob << std::endl;
+                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                float buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
 
 
-            float smallerprob = restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob;
 
-            //std::cout << "DEBUG: About to create a random shop" << std::endl;
+                float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
 
-            std::cout << "DEBUG: done calculate probability" << std::endl;
+                float lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
+                float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
 
-            double bigbuildingmaybe = (double((double)rand()/(double)RAND_MAX) * double((mallprob + nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
-            //std::cout << "DEBUG: Add buildings" << std::endl;
-            if (bigbuildingmaybe < (double)(mallprob)) { std::cout << "DEBUG: Add mall" << std::endl;  add_shop(bigbuildingpos, MallScene); }
-            else if (bigbuildingmaybe < (double)(mallprob + nuclearprob)) { std::cout << "DEBUG: Add NuclearPowerPlantScene" << std::endl;  add_energy(bigbuildingpos, NuclearPowerPlantScene); }
-            else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob)) { std::cout << "DEBUG: Add FieldScene" << std::endl;  add_production(bigbuildingpos, FieldScene); }
-            else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob / 2)) { std::cout << "DEBUG: Add SheepPastureScene" << std::endl;  add_production(bigbuildingpos, SheepPastureScene); }
-            else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob)) { std::cout << "DEBUG: Add PigsPastureScene" << std::endl;  add_production(bigbuildingpos, PigsPastureScene); }
-            else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob)) { std::cout << "DEBUG: Add FactoryScene" << std::endl;  add_production(bigbuildingpos, FactoryScene); }
-            else {
-                //std::cout << "DEBUG: Add else" << std::endl;
-                srand((int)time(0));
-                for (int x1 = 0; x1 < 2; x1++)
-                {
-                    for (int z1 = 0; z1 < 2; z1++) {
+                std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
+                std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
+                std::cout << "DEBUG: restaurantprob  : " << restaurantprob << std::endl;
 
-                        Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-                        double type = (double((double)rand() / (double)RAND_MAX) * double(smallerprob));
 
-                        if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
-                        else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
-                        else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos + pos1, LowHouseScene); }
-                        else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos + pos1, BuildingScene); }
-                        else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos + pos1, WindmillScene); }
-                        else { add_house(pos + pos1, HighHouseScene); }
+                float smallerprob = restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob;
 
-                        int randompdint = rand() % 5;
-                        if (randompdint == 0) {
-                            if (PDScene.is_valid()) {
-                                std::cout << "DEBUG: creating PDscene" << std::endl;
-                                Node* node;
-                                
-                                node = PDScene->instance();
-                                
-                                node->set("scale", Vector3(10, 10, 10));  
-                                node->set("translation", (pos + Vector3(-7,0,-9)));
-                                
-                                this->add_child(node);
+                //std::cout << "DEBUG: About to create a random shop" << std::endl;
+
+                std::cout << "DEBUG: done calculate probability" << std::endl;
+
+                double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
+                //std::cout << "DEBUG: Add buildings" << std::endl;
+                if (bigbuildingmaybe < (double)(mallprob)) { std::cout << "DEBUG: Add mall" << std::endl;  add_shop(bigbuildingpos, MallScene); }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob)) { std::cout << "DEBUG: Add NuclearPowerPlantScene" << std::endl;  add_energy(bigbuildingpos, NuclearPowerPlantScene); }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob)) { std::cout << "DEBUG: Add FieldScene" << std::endl;  add_production(bigbuildingpos, FieldScene); }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob / 2)) { std::cout << "DEBUG: Add SheepPastureScene" << std::endl;  add_production(bigbuildingpos, SheepPastureScene); }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob)) { std::cout << "DEBUG: Add PigsPastureScene" << std::endl;  add_production(bigbuildingpos, PigsPastureScene); }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob)) { std::cout << "DEBUG: Add FactoryScene" << std::endl;  add_production(bigbuildingpos, FactoryScene); }
+                else {
+                    //std::cout << "DEBUG: Add else" << std::endl;
+                    srand((int)time(0));
+                    for (int x1 = 0; x1 < 2; x1++)
+                    {
+                        for (int z1 = 0; z1 < 2; z1++) {
+
+                            Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+                            double type = (double((double)rand() / (double)RAND_MAX) * double(smallerprob));
+
+                            if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
+                            else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos + pos1, LowHouseScene); }
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos + pos1, BuildingScene); }
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos + pos1, WindmillScene); }
+                            else { add_house(pos + pos1, HighHouseScene); }
+
+                            int randompdint = rand() % 5;
+                            if (randompdint == 0) {
+                                if (PDScene.is_valid()) {
+                                    std::cout << "DEBUG: creating PDscene" << std::endl;
+                                    Node* node;
+
+                                    node = PDScene->instance();
+
+                                    node->set("translation", (pos + Vector3(-7, 0, -9)));
+
+                                    this->add_child(node);
+                                }
                             }
-                            }
-                        int randomcarint = rand() % 3;
-                        if (randomcarint == 0) { add_car(pos); }
+                            int randomcarint = rand() % 3;
+                            if (randomcarint == 0) { add_car(pos); }
 
+                        }
                     }
                 }
             }
@@ -649,12 +651,12 @@ void City::add_car(Vector3 pos) {
 
     if (BugattiScene.is_valid() && ChironScene.is_valid() && MotoScene.is_valid())
     {
-        int type = rand() % 4;
+        int type = rand() % 3;
         Node* node;
         switch (type) {
         case 0: node = BugattiScene->instance(); break;
         case 1: node = ChironScene->instance(); break;
-        case 2: node = BusScene->instance(); break;
+        //case 2: node = BusScene->instance(); break;
         default: node = MotoScene->instance(); break;
         }
 
