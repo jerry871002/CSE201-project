@@ -54,11 +54,11 @@ namespace godot {
         * 0 - electic car
         * 1 - big american car
         * 2 - normal car
-        * 3 - old collection car
+        * 3 - old collection car/Bugatti
         * 4 - bike
         * 5 - motorcycle
         * 6 - bus
-        * 7 - sports car
+        * 7 - sports car/Chiron
         */
         int transportType;
 
@@ -80,8 +80,7 @@ namespace godot {
         Vector3 center;
 
         City* myCity = new City();
-        //int traffic[2][3][4][3] = { {{{0, 1, 0},{0, 0, 1},{0, 0, 1},{0, 0, 1}},		{{0, 0, 1},{0, 1, 0},{0, 0, 1},{0, 0, 1}},		{ {0, 1, 1},{0, 1, 1},{0, 0, 1},{0, 0, 1}}},
-        //                            { {{0, 0, 1},{0, 0, 1},{0, 0, 1},{0, 1, 0}}	,		{{0, 0, 1},{0, 0, 1},{1, 1, 0},{0, 1, 1}},		 { {0, 0, 1},{0, 0, 1},{0, 1, 1},{0, 0, 1}}} };
+        
     };
 
     class Pedestrian : public KinematicBody {
