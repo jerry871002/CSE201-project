@@ -83,8 +83,15 @@ void City::_register_methods()
     register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
     register_method((char*)"change_pie_chart", &City::change_pie_chart);
 
-
+    
     register_method((char*)"add_shop", &City::add_shop);
+    register_method((char*)"add_energy", &City::add_energy);
+    register_method((char*)"add_house", &City::add_house);
+    register_method((char*)"add_production", &City::add_production);
+
+    register_method((char*)"update_traffic", &City::update_traffic);
+    register_method((char*)"traffic_preparation", &City::traffic_preparation);
+
 
     register_property<City, float>("time_speed", &City::time_speed, 1.0);
     register_property<City, int>("day_tick", &City::day_tick, 0);
@@ -725,36 +732,9 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
         //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
         //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
         //std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
-        if (x < sizeOfCity && y < sizeOfCity) {
-            if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
-                positionOfBuildings[int(x)][int(y)] = 1;
-            }
-            else {
-                positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
-                positionOfBuildings[int(x) + 1][int(y)] = 3;
-                positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
-                positionOfBuildings[int(x)][int(y) + 1] = 5;
-            }
-            //std::cout << "DEBUG: call the function update traffic" << std::endl;
-            update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
-
-            //for (int k = 0; k < 4; k++) {
-            //  std::cout << "start :" << x << " " << y << " " << traffic[int(x)][int(y)][0][0] << " " << traffic[int(x)][int(y)][k][1] << " " << traffic[int(x)][int(y)][k][2] << " " << std::endl;
-            //}
-
-            //for(int i = 0; i < 10; i++){
-            //  for (int j = 0; j < 10; j++) {
-            //      for (int k = 0; k < 4; k++) {
-            //              std::cout << "start :" << x << " " << y << traffic[i][j][k][0] << '   ' << traffic[i][j][k][1] << '   ' << traffic[i][j][k][2] << '  ' << std::endl;
-            //      }
-            //  }
-            //}
-
-        //std::cout << std::endl;
-        }
+        traffic_preparation(x, y);
     }
 }
-
 
 void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 
@@ -787,37 +767,10 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
         //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
        // std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
-        if (x < sizeOfCity && y < sizeOfCity) {
-            if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
-                positionOfBuildings[int(x)][int(y)] = 1;
-            }
-            else {
-                positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
-                positionOfBuildings[int(x) + 1][int(y)] = 3;
-                positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
-                positionOfBuildings[int(x)][int(y) + 1] = 5;
-            }
-            //std::cout << "DEBUG: call the function update traffic" << std::endl;
-            update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
-
-            //for (int k = 0; k < 4; k++) {
-            //  std::cout << "start :" << x << " " << y << " " << traffic[int(x)][int(y)][0][0] << " " << traffic[int(x)][int(y)][k][1] << " " << traffic[int(x)][int(y)][k][2] << " " << std::endl;
-            //}
-
-            //for(int i = 0; i < 10; i++){
-            //  for (int j = 0; j < 10; j++) {
-            //      for (int k = 0; k < 4; k++) {
-            //              std::cout << "start :" << x << " " << y << traffic[i][j][k][0] << '   ' << traffic[i][j][k][1] << '   ' << traffic[i][j][k][2] << '  ' << std::endl;
-            //      }
-            //  }
-            //}
-
-            //std::cout << std::endl;
-        }
+        traffic_preparation(x, y);
         //std::cout << "DEBUG: add house done" << std::endl;
     }
 }
-
 
 void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
 
@@ -850,37 +803,10 @@ void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
         //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
         //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
        // std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
-        if (x < sizeOfCity && y < sizeOfCity) {
-            if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
-                positionOfBuildings[int(x)][int(y)] = 1;
-            }
-            else {
-                positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
-                positionOfBuildings[int(x) + 1][int(y)] = 3;
-                positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
-                positionOfBuildings[int(x)][int(y) + 1] = 5;
-            }
-            //std::cout << "DEBUG: call the function update traffic" << std::endl;
-            update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
-
-            //for (int k = 0; k < 4; k++) {
-            //  std::cout << "start :" << x << " " << y << " " << traffic[int(x)][int(y)][0][0] << " " << traffic[int(x)][int(y)][k][1] << " " << traffic[int(x)][int(y)][k][2] << " " << std::endl;
-            //}
-
-            //for(int i = 0; i < 10; i++){
-            //  for (int j = 0; j < 10; j++) {
-            //      for (int k = 0; k < 4; k++) {
-            //              std::cout << "start :" << x << " " << y << traffic[i][j][k][0] << '   ' << traffic[i][j][k][1] << '   ' << traffic[i][j][k][2] << '  ' << std::endl;
-            //      }
-            //  }
-            //}
-
-            //std::cout << std::endl;
-        }
+        traffic_preparation(x, y);
         //std::cout << "DEBUG: add energy done" << std::endl;
     }
 }
-
 
 void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
 
@@ -914,66 +840,28 @@ void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
         //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
         //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
         //std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
-        if (x < sizeOfCity && y < sizeOfCity) {
-            if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
-                positionOfBuildings[int(x)][int(y)] = 1;
-                //std::cout << " SMALL BUILDING CREATED" << std::endl;
-            }
-            else {
-                positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
-                positionOfBuildings[int(x) + 1][int(y)] = 3;
-                positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
-                positionOfBuildings[int(x)][int(y) + 1] = 5;
-            }
-            //std::cout << "DEBUG: call the function update traffic" << std::endl;
-            update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
-
-            //for (int k = 0; k < 4; k++) {
-            //  std::cout << "start :" << x << " " << y << " " << traffic[int(x)][int(y)][0][0] << " " << traffic[int(x)][int(y)][k][1] << " " << traffic[int(x)][int(y)][k][2] << " " << std::endl;
-            //}
-
-            //for(int i = 0; i < 10; i++){
-            //  for (int j = 0; j < 10; j++) {
-            //      for (int k = 0; k < 4; k++) {
-            //              std::cout << "start :" << x << " " << y << traffic[i][j][k][0] << '   ' << traffic[i][j][k][1] << '   ' << traffic[i][j][k][2] << '  ' << std::endl;
-            //      }
-            //  }
-            //}
-
-            //std::cout << std::endl;
-        }
+        traffic_preparation(x, y);
         //std::cout << "DEBUG: add production done" << std::endl;
     }
 }
 
-
-
-/*
-int* City::building_coordinates_identification(int x, int y, int number) {
-    //returns coordinates of a center for the upper left square of any buiding
-    if (number == 1) {
-        int a[] = { x, y };
-        return a; // LOCAL VARIABLE NEEDS FIXING - SEE WARNING MESSAGE
+void City::traffic_preparation(double x, double y) {
+    if (x < sizeOfCity && y < sizeOfCity) {
+        if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
+            positionOfBuildings[int(x)][int(y)] = 1;
+            //std::cout << " SMALL BUILDING CREATED" << std::endl;
+        }
+        else {
+            positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
+            positionOfBuildings[int(x) + 1][int(y)] = 3;
+            positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
+            positionOfBuildings[int(x)][int(y) + 1] = 5;
+        }
+        //std::cout << "DEBUG: call the function update traffic" << std::endl;
+        update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
     }
-    if (number == 2) {
-        int a[] = { x , y };
-        return a;
-    }
-    if (number == 3) {
-        int a[] = { x - 1, y };
-        return a;
-    }
-    if (number == 4) {
-        int a[] = { x - 1, y - 1 };
-        return a;
-    }
-    if (number == 5) {
-        int a[] = { x , y - 1 };
-        return a;
-    }
-    return NULL;
 }
-*/
+
 void City::update_traffic(int x, int y, bool newBuilding, int number) {
     //std::cout << "DEBUG: UPDATE TRAFFIC STARTED for coordinates" << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
     if (positionOfBuildings[x][y] != 0) { // nothing happens if the building isn't there
@@ -1616,8 +1504,20 @@ void City::transport_probabilities() {
 * 6 - bus
 * 7 - sports car
 */
-    double satisfactions[8] = { 9.7, 8.5,6.8, 9.3, 9, 7, 8, 9.5 };
-    double satisfactionsSum = 67.8;
+	Transport electicCar = Transport(0);
+	Transport bigCar = Transport(1);
+	Transport car = Transport(2);
+	Transport collectionCar = Transport(3);
+	Transport bike = Transport(4);
+	Transport motorcycle = Transport(5);
+	Transport bus = Transport(6);
+	Transport sportsCar = Transport(7);
+
+    double satisfactions[8] = { electicCar.satisfaction, bigCar.satisfaction, car.satisfaction, collectionCar.satisfaction, bike.satisfaction, motorcycle.satisfaction, bus.satisfaction, sportsCar.satisfaction };
+    double satisfactionsSum = 0;
+	for (int i =0 ;i<8;i++){
+		satisfactionsSum += satisfactions[i];
+	}
     double alpha[8];
     for (int i = 0; i < 8; i++) {
         alpha[i] = satisfactions[i] / satisfactionsSum * incomesLen;
@@ -1625,20 +1525,17 @@ void City::transport_probabilities() {
             alpha[i] *= sqrt(airQuality);
         }
     }
-    double lifetimes[8] = { 15, 10, 15, 20, 20, 12, 10, 10 };
-    double capacities[8] = { 5, 8, 4, 2, 1, 1, 45, 2 };
-    double costs[8] = { 42000, 85000, 14000,40000, 370, 6200, 262500, 52000 };
-    double pricesPerMonth[8];
+    double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
+    double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth, car.pricePerMonth,collectionCar.pricePerMonth, bike.pricePerMonth, motorcycle.pricePerMonth, bus.pricePerMonth/(bus.capacity*bus.occupancyRate), sportsCar.pricePerMonth};
     double probabilities[8];
     double quantities[8] = { 0,0,0,0,0,0,0,0 };
     double alphaSum = 0;
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
     }
-    for (int i = 0; i < 8; i++) {
-        pricesPerMonth[i] = costs[i] / (12 * lifetimes[i]);
-        alpha[i] = 0.01 * alpha[i] / alphaSum;
-    }
+	for (int i = 0;i<8; i++){
+   		alpha[i] =0.01*alpha[i]/alphaSum;
+	}
     alphaSum = 0;
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
@@ -1664,9 +1561,6 @@ void City::transport_probabilities() {
         }
         quantities[maxIndex] += 1;
     }
-    for (int i = 0; i < 8; i++) {
-        quantities[i] /= capacities[i];
-    }
     double quantitiesSum = 0;
     for (int i = 0; i < 8; i++) {
         quantitiesSum += quantities[i];
@@ -1679,7 +1573,6 @@ void City::transport_probabilities() {
     probabilityMotorcycle = quantities[5] / quantitiesSum;
     probabilityBus = quantities[6] / quantitiesSum;
     probabilitySportsCar = quantities[7] / quantitiesSum;
-
 }
 
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
