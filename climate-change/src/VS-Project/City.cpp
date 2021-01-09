@@ -725,7 +725,7 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
         //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
         //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
         //std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
-        traffic_preporation(x, y);
+        traffic_preparation(x, y);
     }
 }
 
@@ -760,7 +760,7 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
         //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
        // std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
-        traffic_preporation(x, y);
+        traffic_preparation(x, y);
         //std::cout << "DEBUG: add house done" << std::endl;
     }
 }
@@ -796,7 +796,7 @@ void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
         //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
         //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
        // std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
-        traffic_preporation(x, y);
+        traffic_preparation(x, y);
         //std::cout << "DEBUG: add energy done" << std::endl;
     }
 }
@@ -833,12 +833,12 @@ void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
         //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
         //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
         //std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
-        traffic_preporation(x, y);
+        traffic_preparation(x, y);
         //std::cout << "DEBUG: add production done" << std::endl;
     }
 }
 
-void City::traffic_preporation(double x, double y) {
+void City::traffic_preparation(double x, double y) {
     if (x < sizeOfCity && y < sizeOfCity) {
         if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
             positionOfBuildings[int(x)][int(y)] = 1;
