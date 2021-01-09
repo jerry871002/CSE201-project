@@ -86,7 +86,7 @@ script = ExtResource( 4 )
 transform = Transform( 1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 0, 0 )
 environment = ExtResource( 2 )
 fov = 35.0
-far = 500.0
+far = 550.0
 
 [node name="CollisionShape" type="CollisionShape" parent="3Dworld/Player"]
 transform = Transform( 1, 0, 0, 0, 0.905702, -0.423915, 0, 0.423915, 0.905702, -1.5638, -0.58039, -6.59145 )

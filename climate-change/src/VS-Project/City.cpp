@@ -570,7 +570,7 @@ void City::_ready()
 {
 
     //std::cout << "DEBUG: Ready started" << std::endl;
-    citysize = 50;
+    citysize = 10;
     this->generate_initial_city_graphics();
     this->set_initial_visible_components();
 

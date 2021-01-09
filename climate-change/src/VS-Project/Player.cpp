@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "City.h"
 #include <Math.hpp>
+#include <Range.hpp>
 #include <GodotGlobal.hpp>
 #include <Math.hpp>
 #include <SceneTree.hpp>
@@ -61,6 +62,14 @@ void Player::_process(float delta)
 {
 	if (movable) { UpdateMotionFromInput(delta); }
 
+	Vector3 position = this->get("translation");
+	if (position.y > MaxHeight) {
+		this->set("translation", Vector3(position.x, MaxHeight, position.z));
+	}
+	else if (position.y < MinHeight) {
+		this->set("translation", Vector3(position.x, MinHeight, position.z));
+	}
+
 	WorldEnvironment* worldEnv = (WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment"));
 	worldEnv->get_environment()->set_dof_blur_far_distance(2 * (this->get_global_transform().get_origin().y));
 	worldEnv->get_environment()->set_dof_blur_far_amount(0.1 * pow(((MaxHeight - this->get_global_transform().get_origin().y) / (MaxHeight - MinHeight)), 0.2));
@@ -82,7 +91,7 @@ void Player::_process(float delta)
 
 void Player::_physics_process(float delta)
 {
-
+	
 }
 
 void Player::_input(InputEvent* e)
@@ -134,10 +143,10 @@ void Player::UpdateMotionFromInput(float delta)
 	// VERTICAL MOTION
 
 	if (i->is_action_pressed("ui_vup")) {
-		if (this->get_global_transform().get_origin().y <= MaxHeight) { motion.y += SPEED_T; }
+		if (this->get_global_transform().get_origin().y <= MaxHeight - 10) { motion.y += SPEED_T; }
 	}
 	else if (i->is_action_pressed("ui_vdown")) {
-		if (this->get_global_transform().get_origin().y >= MinHeight) { motion.y -= SPEED_T; }
+		if (this->get_global_transform().get_origin().y >= MinHeight + 10) { motion.y -= SPEED_T; }
 	}
 
 	// PLANAR MOTION
@@ -183,22 +192,22 @@ void Player::UpdateRotationFromInput(InputEventMouseMotion* e) {
 	if (i->get_mouse_mode() == i->MOUSE_MODE_CAPTURED)		// CHANGE PLAYER ROTATION ONLY IF MOUSE IS CAPTURED
 	{
 		// LOOK LEFT/RIGHT
-		rotation.y -= rot.x * (SPEED_R / 360);				//Must depends on the screen size to avoid slower rotation on high def screens
+		rotation.y -= rot.x * (SPEED_R / 512);				//Must depends on the screen size to avoid slower rotation on high def screens
 
 		// ZOOM-IN MOTION 
 		if (rot.y <= 0) {
-			if (this->get_global_transform().get_origin().y <= MaxHeight)	// Set maximum height
+			if (this->get_global_transform().get_origin().y <= MaxHeight - 10)	// Set maximum height
 			{
-				motion.z -= (rot.y * cos(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
-				motion.y -= (rot.y * sin(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
+				motion.z -= (rot.y * cos((MaxCameraAngle + MinCameraAngle) * (M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
+				motion.y -= (rot.y * sin((MaxCameraAngle + MinCameraAngle) * (M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
 			}
 		}
 		else {
 			// Set minimum height
-			if (this->get_global_transform().get_origin().y >= MinHeight)
+			if (this->get_global_transform().get_origin().y >= MinHeight + 10)
 			{
-				motion.z -= (rot.y * cos(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
-				motion.y -= (rot.y * sin(CameraAngleDeg * (2 * M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
+				motion.z -= (rot.y * cos((MaxCameraAngle + MinCameraAngle) * (M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
+				motion.y -= (rot.y * sin((MaxCameraAngle + MinCameraAngle) * (M_PI) / 180)) / (VSPEED_INVERSE / pow(this->get_global_transform().get_origin().y - MinHeight / 2, VSPEED_POWER));
 			}
 		}
 	}

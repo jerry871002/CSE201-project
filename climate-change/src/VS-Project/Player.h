@@ -22,12 +22,12 @@ namespace godot {
 		const double VSPEED_INVERSE = 512;
 		const double VSPEED_POWER = 1.2;
 
-		const double MaxCameraAngle{ 45 };
+		const double MaxCameraAngle{ 50 };
 		const double MinCameraAngle{ 20 };
 		double CameraAngleDeg;
 		const Vector3 StartPosition{ Vector3(200, 100, 200) };
 		const Vector3 StartRotation{ Vector3(0, 0, 0) };
-		const double MaxHeight{ 250 };
+		const double MaxHeight{ 300 };
 		const double MinHeight{ 20 };
 		void update_camera_angle();
 
