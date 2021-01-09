@@ -129,6 +129,9 @@ namespace godot {
 
         // ARRAYS CONTAINING ALL ACTIVE ELEMENTS
 
+        std::vector<Structure*>::iterator structures_iterator;
+        std::vector<Structure*> all_structures;
+
         std::vector<Shop*> all_shops;
         std::vector<Housing*> all_houses;
         std::vector<Energy*> all_energies;
@@ -144,6 +147,7 @@ namespace godot {
         String get_button_info_text();
 
         void add_car();
+        void add_car(Vector3);
 
         void write_stat_history_to_file();    //writes all the stats to a file so that the interface team can make graphs 
 
@@ -222,5 +226,11 @@ namespace godot {
         const Ref<PackedScene> SheepPastureScene = ResourceLoader::get_singleton()->load("res://Resources/PastureSheeps.tscn", "PackedScene");
         const Ref<PackedScene> FieldScene = ResourceLoader::get_singleton()->load("res://Resources/Field.tscn", "PackedScene");
         const Ref<PackedScene> BuildingScene = ResourceLoader::get_singleton()->load("res://Resources/Building.tscn", "PackedScene");
+
+
+
+        const Ref<PackedScene> PDScene = ResourceLoader::get_singleton()->load("res://Resources/Pedestrian.tscn", "PackedScene");
+
+
     };
 }

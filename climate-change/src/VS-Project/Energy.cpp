@@ -248,7 +248,7 @@ void Windmill::_process(float delta)
 {
 	this->Structure::_process(delta);
 	rot -= delta * turnSpeed * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"));
-	(this->get_node("MeshComponents/Blades"))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
+	((Mesh*)this->get_node("MeshComponents/Blades"))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
 }
 
 void Windmill::simulate_step(double days)
