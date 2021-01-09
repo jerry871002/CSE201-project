@@ -847,6 +847,7 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
         this->add_child(node);
         //std::cout << "DEBUG: add shop to vector" << std::endl;
         all_shops.push_back((Shop*)node);
+        all_structures.push_back((Structure*)node);
 
         //std::cout << "DEBUG: traffic stuff called" << std::endl;
 
@@ -909,7 +910,7 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         this->add_child(node);
         //std::cout << "DEBUG: add house to vector" << std::endl;
         all_houses.push_back((Housing*)node);
-
+        all_structures.push_back((Structure*)node);
 
 
         // traffic stuff
@@ -972,7 +973,7 @@ void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
         this->add_child(node);
         //std::cout << "DEBUG: add shop to vector" << std::endl;
         all_energies.push_back((Energy*)node);
-
+        all_structures.push_back((Structure*)node);
 
         //std::cout << "DEBUG: traffic stuff called" << std::endl;
         // traffic stuff
@@ -1035,7 +1036,7 @@ void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
         this->add_child(node);
         //std::cout << "DEBUG: add shop to vector" << std::endl;
         all_production.push_back((Production*)node);
-
+        all_structures.push_back((Structure*)node);
 
 
 
