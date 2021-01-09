@@ -12,7 +12,7 @@ namespace godot {
         GODOT_CLASS(Transport, KinematicBody)
     public:
         Transport();
-        Transport(int type);
+
         void transport_type();
 
         // godot functions
@@ -46,8 +46,6 @@ namespace godot {
 		double get_co2emissions();
 		double get_energyuse();
 		double get_environmentalcost();
-        double lifetime; //in years
-        double pricePerMonth; // in euros
 
         /*
         * 0 - electic car
@@ -62,16 +60,7 @@ namespace godot {
         void set_transportType(int type);
         int get_transportType();
 
-        /*
-        * 0 - electic car
-        * 1 - big american car
-        * 2 - normal car
-        * 3 - old collection car
-        * 4 - bike
-        * 5 - motorcycle
-        * 6 - bus
-        * 7 - sports car
-        */
+
         int transportType;
 
     private:
