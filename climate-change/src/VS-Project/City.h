@@ -126,7 +126,8 @@ namespace godot {
 
         //int* building_coordinates_identification(int x, int y, int number);//returns coordinates of a center for the upper left square of any buiding  
         void update_traffic(int x, int y, bool newBuilding, int number);// updates the traffic array 
-        void traffic_preporation(double x, double y);
+        void traffic_preparation(double x, double y); // identifies  if the building is 2x2 or 1x1 and calls the update_traffic function
+        
         // ARRAYS CONTAINING ALL ACTIVE ELEMENTS
 
         std::vector<Structure*>::iterator structures_iterator;
