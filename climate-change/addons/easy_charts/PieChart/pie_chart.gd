@@ -68,7 +68,7 @@ func _get_property_list():
 		},
 		{
 			"hint": PROPERTY_HINT_ENUM,
-			"hint_string": PoolStringArray(TemplatesNames.keys()).join(","),
+			"hint_string": PoolStringArray(Utilities.templates.keys()).join(","),
 			"usage": PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE,
 			"name": "Chart_Style/template",
 			"type": TYPE_INT
@@ -109,14 +109,14 @@ func plot_placeholder() -> void:
 	plot_from_array(datas)
 
 func structure_datas(database: Array, are_values_columns: bool, x_values_index: int):
-	# @x_values_index can be either a column or a row relative to x values
+	# @labels_index can be either a column or a row relative to x values
 	clean_variables()
-	self.are_values_columns = are_values_columns
+	are_values_columns = invert_chart != are_values_columns
 	if are_values_columns:
 		for row in database.size():
 			var t_vals: Array
 			for column in database[row].size():
-				if column == x_values_index:
+				if column == labels_index:
 					var x_data = database[row][column]
 					if x_data.is_valid_float() or x_data.is_valid_integer():
 						x_datas.append(x_data as float)
@@ -136,7 +136,7 @@ func structure_datas(database: Array, are_values_columns: bool, x_values_index: 
 		x_label = str(x_datas.pop_front())
 	else:
 		for row in database.size():
-			if row == x_values_index:
+			if row == labels_index:
 				x_datas = (database[row])
 				x_label = x_datas.pop_front() as String
 			else:
@@ -210,7 +210,7 @@ func _draw_areas():
 var mouse_on_area : int
 var mouse_on_slice : bool = false
 
-func _input(event):
+func _gui_input(event : InputEvent):
 	if event is InputEventMouseMotion:
 		for area_idx in range(areas.size()):
 			if Geometry.is_point_in_polygon(event.global_position - get_global_transform().origin, areas[area_idx]):
@@ -224,3 +224,4 @@ func _input(event):
 			mouse_on_slice = false
 			hide_data()
 			update()
+			

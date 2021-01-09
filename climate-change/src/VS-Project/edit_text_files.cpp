@@ -1,5 +1,11 @@
-/*
-#include "edit_text_files.h"
+
+//#include "edit_text_files.h"
+
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <stdio.h>
 
 using namespace std;
 
@@ -20,6 +26,15 @@ void add_data(string documentName, string year, string value) {
     string path = get_path(documentName);
     file.open(path, ios::out | ios::app);
     file << year << ";" << value << '\n';
+    file.close();
+}
+
+void add_data3(string documentName, string year, string value1, string value2, string value3)
+{
+    fstream file;
+    string path = get_path(documentName);
+    file.open(path, ios::out | ios::app);
+    file << year << ";" << value1 << ";" << value2 << ";" << value3 << '\n';
     file.close();
 }
 
@@ -224,11 +239,11 @@ string return_game_date(int day_tick) {
     
 	return date;
 }
-
 */
 
 
-/*
+
+
 //uncomment to run
 int main() {
     // More examples on how to use the above functions:
@@ -236,12 +251,12 @@ int main() {
     //clear("datas");
     //change_data("datas", "2010", "37001");
     //copy("pollution", "tmp");
-    //add_data("datas", "2015", "76");
+    //add_data3("datas", "2015", "76", "54", "47");
     //delete_line("datas", "2010");
     //clear_completely("datas");
 
 
-
+    /*
     
     double stat = 0;
     int day_tick = 0;
@@ -291,7 +306,8 @@ int main() {
         delete_line("statsyear" + to_string(year), return_string_date(daydaysbef,monthdaysbef,yeardaysbef));
         
     }
+
+    */
     
 }
 
-*/

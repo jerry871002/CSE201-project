@@ -189,6 +189,9 @@ namespace godot {
         int totalSatisfaction;
         int totalCo2Emissions;
 
+
+        double budget; //yearly budget that can be used t proomote the policies
+                       // updated in the undate_time function
         int citysize;
         //probability that a certain type of car will be added
         double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
