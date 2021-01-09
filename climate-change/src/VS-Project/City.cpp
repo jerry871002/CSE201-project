@@ -310,29 +310,44 @@ void City::generate_initial_city_graphics()
                             Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
                             double type = (double((double)rand() / (double)RAND_MAX) * double(smallerprob));
 
-                            if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
-                            else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos + pos1, LowHouseScene); }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos + pos1, BuildingScene); }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos + pos1, WindmillScene); }
-                            else { add_house(pos + pos1, HighHouseScene); }
+                            dist = pow(pow(center.x - pos.x - pos1.x, 2) + pow(center.z - pos.z-pos1.z, 2), 0.5);
 
-                            int randompdint = rand() % 5;
-                            if (randompdint == 0) {
-                                if (PDScene.is_valid()) {
-                                    std::cout << "DEBUG: creating PDscene" << std::endl;
-                                    Node* node;
+                            if (dist <= 300) {
+                                restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                                shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                                buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
 
-                                    node = PDScene->instance();
 
-                                    node->set("translation", (pos + Vector3(-7, 0, -9)));
 
-                                    this->add_child(node);
+                                windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
+
+                                lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
+                                highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
+
+                                if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
+                                else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
+                                else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos + pos1, LowHouseScene); }
+                                else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos + pos1, BuildingScene); }
+                                else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos + pos1, WindmillScene); }
+                                else { add_house(pos + pos1, HighHouseScene); }
+
+
+                                int randompdint = rand() % 5;
+                                if (randompdint == 0) {
+                                    if (PDScene.is_valid()) {
+                                        std::cout << "DEBUG: creating PDscene" << std::endl;
+                                        Node* node;
+
+                                        node = PDScene->instance();
+
+                                        node->set("translation", (pos + pos1+ Vector3(-7, 0, -9)));
+
+                                        this->add_child(node);
+                                    }
                                 }
+                                int randomcarint = rand() % 3;
+                                if (randomcarint == 0) { add_car(pos + pos1); }
                             }
-                            int randomcarint = rand() % 3;
-                            if (randomcarint == 0) { add_car(pos); }
-
                         }
                     }
                 }
@@ -1053,13 +1068,13 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
             if (x + 2 < sizeOfCity && y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 2] == 1 || positionOfBuildings[x + 2][y + 2] == 2 || positionOfBuildings[x + 2][y + 2] == 3)) {
                 traffic_system[x + 1][y + 1][3][0] = 1;
             }
-            if (y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 3 || positionOfBuildings[x + 2][y] == 4)) {
+            if (y + 2 < sizeOfCity && (positionOfBuildings[x + 1][y + 2] == 1 || positionOfBuildings[x + 1][y + 2] == 3 || positionOfBuildings[x + 1][y +2] == 4)) {
                 traffic_system[x + 1][y + 1][3][1] = 1;
             }
-
-            traffic_system[x + 1][y][2][1] = 1;
+            
+            traffic_system[x + 1][y + 1][2][1] = 1;
             if (y + 2 < sizeOfCity && (positionOfBuildings[x][y + 2] == 1 || positionOfBuildings[x][y + 2] == 3 || positionOfBuildings[x][y + 2] == 4)) {
-                traffic_system[x + 1][y][2][0] = 1;
+                traffic_system[x + 1][y + 1][2][0] = 1;
             }
 
             traffic_system[x][y + 1][2][2] = 1;
