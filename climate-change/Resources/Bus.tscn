@@ -251,13 +251,13 @@ script = ExtResource( 2 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="LODSpatial"]
 transform = Transform( 0.2506, 0, 0, 0, -2.18791e-08, -0.2506, 0, 0.183535, -2.98738e-08, 0.268904, 0.044209, -0.0763413 )
-visible = false
 mesh = SubResource( 4 )
 material/0 = null
 material/1 = null
 
 [node name="Mesh-lod1" type="MeshInstance" parent="LODSpatial"]
 transform = Transform( 0.2506, 0, 0, 0, -2.62549e-08, -0.2506, 0, 0.220242, -2.98738e-08, 0.268904, 0.044209, -0.0763412 )
+visible = false
 mesh = SubResource( 5 )
 material/0 = null
 
@@ -266,13 +266,13 @@ script = ExtResource( 2 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="LODSpatial2"]
 transform = Transform( 0.2506, 0, 0, 0, -2.18791e-08, -0.2506, 0, 0.183535, -2.98738e-08, 0.268904, 0.044209, 0.0763413 )
-visible = false
 mesh = SubResource( 3 )
 material/0 = null
 material/1 = null
 
 [node name="Mesh-lod1" type="MeshInstance" parent="LODSpatial2"]
 transform = Transform( 0.2506, 0, 0, 0, -2.62549e-08, -0.2506, 0, 0.220242, -2.98738e-08, 0.268904, 0.044209, 0.0763413 )
+visible = false
 mesh = SubResource( 6 )
 material/0 = null
 
@@ -281,13 +281,13 @@ script = ExtResource( 2 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="LODSpatial3"]
 transform = Transform( 0.2506, 0, 0, 0, -2.18791e-08, -0.2506, 0, 0.183535, -2.98738e-08, -0.0246897, 0.044209, 0.0763022 )
-visible = false
 mesh = SubResource( 2 )
 material/0 = null
 material/1 = null
 
 [node name="Mesh-lod1" type="MeshInstance" parent="LODSpatial3"]
 transform = Transform( 0.2506, 0, 0, 0, -2.18791e-08, -0.2506, 0, 0.183535, -2.98738e-08, -0.0246897, 0.044209, 0.0763023 )
+visible = false
 mesh = SubResource( 7 )
 material/0 = null
 
@@ -296,7 +296,6 @@ script = ExtResource( 2 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="LODSpatial4"]
 transform = Transform( 0.261328, 0, 0, 0, 0.261328, 0, 0, 0, 0.222242, 0.105609, 0.0183111, 0 )
-visible = false
 mesh = SubResource( 1 )
 material/0 = null
 material/1 = null
@@ -306,6 +305,7 @@ material/4 = null
 
 [node name="Mesh-lod1" type="MeshInstance" parent="LODSpatial4"]
 transform = Transform( 0.261328, 0, 0, 0, 0.261328, 0, 0, 0, 0.222242, 0.105609, 0.0183111, 0 )
+visible = false
 mesh = SubResource( 8 )
 material/0 = null
 material/1 = null
