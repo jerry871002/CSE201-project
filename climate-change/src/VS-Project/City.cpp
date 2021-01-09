@@ -14,6 +14,7 @@
 #include <HSlider.hpp>
 #include <TextureProgress.hpp>
 #include <Color.hpp>
+#include <Label.hpp>
 
 #include <PoolArrays.hpp>
 
@@ -43,7 +44,6 @@ City::City() {
     energySupply = 0;
     environmentalCost = 0;
     totalSatisfaction = 10;
-    totalCo2Emissions = 10;
 
     time_speed = 1;
 
@@ -784,8 +784,13 @@ void City::_on_Game_Speed_changed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
-    change_pie_chart(time_speed, "PieSatisfaction", true);
-    change_pie_chart(time_speed, "PieCO2", false);
+    change_pie_chart(totalSatisfaction, "PieSatisfaction", true);
+    change_pie_chart(carbonEmission, "PieCO2", false);
+	change_pie_chart(income, "PieIncome", true);
+    change_pie_chart(numberOfEmployees, "PieEmployees", true);
+    change_pie_chart(energySupply, "PiePowerSupply", false);
+    change_pie_chart(energyDemand, "PiePowerDemand", false);
+
 }
 
 
@@ -1809,20 +1814,27 @@ void City::transport_probabilities() {
 
 }
 
-
+// auxiliary function to be able to have values between 1 and 100 in the pie charts
+int City::value_pie_chart(int value) {
+	int newvalue = 100*(1-(1/value+1));
+	return newvalue;
+}
 
 void City::change_pie_chart(int value, NodePath name, bool isPositive)
 {
     TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
+	Label* label = ((Label*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name)->get_child(1));
+
 
     if (isPositive) {
-        node->set_tint_progress(Color(min((double)value / 5, 1.0), min(2 - (double)value / 5, 1.0), 0, 1.0));
+        node->set_tint_progress(Color(min((double)value_pie_chart(value) / 5, 1.0), min(2 - (double)value_pie_chart(value) / 5, 1.0), 0, 1.0));
         std::cout << "DEBUG: VALUE PIE CHARTS= " << value << "     " << min((double)value / 5, 1.0) << std::endl;
     }
     else {
-        node->set_tint_progress(Color(min(2 - (double)value / 5, 1.0), min((double)value / 5, 1.0), 0, 1.0));
+        node->set_tint_progress(Color(min(2 - (double)value_pie_chart(value) / 5, 1.0), min((double)value_pie_chart(value) / 5, 1.0), 0, 1.0));
     }
-    node->set("value", value);
+    node->set("value", value_pie_chart(value));
+	label->set("text", value);
 }
 
 

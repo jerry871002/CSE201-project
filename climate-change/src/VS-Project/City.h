@@ -156,6 +156,7 @@ namespace godot {
         double return_energySupply();
         double return_environmentalCost();
         double return_totalSatisfaction();
+		int value_pie_chart(int);
 
         float calculate_building_prob(float, float, float, double);
 
@@ -187,7 +188,6 @@ namespace godot {
         double energySupply;
         double environmentalCost;
         int totalSatisfaction;
-        int totalCo2Emissions;
 
 
         double budget; //yearly budget that can be used t proomote the policies
