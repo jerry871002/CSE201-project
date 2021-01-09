@@ -1053,13 +1053,13 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
             if (x + 2 < sizeOfCity && y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 2] == 1 || positionOfBuildings[x + 2][y + 2] == 2 || positionOfBuildings[x + 2][y + 2] == 3)) {
                 traffic_system[x + 1][y + 1][3][0] = 1;
             }
-            if (y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 3 || positionOfBuildings[x + 2][y] == 4)) {
+            if (y + 2 < sizeOfCity && (positionOfBuildings[x + 1][y + 2] == 1 || positionOfBuildings[x + 1][y + 2] == 3 || positionOfBuildings[x + 1][y +2] == 4)) {
                 traffic_system[x + 1][y + 1][3][1] = 1;
             }
-
-            traffic_system[x + 1][y][2][1] = 1;
+            
+            traffic_system[x + 1][y + 1][2][1] = 1;
             if (y + 2 < sizeOfCity && (positionOfBuildings[x][y + 2] == 1 || positionOfBuildings[x][y + 2] == 3 || positionOfBuildings[x][y + 2] == 4)) {
-                traffic_system[x + 1][y][2][0] = 1;
+                traffic_system[x + 1][y + 1][2][0] = 1;
             }
 
             traffic_system[x][y + 1][2][2] = 1;
