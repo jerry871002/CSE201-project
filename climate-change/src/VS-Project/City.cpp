@@ -1046,11 +1046,22 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
             if (number == 5) {
                 y = y - 1;
             }
+
+
+            //left top
+            traffic_system[x][y][1][2] = 1;
+            if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
+                traffic_system[x][y][1][0] = 1;
+            }
+            if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
+                traffic_system[x][y][1][1] = 1;
+            }
             traffic_system[x][y][0][1] = 1;
             if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
                 traffic_system[x][y][0][0] = 1;
             }
 
+            //right top
             traffic_system[x + 1][y][0][2] = 1;
             if (x + 2 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 2][y - 1] == 1 || positionOfBuildings[x + 2][y - 1] == 2 || positionOfBuildings[x + 2][y - 1] == 5)) {
                 traffic_system[x + 1][y][0][0] = 1;
@@ -1064,19 +1075,21 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
                 traffic_system[x + 1][y][3][0] = 1;
             }
 
+            //right bottom
             traffic_system[x + 1][y + 1][3][2] = 1;
             if (x + 2 < sizeOfCity && y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 2] == 1 || positionOfBuildings[x + 2][y + 2] == 2 || positionOfBuildings[x + 2][y + 2] == 3)) {
                 traffic_system[x + 1][y + 1][3][0] = 1;
             }
-            if (y + 2 < sizeOfCity && (positionOfBuildings[x + 1][y + 2] == 1 || positionOfBuildings[x + 1][y + 2] == 3 || positionOfBuildings[x + 1][y +2] == 4)) {
+            if (y + 2 < sizeOfCity && (positionOfBuildings[x + 1][y + 2] == 1 || positionOfBuildings[x + 1][y + 2] == 3 || positionOfBuildings[x + 1][y + 2] == 4)) {
                 traffic_system[x + 1][y + 1][3][1] = 1;
             }
-            
+
             traffic_system[x + 1][y + 1][2][1] = 1;
             if (y + 2 < sizeOfCity && (positionOfBuildings[x][y + 2] == 1 || positionOfBuildings[x][y + 2] == 3 || positionOfBuildings[x][y + 2] == 4)) {
                 traffic_system[x + 1][y + 1][2][0] = 1;
             }
 
+            //left bottom
             traffic_system[x][y + 1][2][2] = 1;
             if (x - 1 >= 0 && y + 2 < sizeOfCity && (positionOfBuildings[x - 1][y + 2] == 1 || positionOfBuildings[x - 1][y + 2] == 3 || positionOfBuildings[x - 1][y + 2] == 4)) {
                 traffic_system[x][y + 1][2][0] = 1;
@@ -1085,17 +1098,9 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
                 traffic_system[x][y + 1][2][1] = 1;
             }
 
-            traffic_system[x + 1][y][1][1] = 1;
+            traffic_system[x][y + 1][1][1] = 1;
             if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
                 traffic_system[x + 1][y][1][0] = 1;
-            }
-
-            traffic_system[x][y][1][2] = 1;
-            if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
-                traffic_system[x][y][1][0] = 1;
-            }
-            if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
-                traffic_system[x][y][1][1] = 1;
             }
             if (newBuilding == true) {  // update all the possible buildings around
                 // no need to check if they exist since if they don't the function checks that with the first line
