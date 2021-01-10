@@ -707,7 +707,6 @@ __meta__ = {
 }
 
 [node name="MenuProduction" type="Node2D" parent="2Dworld/Menus"]
-visible = false
 position = Vector2( -1, 0 )
 scale = Vector2( 1.3, 1.3 )
 
@@ -1309,8 +1308,8 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "EfficiencyCogenerationCoalPlant" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "NuclearProhibition" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "EfficiencySupercriticalCoalPlant" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerSuperEff" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerProhibition" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "SubsidyFactories" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "MaximumCarbonFactories" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerCogenEff" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "NuclearPowerProhibition" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerSuperEff" ]]
