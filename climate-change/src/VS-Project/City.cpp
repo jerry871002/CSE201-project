@@ -828,7 +828,7 @@ void City::add_car() { //adds a car in the midle of the city
     const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
     const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/Raptor.tscn", "PackedScene");
     const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/Bike.tscn", "PackedScene");
-    //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/Cybertruck.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
     
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
@@ -893,7 +893,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
     const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/Raptor.tscn", "PackedScene");
     const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/Bike.tscn", "PackedScene");
-    //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/Cybertruck.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
 
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
