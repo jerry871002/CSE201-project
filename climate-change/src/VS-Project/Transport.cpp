@@ -505,6 +505,7 @@ int Transport::get_direction(Vector3 pos, double rot) {
     std::vector<int> out;
 
     if ((int)round(pos.x / 30) >= sizeof(traffic_system) or (int)round(pos.z / 30) >= sizeof((traffic_system[0]))) {
+        myCity->remove_type_car(get_transportType());
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         return(0);
     }
@@ -520,6 +521,7 @@ int Transport::get_direction(Vector3 pos, double rot) {
     
 
     if (out.size() == 0) {
+        myCity->remove_type_car(get_transportType());
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         return(0);
     }
