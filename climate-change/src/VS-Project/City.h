@@ -216,9 +216,14 @@ namespace godot {
         const Ref<PackedScene> MallScene = ResourceLoader::get_singleton()->load("res://Resources/Mall.tscn", "PackedScene");
 
 
-        const Ref<PackedScene> BugattiScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
-        const Ref<PackedScene> ChironScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
+        const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
+        const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
         const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
+        const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
+        //const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+        //const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+        //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+        const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
 
 
         const Ref<PackedScene> WindmillScene = ResourceLoader::get_singleton()->load("res://Resources/Windmill.tscn", "PackedScene");

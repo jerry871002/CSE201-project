@@ -731,13 +731,13 @@ void City::add_car() {
     const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
     const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
-    //const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
+    const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
     //const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
     //const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
     //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
+    const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
     
-    if (BugattiScene.is_valid() && ChironScene.is_valid() && MotoScene.is_valid())
+    if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
     {
 
         // randomly choose between bugatti and chiron otherwise motobike
@@ -760,14 +760,14 @@ void City::add_car() {
          * 7 - sports car/Chiron
          */
         switch (type) {
-        case 0: node = BugattiScene->instance(); current_car_quantities[0] += 1; break;
-        case 1: node = BugattiScene->instance(); current_car_quantities[1] += 1; break;
-        case 2: node = BugattiScene->instance(); current_car_quantities[2] += 1; break;
-        case 3: node = BugattiScene->instance(); current_car_quantities[3] += 1; break;
-        case 4: node = BugattiScene->instance(); current_car_quantities[4] += 1; break;
+        case 0: node = OldCarScene->instance(); current_car_quantities[0] += 1; break;
+        case 1: node = OldCarScene->instance(); current_car_quantities[1] += 1; break;
+        case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
+        case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
+        case 4: node = OldCarScene->instance(); current_car_quantities[4] += 1; break;
         case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
-        case 6: node = BugattiScene->instance(); current_car_quantities[6] += 1; break;
-        case 7: node = ChironScene->instance(); current_car_quantities[7] += 1;  break;
+        case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
+        case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
         default: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
         }
 
@@ -1633,7 +1633,12 @@ int City::most_missing_type() {
             min = i;
         }
     }
-    return min;
+    if (missing_car_quantities[min] > 0) {
+        return min;
+    }
+    else {
+        return NULL;
+    }
 }
 
 void City::transport_to_add() { //now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
