@@ -167,7 +167,7 @@ double Shop::get_environmentalcost() {
 
 
 void Shop::simulate_step(double days) {
-
+    age += days;
     std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
 
     this->Structure::simulate_step(days);
@@ -437,7 +437,7 @@ void Restaurant::simulate_step(double days){
 
     this->Shop::simulate_step(days);
 
-	age += days;
+
 	//double shock;
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 
