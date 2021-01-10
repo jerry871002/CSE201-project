@@ -157,7 +157,9 @@ void Structure::_register_methods()
     register_property<Structure, double>("coal_prohibited", &Structure::coal_prohibited, 0);
     register_property<Structure, double>("maximum_CO2", &Structure::maximum_CO2, 0);
     register_property<Structure, double>("subsidy_green", &Structure::subsidy_green, 0);
-
+    register_property<Structure, double>("pesticideProhibited", &Structure::pesticideProhibited, 0);
+    register_property<Structure, double>("GMOProhibited", &Structure::GMOProhibited, 0);
+    register_property<Structure, double>("fertilizerProhibited", &Structure::fertilizerProhibited, 0);
 }
 
 void Structure::_init()
