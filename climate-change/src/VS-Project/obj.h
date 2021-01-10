@@ -102,9 +102,9 @@ namespace godot {
         // POLICIES (need to not be functions !) :
 
         // Changing the coal power plant efficiency (constructor creates subcritical plant of 38% efficiency) :
-        bool efficiency_supercritical = 0; // set to false when equals 0, true when given 1
+        double efficiency_supercritical = 0; // set to false when equals 0, true when given 1
                                           // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-        bool efficiency_cogeneration = 0; // set to false when equals 0, true when given 1
+        double efficiency_cogeneration = 0; // set to false when equals 0, true when given 1
                                           //improve efficiency to cogeneration type of plant (47% energy converted to electricity)
 
         //Law prohibiting coal power plants :
