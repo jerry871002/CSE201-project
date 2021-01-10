@@ -67,6 +67,7 @@ void Transport::transport_type() {
     passengers = 0; //total number of passengers that used the car
     age = 0; //age in days
     employment = 0; // employees only for the bus
+    fuelTax = 0;
     // random device class instance, source of 'true' randomness for initializing random seed
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -445,6 +446,7 @@ void Transport::simulate_step(double days) {
     }
 
     }
+    maintenance+=fuelTax*fuelInput;
 }
 
 void Transport::turn(int dir, float delta) {
