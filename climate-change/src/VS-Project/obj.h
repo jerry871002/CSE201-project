@@ -130,7 +130,13 @@ namespace godot {
          //Subsidies for helping households, buildings to change their windows to double glazing (these help poorer households to have less environmental impact)
         bool double_glazing_subsidies();
         //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if it is possible
-
+        
+        //law prohibiting pesticides
+        double pesticideProhibited; // 0 if pestices are allowed, 1 if pesticides are prohibited
+        //law prohibiting GMO
+		double GMOProhibited; // 0 if GMO is allowed, 1 if pesticides GMO prohibited
+        //law prohibiting fertilizer
+		double fertilizerProhibited; // 0 if fertilizers are allowed, 1 if fertilizers are prohibited
         /*
         //Ads to promote vegetarianism, and reduce meat production in the city
         bool ad_vegetarian(); //not sure what form ads should take */
