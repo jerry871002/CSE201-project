@@ -123,6 +123,7 @@ namespace godot {
         
         
         double solar_panel_subsidies;
+        double solar_panel_subsidies_housing;
         // range from 0 to solarCost
 
 
