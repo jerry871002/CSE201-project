@@ -153,6 +153,8 @@ void Structure::_register_methods()
     register_property<Structure, double>("solar_panel_subsidies", &Structure::solar_panel_subsidies, 0);
     register_property<Structure, double>("efficiency_supercritical", &Structure::efficiency_supercritical, 0);
     register_property<Structure, double>("efficiency_cogeneration", &Structure::efficiency_cogeneration, 0);
+    register_property<Structure, double>("nuclear_prohibited", &Structure::nuclear_prohibited, 0);
+    register_property<Structure, double>("coal_prohibited", &Structure::coal_prohibited, 0);
 
 }
 
