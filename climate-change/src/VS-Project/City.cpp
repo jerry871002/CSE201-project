@@ -253,21 +253,26 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-   
-     
-    
+
+
+
     Vector3 center = Vector3(15.0 * citysize, 0, 15.0 * citysize);
 
 
-    for (int x = 0; x < (citysize / 2); x++)
+    for (int x = 1; x < (citysize / 2) + 1; x++)
     {
-        for (int z = 0; z < (citysize / 2); z++)
+        for (int z = 1; z < (citysize / 2) + 1; z++)
         {
             Vector3 pos = Vector3(60.0 * x, 0, 60.0 * z);
 
 
             Vector3 bigbuildingpos = pos + Vector3(15.0, 0, 15.0);
             double dist = pow(pow(center.x - bigbuildingpos.x, 2) + pow(center.z - bigbuildingpos.z, 2), 0.5);
+
+
+
+
+            // This if condition keeps the building as a circle. if a 2x2 building cant be put it checks if a 1 x 1 building can
 
             if (dist <= citysize * 15.0) {
 
@@ -325,9 +330,9 @@ void City::generate_initial_city_graphics()
                         for (int z1 = 0; z1 < 2; z1++) {
 
                             Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-                            double type = (double((double)rand() / (double)RAND_MAX) * double(smallerprob));
 
-                            dist = pow(pow(center.x - pos.x - pos1.x, 2) + pow(center.z - pos.z-pos1.z, 2), 0.5);
+
+                            dist = pow(pow(center.x - pos.x - pos1.x, 2) + pow(center.z - pos.z - pos1.z, 2), 0.5);
 
                             if (dist <= 300) {
                                 restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
@@ -336,6 +341,10 @@ void City::generate_initial_city_graphics()
                                 windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
                                 lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
                                 highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
+
+
+
+                                double type = (double((double)rand() / (double)RAND_MAX) * (restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
 
                                 if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
                                 else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
@@ -353,7 +362,7 @@ void City::generate_initial_city_graphics()
 
                                         node = PDScene->instance();
 
-                                        node->set("translation", (pos + pos1+ Vector3(-7, 0, -9)));
+                                        node->set("translation", (pos + pos1 + Vector3(-7, 0, -9)));
 
                                         this->add_child(node);
                                     }
@@ -365,11 +374,38 @@ void City::generate_initial_city_graphics()
                     }
                 }
             }
+            else if ((dist <= (citysize * 15.0 + 30)))
+            {
+
+                // plops down a building if theres no space for a 2x2 but there is for a 1x1  ... this should be on the outside of the city so if we want only one or two types on the edge we can set that here
+
+                dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), 0.5);
+
+                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                float buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
+                float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
+                float lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
+                float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
+
+
+
+                double type = (double((double)rand() / (double)RAND_MAX) * double(restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
+
+                if (type < (double)(restaurantprob)) { add_shop(pos, RestaurantScene); }
+                else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos, ShopScene); }
+                else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos, LowHouseScene); }
+                else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos, BuildingScene); }
+                else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos, WindmillScene); }
+                else { add_house(pos, HighHouseScene); }
+
+
+            }
         }
+
+
+
     }
-
-
-
 }
 
 void City::set_initial_visible_components()
