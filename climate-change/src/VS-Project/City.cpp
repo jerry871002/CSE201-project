@@ -16,6 +16,7 @@
 #include <Color.hpp>
 #include <Label.hpp>
 #include <DirectionalLight.hpp>
+#include <WorldEnvironment.hpp>
 
 #include <PoolArrays.hpp>
 
@@ -152,13 +153,16 @@ void City::_physics_process(float delta) {
         }
         */
         (this->simulation_counter)--;
-        (this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")->get_node("DirectionalLight"))->set("rotation_degrees", Vector3(-45 - sin((M_PI * (2 * (double)(this->day_tick)) / 360) )*25 / 2 - 12.5, 45, 0 ));
+        
     }
 
     if (this->date_counter > 1)
     {
         (this->days_since_last_simulation)++;
         this->update_date();
+        std::cout << "Day tick : " << (this->day_tick) << endl;
+        (this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")->get_node("DirectionalLight"))->set("rotation_degrees", Vector3(-45 - sin((M_PI * (2 * (double)(this->daycount)) / 360)) * 25 / 2 - 12.5, 45, 0));
+        ((WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")))->set("fog_color", Color(0.77, 0.8, 0.86, (1 - airQuality) * 0.11));
         (this->date_counter)--;
     }
 
