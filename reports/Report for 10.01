@@ -6,4 +6,8 @@ Anna:
 
 This week I finished wheat section in agriculrural production class and wrote how pesticide/fertilizer prohibition law policies modify some properties of wheat.
 Also I wrote a function in city which for each type of transport calculates probability that it will be added basing it on a model Eliott had written before in python. 
-Next week I am planning to work on transport policies. 
+Next week I am planning to work on transport policies.
+
+Luca:
+This week and during the holidays, I finished fixing the bugs for plotting pie charts and line charts in Godot. Now, they are working perfectly. Moreover, I have worked with the algorithm team so as to make my charts functional. 
+In the next few days, I will continue to work with the algorithm team so as to display relevant data about the city with my charts.
