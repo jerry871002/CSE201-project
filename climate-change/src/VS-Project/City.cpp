@@ -538,7 +538,22 @@ void godot::City::_on_MenuShop_pressed(String name)
 
 }
 
+void godot::City::_on_MenuHousing_pressed(String name)
+{
 
+    active_button = name;
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
+
+    String ButtonInfo = this->get_button_info_text();
+    this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
+}
 
 String City::get_button_info_text() {
 
@@ -551,11 +566,27 @@ String City::get_button_info_text() {
     if (this->active_button == String("PanelSubsidyForShops"))
     {
         //this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
-        return String("Please input a value between 0 and 450. This will be a sola panel subsidy for shops.");
+        return String("Please input a value between 0 and 450. This will be a solar panel subsidy for shops in euros.");
     }
     else if (this->active_button == String("ChangePanelProbabilityForRestaurants"))
     {
         return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for restaurants in the city.");
+    }
+    else if (this->active_button == String("EfficiencySupercriticalCoalPlant"))
+    {
+        return String("Please input 1 in order to activate the policy or 0 to return to a subcritical efficiency (38%).");
+    }
+    else if (this->active_button == String("EfficiencyCogenerationCoalPlant"))
+    {
+        return String("Please input 1 in order to activate the policy or 0 to return to a subcritical efficiency (38%).");
+    }
+    else if (this->active_button == String("NuclearProhibition"))
+    {
+        return String("Please input 1 in order to activate the policy or 0 to authorize nuclear power plants again.");
+    }
+    else if (this->active_button == String("CoalProhibition"))
+    {
+        return String("Please input 1 in order to activate the policy or 0 to authorize coal power plants again.");
     }
     else {
         return String("No information has been specified for this policy.");
@@ -574,7 +605,7 @@ void godot::City::_on_Validate_pressed()
     this->_on_Game_Speed_changed();
 
     if (mytext.is_valid_float()) {
-        this->implement_shop_policies((double)mytext.to_float());
+        this->implement_policies((double)mytext.to_float());
     }
     else {
         this->trigger_notification(String("You did not enter an appropriate value for the policy."));
@@ -590,7 +621,7 @@ void City::trigger_notification(String text = String("Seems like there was a mis
     this->notification_active = true;
 }
 
-void City::implement_shop_policies(double value) {
+void City::implement_policies(double value) {
 
     Godot::print(this->active_button);
 
@@ -617,7 +648,59 @@ void City::implement_shop_policies(double value) {
             }
         }
         else {
-            this->trigger_notification();
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("EfficiencySupercriticalCoalPlant")) {
+        if (value == 0 || value == 1) {
+            Godot::print("THE COAL POWER PLANTS WILL CHANGE THEIR EFFICIENCY");
+            for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
+            {
+                if ((String)(*it)->get("object_type") == (String)("Coal Power Plant")) {
+                    (*it)->set("efficiency_supercritical", value);
+                }
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("EfficiencyCogenerationCoalPlant")) {
+        if (value == 0 || value == 1) {
+            Godot::print("THE COAL POWER PLANTS WILL CHANGE THEIR EFFICIENCY");
+            for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
+            {
+                if ((String)(*it)->get("object_type") == (String)("Coal Power Plant")) {
+                    (*it)->set("efficiency_cogeneration", value);
+                }
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("NuclearProhibition")) {
+        if (value == 0 || value == 1) {
+            Godot::print("THE LAW PROHIBITING OR ALLOWING THE USE OF NUCLEAR POWER WILL BE IMPLEMENTED");
+            for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
+            {
+                 (*it)->set("nuclear_prohibited", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("CoalProhibition")) {
+        if (value == 0 || value == 1) {
+            Godot::print("THE LAW PROHIBITING OR ALLOWING THE USE OF COAL POWER WILL BE IMPLEMENTED");
+            for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
+            {
+                (*it)->set("coal_prohibited", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
 }
