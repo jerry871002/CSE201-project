@@ -92,9 +92,11 @@ void AgriculturalProduction::simulate_step(double days) {
 		case(0):{ // wheat
 		if ((fertilizerBefore == 0) &&(fertilizerProhibited==1)){
 			fertility*=0.65;
+			satisfaction/=0.95;
 		}
 		else if((fertilizerBefore == 1) &&(fertilizerProhibited==0)){
 			fertility/=0.65;
+			satisfaction*=0.95;
 		}
 		if ((pesticideBefore==0) &&(pesticideProhibited ==1)){
 			fertility/=1.15;
@@ -115,14 +117,18 @@ void AgriculturalProduction::simulate_step(double days) {
 		fertilizerBefore = fertilizerProhibited;
 		production=requiredLand*fertility*days; //output over the time period
 		waterConsumption=requiredLand*fertility*days*1500;
-		CO2Emission=0.59*requiredLand*fertility*days;
+		CO2Emission=0.45*requiredLand*fertility*days;
 		maintenance = 144*days*requiredLand;
-		if (pesticideProhibited==0){
-			CO2Emission=9400*requiredLand*days;
-			maintenance+=25*requiredLand;
-			}
 		if (fertilizerProhibited == 0){
-			maintenance+=45*requiredLand;
+			maintenance+=45*requiredLand*days;
+			CO2Emission+=0.3*CO2Emission;
+		}
+		if (pesticideProhibited==0){
+			CO2Emission+=9400*requiredLand*days;
+			maintenance+=25*requiredLand*days;
+			}
+		if (GMOProhibited == 0){
+
 		}
 		break;
 		}
