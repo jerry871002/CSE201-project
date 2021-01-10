@@ -249,7 +249,6 @@ transform = Transform( 0.2506, 0, 0, 0, -2.18791e-08, -0.2506, 0, 0.183535, -2.9
 script = ExtResource( 2 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="Mesh-lod2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null
 material/1 = null
@@ -265,7 +264,6 @@ transform = Transform( 0.2506, 0, 0, 0, -2.18791e-08, -0.2506, 0, 0.183535, -2.9
 script = ExtResource( 2 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="Mesh-lod3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 3 )
 material/0 = null
 material/1 = null

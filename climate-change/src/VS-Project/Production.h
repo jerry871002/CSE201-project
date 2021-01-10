@@ -76,17 +76,17 @@ namespace godot {
 		double get_energyuse();
 		double get_environmentalcost();
 		void agriculture_type(int type);
-		//calculates probalities of policies
+		//prohibites or authorises pesticides with inpit from user
 		void prohibite_pesticide();
+		//prohibites or authorises GMO with inpit from user
 		void prohibite_GMO();
+		//prohibites or authorises fertilizer with inpit from user
 		void prohibite_fertilizer();
 		double waterConsumption; // per day 
 		int agricultureType; // 0 - wheat, 1 - meat, 2 - vegetables
 		double requiredLand; //size of the field in km^2
 		double fertility; //per km^2 output in kg
 		double production; //how much output per day in kg
-		//probabilities that policies will be implemented
-		double pesticideProhibitedProbability, GMOProhibitedProbability, fertilizerProhibitedProbability;
 	};
 
 	/// <summary>

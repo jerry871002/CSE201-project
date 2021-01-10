@@ -88,15 +88,21 @@ AgriculturalProduction::~AgriculturalProduction() {
 
 void AgriculturalProduction::simulate_step(double days) {
 	age+=days;
+	prohibite_pesticide();
 	switch(agricultureType){
 		case(0):{ // wheat
 		production=requiredLand*fertility*days; //output over the time period
 		waterConsumption=requiredLand*fertility*days*1500;
 		CO2Emission=0.59*requiredLand*fertility*days;
+		maintenance = 144*days*requiredLand;
 		if (pesticideProhibited==0){
 			CO2Emission=9400*requiredLand*days;
+			maintenance+=25*requiredLand;
 			}
-			break;
+		if (fertilizerProhibited == 0){
+			maintenance+=45*requiredLand;
+		}
+		break;
 		}
 
 		case(1):{ 
@@ -119,6 +125,7 @@ AgriculturalProduction::AgriculturalProduction(int type){
 void AgriculturalProduction::agriculture_type(int type){
 	agricultureType = type; // 0 - wheat, 1 - meat, 2 - vegetables
 	employment = 50;
+	prohibite_pesticide();
 	switch(agricultureType){
 		case(0):{ // wheat
 		    std::random_device rd;
@@ -127,6 +134,8 @@ void AgriculturalProduction::agriculture_type(int type){
 			requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
 			std::normal_distribution <double> wheatferltility(464000, 40000);
 			fertility = wheatferltility(gen); //production of wheat per km^2
+			std::normal_distribution <double> wheatfieldcost(595000, 1000);
+			cost = wheatfieldcost(gen)*requiredLand; //of land in euros
 			production = fertility *requiredLand; //output of wheat in kg per day
 			waterConsumption = 1500*production; //water litres per day
 			CO2Emission =0.59*production; //co2 kg per day
@@ -161,13 +170,21 @@ double AgriculturalProduction::get_environmentalcost(){
 }
 
 void AgriculturalProduction::prohibite_pesticide(){
-	if (pesticideProhibited==1){
-		pesticideProhibitedProbability = 1;
+	double pesticidePolicy = this->get("Pesticides"); // from user
+	switch (agricultureType)
+	{
+	case (0):
+		if ((pesticideProhibited==1)&&(pesticidePolicy==0)){
+			fertility*=1.15;
+			satisfaction*=0.85;
+		}
+		else if ((pesticideProhibited==0)&&(pesticidePolicy==1)){
+			fertility/=1.15;
+			satisfaction/=0.85;
+		}
+		break;
 	}
-	else{
-		//not finished at all
-		pesticideProhibitedProbability = CO2Emission/satisfaction*pow(production,2);
-	}
+	pesticideProhibited = pesticidePolicy;
 }
 
 /// <summary>
