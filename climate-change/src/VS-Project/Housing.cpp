@@ -200,7 +200,7 @@ double Housing::get_double_glazing_age() {
 
 void Housing::panel_added_probability(){
 	double panelCost;
-    double panel_subsidies = this->get("solar_panel_subsidies"); // input from user of how much are the subsidies
+    double panel_subsidies = this->get("solar_panel_subsidies_housing"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
     panelCost = this->solarCost - panel_subsidies;  
     if (panelCost < 0) {

@@ -862,9 +862,9 @@ void City::add_car() { //adds a car in the midle of the city
     const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
     const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
-    //const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/Raptor.tscn", "PackedScene");
+    const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/Bike.tscn", "PackedScene");
+    const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/Cybertruck.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
     
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
@@ -890,11 +890,11 @@ void City::add_car() { //adds a car in the midle of the city
          * 7 - sports car/Chiron
          */
         switch (type) {
-        case 0: node = OldCarScene->instance(); current_car_quantities[0] += 1; break;
-        case 1: node = OldCarScene->instance(); current_car_quantities[1] += 1; break;
+        case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
+        case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
         case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
         case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
-        case 4: node = OldCarScene->instance(); current_car_quantities[4] += 1; break;
+        case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
         case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
         case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
         case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
@@ -902,7 +902,7 @@ void City::add_car() { //adds a car in the midle of the city
         }
 
         node->set("scale", Vector3(10, 10, 10));
-        node->set("translation", Vector3(citysize * 30 -13, 0, citysize* 30 -13 + 30 ));
+        node->set("translation", Vector3(citysize * 15 -13, 0, citysize* 15 - 13 ));
 
 
         this->add_child((Node*)node);
@@ -927,9 +927,9 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
     const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
-    //const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/Raptor.tscn", "PackedScene");
+    const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/Bike.tscn", "PackedScene");
+    const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/Cybertruck.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
 
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
@@ -943,11 +943,11 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
         Node* node;
         
         switch (type) {
-        case 0: node = OldCarScene->instance(); current_car_quantities[0] += 1; break;
-        case 1: node = OldCarScene->instance(); current_car_quantities[1] += 1; break;
+        case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
+        case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
         case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
         case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
-        case 4: node = OldCarScene->instance(); current_car_quantities[4] += 1; break;
+        case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
         case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
         case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
         case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
