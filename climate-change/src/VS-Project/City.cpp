@@ -823,16 +823,28 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("WindturbinesHousing")) {
-    if (value >= 0 && value <= 800) {
-        Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON HOUSING IMPLEMENTED");
-        for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
-        {
-            (*it)->set("wind_turbine_subsidies", value);
+        if (value >= 0 && value <= 800) {
+            Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON HOUSING IMPLEMENTED");
+            for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+            {
+                (*it)->set("wind_turbine_subsidies", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
-    else {
-        this->trigger_notification(String("The value you provided was not in the specified range."));
-    }
+    else if (this->active_button == String("DoulbleGlazingHousing")) {
+        if (value >= 0 && value <= 1000) {
+            Godot::print("DOUBLE GLAZING SUBSIDIES ON HOUSING IMPLEMENTED");
+            for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+            {
+                (*it)->set("double_glazing_subsidies", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
     }
 }
 
