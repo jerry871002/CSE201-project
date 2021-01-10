@@ -197,14 +197,15 @@ int* return_date(int day_tick) {
 void City::update_date() {
     this->day_tick += days_since_last_simulation;
     this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date_godot());
-    this->day_tick -= days_since_last_simulation;
     int* datenumber = return_date(int(this->day_tick) + days_since_last_simulation);
     if (datenumber[0] == 1 && datenumber[1] == 1) { // resets the budget to initial value
         budget = 10000; // needs to be updated for every year somehow
     }
     if (datenumber[0] == 1) {
-        
+
     }
+    this->day_tick -= days_since_last_simulation;
+    
 }
 
 void City::_input(InputEvent*)
