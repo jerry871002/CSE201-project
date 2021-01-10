@@ -115,7 +115,7 @@ namespace godot {
         bool ClickActive{ false };
 
         //TRAFFIC
-        int sizeOfCity = citysize; // buildings are placed only on a square sizeOfCity * sizeOfCity
+        int sizeOfCity = citysize  + 1; // buildings are placed only on a square sizeOfCity * sizeOfCity
         int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 
 
         // following functions handle adding structures to the city, takes a position and the required scene
@@ -167,8 +167,9 @@ namespace godot {
         float calculate_building_prob(float, float, float, double);
 
         //computes probailities for each type of transport that this type will be added
-        int transport_to_add();
-        void remove_type_car(int type);
+        void transport_to_add(); // updates the array of all missing cars - missing_car_quantities
+        void remove_type_car(int type); //reduces by 1 current_car_quantities[type] 
+        int most_missing_type();
 
         /* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
         and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
@@ -204,10 +205,11 @@ namespace godot {
         double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
         double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;
         double airQuality;
-        double* incomes;
-        int incomesLen;
-        int current_car_quantities[8] = { 0 };
-        
+        //double* incomes;
+        //int incomesLen;
+        int numberOfHouses;
+        int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
+        int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month
 
         const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");
         const Ref<PackedScene> ShopScene = ResourceLoader::get_singleton()->load("res://Resources/Shop.tscn", "PackedScene");
