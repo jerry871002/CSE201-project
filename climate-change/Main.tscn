@@ -408,6 +408,251 @@ shape = SubResource( 1 )
 
 [node name="2Dworld" type="Node2D" parent="."]
 
+[node name="Infographics" type="Node2D" parent="2Dworld"]
+position = Vector2( 1658.04, 38.8548 )
+
+[node name="PieSatisfaction" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 112.192
+margin_top = -38.2587
+margin_right = 612.192
+margin_bottom = 461.741
+rect_scale = Vector2( 0.3, 0.3 )
+min_value = 1.0
+value = 44.0
+rounded = true
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 1, 1, 1, 0.356863 )
+tint_progress = Color( 0.329412, 0.811765, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SatisfactionLabel" type="Label" parent="2Dworld/Infographics/PieSatisfaction"]
+margin_left = 80.0
+margin_top = 168.087
+margin_right = 191.0
+margin_bottom = 204.087
+rect_scale = Vector2( 3, 3 )
+text = "Satisfaction 
+Level :"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SatisfactionValue" type="Label" parent="2Dworld/Infographics/PieSatisfaction"]
+margin_left = 95.0
+margin_top = 273.0
+margin_right = 198.0
+margin_bottom = 303.0
+rect_scale = Vector2( 3, 3 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PieCO2" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 113.004
+margin_top = 103.25
+margin_right = 613.004
+margin_bottom = 603.25
+rect_scale = Vector2( 0.3, 0.3 )
+value = 20.0
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 1, 1, 1, 0.356863 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CO2Label" type="Label" parent="2Dworld/Infographics/PieCO2"]
+margin_left = 77.8352
+margin_top = 131.342
+margin_right = 188.835
+margin_bottom = 180.342
+rect_scale = Vector2( 3, 3 )
+text = "Carbon
+Emission
+Level :"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CO2Value" type="Label" parent="2Dworld/Infographics/PieCO2"]
+margin_left = 68.751
+margin_top = 285.411
+margin_right = 183.751
+margin_bottom = 312.411
+rect_scale = Vector2( 3, 3 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PieIncome" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 112.432
+margin_top = 243.105
+margin_right = 612.432
+margin_bottom = 743.105
+rect_scale = Vector2( 0.3, 0.3 )
+value = 20.0
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 1, 1, 1, 0.356863 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IncomeLabel" type="Label" parent="2Dworld/Infographics/PieIncome"]
+margin_left = 87.0
+margin_top = 166.0
+margin_right = 198.0
+margin_bottom = 197.0
+rect_scale = Vector2( 3, 3 )
+text = "Income :"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IncomeValue" type="Label" parent="2Dworld/Infographics/PieIncome"]
+margin_left = 87.0
+margin_top = 264.655
+margin_right = 198.0
+margin_bottom = 295.655
+rect_scale = Vector2( 3, 3 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PieEmployees" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 112.36
+margin_top = 381.18
+margin_right = 612.36
+margin_bottom = 881.18
+rect_scale = Vector2( 0.3, 0.3 )
+value = 20.0
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 1, 1, 1, 0.356863 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EmployeesLabel" type="Label" parent="2Dworld/Infographics/PieEmployees"]
+margin_left = 87.6978
+margin_top = 134.069
+margin_right = 198.698
+margin_bottom = 183.069
+rect_scale = Vector2( 3, 3 )
+text = "Number 
+Of 
+Employees :"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EmployeesValue" type="Label" parent="2Dworld/Infographics/PieEmployees"]
+margin_left = 91.083
+margin_top = 282.332
+margin_right = 198.083
+margin_bottom = 315.332
+rect_scale = Vector2( 3, 3 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PiePowerSupply" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 113.255
+margin_top = 519.217
+margin_right = 613.255
+margin_bottom = 1019.22
+rect_scale = Vector2( 0.3, 0.3 )
+value = 20.0
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 1, 1, 1, 0.356863 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PowerSupplyLabel" type="Label" parent="2Dworld/Infographics/PiePowerSupply"]
+margin_left = 86.4663
+margin_top = 190.74
+margin_right = 197.466
+margin_bottom = 239.74
+rect_scale = Vector2( 3, 3 )
+text = "Power Use :"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PowerSupplyValue" type="Label" parent="2Dworld/Infographics/PiePowerSupply"]
+margin_left = 86.4663
+margin_top = 264.731
+margin_right = 197.466
+margin_bottom = 313.731
+rect_scale = Vector2( 3, 3 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PiePowerDemand" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 112.541
+margin_top = 657.944
+margin_right = 612.541
+margin_bottom = 1157.94
+rect_scale = Vector2( 0.3, 0.3 )
+value = 20.0
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 15 )
+fill_mode = 4
+tint_under = Color( 1, 1, 1, 0.356863 )
+tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PowerDemandLabel" type="Label" parent="2Dworld/Infographics/PiePowerDemand"]
+margin_left = 89.8369
+margin_top = 146.445
+margin_right = 200.837
+margin_bottom = 195.445
+rect_scale = Vector2( 3, 3 )
+text = "Power 
+Demand :"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PowerDemandValue" type="Label" parent="2Dworld/Infographics/PiePowerDemand"]
+margin_left = 89.8369
+margin_top = 248.183
+margin_right = 200.837
+margin_bottom = 297.183
+rect_scale = Vector2( 3, 3 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Blur" type="Node2D" parent="2Dworld"]
 visible = false
 
@@ -930,251 +1175,6 @@ margin_bottom = 800.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CONFIRM"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Infographics" type="Node2D" parent="2Dworld"]
-position = Vector2( 1658.04, 38.8548 )
-
-[node name="PieSatisfaction" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 112.192
-margin_top = -38.2587
-margin_right = 612.192
-margin_bottom = 461.741
-rect_scale = Vector2( 0.3, 0.3 )
-min_value = 1.0
-value = 44.0
-rounded = true
-texture_under = ExtResource( 15 )
-texture_progress = ExtResource( 15 )
-fill_mode = 4
-tint_under = Color( 1, 1, 1, 0.356863 )
-tint_progress = Color( 0.329412, 0.811765, 0, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SatisfactionLabel" type="Label" parent="2Dworld/Infographics/PieSatisfaction"]
-margin_left = 80.0
-margin_top = 168.087
-margin_right = 191.0
-margin_bottom = 204.087
-rect_scale = Vector2( 3, 3 )
-text = "Satisfaction 
-Level :"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SatisfactionValue" type="Label" parent="2Dworld/Infographics/PieSatisfaction"]
-margin_left = 95.0
-margin_top = 273.0
-margin_right = 198.0
-margin_bottom = 303.0
-rect_scale = Vector2( 3, 3 )
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PieCO2" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 113.004
-margin_top = 103.25
-margin_right = 613.004
-margin_bottom = 603.25
-rect_scale = Vector2( 0.3, 0.3 )
-value = 20.0
-texture_under = ExtResource( 15 )
-texture_progress = ExtResource( 15 )
-fill_mode = 4
-tint_under = Color( 1, 1, 1, 0.356863 )
-tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CO2Label" type="Label" parent="2Dworld/Infographics/PieCO2"]
-margin_left = 77.8352
-margin_top = 131.342
-margin_right = 188.835
-margin_bottom = 180.342
-rect_scale = Vector2( 3, 3 )
-text = "Carbon
-Emission
-Level :"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CO2Value" type="Label" parent="2Dworld/Infographics/PieCO2"]
-margin_left = 68.751
-margin_top = 285.411
-margin_right = 183.751
-margin_bottom = 312.411
-rect_scale = Vector2( 3, 3 )
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PieIncome" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 112.432
-margin_top = 243.105
-margin_right = 612.432
-margin_bottom = 743.105
-rect_scale = Vector2( 0.3, 0.3 )
-value = 20.0
-texture_under = ExtResource( 15 )
-texture_progress = ExtResource( 15 )
-fill_mode = 4
-tint_under = Color( 1, 1, 1, 0.356863 )
-tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="IncomeLabel" type="Label" parent="2Dworld/Infographics/PieIncome"]
-margin_left = 87.0
-margin_top = 166.0
-margin_right = 198.0
-margin_bottom = 197.0
-rect_scale = Vector2( 3, 3 )
-text = "Income :"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="IncomeValue" type="Label" parent="2Dworld/Infographics/PieIncome"]
-margin_left = 87.0
-margin_top = 264.655
-margin_right = 198.0
-margin_bottom = 295.655
-rect_scale = Vector2( 3, 3 )
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PieEmployees" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 112.36
-margin_top = 381.18
-margin_right = 612.36
-margin_bottom = 881.18
-rect_scale = Vector2( 0.3, 0.3 )
-value = 20.0
-texture_under = ExtResource( 15 )
-texture_progress = ExtResource( 15 )
-fill_mode = 4
-tint_under = Color( 1, 1, 1, 0.356863 )
-tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="EmployeesLabel" type="Label" parent="2Dworld/Infographics/PieEmployees"]
-margin_left = 87.6978
-margin_top = 134.069
-margin_right = 198.698
-margin_bottom = 183.069
-rect_scale = Vector2( 3, 3 )
-text = "Number 
-Of 
-Employees :"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="EmployeesValue" type="Label" parent="2Dworld/Infographics/PieEmployees"]
-margin_left = 91.083
-margin_top = 282.332
-margin_right = 198.083
-margin_bottom = 315.332
-rect_scale = Vector2( 3, 3 )
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PiePowerSupply" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 113.255
-margin_top = 519.217
-margin_right = 613.255
-margin_bottom = 1019.22
-rect_scale = Vector2( 0.3, 0.3 )
-value = 20.0
-texture_under = ExtResource( 15 )
-texture_progress = ExtResource( 15 )
-fill_mode = 4
-tint_under = Color( 1, 1, 1, 0.356863 )
-tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PowerSupplyLabel" type="Label" parent="2Dworld/Infographics/PiePowerSupply"]
-margin_left = 86.4663
-margin_top = 190.74
-margin_right = 197.466
-margin_bottom = 239.74
-rect_scale = Vector2( 3, 3 )
-text = "Power Use :"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PowerSupplyValue" type="Label" parent="2Dworld/Infographics/PiePowerSupply"]
-margin_left = 86.4663
-margin_top = 264.731
-margin_right = 197.466
-margin_bottom = 313.731
-rect_scale = Vector2( 3, 3 )
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PiePowerDemand" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 112.541
-margin_top = 657.944
-margin_right = 612.541
-margin_bottom = 1157.94
-rect_scale = Vector2( 0.3, 0.3 )
-value = 20.0
-texture_under = ExtResource( 15 )
-texture_progress = ExtResource( 15 )
-fill_mode = 4
-tint_under = Color( 1, 1, 1, 0.356863 )
-tint_progress = Color( 0.419608, 0.909804, 0.0862745, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PowerDemandLabel" type="Label" parent="2Dworld/Infographics/PiePowerDemand"]
-margin_left = 89.8369
-margin_top = 146.445
-margin_right = 200.837
-margin_bottom = 195.445
-rect_scale = Vector2( 3, 3 )
-text = "Power 
-Demand :"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PowerDemandValue" type="Label" parent="2Dworld/Infographics/PiePowerDemand"]
-margin_left = 89.8369
-margin_top = 248.183
-margin_right = 200.837
-margin_bottom = 297.183
-rect_scale = Vector2( 3, 3 )
-align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
