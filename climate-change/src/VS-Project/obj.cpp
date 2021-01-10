@@ -343,19 +343,3 @@ void godot::Structure::_on_Area_mouse_exited()
 
 
 
-bool Structure::wind_turbine_subsidies() {
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
-
-
-bool Structure::double_glazing_subsidies(){
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}

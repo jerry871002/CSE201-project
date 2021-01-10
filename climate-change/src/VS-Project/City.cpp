@@ -833,34 +833,46 @@ void City::add_car() {
 void City::add_car(Vector3 pos) {
 
 
-    const Ref<PackedScene> BugattiScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
-    const Ref<PackedScene> ChironScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
+    const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
+    const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
     const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
+    //const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    //const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
 
-    if (BugattiScene.is_valid() && ChironScene.is_valid() && MotoScene.is_valid())
+    if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
     {
-        int type = rand() % 3;
-        Node* node;
-        switch (type) {
-        case 0: node = BugattiScene->instance(); break;
-        case 1: node = ChironScene->instance(); break;
-        //case 2: node = BusScene->instance(); break;
-        default: node = MotoScene->instance(); break;
+        int type = most_missing_type();
+        if (type == NULL) {
+            type = rand() % 8;
         }
 
+        //int type = rand() % 3;
+        Node* node;
+        
+        switch (type) {
+        case 0: node = OldCarScene->instance(); current_car_quantities[0] += 1; break;
+        case 1: node = OldCarScene->instance(); current_car_quantities[1] += 1; break;
+        case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
+        case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
+        case 4: node = OldCarScene->instance(); current_car_quantities[4] += 1; break;
+        case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
+        case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
+        case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
+        default: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
+        }
+        
         node->set("scale", Vector3(10, 10, 10));
-        node->set("translation", pos + Vector3(-13, 0, -13 + 30));
+        node->set("translation", pos + Vector3(-13, 0, -13));
 
 
         this->add_child((Node*)node);
         ((Transport*)node)->set("transportType", type);
 
         //((Transport*)node)->transport_type();
-
-
         //income -= node->cost;
-
         //all_transports.push_back((Transport*)node);         THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
     }
 }
