@@ -160,6 +160,8 @@ void Structure::_register_methods()
     register_property<Structure, double>("pesticideProhibited", &Structure::pesticideProhibited, 0);
     register_property<Structure, double>("GMOProhibited", &Structure::GMOProhibited, 0);
     register_property<Structure, double>("fertilizerProhibited", &Structure::fertilizerProhibited, 0);
+    register_property<Structure, double>("solar_panel_subsidies_housing", &Structure::solar_panel_subsidies_housing, 0);
+    register_property<Structure, double>("wind_turbine_subsidies", &Structure::wind_turbine_subsidies, 0);
 }
 
 void Structure::_init()

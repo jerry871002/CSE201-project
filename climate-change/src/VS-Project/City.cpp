@@ -604,6 +604,18 @@ String City::get_button_info_text() {
     {
         return String("This is a law prohibiting the use of fertilizers. Please input 1 in order to activate the policy or 0 to authorize fertilizers again.");
     }
+    else if (this->active_button == String("SolarHousing"))
+    {
+        return String("This is a subsidy for building solar panels on houses. Please input a value between 0 and 450 euros per family.");
+    }
+    else if (this->active_button == String("WindturbinesHousing"))
+    {
+        return String("This is a subsidy for building rooftop wind turbines on houses. Please input a value between 0 and 800 euros per family.");
+    }
+    else if (this->active_button == String("DoubleGlazingHousing"))
+    {
+        return String("This is a subsidy for implementing double glazing on houses. Please input a value between 0 and 1000 euros per family.");
+    }
     else {
         return String("No information has been specified for this policy.");
     }
@@ -797,6 +809,30 @@ void City::implement_policies(double value) {
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
+    }
+    else if (this->active_button == String("SolarHousing")) {
+        if (value >= 0 && value<=450) {
+            Godot::print("SOLAR PANELS SUBSIDIES ON HOUSING IMPLEMENTED");
+            for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+            {
+                 (*it)->set("solar_panel_subsidies_housing", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("WindturbinesHousing")) {
+    if (value >= 0 && value <= 800) {
+        Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON HOUSING IMPLEMENTED");
+        for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+        {
+            (*it)->set("wind_turbine_subsidies", value);
+        }
+    }
+    else {
+        this->trigger_notification(String("The value you provided was not in the specified range."));
+    }
     }
 }
 
