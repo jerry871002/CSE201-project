@@ -558,7 +558,7 @@ void godot::City::_on_MenuHousing_pressed(String name)
     String ButtonInfo = this->get_button_info_text();
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
-
+}
 
 String City::get_button_info_text() {
 
