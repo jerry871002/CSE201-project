@@ -616,6 +616,30 @@ String City::get_button_info_text() {
     {
         return String("This is a subsidy for implementing double glazing on houses. Please input a value between 0 and 1000 euros per family.");
     }
+    else if (this->active_button == String("ConsumptionTransport"))
+    {
+        return String("This is a tax on car consumption. Please input a value between 0 and - euros per liter of fuel.");
+    }
+    else if (this->active_button == String("WeightTransport"))
+    {
+        return String("This is a tax on car weight. Please input a value between 0 and - euros per ton of car.");
+    }
+    else if (this->active_button == String("BikeSubsidy"))
+    {
+        return String("This is a subsidy for bicycles. Please input a value between 0 and - euros per family.");
+    }
+    else if (this->active_button == String("ElectricSubsidy"))
+    {
+        return String("This is a subsidy for electric cars. Please input a value between 0 and - euros per family.");
+    }
+    else if (this->active_button == String("BusSubsidy"))
+    {
+        return String("This is a subsidy for public transport. Please input a value between 0 and - euros per family.");
+    }
+    else if (this->active_button == String("CarsProhibition"))
+    {
+        return String("This is a law prohibiting the use of all cars during a certain number of days per week. Please input a value between 0 and 7 days per week.");
+    }
     else {
         return String("No information has been specified for this policy.");
     }
