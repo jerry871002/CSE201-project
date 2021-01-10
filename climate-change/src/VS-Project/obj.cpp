@@ -150,7 +150,7 @@ void Structure::_register_methods()
 
     //register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
 
-    register_property<Structure, double>("solar_panel_subsidies", &Structure::solar_panel_subsidies, 0);
+    register_property<Structure, double>("panel_subsidies", &Structure::panel_subsidies, 0);
     register_property<Structure, double>("efficiency_supercritical", &Structure::efficiency_supercritical, 0);
     register_property<Structure, double>("efficiency_cogeneration", &Structure::efficiency_cogeneration, 0);
 
@@ -339,19 +339,3 @@ void godot::Structure::_on_Area_mouse_exited()
 
 
 
-bool Structure::wind_turbine_subsidies() {
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
-
-
-bool Structure::double_glazing_subsidies(){
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}

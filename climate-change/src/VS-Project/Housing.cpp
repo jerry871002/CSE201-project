@@ -10,21 +10,32 @@
 
 using namespace godot;
 
-/* For sim team: Can you make a function for double glazing making windows be changed, same for wind turbines. 
-Also is there a variable name for no solar panels. Because after 25 years, solar panels are removed automatically
-I would like to know how this is translated in the code, because right now I only know how to make them appear.
-*/
 
-// yes we can work on this , send us a text if theirs anything specific bothering you in the meanwhile
+//INFORMATION DISPLAY 
 
+template<typename T> String to_godot_string(T s)
+{
+	std::string standardString = std::to_string(s);
+	godot::String godotString = godot::String(standardString.c_str());
+	return godotString;
+}
+
+String Housing::get_object_info()
+{
+	String info = this->Structure::get_object_info();
+
+	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
+	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy used by the building in kWh: " + to_godot_string(this->energyUse) + String("\n");
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+	return info;
+}
 
 
 /// HOUSING SUPER CLASS
 /// This is the super class that contains classes for houses and buildings of our city.
 Housing::Housing() {
-
 	environmentalCost = 0;
-
 }
 
 Housing::~Housing() {
@@ -99,8 +110,7 @@ void Housing::simulate_step(double days) {
         }
         else {}
     }
-    else if (int(this->doubleGlazingAge) > days)
-    {
+    else if (int(this->doubleGlazingAge) > days) {
         this->doubleGlazingAge -= int(days);
     }
     else {
@@ -190,7 +200,7 @@ double Housing::get_double_glazing_age() {
 
 void Housing::panel_added_probability(){
 	double panelCost;
-    double panel_subsidies = this->get("solar_panel_subsidies"); // input from user of how much are the subsidies
+    panel_subsidies = this->get("solar_panel_subsidies"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
     panelCost = this->solarCost - panel_subsidies;  
     if (panelCost < 0) {
@@ -210,7 +220,7 @@ void Housing::panel_added_probability(){
 
 void Housing::double_glazing_added_probability(){
 	double doubleGlazingCost;
-    double double_glazing_subsidies = this->get("double_glazing_subsidies"); // input from user of how much are the subsidies
+    double_glazing_subsidies = this->get("double_glazing_subsidies"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
     doubleGlazingCost = windowCost * this->windowNumber - double_glazing_subsidies;  
     if (doubleGlazingCost < 0) {
@@ -226,7 +236,7 @@ void Housing::double_glazing_added_probability(){
 
 void Housing::roof_wind_turbines_added_probability(){
 	double turbineCost;
-    double wind_turbine_subsidies = this->get("wind_turbine_subsidies"); // input from user of how much are the subsidies
+    wind_turbine_subsidies = this->get("wind_turbine_subsidies"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
     turbineCost = this->windCost - wind_turbine_subsidies;  
     if (turbineCost < 0) {
@@ -365,6 +375,9 @@ void House::simulate_step(double days) {
 		satisfaction = 0;
 
 	}
+
+	maintenance = 0.1765 * energyUse * days;
+	CO2Emission = 0.0065 * energyUse * days; 
 
 	/*switch (houseType){
 		
@@ -605,6 +618,9 @@ void Building::simulate_step(double days) {
 
 	this->Housing::simulate_step(days);
 
+	maintenance = 0.1765 * energyUse * days;
+	CO2Emission = 0.0065 * energyUse * days;  
+
 	/*
 
 	if (solar_panel() == true) {
@@ -776,25 +792,7 @@ bool Building::rooftop_wind_turbines() {
 }
 */
 
-//INFORMATION DISPLAY 
 
-template<typename T> String to_godot_string(T s)
-{
-	std::string standardString = std::to_string(s);
-	godot::String godotString = godot::String(standardString.c_str());
-	return godotString;
-}
-
-String Housing::get_object_info()
-{
-	String info = this->Structure::get_object_info();
-
-	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
-	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy used by the building in kWh: " + to_godot_string(this->energyUse) + String("\n");
-	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
-	return info;
-}
 
 
 // Housing::Housing() {
