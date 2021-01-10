@@ -215,7 +215,7 @@ void City::_input(InputEvent*)
 
     if (i->is_action_pressed("ui_test"))
     {
-        //add_car();
+        add_car();
     }
 
     if (i->is_action_pressed("ui_turn"))
@@ -765,7 +765,7 @@ void City::_on_Game_Speed_changed()
 }
 
 
-void City::add_car() {
+void City::add_car() { //adds a car in the midle of the city 
 
 
     const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
@@ -812,7 +812,7 @@ void City::add_car() {
         }
 
         node->set("scale", Vector3(10, 10, 10));
-        node->set("translation", Vector3(-13, 0, -13 + 30 ));
+        node->set("translation", Vector3(citysize * 30 -13, 0, citysize* 30 -13 + 30 ));
 
 
         this->add_child((Node*)node);
@@ -830,7 +830,7 @@ void City::add_car() {
 
 
 
-void City::add_car(Vector3 pos) {
+void City::add_car(Vector3 pos) { //adds a car at a location given by the vector with a shift
 
 
     const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
