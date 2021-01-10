@@ -32,7 +32,8 @@ using namespace godot;
 
 using namespace std;
 
-int traffic_system[10][10][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
+
+int traffic_system[citysize][citysize][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
                  // the third coornidate indicates the side of the building and the forth one which way the car can turn
 
 
@@ -407,7 +408,7 @@ void City::_ready()
 {
 
     //std::cout << "DEBUG: Ready started" << std::endl;
-    citysize = 10;
+    // citysize = 10;
 
     this->generate_initial_city_graphics();
     structures_iterator = all_structures.begin();
@@ -1690,7 +1691,7 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
         double c = double(a * roota * rootb);
 
         // returns specific probability 
-        return float(a * pow(((20*dist/(this->citysize))), 2) + b * (20 * dist / (this->citysize)) + c);
+        return float(a * pow(((20*dist/(citysize))), 2) + b * (20 * dist / (citysize)) + c);
 
 
         // test line to verify that the integral is the proportion
