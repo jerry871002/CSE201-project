@@ -87,6 +87,7 @@ AgriculturalProduction::~AgriculturalProduction() {
 }
 
 void AgriculturalProduction::simulate_step(double days) {
+	age+=days;
 	switch(agricultureType){
 		case(0):{ // wheat
 		production=requiredLand*fertility*days; //output over the time period
