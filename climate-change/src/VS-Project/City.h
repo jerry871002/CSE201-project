@@ -147,6 +147,7 @@ namespace godot {
         int notification_timeout{ 180 };
         void trigger_notification(String);
         String get_button_info_text();
+        void hide_menus();
 
         void add_car();
         void add_car(Vector3);
