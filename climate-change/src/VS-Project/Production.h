@@ -76,6 +76,10 @@ namespace godot {
 		double get_energyuse();
 		double get_environmentalcost();
 		void agriculture_type(int type);
+		//calculates probalities of policies
+		void prohibite_pesticide();
+		void prohibite_GMO();
+		void prohibite_fertilizer();
 		double waterConsumption; // per day 
 		int agricultureType; // 0 - wheat, 1 - meat, 2 - vegetables
 		double requiredLand; //size of the field in km^2
@@ -85,6 +89,8 @@ namespace godot {
 		double pesticideProhibited; // 0 if pestices are allowed, 1 if pesticides are prohibited
 		double GMOProhibited; // 0 if GMO is allowed, 1 if pesticides GMO prohibited
 		double fertilizerProhibited; // 0 if fertilizers are allowed, 1 if fertilizers are prohibited
+		//probabilities that policies will be implemented
+		double pesticideProhibitedProbability, GMOProhibitedProbability, fertilizerProhibitedProbability;
 	};
 
 	/// <summary>
