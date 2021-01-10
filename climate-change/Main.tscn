@@ -1,17 +1,47 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=99 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
 [ext_resource path="res://Ressources/Grass.material" type="Material" id=3]
 [ext_resource path="res://KinematicBody.gdns" type="Script" id=4]
-[ext_resource path="res://Ressources/Icons/RoofWindTurb1.png" type="Texture" id=6]
-[ext_resource path="res://Ressources/Icons/RoofWindTurb2.png" type="Texture" id=7]
+[ext_resource path="res://Ressources/Icons/Policies/SolarPanel_shop_text.png" type="Texture" id=5]
+[ext_resource path="res://Ressources/Icons/Policies/SolarPanel_shop.png" type="Texture" id=6]
+[ext_resource path="res://Ressources/Icons/Policies/SolarPanel_house.png" type="Texture" id=7]
 [ext_resource path="res://MyTheme.tres" type="Theme" id=8]
 [ext_resource path="res://integerLineEdit.gd" type="Script" id=9]
 [ext_resource path="res://Ressources/Roboto/Roboto-Black.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Ressources/Icons/Policies/SolarPanel_house_text.png" type="Texture" id=11]
 [ext_resource path="res://Font.tres" type="DynamicFont" id=12]
 [ext_resource path="res://Box.tres" type="StyleBox" id=13]
+[ext_resource path="res://Ressources/Icons/Policies/Windturbine_house_text.png" type="Texture" id=14]
 [ext_resource path="res://RingTexture.png" type="Texture" id=15]
+[ext_resource path="res://Ressources/Icons/Policies/Windturbine_house.png" type="Texture" id=16]
+[ext_resource path="res://Ressources/Icons/Policies/Glazing_house_text.png" type="Texture" id=17]
+[ext_resource path="res://Ressources/Icons/Policies/Glazing_house.png" type="Texture" id=18]
+[ext_resource path="res://Ressources/Icons/Policies/BudgetTree_house_text.png" type="Texture" id=19]
+[ext_resource path="res://Ressources/Icons/Policies/BudgetTree_house.png" type="Texture" id=20]
+[ext_resource path="res://Ressources/Icons/Policies/Windturbine_shop.png" type="Texture" id=21]
+[ext_resource path="res://Ressources/Icons/Policies/Windturbine_shop_text.png" type="Texture" id=22]
+[ext_resource path="res://Ressources/Icons/Policies/BudgetTree_shop_text.png" type="Texture" id=23]
+[ext_resource path="res://Ressources/Icons/Policies/BudgetTree_shop.png" type="Texture" id=24]
+[ext_resource path="res://Ressources/Icons/Policies/Coal_energy.png" type="Texture" id=25]
+[ext_resource path="res://Ressources/Icons/Policies/Coal_energy_text.png" type="Texture" id=26]
+[ext_resource path="res://Ressources/Icons/Policies/Cogeneration_energy.png" type="Texture" id=27]
+[ext_resource path="res://Ressources/Icons/Policies/Cogeneration_energy_text.png" type="Texture" id=28]
+[ext_resource path="res://Ressources/Icons/Policies/Nuclear_energy_text.png" type="Texture" id=29]
+[ext_resource path="res://Ressources/Icons/Policies/Supercritical_energy.png" type="Texture" id=30]
+[ext_resource path="res://Ressources/Icons/Policies/Supercritical_energy_text.png" type="Texture" id=31]
+[ext_resource path="res://Ressources/Icons/Policies/Nuclear_energy.png" type="Texture" id=32]
+[ext_resource path="res://Ressources/Icons/Policies/Carbon_factory.png" type="Texture" id=33]
+[ext_resource path="res://Ressources/Icons/Policies/Carbon_factory_text.png" type="Texture" id=34]
+[ext_resource path="res://Ressources/Icons/Policies/Fertilizers_fields_text.png" type="Texture" id=35]
+[ext_resource path="res://Ressources/Icons/Policies/Fertilizers_fields.png" type="Texture" id=36]
+[ext_resource path="res://Ressources/Icons/Policies/GMO_fields_text.png" type="Texture" id=37]
+[ext_resource path="res://Ressources/Icons/Policies/GMO_fields.png" type="Texture" id=38]
+[ext_resource path="res://Ressources/Icons/Policies/Pesticides_fields.png" type="Texture" id=39]
+[ext_resource path="res://Ressources/Icons/Policies/Pesticides_fields_text.png" type="Texture" id=40]
+[ext_resource path="res://Ressources/Icons/Policies/Subsidy_factory.png" type="Texture" id=41]
+[ext_resource path="res://Ressources/Icons/Policies/Subsidy_factory_text.png" type="Texture" id=42]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -36,18 +66,213 @@ shader_param/blur_amount = 3.0
 
 [sub_resource type="Theme" id=5]
 
-[sub_resource type="StyleBoxTexture" id=6]
+[sub_resource type="StyleBoxTexture" id=13]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=14]
 texture = ExtResource( 7 )
-region_rect = Rect2( 0, 0, 347, 100 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=12]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=15]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=16]
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=17]
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=18]
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=19]
+texture = ExtResource( 18 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=20]
+texture = ExtResource( 18 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=21]
+texture = ExtResource( 19 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=22]
+texture = ExtResource( 20 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=23]
+texture = ExtResource( 20 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 726, 207 )
 expand_margin_left = 247.0
 
 [sub_resource type="StyleBoxTexture" id=7]
 texture = ExtResource( 6 )
-region_rect = Rect2( 0, 0, 100, 100 )
+region_rect = Rect2( 0, 0, 208, 207 )
 
 [sub_resource type="StyleBoxTexture" id=8]
 texture = ExtResource( 6 )
-region_rect = Rect2( 0, 0, 100, 100 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=24]
+texture = ExtResource( 23 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=25]
+texture = ExtResource( 24 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=26]
+texture = ExtResource( 24 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=27]
+texture = ExtResource( 22 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=28]
+texture = ExtResource( 21 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=29]
+texture = ExtResource( 21 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=30]
+texture = ExtResource( 26 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=31]
+texture = ExtResource( 25 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=32]
+texture = ExtResource( 25 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=33]
+texture = ExtResource( 28 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=34]
+texture = ExtResource( 27 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=35]
+texture = ExtResource( 27 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=39]
+texture = ExtResource( 29 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=40]
+texture = ExtResource( 32 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=41]
+texture = ExtResource( 32 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=36]
+texture = ExtResource( 31 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=37]
+texture = ExtResource( 30 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=38]
+texture = ExtResource( 30 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=42]
+texture = ExtResource( 34 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=43]
+texture = ExtResource( 33 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=44]
+texture = ExtResource( 33 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=45]
+texture = ExtResource( 35 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=46]
+texture = ExtResource( 36 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=47]
+texture = ExtResource( 36 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=48]
+texture = ExtResource( 37 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=49]
+texture = ExtResource( 38 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=50]
+texture = ExtResource( 38 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=51]
+texture = ExtResource( 40 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=52]
+texture = ExtResource( 39 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=53]
+texture = ExtResource( 39 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=54]
+texture = ExtResource( 42 )
+region_rect = Rect2( 0, 0, 726, 207 )
+expand_margin_left = 247.0
+
+[sub_resource type="StyleBoxTexture" id=55]
+texture = ExtResource( 41 )
+region_rect = Rect2( 0, 0, 208, 207 )
+
+[sub_resource type="StyleBoxTexture" id=56]
+texture = ExtResource( 41 )
+region_rect = Rect2( 0, 0, 208, 207 )
 
 [sub_resource type="RectangleShape2D" id=9]
 
@@ -232,13 +457,74 @@ __meta__ = {
 
 [node name="Menus" type="KinematicBody2D" parent="2Dworld"]
 
-[node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
+[node name="MenuHousing" type="Node2D" parent="2Dworld/Menus"]
+visible = false
 position = Vector2( -1, 0 )
 
-[node name="Button1" type="Button" parent="2Dworld/Menus/MenuShop"]
-margin_left = -140.0
+[node name="Button1" type="Button" parent="2Dworld/Menus/MenuHousing"]
+margin_left = -150.0
 margin_top = -50.0
-margin_right = -40.0
+margin_right = -50.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 13 )
+custom_styles/pressed = SubResource( 14 )
+custom_styles/normal = SubResource( 12 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="2Dworld/Menus/MenuHousing"]
+margin_left = -50.0
+margin_top = -150.0
+margin_right = 50.0
+margin_bottom = -50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 15 )
+custom_styles/pressed = SubResource( 16 )
+custom_styles/normal = SubResource( 17 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="2Dworld/Menus/MenuHousing"]
+margin_left = 50.0
+margin_top = -50.0
+margin_right = 150.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 18 )
+custom_styles/pressed = SubResource( 19 )
+custom_styles/normal = SubResource( 20 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button4" type="Button" parent="2Dworld/Menus/MenuHousing"]
+margin_left = -50.0
+margin_top = 50.0
+margin_right = 50.0
+margin_bottom = 150.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 21 )
+custom_styles/pressed = SubResource( 22 )
+custom_styles/normal = SubResource( 23 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
+visible = false
+position = Vector2( -1, 0 )
+
+[node name="Solar" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -150.0
+margin_top = -50.0
+margin_right = -50.0
 margin_bottom = 50.0
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 6 )
@@ -249,43 +535,162 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button2" type="Button" parent="2Dworld/Menus/MenuShop"]
-margin_left = -46.0
-margin_top = -156.0
-margin_right = 54.0
-margin_bottom = -56.0
+[node name="Button5" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -50.0
+margin_top = 50.0
+margin_right = 50.0
+margin_bottom = 150.0
 mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 6 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
+custom_styles/hover = SubResource( 24 )
+custom_styles/pressed = SubResource( 25 )
+custom_styles/normal = SubResource( 26 )
 action_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RoofWindTurbines4" type="Button" parent="2Dworld/Menus/MenuShop"]
-margin_left = 52.0
-margin_top = -52.0
-margin_right = 152.0
-margin_bottom = 48.0
+[node name="Button6" type="Button" parent="2Dworld/Menus/MenuShop"]
+margin_left = -50.0
+margin_top = -150.0
+margin_right = 50.0
+margin_bottom = -50.0
 mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 6 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
+custom_styles/hover = SubResource( 27 )
+custom_styles/pressed = SubResource( 28 )
+custom_styles/normal = SubResource( 29 )
 action_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RoofWindTurbines5" type="Button" parent="2Dworld/Menus/MenuShop"]
-margin_left = -44.0
-margin_top = 56.0
-margin_right = 56.0
-margin_bottom = 156.0
+[node name="MenuEnergy" type="Node2D" parent="2Dworld/Menus"]
+visible = false
+position = Vector2( -1, 0 )
+
+[node name="Solar" type="Button" parent="2Dworld/Menus/MenuEnergy"]
+margin_left = -150.0
+margin_top = -50.0
+margin_right = -50.0
+margin_bottom = 50.0
 mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 6 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
+custom_styles/hover = SubResource( 30 )
+custom_styles/pressed = SubResource( 31 )
+custom_styles/normal = SubResource( 32 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar2" type="Button" parent="2Dworld/Menus/MenuEnergy"]
+margin_left = -50.0
+margin_top = -150.0
+margin_right = 50.0
+margin_bottom = -50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 33 )
+custom_styles/pressed = SubResource( 34 )
+custom_styles/normal = SubResource( 35 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar3" type="Button" parent="2Dworld/Menus/MenuEnergy"]
+margin_left = 50.0
+margin_top = -50.0
+margin_right = 150.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 39 )
+custom_styles/pressed = SubResource( 40 )
+custom_styles/normal = SubResource( 41 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar4" type="Button" parent="2Dworld/Menus/MenuEnergy"]
+margin_left = -50.0
+margin_top = 50.0
+margin_right = 50.0
+margin_bottom = 150.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 36 )
+custom_styles/pressed = SubResource( 37 )
+custom_styles/normal = SubResource( 38 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuProduction" type="Node2D" parent="2Dworld/Menus"]
+position = Vector2( -1, 0 )
+
+[node name="Solar" type="Button" parent="2Dworld/Menus/MenuProduction"]
+margin_left = -150.0
+margin_top = -50.0
+margin_right = -50.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 42 )
+custom_styles/pressed = SubResource( 43 )
+custom_styles/normal = SubResource( 44 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar2" type="Button" parent="2Dworld/Menus/MenuProduction"]
+margin_left = -50.0
+margin_top = -150.0
+margin_right = 50.0
+margin_bottom = -50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 45 )
+custom_styles/pressed = SubResource( 46 )
+custom_styles/normal = SubResource( 47 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar3" type="Button" parent="2Dworld/Menus/MenuProduction"]
+margin_left = 50.0
+margin_top = -50.0
+margin_right = 150.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 48 )
+custom_styles/pressed = SubResource( 49 )
+custom_styles/normal = SubResource( 50 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar4" type="Button" parent="2Dworld/Menus/MenuProduction"]
+margin_left = -50.0
+margin_top = 50.0
+margin_right = 50.0
+margin_bottom = 150.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 51 )
+custom_styles/pressed = SubResource( 52 )
+custom_styles/normal = SubResource( 53 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar5" type="Button" parent="2Dworld/Menus/MenuProduction"]
+margin_left = -204.597
+margin_top = 60.7029
+margin_right = -104.597
+margin_bottom = 160.703
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 54 )
+custom_styles/pressed = SubResource( 55 )
+custom_styles/normal = SubResource( 56 )
 action_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -721,10 +1126,22 @@ margin_left = 157.0
 margin_right = 157.0
 margin_bottom = 38.0
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button1" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "PanelSubsidyForShops" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ChangePanelProbabilityForRestaurants" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/RoofWindTurbines5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "RoofWindTurbines" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button1" to="3Dworld" method="_on_MenuHousing_pressed" binds= [ "PanelSubsidy" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button2" to="3Dworld" method="_on_MenuHousing_pressed" binds= [ "WindTurbinesSubsidy" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button3" to="3Dworld" method="_on_MenuHousing_pressed" binds= [ "GlazingSubsidyForHouses" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button4" to="3Dworld" method="_on_MenuHousing_pressed" binds= [ "TreesBudget" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/Solar" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "PanelSubsidy" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "TreesBudget" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button6" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "WindTurbinesSubsidy" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerProhibition" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerCogenEff" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "NuclearPowerProhibition" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerSuperEff" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerProhibition" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerCogenEff" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "NuclearPowerProhibition" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerSuperEff" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerSuperEff" ]]
 [connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]
 [connection signal="pressed" from="2Dworld/ResetButton" to="3Dworld" method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="2Dworld/ResetConfirmationBox/ConfirmReset" to="3Dworld" method="_on_Reset_confirmed"]

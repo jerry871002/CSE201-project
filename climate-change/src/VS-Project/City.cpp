@@ -76,6 +76,7 @@ void City::_register_methods()
     register_method((char*)"_input", &City::_input);
     register_method((char*)"_ready", &City::_ready);
     register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
+    register_method((char*)"_on_MenuHousing_pressed", &City::_on_MenuHousing_pressed);
     register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
     register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
     register_method((char*)"_on_ResetButton_pressed", &City::_on_ResetButton_pressed);
@@ -218,6 +219,8 @@ void City::_input(InputEvent*)
     if (i->is_action_pressed("ui_turn"))
     {
         this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+
         this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
         this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
@@ -385,6 +388,7 @@ void City::set_initial_visible_components()
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
     // Repeat for all menus
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
@@ -424,6 +428,8 @@ void City::_on_ExitButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+
     this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
@@ -456,6 +462,8 @@ void City::_on_ResetButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+
     this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
@@ -518,6 +526,32 @@ void godot::City::_on_MenuShop_pressed(String name)
     active_button = name;
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
+
+    String ButtonInfo = this->get_button_info_text();
+    this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
+
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
+
+}
+
+void godot::City::_on_MenuShop_pressed(String name)
+{
+
+    active_button = name;
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
@@ -619,7 +653,10 @@ void City::implement_shop_policies(double value) {
 void City::_on_Game_Speed_changed()
 {
     time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
