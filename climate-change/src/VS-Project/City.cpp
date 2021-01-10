@@ -645,7 +645,7 @@ void City::implement_policies(double value) {
             }
         }
         else {
-            this->trigger_notification();
+            this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
     else if (this->active_button == String("EfficiencySupercriticalCoalPlant")) {
@@ -659,7 +659,7 @@ void City::implement_policies(double value) {
             }
         }
         else {
-            this->trigger_notification();
+            this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
     else if (this->active_button == String("EfficiencyCogenerationCoalPlant")) {
@@ -673,7 +673,7 @@ void City::implement_policies(double value) {
             }
         }
         else {
-            this->trigger_notification();
+            this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
 }
