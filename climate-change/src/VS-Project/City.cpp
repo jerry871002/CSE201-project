@@ -397,7 +397,7 @@ void City::_ready()
 {
 
     //std::cout << "DEBUG: Ready started" << std::endl;
-    citysize = 9;
+    citysize = 10;
     for (int i = 0; i < 8; i++) {
         current_car_quantities.push_back(0);
     }
