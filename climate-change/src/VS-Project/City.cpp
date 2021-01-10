@@ -215,7 +215,7 @@ void City::_input(InputEvent*)
 
     if (i->is_action_pressed("ui_test"))
     {
-        //add_car();
+        add_car();
     }
 
     if (i->is_action_pressed("ui_turn"))
@@ -592,6 +592,18 @@ String City::get_button_info_text() {
     {
         return String("This is a subsidy for green factories, promoting the reduction of harmful chemicals and heavy metals emissions. Please input a value between 1000 and 100 000 euros per factory per year or 0 to remove the policy");
     }
+    else if (this->active_button == String("Pesticides"))
+    {
+        return String("This is a law prohibiting the use of pesticides. Please input 1 in order to activate the policy or 0 to authorize pesticides again.");
+    }
+    else if (this->active_button == String("GMO"))
+    {
+        return String("This is a law prohibiting the use of GMOs. Please input 1 in order to activate the policy or 0 to authorize GMOs again.");
+    }
+    else if (this->active_button == String("Fertilizers"))
+    {
+        return String("This is a law prohibiting the use of fertilizers. Please input 1 in order to activate the policy or 0 to authorize fertilizers again.");
+    }
     else {
         return String("No information has been specified for this policy.");
     }
@@ -717,7 +729,7 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("MaximumCarbonFactories")) {
-        if (42>=value >= 0) {
+        if (42>=value && value>= 0) {
             Godot::print("MAXIMUM EMISSIONS ON FACTORIES IMPLEMENTED");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
@@ -731,12 +743,54 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("SubsidyFactories")) {
-        if (100000 >= value >= 1000 || value == 0) {
+        if ((100000 >= value && value >= 1000) || value == 0) {
             Godot::print("GREEN SUBSIDY FOR FACTORIES IMPLEMENTED");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
                 if ((String)(*it)->get("object_type") == (String)("Goods Factory")) {
                     (*it)->set("subsidy_green", value);
+                }
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("Pesticides")) {
+        if (value == 1 || value == 0) {
+            Godot::print("PROHIBITION OF PESTICIDES");
+            for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+            {
+                if ((String)(*it)->get("object_type") == (String)("Agricultural Production")) {
+                    (*it)->set("pesticideProhibited", value);
+                }
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("GMO")) {
+        if (value == 1 || value == 0) {
+            Godot::print("PROHIBITION OF GMOs");
+            for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+            {
+                if ((String)(*it)->get("object_type") == (String)("Agricultural Production")) {
+                    (*it)->set("GMOProhibited", value);
+                }
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("Fertilizers")) {
+        if (value == 1 || value == 0) {
+            Godot::print("PROHIBITION OF FERTILIZERS");
+            for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+            {
+                if ((String)(*it)->get("object_type") == (String)("Agricultural Production")) {
+                    (*it)->set("fertilizerProhibited", value);
                 }
             }
         }
@@ -765,16 +819,16 @@ void City::_on_Game_Speed_changed()
 }
 
 
-void City::add_car() {
+void City::add_car() { //adds a car in the midle of the city 
 
 
     const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
     const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
     const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
-    //const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/Raptor.tscn", "PackedScene");
+    const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/Bike.tscn", "PackedScene");
+    const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/Cybertruck.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
     
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
@@ -800,11 +854,11 @@ void City::add_car() {
          * 7 - sports car/Chiron
          */
         switch (type) {
-        case 0: node = OldCarScene->instance(); current_car_quantities[0] += 1; break;
-        case 1: node = OldCarScene->instance(); current_car_quantities[1] += 1; break;
+        case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
+        case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
         case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
         case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
-        case 4: node = OldCarScene->instance(); current_car_quantities[4] += 1; break;
+        case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
         case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
         case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
         case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
@@ -812,7 +866,7 @@ void City::add_car() {
         }
 
         node->set("scale", Vector3(10, 10, 10));
-        node->set("translation", Vector3(-13, 0, -13 + 30 ));
+        node->set("translation", Vector3(citysize * 15 -13, 0, citysize* 15 - 13 ));
 
 
         this->add_child((Node*)node);
@@ -830,16 +884,16 @@ void City::add_car() {
 
 
 
-void City::add_car(Vector3 pos) {
+void City::add_car(Vector3 pos) { //adds a car at a location given by the vector with a shift
 
 
     const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
     const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
     const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
-    //const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/Raptor.tscn", "PackedScene");
+    const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/Bike.tscn", "PackedScene");
+    const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/Cybertruck.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
 
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
@@ -853,11 +907,11 @@ void City::add_car(Vector3 pos) {
         Node* node;
         
         switch (type) {
-        case 0: node = OldCarScene->instance(); current_car_quantities[0] += 1; break;
-        case 1: node = OldCarScene->instance(); current_car_quantities[1] += 1; break;
+        case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
+        case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
         case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
         case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
-        case 4: node = OldCarScene->instance(); current_car_quantities[4] += 1; break;
+        case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
         case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
         case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
         case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
