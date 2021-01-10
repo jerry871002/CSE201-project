@@ -681,10 +681,6 @@ String City::get_button_info_text() {
     {
         return String("This is a law prohibiting the use of all cars during a certain number of days per week. Please input a value between 0 and 7 days per week.");
     }
-    else if (this->active_button == String("TreesBudget"))
-    {
-        return String("This policy defines a budget for the city to plant and grow more trees in residential and commercial areas. Please input a value between 0 and - in euros per year.");
-    }
     else {
         return String("No information has been specified for this policy.");
     }

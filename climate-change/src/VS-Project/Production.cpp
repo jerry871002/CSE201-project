@@ -88,9 +88,31 @@ AgriculturalProduction::~AgriculturalProduction() {
 
 void AgriculturalProduction::simulate_step(double days) {
 	age+=days;
-	//prohibite_pesticide();
 	switch(agricultureType){
 		case(0):{ // wheat
+		if ((fertilizerBefore == 0) &&(fertilizerProhibited==1)){
+			fertility*=0.65;
+		}
+		else if((fertilizerBefore == 1) &&(fertilizerProhibited==0)){
+			fertility/=0.65;
+		}
+		if ((pesticideBefore==0) &&(pesticideProhibited ==1)){
+			fertility/=1.15;
+			satisfaction/=0.85;
+		}
+		else if ((pesticideBefore==1) &&(pesticideProhibited ==0)){
+			fertility*=1.15;
+			satisfaction*=0.85;
+		}
+		if ((GMOBefore==0) &&(GMOProhibited ==1)){
+			//code to come
+		}
+		else if ((GMOBefore==1) &&(GMOProhibited ==0)){
+			//code to come
+		}
+		GMOBefore = GMOProhibited;
+		pesticideBefore = pesticideProhibited;
+		fertilizerBefore = fertilizerProhibited;
 		production=requiredLand*fertility*days; //output over the time period
 		waterConsumption=requiredLand*fertility*days*1500;
 		CO2Emission=0.59*requiredLand*fertility*days;
@@ -125,7 +147,6 @@ AgriculturalProduction::AgriculturalProduction(int type){
 void AgriculturalProduction::agriculture_type(int type){
 	agricultureType = type; // 0 - wheat, 1 - meat, 2 - vegetables
 	employment = 50;
-	//prohibite_pesticide();
 	switch(agricultureType){
 		case(0):{ // wheat
 		    std::random_device rd;
@@ -139,9 +160,12 @@ void AgriculturalProduction::agriculture_type(int type){
 			production = fertility *requiredLand; //output of wheat in kg per day
 			waterConsumption = 1500*production; //water litres per day
 			CO2Emission =0.59*production; //co2 kg per day
-			pesticideProhibited = false;
-			fertilizerProhibited = false;
-			GMOProhibited = false;
+			pesticideProhibited = 0;
+			fertilizerProhibited = 0;
+			GMOProhibited = 0;
+			fertilizerBefore = 0;
+			GMOBefore = 0;
+			pesticideBefore = 0;
 			std::normal_distribution <double> wheatsatisfaction(5.15, 0.15);
 			satisfaction = wheatsatisfaction(gen);
 		break;
@@ -169,23 +193,6 @@ double AgriculturalProduction::get_environmentalcost(){
 	return 0;
 }
 
-void AgriculturalProduction::prohibite_pesticide(){
-	double pesticidePolicy = this->get("Pesticides"); // from user
-	switch (agricultureType)
-	{
-	case (0):
-		if ((pesticideProhibited==1)&&(pesticidePolicy==0)){
-			fertility*=1.15;
-			satisfaction*=0.85;
-		}
-		else if ((pesticideProhibited==0)&&(pesticidePolicy==1)){
-			fertility/=1.15;
-			satisfaction/=0.85;
-		}
-		break;
-	}
-	pesticideProhibited = pesticidePolicy;
-}
 
 /// <summary>
 /// GOODS FACTORIES
