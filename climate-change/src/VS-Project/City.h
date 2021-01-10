@@ -42,7 +42,7 @@ then run:
 */
 
 namespace godot {
-
+    const int citysize = 10;
     class Transport;
 
     class City : public Spatial {
@@ -68,7 +68,6 @@ namespace godot {
         // SIGNALS
 
         void _on_MenuShop_pressed(String Name);
-        void _on_MenuHousing_pressed(String Name);
         void _on_Validate_pressed();
         void _on_Game_Speed_changed();
         void _on_ResetButton_pressed();
@@ -115,7 +114,7 @@ namespace godot {
         bool ClickActive{ false };
 
         //TRAFFIC
-        int sizeOfCity = 10; // buildings are placed only on a square sizeOfCity * sizeOfCity
+        int sizeOfCity = citysize; // buildings are placed only on a square sizeOfCity * sizeOfCity
         int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 
 
         // following functions handle adding structures to the city, takes a position and the required scene
@@ -199,7 +198,7 @@ namespace godot {
 
         double budget; //yearly budget that can be used t proomote the policies
                        // updated in the undate_time function
-        int citysize;
+
         //probability that a certain type of car will be added
         double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
         double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;

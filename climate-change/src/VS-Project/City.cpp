@@ -32,7 +32,8 @@ using namespace godot;
 
 using namespace std;
 
-int traffic_system[10][10][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
+
+int traffic_system[citysize][citysize][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
                  // the third coornidate indicates the side of the building and the forth one which way the car can turn
 
 
@@ -75,7 +76,6 @@ void City::_register_methods()
     register_method((char*)"_input", &City::_input);
     register_method((char*)"_ready", &City::_ready);
     register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
-    register_method((char*)"_on_MenuHousing_pressed", &City::_on_MenuHousing_pressed);
     register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
     register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
     register_method((char*)"_on_ResetButton_pressed", &City::_on_ResetButton_pressed);
@@ -407,7 +407,7 @@ void City::_ready()
 {
 
     //std::cout << "DEBUG: Ready started" << std::endl;
-    citysize = 10;
+    // citysize = 10;
 
     this->generate_initial_city_graphics();
     structures_iterator = all_structures.begin();
@@ -559,13 +559,6 @@ void godot::City::_on_MenuHousing_pressed(String name)
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
 
-
-    this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
-
-    this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
-
-}
 
 String City::get_button_info_text() {
 
@@ -1726,7 +1719,7 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
         double c = double(a * roota * rootb);
 
         // returns specific probability 
-        return float(a * pow(((20*dist/(this->citysize))), 2) + b * (20 * dist / (this->citysize)) + c);
+        return float(a * pow(((20*dist/(citysize))), 2) + b * (20 * dist / (citysize)) + c);
 
 
         // test line to verify that the integral is the proportion

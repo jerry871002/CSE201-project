@@ -624,6 +624,7 @@ __meta__ = {
 }
 
 [node name="MenuProduction" type="Node2D" parent="2Dworld/Menus"]
+visible = false
 position = Vector2( -1, 0 )
 
 [node name="Solar" type="Button" parent="2Dworld/Menus/MenuProduction"]
@@ -683,10 +684,97 @@ __meta__ = {
 }
 
 [node name="Solar5" type="Button" parent="2Dworld/Menus/MenuProduction"]
-margin_left = -204.597
-margin_top = 60.7029
-margin_right = -104.597
-margin_bottom = 160.703
+margin_left = -300.0
+margin_top = -50.0
+margin_right = -200.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 54 )
+custom_styles/pressed = SubResource( 55 )
+custom_styles/normal = SubResource( 56 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuTransport" type="Node2D" parent="2Dworld/Menus"]
+position = Vector2( -1, 0 )
+
+[node name="Solar" type="Button" parent="2Dworld/Menus/MenuTransport"]
+margin_left = -150.0
+margin_top = -50.0
+margin_right = -50.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 42 )
+custom_styles/pressed = SubResource( 43 )
+custom_styles/normal = SubResource( 44 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar2" type="Button" parent="2Dworld/Menus/MenuTransport"]
+margin_left = -50.0
+margin_top = -150.0
+margin_right = 50.0
+margin_bottom = -50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 45 )
+custom_styles/pressed = SubResource( 46 )
+custom_styles/normal = SubResource( 47 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar3" type="Button" parent="2Dworld/Menus/MenuTransport"]
+margin_left = 50.0
+margin_top = -50.0
+margin_right = 150.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 48 )
+custom_styles/pressed = SubResource( 49 )
+custom_styles/normal = SubResource( 50 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar4" type="Button" parent="2Dworld/Menus/MenuTransport"]
+margin_left = -50.0
+margin_top = 50.0
+margin_right = 50.0
+margin_bottom = 150.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 51 )
+custom_styles/pressed = SubResource( 52 )
+custom_styles/normal = SubResource( 53 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar5" type="Button" parent="2Dworld/Menus/MenuTransport"]
+margin_left = -300.0
+margin_top = -50.0
+margin_right = -200.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 54 )
+custom_styles/pressed = SubResource( 55 )
+custom_styles/normal = SubResource( 56 )
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solar6" type="Button" parent="2Dworld/Menus/MenuTransport"]
+margin_left = 200.0
+margin_top = -50.0
+margin_right = 300.0
+margin_bottom = 50.0
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 54 )
 custom_styles/pressed = SubResource( 55 )
@@ -1142,6 +1230,12 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "NuclearPowerProhibition" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerSuperEff" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuProduction/Solar5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerSuperEff" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerProhibition" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar2" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerCogenEff" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "NuclearPowerProhibition" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar4" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerSuperEff" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerSuperEff" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar6" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "CoalPowerSuperEff" ]]
 [connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]
 [connection signal="pressed" from="2Dworld/ResetButton" to="3Dworld" method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="2Dworld/ResetConfirmationBox/ConfirmReset" to="3Dworld" method="_on_Reset_confirmed"]
