@@ -255,7 +255,7 @@ void City::_input(InputEvent*)
 void City::generate_initial_city_graphics()
 {
 
-    srand((int)time(0));
+    // srand((int)time(0));
 
     Vector3 center = Vector3(15.0 * citysize, 0, 15.0 * citysize);
 
@@ -329,7 +329,7 @@ void City::generate_initial_city_graphics()
                         for (int z1 = 0; z1 < 2; z1++) {
 
                             Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-
+                            srand(int((x1+1) * (z1+1)*(x+1)*(z+1)));
 
                             dist = pow(pow(center.x - pos.x - pos1.x, 2) + pow(center.z - pos.z - pos1.z, 2), 0.5);
 
@@ -376,7 +376,7 @@ void City::generate_initial_city_graphics()
                 for (int x1 = 0; x1 < 2; x1++)
                 {
                     for (int z1 = 0; z1 < 2; z1++) {
-
+                        srand(int((x1 + 1)* (z1 + 1)* (x + 1)* (z + 1)));
                         Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
 
 
