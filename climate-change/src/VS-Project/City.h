@@ -140,7 +140,7 @@ namespace godot {
         std::vector<Transport*> all_transports;
 
         String active_button;
-        void implement_shop_policies(double);
+        void implement_policies(double);
         bool notification_active{ false };
         int notification_counter{ 0 };
         int notification_timeout{ 180 };
