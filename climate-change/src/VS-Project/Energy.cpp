@@ -190,20 +190,20 @@ void NuclearPowerPlant::simulate_step(double days)
 		}
 	}
 
-	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
+	energyOutput = energyPerDay * days; // total kWh produced by a standard plant 
 
-	fissileMaterial += 1.4E-7 * energyPerDay * days;
-	naturalUranium += 3.4E-8 * energyPerDay * days;
-	CO2Emission += 0.012 * energyPerDay * days;
-	nuclearWaste += 3.4E-9 * energyPerDay * days;
-	radiation += 1.4E-12 * energyPerDay * days;
+	fissileMaterial = 1.4E-7 * energyPerDay * days;
+	naturalUranium = 3.4E-8 * energyPerDay * days;
+	CO2Emission = 0.012 * energyPerDay * days;
+	nuclearWaste = 3.4E-9 * energyPerDay * days;
+	radiation = 1.4E-12 * energyPerDay * days;
 	environmentalCost = 0.019 * energyPerDay * days;
-	maintenance += 0.04 * energyPerDay * days;
+	maintenance = 0.04 * energyPerDay * days;
 	if (age >= 3650) {
-		maintenance += 0.04 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
+		maintenance = 0.04 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
 	}
 	if (age >= 10950) {
-		maintenance += 0.04; // after 30 years the maintenance and working costs double
+		maintenance = 0.04; // after 30 years the maintenance and working costs double
 	}
 }
 
@@ -265,11 +265,11 @@ void Windmill::simulate_step(double days)
 		//send message on screen for closure
 	}
 
-	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
+	energyOutput = energyPerDay * days; // total kWh produced by a standard plant 
 
-	CO2Emission += 0.011 * energyPerDay * days;
+	CO2Emission = 0.011 * energyPerDay * days;
 	environmentalCost = 0.0009 * energyPerDay * days;
-	maintenance += 7.45E-4 * energyPerDay * days;
+	maintenance = 7.45E-4 * energyPerDay * days;
 }
 
 /// <summary>
@@ -335,17 +335,17 @@ void GeothermalPowerPlant::simulate_step(double days)
 	
 	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
 
-	maintenance += 0.08 * energyPerDay * days;
+	maintenance = 0.08 * energyPerDay * days;
 	if (age >= 3650) {
-		maintenance += 0.08 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
+		maintenance = 0.08 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
 	}
 	if (age >= 7300) {
-		maintenance += 0.08; // after 20 years the maintenance and working costs double
+		maintenance = 0.08; // after 20 years the maintenance and working costs double
 	}
-	CO2Emission += 0.09 * energyPerDay * days;
-	NH3Emission += 1.7E-5 * energyPerDay * days;
-	CH4Emission += 1.6E-5 * energyPerDay * days;
-	H2SEmission += 8.2E-5 * energyPerDay * days;
+	CO2Emission = 0.09 * energyPerDay * days;
+	NH3Emission = 1.7E-5 * energyPerDay * days;
+	CH4Emission = 1.6E-5 * energyPerDay * days;
+	H2SEmission = 8.2E-5 * energyPerDay * days;
 
 	environmentalCost = 0.0015 * energyPerDay * days;
 }
@@ -431,7 +431,7 @@ void CoalPowerPlant::simulate_step(double days)
 		}
 	}
 	
-	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
+	energyOutput = energyPerDay * days; // total kWh produced by a standard plant 
 	bool efficiencySup = true;
 	bool efficiencyCo = true;
 	
@@ -441,32 +441,32 @@ void CoalPowerPlant::simulate_step(double days)
 			efficiencySup = false;
 		}
 		energyPerDay = 9589041 * (1 - 0.04);
-		maintenance += 0.054 * energyPerDay * days;
+		maintenance = 0.054 * energyPerDay * days;
 	}
 	if (efficiency_cogeneration == 1) {
 		if (efficiencyCo == true) {
-			maintenance += 20E6;
+			maintenance = 20E6;
 			efficiencyCo = false;
 		}
 		energyPerDay = 9589041 * (1 - 0.09);
-		maintenance += 0.058 * energyPerDay * days;
+		maintenance = 0.058 * energyPerDay * days;
 	}
 	else {
-		maintenance += 0.05 * energyPerDay * days;
+		maintenance = 0.05 * energyPerDay * days;
 	}
 	if (age >= 3650) {
-		maintenance += 0.05 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
+		maintenance = 0.05 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
 	}
 	if (age >= 10950) {
-		maintenance += 0.05; // after 30 years the maintenance and working costs double
+		maintenance = 0.05; // after 30 years the maintenance and working costs double
 	}
 
-	coal += 4.06E-4 * energyPerDay * days;
-	CO2Emission += 0.868 * energyPerDay * days;
-	SO2Emission += 0.00152 * energyPerDay * days;
-	NOxEmission += 8.49E-4 * energyPerDay * days;
-	PMEmission += 4E-5 * energyPerDay * days;
-	ashOutput += 0.0619 * energyPerDay * days;
-	mercuryEmission += 1.137E-8 * energyPerDay * days;
+	coal = 4.06E-4 * energyPerDay * days;
+	CO2Emission = 0.868 * energyPerDay * days;
+	SO2Emission = 0.00152 * energyPerDay * days;
+	NOxEmission = 8.49E-4 * energyPerDay * days;
+	PMEmission = 4E-5 * energyPerDay * days;
+	ashOutput = 0.0619 * energyPerDay * days;
+	mercuryEmission = 1.137E-8 * energyPerDay * days;
 	environmentalCost = 0.06 * energyPerDay * days;
 }

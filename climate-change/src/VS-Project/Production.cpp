@@ -179,6 +179,8 @@ String godot::GoodsFactories::class_name()
 }
 
 GoodsFactories::GoodsFactories() {
+	age = 0;
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> employees(100, 60);
@@ -206,6 +208,8 @@ GoodsFactories::~GoodsFactories() {}
 
 void GoodsFactories::simulate_step(double days)
 {
+	age += days;
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
@@ -255,36 +259,36 @@ void GoodsFactories::simulate_step(double days)
 			employment = 0;
 		}
 		std::normal_distribution <double> co2(maximum_CO2, 0.5);
-		CO2Emission += (co2(gen) * employment) * green;
+		CO2Emission = (co2(gen) * employment) * green;
 	}
 	else {
 		std::normal_distribution <double> co2(42.5, 0.5);
-		CO2Emission += (co2(gen) * employment) * green;
+		CO2Emission = (co2(gen) * employment) * green;
 	}
 
 	std::normal_distribution <double> mercury(2.3E-7, 1E-8);
-	mercuryEmission += (mercury(gen)* employment)*green;
+	mercuryEmission = (mercury(gen)* employment)*green;
 	std::normal_distribution <double> arsenic(2.4E-7, 1E-8);
-	arsenicEmission += (arsenic(gen)* employment)* green;
+	arsenicEmission = (arsenic(gen)* employment)* green;
 	std::normal_distribution <double> cadmium(1.E-7, 5E-9);
-	cadmiumEmission += (cadmium(gen)* employment) * green;
+	cadmiumEmission = (cadmium(gen)* employment) * green;
 	std::normal_distribution <double> nickel(1.85E-6, 5E-8);
-	nickelEmission += (nickel(gen)* employment) * green;
+	nickelEmission = (nickel(gen)* employment) * green;
 	std::normal_distribution <double> lead(3.7E-6, 5E-8);
-	leadEmission += (lead(gen)* employment) * green;
+	leadEmission = (lead(gen)* employment) * green;
 	std::normal_distribution <double> so2(0.04, 0.001);
-	SO2Emission += (so2(gen)* employment) * green;
+	SO2Emission = (so2(gen)* employment) * green;
 	std::normal_distribution <double> nh3(0.05, 0.0025);
-	NH3Emission += (nh3(gen)* employment) * green;
+	NH3Emission = (nh3(gen)* employment) * green;
 	std::normal_distribution <double> nox(0.05, 0.0025);
-	NOxEmission += (nox(gen)* employment) * green;
+	NOxEmission = (nox(gen)* employment) * green;
 	std::normal_distribution <double> vocs(0.075, 0.005);
-	VOCsEmission += (vocs(gen)* employment) * green;
+	VOCsEmission = (vocs(gen)* employment) * green;
 	std::normal_distribution <double> pm(0.5, 0.15);
-	PMEmission += (pm(gen)* employment) * green;
+	PMEmission = (pm(gen)* employment) * green;
 
 	std::normal_distribution <double> energy(100, 10);
-	energyUse += energy(gen)* employment * green;
+	energyUse = energy(gen)* employment * green;
 }
 
 /// <summary>
@@ -297,6 +301,7 @@ String godot::Services::class_name()
 }
 
 Services::Services() {
+	age = 0;
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> employees(30000, 1000);
@@ -319,20 +324,22 @@ Services::~Services() {}
 
 void Services::simulate_step(double days)
 {
+	age += days;
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
 
 	std::normal_distribution <double> energy(250000, 5000);
-	energyUse += energy(gen); 
+	energyUse = energy(gen); 
 	std::normal_distribution <double> pm(1010, 70);
-	PMEmission += pm(gen);
+	PMEmission = pm(gen);
 	std::normal_distribution <double> arsenic(0.002, 0.0001);
-	arsenicEmission += arsenic(gen);
+	arsenicEmission = arsenic(gen);
 	std::normal_distribution <double> nickel(0.012, 0.001);
-	nickelEmission += nickel(gen);
+	nickelEmission = nickel(gen);
 	std::normal_distribution <double> lead(0.021, 0.002);
-	leadEmission += lead(gen); 
+	leadEmission = lead(gen); 
 }
 
 // INOFRMATION DISPLAY
