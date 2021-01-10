@@ -1,0 +1,3 @@
+Saga:
+This weel i wrote functions to compute the probability that solar panels, wind turbines and double glazing are added on houses.
+For that I had to reorganize the code for the housing class. The next few days I will fix some of the things that aren't working perfectly.
