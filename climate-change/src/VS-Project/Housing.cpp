@@ -200,7 +200,7 @@ double Housing::get_double_glazing_age() {
 
 void Housing::panel_added_probability(){
 	double panelCost;
-    panel_subsidies = this->get("solar_panel_subsidies"); // input from user of how much are the subsidies
+    double panel_subsidies = this->get("solar_panel_subsidies"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
     panelCost = this->solarCost - panel_subsidies;  
     if (panelCost < 0) {
@@ -220,7 +220,7 @@ void Housing::panel_added_probability(){
 
 void Housing::double_glazing_added_probability(){
 	double doubleGlazingCost;
-    double_glazing_subsidies = this->get("double_glazing_subsidies"); // input from user of how much are the subsidies
+    double glazing_subsidies = this->get("double_glazing_subsidies"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
     doubleGlazingCost = windowCost * this->windowNumber - double_glazing_subsidies;  
     if (doubleGlazingCost < 0) {
@@ -236,7 +236,7 @@ void Housing::double_glazing_added_probability(){
 
 void Housing::roof_wind_turbines_added_probability(){
 	double turbineCost;
-    wind_turbine_subsidies = this->get("wind_turbine_subsidies"); // input from user of how much are the subsidies
+    double wind_subsidies = this->get("wind_turbine_subsidies"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
     turbineCost = this->windCost - wind_turbine_subsidies;  
     if (turbineCost < 0) {
