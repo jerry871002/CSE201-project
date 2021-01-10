@@ -1894,7 +1894,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 		}
 	}
 	for (int i =0;i<8;i++){
-		resourcesUse[i]/=resourcesUse[minInd]/resourcesUse[i];
+		resourcesUse[i]=resourcesUse[minInd]/resourcesUse[i];
 	}
     double alpha[8];
     for (int i = 0; i < 8; i++) {

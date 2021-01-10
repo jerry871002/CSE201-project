@@ -1,3 +1,9 @@
 Saga:
 This weel i wrote functions to compute the probability that solar panels, wind turbines and double glazing are added on houses.
 For that I had to reorganize the code for the housing class. The next few days I will fix some of the things that aren't working perfectly.
+
+Anna:
+
+This week I finished wheat section in agriculrural production class and wrote how pesticide/fertilizer prohibition law policies modify some properties of wheat.
+Also I wrote a function in city which for each type of transport calculates probability that it will be added basing it on a model Eliott had written before in python. 
+Next week I am planning to work on transport policies. 
