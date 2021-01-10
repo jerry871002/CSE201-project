@@ -102,9 +102,9 @@ namespace godot {
         // POLICIES (need to not be functions !) :
 
         // Changing the coal power plant efficiency (constructor creates subcritical plant of 38% efficiency) :
-        bool efficiency_supercritical = 0; // set to false when equals 0, true when given 1
+        double efficiency_supercritical = 0; // set to false when equals 0, true when given 1
                                           // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-        bool efficiency_cogeneration = 0; // set to false when equals 0, true when given 1
+        double efficiency_cogeneration = 0; // set to false when equals 0, true when given 1
                                           //improve efficiency to cogeneration type of plant (47% energy converted to electricity)
 
         //Law prohibiting coal power plants :
@@ -130,7 +130,13 @@ namespace godot {
          //Subsidies for helping households, buildings to change their windows to double glazing (these help poorer households to have less environmental impact)
         bool double_glazing_subsidies();
         //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if it is possible
-
+        
+        //law prohibiting pesticides
+        double pesticideProhibited; // 0 if pestices are allowed, 1 if pesticides are prohibited
+        //law prohibiting GMO
+		double GMOProhibited; // 0 if GMO is allowed, 1 if pesticides GMO prohibited
+        //law prohibiting fertilizer
+		double fertilizerProhibited; // 0 if fertilizers are allowed, 1 if fertilizers are prohibited
         /*
         //Ads to promote vegetarianism, and reduce meat production in the city
         bool ad_vegetarian(); //not sure what form ads should take */

@@ -558,7 +558,22 @@ void godot::City::_on_MenuShop_pressed(String name)
 
 }
 
+void godot::City::_on_MenuHousing_pressed(String name)
+{
 
+    active_button = name;
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
+
+    String ButtonInfo = this->get_button_info_text();
+    this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
+}
 
 String City::get_button_info_text() {
 
@@ -577,6 +592,14 @@ String City::get_button_info_text() {
     {
         return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for restaurants in the city.");
     }
+    else if (this->active_button == String("EfficiencySupercriticalCoalPlant"))
+    {
+        return String("Please input 1 in order to activate the policy or 0 to return to a subcritical efficiency (38%).");
+    }
+    else if (this->active_button == String("EfficiencyCogenerationCoalPlant"))
+    {
+        return String("Please input 1 in order to activate the policy or 0 to return to a subcritical efficiency (38%).");
+    }
     else {
         return String("No information has been specified for this policy.");
     }
@@ -594,7 +617,7 @@ void godot::City::_on_Validate_pressed()
     this->_on_Game_Speed_changed();
 
     if (mytext.is_valid_float()) {
-        this->implement_shop_policies((double)mytext.to_float());
+        this->implement_policies((double)mytext.to_float());
     }
     else {
         this->trigger_notification(String("You did not enter an appropriate value for the policy."));
@@ -610,7 +633,7 @@ void City::trigger_notification(String text = String("Seems like there was a mis
     this->notification_active = true;
 }
 
-void City::implement_shop_policies(double value) {
+void City::implement_policies(double value) {
 
     Godot::print(this->active_button);
 
@@ -633,6 +656,34 @@ void City::implement_shop_policies(double value) {
             {
                 if ((String)(*it)->get("object_type") == (String)("Restaurant")) {
                     (*it)->set("panel_probability", value);
+                }
+            }
+        }
+        else {
+            this->trigger_notification();
+        }
+    }
+    else if (this->active_button == String("EfficiencySupercriticalCoalPlant")) {
+        if (value == 0 || value == 1) {
+            Godot::print("THE COAL POWER PLANTS WILL INCREASE THEIR EFFICIENCY TO A SUPERCRITICAL TYPE (42%)");
+            for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
+            {
+                if ((String)(*it)->get("object_type") == (String)("Coal Power Plant")) {
+                    (*it)->set("efficiency_supercritical", value);
+                }
+            }
+        }
+        else {
+            this->trigger_notification();
+        }
+    }
+    else if (this->active_button == String("EfficiencyCogenerationCoalPlant")) {
+        if (value == 0 || value == 1) {
+            Godot::print("THE COAL POWER PLANTS WILL INCREASE THEIR EFFICIENCY TO A COGENERATION TYPE (47%)");
+            for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
+            {
+                if ((String)(*it)->get("object_type") == (String)("Coal Power Plant")) {
+                    (*it)->set("efficiency_cogeneration", value);
                 }
             }
         }
