@@ -15,6 +15,7 @@
 #include <TextureProgress.hpp>
 #include <Color.hpp>
 #include <Label.hpp>
+#include <DirectionalLight.hpp>
 
 #include <PoolArrays.hpp>
 
@@ -151,6 +152,7 @@ void City::_physics_process(float delta) {
         }
         */
         (this->simulation_counter)--;
+        (this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")->get_node("DirectionalLight"))->set("rotation_degrees", Vector3(-45 - sin((M_PI * (2 * (double)daycount) / 10) )*25 / 2 - 12.5, 45, 0 ));
     }
 
     if (this->date_counter > 1)
