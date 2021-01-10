@@ -88,6 +88,7 @@ AgriculturalProduction::~AgriculturalProduction() {
 
 void AgriculturalProduction::simulate_step(double days) {
 	age+=days;
+	prohibite_pesticide();
 	switch(agricultureType){
 		case(0):{ // wheat
 		production=requiredLand*fertility*days; //output over the time period
@@ -124,6 +125,7 @@ AgriculturalProduction::AgriculturalProduction(int type){
 void AgriculturalProduction::agriculture_type(int type){
 	agricultureType = type; // 0 - wheat, 1 - meat, 2 - vegetables
 	employment = 50;
+	prohibite_pesticide();
 	switch(agricultureType){
 		case(0):{ // wheat
 		    std::random_device rd;
@@ -168,13 +170,21 @@ double AgriculturalProduction::get_environmentalcost(){
 }
 
 void AgriculturalProduction::prohibite_pesticide(){
-	if (pesticideProhibited==1){
-		pesticideProhibitedProbability = 1;
+	double pesticidePolicy = this->get("Pesticides"); // from user
+	switch (agricultureType)
+	{
+	case (0):
+		if ((pesticideProhibited==1)&&(pesticidePolicy==0)){
+			fertility*=1.15;
+			satisfaction*=0.85;
+		}
+		else if ((pesticideProhibited==0)&&(pesticidePolicy==1)){
+			fertility/=1.15;
+			satisfaction/=0.85;
+		}
+		break;
 	}
-	else{
-		//not finished at all
-		pesticideProhibitedProbability = CO2Emission/satisfaction*pow(production,2);
-	}
+	pesticideProhibited = pesticidePolicy;
 }
 
 /// <summary>
