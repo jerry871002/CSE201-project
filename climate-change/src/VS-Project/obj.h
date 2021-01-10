@@ -122,7 +122,7 @@ namespace godot {
         //Subsidies for helping households, buildings to install solar panels (these help poorer households to have less environmental impact)
         
         
-        double panel_subsidies;
+        double solar_panel_subsidies;
         // range from 0 to solarCost
 
 
