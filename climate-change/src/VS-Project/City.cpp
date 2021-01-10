@@ -913,7 +913,7 @@ void City::add_car() { //adds a car in the midle of the city
             }
 
             node->set("scale", Vector3(10, 10, 10));
-            node->set("translation", Vector3(citysize * 15 - 13, 0, citysize * 15 - 13));
+            node->set("translation", Vector3(citysize * 15 - 13, 0.1, citysize * 15 - 13));
 
 
             this->add_child((Node*)node);
@@ -966,7 +966,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             }
 
             node->set("scale", Vector3(10, 10, 10));
-            node->set("translation", pos + Vector3(-13, 0, -13));
+            node->set("translation", pos + Vector3(-13, 0.1, -13));
 
 
             this->add_child((Node*)node);
