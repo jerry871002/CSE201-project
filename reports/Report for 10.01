@@ -14,3 +14,6 @@ because of libraries issues. This last problem is still unsolved for now and I w
 retrieve all the attributes of the different buildings this week and am now defining our counters and indices based on this. I plan to finish
 this the coming week.
 
+Luca:
+This week and during the holidays, I finished fixing the bugs for plotting pie charts and line charts in Godot. Now, they are working perfectly. Moreover, I have worked with the algorithm team so as to make my charts functional. 
+In the next few days, I will continue to work with the algorithm team so as to display relevant data about the city with my charts.
