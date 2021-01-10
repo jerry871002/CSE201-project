@@ -88,7 +88,7 @@ AgriculturalProduction::~AgriculturalProduction() {
 
 void AgriculturalProduction::simulate_step(double days) {
 	age+=days;
-	prohibite_pesticide();
+	//prohibite_pesticide();
 	switch(agricultureType){
 		case(0):{ // wheat
 		production=requiredLand*fertility*days; //output over the time period
@@ -125,7 +125,7 @@ AgriculturalProduction::AgriculturalProduction(int type){
 void AgriculturalProduction::agriculture_type(int type){
 	agricultureType = type; // 0 - wheat, 1 - meat, 2 - vegetables
 	employment = 50;
-	prohibite_pesticide();
+	//prohibite_pesticide();
 	switch(agricultureType){
 		case(0):{ // wheat
 		    std::random_device rd;
