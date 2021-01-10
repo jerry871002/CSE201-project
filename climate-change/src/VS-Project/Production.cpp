@@ -216,7 +216,7 @@ void GoodsFactories::simulate_step(double days)
 
 	double green = 1; //needed for the green_subsidy policy
 
-	if (subsidy_green > -1) {
+	if (subsidy_green > 0) {
 		int value = 10;
 		subsidy = true;
 		if (subsidy_green <= 30000) {
@@ -237,7 +237,7 @@ void GoodsFactories::simulate_step(double days)
 		}
 	}
 
-	if (maximum_CO2 > -1) {
+	if (maximum_CO2 > 0) {
 		int maxi = 10;
 		if (maximum_CO2 >= 30) {
 			maxi = 10;

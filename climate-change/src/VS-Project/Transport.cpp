@@ -516,6 +516,7 @@ int Transport::get_direction(Vector3 pos, double rot) {
         myCity->remove_type_car(get_transportType());
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         return(0);
+
     }
     std::cout << "Car direction possible " << std::endl;
     int i = -1;
