@@ -885,47 +885,47 @@ void City::add_car() { //adds a car in the midle of the city
         // randomly choose between bugatti and chiron otherwise motobike
         //int type = rand() % 3; 
         int type = most_missing_type();
-        if (type == NULL) {
-            type = rand() % 8;
+        if (type != NULL) {
+
+
+            Node* node;
+
+            /*
+             *  0 - electic car
+             * 1 - big american car
+             * 2 - normal car
+             * 3 - old collection car/bugatti
+             * 4 - bike
+             * 5 - motorcycle
+             * 6 - bus
+             * 7 - sports car/Chiron
+             */
+            switch (type) {
+            case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
+            case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
+            case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
+            case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
+            case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
+            case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
+            case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
+            case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
+            default: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
+            }
+
+            node->set("scale", Vector3(10, 10, 10));
+            node->set("translation", Vector3(citysize * 15 - 13, 0, citysize * 15 - 13));
+
+
+            this->add_child((Node*)node);
+            ((Transport*)node)->set("transportType", type);
+
+            //((Transport*)node)->transport_type();
+
+
+            //income -= node->cost;
+
+            //all_transports.push_back((Transport*)node);     THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
         }
-        
-        Node* node;
-
-        /*
-         *  0 - electic car
-         * 1 - big american car
-         * 2 - normal car
-         * 3 - old collection car/bugatti
-         * 4 - bike
-         * 5 - motorcycle
-         * 6 - bus
-         * 7 - sports car/Chiron
-         */
-        switch (type) {
-        case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
-        case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
-        case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
-        case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
-        case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
-        case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
-        case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
-        case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
-        default: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
-        }
-
-        node->set("scale", Vector3(10, 10, 10));
-        node->set("translation", Vector3(citysize * 15 -13, 0, citysize* 15 - 13 ));
-
-
-        this->add_child((Node*)node);
-        ((Transport*)node)->set("transportType", type);
-
-        //((Transport*)node)->transport_type();
-
-
-        //income -= node->cost;
-
-        //all_transports.push_back((Transport*)node);     THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
     }
 }
 
@@ -947,35 +947,35 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
     {
         int type = most_missing_type();
-        if (type == NULL) {
-            type = rand() % 8;
+        if (type != NULL) {
+
+
+            //int type = rand() % 3;
+            Node* node;
+
+            switch (type) {
+            case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
+            case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
+            case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
+            case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
+            case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
+            case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
+            case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
+            case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
+            default: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
+            }
+
+            node->set("scale", Vector3(10, 10, 10));
+            node->set("translation", pos + Vector3(-13, 0, -13));
+
+
+            this->add_child((Node*)node);
+            ((Transport*)node)->set("transportType", type);
+
+            //((Transport*)node)->transport_type();
+            //income -= node->cost;
+            //all_transports.push_back((Transport*)node);         THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
         }
-
-        //int type = rand() % 3;
-        Node* node;
-        
-        switch (type) {
-        case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
-        case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
-        case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
-        case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
-        case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
-        case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
-        case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
-        case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
-        default: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
-        }
-        
-        node->set("scale", Vector3(10, 10, 10));
-        node->set("translation", pos + Vector3(-13, 0, -13));
-
-
-        this->add_child((Node*)node);
-        ((Transport*)node)->set("transportType", type);
-
-        //((Transport*)node)->transport_type();
-        //income -= node->cost;
-        //all_transports.push_back((Transport*)node);         THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
     }
 }
 
