@@ -50,13 +50,13 @@ City::City() {
 
     time_speed = 1;
 
-
     //timer = 0;
     day_tick = 0;
     days_since_last_simulation = 0;
 
     // in order to find date
     daycount = 0;
+    numberOfHouses = 0;
 
     // in order to write stats to csv files
     stat = 0;
@@ -202,6 +202,9 @@ void City::update_date() {
     if (datenumber[0] == 1 && datenumber[1] == 1) { // resets the budget to initial value
         budget = 10000; // needs to be updated for every year somehow
     }
+    if (datenumber[0] == 1) {
+        
+    }
 }
 
 void City::_input(InputEvent*)
@@ -212,13 +215,12 @@ void City::_input(InputEvent*)
 
     if (i->is_action_pressed("ui_test"))
     {
-        add_car();
+        //add_car();
     }
 
     if (i->is_action_pressed("ui_turn"))
     {
-        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
-        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+        hide_menus();
 
         this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
         this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
@@ -292,11 +294,7 @@ void City::generate_initial_city_graphics()
                 float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
                 float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
                 float buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
-
-
-
                 float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
-
                 float lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
                 float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
 
@@ -335,11 +333,7 @@ void City::generate_initial_city_graphics()
                                 restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
                                 shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
                                 buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
-
-
-
                                 windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
-
                                 lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
                                 highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
 
@@ -386,9 +380,8 @@ void City::set_initial_visible_components()
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
 
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
-    // Repeat for all menus
+    hide_menus();
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 
@@ -401,6 +394,8 @@ void City::set_initial_visible_components()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", false);
 
 }
+
+
 
 
 void City::_ready()
@@ -426,8 +421,7 @@ void City::_on_ExitButton_pressed()
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+    hide_menus();
 
     this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
@@ -460,8 +454,7 @@ void City::_on_ResetButton_pressed()
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+    hide_menus();
 
     this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
@@ -524,8 +517,7 @@ void godot::City::_on_MenuShop_pressed(String name)
 
     active_button = name;
 
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+    hide_menus();
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
 
@@ -548,8 +540,7 @@ void godot::City::_on_MenuHousing_pressed(String name)
 
     active_button = name;
 
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+    hide_menus();
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
 
@@ -604,6 +595,15 @@ String City::get_button_info_text() {
     else {
         return String("No information has been specified for this policy.");
     }
+}
+
+void City::hide_menus()
+{
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuEnergy")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuProduction")->set("visible", false);
 }
 
 void godot::City::_on_Validate_pressed()
@@ -750,8 +750,7 @@ void City::_on_Game_Speed_changed()
 {
     time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
 
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
+    hide_menus();
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
@@ -769,22 +768,46 @@ void City::_on_Game_Speed_changed()
 void City::add_car() {
 
 
-    const Ref<PackedScene> BugattiScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
-    const Ref<PackedScene> ChironScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
+    const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
+    const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
-
-    if (BugattiScene.is_valid() && ChironScene.is_valid() && MotoScene.is_valid())
+    const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
+    //const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    //const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
+    
+    if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
     {
 
-        // randomly choose between bugatti and chiron
-        int type = rand() % 3; 
-        //int type = transport_to_add(); // doesn't work
-
+        // randomly choose between bugatti and chiron otherwise motobike
+        //int type = rand() % 3; 
+        int type = most_missing_type();
+        if (type == NULL) {
+            type = rand() % 8;
+        }
+        
         Node* node;
 
+        /*
+         *  0 - electic car
+         * 1 - big american car
+         * 2 - normal car
+         * 3 - old collection car/bugatti
+         * 4 - bike
+         * 5 - motorcycle
+         * 6 - bus
+         * 7 - sports car/Chiron
+         */
         switch (type) {
-        case 0: node = BugattiScene->instance(); current_car_quantities[3] += 1; break;
-        case 1: node = ChironScene->instance(); current_car_quantities[7] += 1;  break;
+        case 0: node = OldCarScene->instance(); current_car_quantities[0] += 1; break;
+        case 1: node = OldCarScene->instance(); current_car_quantities[1] += 1; break;
+        case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
+        case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
+        case 4: node = OldCarScene->instance(); current_car_quantities[4] += 1; break;
+        case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
+        case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
+        case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
         default: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
         }
 
@@ -881,7 +904,7 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 }
 
 void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
-
+    numberOfHouses += 1;
     //std::cout << "DEBUG: add house called" << std::endl;
 
     //std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
@@ -1643,11 +1666,24 @@ void City::remove_type_car(int type){
     }
 }
 
-int City::transport_to_add() { //now the old finction transport_probabilities returns the type of car that is missing the most
-                                //the income might be computed as a gaussian around the average, but that is not sure
-                                //otherwise the generation of a car might take a lot of time - going through 1000 buildings to get the array of incomes
-                                // but we might just be updating the array in the simulation step for every building - it happens for 1 or 2 per frame, so the array isn't exactly real time
-                            /*
+int City::most_missing_type() {
+    int min = 0;
+    for (int i = 0; i < 8; i++) {
+        if(missing_car_quantities[min] > missing_car_quantities[i]){
+            min = i;
+        }
+    }
+    if (missing_car_quantities[min] > 0) {
+        return min;
+    }
+    else {
+        return NULL;
+    }
+}
+
+void City::transport_to_add() { //now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
+                               // the finction goes through all the buidlings  to get the wage as income
+  /*
 * 0 - electic car
 * 1 - big american car
 * 2 - normal car
@@ -1668,21 +1704,23 @@ int City::transport_to_add() { //now the old finction transport_probabilities re
 
     double satisfactions[8] = { electicCar.satisfaction, bigCar.satisfaction, car.satisfaction, collectionCar.satisfaction, bike.satisfaction, motorcycle.satisfaction, bus.satisfaction, sportsCar.satisfaction };
     double satisfactionsSum = 0;
-	for (int i =0 ;i<8;i++){
+	for (int i =0 ; i < 8; i++){
 		satisfactionsSum += satisfactions[i];
 	}
     double alpha[8];
     for (int i = 0; i < 8; i++) {
-        alpha[i] = satisfactions[i] / satisfactionsSum * incomesLen;
+        alpha[i] = satisfactions[i] / satisfactionsSum * numberOfHouses;
         if ((i == 4) || (i == 5)) {
             alpha[i] *= sqrt(airQuality);
         }
     }
+
     double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
     double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth, car.pricePerMonth,collectionCar.pricePerMonth, bike.pricePerMonth, motorcycle.pricePerMonth, bus.pricePerMonth/(bus.capacity*bus.occupancyRate), sportsCar.pricePerMonth};
     double probabilities[8];
     double quantities[8] = { 0,0,0,0,0,0,0,0 };
     double alphaSum = 0;
+    
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
     }
@@ -1693,10 +1731,11 @@ int City::transport_to_add() { //now the old finction transport_probabilities re
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
     }
-    for (int n = 0; n < incomesLen; n++) {
+     
+    for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it) {
         double choice[8] = { 0,0,0,0,0,0,0,0 };
         for (int i = 0; i < 8; i++) {
-            probabilities[i] = alpha[i] * (incomes[n] / pricesPerMonth[i]) / alphaSum;
+            probabilities[i] = alpha[i] * ((*it)->get_averageWage() / pricesPerMonth[i]) / alphaSum;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
@@ -1714,6 +1753,7 @@ int City::transport_to_add() { //now the old finction transport_probabilities re
         }
         quantities[maxIndex] += 1;
     }
+
     double quantitiesSum = 0;
     for (int i = 0; i < 8; i++) {
         quantitiesSum += quantities[i];
@@ -1730,16 +1770,12 @@ int City::transport_to_add() { //now the old finction transport_probabilities re
     for (int i = 0; i < 8; i++) {
         quantities[i] = quantities[i] / quantitiesSum;
     }
-    int min = 0;
-    double min_value = current_car_quantities[0] - quantities[0];
     for (int i = 1; i < 8; i++) {
-        if (min_value > current_car_quantities[i] - quantities[i]) {
-            min = i;
-            min_value = current_car_quantities[i] - quantities[i];
+        missing_car_quantities[i] = current_car_quantities[i] - quantities[i];
+        if (missing_car_quantities[i] > 0) {
+            missing_car_quantities[i] = 0;
         }
-    }
-    return min;
-
+    } 
 }
 
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
