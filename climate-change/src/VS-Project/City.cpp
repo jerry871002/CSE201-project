@@ -1886,15 +1886,24 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 	for (int i =0 ; i < 8; i++){
 		satisfactionsSum += satisfactions[i];
 	}
+	double resourcesUse[8]= {electicCar.energyUse, bigCar.fuelInput, car.fuelInput, collectionCar.fuelInput, bike.fuelInput, motorcycle.fuelInput, bus.fuelInput, sportsCar.fuelInput };
+	int minInd = 0;
+	for (int i = 1;i<8;i++){
+		if (resourcesUse[i]<resourcesUse[minInd]){
+			minInd = i;
+		}
+	}
+	for (int i =0;i<8;i++){
+		resourcesUse[i]/=resourcesUse[minInd]/resourcesUse[i];
+	}
     double alpha[8];
     for (int i = 0; i < 8; i++) {
         alpha[i] = satisfactions[i] / satisfactionsSum * numberOfHouses;
         if ((i == 4) || (i == 5)) {
             alpha[i] *= sqrt(airQuality);
         }
+		alpha[i]*=sqrt(resourcesUse[i]);
     }
-
-    double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
     double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth, car.pricePerMonth,collectionCar.pricePerMonth, bike.pricePerMonth, motorcycle.pricePerMonth, bus.pricePerMonth/(bus.capacity*bus.occupancyRate), sportsCar.pricePerMonth};
     double probabilities[8];
     double quantities[8] = { 0,0,0,0,0,0,0,0 };
@@ -1905,6 +1914,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     }
 	for (int i = 0;i<8; i++){
    		alpha[i] =0.01*alpha[i]/alphaSum;
+		
 	}
     alphaSum = 0;
     for (int i = 0; i < 8; i++) {

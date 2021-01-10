@@ -106,12 +106,6 @@ void AgriculturalProduction::simulate_step(double days) {
 			fertility*=1.15;
 			satisfaction*=0.85;
 		}
-		if ((GMOBefore==0) &&(GMOProhibited ==1)){
-			//code to come
-		}
-		else if ((GMOBefore==1) &&(GMOProhibited ==0)){
-			//code to come
-		}
 		GMOBefore = GMOProhibited;
 		pesticideBefore = pesticideProhibited;
 		fertilizerBefore = fertilizerProhibited;
@@ -127,9 +121,6 @@ void AgriculturalProduction::simulate_step(double days) {
 			CO2Emission+=9400*requiredLand*days;
 			maintenance+=25*requiredLand*days;
 			}
-		if (GMOProhibited == 0){
-
-		}
 		break;
 		}
 
