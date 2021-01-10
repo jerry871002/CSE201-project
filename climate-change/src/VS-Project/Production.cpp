@@ -93,7 +93,7 @@ void AgriculturalProduction::simulate_step(double days) {
 		production=requiredLand*fertility*days; //output over the time period
 		waterConsumption=requiredLand*fertility*days*1500;
 		CO2Emission=0.59*requiredLand*fertility*days;
-		if (pesticideProhibited==false){
+		if (pesticideProhibited==0){
 			CO2Emission=9400*requiredLand*days;
 			}
 			break;

@@ -592,6 +592,18 @@ String City::get_button_info_text() {
     {
         return String("This is a subsidy for green factories, promoting the reduction of harmful chemicals and heavy metals emissions. Please input a value between 1000 and 100 000 euros per factory per year or 0 to remove the policy");
     }
+    else if (this->active_button == String("Pesticides"))
+    {
+        return String("This is a law prohibiting the use of pesticides. Please input 1 in order to activate the policy or 0 to authorize pesticides again.");
+    }
+    else if (this->active_button == String("GMO"))
+    {
+        return String("This is a law prohibiting the use of GMOs. Please input 1 in order to activate the policy or 0 to authorize GMOs again.");
+    }
+    else if (this->active_button == String("Fertilizers"))
+    {
+        return String("This is a law prohibiting the use of fertilizers. Please input 1 in order to activate the policy or 0 to authorize fertilizers again.");
+    }
     else {
         return String("No information has been specified for this policy.");
     }
@@ -717,7 +729,7 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("MaximumCarbonFactories")) {
-        if (42>=value >= 0) {
+        if (42>=value && value>= 0) {
             Godot::print("MAXIMUM EMISSIONS ON FACTORIES IMPLEMENTED");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
@@ -731,12 +743,54 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("SubsidyFactories")) {
-        if (100000 >= value >= 1000 || value == 0) {
+        if ((100000 >= value && value >= 1000) || value == 0) {
             Godot::print("GREEN SUBSIDY FOR FACTORIES IMPLEMENTED");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
                 if ((String)(*it)->get("object_type") == (String)("Goods Factory")) {
                     (*it)->set("subsidy_green", value);
+                }
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("Pesticides")) {
+        if (value == 1 || value == 0) {
+            Godot::print("PROHIBITION OF PESTICIDES");
+            for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+            {
+                if ((String)(*it)->get("object_type") == (String)("Agricultural Production")) {
+                    (*it)->set("pesticideProhibited", value);
+                }
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("GMO")) {
+        if (value == 1 || value == 0) {
+            Godot::print("PROHIBITION OF GMOs");
+            for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+            {
+                if ((String)(*it)->get("object_type") == (String)("Agricultural Production")) {
+                    (*it)->set("GMOProhibited", value);
+                }
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("Fertilizers")) {
+        if (value == 1 || value == 0) {
+            Godot::print("PROHIBITION OF FERTILIZERS");
+            for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+            {
+                if ((String)(*it)->get("object_type") == (String)("Agricultural Production")) {
+                    (*it)->set("fertilizerProhibited", value);
                 }
             }
         }
@@ -772,8 +826,8 @@ void City::add_car() { //adds a car in the midle of the city
     const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
     const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
-    //const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/Raptor.tscn", "PackedScene");
+    const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/Bike.tscn", "PackedScene");
     //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
     
@@ -837,8 +891,8 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
     const Ref<PackedScene> BusScene = ResourceLoader::get_singleton()->load("res://Resources/Bus.tscn", "PackedScene");
-    //const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
-    //const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
+    const Ref<PackedScene> AmericanCarScene = ResourceLoader::get_singleton()->load("res://Resources/Raptor.tscn", "PackedScene");
+    const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/Bike.tscn", "PackedScene");
     //const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
 
