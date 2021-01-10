@@ -31,22 +31,14 @@ int main() {
 
 void test_simulate(double days){
 std::cout<<"Simulation of "<<days<<" days"<<std::endl;
-Transport electricCar = Transport();
-electricCar.transport_type(0);
-Transport bigCar = Transport();
-bigCar.transport_type(1);
-Transport car = Transport();
-car.transport_type(2);
-Transport collectionCar = Transport();
-collectionCar.transport_type(3);
-Transport bike = Transport();
-bike.transport_type(4);
-Transport motorcycle = Transport();
-motorcycle.transport_type(5);
-Transport bus = Transport();
-bus.transport_type(6);
-Transport sportscar = Transport();
-sportscar.transport_type(7);
+Transport electricCar = Transport(0);
+Transport bigCar = Transport(1);
+Transport car = Transport(2);
+Transport collectionCar = Transport(3);
+Transport bike = Transport(4);
+Transport motorcycle = Transport(5);
+Transport bus = Transport(6);
+Transport sportscar = Transport(7);
 electricCar.simulate_step(days);
 bigCar.simulate_step(days);
 car.simulate_step(days);
@@ -67,22 +59,14 @@ std::cout<<"Simulation works";
 }
 
 void test_constructor() {
-  Transport electricCar = Transport();
-electricCar.transport_type(0);
-Transport bigCar = Transport();
-bigCar.transport_type(1);
-Transport car = Transport();
-car.transport_type(2);
-Transport collectionCar = Transport();
-collectionCar.transport_type(3);
-Transport bike = Transport();
-bike.transport_type(4);
-Transport motorcycle = Transport();
-motorcycle.transport_type(5);
-Transport bus = Transport();
-bus.transport_type(6);
-Transport sportscar = Transport();
-sportscar.transport_type(7);
+Transport electricCar = Transport(0);
+Transport bigCar = Transport(1);
+Transport car = Transport(2);
+Transport collectionCar = Transport(3);
+Transport bike = Transport(4);
+Transport motorcycle = Transport(5);
+Transport bus = Transport(6);
+Transport sportscar = Transport(7);
     std::cout<<"Electric car: capacity "<<electricCar.capacity<<" , occupancy rate "<<electricCar.occupancyRate<<", cost "<<electricCar.cost<<" ,building time "<<electricCar.buildingTime<<", satisfaction "<<electricCar.satisfaction<<std::endl;
     std::cout<<"Bus: capacity "<<bus.capacity<<" , occupancy rate "<<bus.occupancyRate<<" cost"<<bus.cost<<" ,building time "<<bus.buildingTime<<", employment "<<bus.employment<<", satisfaction "<<bus.satisfaction<<std::endl;
     std::cout<<"Car: capacity "<<car.capacity<<" , occupancy rate "<<car.occupancyRate<<" cost"<<car.cost<<" ,building time "<<car.buildingTime<<", satisfaction "<<car.satisfaction<<std::endl;
