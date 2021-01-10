@@ -93,10 +93,15 @@ void AgriculturalProduction::simulate_step(double days) {
 		production=requiredLand*fertility*days; //output over the time period
 		waterConsumption=requiredLand*fertility*days*1500;
 		CO2Emission=0.59*requiredLand*fertility*days;
+		maintenance = 144*days*requiredLand;
 		if (pesticideProhibited==0){
 			CO2Emission=9400*requiredLand*days;
+			maintenance+=25*requiredLand;
 			}
-			break;
+		if (fertilizerProhibited == 0){
+			maintenance+=45*requiredLand;
+		}
+		break;
 		}
 
 		case(1):{ 
@@ -127,6 +132,8 @@ void AgriculturalProduction::agriculture_type(int type){
 			requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
 			std::normal_distribution <double> wheatferltility(464000, 40000);
 			fertility = wheatferltility(gen); //production of wheat per km^2
+			std::normal_distribution <double> wheatfieldcost(595000, 1000);
+			cost = wheatfieldcost(gen)*requiredLand; //of land in euros
 			production = fertility *requiredLand; //output of wheat in kg per day
 			waterConsumption = 1500*production; //water litres per day
 			CO2Emission =0.59*production; //co2 kg per day
