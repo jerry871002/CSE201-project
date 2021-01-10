@@ -42,7 +42,9 @@ then run:
 */
 
 namespace godot {
-    const int citysize = 10;
+    
+    const int citysize = 25;
+
     class Transport;
 
     class City : public Spatial {
@@ -115,8 +117,8 @@ namespace godot {
         bool ClickActive{ false };
 
         //TRAFFIC
-        int sizeOfCity = citysize  + 1; // buildings are placed only on a square sizeOfCity * sizeOfCity
-        int positionOfBuildings[10][10] = { 0 }; // sets  everything to non-existing for the traffic array 
+        int sizeOfCity = citysize; // buildings are placed only on a square sizeOfCity * sizeOfCity
+        int positionOfBuildings[citysize][citysize] = { 0 }; // sets  everything to non-existing for the traffic array 
 
         // following functions handle adding structures to the city, takes a position and the required scene
         void add_shop(Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
