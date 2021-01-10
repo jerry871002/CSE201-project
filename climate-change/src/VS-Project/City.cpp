@@ -58,7 +58,7 @@ City::City() {
 
     // in order to write stats to csv files
     stat = 0;
-
+    
     srand((int)time(0));
 }
 
@@ -92,7 +92,7 @@ void City::_register_methods()
 
     register_method((char*)"update_traffic", &City::update_traffic);
     register_method((char*)"traffic_preparation", &City::traffic_preparation);
-
+    register_method((char*)"remove_type_car", &City::remove_type_car);
 
     register_property<City, float>("time_speed", &City::time_speed, 1.0);
     register_property<City, int>("day_tick", &City::day_tick, 0);
@@ -400,9 +400,7 @@ void City::_ready()
 
     //std::cout << "DEBUG: Ready started" << std::endl;
     citysize = 10;
-    for (int i = 0; i < 8; i++) {
-        current_car_quantities.push_back(0);
-    }
+
     this->generate_initial_city_graphics();
     structures_iterator = all_structures.begin();
     this->set_initial_visible_components();
@@ -1499,6 +1497,12 @@ double City::return_energyDemand() {
 
 double City::return_energySupply() {
     return energySupply;
+}
+
+void City::remove_type_car(int type){
+    if (current_car_quantities[type] > 0) {
+        current_car_quantities[type] -= 1;
+    }
 }
 
 int City::transport_to_add() { //now the old finction transport_probabilities returns the type of car that is missing the most
