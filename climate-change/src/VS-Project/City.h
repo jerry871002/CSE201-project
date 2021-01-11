@@ -255,10 +255,11 @@ namespace godot {
         const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
 
 
-        const Ref<PackedScene> WindmillScene = ResourceLoader::get_singleton()->load("res://Resources/Windmill.tscn", "PackedScene");
+        const Ref<PackedScene> WindmillScene = ResourceLoader::get_singleton()->load("res://Resources/WindMill.tscn", "PackedScene");
         const Ref<PackedScene> LowHouseScene = ResourceLoader::get_singleton()->load("res://Resources/LowHouse.tscn", "PackedScene");
         const Ref<PackedScene> HighHouseScene = ResourceLoader::get_singleton()->load("res://Resources/HighHouse.tscn", "PackedScene");
-        const Ref<PackedScene> CoalPowerPlantScene = ResourceLoader::get_singleton()->load("res://Resources/CoalPowerPlant.tscn", "PackedScene");
+        const Ref<PackedScene> CoalPowerPlantScene = ResourceLoader::get_singleton()->load("res://Resources/CoalPowerPlant.tscn", "PackedScene"); 
+        const Ref<PackedScene> GeothermalPowerPlantScene = ResourceLoader::get_singleton()->load("res://Resources/GeothermalPowerPlant.tscn", "PackedScene");
         const Ref<PackedScene> NuclearPowerPlantScene = ResourceLoader::get_singleton()->load("res://Resources/NuclearPowerPlant.tscn", "PackedScene");
         const Ref<PackedScene> FactoryScene = ResourceLoader::get_singleton()->load("res://Resources/Factory.tscn", "PackedScene");
         const Ref<PackedScene> PigsPastureScene = ResourceLoader::get_singleton()->load("res://Resources/PasturePigs.tscn", "PackedScene");
