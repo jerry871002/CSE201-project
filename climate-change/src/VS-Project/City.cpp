@@ -1821,6 +1821,8 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 * 7 - sports car
 */
     std::cout<< "TRANSPORT_TO_ADD begins" << endl;
+    std::random_device rd;
+    std::mt19937 gen(rd());
 	Transport electicCar = Transport(0);
 	Transport bigCar = Transport(1);
 	Transport car = Transport(2);
@@ -1840,6 +1842,11 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         alpha[i] = satisfactions[i] / satisfactionsSum * numberOfHouses;
         if ((i == 4) || (i == 5)) {
             alpha[i] *= sqrt(airQuality);
+        }
+        std::normal_distribution <double> alpharandomiser(alpha[i], alpha[i]/4);
+        alpha[i] = alpharandomiser(gen);
+        if (alpha[i]<0){
+            alpha[i] = 0;
         }
     }
 
