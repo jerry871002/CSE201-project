@@ -12,7 +12,7 @@ namespace godot {
 		GODOT_SUBCLASS(Production, Structure)
 
 	public:
-		virtual String class_name();
+		
 		Production();
 		~Production();
 
@@ -54,6 +54,8 @@ namespace godot {
 		virtual double get_cadmium_emission();
 		virtual double get_nickel_emission();
 
+		virtual void simulate_step(double days);
+
 	};
 
 	/// <summary>
@@ -63,7 +65,7 @@ namespace godot {
 	class AgriculturalProduction : public Production {
 		GODOT_SUBCLASS(AgriculturalProduction, Production)
 	public:
-		virtual String class_name();
+		
 		virtual String get_object_type() { return "Agricultural Production"; };
 
 		AgriculturalProduction();
@@ -96,7 +98,7 @@ namespace godot {
 	class GoodsFactories : public Production {
 		GODOT_SUBCLASS(GoodsFactories, Production)
 	public:
-		virtual String class_name();
+		
 		GoodsFactories();
 		~GoodsFactories();
 		virtual String get_object_type() { return "Goods Factory"; };
@@ -117,7 +119,7 @@ namespace godot {
 	class Services : public Production {
 		GODOT_SUBCLASS(Services, Production)
 	public:
-		virtual String class_name();
+		
 		Services();
 		~Services();
 		virtual String get_object_type() { return "Services"; };

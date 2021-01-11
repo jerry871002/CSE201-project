@@ -6,9 +6,6 @@
 #include <string>
 using namespace godot;
 
-String godot::Production::class_name() {
-	return "Production";
-}
 
 Production::Production() {
 }
@@ -64,15 +61,18 @@ double Production::get_lead_emission()
 double Production::get_nickel_emission()
 {
 	return this->nickelEmission;
+
+}
+
+void Production::simulate_step(double days) {
+	this->Structure::simulate_step(days);
 }
 
 /// <summary>
 /// AGRICULTURAL PRODUCTION
 /// </summary>
 
-String godot::AgriculturalProduction::class_name() {
-	return "AgriculturalProduction";
-}
+
 
 AgriculturalProduction::AgriculturalProduction() {
 	int type = rand() % 3;
@@ -86,8 +86,11 @@ AgriculturalProduction::~AgriculturalProduction() {
 
 }
 
-void AgriculturalProduction::simulate_step(double days) {
-	age += days;
+void AgriculturalProduction::simulate_step(double days) 
+{
+	
+	this->Production::simulate_step(days);
+
 	switch (agricultureType) {
 	case(0): { // wheat
 		if ((fertilizerBefore == 0) && (fertilizerProhibited == 1)) {
@@ -141,6 +144,7 @@ void AgriculturalProduction::simulate_step(double days) {
 AgriculturalProduction::AgriculturalProduction(int type) {
 	agriculture_type(type);
 }
+
 void AgriculturalProduction::agriculture_type(int type) {
 	agricultureType = type; // 0 - wheat, 1 - meat, 2 - vegetables
 	employment = 50;
@@ -195,10 +199,7 @@ double AgriculturalProduction::get_environmentalcost() {
 /// GOODS FACTORIES
 /// </summary>
 
-String godot::GoodsFactories::class_name()
-{
-	return "GoodsFactories";
-}
+
 
 GoodsFactories::GoodsFactories() {
 	age = 0;
@@ -230,7 +231,7 @@ GoodsFactories::~GoodsFactories() {}
 
 void GoodsFactories::simulate_step(double days)
 {
-	age += days;
+	this->Production::simulate_step(days);
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -317,10 +318,6 @@ void GoodsFactories::simulate_step(double days)
 /// SERVICES
 /// </summary>
 
-String godot::Services::class_name()
-{
-	return "Services";
-}
 
 Services::Services() {
 	age = 0;
@@ -346,7 +343,7 @@ Services::~Services() {}
 
 void Services::simulate_step(double days)
 {
-	age += days;
+	this->Production::simulate_step(days);
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
