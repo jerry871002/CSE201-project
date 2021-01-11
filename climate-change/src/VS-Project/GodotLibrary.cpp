@@ -37,6 +37,7 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<Pedestrian>();
 	register_class<Building>();
 	register_class<CoalPowerPlant>();
+	register_class<GeothermalPowerPlant>();
 	register_class<AgriculturalProduction>();
 	register_class<GoodsFactories>();
 	register_class<Services>();
