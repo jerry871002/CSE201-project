@@ -80,7 +80,7 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmt(70, 15);
         kmPerDay = kmt(gen); // average km per day for this car using gaussian
         std::normal_distribution <double> costt(42000, 8500); //cost randomised using gaussian
-        cost = costt(gen);
+        cost = costt(gen)-myCity->return_electicCarSubsidy();
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
         std::normal_distribution <double> satisfactiont(9.15, 0.15); //very high satisfaction
@@ -152,7 +152,7 @@ void Transport::transport_type() {
         fuelPerKm = 0;
         co2PerKm = 0;
         std::normal_distribution <double> costbike(370, 30);
-        cost = costbike(gen); // cost of 1 bike in euros, randomised using gaussian
+        cost = costbike(gen)-myCity->return_bikeSubsidy(); // cost of 1 bike in euros, randomised using gaussian
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.04; //really fast, in days (1 hour )
@@ -186,7 +186,7 @@ void Transport::transport_type() {
         fuelPerKm = 0.26; //in liters
         co2PerKm = 1.25; //in kg
         std::normal_distribution <double> costb(262500, 52500);
-        cost = costb(gen); // cost of 1 bus in euros, randomised using gaussian
+        cost = costb(gen)-myCity->return_busSubsidy(); // cost of 1 bus in euros, randomised using gaussian
         double alpha = (cost - 262500) / 262500;
         if (alpha < 0) {
             alpha = 0;
