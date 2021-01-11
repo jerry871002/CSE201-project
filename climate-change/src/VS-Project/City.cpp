@@ -60,7 +60,13 @@ City::City() {
 
     // in order to write stats to csv files
     stat = 0;
-    
+	//policies for transport
+    fuelTax = 0;
+	weightTax = 0;
+    bikeSubsidy = 0;
+    electicCarSubsidy = 0;
+    busSubsidy = 0;
+    carProhibition = 0;
     srand((int)time(0));
 }
 
@@ -1941,6 +1947,25 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
     }
 
 
+}
+double City::return_fuelTax(){
+	return fuelTax;
+}
+
+double City::return_weightTax(){
+	return weightTax;
+}
+double City::return_bikeSubsidy(){
+	return bikeSubsidy;
+}
+double City::return_electicCarSubsidy(){
+	return electicCarSubsidy;
+}
+double City::return_busSubsidy(){
+	return busSubsidy;
+}
+double City::return_carProhibition(){
+	return carProhibition;
 }
     
    
