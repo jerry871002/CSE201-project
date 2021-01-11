@@ -18,10 +18,6 @@ Luca:
 This week and during the holidays, I finished fixing the bugs for plotting pie charts and line charts in Godot. Now, they are working perfectly. Moreover, I have worked with the algorithm team so as to make my charts functional. 
 In the next few days, I will continue to work with the algorithm team so as to display relevant data about the city with my charts.
 
-Vincent:
-In the past weeek I have mostly worked on generating the initial city and having the game start up correctly.
-For the next week I will work on helping to coordinate everyone together so as to be able to round up the project, as well as finishing parts of the simulation and generation.
-
 Paloma:
 During the holidays and throughout this week I finished coding the goods factories and services class. I also implemented efficiency policies on coal power plants, 
 policies prohibiting nuclear and coal plants and policies imposing maximum emissions or allowing subsidies to green factories. I helped the interface team displaying
