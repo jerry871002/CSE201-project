@@ -104,7 +104,7 @@ void Transport::transport_type() {
         occupancyRate = occupancyg(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeg(1, 0.5);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactiong(8.5, 0.4); // high satisfaction
+        std::normal_distribution <double> satisfactiong(9.1, 0.25); // high satisfaction
         satisfaction = satisfactiong(gen);
         lifetime = 10;
         pricePerMonth = 1.25*30*workingDays/7;
@@ -142,7 +142,7 @@ void Transport::transport_type() {
         occupancyRate = occupancyo(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeo(7, 2);
         buildingTime = timeo(gen); // building time of 1 collection (replica i think) car car, not so fast
-        std::normal_distribution <double> satisfactiono(9.5, 0.3); // very high satisfaction
+        std::normal_distribution <double> satisfactiono(9.35, 0.25); // very high satisfaction
         satisfaction = satisfactiono(gen);
         lifetime = 20;
         pricePerMonth = 25*30*workingDays/7;
@@ -227,7 +227,7 @@ void Transport::transport_type() {
         occupancyRate = occupancysp(gen); // average percentage occupancy of the car: number of people in the bus / capacity
         std::normal_distribution <double> timeg(1.5, 0.75);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactionsp(9.5, 0.5); // satisfaction level is very high, randomised
+        std::normal_distribution <double> satisfactionsp(9.3, 0.2); // satisfaction level is very high, randomised
         satisfaction = satisfactionsp(gen);
         if (satisfaction > 10) {
             satisfaction = 10;
