@@ -238,8 +238,7 @@ void Transport::transport_type() {
         kmPerDay = kmsp(gen); // kilometres per day,  randomised for each car
         lifetime = 10;
         pricePerMonth = 2.5*30*workingDays/7;
-        weight = 2;
-        cost+=myCity->return_weightTax()*weight; //weight tax directly on car cost
+        weight = 1.5;
         break;
     }
     }
