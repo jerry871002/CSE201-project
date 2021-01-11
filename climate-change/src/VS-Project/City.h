@@ -151,8 +151,7 @@ namespace godot {
         String get_button_info_text();
         void hide_menus();
 
-        void add_car();
-        void add_car(Vector3);
+        void add_car(Vector3 pos = Vector3(citysize * 15 ,0, citysize * 15));
 
         void write_stat_history_to_file();    //writes all the stats to a file so that the interface team can make graphs 
 

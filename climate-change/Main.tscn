@@ -1298,7 +1298,7 @@ margin_right = 157.0
 margin_bottom = 38.0
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button1" to="3Dworld" method="_on_Menu_pressed" binds= [ "SolarHousing" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button2" to="3Dworld" method="_on_MenuHousing_pressed" binds= [ "WindturbinesHousing" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button2" to="3Dworld" method="_on_Menu_pressed" binds= [ "WindturbinesHousing" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button3" to="3Dworld" method="_on_Menu_pressed" binds= [ "DoubleGlazingHousing" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button4" to="3Dworld" method="_on_Menu_pressed" binds= [ "TreesBudget" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Solar" to="3Dworld" method="_on_Menu_pressed" binds= [ "PanelSubsidy" ]]
