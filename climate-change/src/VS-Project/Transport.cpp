@@ -12,7 +12,7 @@
 
 using namespace godot;
 
-extern int traffic_system[26][26][4][3];
+extern int traffic_system[50][50][4][3];
 
 // helper functions
 void compute_speed(double& Speed, double &Acc, float delta, Vector3 prevPos, Vector3 pos) {

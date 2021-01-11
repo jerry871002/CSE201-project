@@ -119,10 +119,10 @@ namespace godot {
 
         //TRAFFIC
 
-        const int citysize = 26;
+        const int citysize = 50;
 
-        int sizeOfCity = 26; // buildings are placed only on a square sizeOfCity * sizeOfCity
-        int positionOfBuildings[26][26] = { 0 }; // sets  everything to non-existing for the traffic array 
+        int sizeOfCity = 50; // buildings are placed only on a square sizeOfCity * sizeOfCity
+        int positionOfBuildings[50][50] = { 0 }; // sets  everything to non-existing for the traffic array 
 
         // following functions handle adding structures to the city, takes a position and the required scene
         void add_shop(Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
