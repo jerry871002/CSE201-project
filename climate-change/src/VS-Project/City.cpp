@@ -1829,7 +1829,8 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     }
 
     double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
-    double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth, car.pricePerMonth,collectionCar.pricePerMonth, bike.pricePerMonth, motorcycle.pricePerMonth, bus.pricePerMonth/(bus.capacity*bus.occupancyRate), sportsCar.pricePerMonth};
+    double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth+fuelTax*bigCar.fuelInput*30, car.pricePerMonth+fuelTax*car.fuelInput*30,collectionCar.pricePerMonth+fuelTax*collectionCar.fuelInput*30, bike.pricePerMonth, 
+	motorcycle.pricePerMonth+fuelTax*motorcycle.fuelInput*30, bus.pricePerMonth/(bus.capacity*bus.occupancyRate)+fuelTax*bus.fuelInput*30, sportsCar.pricePerMonth+fuelTax*sportsCar.fuelInput*30};
     double probabilities[8];
     double quantities[8] = { 0,0,0,0,0,0,0,0 };
     double alphaSum = 0;
