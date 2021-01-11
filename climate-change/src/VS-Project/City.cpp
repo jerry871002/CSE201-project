@@ -337,7 +337,7 @@ void City::generate_initial_city_graphics()
 
                             dist = pow(pow(center.x - pos.x - pos1.x, 2) + pow(center.z - pos.z - pos1.z, 2), 0.5);
 
-                            if (dist <= 300) {
+                            if (dist <= citysize*15) {
                                 restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
                                 shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
                                 buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
@@ -388,7 +388,7 @@ void City::generate_initial_city_graphics()
 
                         dist = pow(pow(center.x - pos.x - pos1.x, 2) + pow(center.z - pos.z - pos1.z, 2), 0.5);
 
-                        if (dist <= 300) {
+                        if (dist <= citysize * 15) {
                             // plops down a building if theres no space for a 2x2 but there is for a 1x1  ... this should be on the outside of the city so if we want only one or two types on the edge we can set that here
 
 
