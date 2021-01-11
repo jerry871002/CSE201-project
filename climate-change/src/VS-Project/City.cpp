@@ -33,7 +33,7 @@ using namespace godot;
 using namespace std;
 
 
-int traffic_system[25][25][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
+int traffic_system[26][26][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
                  // the third coornidate indicates the side of the building and the forth one which way the car can turn
 
 
@@ -925,7 +925,6 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     {
         int type = most_missing_type();
         if (type != NULL) {
-
 
             //int type = rand() % 3;
             Node* node;

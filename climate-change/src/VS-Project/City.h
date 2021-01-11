@@ -119,10 +119,10 @@ namespace godot {
 
         //TRAFFIC
 
-        const int citysize = 25;
+        const int citysize = 26;
 
-        int sizeOfCity = 25; // buildings are placed only on a square sizeOfCity * sizeOfCity
-        int positionOfBuildings[25][25] = { 0 }; // sets  everything to non-existing for the traffic array 
+        int sizeOfCity = 26; // buildings are placed only on a square sizeOfCity * sizeOfCity
+        int positionOfBuildings[26][26] = { 0 }; // sets  everything to non-existing for the traffic array 
 
         // following functions handle adding structures to the city, takes a position and the required scene
         void add_shop(Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
@@ -155,7 +155,7 @@ namespace godot {
         String get_button_info_text();
         void hide_menus();
 
-        void add_car(Vector3 pos = Vector3(citysize * 15 ,0, citysize * 15));
+        void add_car(Vector3 pos = Vector3(26 * 15 ,0, 26 * 15));
 
         void write_stat_history_to_file();    //writes all the stats to a file so that the interface team can make graphs 
 

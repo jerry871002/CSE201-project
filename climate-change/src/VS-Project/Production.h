@@ -68,7 +68,7 @@ namespace godot {
 
 		AgriculturalProduction();
 		~AgriculturalProduction();
-        AgriculturalProduction(int type);
+		AgriculturalProduction(int type);
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 		//void test();
 		double get_satisfaction();
@@ -76,25 +76,21 @@ namespace godot {
 		double get_energyuse();
 		double get_environmentalcost();
 		void agriculture_type(int type);
-		//prohibites or authorises pesticides with inpit from user
-		void prohibite_pesticide();
-		//prohibites or authorises GMO with inpit from user
-		void prohibite_GMO();
-		//prohibites or authorises fertilizer with inpit from user
-		void prohibite_fertilizer();
 		double waterConsumption; // per day 
 		int agricultureType; // 0 - wheat, 1 - meat, 2 - vegetables
 		double requiredLand; //size of the field in km^2
 		double fertility; //per km^2 output in kg
 		double production; //how much output per day in kg
+		//for previous values to compare 
+		double pesticideBefore, fertilizerBefore, GMOBefore;
 	};
 
 	/// <summary>
 	/// GOODS FACTORIES
 	/// </summary>
-	
+
 	/* This class models the manufacturing and industry secotrs.
-	Its purpose is to simulate the factories/companies in enough detail in order to see a change in pollution, employment and energy usage given policies 
+	Its purpose is to simulate the factories/companies in enough detail in order to see a change in pollution, employment and energy usage given policies
 	related to it (taxes, subsidies, charges, prohibitions...) */
 
 	class GoodsFactories : public Production {
@@ -114,7 +110,7 @@ namespace godot {
 	/// SERVICES
 	/// </summary>
 
-	/* This class models to the following sectors : education and health services, trade, professional and business services, leisure 
+	/* This class models to the following sectors : education and health services, trade, professional and business services, leisure
 	and hospitality, financial activities, public administration, information and other services.
 	Its purpose is to model primarly the employment, emissions and energy usage of this sector in an overall way */
 
