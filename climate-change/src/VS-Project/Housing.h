@@ -13,6 +13,7 @@ namespace godot {
 
 		static void _register_methods();
 		virtual void _ready();
+		virtual void _process(float delta);
 
 		virtual String get_object_type() { return "Housing"; };
 		String get_main_type() { return "Housing"; };
@@ -46,6 +47,9 @@ namespace godot {
 		double get_double_glazing_age();	
 		int doubleGlazingSatisfaction = 5;
 
+	private:
+		double turnSpeed = 5;
+		double rot = 0;
 
     };
 

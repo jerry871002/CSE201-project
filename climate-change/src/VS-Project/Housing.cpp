@@ -46,11 +46,18 @@ Housing::~Housing() {
 void Housing::_register_methods()
 {
 	register_method((char*)"_ready", &Housing::_ready);
+	register_method((char*)"_process", &Housing::_process);
 }
 
 void Housing::_ready()
 {
 	this->Structure::_ready();
+}
+
+void Housing::_process(float delta) {
+	this->Structure::_process(delta);
+	rot -= delta * turnSpeed * int(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("time_speed"));
+	((Mesh*)this->get_node("MeshComponents/WindTurbine"))->set("rotation_degrees", Vector3(0, - double((180 / 3.1415926535) * rot), 0));
 }
 
 void Housing::simulate_step(double days) {

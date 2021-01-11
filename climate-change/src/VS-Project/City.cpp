@@ -60,7 +60,13 @@ City::City() {
 
     // in order to write stats to csv files
     stat = 0;
-    
+	//policies for transport
+    fuelTax = 0;
+	weightTax = 0;
+    bikeSubsidy = 0;
+    electicCarSubsidy = 0;
+    busSubsidy = 0;
+    carProhibition = 0;
     srand((int)time(0));
 }
 
@@ -1826,12 +1832,14 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
             alpha[i] *= sqrt(airQuality);
         }
     }
-    std::cout << "TRANSPORT_TO_ADD check 2" << endl;
-    double costs[8] = { electicCar.cost, bigCar.cost, car.cost, collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
-    double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth, car.pricePerMonth,collectionCar.pricePerMonth, bike.pricePerMonth, motorcycle.pricePerMonth, bus.pricePerMonth/(bus.capacity*bus.occupancyRate), sportsCar.pricePerMonth};
-    double probabilities[8] = { 0 };
+
+    double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
+    double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth+fuelTax*bigCar.fuelInput*30, car.pricePerMonth+fuelTax*car.fuelInput*30,collectionCar.pricePerMonth+fuelTax*collectionCar.fuelInput*30, bike.pricePerMonth, 
+	motorcycle.pricePerMonth+fuelTax*motorcycle.fuelInput*30, bus.pricePerMonth/(bus.capacity*bus.occupancyRate)+fuelTax*bus.fuelInput*30, sportsCar.pricePerMonth+fuelTax*sportsCar.fuelInput*30};
+    double probabilities[8] = {0};
     double quantities[8] = { 0 };
     double alphaSum = 0;
+
     std::cout << "TRANSPORT_TO_ADD check 3" << endl;
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
@@ -1954,6 +1962,25 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
     }
 
 
+}
+double City::return_fuelTax(){
+	return fuelTax;
+}
+
+double City::return_weightTax(){
+	return weightTax;
+}
+double City::return_bikeSubsidy(){
+	return bikeSubsidy;
+}
+double City::return_electicCarSubsidy(){
+	return electicCarSubsidy;
+}
+double City::return_busSubsidy(){
+	return busSubsidy;
+}
+double City::return_carProhibition(){
+	return carProhibition;
 }
     
    
