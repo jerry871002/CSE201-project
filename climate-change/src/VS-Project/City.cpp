@@ -33,7 +33,7 @@ using namespace godot;
 using namespace std;
 
 
-int traffic_system[citysize][citysize][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
+int traffic_system[25][25][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
                  // the third coornidate indicates the side of the building and the forth one which way the car can turn
 
 
@@ -68,6 +68,22 @@ City::~City()
 {
 
 };
+
+int* return_date(int day_tick) {
+    int static date[3];
+    int Y = 1, M = 1, D = 1;
+    int julian = (1461 * (Y + 4800 + (M - 14) / 12)) / 4 + (367 * (M - 2 - 12 / ((M - 14) / 12))) / 12 - (3 * ((Y + 4900 + (M - 14) / 12) / 100)) / 4 + D - 32075 + day_tick + 35;
+    int gregorian = julian + 1401 + (int)((((int)(4 * day_tick + 274277) / 146097) * 3) / 4) - 38;
+    int e = 4 * gregorian + 3;
+    int h = 5 * ((int)(e % 1461) / 4) + 2;
+    int day = ((int)(h % 153) / 5) + 1;
+    int month = (((int)h / 153) + 2) % 12 + 1;
+    int year = (int)(e / 1461) - 4716 + (int)((14 - month) / 12);
+    date[0] = day;
+    date[1] = month;
+    date[2] = year;
+    return date;
+}
 
 void City::_register_methods()
 {
@@ -133,39 +149,33 @@ void City::_physics_process(float delta) {
     
     if (simulation_counter > 1)
     {   
-        /*
-        (this->rolling_simulation_counter)++;
+        // CALLED EVERY SECOND
 
-        if (this->rolling_simulation_counter == 0) {
-            write_stat_history_to_file();
-            this->simulation_shops();
-        }
-        else if (this->rolling_simulation_counter == 1) {
-            this->simulation_housing();
-        }
-        else if (this->rolling_simulation_counter == 2) {
-            this->simulation_energy();
-        }
-        else if (this->rolling_simulation_counter == 3) {
-            this->simulation_production();
-        }
-        else if (this->rolling_simulation_counter == 4) {
-            this->simulation_transport();
-            (this->rolling_simulation_counter) -= 5;
-        }
-        */
         (this->simulation_counter)--;
         
     }
 
     if (this->date_counter > 1)
     {
-        (this->days_since_last_simulation)++;
-        this->update_date();
+        // CALLED EVERY GAME DAY
+
+        day_tick++;
         std::cout << "Day tick : " << (this->day_tick) << endl;
+        
+        this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date_godot());
+        int* datenumber = return_date(int(this->day_tick));
+        if (datenumber[0] == 1 && datenumber[1] == 1) { // resets the budget to initial value
+            budget = 10000; // needs to be updated for every year somehow
+        }
+        if (datenumber[0] == 1) {
+
+        }
+        
         (this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")->get_node("DirectionalLight"))->set("rotation_degrees", Vector3(-45 - sin((M_PI * (2 * (double)(this->daycount)) / 360)) * 25 / 2 - 12.5, 45, 0));
         ((WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")))->set("fog_color", Color(0.77, 0.8, 0.86, (1 - airQuality) * 0.11));
+        
         (this->date_counter)--;
+
     }
 
     if (this->notification_active)
@@ -179,33 +189,10 @@ void City::_physics_process(float delta) {
         }
     }
 }
-int* return_date(int day_tick) {
-    int static date[3];
-    int Y = 1, M = 1, D = 1;
-    int julian = (1461 * (Y + 4800 + (M - 14) / 12)) / 4 + (367 * (M - 2 - 12 / ((M - 14) / 12))) / 12 - (3 * ((Y + 4900 + (M - 14) / 12) / 100)) / 4 + D - 32075 + day_tick + 35;
-    int gregorian = julian + 1401 + (int)((((int)(4 * day_tick + 274277) / 146097) * 3) / 4) - 38;
-    int e = 4 * gregorian + 3;
-    int h = 5 * ((int)(e % 1461) / 4) + 2;
-    int day = ((int)(h % 153) / 5) + 1;
-    int month = (((int)h / 153) + 2) % 12 + 1;
-    int year = (int)(e / 1461) - 4716 + (int)((14 - month) / 12);
-    date[0] = day;
-    date[1] = month;
-    date[2] = year;
-    return date;
-}
+
 
 void City::update_date() {
-    this->day_tick += days_since_last_simulation;
-    this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date_godot());
-    int* datenumber = return_date(int(this->day_tick) + days_since_last_simulation);
-    if (datenumber[0] == 1 && datenumber[1] == 1) { // resets the budget to initial value
-        budget = 10000; // needs to be updated for every year somehow
-    }
-    if (datenumber[0] == 1) {
-
-    }
-    this->day_tick -= days_since_last_simulation;
+    
     
 }
 
@@ -258,8 +245,14 @@ void City::generate_initial_city_graphics()
 
 
 
-    Vector3 center = Vector3(15.0 * citysize, 0, 15.0 * citysize);
+    
 
+
+    Vector3 center = Vector3(15.0 * citysize, 0, 15.0 * citysize);
+    add_shop(center, RestaurantScene);
+
+
+    /*
 
     for (int x = 1; x < (citysize / 2) + 1; x++)
     {
@@ -408,6 +401,7 @@ void City::generate_initial_city_graphics()
 
 
     }
+    */
 }
 
 void City::set_initial_visible_components()

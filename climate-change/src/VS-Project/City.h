@@ -43,7 +43,6 @@ then run:
 
 namespace godot {
     
-    const int citysize = 25;
 
     class Transport;
 
@@ -82,6 +81,8 @@ namespace godot {
 
         // INITIAL GRAPHICAL SETUP
 
+        
+
         void generate_initial_city_graphics();
         void set_initial_visible_components();
 
@@ -117,8 +118,11 @@ namespace godot {
         bool ClickActive{ false };
 
         //TRAFFIC
-        int sizeOfCity = citysize; // buildings are placed only on a square sizeOfCity * sizeOfCity
-        int positionOfBuildings[citysize][citysize] = { 0 }; // sets  everything to non-existing for the traffic array 
+
+        const int citysize = 25;
+
+        int sizeOfCity = 25; // buildings are placed only on a square sizeOfCity * sizeOfCity
+        int positionOfBuildings[25][25] = { 0 }; // sets  everything to non-existing for the traffic array 
 
         // following functions handle adding structures to the city, takes a position and the required scene
         void add_shop(Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
@@ -146,7 +150,7 @@ namespace godot {
         void implement_policies(double);
         bool notification_active{ false };
         int notification_counter{ 0 };
-        int notification_timeout{ 180 };
+        int notification_timeout{ 60 };
         void trigger_notification(String);
         String get_button_info_text();
         void hide_menus();

@@ -12,8 +12,7 @@
 
 using namespace godot;
 
-const int c = citysize;
-extern int traffic_system[c][c][4][3];
+extern int traffic_system[25][25][4][3];
 
 // helper functions
 void compute_speed(double& Speed, double &Acc, float delta, Vector3 prevPos, Vector3 pos) {
