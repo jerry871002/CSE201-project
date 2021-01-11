@@ -69,8 +69,8 @@ namespace godot {
 
         // SIGNALS
 
-        void _on_MenuShop_pressed(String Name);
-        void _on_MenuHousing_pressed(String Name);
+        void _on_Menu_pressed(String Name);
+
         void _on_Validate_pressed();
         void _on_Game_Speed_changed();
         void _on_ResetButton_pressed();
