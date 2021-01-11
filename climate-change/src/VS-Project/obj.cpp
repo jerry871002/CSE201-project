@@ -182,8 +182,8 @@ void Structure::_process(float delta)
 {
     
     if (this->get("updatable")) {
-        Godot::print("This is a: " + this->get_object_type());
-        std::cout << "DEBUG: simulate step should be called now " << std::endl;
+        //Godot::print("This is a: " + this->get_object_type());
+        //std::cout << "DEBUG: simulate step should be called now " << std::endl;
         this->simulate_step((double)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("time_speed"))*5); // will run the lowest level simulate step function
         this->set("updatable", false);
     }
@@ -203,7 +203,7 @@ void Structure::_process(float delta)
 
 void Structure::simulate_step(double days) {
 
-    std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
+    //std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
 
 }
 
