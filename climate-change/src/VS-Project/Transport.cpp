@@ -54,6 +54,7 @@ Transport::Transport(int type){
 }
 
 void Transport::transport_type() {
+    workingDays = 7 - myCity->return_carProhibition();
     // initialize graphical variables
     motion = Vector3(0, 0, 0);
     rot = (M_PI / 2);
@@ -80,14 +81,14 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmt(70, 15);
         kmPerDay = kmt(gen); // average km per day for this car using gaussian
         std::normal_distribution <double> costt(42000, 8500); //cost randomised using gaussian
-        cost = costt(gen);
+        cost = costt(gen)-myCity->return_electicCarSubsidy();
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
         std::normal_distribution <double> satisfactiont(9.15, 0.15); //very high satisfaction
         satisfaction = fmax(satisfactiont(gen), 10);
         energyUse = 0.119 * kmPerDay;
         lifetime = 15;
-        pricePerMonth = 1.09*30;
+        pricePerMonth = 1.09*30*workingDays/7;
         weight = 1.7;
         break;
     }
@@ -103,11 +104,12 @@ void Transport::transport_type() {
         occupancyRate = occupancyg(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeg(1, 0.5);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactiong(8.5, 0.4); // high satisfaction
+        std::normal_distribution <double> satisfactiong(9.1, 0.25); // high satisfaction
         satisfaction = satisfactiong(gen);
         lifetime = 10;
-        pricePerMonth = 1.25*30;
+        pricePerMonth = 1.25*30*workingDays/7;
         weight = 2.5;
+        cost+=myCity->return_weightTax()*weight; //weight tax directly on car cost
         break;
     }
     case 2: { //normal family car 
@@ -125,7 +127,7 @@ void Transport::transport_type() {
         std::normal_distribution <double> satisfactiong(7, 0.5); // medium satisfaction
         satisfaction = satisfactiong(gen);
         lifetime = 15;
-        pricePerMonth = 0.15*30;
+        pricePerMonth = 0.15*30*workingDays/7;
         weight = 0.98;
         break;
     }
@@ -141,18 +143,19 @@ void Transport::transport_type() {
         occupancyRate = occupancyo(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeo(7, 2);
         buildingTime = timeo(gen); // building time of 1 collection (replica i think) car car, not so fast
-        std::normal_distribution <double> satisfactiono(9.5, 0.3); // very high satisfaction
+        std::normal_distribution <double> satisfactiono(9.35, 0.25); // very high satisfaction
         satisfaction = satisfactiono(gen);
         lifetime = 20;
-        pricePerMonth = 25*30;
+        pricePerMonth = 25*30*workingDays/7;
         weight = 2;
+        cost+=myCity->return_weightTax()*weight; //weight tax directly on car cost
         break;
     }
     case 4: { //bike
         fuelPerKm = 0;
         co2PerKm = 0;
         std::normal_distribution <double> costbike(370, 30);
-        cost = costbike(gen); // cost of 1 bike in euros, randomised using gaussian
+        cost = costbike(gen)-myCity->return_bikeSubsidy(); // cost of 1 bike in euros, randomised using gaussian
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.04; //really fast, in days (1 hour )
@@ -162,7 +165,7 @@ void Transport::transport_type() {
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
         lifetime = 20;
         pricePerMonth = 0.8*30;
-        weight = 0; //not true but in order for the tax to not be applied
+        weight = 0.15; //not true but in order for the tax to not be applied
         break;
     }
     case 5: { //motorcycle 
@@ -179,14 +182,14 @@ void Transport::transport_type() {
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
         lifetime = 12;
         pricePerMonth = 2.6*30;
-        weight = 0; //not true but in order for the tax to not be applied
+        weight = 0.01; //not true but in order for the tax to not be applied
         break;
     }
     case 6: { // bus
         fuelPerKm = 0.26; //in liters
         co2PerKm = 1.25; //in kg
         std::normal_distribution <double> costb(262500, 52500);
-        cost = costb(gen); // cost of 1 bus in euros, randomised using gaussian
+        cost = costb(gen)-myCity->return_busSubsidy(); // cost of 1 bus in euros, randomised using gaussian
         double alpha = (cost - 262500) / 262500;
         if (alpha < 0) {
             alpha = 0;
@@ -213,7 +216,7 @@ void Transport::transport_type() {
         employment = 1 + round(alpha * 2);
         lifetime = 12;
         pricePerMonth = (0.67 + alpha * 0.17) * kmPerDay * 30;
-        weight = 0; //not true but in order for the tax to not be applied
+        weight = 11; //not true but in order for the tax to not be applied
         break;
     }
     case 7: { //sports car
@@ -226,7 +229,7 @@ void Transport::transport_type() {
         occupancyRate = occupancysp(gen); // average percentage occupancy of the car: number of people in the bus / capacity
         std::normal_distribution <double> timeg(1.5, 0.75);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactionsp(9.5, 0.5); // satisfaction level is very high, randomised
+        std::normal_distribution <double> satisfactionsp(9.3, 0.2); // satisfaction level is very high, randomised
         satisfaction = satisfactionsp(gen);
         if (satisfaction > 10) {
             satisfaction = 10;
@@ -234,15 +237,21 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmsp(80, 20);
         kmPerDay = kmsp(gen); // kilometres per day,  randomised for each car
         lifetime = 10;
-        pricePerMonth = 2.5*30;
-        weight = 2;
+        pricePerMonth = 2.5*30*workingDays/7;
+        weight = 1.5;
         break;
     }
     }
     pricePerMonth += cost / (12 * lifetime);
     fuelInput = fuelPerKm*kmPerDay; //in 1 day
     CO2Emission = co2PerKm*kmPerDay; //in 1 day
-    cost-=myCity->return_weightTax()*weight; //weight tax directly on car cost
+    //car prohibition
+    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)){
+        satisfaction*=workingDays/7;
+        energyUse*=workingDays/7;
+        fuelInput*=workingDays/7;
+        CO2Emission*=workingDays/7;
+    }
 }
 
 void Transport::_register_methods() {
@@ -452,6 +461,19 @@ void Transport::simulate_step(double days) {
     case 7: { //sports car
         maintenance = 2.5 * days;
         break;
+    }
+    }
+    //car prohibition
+    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)){
+        {if (workingDays!=7-myCity->return_carProhibition()){
+        satisfaction/=workingDays/7;
+        workingDays = 7-myCity->return_carProhibition();
+        satisfaction*=workingDays/7;
+     }
+    maintenance*=workingDays/7;
+    fuelInput*=workingDays/7;
+    CO2Emission*=workingDays/7;
+    energyUse*=workingDays/7;
     }
     }
     //car consumption tax

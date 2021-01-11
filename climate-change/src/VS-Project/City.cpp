@@ -64,7 +64,7 @@ City::City() {
     fuelTax = 0;
 	weightTax = 0;
     bikeSubsidy = 0;
-    electicCarSubsidy = 0;
+    electricCarSubsidy = 0;
     busSubsidy = 0;
     carProhibition = 0;
     srand((int)time(0));
@@ -122,6 +122,14 @@ void City::_register_methods()
     register_property<City, float>("time_speed", &City::time_speed, 1.0);
     register_property<City, int>("day_tick", &City::day_tick, 0);
     register_property<City, double>("budget", &City::budget, 10000);
+
+    //Transport policies methods :
+    register_property<City, double>("fuelTax", &City::fuelTax, 0);
+    register_property<City, double>("weightTax", &City::weightTax, 0);
+    register_property<City, double>("bikeSubsidy", &City::bikeSubsidy, 0);
+    register_property<City, double>("electricCarSubsidy", &City::electricCarSubsidy, 0);
+    register_property<City, double>("busSubsidy", &City::busSubsidy, 0);
+    register_property<City, double>("carProhibition", &City::carProhibition, 0);
 };
 
 void City::_init()
@@ -225,6 +233,7 @@ void City::_input(InputEvent*)
 
     if (i->is_action_pressed("ui_test"))
     {
+        transport_to_add();
         add_car();
     }
 
@@ -268,6 +277,9 @@ void City::generate_initial_city_graphics()
 
     Vector3 center = Vector3(15.0 * citysize + 60, 0, 15.0 * citysize + 60);
 
+    bool hasnuclear = false;
+    bool hascoal = false;
+    bool hasgeo = false;
 
     for (int x = 1; x < (citysize / 2) + 1; x++)
     {
@@ -278,6 +290,7 @@ void City::generate_initial_city_graphics()
 
             Vector3 bigbuildingpos = pos + Vector3(15.0, 0, 15.0);
             double dist = pow(pow(center.x - bigbuildingpos.x, 2) + pow(center.z - bigbuildingpos.z, 2), 0.5);
+
 
 
             // This if condition keeps the building as a circle. if a 2x2 building cant be put it checks if a 1 x 1 building can
@@ -292,10 +305,16 @@ void City::generate_initial_city_graphics()
                 std::cout << "DEBUG: about to calculate probability" << std::endl;
                 // 2x2 buildings
                 float mallprob = calculate_building_prob(20, 90, 0.15, dist);
-                float nuclearprob = calculate_building_prob(170, 320, 0.05, dist);
-                float fieldprob = calculate_building_prob(260, 450, 1, dist);
-                float pastureprob = calculate_building_prob(240, 400, 2, dist);
+                float nuclearprob = calculate_building_prob(200, 240, 2, dist);
+                float coalprob = calculate_building_prob(200, 240, 2, dist);
+                float geoprob = calculate_building_prob(200, 240, 2, dist);
+                float fieldprob = calculate_building_prob(260, 350, 1, dist);
+                float pastureprob = calculate_building_prob(240, 350, 2, dist);
                 float factoryprob = calculate_building_prob(170, 200, 0.01, dist);
+
+                if (hasgeo) { geoprob = 0; }
+                if (hasnuclear) { nuclearprob = 0; }
+                if (hascoal) { coalprob = 0; }
 
                 std::cout << "DEBUG: distance : " << dist << std::endl;
 
@@ -304,12 +323,12 @@ void City::generate_initial_city_graphics()
 
                 dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), 0.5);
 
-                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-                float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
+                float shopprob = calculate_building_prob(0, 200, 1.1, dist) + calculate_building_prob(260, 300, 0.2, dist);
                 float buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
-                float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
+                float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                 float lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
-                float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
+                float highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
 
                 std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
                 std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
@@ -322,14 +341,16 @@ void City::generate_initial_city_graphics()
 
                 std::cout << "DEBUG: done calculate probability" << std::endl;
 
-                double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
+                double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + coalprob + geoprob+nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
                 //std::cout << "DEBUG: Add buildings" << std::endl;
                 if (bigbuildingmaybe < (double)(mallprob)) { std::cout << "DEBUG: Add mall" << std::endl;  add_shop(bigbuildingpos, MallScene); }
-                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob)) { std::cout << "DEBUG: Add NuclearPowerPlantScene" << std::endl;  add_energy(bigbuildingpos, NuclearPowerPlantScene); }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob)) { std::cout << "DEBUG: Add NuclearPowerPlantScene" << std::endl;  add_energy(bigbuildingpos, NuclearPowerPlantScene); hasnuclear = true; }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob)) { std::cout << "DEBUG: Add FieldScene" << std::endl;  add_production(bigbuildingpos, FieldScene); }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob / 2)) { std::cout << "DEBUG: Add SheepPastureScene" << std::endl;  add_production(bigbuildingpos, SheepPastureScene); }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob)) { std::cout << "DEBUG: Add PigsPastureScene" << std::endl;  add_production(bigbuildingpos, PigsPastureScene); }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob)) { std::cout << "DEBUG: Add FactoryScene" << std::endl;  add_production(bigbuildingpos, FactoryScene); }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob + geoprob)) { std::cout << "DEBUG: Add GeothermalScene" << std::endl;  add_energy(bigbuildingpos, GeothermalPowerPlantScene); hasgeo = true; }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob + geoprob + coalprob)) { std::cout << "DEBUG: Add Coalpowerplantscene " << std::endl;  add_energy(bigbuildingpos, CoalPowerPlantScene); hascoal = true; }
                 else {
                     //std::cout << "DEBUG: Add else" << std::endl;
                     srand(int((x + 1) * (z + 1) * (int)(time(0))));
@@ -344,12 +365,12 @@ void City::generate_initial_city_graphics()
                             dist = pow(pow(center.x - pos.x - pos1.x, 2) + pow(center.z - pos.z - pos1.z, 2), 0.5);
 
                             if (dist <= citysize*15) {
-                                restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-                                shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                                restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
+                                shopprob = calculate_building_prob(0, 200, 1.1, dist) + calculate_building_prob(260, 300, 0.2, dist);
                                 buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
-                                windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
+                                windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                                 lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
-                                highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
+                                highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
 
                                 double type = (double((double)rand() / (double)RAND_MAX) * (restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
 
@@ -382,9 +403,9 @@ void City::generate_initial_city_graphics()
                     }
                 }
             }
-            else if ((dist <= (citysize * 15.0 + 30)))
+            else
             {
-                std::cout << "DEBUG: loop if between citysize*15 and citysize*15+30 entered" << std::endl;
+                
                 for (int x1 = 0; x1 < 2; x1++)
                 {
                     for (int z1 = 0; z1 < 2; z1++) {
@@ -398,14 +419,12 @@ void City::generate_initial_city_graphics()
                             // plops down a building if theres no space for a 2x2 but there is for a 1x1  ... this should be on the outside of the city so if we want only one or two types on the edge we can set that here
 
 
-
-                            float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-                            float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                            float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
+                            float shopprob = calculate_building_prob(0, 200, 1.1, dist) + calculate_building_prob(260, 300, 0.2, dist);
                             float buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
-                            float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
+                            float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                             float lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
-                            float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
-
+                            float highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
 
 
                             double type = (double((double)rand() / (double)RAND_MAX) * double(restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
@@ -421,7 +440,7 @@ void City::generate_initial_city_graphics()
                     }
                 }
             }
-            else { std::cout << "DEBUG: building outside circle" << std::endl; }
+           
         }
     }
     std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
@@ -658,27 +677,31 @@ String City::get_button_info_text() {
     }
     else if (this->active_button == String("ConsumptionTransport"))
     {
-        return String("This is a tax on car consumption. Please input a value between 0 and - euros per liter of fuel.");
+        return String("This is a tax on car consumption. Please input a value between 0 and 2 euros per liter of fuel.");
     }
     else if (this->active_button == String("WeightTransport"))
     {
-        return String("This is a tax on car weight. Please input a value between 0 and - euros per ton of car.");
+        return String("This is a tax on car weight. Please input a value between 0 and 5000 euros.");
     }
     else if (this->active_button == String("BikeSubsidy"))
     {
-        return String("This is a subsidy for bicycles. Please input a value between 0 and - euros per family.");
+        return String("This is a subsidy for bicycles. Please input a value between 0 and 250 euros.");
     }
     else if (this->active_button == String("ElectricSubsidy"))
     {
-        return String("This is a subsidy for electric cars. Please input a value between 0 and - euros per family.");
+        return String("This is a subsidy for electric cars. Please input a value between 0 and 30 000 euros.");
     }
     else if (this->active_button == String("BusSubsidy"))
     {
-        return String("This is a subsidy for public transport. Please input a value between 0 and - euros per family.");
+        return String("This is a subsidy for public transport. Please input a value between 0 and 60 000 euros.");
     }
     else if (this->active_button == String("CarsProhibition"))
     {
         return String("This is a law prohibiting the use of all cars during a certain number of days per week. Please input a value between 0 and 7 days per week.");
+    }
+    else if (this->active_button == String("TreesBudget"))
+    {
+        return String("This is a policy implementing a budget for planting and growing more trees in residential and commercial areas. Please input a value between 0 and - in euros per year.");
     }
     else {
         return String("No information has been specified for this policy.");
@@ -910,6 +933,78 @@ void City::implement_policies(double value) {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
+    else if (this->active_button == String("ConsumptionTransport")) {
+        if (value >= 0 && value <= 2) { 
+            Godot::print("TAX ON CAR CONSUMPTION IMPLEMENTED");
+            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
+            {
+                (*it)->set("fuelTax", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("WeightTransport")) {
+        if (value >= 0 && value <= 5000) { 
+            Godot::print("TAX ON CAR WEIGHT IMPLEMENTED");
+            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
+            {
+                (*it)->set("weightTax", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("BikeSubsidy")) {
+        if (value >= 0 && value <= 250) { 
+            Godot::print("BIKE SUBSIDY IMPLEMENTED");
+            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
+            {
+                (*it)->set("bikeSubsidy", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("ElectricSubsidy")) {
+        if (value >= 0 && value <= 30000) { 
+            Godot::print("ELECTRIC CAR SUBSIDY IMPLEMENTED");
+            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
+            {
+                (*it)->set("electricCarSubsidy", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("BusSubsidy")) {
+        if (value >= 0 && value <= 60000) { 
+            Godot::print("BUS SUBSIDY IMPLEMENTED");
+            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
+            {
+                (*it)->set("busSubsidy", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+    else if (this->active_button == String("CarsProhibition")) {
+        if (value >= 0 && value <= 7) { 
+            Godot::print("CARS PROHIBITION ON CERTAIN DAYS IMPLEMENTED");
+            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
+            {
+                (*it)->set("carProhibition", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
 }
 
 void City::_on_Game_Speed_changed()
@@ -947,7 +1042,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     {
         int type = most_missing_type();
         std::cout << "The most missing type is currently : " << type << std::endl;
-        if (type != NULL) {
+        if (type != -1) {
 
             //int type = rand() % 3;
             Node* node;
@@ -965,7 +1060,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             }
 
             node->set("scale", Vector3(10, 10, 10));
-            node->set("translation", pos + Vector3(-13, 0.1, -13));
+            node->set("translation", pos + Vector3(-13, 0.2, -13));
 
             std::cout << "ADD A CAR OF TYPE: " << type << std::endl;
             this->add_child((Node*)node);
@@ -1780,18 +1875,21 @@ void City::remove_type_car(int type){
 
 int City::most_missing_type() {
     int min = 0;
+    std::cout << "missing_car_quantities   ";
     for (int i = 0; i < 8; i++) {
         if(missing_car_quantities[min] > missing_car_quantities[i]){
             min = i;
         }
+        std::cout << missing_car_quantities[i] << "  ";
     }
-    if (missing_car_quantities[min] > 0) {
+    if (missing_car_quantities[min] < 0) {
         missing_car_quantities[min] += 1;
         return min;
     }
     else {
-        return NULL;
+        return -1;
     }
+
 }
 
 void City::transport_to_add() { //now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
@@ -1806,6 +1904,9 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 * 6 - bus
 * 7 - sports car
 */
+    std::cout<< "TRANSPORT_TO_ADD begins" << endl;
+    std::random_device rd;
+    std::mt19937 gen(rd());
 	Transport electicCar = Transport(0);
 	Transport bigCar = Transport(1);
 	Transport car = Transport(2);
@@ -1814,7 +1915,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 	Transport motorcycle = Transport(5);
 	Transport bus = Transport(6);
 	Transport sportsCar = Transport(7);
-
+    std::cout << "TRANSPORT_TO_ADD check 1" << endl;
     double satisfactions[8] = { electicCar.satisfaction, bigCar.satisfaction, car.satisfaction, collectionCar.satisfaction, bike.satisfaction, motorcycle.satisfaction, bus.satisfaction, sportsCar.satisfaction };
     double satisfactionsSum = 0;
 	for (int i =0 ; i < 8; i++){
@@ -1826,15 +1927,21 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         if ((i == 4) || (i == 5)) {
             alpha[i] *= sqrt(airQuality);
         }
+        std::normal_distribution <double> alpharandomiser(alpha[i], alpha[i]/4);
+        alpha[i] = alpharandomiser(gen);
+        if (alpha[i]<0){
+            alpha[i] = 0;
+        }
     }
 
     double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
     double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth+fuelTax*bigCar.fuelInput*30, car.pricePerMonth+fuelTax*car.fuelInput*30,collectionCar.pricePerMonth+fuelTax*collectionCar.fuelInput*30, bike.pricePerMonth, 
 	motorcycle.pricePerMonth+fuelTax*motorcycle.fuelInput*30, bus.pricePerMonth/(bus.capacity*bus.occupancyRate)+fuelTax*bus.fuelInput*30, sportsCar.pricePerMonth+fuelTax*sportsCar.fuelInput*30};
-    double probabilities[8];
-    double quantities[8] = { 0,0,0,0,0,0,0,0 };
+    double probabilities[8] = {0};
+    double quantities[8] = { 0 };
     double alphaSum = 0;
-    
+
+    std::cout << "TRANSPORT_TO_ADD check 3" << endl;
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
     }
@@ -1845,12 +1952,13 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
     }
-     
+    std::cout << "TRANSPORT_TO_ADD check 4" << endl;
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it) {
-        double choice[8] = { 0,0,0,0,0,0,0,0 };
+        std::cout << "TRANSPORT_TO_ADD check 5" << endl;
+        double choice[8] = { 0 };
         for (int i = 0; i < 8; i++) {
-            probabilities[i] = alpha[i] * ((*it)->get_averageWage() / pricesPerMonth[i]) / alphaSum;
-            std::cout << "Average wage is:" << (*it)->get_averageWage() << endl;
+            std::cout << "Average wage is:"  << endl;
+            probabilities[i] = alpha[i] * ((double)((*it)->get("averageWage")) / pricesPerMonth[i]) / alphaSum;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
@@ -1868,11 +1976,14 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         }
         quantities[maxIndex] += 1;
     }
-
+    std::cout << "TRANSPORT_TO_ADD check 6" << endl;
     double quantitiesSum = 0;
     for (int i = 0; i < 8; i++) {
         quantitiesSum += quantities[i];
     }
+    std::cout << quantitiesSum << endl;
+
+    // NO NEED FOR THOSE
     probabilityElectricCar = quantities[0] / quantitiesSum;
     probabilityBigCar = quantities[1] / quantitiesSum;
     probabilityCar = quantities[2] / quantitiesSum;
@@ -1881,12 +1992,16 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     probabilityMotorcycle = quantities[5] / quantitiesSum;
     probabilityBus = quantities[6] / quantitiesSum;
     probabilitySportsCar = quantities[7] / quantitiesSum;
-
+    std::cout << "TRANSPORT_TO_ADD check 7" << endl;
+    /*
     for (int i = 0; i < 8; i++) {
         quantities[i] = quantities[i] / quantitiesSum;
     }
-    for (int i = 1; i < 8; i++) {
+    */
+    for (int i = 0; i < 8; i++) {
         missing_car_quantities[i] = current_car_quantities[i] - quantities[i];
+        std::cout << "CUrrent car " << current_car_quantities[i] << endl;
+        std::cout << "quantities " << quantities[i] << endl;
         std::cout << "Missing quanity for type " << i << " is " << missing_car_quantities[i] << endl;
         if (missing_car_quantities[i] > 0) {
             missing_car_quantities[i] = 0;
@@ -1960,7 +2075,7 @@ double City::return_bikeSubsidy(){
 	return bikeSubsidy;
 }
 double City::return_electicCarSubsidy(){
-	return electicCarSubsidy;
+	return electricCarSubsidy;
 }
 double City::return_busSubsidy(){
 	return busSubsidy;

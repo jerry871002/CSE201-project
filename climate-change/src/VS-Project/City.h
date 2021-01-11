@@ -234,7 +234,7 @@ namespace godot {
         //bike subsidy
         double bikeSubsidy;
         //electic car subsidy
-        double electicCarSubsidy;
+        double electricCarSubsidy;
         //bus subsidy
         double busSubsidy;
         //cars' prohibition on certain days
