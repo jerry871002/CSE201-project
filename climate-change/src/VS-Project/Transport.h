@@ -32,22 +32,23 @@ namespace godot {
 
         double occupancyRate, capacity, kmPerDay;
         double passengers, co2PerKm, fuelPerKm; // CO2 in kg
-        double test ;
-        double CO2Emission ; // co2 output for the whole duration of simulation
-        double maintenance ; // maintenance cost for the whole duration of simulation
-        double fuelInput ; // fuel needed for the whole duration of simulation
-        double energyUse ; //energy needed for the whole duration of simulation
-        double age ; //age in days
-        double employment ;
-        double cost ;
-        double buildingTime ;
-        double satisfaction ;
+        double test;
+        double CO2Emission; // co2 output for the whole duration of simulation
+        double maintenance; // maintenance cost for the whole duration of simulation
+        double fuelInput; // fuel needed for the whole duration of simulation
+        double energyUse; //energy needed for the whole duration of simulation
+        double age; //age in days
+        double employment;
+        double cost;
+        double buildingTime;
+        double satisfaction;
         double get_satisfaction();
 		double get_co2emissions();
 		double get_energyuse();
 		double get_environmentalcost();
         double lifetime; //in years
         double pricePerMonth; // in euros
+        double weight; //in tonnes
 
         /*
         * 0 - electic car
