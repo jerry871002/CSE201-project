@@ -216,7 +216,18 @@ namespace godot {
         int numberOfHouses;
         int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
         int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month
-
+        //tax on car consumption
+        double fuelTax; // value per liter of fuel
+        // tax on car weight
+        double weightTax; // value per ton of car
+        //bike subsidy
+        double bikeSubsidy;
+        //electic car subsidy
+        double electicCarSubsidy;
+        //bus subsidy
+        double busSubsidy;
+        //cars' prohibition on certain days
+        double carProhibition; //number of days on which cars are prohibited
         const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");
         const Ref<PackedScene> ShopScene = ResourceLoader::get_singleton()->load("res://Resources/Shop.tscn", "PackedScene");
         const Ref<PackedScene> MallScene = ResourceLoader::get_singleton()->load("res://Resources/Mall.tscn", "PackedScene");
