@@ -940,6 +940,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
     {
         int type = most_missing_type();
+        std::cout << "The most missing type is currently : " << type << std::endl;
         if (type != NULL) {
 
             //int type = rand() % 3;
@@ -964,7 +965,6 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             this->add_child((Node*)node);
             ((Transport*)node)->set("transportType", type);
 
-            //((Transport*)node)->transport_type();
             //income -= node->cost;
             //all_transports.push_back((Transport*)node);         THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
         }
@@ -1780,6 +1780,7 @@ int City::most_missing_type() {
         }
     }
     if (missing_car_quantities[min] > 0) {
+        missing_car_quantities[min] += 1;
         return min;
     }
     else {
@@ -1842,6 +1843,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         double choice[8] = { 0,0,0,0,0,0,0,0 };
         for (int i = 0; i < 8; i++) {
             probabilities[i] = alpha[i] * ((*it)->get_averageWage() / pricesPerMonth[i]) / alphaSum;
+            std::cout << "Average wage is:" << (*it)->get_averageWage() << endl;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
@@ -1878,6 +1880,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     }
     for (int i = 1; i < 8; i++) {
         missing_car_quantities[i] = current_car_quantities[i] - quantities[i];
+        std::cout << "Missing quanity for type " << i << " is " << missing_car_quantities[i] << endl;
         if (missing_car_quantities[i] > 0) {
             missing_car_quantities[i] = 0;
         }
