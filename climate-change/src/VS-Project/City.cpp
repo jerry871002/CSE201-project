@@ -277,6 +277,9 @@ void City::generate_initial_city_graphics()
 
     Vector3 center = Vector3(15.0 * citysize + 60, 0, 15.0 * citysize + 60);
 
+    bool hasnuclear = false;
+    bool hascoal = false;
+    bool hasgeo = false;
 
     for (int x = 1; x < (citysize / 2) + 1; x++)
     {
@@ -287,6 +290,7 @@ void City::generate_initial_city_graphics()
 
             Vector3 bigbuildingpos = pos + Vector3(15.0, 0, 15.0);
             double dist = pow(pow(center.x - bigbuildingpos.x, 2) + pow(center.z - bigbuildingpos.z, 2), 0.5);
+
 
 
             // This if condition keeps the building as a circle. if a 2x2 building cant be put it checks if a 1 x 1 building can
@@ -301,10 +305,16 @@ void City::generate_initial_city_graphics()
                 std::cout << "DEBUG: about to calculate probability" << std::endl;
                 // 2x2 buildings
                 float mallprob = calculate_building_prob(20, 90, 0.15, dist);
-                float nuclearprob = calculate_building_prob(170, 320, 0.05, dist);
-                float fieldprob = calculate_building_prob(260, 450, 1, dist);
-                float pastureprob = calculate_building_prob(240, 400, 2, dist);
+                float nuclearprob = calculate_building_prob(200, 240, 2, dist);
+                float coalprob = calculate_building_prob(200, 240, 2, dist);
+                float geoprob = calculate_building_prob(200, 240, 2, dist);
+                float fieldprob = calculate_building_prob(260, 350, 1, dist);
+                float pastureprob = calculate_building_prob(240, 350, 2, dist);
                 float factoryprob = calculate_building_prob(170, 200, 0.01, dist);
+
+                if (hasgeo) { geoprob = 0; }
+                if (hasnuclear) { nuclearprob = 0; }
+                if (hascoal) { coalprob = 0; }
 
                 std::cout << "DEBUG: distance : " << dist << std::endl;
 
@@ -313,12 +323,12 @@ void City::generate_initial_city_graphics()
 
                 dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), 0.5);
 
-                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-                float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
+                float shopprob = calculate_building_prob(0, 200, 1.1, dist) + calculate_building_prob(260, 300, 0.2, dist);
                 float buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
-                float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
+                float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                 float lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
-                float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
+                float highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
 
                 std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
                 std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
@@ -331,14 +341,16 @@ void City::generate_initial_city_graphics()
 
                 std::cout << "DEBUG: done calculate probability" << std::endl;
 
-                double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
+                double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + coalprob + geoprob+nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
                 //std::cout << "DEBUG: Add buildings" << std::endl;
                 if (bigbuildingmaybe < (double)(mallprob)) { std::cout << "DEBUG: Add mall" << std::endl;  add_shop(bigbuildingpos, MallScene); }
-                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob)) { std::cout << "DEBUG: Add NuclearPowerPlantScene" << std::endl;  add_energy(bigbuildingpos, NuclearPowerPlantScene); }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob)) { std::cout << "DEBUG: Add NuclearPowerPlantScene" << std::endl;  add_energy(bigbuildingpos, NuclearPowerPlantScene); hasnuclear = true; }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob)) { std::cout << "DEBUG: Add FieldScene" << std::endl;  add_production(bigbuildingpos, FieldScene); }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob / 2)) { std::cout << "DEBUG: Add SheepPastureScene" << std::endl;  add_production(bigbuildingpos, SheepPastureScene); }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob)) { std::cout << "DEBUG: Add PigsPastureScene" << std::endl;  add_production(bigbuildingpos, PigsPastureScene); }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob)) { std::cout << "DEBUG: Add FactoryScene" << std::endl;  add_production(bigbuildingpos, FactoryScene); }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob + geoprob)) { std::cout << "DEBUG: Add GeothermalScene" << std::endl;  add_energy(bigbuildingpos, GeothermalPowerPlantScene); hasgeo = true; }
+                else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob + geoprob + coalprob)) { std::cout << "DEBUG: Add Coalpowerplantscene " << std::endl;  add_energy(bigbuildingpos, CoalPowerPlantScene); hascoal = true; }
                 else {
                     //std::cout << "DEBUG: Add else" << std::endl;
                     srand(int((x + 1) * (z + 1) * (int)(time(0))));
@@ -353,12 +365,12 @@ void City::generate_initial_city_graphics()
                             dist = pow(pow(center.x - pos.x - pos1.x, 2) + pow(center.z - pos.z - pos1.z, 2), 0.5);
 
                             if (dist <= citysize*15) {
-                                restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-                                shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                                restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
+                                shopprob = calculate_building_prob(0, 200, 1.1, dist) + calculate_building_prob(260, 300, 0.2, dist);
                                 buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
-                                windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
+                                windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                                 lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
-                                highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
+                                highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
 
                                 double type = (double((double)rand() / (double)RAND_MAX) * (restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
 
@@ -391,9 +403,9 @@ void City::generate_initial_city_graphics()
                     }
                 }
             }
-            else if ((dist <= (citysize * 15.0 + 30)))
+            else
             {
-                std::cout << "DEBUG: loop if between citysize*15 and citysize*15+30 entered" << std::endl;
+                
                 for (int x1 = 0; x1 < 2; x1++)
                 {
                     for (int z1 = 0; z1 < 2; z1++) {
@@ -407,14 +419,12 @@ void City::generate_initial_city_graphics()
                             // plops down a building if theres no space for a 2x2 but there is for a 1x1  ... this should be on the outside of the city so if we want only one or two types on the edge we can set that here
 
 
-
-                            float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
-                            float shopprob = calculate_building_prob(0, 200, 1, dist) + calculate_building_prob(300, 500, 0.2, dist);
+                            float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
+                            float shopprob = calculate_building_prob(0, 200, 1.1, dist) + calculate_building_prob(260, 300, 0.2, dist);
                             float buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
-                            float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 300, 0.3, dist);
+                            float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                             float lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
-                            float highhouseprob = calculate_building_prob(-100, 200, 4, dist) + calculate_building_prob(280, 310, 0.5, dist);
-
+                            float highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
 
 
                             double type = (double((double)rand() / (double)RAND_MAX) * double(restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
@@ -430,7 +440,7 @@ void City::generate_initial_city_graphics()
                     }
                 }
             }
-            else { std::cout << "DEBUG: building outside circle" << std::endl; }
+           
         }
     }
     std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
@@ -1895,6 +1905,8 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 * 7 - sports car
 */
     std::cout<< "TRANSPORT_TO_ADD begins" << endl;
+    std::random_device rd;
+    std::mt19937 gen(rd());
 	Transport electicCar = Transport(0);
 	Transport bigCar = Transport(1);
 	Transport car = Transport(2);
@@ -1914,6 +1926,11 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         alpha[i] = satisfactions[i] / satisfactionsSum * numberOfHouses;
         if ((i == 4) || (i == 5)) {
             alpha[i] *= sqrt(airQuality);
+        }
+        std::normal_distribution <double> alpharandomiser(alpha[i], alpha[i]/4);
+        alpha[i] = alpharandomiser(gen);
+        if (alpha[i]<0){
+            alpha[i] = 0;
         }
     }
 
