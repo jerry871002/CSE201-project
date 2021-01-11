@@ -49,6 +49,7 @@ namespace godot {
         double lifetime; //in years
         double pricePerMonth; // in euros
         double weight; //in tonnes
+        double workingDays;//number  of days when cars are not prohibited
 
         /*
         * 0 - electic car

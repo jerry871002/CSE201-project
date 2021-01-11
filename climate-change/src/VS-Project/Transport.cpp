@@ -54,6 +54,7 @@ Transport::Transport(int type){
 }
 
 void Transport::transport_type() {
+    workingDays = 7 - myCity->return_carProhibition();
     // initialize graphical variables
     motion = Vector3(0, 0, 0);
     rot = (M_PI / 2);
@@ -87,7 +88,7 @@ void Transport::transport_type() {
         satisfaction = fmax(satisfactiont(gen), 10);
         energyUse = 0.119 * kmPerDay;
         lifetime = 15;
-        pricePerMonth = 1.09*30;
+        pricePerMonth = 1.09*30*workingDays/7;
         weight = 1.7;
         break;
     }
@@ -106,7 +107,7 @@ void Transport::transport_type() {
         std::normal_distribution <double> satisfactiong(8.5, 0.4); // high satisfaction
         satisfaction = satisfactiong(gen);
         lifetime = 10;
-        pricePerMonth = 1.25*30;
+        pricePerMonth = 1.25*30*workingDays/7;
         weight = 2.5;
         break;
     }
@@ -125,7 +126,7 @@ void Transport::transport_type() {
         std::normal_distribution <double> satisfactiong(7, 0.5); // medium satisfaction
         satisfaction = satisfactiong(gen);
         lifetime = 15;
-        pricePerMonth = 0.15*30;
+        pricePerMonth = 0.15*30*workingDays/7;
         weight = 0.98;
         break;
     }
@@ -144,7 +145,7 @@ void Transport::transport_type() {
         std::normal_distribution <double> satisfactiono(9.5, 0.3); // very high satisfaction
         satisfaction = satisfactiono(gen);
         lifetime = 20;
-        pricePerMonth = 25*30;
+        pricePerMonth = 25*30*workingDays/7;
         weight = 2;
         break;
     }
@@ -234,7 +235,7 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmsp(80, 20);
         kmPerDay = kmsp(gen); // kilometres per day,  randomised for each car
         lifetime = 10;
-        pricePerMonth = 2.5*30;
+        pricePerMonth = 2.5*30*workingDays/7;
         weight = 2;
         break;
     }
@@ -243,6 +244,13 @@ void Transport::transport_type() {
     fuelInput = fuelPerKm*kmPerDay; //in 1 day
     CO2Emission = co2PerKm*kmPerDay; //in 1 day
     cost-=myCity->return_weightTax()*weight; //weight tax directly on car cost
+    //car prohibition
+    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)){
+        satisfaction*=workingDays/7;
+        energyUse*=workingDays/7;
+        fuelInput*=workingDays/7;
+        CO2Emission*=workingDays/7;
+    }
 }
 
 void Transport::_register_methods() {
@@ -452,6 +460,19 @@ void Transport::simulate_step(double days) {
     case 7: { //sports car
         maintenance = 2.5 * days;
         break;
+    }
+    }
+    //car prohibition
+    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)){
+        {if (workingDays!=7-myCity->return_carProhibition()){
+        satisfaction/=workingDays/7;
+        workingDays = 7-myCity->return_carProhibition();
+        satisfaction*=workingDays/7;
+     }
+    maintenance*=workingDays/7;
+    fuelInput*=workingDays/7;
+    CO2Emission*=workingDays/7;
+    energyUse*=workingDays/7;
     }
     }
     //car consumption tax
