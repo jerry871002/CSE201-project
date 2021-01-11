@@ -257,7 +257,7 @@ void City::generate_initial_city_graphics()
 
     // srand((int)time(0));
 
-    Vector3 center = Vector3(15.0 * citysize, 0, 15.0 * citysize);
+    Vector3 center = Vector3(15.0 * citysize+60, 0, 15.0 * citysize+60);
 
 
     for (int x = 1; x < (citysize / 2) + 1; x++)
@@ -354,7 +354,7 @@ void City::generate_initial_city_graphics()
                                 int randompdint = rand() % 5;
                                 if (randompdint == 0) {
                                     if (PDScene.is_valid()) {
-                                        std::cout << "DEBUG: creating PDscene" << std::endl;
+                                        std::cout << "DEBUG: adding pedestrian" << std::endl;
                                         Node* node;
 
                                         node = PDScene->instance();
@@ -365,7 +365,8 @@ void City::generate_initial_city_graphics()
                                     }
                                 }
                                 int randomcarint = rand() % 3;
-                                if (randomcarint == 0) { add_car(pos + pos1); }
+                                if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car(pos + pos1); }
+
                             }
                         }
                     }
@@ -373,6 +374,7 @@ void City::generate_initial_city_graphics()
             }
             else if ((dist <= (citysize * 15.0 + 30)))
             {
+            std::cout << "DEBUG: loop if between citysize*15 and citysize*15+30 entered" << std::endl;
                 for (int x1 = 0; x1 < 2; x1++)
                 {
                     for (int z1 = 0; z1 < 2; z1++) {
@@ -409,8 +411,10 @@ void City::generate_initial_city_graphics()
                     }
                 }
             }
+            else{ std::cout << "DEBUG: building outside circle" << std::endl; }
         }
     }
+    std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
 }
 
 void City::set_initial_visible_components()
