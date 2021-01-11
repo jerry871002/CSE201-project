@@ -243,7 +243,7 @@ void Transport::transport_type() {
     pricePerMonth += cost / (12 * lifetime);
     fuelInput = fuelPerKm*kmPerDay; //in 1 day
     CO2Emission = co2PerKm*kmPerDay; //in 1 day
-    cost-=myCity->return_weightTax()*weight; //weight tax directly on car cost
+    cost+=myCity->return_weightTax()*weight; //weight tax directly on car cost
     //car prohibition
     if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)){
         satisfaction*=workingDays/7;
