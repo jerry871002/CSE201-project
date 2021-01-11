@@ -48,16 +48,7 @@ namespace godot {
 		double get_environmentalcost();
         double lifetime; //in years
         double pricePerMonth; // in euros
-        //tax on car fuel consumption
-        double fuelTax; //a value between 0 and - euros per liter of fuel
-        //tax on car weight
-        double weightTax; //a value between 0 and - euros per ton of car
-        //Bike subsidy
-        double bikeSubsidy; 
-        //electic car subsidy
-        double electicCarSubsidy;
-        //bus subsidy
-        double busSubsidy;
+
         /*
         * 0 - electic car
         * 1 - big american car
@@ -68,7 +59,6 @@ namespace godot {
         * 6 - bus
         * 7 - sports car
         */
-
         void set_transportType(int type);
         int get_transportType();
 
