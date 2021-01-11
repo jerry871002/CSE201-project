@@ -937,7 +937,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/Cybertruck.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
 
-    if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid())
+    if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid() && BusScene.is_valid() && AmericanCarScene.is_valid() && BikeScene.is_valid() && ElectricCarScene.is_valid() && NormalCarScene.is_valid())
     {
         int type = most_missing_type();
         std::cout << "The most missing type is currently : " << type << std::endl;
@@ -961,7 +961,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             node->set("scale", Vector3(10, 10, 10));
             node->set("translation", pos + Vector3(-13, 0.1, -13));
 
-
+            std::cout << "ADD A CAR OF TYPE: " << type << std::endl;
             this->add_child((Node*)node);
             ((Transport*)node)->set("transportType", type);
 
