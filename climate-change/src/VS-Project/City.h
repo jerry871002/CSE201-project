@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include <algorithm>
 
+
 using namespace std;
 
 
@@ -43,6 +44,7 @@ then run:
 
 namespace godot {
     
+    const int citysize{ 26 };
 
     class Transport;
 
@@ -119,7 +121,7 @@ namespace godot {
 
         //TRAFFIC
 
-        const int citysize = 26;
+        //const int citysize = 26;
 
         int sizeOfCity = 26; // buildings are placed only on a square sizeOfCity * sizeOfCity
         int positionOfBuildings[26][26] = { 0 }; // sets  everything to non-existing for the traffic array 

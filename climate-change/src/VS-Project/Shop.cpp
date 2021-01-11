@@ -160,7 +160,7 @@ double Shop::get_environmentalcost() {
 
 void Shop::simulate_step(double days) {
 
-    std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
+    //std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
 
     this->Structure::simulate_step(days);
 
@@ -181,14 +181,14 @@ void Shop::simulate_step(double days) {
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->panels_age) << " AND PANEL PROBABILITY = " << std::to_string(this->panel_probability) << std::endl;
-        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->panel_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
+        //std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->panels_age) << " AND PANEL PROBABILITY = " << std::to_string(this->panel_probability) << std::endl;
+        //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->panel_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             PanelsOn = true;
             panels_age = 100;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
-            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+            //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
     }
@@ -200,7 +200,7 @@ void Shop::simulate_step(double days) {
         this->panels_age = 0;
         PanelsOn = false;
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
-        std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
 
 }
@@ -258,7 +258,7 @@ void Shop::panel_added_probability(){
         break;
 
     default:
-        std::cout << "DEBUG: SHOP set initial investment error" << std::endl;
+        //std::cout << "DEBUG: SHOP set initial investment error" << std::endl;
         break;
     }
     panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + ((initial_investment + this->solarSatisfaction/10)/2)*25 + income_indexed*25)/100;
@@ -336,7 +336,7 @@ Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
 
-    std::cout << "DEBUG: RESTAURANT SIMULATION CALLED" << std::endl;
+    //std::cout << "DEBUG: RESTAURANT SIMULATION CALLED" << std::endl;
 
     this->Shop::simulate_step(days);
 
@@ -441,7 +441,7 @@ SmallShop::~SmallShop(){}
 
 
 void SmallShop::simulate_step(double days){
-    std::cout << "DEBUG: SMALLSHOP SIMULATION CALLED" << std::endl;
+    //std::cout << "DEBUG: SMALLSHOP SIMULATION CALLED" << std::endl;
     this->Shop::simulate_step(days);
 }
 
@@ -468,7 +468,7 @@ Mall::Mall(){
 Mall::~Mall(){}
 
 void Mall::simulate_step(double days) {
-    std::cout << "DEBUG: MALL SIMULATION CALLED" << std::endl;
+    //std::cout << "DEBUG: MALL SIMULATION CALLED" << std::endl;
     this->Shop::simulate_step(days);
 }
 

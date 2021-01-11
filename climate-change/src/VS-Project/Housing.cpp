@@ -55,7 +55,7 @@ void Housing::_ready()
 
 void Housing::simulate_step(double days) {
 
-	std::cout << "DEBUG: HOUSING SIMULATION CALLED" << std::endl;
+	//std::cout << "DEBUG: HOUSING SIMULATION CALLED" << std::endl;
 	this->Structure::simulate_step(days); 
 	this->Housing::panel_added_probability();	
 	this->Housing::double_glazing_added_probability();
@@ -69,14 +69,14 @@ void Housing::simulate_step(double days) {
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->solarPanelAge) << " AND PANEL PROBABILITY = " << std::to_string(this->panel_probability) << std::endl;
-        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->panel_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
+        //std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->solarPanelAge) << " AND PANEL PROBABILITY = " << std::to_string(this->panel_probability) << std::endl;
+        //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->panel_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             PanelsOn = true;
             solarPanelAge = 100;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
-            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+            //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
     }
@@ -88,7 +88,7 @@ void Housing::simulate_step(double days) {
         this->solarPanelAge = 0;
         PanelsOn = false;
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
-        std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
 
 	if (int(this->doubleGlazingAge) == 0) {
@@ -99,14 +99,14 @@ void Housing::simulate_step(double days) {
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->doubleGlazingAge) << " AND PANEL PROBABILITY = " << std::to_string(this->double_glazing_probability) << std::endl;
-        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->double_glazing_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
+        //std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->doubleGlazingAge) << " AND PANEL PROBABILITY = " << std::to_string(this->double_glazing_probability) << std::endl;
+        //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->double_glazing_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             doubleGlazingOn = true;
             doubleGlazingAge = 100;
             
-            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+            //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
     }
@@ -117,7 +117,7 @@ void Housing::simulate_step(double days) {
         this->doubleGlazingAge = 0;
         doubleGlazingOn = false;
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
-        std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
 
 	if (int(this->rooftopWindTurbineAge) == 0) {
@@ -128,14 +128,14 @@ void Housing::simulate_step(double days) {
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->rooftopWindTurbineAge) << " AND PANEL PROBABILITY = " << std::to_string(this->roof_wind_turbines_probability) << std::endl;
-        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->roof_wind_turbines_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
+        //std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->rooftopWindTurbineAge) << " AND PANEL PROBABILITY = " << std::to_string(this->roof_wind_turbines_probability) << std::endl;
+        //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->roof_wind_turbines_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             rooftopWindTurbineOn = true;
             rooftopWindTurbineAge = 100;
             this->get_node("MeshComponents/WindTurbine")->set("visible", rooftopWindTurbineOn);
-            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+            //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
     }
@@ -147,7 +147,7 @@ void Housing::simulate_step(double days) {
         this->rooftopWindTurbineAge = 0;
         rooftopWindTurbineOn = false;
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
-        std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     } 
 
 	age += days; 
@@ -367,7 +367,7 @@ House::~House() {
 
 void House::simulate_step(double days) {
 
-	std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
+	//std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
 
 	this->Housing::simulate_step(days);
 	
@@ -614,7 +614,7 @@ Building::~Building() {
 
 void Building::simulate_step(double days) {
 
-	std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
+	//std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
 
 	this->Housing::simulate_step(days);
 

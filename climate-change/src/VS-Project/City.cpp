@@ -33,7 +33,7 @@ using namespace godot;
 using namespace std;
 
 
-int traffic_system[26][26][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
+int traffic_system[citysize][citysize][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
                  // the third coornidate indicates the side of the building and the forth one which way the car can turn
 
 
@@ -139,12 +139,12 @@ void City::_physics_process(float delta) {
 
     // CALLED EVERY PHYSICS FRAME (60 FPS)
 
-    (*structures_iterator)->set("updatable", true);
-    ++structures_iterator;
-    if (structures_iterator == all_structures.end()) { structures_iterator = all_structures.begin(); };
-
     if (bool(this->time_speed))
     {
+        (*structures_iterator)->set("updatable", true);
+        ++structures_iterator;
+        if (structures_iterator == all_structures.end()) { structures_iterator = all_structures.begin(); };
+
         this->simulation_counter += (double)delta;
 
         this->date_counter += double(delta) * this->time_speed;
@@ -183,7 +183,7 @@ void City::_physics_process(float delta) {
         { 
             // CALLED EVERY YEAR
 
-            budget = 10000; // needs to be updated for every year somehow
+            budget = 10000; 
         }
         
         (this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")->get_node("DirectionalLight"))->set("rotation_degrees", Vector3(-45 - sin((M_PI * (2 * (double)(day_tick % 365)) / 365)) * 25 / 2 - 12.5, 45, 0));
