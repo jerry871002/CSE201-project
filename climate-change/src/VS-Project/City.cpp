@@ -219,6 +219,7 @@ void City::_input(InputEvent*)
 
     if (i->is_action_pressed("ui_test"))
     {
+        transport_to_add();
         add_car();
     }
 
@@ -941,7 +942,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     {
         int type = most_missing_type();
         std::cout << "The most missing type is currently : " << type << std::endl;
-        if (type != NULL) {
+        if (type != -1) {
 
             //int type = rand() % 3;
             Node* node;
@@ -959,7 +960,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             }
 
             node->set("scale", Vector3(10, 10, 10));
-            node->set("translation", pos + Vector3(-13, 0.1, -13));
+            node->set("translation", pos + Vector3(-13, 0.2, -13));
 
             std::cout << "ADD A CAR OF TYPE: " << type << std::endl;
             this->add_child((Node*)node);
@@ -1774,18 +1775,21 @@ void City::remove_type_car(int type){
 
 int City::most_missing_type() {
     int min = 0;
+    std::cout << "missing_car_quantities   ";
     for (int i = 0; i < 8; i++) {
         if(missing_car_quantities[min] > missing_car_quantities[i]){
             min = i;
         }
+        std::cout << missing_car_quantities[i] << "  ";
     }
-    if (missing_car_quantities[min] > 0) {
+    if (missing_car_quantities[min] < 0) {
         missing_car_quantities[min] += 1;
         return min;
     }
     else {
-        return NULL;
+        return -1;
     }
+
 }
 
 void City::transport_to_add() { //now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
@@ -1800,6 +1804,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 * 6 - bus
 * 7 - sports car
 */
+    std::cout<< "TRANSPORT_TO_ADD begins" << endl;
 	Transport electicCar = Transport(0);
 	Transport bigCar = Transport(1);
 	Transport car = Transport(2);
@@ -1808,7 +1813,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 	Transport motorcycle = Transport(5);
 	Transport bus = Transport(6);
 	Transport sportsCar = Transport(7);
-
+    std::cout << "TRANSPORT_TO_ADD check 1" << endl;
     double satisfactions[8] = { electicCar.satisfaction, bigCar.satisfaction, car.satisfaction, collectionCar.satisfaction, bike.satisfaction, motorcycle.satisfaction, bus.satisfaction, sportsCar.satisfaction };
     double satisfactionsSum = 0;
 	for (int i =0 ; i < 8; i++){
@@ -1821,13 +1826,13 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
             alpha[i] *= sqrt(airQuality);
         }
     }
-
-    double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
+    std::cout << "TRANSPORT_TO_ADD check 2" << endl;
+    double costs[8] = { electicCar.cost, bigCar.cost, car.cost, collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
     double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth, car.pricePerMonth,collectionCar.pricePerMonth, bike.pricePerMonth, motorcycle.pricePerMonth, bus.pricePerMonth/(bus.capacity*bus.occupancyRate), sportsCar.pricePerMonth};
-    double probabilities[8];
-    double quantities[8] = { 0,0,0,0,0,0,0,0 };
+    double probabilities[8] = { 0 };
+    double quantities[8] = { 0 };
     double alphaSum = 0;
-    
+    std::cout << "TRANSPORT_TO_ADD check 3" << endl;
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
     }
@@ -1838,12 +1843,13 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
     }
-     
+    std::cout << "TRANSPORT_TO_ADD check 4" << endl;
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it) {
-        double choice[8] = { 0,0,0,0,0,0,0,0 };
+        std::cout << "TRANSPORT_TO_ADD check 5" << endl;
+        double choice[8] = { 0 };
         for (int i = 0; i < 8; i++) {
-            probabilities[i] = alpha[i] * ((*it)->get_averageWage() / pricesPerMonth[i]) / alphaSum;
-            std::cout << "Average wage is:" << (*it)->get_averageWage() << endl;
+            std::cout << "Average wage is:"  << endl;
+            probabilities[i] = alpha[i] * ((double)((*it)->get("averageWage")) / pricesPerMonth[i]) / alphaSum;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
@@ -1861,11 +1867,14 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         }
         quantities[maxIndex] += 1;
     }
-
+    std::cout << "TRANSPORT_TO_ADD check 6" << endl;
     double quantitiesSum = 0;
     for (int i = 0; i < 8; i++) {
         quantitiesSum += quantities[i];
     }
+    std::cout << quantitiesSum << endl;
+
+    // NO NEED FOR THOSE
     probabilityElectricCar = quantities[0] / quantitiesSum;
     probabilityBigCar = quantities[1] / quantitiesSum;
     probabilityCar = quantities[2] / quantitiesSum;
@@ -1874,12 +1883,16 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     probabilityMotorcycle = quantities[5] / quantitiesSum;
     probabilityBus = quantities[6] / quantitiesSum;
     probabilitySportsCar = quantities[7] / quantitiesSum;
-
+    std::cout << "TRANSPORT_TO_ADD check 7" << endl;
+    /*
     for (int i = 0; i < 8; i++) {
         quantities[i] = quantities[i] / quantitiesSum;
     }
-    for (int i = 1; i < 8; i++) {
+    */
+    for (int i = 0; i < 8; i++) {
         missing_car_quantities[i] = current_car_quantities[i] - quantities[i];
+        std::cout << "CUrrent car " << current_car_quantities[i] << endl;
+        std::cout << "quantities " << quantities[i] << endl;
         std::cout << "Missing quanity for type " << i << " is " << missing_car_quantities[i] << endl;
         if (missing_car_quantities[i] > 0) {
             missing_car_quantities[i] = 0;
