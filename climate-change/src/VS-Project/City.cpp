@@ -137,6 +137,8 @@ we update `day_tick` and execute simulation()
 */
 void City::_physics_process(float delta) {
 
+    // CALLED EVERY PHYSICS FRAME (60 FPS)
+
     (*structures_iterator)->set("updatable", true);
     ++structures_iterator;
     if (structures_iterator == all_structures.end()) { structures_iterator = all_structures.begin(); };
@@ -144,34 +146,47 @@ void City::_physics_process(float delta) {
     if (bool(this->time_speed))
     {
         this->simulation_counter += (double)delta;
+
         this->date_counter += double(delta) * this->time_speed;
     }
     
-    if (simulation_counter > 1)
+    if (simulation_counter > 5)
     {   
-        // CALLED EVERY SECOND
+        // CALLED EVERY 5 SECONDS
 
-        (this->simulation_counter)--;
+        add_car();
+
+        (this->simulation_counter) -= 5;
         
     }
 
     if (this->date_counter > 1)
     {
         // CALLED EVERY GAME DAY
-
+        
         day_tick++;
         std::cout << "Day tick : " << (this->day_tick) << endl;
-        
         this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date_godot());
+
+
         int* datenumber = return_date(int(this->day_tick));
-        if (datenumber[0] == 1 && datenumber[1] == 1) { // resets the budget to initial value
+
+        
+        if (datenumber[0] == 1) 
+        {   
+            // CALLED EVERY MONTH
+
+            //transport_to_add();
+        }
+
+        if (datenumber[0] == 1 && datenumber[1] == 1) 
+        { 
+            // CALLED EVERY YEAR
+
             budget = 10000; // needs to be updated for every year somehow
         }
-        if (datenumber[0] == 1) {
-
-        }
         
-        (this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")->get_node("DirectionalLight"))->set("rotation_degrees", Vector3(-45 - sin((M_PI * (2 * (double)(this->daycount)) / 360)) * 25 / 2 - 12.5, 45, 0));
+        (this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")->get_node("DirectionalLight"))->set("rotation_degrees", Vector3(-45 - sin((M_PI * (2 * (double)(day_tick % 365)) / 365)) * 25 / 2 - 12.5, 45, 0));
         ((WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")))->set("fog_color", Color(0.77, 0.8, 0.86, (1 - airQuality) * 0.11));
         
         (this->date_counter)--;

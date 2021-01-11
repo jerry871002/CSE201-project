@@ -71,7 +71,7 @@ namespace godot {
         double energyUse = 0; //amount of energy used by the building in kWh
         double energyperDay = 0; //amount of energy used by the building in kWh
         double maintenance = 0; //maintenace and working cost in euros
-        double averageWage = 1000; //average wage of the people in the building
+        double averageWage = 10000; //average wage of the people in the building
         double CO2Emission{ 1 }; // kg of CO2 emitted
         double buildingTime = 0; // years needed to build a new building
         double satisfaction{ 1 }; // on scale of 10
