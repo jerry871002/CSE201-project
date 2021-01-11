@@ -354,8 +354,8 @@ void Transport::_physics_process(float delta) {
 void Transport::simulate_step(double days) {
     int years = floor((age + days) / 365 - age / 365);
     co2PerKm *= pow(1.05, years); //increase in emissions with each year
-    fuelInput = days*fuelPerKm*kmPerDay; //in 1 day
-    CO2Emission = days*co2PerKm*kmPerDay; //in 1 day
+    fuelInput = days*fuelPerKm*kmPerDay; //in the time period
+    CO2Emission = days*co2PerKm*kmPerDay; //in the time period
     age += days; //total number of days 
     /*fuelInput += fuelPerKm * kmPerDay * days; //litres of fuel for car
     CO2Emission += co2PerKm * kmPerDay * days;*/ // co2 emissions per car
@@ -442,9 +442,11 @@ void Transport::simulate_step(double days) {
     }
     case 7: { //sports car
         maintenance = 2.5 * days;
+        break;
     }
-
     }
+    //car consumption tax
+    maintenance+=fuelInput*myCity->return_fuelTax();
 }
 
 void Transport::turn(int dir, float delta) {
