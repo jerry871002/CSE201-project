@@ -75,7 +75,8 @@ void City::_register_methods()
     register_method((char*)"_physics_process", &City::_physics_process);
     register_method((char*)"_input", &City::_input);
     register_method((char*)"_ready", &City::_ready);
-    register_method((char*)"_on_MenuShop_pressed", &City::_on_MenuShop_pressed);
+    register_method((char*)"_on_Menu_pressed", &City::_on_Menu_pressed);
+
     register_method((char*)"_on_Validate_pressed", &City::_on_Validate_pressed);
     register_method((char*)"_on_Game_Speed_changed", &City::_on_Game_Speed_changed);
     register_method((char*)"_on_ResetButton_pressed", &City::_on_ResetButton_pressed);
@@ -549,7 +550,7 @@ void City::_on_Reset_confirmed()
 
 
 
-void godot::City::_on_MenuShop_pressed(String name)
+void godot::City::_on_Menu_pressed(String name)
 {
 
     active_button = name;
@@ -572,21 +573,6 @@ void godot::City::_on_MenuShop_pressed(String name)
 
 }
 
-void godot::City::_on_MenuHousing_pressed(String name)
-{
-
-    active_button = name;
-
-    hide_menus();
-
-    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
-
-    this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
-
-    String ButtonInfo = this->get_button_info_text();
-    this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
-}
 
 String City::get_button_info_text() {
 
