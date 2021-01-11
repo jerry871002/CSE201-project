@@ -109,6 +109,7 @@ void Transport::transport_type() {
         lifetime = 10;
         pricePerMonth = 1.25*30*workingDays/7;
         weight = 2.5;
+        cost+=myCity->return_weightTax()*weight; //weight tax directly on car cost
         break;
     }
     case 2: { //normal family car 
@@ -147,6 +148,7 @@ void Transport::transport_type() {
         lifetime = 20;
         pricePerMonth = 25*30*workingDays/7;
         weight = 2;
+        cost+=myCity->return_weightTax()*weight; //weight tax directly on car cost
         break;
     }
     case 4: { //bike
@@ -163,7 +165,7 @@ void Transport::transport_type() {
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
         lifetime = 20;
         pricePerMonth = 0.8*30;
-        weight = 0; //not true but in order for the tax to not be applied
+        weight = 0.15; //not true but in order for the tax to not be applied
         break;
     }
     case 5: { //motorcycle 
@@ -180,7 +182,7 @@ void Transport::transport_type() {
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
         lifetime = 12;
         pricePerMonth = 2.6*30;
-        weight = 0; //not true but in order for the tax to not be applied
+        weight = 0.01; //not true but in order for the tax to not be applied
         break;
     }
     case 6: { // bus
@@ -214,7 +216,7 @@ void Transport::transport_type() {
         employment = 1 + round(alpha * 2);
         lifetime = 12;
         pricePerMonth = (0.67 + alpha * 0.17) * kmPerDay * 30;
-        weight = 0; //not true but in order for the tax to not be applied
+        weight = 11; //not true but in order for the tax to not be applied
         break;
     }
     case 7: { //sports car
@@ -237,13 +239,13 @@ void Transport::transport_type() {
         lifetime = 10;
         pricePerMonth = 2.5*30*workingDays/7;
         weight = 2;
+        cost+=myCity->return_weightTax()*weight; //weight tax directly on car cost
         break;
     }
     }
     pricePerMonth += cost / (12 * lifetime);
     fuelInput = fuelPerKm*kmPerDay; //in 1 day
     CO2Emission = co2PerKm*kmPerDay; //in 1 day
-    cost+=myCity->return_weightTax()*weight; //weight tax directly on car cost
     //car prohibition
     if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)){
         satisfaction*=workingDays/7;
