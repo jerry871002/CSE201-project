@@ -11,6 +11,7 @@
 using namespace godot;
 
 
+
 //INFORMATION DISPLAY 
 
 template<typename T> String to_godot_string(T s)
@@ -206,8 +207,9 @@ void Housing::panel_added_probability(){
     if (panelCost < 0) {
 		panelCost = 0; //cannot have a negative solar panel cost
 	}
+	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
 
-	panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + (this->solarSatisfaction/10)*25 + housingIncome*25)/100;
+	panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + (this->solarSatisfaction/10)*15 + housingIncomeIndexed*35)/100;
 
 	if (PanelsOn == true) {
 		panel_probability = 0;
@@ -222,12 +224,14 @@ void Housing::double_glazing_added_probability(){
 	double doubleGlazingCost;
     double glazing_subsidies = this->get("double_glazing_subsidies"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
-    doubleGlazingCost = windowCost * this->windowNumber - double_glazing_subsidies;  
+	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
+    doubleGlazingCost = windowCost * this->windowNumber - double_glazing_subsidies;
+
     if (doubleGlazingCost < 0) {
 		doubleGlazingCost = 0; //cannot have a negative solar panel cost
 	}
 
-	double_glazing_probability = (((windowCost - doubleGlazingCost)/windowCost)*50 + (this->doubleGlazingSatisfaction/10)*25 + housingIncome*25)/100;
+	double_glazing_probability = (((windowCost - doubleGlazingCost)/windowCost)*50 + (this->doubleGlazingSatisfaction/10)*15 + housingIncomeIndexed*35)/100;
 
 	if (doubleGlazingOn == true) {
 		double_glazing_probability = 0;
@@ -238,12 +242,13 @@ void Housing::roof_wind_turbines_added_probability(){
 	double turbineCost;
     double wind_subsidies = this->get("wind_turbine_subsidies"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
+	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
     turbineCost = this->windCost - wind_turbine_subsidies;  
     if (turbineCost < 0) {
 		turbineCost = 0; //cannot have a negative solar panel cost
 	}
 
-	roof_wind_turbines_probability = (((this->windCost - turbineCost)/this->windCost)*50 + (this->windSatisfaction/10)*25 + housingIncome*25)/100;
+	roof_wind_turbines_probability = (((this->windCost - turbineCost)/this->windCost)*50 + (this->windSatisfaction/10)*15 + housingIncomeIndexed*35)/100;
 
 	if (rooftopWindTurbineOn == true) {
 		roof_wind_turbines_probability = 0;
@@ -262,24 +267,25 @@ double House::get_co2emissions() {
 }
 
 double House::get_energyuse() {
-	double factor = 1;
+	double panelsF = 1;
+	double turbineF = 1;
+	double glazingF = 1;
 	if (this->PanelsOn) {
-			this->energyUse -= solarEnergy;
+			panelsF = 0.6;
 		}
 
 	if (this->rooftopWindTurbineOn) {
-			this->energyUse -= windEnergy;
+			turbineF = 0.9;
 		}
-	switch (houseType){
-		case 1: { // If its a low level house then double glazing decrease energyuse 
+	
+	if (this->houseType == 1) { // If its a low level house then double glazing decrease energyuse 
 			if (this->doubleGlazingOn) {
-				factor = 0.25; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
+				glazingF = 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
 			}
 		}
-		break;
-	}
+	
 
-    return (double)(this->energyUse)*factor;
+    return (double)(this->energyUse)*panelsF*turbineF*glazingF;
 }
 
 double House::get_environmentalcost() {
@@ -371,10 +377,10 @@ void House::simulate_step(double days) {
 
 	this->Housing::simulate_step(days);
 	
-	if ((int)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) % 25 == 0) {
-		satisfaction = 0;
+	// if ((int)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) % 25 == 0) {
+	// 	satisfaction = 0;
 
-	}
+	// }
 
 	maintenance = 0.1765 * energyUse * days;
 	CO2Emission = 0.0065 * energyUse * days; 
