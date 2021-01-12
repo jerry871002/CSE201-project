@@ -46,6 +46,9 @@ namespace godot {
 		double get_double_glazing_age();	
 		int doubleGlazingSatisfaction = 5;
 
+		double get_co2emissions(){}
+		double get_energyuse(){}
+		double get_environmentalcost(){}
 
     };
 

@@ -27,7 +27,7 @@ String Housing::get_object_info()
 
 	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
 	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy used by the building in kWh: " + to_godot_string(this->energyUse) + String("\n");
+	info += "Energy used by the building in kWh: " + to_godot_string((double)(this->energyUse)) + String("\n");
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	return info;
 }
