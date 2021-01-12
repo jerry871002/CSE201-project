@@ -169,6 +169,35 @@ void Structure::_init()
 
 }
 
+void Structure::_ready()
+{
+    object_scale = this->get("scale");
+
+    myCity = this->get_tree()->get_root()->get_node("Main/3Dworld");
+
+    // COUNT UP ALL THE INITIAL VARIABLES
+
+    add_city_counters();
+   
+
+}
+
+void Structure::add_city_counters() {
+    myCity->set("income", double(myCity->get("income")) + double(this->get("averageWage")));
+    myCity->set("carbonEmission", double(myCity->get("carbonEmission")) + double(this->get("CO2Emission")));
+    myCity->set("energyDemand", double(myCity->get("energyDemand")) + double(this->get("energyUse")));
+    myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) + double(this->get("employment")));
+    myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) + double(this->get("satisfaction")));
+}
+
+void Structure::subtract_city_counters() {
+    myCity->set("income", double(myCity->get("income")) - double(this->get("averageWage")));
+    myCity->set("carbonEmission", double(myCity->get("carbonEmission")) - double(this->get("CO2Emission")));
+    myCity->set("energyDemand", double(myCity->get("energyDemand")) - double(this->get("energyUse")));
+    myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) - double(this->get("employment")));
+    myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) - double(this->get("satisfaction")));
+}
+
 Vector3 Structure::get_position() {
     return (Vector3)((Spatial*)this)->get_translation();
 }
@@ -182,9 +211,13 @@ void Structure::_process(float delta)
 {
     
     if (this->get("updatable")) {
-        //Godot::print("This is a: " + this->get_object_type());
-        //std::cout << "DEBUG: simulate step should be called now " << std::endl;
+
+        subtract_city_counters();
+
         this->simulate_step((double)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) - age); // will run the lowest level simulate step function
+       
+        add_city_counters();
+
         this->set("updatable", false);
     }
 
@@ -317,10 +350,7 @@ String Structure::get_object_info()
     return  info;
 }
 
-void Structure::_ready()
-{
-    object_scale = this->get("scale");
-}
+
 
 void godot::Structure::_on_Area_mouse_entered()
 {
