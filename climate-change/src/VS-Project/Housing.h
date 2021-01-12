@@ -48,7 +48,7 @@ namespace godot {
 		int doubleGlazingSatisfaction = 5;
 
 	private:
-		double turnSpeed = 5;
+		double turnSpeed = 0.5;
 		double rot = 0;
 
     };

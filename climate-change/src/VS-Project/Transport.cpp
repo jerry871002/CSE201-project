@@ -109,7 +109,7 @@ void Transport::transport_type() {
         lifetime = 10;
         pricePerMonth = 1.25*30*workingDays/7;
         weight = 2.5;
-        cost+=myCity->return_weightTax()*weight; //weight tax directly on car cost
+        cost += myCity->return_weightTax() * weight;  //weight tax directly on car cost
         break;
     }
     case 2: { //normal family car 

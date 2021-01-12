@@ -275,11 +275,12 @@ void City::generate_initial_city_graphics()
 
     // srand((int)time(0));
 
-    Vector3 center = Vector3(15.0 * citysize + 60, 0, 15.0 * citysize + 60);
+    Vector3 center = Vector3(15.0 * citysize + 62, 0, 15.0 * citysize + 62);
 
     bool hasnuclear = false;
     bool hascoal = false;
     bool hasgeo = false;
+    double dist;
 
     for (int x = 1; x < (citysize / 2) + 1; x++)
     {
@@ -289,7 +290,7 @@ void City::generate_initial_city_graphics()
 
 
             Vector3 bigbuildingpos = pos + Vector3(15.0, 0, 15.0);
-            double dist = pow(pow(center.x - bigbuildingpos.x, 2) + pow(center.z - bigbuildingpos.z, 2), 0.5);
+            dist = pos.distance_to(center);
 
 
 
@@ -321,7 +322,7 @@ void City::generate_initial_city_graphics()
 
                 // 1 x 1 buildings
 
-                dist = pow(pow(center.x - pos.x, 2) + pow(center.z - pos.z, 2), 0.5);
+                dist = pos.distance_to(center);
 
                 float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
                 float shopprob = calculate_building_prob(0, 200, 1.1, dist) + calculate_building_prob(260, 300, 0.2, dist);
@@ -352,6 +353,7 @@ void City::generate_initial_city_graphics()
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob + geoprob)) { std::cout << "DEBUG: Add GeothermalScene" << std::endl;  add_energy(bigbuildingpos, GeothermalPowerPlantScene); hasgeo = true; }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob + geoprob + coalprob)) { std::cout << "DEBUG: Add Coalpowerplantscene " << std::endl;  add_energy(bigbuildingpos, CoalPowerPlantScene); hascoal = true; }
                 else {
+                    
                     //std::cout << "DEBUG: Add else" << std::endl;
                     srand(int((x + 1) * (z + 1) * (int)(time(0))));
 
@@ -360,47 +362,43 @@ void City::generate_initial_city_graphics()
                         for (int z1 = 0; z1 < 2; z1++) {
 
                             Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
-                            
 
-                            dist = pow(pow(center.x - pos.x - pos1.x, 2) + pow(center.z - pos.z - pos1.z, 2), 0.5);
+                            restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
+                            shopprob = calculate_building_prob(0, 200, 1.1, dist) + calculate_building_prob(260, 300, 0.2, dist);
+                            buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
+                            windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
+                            lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
+                            highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
 
-                            if (dist <= citysize*15) {
-                                restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
-                                shopprob = calculate_building_prob(0, 200, 1.1, dist) + calculate_building_prob(260, 300, 0.2, dist);
-                                buildingprob = calculate_building_prob(150, 250, 2, dist) + calculate_building_prob(-100, 150, 1, dist);
-                                windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
-                                lowhouseprob = calculate_building_prob(-200, 200, 5, dist);
-                                highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
+                            double type = (double((double)rand() / (double)RAND_MAX) * (restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
 
-                                double type = (double((double)rand() / (double)RAND_MAX) * (restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
-
-                                if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
-                                else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
-                                else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos + pos1, LowHouseScene); }
-                                else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos + pos1, BuildingScene); }
-                                else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos + pos1, WindmillScene); }
-                                else { add_house(pos + pos1, HighHouseScene); }
+                            if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
+                            else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos + pos1, LowHouseScene); }
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos + pos1, BuildingScene); }
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos + pos1, WindmillScene); }
+                            else { add_house(pos + pos1, HighHouseScene); }
 
 
-                                int randompdint = rand() % 5;
-                                if (randompdint == 0) {
-                                    if (PDScene.is_valid()) {
-                                        std::cout << "DEBUG: adding pedestrian" << std::endl;
-                                        Node* node;
+                            int randompdint = rand() % 5;
+                            if (randompdint == 0) {
+                                if (PDScene.is_valid()) {
+                                    std::cout << "DEBUG: adding pedestrian" << std::endl;
+                                    Node* node;
 
-                                        node = PDScene->instance();
+                                    node = PDScene->instance();
 
-                                        node->set("translation", (pos + pos1 + Vector3(-7, 0, -9)));
+                                    node->set("translation", (pos + pos1 + Vector3(-7, 0, -9)));
 
-                                        this->add_child(node);
-                                    }
+                                    this->add_child(node);
                                 }
-                                int randomcarint = rand() % 3;
-                                if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car(pos + pos1); }
-
                             }
+                            int randomcarint = rand() % 3;
+                            if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car(pos + pos1); }
+
                         }
                     }
+                    
                 }
             }
             else
@@ -410,10 +408,11 @@ void City::generate_initial_city_graphics()
                 {
                     for (int z1 = 0; z1 < 2; z1++) {
                         srand(int((x1 + 1) * (z1 + 1) * (x + 1) * (z + 1)));
-                        Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
+                        Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1) ;
 
-
-                        dist = pow(pow(center.x - pos.x - pos1.x, 2) + pow(center.z - pos.z - pos1.z, 2), 0.5);
+                        Vector3 pos2 = pos + pos1;
+                        dist = pos2.distance_to(center);
+                        //dist = pow(pow(center.x - pos1.x, 2) + pow(center.z - pos1.z, 2), 0.5);
 
                         if (dist <= citysize * 15) {
                             // plops down a building if theres no space for a 2x2 but there is for a 1x1  ... this should be on the outside of the city so if we want only one or two types on the edge we can set that here
@@ -429,7 +428,7 @@ void City::generate_initial_city_graphics()
 
                             double type = (double((double)rand() / (double)RAND_MAX) * double(restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
 
-                            if (type < (double)(restaurantprob)) { add_shop(pos, RestaurantScene); }
+                            if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
                             else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
                             else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos + pos1, LowHouseScene); }
                             else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos + pos1, BuildingScene); }
