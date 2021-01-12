@@ -7,7 +7,6 @@
 #include <SceneTree.hpp>
 #include <PackedScene.hpp>
 #include <Node.hpp>
-#include <ctime>
 #include <Input.hpp>
 #include <Button.hpp>
 #include <Viewport.hpp>
@@ -20,6 +19,8 @@
 
 #include <PoolArrays.hpp>
 #include <random>
+#include <ctime>
+#include <algorithm>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -131,6 +132,17 @@ void City::_register_methods()
     register_property<City, double>("electricCarSubsidy", &City::electricCarSubsidy,0.0);
     register_property<City, double>("busSubsidy", &City::busSubsidy, 0.0);
     register_property<City, double>("carProhibition", &City::carProhibition, 0.0);
+
+
+    register_property<City, double>("income", &City::income, 0.0);
+    register_property<City, double>("population", &City::population, 0.0);
+    register_property<City, double>("numberOfEmployees", &City::numberOfEmployees, 0.0);
+    register_property<City, double>("carbonEmission", &City::carbonEmission, 0.0);
+    register_property<City, double>("energyDemand", &City::energyDemand, 0.0);
+    register_property<City, double>("energySupply", &City::energySupply, 0.0);
+    register_property<City, int>("totalSatisfaction", &City::totalSatisfaction, 0.0);
+
+
 };
 
 void City::_init()
@@ -169,9 +181,17 @@ void City::_physics_process(float delta) {
     {   
         // CALLED EVERY 5 SECONDS
 
-        add_car();
+        //add_car();
 
         (this->simulation_counter) -= 5;
+        
+        std::cout << "income = " << (double)(this->get("income")) << std::endl;
+        std::cout << "population = " << (double)(this->get("population")) << std::endl;
+        std::cout << "numberOfEmployees = " << (double)(this->get("numberOfEmployees")) << std::endl; 
+        std::cout << "carbonEmission = " << (double)(this->get("carbonEmission")) << std::endl;
+        std::cout << "energyDemand = " << (double)(this->get("energyDemand")) << std::endl;
+        std::cout << "energySupply = " << (double)(this->get("energySupply")) << std::endl;
+        std::cout << "environmentalCost = " << (double)(this->get("environmentalCost")) << std::endl;
         
     }
 
@@ -443,6 +463,16 @@ void City::generate_initial_city_graphics()
            
         }
     }
+    //   shuffles all the vectors so that buildings arent updated in a noticeable pattern
+    std::random_shuffle(all_structures.begin(), all_structures.end());
+    std::random_shuffle(all_energies.begin(), all_energies.end());
+    std::random_shuffle(all_houses.begin(), all_houses.end());
+    std::random_shuffle(all_shops.begin(), all_shops.end());
+    std::random_shuffle(all_production.begin(), all_production.end());
+
+
+
+
     std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
 }
 

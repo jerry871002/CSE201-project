@@ -209,6 +209,7 @@ namespace godot {
         double normalGenerator(double mean, double stdDev);
     private:
         // city indices
+
         double income;
         double population;
         double numberOfEmployees;

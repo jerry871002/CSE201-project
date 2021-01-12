@@ -34,6 +34,11 @@ namespace godot {
         bool MenuVisible;
         bool PanelsOn{ false };
 
+        Node* myCity;
+
+        void add_city_counters();
+        void subtract_city_counters();
+
         static void _register_methods();
         virtual void _init();
         virtual void _process(float delta);
