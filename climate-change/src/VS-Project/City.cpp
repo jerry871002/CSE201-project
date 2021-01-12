@@ -2049,7 +2049,7 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
         node->set_tint_progress(Color(min(2 - (double)value_pie_chart(value) / 5, 1.0), min((double)value_pie_chart(value) / 5, 1.0), 0, 1.0));
     }
     node->set("value", value_pie_chart(value));
-	label->set("text", value);
+	label->set("text", std::tostring(value));
 }
 
 

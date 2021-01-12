@@ -456,10 +456,10 @@ __meta__ = {
 }
 
 [node name="SatisfactionLabel" type="Label" parent="2Dworld/Infographics/PieSatisfaction"]
-margin_left = 80.0
-margin_top = 168.087
-margin_right = 191.0
-margin_bottom = 204.087
+margin_left = 88.4497
+margin_top = 179.353
+margin_right = 200.45
+margin_bottom = 215.353
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = ExtResource( 12 )
 text = "Satisfaction:"
@@ -618,10 +618,10 @@ __meta__ = {
 }
 
 [node name="PowerSupplyLabel" type="Label" parent="2Dworld/Infographics/PiePowerSupply"]
-margin_left = 86.4663
-margin_top = 190.74
-margin_right = 197.466
-margin_bottom = 239.74
+margin_left = 92.0996
+margin_top = 193.557
+margin_right = 203.099
+margin_bottom = 242.557
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = ExtResource( 12 )
 text = "Power Use :"
