@@ -52,6 +52,8 @@ void Housing::_register_methods()
 void Housing::_ready()
 {
 	this->Structure::_ready();
+	this->get_node("MeshComponents/SolarPanels")->set("visible", false);
+	this->get_node("MeshComponents/WindTurbine")->set("visible", false);
 }
 
 void Housing::simulate_step(double days) {
