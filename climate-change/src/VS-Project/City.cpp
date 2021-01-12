@@ -1912,7 +1912,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         std::cout << "TRANSPORT_TO_ADD check 2.1" << endl;
         std::normal_distribution <double> alpharandomiser(1000, 500);
         std::cout << "TRANSPORT_TO_ADD check 2.2" << endl;
-        alpha[i] = fmax(alpharandomiser(gen), 0);
+        //alpha[i] = fmax(alpharandomiser(gen), 0);
     }
     std::cout << "TRANSPORT_TO_ADD check 3.0" << endl;
     double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
