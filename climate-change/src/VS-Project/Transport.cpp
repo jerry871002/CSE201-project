@@ -83,8 +83,7 @@ void Transport::transport_type() {
         cost = costt(gen)-(int)myCity->get("electricCarSubsidy");
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
-        std::normal_distribution <double> satisfactiont(7.45, 0.1); //very high satisfaction
-        satisfaction = fmax(satisfactiont(gen), 10);
+        satisfaction = 7.45;
         energyUse = 0.119 * kmPerDay;
         lifetime = 15;
         pricePerMonth = 1.09*30*workingDays/7;
@@ -103,8 +102,7 @@ void Transport::transport_type() {
         occupancyRate = occupancyg(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeg(1, 0.5);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactiong(9.3, 0.25); // high satisfaction
-        satisfaction = satisfactiong(gen);
+        satisfaction = 9.3;
         lifetime = 12;
         pricePerMonth = 1.25*30*workingDays/7;
         weight = 2.5;
@@ -123,8 +121,7 @@ void Transport::transport_type() {
         occupancyRate = occupancyf(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeg(1, 0.5);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactiong(7.3, 0.1); // medium satisfaction
-        satisfaction = satisfactiong(gen);
+        satisfaction = 7.3;
         lifetime = 15;
         pricePerMonth = 0.15*30*workingDays/7;
         weight = 0.98;
@@ -142,8 +139,7 @@ void Transport::transport_type() {
         occupancyRate = occupancyo(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeo(7, 2);
         buildingTime = timeo(gen); // building time of 1 collection (replica i think) car car, not so fast
-        std::normal_distribution <double> satisfactiono(9.6, 0.2); // very high satisfaction
-        satisfaction = satisfactiono(gen);
+        satisfaction = 9.6;
         lifetime = 20;
         pricePerMonth = 25*30*workingDays/7;
         weight = 2;
@@ -158,8 +154,7 @@ void Transport::transport_type() {
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.04; //really fast, in days (1 hour )
-        std::normal_distribution <double> satisfactionbike(6.9, 0.2);
-        satisfaction = satisfactionbike(gen); //meduim satisfaction
+        satisfaction = 6.9; //meduim satisfaction
         std::normal_distribution <double> kmbike(18, 7);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
         lifetime = 5;
@@ -175,8 +170,7 @@ void Transport::transport_type() {
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.12; //really fast, in days (3 hours )
-        std::normal_distribution <double> satisfactionm(7, 0.15);
-        satisfaction = satisfactionm(gen); // not very high satisfaction
+        satisfaction = 7;
         std::normal_distribution <double> kmbike(30, 10);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
         lifetime = 12;
@@ -205,8 +199,7 @@ void Transport::transport_type() {
         }
         std::normal_distribution <double> buildingb(22, 3);
         buildingTime = buildingb(gen); // construction time for 1 bus, in days
-        std::normal_distribution <double> satisfactionb(6.85, 0.2); // satisfaction level medium, randomised
-        satisfaction = satisfactionb(gen);
+        satisfaction = 6.85;
         if (satisfaction > 10) {
             satisfaction = 10;
         }
@@ -228,8 +221,7 @@ void Transport::transport_type() {
         occupancyRate = occupancysp(gen); // average percentage occupancy of the car: number of people in the bus / capacity
         std::normal_distribution <double> timeg(1.5, 0.75);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactionsp(9.2, 0.2); // satisfaction level is very high, randomised
-        satisfaction = satisfactionsp(gen);
+        satisfaction = 9.2;
         if (satisfaction > 10) {
             satisfaction = 10;
         }
