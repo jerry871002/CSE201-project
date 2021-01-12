@@ -181,7 +181,7 @@ void City::_physics_process(float delta) {
     {   
         // CALLED EVERY 5 SECONDS
 
-        //add_car();
+        add_car();
 
         (this->simulation_counter) -= 5;
         
@@ -1071,7 +1071,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             default: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
             }
             std::cout << "INSTANCE DONE A CAR OF TYPE: " << type << std::endl;
-            node->set("scale", Vector3(10, 10, 10));
+            node->set("scale", Vector3(15, 15, 15));
             node->set("translation", pos + Vector3(-13, 0.2, -13));
 
             std::cout << "ADD A CAR OF TYPE: " << type << std::endl;

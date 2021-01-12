@@ -395,14 +395,12 @@ transform = Transform( 0.641477, 0, 0, 0, 0.732599, 0, 0, 0, 0.641477, 0.110791,
 script = ExtResource( 14 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="Mesh-lod2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null
 material/1 = null
 material/2 = null
 
 [node name="Mesh-lod1" type="MeshInstance" parent="Mesh-lod2/Mesh-lod0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 visible = false
 mesh = SubResource( 2 )
 material/0 = null
@@ -412,14 +410,13 @@ transform = Transform( 0.641477, 0, 0, 0, 0.732599, 0, 0, 0, 0.641477, -0.055992
 script = ExtResource( 14 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="Mesh-lod3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
 mesh = SubResource( 3 )
 material/0 = null
 material/1 = null
 material/2 = null
 
 [node name="Mesh-lod1" type="MeshInstance" parent="Mesh-lod3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 visible = false
 mesh = SubResource( 4 )
 material/0 = null
@@ -458,5 +455,5 @@ material/7 = null
 material/8 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.1, 0.1, 0 )
+transform = Transform( -1.09157e-07, 0, 0.67, 0, 0.67, 0, -0.67, 0, -1.09157e-07, 0.1, 0.1, 0 )
 shape = SubResource( 7 )

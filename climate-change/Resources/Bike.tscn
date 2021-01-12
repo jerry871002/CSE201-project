@@ -423,7 +423,7 @@ bind/64/name = "mixamorig_right_toe_end"
 bind/64/bone = -1
 bind/64/pose = Transform( -243.231, 0.741332, 2130.56, 2130.42, -18.3241, 242.914, 18.2962, 2144.11, 1.33403, -39.8143, 24.9813, -8.85559 )
 
-[sub_resource type="ArrayMesh" id=12]
+[sub_resource type="ArrayMesh" id=9]
 resource_name = "Circle015"
 surfaces/0 = {
 "aabb": AABB( -1.73228, -0.95003, -0.945703, 3.46781, 1.11365, 1.88655 ),
@@ -438,7 +438,7 @@ surfaces/0 = {
 "vertex_count": 281
 }
 
-[sub_resource type="ArrayMesh" id=13]
+[sub_resource type="ArrayMesh" id=10]
 resource_name = "Torus012"
 surfaces/0 = {
 "aabb": AABB( -0.739, -0.105059, -0.739, 1.4404, 0.210118, 1.478 ),
@@ -453,7 +453,7 @@ surfaces/0 = {
 "vertex_count": 122
 }
 
-[sub_resource type="ArrayMesh" id=14]
+[sub_resource type="ArrayMesh" id=11]
 resource_name = "Torus013"
 surfaces/0 = {
 "aabb": AABB( -0.739, -0.105059, -0.739, 1.4404, 0.210118, 1.478 ),
@@ -468,7 +468,7 @@ surfaces/0 = {
 "vertex_count": 122
 }
 
-[sub_resource type="ArrayMesh" id=15]
+[sub_resource type="ArrayMesh" id=12]
 resource_name = "Cube003"
 surfaces/0 = {
 "aabb": AABB( -0.0500859, 0.17052, 0.0257855, 0.0259252, 0.06525, 0.210066 ),
@@ -519,7 +519,7 @@ surfaces/3 = {
 "vertex_count": 14
 }
 
-[sub_resource type="Skin" id=16]
+[sub_resource type="Skin" id=13]
 resource_name = "Skin"
 bind_count = 65
 bind/0/name = "mixamorig_hips"
@@ -718,7 +718,7 @@ bind/64/name = "mixamorig_right_toe_end"
 bind/64/bone = -1
 bind/64/pose = Transform( -243.231, 0.741332, 2130.56, 2130.42, -18.3241, 242.914, 18.2962, 2144.11, 1.33403, -316.787, -6.59753, -9.02901 )
 
-[sub_resource type="CapsuleShape" id=11]
+[sub_resource type="CapsuleShape" id=14]
 radius = 0.15
 height = 0.35
 
@@ -1112,17 +1112,17 @@ visible = false
 
 [node name="Circle015" type="MeshInstance" parent="LODSpatial/Mesh-lod1"]
 transform = Transform( 0.0114331, 0, 0, 0, -1.2115e-09, -0.0114331, 0, 0.0101628, -1.36293e-09, -0.00795353, 0.0321511, 0.00411327 )
-mesh = SubResource( 12 )
+mesh = SubResource( 9 )
 material/0 = null
 
 [node name="Torus012" type="MeshInstance" parent="LODSpatial/Mesh-lod1"]
 transform = Transform( 0.0508138, 0, 0, 0, -6.05748e-09, -0.0508138, 0, 0.0508138, -6.05748e-09, -0.0524557, 0.0398533, 9.60827e-05 )
-mesh = SubResource( 13 )
+mesh = SubResource( 10 )
 material/0 = null
 
 [node name="Torus013" type="MeshInstance" parent="LODSpatial/Mesh-lod1"]
 transform = Transform( 0.0508138, 0, 0, 0, -6.05748e-09, -0.0508138, 0, 0.0508138, -6.05748e-09, 0.058368, 0.0398533, 9.60827e-05 )
-mesh = SubResource( 14 )
+mesh = SubResource( 11 )
 material/0 = null
 
 [node name="Armature002" type="Spatial" parent="LODSpatial/Mesh-lod1"]
@@ -1456,13 +1456,13 @@ bones/64/enabled = true
 bones/64/bound_children = [  ]
 
 [node name="Cube003" type="MeshInstance" parent="LODSpatial/Mesh-lod1/Armature002/Skeleton"]
-mesh = SubResource( 15 )
-skin = SubResource( 16 )
+mesh = SubResource( 12 )
+skin = SubResource( 13 )
 material/0 = null
 material/1 = null
 material/2 = null
 material/3 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.1, 0.1, 0 )
-shape = SubResource( 11 )
+transform = Transform( -1.09157e-07, 0, 0.67, 0, 0.67, 0, -0.67, 0, -1.09157e-07, 0.1, 0.1, 0 )
+shape = SubResource( 14 )
