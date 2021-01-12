@@ -1061,15 +1061,16 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             std::cout << "INSTANCE A CAR OF TYPE: " << type << std::endl;
 
             switch (type) {
-            case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
-            case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
-            case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
-            case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
-            case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
-            case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
-            case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
-            default: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
+            case 0: node = ElectricCarScene->instance(); //current_car_quantities[0] += 1; break;
+            case 1: node = AmericanCarScene->instance(); //current_car_quantities[1] += 1; break;
+            case 2: node = NormalCarScene->instance(); //current_car_quantities[2] += 1; break;
+            case 3: node = OldCarScene->instance(); //current_car_quantities[3] += 1; break;
+            case 5: node = MotoScene->instance(); //current_car_quantities[5] += 1; break;
+            case 6: node = BusScene->instance(); //current_car_quantities[6] += 1; break;
+            case 7: node = SportCarScene->instance(); //current_car_quantities[7] += 1;  break;
+            default: node = BikeScene->instance(); //current_car_quantities[4] += 1; break;
             }
+
             std::cout << "INSTANCE DONE A CAR OF TYPE: " << type << std::endl;
             node->set("scale", Vector3(15, 15, 15));
             node->set("translation", pos + Vector3(-13, 0.2, -13));
@@ -1943,7 +1944,8 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         }
         std::cout << "TRANSPORT_TO_ADD check 2.1" << endl;
         //std::normal_distribution <double> alpharandomiser(1000, 500);
-        alpha[i] = normalGenerator(alpha[i], alpha[i]/4);
+        //alpha[i] = normalGenerator(alpha[i], alpha[i]/4);
+        //alpha[i] = normalGenerator(alpha[i], alpha[i] / 4);
         std::cout << "TRANSPORT_TO_ADD check 2.2" << endl;
         //alpha[i] = fmax(alpharandomiser(gen), 0);
     
