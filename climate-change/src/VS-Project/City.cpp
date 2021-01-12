@@ -1660,7 +1660,7 @@ void City::transport_probabilities() {
 
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
 int City::value_pie_chart(int value) {
-	int newvalue = 100*(1-(1/value+1));
+	int newvalue = 100*(1-(1/(value+1)));
 	return newvalue;
 }
 
