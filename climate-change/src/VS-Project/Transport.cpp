@@ -213,8 +213,8 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmb(225, 75);
         kmPerDay = kmb(gen); // kilometres per day,  randomised for each bus
         employment = 1 + round(alpha * 2);
-        lifetime = 12;
-        pricePerMonth = (0.67 + alpha * 0.17) * kmPerDay * 30;
+        lifetime = 16;
+        pricePerMonth = 0.67 * kmPerDay * 30;
         weight = 11; //not true but in order for the tax to not be applied
         break;
     }
