@@ -13,4 +13,4 @@ Windows.64="res://src/VS-Project/DLLExport/LibVS-Project-x64-Debug.dll"
 [dependencies]
 
 OSX.64=[  ]
-Windows.64=[  ]
+Windows.64=[ "res://src/VS-Project/DLLExport/LibVS-Project-x64-Debug.dll" ]

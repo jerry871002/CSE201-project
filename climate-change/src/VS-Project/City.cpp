@@ -586,7 +586,7 @@ void City::_on_Reset_confirmed()
 
 
 
-void godot::City::_on_Menu_pressed(String name)
+void City::_on_Menu_pressed(String name)
 {
 
     active_button = name;
@@ -717,7 +717,7 @@ void City::hide_menus()
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuProduction")->set("visible", false);
 }
 
-void godot::City::_on_Validate_pressed()
+void City::_on_Validate_pressed()
 {
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
@@ -1028,19 +1028,19 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
 
             //int type = rand() % 3;
             Node* node;
+            std::cout << "INSTANCE A CAR OF TYPE: " << type << std::endl;
 
             switch (type) {
             case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
             case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
             case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
             case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
-            case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
             case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
             case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
             case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
-            default: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
+            default: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
             }
-
+            std::cout << "INSTANCE DONE A CAR OF TYPE: " << type << std::endl;
             node->set("scale", Vector3(10, 10, 10));
             node->set("translation", pos + Vector3(-13, 0.2, -13));
 
