@@ -544,25 +544,29 @@ double Building::get_co2emissions() {
 }
 
 double Building::get_energyuse() {
-	double factor = 1;
+	double panelsF = 1;
+	double turbineF = 1;
+	double glazingF = 1;
 	if (this->PanelsOn) {
-			this->energyUse -= solarEnergy;
+			panelsF = 0.6;
 		}
 
 	if (this->rooftopWindTurbineOn) {
-			this->energyUse -= windEnergy;
+			turbineF = 0.9;
 		}
-	switch (buildingType){
-		case 1: { // If its a low level house then double glazing decrease energyuse 
+	
+	if (this->buildingType == 1) { // If its a low level house then double glazing decrease energyuse 
 			if (this->doubleGlazingOn) {
-				factor = 0.25; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
+				glazingF = 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
 			}
 		}
-		break;
-	}
+	
 
-    return (double)(this->energyUse)*factor;
+    return (double)(this->energyUse)*panelsF*turbineF*glazingF;
 }
+
+	
+
 
 double Building::get_environmentalcost() {
     return this->environmentalCost;
