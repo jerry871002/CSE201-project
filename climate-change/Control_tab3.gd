@@ -4,9 +4,7 @@ extends Control
 var data : Array = [
 	["Country", "Votes"],
 	["USA", 20],
-	["UK", 55],
-	["FRA", 10],
-	["GER", 15]
+	["UK", 80]
 ]
 
 # Called wen the node enters the scene tree for the first time.
