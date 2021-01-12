@@ -408,6 +408,32 @@ shape = SubResource( 1 )
 
 [node name="2Dworld" type="Node2D" parent="."]
 
+[node name="Blur2" type="Node2D" parent="2Dworld"]
+
+[node name="ColorRect" type="ColorRect" parent="2Dworld/Blur2"]
+material = SubResource( 3 )
+margin_left = 1761.0
+margin_top = -5.0
+margin_right = 1982.0
+margin_bottom = 1148.0
+rect_pivot_offset = Vector2( 536.625, 1828.64 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Blur3" type="Node2D" parent="2Dworld"]
+
+[node name="ColorRect" type="ColorRect" parent="2Dworld/Blur3"]
+material = SubResource( 3 )
+margin_left = -29.5874
+margin_top = -18.0
+margin_right = 1778.41
+margin_bottom = 131.0
+rect_pivot_offset = Vector2( 536.625, 1828.64 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Infographics" type="Node2D" parent="2Dworld"]
 position = Vector2( 1658.04, 38.8548 )
 
@@ -435,8 +461,8 @@ margin_top = 168.087
 margin_right = 191.0
 margin_bottom = 204.087
 rect_scale = Vector2( 3, 3 )
-text = "Satisfaction 
-Level :"
+custom_fonts/font = ExtResource( 12 )
+text = "Satisfaction:"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -475,9 +501,9 @@ margin_top = 131.342
 margin_right = 188.835
 margin_bottom = 180.342
 rect_scale = Vector2( 3, 3 )
-text = "Carbon
-Emission
-Level :"
+custom_fonts/font = ExtResource( 12 )
+text = "CO2
+Emission:"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -516,6 +542,7 @@ margin_top = 166.0
 margin_right = 198.0
 margin_bottom = 197.0
 rect_scale = Vector2( 3, 3 )
+custom_fonts/font = ExtResource( 12 )
 text = "Income :"
 align = 1
 __meta__ = {
@@ -551,12 +578,12 @@ __meta__ = {
 
 [node name="EmployeesLabel" type="Label" parent="2Dworld/Infographics/PieEmployees"]
 margin_left = 87.6978
-margin_top = 134.069
+margin_top = 128.13
 margin_right = 198.698
-margin_bottom = 183.069
+margin_bottom = 206.13
 rect_scale = Vector2( 3, 3 )
-text = "Number 
-Of 
+custom_fonts/font = ExtResource( 12 )
+text = "No. of
 Employees :"
 align = 1
 __meta__ = {
@@ -596,6 +623,7 @@ margin_top = 190.74
 margin_right = 197.466
 margin_bottom = 239.74
 rect_scale = Vector2( 3, 3 )
+custom_fonts/font = ExtResource( 12 )
 text = "Power Use :"
 align = 1
 __meta__ = {
@@ -631,10 +659,11 @@ __meta__ = {
 
 [node name="PowerDemandLabel" type="Label" parent="2Dworld/Infographics/PiePowerDemand"]
 margin_left = 89.8369
-margin_top = 146.445
+margin_top = 122.688
 margin_right = 200.837
-margin_bottom = 195.445
+margin_bottom = 173.688
 rect_scale = Vector2( 3, 3 )
+custom_fonts/font = ExtResource( 12 )
 text = "Power 
 Demand :"
 align = 1
@@ -716,11 +745,11 @@ __meta__ = {
 
 [node name="Label2" type="Label" parent="2Dworld/Slider"]
 margin_left = 225.0
-margin_top = 80.0
+margin_top = 70.0
 margin_right = 297.0
-margin_bottom = 150.0
+margin_bottom = 140.0
 custom_fonts/font = ExtResource( 12 )
-custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "II"
 align = 1
 __meta__ = {
@@ -729,11 +758,11 @@ __meta__ = {
 
 [node name="Label3" type="Label" parent="2Dworld/Slider"]
 margin_left = 362.5
-margin_top = 78.502
+margin_top = 70.0
 margin_right = 467.5
-margin_bottom = 148.502
+margin_bottom = 140.0
 custom_fonts/font = ExtResource( 12 )
-custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "X1"
 align = 1
 __meta__ = {
@@ -741,12 +770,12 @@ __meta__ = {
 }
 
 [node name="Label4" type="Label" parent="2Dworld/Slider"]
-margin_left = 550.0
-margin_top = 80.0
-margin_right = 622.0
-margin_bottom = 150.0
+margin_left = 552.381
+margin_top = 70.0
+margin_right = 624.381
+margin_bottom = 140.0
 custom_fonts/font = ExtResource( 12 )
-custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "X2"
 align = 1
 __meta__ = {
@@ -755,11 +784,11 @@ __meta__ = {
 
 [node name="Label5" type="Label" parent="2Dworld/Slider"]
 margin_left = 712.5
-margin_top = 78.502
+margin_top = 70.0
 margin_right = 784.5
-margin_bottom = 148.502
+margin_bottom = 140.0
 custom_fonts/font = ExtResource( 12 )
-custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "X4"
 align = 1
 __meta__ = {
@@ -768,11 +797,11 @@ __meta__ = {
 
 [node name="Label6" type="Label" parent="2Dworld/Slider"]
 margin_left = 875.0
-margin_top = 80.0
+margin_top = 70.0
 margin_right = 947.0
-margin_bottom = 159.0
+margin_bottom = 149.0
 custom_fonts/font = ExtResource( 12 )
-custom_colors/font_color = Color( 1, 1, 1, 0.352941 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "X8
 "
 align = 1
@@ -1180,10 +1209,10 @@ __meta__ = {
 }
 
 [node name="ResetButton" type="Button" parent="2Dworld"]
-margin_left = 1459.15
-margin_top = 28.0
-margin_right = 1549.15
-margin_bottom = 65.0
+margin_left = 1550.0
+margin_top = 25.0
+margin_right = 1644.0
+margin_bottom = 67.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "RESET"
@@ -1225,10 +1254,10 @@ __meta__ = {
 }
 
 [node name="ExitButton" type="Button" parent="2Dworld"]
-margin_left = 435.781
-margin_top = 29.9966
-margin_right = 572.781
-margin_bottom = 66.9966
+margin_left = 400.0
+margin_top = 30.0
+margin_right = 537.0
+margin_bottom = 67.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "EXIT GAME"
@@ -1271,8 +1300,10 @@ __meta__ = {
 
 [node name="GUI" type="MarginContainer" parent="."]
 anchor_right = 1.0
-margin_right = -1672.0
-margin_bottom = 38.0
+margin_left = 60.0
+margin_top = 40.0
+margin_right = -1612.0
+margin_bottom = 78.0
 theme = SubResource( 73 )
 __meta__ = {
 "_edit_use_anchors_": false

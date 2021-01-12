@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "Chart",
 "language": "GDScript",
-"path": "res://addons/easy_charts/Utilities/Scripts/chart.gd"
+"path": "res://addons/easy_charts/Utilities/Scripts/Chart.gd"
 }, {
 "base": "Node2D",
 "class": "Chart2D",
 "language": "GDScript",
-"path": "res://addons/easy_charts/Utilities/Scripts/chart2d.gd"
+"path": "res://addons/easy_charts/Utilities/Scripts/Chart2D.gd"
 }, {
 "base": "Chart",
 "class": "ColumnChart",
