@@ -205,7 +205,8 @@ namespace godot {
         //cars' prohibition on certain days
         double carProhibition; //number of days on which cars are prohibited
 
-
+        //to generate random numbers
+        double normalGenerator(double mean, double stdDev);
     private:
         // city indices
         double income;

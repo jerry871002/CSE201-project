@@ -1887,8 +1887,6 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 * 7 - sports car
 */
     std::cout<< "TRANSPORT_TO_ADD begins" << endl;
-    std::random_device rd;
-    std::mt19937 gen(rd());
 	Transport electicCar = Transport(0);
 	Transport bigCar = Transport(1);
 	Transport car = Transport(2);
@@ -1904,8 +1902,8 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 	for (int i =0 ; i < 8; i++){
 		satisfactionsSum += satisfactions[i];
 	}
-    std::cout << "TRANSPORT_TO_ADD check 2" << endl;
-    double alpha[8] = { 0 };
+    double alpha[8] = {0};
+    
     for (int i = 0; i < 8; i++) {
         alpha[i] = satisfactions[i] / satisfactionsSum * numberOfHouses;
         if ((i == 4) || (i == 5)) {
@@ -1992,6 +1990,12 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     } 
 }
 
+//generate random alphas for previous function
+double City::normalGenerator(double mean, double stdDev){
+    static default_random_engine generator(time(0));
+    normal_distribution<double> distribution(mean,stdDev);
+    return distribution(generator); 
+}
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
 int City::value_pie_chart(int value) {
     int newvalue = (int)(100 * (1 - (1 / (value + 1))));
