@@ -16,11 +16,15 @@
 #include <Label.hpp>
 #include <DirectionalLight.hpp>
 #include <WorldEnvironment.hpp>
+#include <godot.hpp>
 
 #include <PoolArrays.hpp>
 #include <random>
 #include <ctime>
 #include <algorithm>
+#include <string>
+#include <stdlib.h>
+#include <iostream>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -37,6 +41,7 @@ using namespace std;
 
 int traffic_system[citysize][citysize][4][3] = { 0 }; //sets everything to non-existing for the traffic array : the first to things are coordinates of the building where  the car is
                  // the third coornidate indicates the side of the building and the forth one which way the car can turn
+
 
 
 City::City() {
@@ -154,6 +159,13 @@ void City::_process(float)
 {
 
 };
+
+template<typename T> String to_godot_string(T s)
+{
+    std::string standardString = std::to_string(s);
+    godot::String godotString = godot::String(standardString.c_str());
+    return godotString;
+}
 
 
 /*
@@ -1565,12 +1577,6 @@ void City::simulation_transport()
 }
 
 
-template<typename T> String to_godot_string(T s)
-{
-    std::string standardString = std::to_string(s);
-    godot::String godotString = godot::String(standardString.c_str());
-    return godotString;
-}
 
 
 
@@ -2042,20 +2048,16 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
 
 
     if (isPositive) {
-        node->set_tint_progress(Color(min((double)value_pie_chart(value) / 5, 1.0), min(2 - (double)value_pie_chart(value) / 5, 1.0), 0, 1.0));
-        //std::cout << "DEBUG: VALUE PIE CHARTS= " << value << "     " << min((double)value / 5, 1.0) << std::endl;
-    }
-    else {
         node->set_tint_progress(Color(min(2 - (double)value_pie_chart(value) / 5, 1.0), min((double)value_pie_chart(value) / 5, 1.0), 0, 1.0));
     }
+    else {
+        node->set_tint_progress(Color(min((double)value_pie_chart(value) / 5, 1.0), min(2 - (double)value_pie_chart(value) / 5, 1.0), 0, 1.0));  
+    }
     node->set("value", value_pie_chart(value));
-	label->set("text", std::to_string(value));
+    std::string standardString = std::to_string((int)value);
+    godot::String godotString = godot::String(standardString.c_str());
+	label->set("text", godotString);
 }
-
-
-
-
-
 
 
 
