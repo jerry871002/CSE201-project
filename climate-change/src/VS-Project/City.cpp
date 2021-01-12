@@ -1974,6 +1974,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         for (int i = 0; i < 8; i++) {
 
             probabilities[i] = alpha[i] * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i]) / alphaSum;
+            std::cout << "Housing Incomr is : " << (double)((*it)->get("housingIncome")) << std::endl;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
@@ -2007,7 +2008,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     probabilityMotorcycle = quantities[5] / quantitiesSum;
     probabilityBus = quantities[6] / quantitiesSum;
     probabilitySportsCar = quantities[7] / quantitiesSum;
-    std::cout << "TRANSPORT_TO_ADD check 7" << endl;
+
     /*
     for (int i = 0; i < 8; i++) {
         quantities[i] = quantities[i] / quantitiesSum;
@@ -2015,9 +2016,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     */
     for (int i = 0; i < 8; i++) {
         missing_car_quantities[i] = current_car_quantities[i] - quantities[i];
-        std::cout << "CUrrent car " << current_car_quantities[i] << endl;
-        std::cout << "quantities " << quantities[i] << endl;
-        std::cout << "Missing quanity for type " << i << " is " << missing_car_quantities[i] << endl;
+
         if (missing_car_quantities[i] > 0) {
             missing_car_quantities[i] = 0;
         }
