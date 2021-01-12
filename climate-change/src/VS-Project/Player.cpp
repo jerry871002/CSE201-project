@@ -13,6 +13,11 @@
 
 using namespace godot;
 
+
+Vector3 center = Vector3(15.0 * citysize + 60, 0, 15.0 * citysize + 60);
+
+
+
 Player::Player() {
 	// INITIALIZE MOTION AND ROTATION VECTORS USED FOR PLAYER CONTROL
 	motion = Vector3(0, 0, 0);
@@ -138,7 +143,8 @@ void Player::UpdateMotionFromInput(float delta)
 	// INPUT USED FOR KEY CONTROLS
 	Input* i = Input::get_singleton();
 
-	SPEED_T = 2 * get_global_transform().get_origin().y * delta;
+	Vector3 pos = this->get("translation");
+	SPEED_T = 2 * pos.y * delta;// *(citysize / 2 - pow((center.x - pos.x) * (center.x - pos.x) + (center.z - pos.z) * (center.z - pos.z), 0.5));
 
 	// VERTICAL MOTION
 
