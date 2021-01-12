@@ -83,7 +83,7 @@ void Transport::transport_type() {
         cost = costt(gen)-(int)myCity->get("electricCarSubsidy");
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
-        std::normal_distribution <double> satisfactiont(9.15, 0.15); //very high satisfaction
+        std::normal_distribution <double> satisfactiont(7.45, 0.1); //very high satisfaction
         satisfaction = fmax(satisfactiont(gen), 10);
         energyUse = 0.119 * kmPerDay;
         lifetime = 15;
@@ -103,9 +103,9 @@ void Transport::transport_type() {
         occupancyRate = occupancyg(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeg(1, 0.5);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactiong(9.1, 0.25); // high satisfaction
+        std::normal_distribution <double> satisfactiong(9.3, 0.25); // high satisfaction
         satisfaction = satisfactiong(gen);
-        lifetime = 10;
+        lifetime = 12;
         pricePerMonth = 1.25*30*workingDays/7;
         weight = 2.5;
         cost += ((double)(myCity->get("weightTax"))) * weight;  //weight tax directly on car cost
@@ -123,7 +123,7 @@ void Transport::transport_type() {
         occupancyRate = occupancyf(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeg(1, 0.5);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactiong(7, 0.5); // medium satisfaction
+        std::normal_distribution <double> satisfactiong(7.3, 0.1); // medium satisfaction
         satisfaction = satisfactiong(gen);
         lifetime = 15;
         pricePerMonth = 0.15*30*workingDays/7;
@@ -142,7 +142,7 @@ void Transport::transport_type() {
         occupancyRate = occupancyo(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeo(7, 2);
         buildingTime = timeo(gen); // building time of 1 collection (replica i think) car car, not so fast
-        std::normal_distribution <double> satisfactiono(9.35, 0.25); // very high satisfaction
+        std::normal_distribution <double> satisfactiono(9.6, 0.2); // very high satisfaction
         satisfaction = satisfactiono(gen);
         lifetime = 20;
         pricePerMonth = 25*30*workingDays/7;
@@ -158,7 +158,7 @@ void Transport::transport_type() {
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.04; //really fast, in days (1 hour )
-        std::normal_distribution <double> satisfactionbike(7.5, 1);
+        std::normal_distribution <double> satisfactionbike(6.9, 0.2);
         satisfaction = satisfactionbike(gen); //meduim satisfaction
         std::normal_distribution <double> kmbike(18, 7);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
@@ -175,7 +175,7 @@ void Transport::transport_type() {
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.12; //really fast, in days (3 hours )
-        std::normal_distribution <double> satisfactionm(7.7, 1);
+        std::normal_distribution <double> satisfactionm(7, 0.15);
         satisfaction = satisfactionm(gen); // not very high satisfaction
         std::normal_distribution <double> kmbike(30, 10);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
@@ -187,7 +187,7 @@ void Transport::transport_type() {
     case 6: { // bus
         fuelPerKm = 0.26; //in liters
         co2PerKm = 1.25; //in kg
-        std::normal_distribution <double> costb(262500, 52500);
+        std::normal_distribution <double> costb(230500, 20000);
         cost = costb(gen)- (int)(myCity->get("busSubsidy")); // cost of 1 bus in euros, randomised using gaussian
         double alpha = (cost - 262500) / 262500;
         if (alpha < 0) {
@@ -205,7 +205,7 @@ void Transport::transport_type() {
         }
         std::normal_distribution <double> buildingb(22, 3);
         buildingTime = buildingb(gen); // construction time for 1 bus, in days
-        std::normal_distribution <double> satisfactionb(6.5, 1.5); // satisfaction level medium, randomised
+        std::normal_distribution <double> satisfactionb(6.85, 0.2); // satisfaction level medium, randomised
         satisfaction = satisfactionb(gen);
         if (satisfaction > 10) {
             satisfaction = 10;
@@ -214,7 +214,7 @@ void Transport::transport_type() {
         kmPerDay = kmb(gen); // kilometres per day,  randomised for each bus
         employment = 1 + round(alpha * 2);
         lifetime = 16;
-        pricePerMonth = 0.67 * kmPerDay * 30;
+        pricePerMonth = (0.67+0.18*alpha) * kmPerDay * 30;
         weight = 11; //not true but in order for the tax to not be applied
         break;
     }
@@ -228,7 +228,7 @@ void Transport::transport_type() {
         occupancyRate = occupancysp(gen); // average percentage occupancy of the car: number of people in the bus / capacity
         std::normal_distribution <double> timeg(1.5, 0.75);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactionsp(9.3, 0.2); // satisfaction level is very high, randomised
+        std::normal_distribution <double> satisfactionsp(9.2, 0.2); // satisfaction level is very high, randomised
         satisfaction = satisfactionsp(gen);
         if (satisfaction > 10) {
             satisfaction = 10;
