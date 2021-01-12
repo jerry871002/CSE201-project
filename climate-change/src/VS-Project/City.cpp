@@ -19,6 +19,7 @@
 #include <WorldEnvironment.hpp>
 
 #include <PoolArrays.hpp>
+#include <random>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -1063,7 +1064,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
 
             std::cout << "ADD A CAR OF TYPE: " << type << std::endl;
             this->add_child((Node*)node);
-            ((Transport*)node)->set("transportType", type);
+            //((Transport*)node)->set("transportType", type); //to put back
 
             //income -= node->cost;
             //all_transports.push_back((Transport*)node);         THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
@@ -1917,22 +1918,23 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     std::cout << "TRANSPORT_TO_ADD check 1" << endl;
     double satisfactions[8] = { electicCar.satisfaction, bigCar.satisfaction, car.satisfaction, collectionCar.satisfaction, bike.satisfaction, motorcycle.satisfaction, bus.satisfaction, sportsCar.satisfaction };
     double satisfactionsSum = 0;
+    std::cout << "TRANSPORT_TO_ADD check 1.1" << endl;
 	for (int i =0 ; i < 8; i++){
 		satisfactionsSum += satisfactions[i];
 	}
-    double alpha[8];
+    std::cout << "TRANSPORT_TO_ADD check 2" << endl;
+    double alpha[8] = { 0 };
     for (int i = 0; i < 8; i++) {
         alpha[i] = satisfactions[i] / satisfactionsSum * numberOfHouses;
         if ((i == 4) || (i == 5)) {
             alpha[i] *= sqrt(airQuality);
         }
-        std::normal_distribution <double> alpharandomiser(alpha[i], alpha[i]/4);
-        alpha[i] = alpharandomiser(gen);
-        if (alpha[i]<0){
-            alpha[i] = 0;
-        }
+        std::cout << "TRANSPORT_TO_ADD check 2.1" << endl;
+        std::normal_distribution <double> alpharandomiser(1000, 500);
+        std::cout << "TRANSPORT_TO_ADD check 2.2" << endl;
+        alpha[i] = fmax(alpharandomiser(gen), 0);
     }
-
+    std::cout << "TRANSPORT_TO_ADD check 3.0" << endl;
     double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
     double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth+fuelTax*bigCar.fuelInput*30, car.pricePerMonth+fuelTax*car.fuelInput*30,collectionCar.pricePerMonth+fuelTax*collectionCar.fuelInput*30, bike.pricePerMonth, 
 	motorcycle.pricePerMonth+fuelTax*motorcycle.fuelInput*30, bus.pricePerMonth/(bus.capacity*bus.occupancyRate)+fuelTax*bus.fuelInput*30, sportsCar.pricePerMonth+fuelTax*sportsCar.fuelInput*30};

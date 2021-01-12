@@ -50,11 +50,10 @@ Transport::Transport() {
 
 Transport::Transport(int type){
     transportType = type;
-    transport_type();
 }
 
 void Transport::transport_type() {
-    workingDays = 7 - (int)myCity->get("carProhibition");
+    workingDays = 7 - (int)(myCity->get("carProhibition"));
     // initialize graphical variables
     motion = Vector3(0, 0, 0);
     rot = (M_PI / 2);
@@ -109,7 +108,7 @@ void Transport::transport_type() {
         lifetime = 10;
         pricePerMonth = 1.25*30*workingDays/7;
         weight = 2.5;
-        cost += ((double)((int)myCity->get("weightTax"))) * weight;  //weight tax directly on car cost
+        cost += ((double)(myCity->get("weightTax"))) * weight;  //weight tax directly on car cost
         break;
     }
     case 2: { //normal family car 
@@ -148,14 +147,14 @@ void Transport::transport_type() {
         lifetime = 20;
         pricePerMonth = 25*30*workingDays/7;
         weight = 2;
-        cost += ((double)((int)myCity->get("weightTax"))) * weight; //weight tax directly on car cost
+        cost += ((double)(myCity->get("weightTax"))) * weight; //weight tax directly on car cost
         break;
     }
     case 4: { //bike
         fuelPerKm = 0;
         co2PerKm = 0;
         std::normal_distribution <double> costbike(370, 30);
-        cost = costbike(gen)-(int)myCity->get("bikeSubsidy"); // cost of 1 bike in euros, randomised using gaussian
+        cost = costbike(gen)-(int)(myCity->get("bikeSubsidy")); // cost of 1 bike in euros, randomised using gaussian
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.04; //really fast, in days (1 hour )
@@ -189,7 +188,7 @@ void Transport::transport_type() {
         fuelPerKm = 0.26; //in liters
         co2PerKm = 1.25; //in kg
         std::normal_distribution <double> costb(262500, 52500);
-        cost = costb(gen)-(int)myCity->get("busSubsidy"); // cost of 1 bus in euros, randomised using gaussian
+        cost = costb(gen)- (int)(myCity->get("busSubsidy")); // cost of 1 bus in euros, randomised using gaussian
         double alpha = (cost - 262500) / 262500;
         if (alpha < 0) {
             alpha = 0;
@@ -272,7 +271,7 @@ void Transport::_ready() {
     prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
     prevPositionVec = this->get_global_transform().get_origin();
     myCity = (City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")));
-    transportType = 0;
+    transport_type();
 }
 
 
@@ -464,12 +463,12 @@ void Transport::simulate_step(double days) {
     }
     }
     //car prohibition
-    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)){
-        {if (workingDays!=7-(int)myCity->get("carProhibition")){
-        satisfaction/=workingDays/7;
-        workingDays = 7-(int)myCity->get("carProhibition");
-        satisfaction*=workingDays/7;
+    /*
+    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)) {
+        {if (workingDays!= (7-(int)(myCity->get("carProhibition")))) {
+        satisfaction /= workingDays/7;
      }
+     
     maintenance*=workingDays/7;
     fuelInput*=workingDays/7;
     CO2Emission*=workingDays/7;
@@ -477,8 +476,9 @@ void Transport::simulate_step(double days) {
     passengers*=workingDays/7;
     }
     }
+    */
     //car consumption tax
-    maintenance+=fuelInput*(int)myCity->get("fuelTax");
+    maintenance+=fuelInput*(int)(myCity->get("fuelTax"));
 }
 
 void Transport::turn(int dir, float delta) {
