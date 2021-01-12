@@ -936,10 +936,7 @@ void City::implement_policies(double value) {
     else if (this->active_button == String("ConsumptionTransport")) {
         if (value >= 0 && value <= 2) { 
             Godot::print("TAX ON CAR CONSUMPTION IMPLEMENTED");
-            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
-            {
-                (*it)->set("fuelTax", value);
-            }
+            fuelTax = value;
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -948,10 +945,7 @@ void City::implement_policies(double value) {
     else if (this->active_button == String("WeightTransport")) {
         if (value >= 0 && value <= 5000) { 
             Godot::print("TAX ON CAR WEIGHT IMPLEMENTED");
-            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
-            {
-                (*it)->set("weightTax", value);
-            }
+            weightTax = value;
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -960,10 +954,7 @@ void City::implement_policies(double value) {
     else if (this->active_button == String("BikeSubsidy")) {
         if (value >= 0 && value <= 250) { 
             Godot::print("BIKE SUBSIDY IMPLEMENTED");
-            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
-            {
-                (*it)->set("bikeSubsidy", value);
-            }
+            bikeSubsidy = value;
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -972,10 +963,7 @@ void City::implement_policies(double value) {
     else if (this->active_button == String("ElectricSubsidy")) {
         if (value >= 0 && value <= 30000) { 
             Godot::print("ELECTRIC CAR SUBSIDY IMPLEMENTED");
-            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
-            {
-                (*it)->set("electricCarSubsidy", value);
-            }
+            electricCarSubsidy =  value;
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -984,10 +972,7 @@ void City::implement_policies(double value) {
     else if (this->active_button == String("BusSubsidy")) {
         if (value >= 0 && value <= 60000) { 
             Godot::print("BUS SUBSIDY IMPLEMENTED");
-            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
-            {
-                (*it)->set("busSubsidy", value);
-            }
+            busSubsidy = value;
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -996,10 +981,7 @@ void City::implement_policies(double value) {
     else if (this->active_button == String("CarsProhibition")) {
         if (value >= 0 && value <= 7) { 
             Godot::print("CARS PROHIBITION ON CERTAIN DAYS IMPLEMENTED");
-            for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
-            {
-                (*it)->set("carProhibition", value);
-            }
+            carProhibition = value;
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
