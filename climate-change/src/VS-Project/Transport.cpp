@@ -162,7 +162,7 @@ void Transport::transport_type() {
         satisfaction = satisfactionbike(gen); //meduim satisfaction
         std::normal_distribution <double> kmbike(18, 7);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
-        lifetime = 20;
+        lifetime = 5;
         pricePerMonth = 0.8*30;
         weight = 0.15; //not true but in order for the tax to not be applied
         break;
