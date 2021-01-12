@@ -111,7 +111,7 @@ func _get_property_list():
 				},
 				{
 						"hint": PROPERTY_HINT_ENUM,
-						"hint_string": PoolStringArray(TemplatesNames.keys()).join(","),
+						"hint_string": PoolStringArray(Utilities.templates.keys()).join(","),
 						"usage": PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE,
 						"name": "Chart_Style/template",
 						"type": TYPE_INT
@@ -125,44 +125,51 @@ func _get_property_list():
 				},
 		]
 
-func structure_datas(database : Array, are_values_columns : bool, labels_index : int):
-		# @x_values_index can be either a column or a row relative to x values
-		# @y_values can be either a column or a row relative to y values
-		self.labels_index = labels_index
-		self.are_values_columns = are_values_columns
-		match are_values_columns:
-				true:
-						for row in database.size():
-								if row == labels_index:
-										x_labels = database[row] as PoolStringArray
-								else:
-										if database[row].empty() or database[row].size() < 2:
-												continue
-										x_datas.append(PoolRealArray(database[row] as Array))
-								
-								for column in database[row].size():
-										if column == function_names_index:
-												y_labels.append(database[row][column])
-				false:
-						for row in database.size():
-								if row == function_names_index:
-										y_labels = database[row] as PoolStringArray
-								
-								var x_temp_datas : PoolRealArray = []
-								for column in database[row].size():
-										if column == labels_index:
-												x_labels.append(database[row][column] as String)
-										else:
-												x_temp_datas.append(database[row][column] as float)
-										x_datas.append(x_temp_datas)
-		
-		if labels_index == -1 :
-				for data in x_datas[0].size():
-						x_labels.append("Element %s" % data)
-		
-		if function_names_index == -1 :
-				for data in x_datas.size():
-						y_labels.append("Function %s" % data)
+func structure_datas(database : Array):
+	# @x_values_index can be either a column or a row relative to x values
+	# @y_values can be either a column or a row relative to y values
+	are_values_columns = invert_chart != are_values_columns
+	match are_values_columns:
+		true:
+			for row in database.size():
+				var t_row : Array = []
+				for column in database[row].size():
+					if row == labels_index:
+						if column == function_names_index:
+							pass
+						else:
+							x_labels.append(database[row][column])
+					else:
+						if column == function_names_index:
+							y_labels.append(database[row][column])
+						else:
+							if typeof(database[row][column]) == TYPE_INT or typeof(database[row][column]) == TYPE_REAL:
+								t_row.append(database[row][column] as float)
+							else:
+								t_row.append(database[row][column].replace(",", ".") as float)
+				if not t_row.empty():
+					x_datas.append(t_row)
+		false:
+			for row in database.size():
+				if row == function_names_index:
+					y_labels = database[row] as PoolStringArray
+				
+				var x_temp_datas : PoolRealArray = []
+				for column in database[row].size():
+					if column == labels_index:
+						x_labels.append(database[row][column] as String)
+					else:
+						x_temp_datas.append(database[row][column] as float)
+					x_datas.append(x_temp_datas)
+	
+	
+	if labels_index == -1 :
+			for data in x_datas[0].size():
+					x_labels.append("Element %s" % data)
+	
+	if function_names_index == -1 :
+			for data in x_datas.size():
+					y_labels.append("Function %s" % data)
 
 func build_chart():
 	SIZE = get_size()
@@ -171,47 +178,47 @@ func build_chart():
 var radar_polygon : Array
 
 func calculate_pass() : 
-		var ordered_max : Array
-		for data in x_datas :
-				var ordered_data : Array = (data as Array)
-				ordered_data.sort()
-				ordered_max.append(ordered_data.pop_back())
-		ordered_max.sort()
-		var max_value : float = ordered_max.pop_back()
-		var dist = full_scale * pow(10.0,str(max_value).length()-2)
-		var multi = 0
-		var value = dist * multi
+	var ordered_max : Array
+	for data in x_datas :
+		var ordered_data : Array = data.duplicate()
+		ordered_data.sort()
+		ordered_max.append(ordered_data.pop_back())
+	ordered_max.sort()
+	var max_value : float = ordered_max.pop_back()
+	var dist = full_scale * pow(10.0,str(max_value).length()-2)
+	var multi = 0
+	var value = dist * multi
+	x_chors.append(value as String)
+	while value < max_value:
+		multi+=1
+		value = dist * multi
 		x_chors.append(value as String)
-		while value < max_value:
-				multi+=1
-				value = dist * multi
-				x_chors.append(value as String)
 
 func calculate_coordinates():
-		for chor in x_chors.size():
-				var inner_polyline : PoolVector2Array
-				var scalar_factor : float = (x_chors[chor] as float/x_chors.back() as float)
-				for function in functions:
-						var angle : float =  ((2 * PI * function) / functions) - PI /2 + deg2rad(rotation)
-						var x_coordinate : float = (radius if (not use_height_as_radius and radius<SIZE.y/2) else SIZE.y/2) * scalar_factor * cos(angle) + origin.x
-						var y_coordinate : float = (radius if (not use_height_as_radius and radius<SIZE.y/2) else SIZE.y/2) * scalar_factor * sin(angle) + origin.y
-						inner_polyline.append(Vector2(x_coordinate, y_coordinate))
-				inner_polyline.append(inner_polyline[0])
-				radar_polygon.append(inner_polyline)
-		
-		for datas in x_datas:
-				var function_positions : PoolVector2Array
-				var function_values : Array
-				for data in datas.size():
-						var scalar_factor : float = datas[data] /( x_chors.back() as float)
-						var angle : float =  ((2 * PI * data) / datas.size()) - PI/2 + deg2rad(rotation)
-						var x_coordinate : float = (radius if (not use_height_as_radius and radius<SIZE.y/2) else SIZE.y/2) * scalar_factor * cos(angle) + origin.x
-						var y_coordinate : float = (radius if (not use_height_as_radius and radius<SIZE.y/2) else SIZE.y/2) * scalar_factor * sin(angle) + origin.y
-						function_positions.append(Vector2(x_coordinate,y_coordinate))
-						function_values.append([x_labels[data], datas[data]])
-				function_positions.append(function_positions[0])
-				point_positions.append(function_positions)
-				point_values.append(function_values)
+	for chor in x_chors.size():
+		var inner_polyline : PoolVector2Array
+		var scalar_factor : float = (x_chors[chor] as float/x_chors.back() as float)
+		for function in functions:
+			var angle : float =  ((2 * PI * function) / functions) - PI /2 + deg2rad(rotation)
+			var x_coordinate : float = (radius if (not use_height_as_radius and radius<SIZE.y/2) else SIZE.y/2) * scalar_factor * cos(angle) + origin.x
+			var y_coordinate : float = (radius if (not use_height_as_radius and radius<SIZE.y/2) else SIZE.y/2) * scalar_factor * sin(angle) + origin.y
+			inner_polyline.append(Vector2(x_coordinate, y_coordinate))
+		inner_polyline.append(inner_polyline[0])
+		radar_polygon.append(inner_polyline)
+	
+	for datas in x_datas:
+		var function_positions : PoolVector2Array
+		var function_values : Array
+		for data in datas.size():
+			var scalar_factor : float = datas[data] /( x_chors.back() as float)
+			var angle : float =  ((2 * PI * data) / datas.size()) - PI/2 + deg2rad(rotation)
+			var x_coordinate : float = (radius if (not use_height_as_radius and radius<SIZE.y/2) else SIZE.y/2) * scalar_factor * cos(angle) + origin.x
+			var y_coordinate : float = (radius if (not use_height_as_radius and radius<SIZE.y/2) else SIZE.y/2) * scalar_factor * sin(angle) + origin.y
+			function_positions.append(Vector2(x_coordinate,y_coordinate))
+			function_values.append([x_labels[data], datas[data]])
+		function_positions.append(function_positions[0])
+		point_positions.append(function_positions)
+		point_values.append(function_values)
 
 func _draw():
 		if Engine.editor_hint:
