@@ -7,7 +7,6 @@
 #include <SceneTree.hpp>
 #include <PackedScene.hpp>
 #include <Node.hpp>
-#include <ctime>
 #include <Input.hpp>
 #include <Button.hpp>
 #include <Viewport.hpp>
@@ -20,6 +19,8 @@
 
 #include <PoolArrays.hpp>
 #include <random>
+#include <ctime>
+#include <algorithm>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -443,6 +444,16 @@ void City::generate_initial_city_graphics()
            
         }
     }
+    //   shuffles all the vectors so that buildings arent updated in a noticeable pattern
+    std::random_shuffle(all_structures.begin(), all_structures.end());
+    std::random_shuffle(all_energies.begin(), all_energies.end());
+    std::random_shuffle(all_houses.begin(), all_houses.end());
+    std::random_shuffle(all_shops.begin(), all_shops.end());
+    std::random_shuffle(all_production.begin(), all_production.end());
+
+
+
+
     std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
 }
 
