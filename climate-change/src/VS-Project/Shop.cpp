@@ -17,6 +17,7 @@ using namespace godot;
 void Shop::_register_methods() 
 {
     register_method((char*)"_ready", &Shop::_ready);
+    register_method((char*)"_process", &Shop::_process);
     register_property<Shop, double>("panel_probability", &Shop::panel_probability, 0.75);
 }
 
@@ -35,6 +36,12 @@ Shop::Shop()
 Shop::~Shop()
 {
 
+}
+
+void Shop::_process(float delta) {
+    this->Structure::_process(delta);
+    rot -= delta * turnSpeed * int(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("time_speed"));
+    ((Mesh*)this->get_node("MeshComponents/WindTurbine"))->set("rotation_degrees", Vector3(0, -double((180 / 3.1415926535) * rot), 0));
 }
 
 /*

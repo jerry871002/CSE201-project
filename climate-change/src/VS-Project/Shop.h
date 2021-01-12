@@ -17,6 +17,7 @@ namespace godot {
 
         static void _register_methods();
         virtual void _ready();
+        virtual void _process(float delta);
         
         virtual String get_object_type() { return "Shop"; };
         String get_main_type() { return "Shop"; };
@@ -43,6 +44,10 @@ namespace godot {
         double panel_probability{ 0.75 };  // will likely be changed to a more complex function soon 
 
         virtual void panel_added_probability();  //Function to determine the probablility of adding a solar panel
+
+    private:
+        double turnSpeed = 0.5;
+        double rot = 0;
     };
 
 
