@@ -158,7 +158,7 @@ void Transport::transport_type() {
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.04; //really fast, in days (1 hour )
-        std::normal_distribution <double> satisfactionbike(6.5, 1);
+        std::normal_distribution <double> satisfactionbike(7.5, 1);
         satisfaction = satisfactionbike(gen); //meduim satisfaction
         std::normal_distribution <double> kmbike(18, 7);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
@@ -175,7 +175,7 @@ void Transport::transport_type() {
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.12; //really fast, in days (3 hours )
-        std::normal_distribution <double> satisfactionm(7, 1);
+        std::normal_distribution <double> satisfactionm(7.7, 1);
         satisfaction = satisfactionm(gen); // not very high satisfaction
         std::normal_distribution <double> kmbike(30, 10);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
@@ -205,7 +205,7 @@ void Transport::transport_type() {
         }
         std::normal_distribution <double> buildingb(22, 3);
         buildingTime = buildingb(gen); // construction time for 1 bus, in days
-        std::normal_distribution <double> satisfactionb(8, 1.5); // satisfaction level rather high, randomised
+        std::normal_distribution <double> satisfactionb(6.5, 1.5); // satisfaction level medium, randomised
         satisfaction = satisfactionb(gen);
         if (satisfaction > 10) {
             satisfaction = 10;
