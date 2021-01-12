@@ -1886,6 +1886,8 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 * 6 - bus
 * 7 - sports car
 */
+    std::random_device rd;
+    std::mt19937 gen(rd());
     std::cout<< "TRANSPORT_TO_ADD begins" << endl;
 	Transport electicCar = Transport(0);
 	Transport bigCar = Transport(1);
@@ -1910,9 +1912,11 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
             alpha[i] *= sqrt(airQuality);
         }
         std::cout << "TRANSPORT_TO_ADD check 2.1" << endl;
-        std::normal_distribution <double> alpharandomiser(1000, 500);
+        //std::normal_distribution <double> alpharandomiser(1000, 500);
+        alpha[i] = normalGenerator(alpha[i], alpha[i]/4);
         std::cout << "TRANSPORT_TO_ADD check 2.2" << endl;
         //alpha[i] = fmax(alpharandomiser(gen), 0);
+    
     }
     std::cout << "TRANSPORT_TO_ADD check 3.0" << endl;
     double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
