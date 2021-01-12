@@ -47,6 +47,7 @@ void Housing::_register_methods()
 {
 	register_method((char*)"_ready", &Housing::_ready);
 	register_method((char*)"_process", &Housing::_process);
+	register_property<Housing, int>("housingIncome", &Housing::housingIncome, 0);
 }
 
 void Housing::_ready()

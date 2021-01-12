@@ -1061,14 +1061,15 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             std::cout << "INSTANCE A CAR OF TYPE: " << type << std::endl;
 
             switch (type) {
-            case 0: node = ElectricCarScene->instance(); //current_car_quantities[0] += 1; break;
-            case 1: node = AmericanCarScene->instance(); //current_car_quantities[1] += 1; break;
-            case 2: node = NormalCarScene->instance(); //current_car_quantities[2] += 1; break;
-            case 3: node = OldCarScene->instance(); //current_car_quantities[3] += 1; break;
-            case 5: node = MotoScene->instance(); //current_car_quantities[5] += 1; break;
-            case 6: node = BusScene->instance(); //current_car_quantities[6] += 1; break;
-            case 7: node = SportCarScene->instance(); //current_car_quantities[7] += 1;  break;
-            default: node = BikeScene->instance(); //current_car_quantities[4] += 1; break;
+            case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
+            case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
+            case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
+            case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
+            case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
+            case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
+            case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
+            case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
+            default: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
             }
 
             std::cout << "INSTANCE DONE A CAR OF TYPE: " << type << std::endl;
@@ -1077,7 +1078,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
 
             std::cout << "ADD A CAR OF TYPE: " << type << std::endl;
             this->add_child((Node*)node);
-            //((Transport*)node)->set("transportType", type); //to put back
+            ((Transport*)node)->set("transportType", type);
 
             //income -= node->cost;
             //all_transports.push_back((Transport*)node);         THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
@@ -1919,7 +1920,6 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 */
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::cout<< "TRANSPORT_TO_ADD begins" << endl;
 	Transport electicCar = Transport(0);
 	Transport bigCar = Transport(1);
 	Transport car = Transport(2);
@@ -1928,29 +1928,28 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 	Transport motorcycle = Transport(5);
 	Transport bus = Transport(6);
 	Transport sportsCar = Transport(7);
-    std::cout << "TRANSPORT_TO_ADD check 1" << endl;
+
     double satisfactions[8] = { electicCar.satisfaction, bigCar.satisfaction, car.satisfaction, collectionCar.satisfaction, bike.satisfaction, motorcycle.satisfaction, bus.satisfaction, sportsCar.satisfaction };
     double satisfactionsSum = 0;
-    std::cout << "TRANSPORT_TO_ADD check 1.1" << endl;
+    double alpha[8] = { 0 };
+
 	for (int i =0 ; i < 8; i++){
 		satisfactionsSum += satisfactions[i];
 	}
-    double alpha[8] = {0};
+   
     
     for (int i = 0; i < 8; i++) {
         alpha[i] = satisfactions[i] / satisfactionsSum * numberOfHouses;
         if ((i == 4) || (i == 5)) {
             alpha[i] *= sqrt(airQuality);
         }
-        std::cout << "TRANSPORT_TO_ADD check 2.1" << endl;
+
         //std::normal_distribution <double> alpharandomiser(1000, 500);
-        //alpha[i] = normalGenerator(alpha[i], alpha[i]/4);
         //alpha[i] = normalGenerator(alpha[i], alpha[i] / 4);
-        std::cout << "TRANSPORT_TO_ADD check 2.2" << endl;
         //alpha[i] = fmax(alpharandomiser(gen), 0);
     
     }
-    std::cout << "TRANSPORT_TO_ADD check 3.0" << endl;
+
     double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
     double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth+fuelTax*bigCar.fuelInput*30, car.pricePerMonth+fuelTax*car.fuelInput*30,collectionCar.pricePerMonth+fuelTax*collectionCar.fuelInput*30, bike.pricePerMonth, 
 	motorcycle.pricePerMonth+fuelTax*motorcycle.fuelInput*30, bus.pricePerMonth/(bus.capacity*30)+fuelTax*bus.fuelInput*30, sportsCar.pricePerMonth+fuelTax*sportsCar.fuelInput*30};
@@ -1958,7 +1957,6 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     double quantities[8] = { 0 };
     double alphaSum = 0;
 
-    std::cout << "TRANSPORT_TO_ADD check 3" << endl;
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
     }
@@ -1969,13 +1967,13 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     for (int i = 0; i < 8; i++) {
         alphaSum += alpha[i];
     }
-    std::cout << "TRANSPORT_TO_ADD check 4" << endl;
+
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it) {
-        std::cout << "TRANSPORT_TO_ADD check 5" << endl;
+ 
         double choice[8] = { 0 };
         for (int i = 0; i < 8; i++) {
-            std::cout << "Average wage is:"  << endl;
-            probabilities[i] = alpha[i] * ((double)((*it)->get("averageWage")) / pricesPerMonth[i]) / alphaSum;
+
+            probabilities[i] = alpha[i] * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i]) / alphaSum;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
@@ -1993,7 +1991,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         }
         quantities[maxIndex] += 1;
     }
-    std::cout << "TRANSPORT_TO_ADD check 6" << endl;
+
     double quantitiesSum = 0;
     for (int i = 0; i < 8; i++) {
         quantitiesSum += quantities[i];
