@@ -191,14 +191,19 @@ namespace godot {
         float energyDemand_array[3];
         float energySupply_array[3];
         */
-       //getters for transport policies
-        double return_fuelTax();
-        double return_weightTax(); 
-        double return_bikeSubsidy();
-        double return_electicCarSubsidy();
-        double return_busSubsidy();
-        double return_carProhibition();
-
+        //policies for transport
+        //tax on car consumption
+        double fuelTax; // value per liter of fuel
+        // tax on car weight
+        double weightTax; // value per ton of car
+        //bike subsidy
+        double bikeSubsidy;
+        //electic car subsidy
+        double electricCarSubsidy;
+        //bus subsidy
+        double busSubsidy;
+        //cars' prohibition on certain days
+        double carProhibition; //number of days on which cars are prohibited
 
 
     private:
@@ -226,19 +231,6 @@ namespace godot {
         int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
         int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month
 
-        //policies for transport
-        //tax on car consumption
-        double fuelTax; // value per liter of fuel
-        // tax on car weight
-        double weightTax; // value per ton of car
-        //bike subsidy
-        double bikeSubsidy;
-        //electic car subsidy
-        double electricCarSubsidy;
-        //bus subsidy
-        double busSubsidy;
-        //cars' prohibition on certain days
-        double carProhibition; //number of days on which cars are prohibited
         
         const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");
         const Ref<PackedScene> ShopScene = ResourceLoader::get_singleton()->load("res://Resources/Shop.tscn", "PackedScene");

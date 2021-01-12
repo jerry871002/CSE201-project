@@ -124,12 +124,12 @@ void City::_register_methods()
     register_property<City, double>("budget", &City::budget, 10000);
 
     //Transport policies methods :
-    register_property<City, double>("fuelTax", &City::fuelTax, 0);
-    register_property<City, double>("weightTax", &City::weightTax, 0);
-    register_property<City, double>("bikeSubsidy", &City::bikeSubsidy, 0);
-    register_property<City, double>("electricCarSubsidy", &City::electricCarSubsidy, 0);
-    register_property<City, double>("busSubsidy", &City::busSubsidy, 0);
-    register_property<City, double>("carProhibition", &City::carProhibition, 0);
+    register_property<City, double>("fuelTax",&City::fuelTax, 0.0);
+    register_property<City, double>("weightTax", &City::weightTax, 0.0);
+    register_property<City, double>("bikeSubsidy", &City::bikeSubsidy,0.0);
+    register_property<City, double>("electricCarSubsidy", &City::electricCarSubsidy,0.0);
+    register_property<City, double>("busSubsidy", &City::busSubsidy, 0.0);
+    register_property<City, double>("carProhibition", &City::carProhibition, 0.0);
 };
 
 void City::_init()
@@ -2063,26 +2063,7 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
 
 
 }
-double City::return_fuelTax(){
-	return fuelTax;
-}
 
-double City::return_weightTax(){
-	return weightTax;
-}
-double City::return_bikeSubsidy(){
-	return bikeSubsidy;
-}
-double City::return_electicCarSubsidy(){
-	return electricCarSubsidy;
-}
-double City::return_busSubsidy(){
-	return busSubsidy;
-}
-double City::return_carProhibition(){
-	return carProhibition;
-}
-    
    
 
 
