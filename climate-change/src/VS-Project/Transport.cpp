@@ -13,7 +13,7 @@
 using namespace godot;
 
 
-extern int traffic_system[10][10][4][3];
+extern int traffic_system[citysize][citysize][4][3];
 
 // helper functions
 void compute_speed(double& Speed, double &Acc, float delta, Vector3 prevPos, Vector3 pos) {
@@ -44,10 +44,15 @@ template <typename T> void align_on_axis(T obj) {
 
 
 Transport::Transport() {
-    transport_type();
+    transportType = 4;
+}
+
+Transport::Transport(int type){
+    transportType = type;
 }
 
 void Transport::transport_type() {
+    workingDays = 7 - (int)(myCity->get("carProhibition"));
     // initialize graphical variables
     motion = Vector3(0, 0, 0);
     rot = (M_PI / 2);
@@ -74,12 +79,14 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmt(70, 15);
         kmPerDay = kmt(gen); // average km per day for this car using gaussian
         std::normal_distribution <double> costt(42000, 8500); //cost randomised using gaussian
-        cost = costt(gen);
+        cost = costt(gen)-(int)myCity->get("electricCarSubsidy");
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
-        std::normal_distribution <double> satisfactiont(9.7, 0.2); //very high satisfaction
-        satisfaction = fmax(satisfactiont(gen), 10);
+        satisfaction = 7.45;
         energyUse = 0.119 * kmPerDay;
+        lifetime = 15;
+        pricePerMonth = 1.09*30*workingDays/7;
+        weight = 1.7;
         break;
     }
     case 1: {  // big american car
@@ -94,8 +101,11 @@ void Transport::transport_type() {
         occupancyRate = occupancyg(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeg(1, 0.5);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactiong(8.5, 0.4); // high satisfaction
-        satisfaction = satisfactiong(gen);
+        satisfaction = 9.3;
+        lifetime = 12;
+        pricePerMonth = 1.25*30*workingDays/7;
+        weight = 2.5;
+        cost += ((double)(myCity->get("weightTax"))) * weight;  //weight tax directly on car cost
         break;
     }
     case 2: { //normal family car 
@@ -110,8 +120,10 @@ void Transport::transport_type() {
         occupancyRate = occupancyf(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeg(1, 0.5);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactiong(6.8, 0.5); // medium satisfaction
-        satisfaction = satisfactiong(gen);
+        satisfaction = 7.3;
+        lifetime = 15;
+        pricePerMonth = 0.15*30*workingDays/7;
+        weight = 0.98;
         break;
     }
     case 3: { //old collection car 
@@ -126,22 +138,27 @@ void Transport::transport_type() {
         occupancyRate = occupancyo(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeo(7, 2);
         buildingTime = timeo(gen); // building time of 1 collection (replica i think) car car, not so fast
-        std::normal_distribution <double> satisfactiono(9.3, 0.5); // very high satisfaction
-        satisfaction = satisfactiono(gen);
+        satisfaction = 9.6;
+        lifetime = 20;
+        pricePerMonth = 25*30*workingDays/7;
+        weight = 2;
+        cost += ((double)(myCity->get("weightTax"))) * weight; //weight tax directly on car cost
         break;
     }
     case 4: { //bike
         fuelPerKm = 0;
         co2PerKm = 0;
         std::normal_distribution <double> costbike(370, 30);
-        cost = costbike(gen); // cost of 1 bike in euros, randomised using gaussian
+        cost = costbike(gen)-(int)(myCity->get("bikeSubsidy")); // cost of 1 bike in euros, randomised using gaussian
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.04; //really fast, in days (1 hour )
-        std::normal_distribution <double> satisfactionbike(9, 1);
-        satisfaction = satisfactionbike(gen); //high satisfaction
+        satisfaction = 6.9; //meduim satisfaction
         std::normal_distribution <double> kmbike(18, 7);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
+        lifetime = 5;
+        pricePerMonth = 0.8*30;
+        weight = 0.15; //not true but in order for the tax to not be applied
         break;
     }
     case 5: { //motorcycle 
@@ -152,17 +169,19 @@ void Transport::transport_type() {
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.12; //really fast, in days (3 hours )
-        std::normal_distribution <double> satisfactionm(7, 1);
-        satisfaction = satisfactionm(gen); // not very high satisfaction
+        satisfaction = 7;
         std::normal_distribution <double> kmbike(30, 10);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
+        lifetime = 12;
+        pricePerMonth = 2.6*30;
+        weight = 0.01; //not true but in order for the tax to not be applied
         break;
     }
     case 6: { // bus
         fuelPerKm = 0.26; //in liters
         co2PerKm = 1.25; //in kg
-        std::normal_distribution <double> costb(262500, 52500);
-        cost = costb(gen); // cost of 1 bus in euros, randomised using gaussian
+        std::normal_distribution <double> costb(230500, 20000);
+        cost = costb(gen)- (int)(myCity->get("busSubsidy")); // cost of 1 bus in euros, randomised using gaussian
         double alpha = (cost - 262500) / 262500;
         if (alpha < 0) {
             alpha = 0;
@@ -179,14 +198,16 @@ void Transport::transport_type() {
         }
         std::normal_distribution <double> buildingb(22, 3);
         buildingTime = buildingb(gen); // construction time for 1 bus, in days
-        std::normal_distribution <double> satisfactionb(8, 1.5); // satisfaction level rather high, randomised
-        satisfaction = satisfactionb(gen);
+        satisfaction = 6.85;
         if (satisfaction > 10) {
             satisfaction = 10;
         }
         std::normal_distribution <double> kmb(225, 75);
         kmPerDay = kmb(gen); // kilometres per day,  randomised for each bus
         employment = 1 + round(alpha * 2);
+        lifetime = 16;
+        pricePerMonth = (0.67+0.18*alpha) * kmPerDay * 30;
+        weight = 11; //not true but in order for the tax to not be applied
         break;
     }
     case 7: { //sports car
@@ -199,18 +220,28 @@ void Transport::transport_type() {
         occupancyRate = occupancysp(gen); // average percentage occupancy of the car: number of people in the bus / capacity
         std::normal_distribution <double> timeg(1.5, 0.75);
         buildingTime = timeg(gen); // building time of 1 car, very fast
-        std::normal_distribution <double> satisfactionsp(9.5, 0.5); // satisfaction level is very high, randomised
-        satisfaction = satisfactionsp(gen);
+        satisfaction = 9.2;
         if (satisfaction > 10) {
             satisfaction = 10;
         }
         std::normal_distribution <double> kmsp(80, 20);
         kmPerDay = kmsp(gen); // kilometres per day,  randomised for each car
+        lifetime = 10;
+        pricePerMonth = 2.5*30*workingDays/7;
+        weight = 1.5;
         break;
     }
     }
+    pricePerMonth += cost / (12 * lifetime);
     fuelInput = fuelPerKm*kmPerDay; //in 1 day
     CO2Emission = co2PerKm*kmPerDay; //in 1 day
+    //car prohibition
+    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)){
+        satisfaction*=workingDays/7;
+        energyUse*=workingDays/7;
+        fuelInput*=workingDays/7;
+        CO2Emission*=workingDays/7;
+    }
 }
 
 void Transport::_register_methods() {
@@ -231,7 +262,7 @@ void Transport::_ready() {
     prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
     prevPositionVec = this->get_global_transform().get_origin();
     myCity = (City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")));
-    transportType = 0;
+    transport_type();
 }
 
 
@@ -331,97 +362,114 @@ void Transport::_physics_process(float delta) {
 void Transport::simulate_step(double days) {
     int years = floor((age + days) / 365 - age / 365);
     co2PerKm *= pow(1.05, years); //increase in emissions with each year
-    fuelInput = fuelPerKm*kmPerDay; //in 1 day
-    CO2Emission = co2PerKm*kmPerDay; //in 1 day
+    fuelInput = days*fuelPerKm*kmPerDay; //in the time period
+    CO2Emission = days*co2PerKm*kmPerDay; //in the time period
     age += days; //total number of days 
     /*fuelInput += fuelPerKm * kmPerDay * days; //litres of fuel for car
     CO2Emission += co2PerKm * kmPerDay * days;*/ // co2 emissions per car
-    passengers += capacity * occupancyRate * days; //number of people that used the car in given period
+    passengers = capacity * occupancyRate * days; //number of people that used the car in given period
     switch (transportType) {
     case 0: { //electric car
         if (age <= 365) {
-            maintenance += 1.09 * days; //maintenance service price per day if car is less than 1 yo
+            maintenance = 1.09 * days; //maintenance service price per day if car is less than 1 yo
         }
         else if (age <= 730) {
-            maintenance += 1.67 * days; //maintenance service price per day if car is less than 2 yo
+            maintenance = 1.67 * days; //maintenance service price per day if car is less than 2 yo
         }
         else if (age <= 1095) {
-            maintenance += 1.1 * days; //maintenance service price per day if car is less than 3 yo
+            maintenance = 1.1 * days; //maintenance service price per day if car is less than 3 yo
         }
         if (age <= 1460) {
-            maintenance += 1.94 * days; // maintenance service price per day is car is less than 4 yo
+            maintenance = 1.94 * days; // maintenance service price per day is car is less than 4 yo
         }
         else {
-            maintenance += 2.2 * days; // maintenance service price per day if car is more than 4 yo
+            maintenance = 2.2 * days; // maintenance service price per day if car is more than 4 yo
         }
         break;
     }
     case 1: { // big american car
     // no repairs price if car is <3yo
         if (age <= 365) {
-            maintenance += 1.25 * days; //maintenance price per day if car is less than 1 yo
+            maintenance = 1.25 * days; //maintenance price per day if car is less than 1 yo
         }
         else if (age <= 730) {
-            maintenance += 1.92 * days; //maintenance price per day if car is less than 2 yo
+            maintenance = 1.92 * days; //maintenance price per day if car is less than 2 yo
         }
         else if (age <= 1095) {
-            maintenance += 1.95 * days; //maintenance price per day if car is less than 3 yo
+            maintenance = 1.95 * days; //maintenance price per day if car is less than 3 yo
         }
         if (age <= 1460) {
-            maintenance += 1.86 * days; // repairs price per day is car is less than 4 yo
-            maintenance += 5.7 * days; //maintenance price per day if car is less than 4 yo
+            maintenance = 1.86 * days; // repairs price per day is car is less than 4 yo
+            maintenance = 5.7 * days; //maintenance price per day if car is less than 4 yo
         }
         else {
-            maintenance += 2.78 * days; //repairs price per day if car is more than 4 yo
-            maintenance += 3.21 * days; //maintenance price per day if car is more than 4 yo
+            maintenance = 2.78 * days; //repairs price per day if car is more than 4 yo
+            maintenance = 3.21 * days; //maintenance price per day if car is more than 4 yo
         }
         break;
     }
     case 2: { // normal family car
     // no repairs price if car is <3yo
         if (age <= 365) {
-            maintenance += 0.15 * days; //maintenance price per day if car is less than 1 yo
+            maintenance = 0.15 * days; //maintenance price per day if car is less than 1 yo
         }
         else if (age <= 730) {
-            maintenance += 0.5 * days; //maintenance price per day if car is less than 2 yo
+            maintenance = 0.5 * days; //maintenance price per day if car is less than 2 yo
         }
         else if (age <= 1095) {
-            maintenance += 1.05 * days; //maintenance price per day if car is less than 3 yo
+            maintenance = 1.05 * days; //maintenance price per day if car is less than 3 yo
         }
         if (age <= 1460) {
-            maintenance += 0.765 * days; // repairs price per day is car is less than 4 yo
+            maintenance = 0.765 * days; // repairs price per day is car is less than 4 yo
             maintenance += 2.70 * days; //maintenance price per day if car is less than 4 yo
         }
         else {
-            maintenance += 1.17 * days; //repairs price per day if car is more than 4 yo
-            maintenance += 2.26 * days; //maintenance price per day if car is more than 4 yo
+            maintenance = 1.17 * days; //repairs price per day if car is more than 4 yo
+            maintenance = 2.26 * days; //maintenance price per day if car is more than 4 yo
         }
         break;
     }
     case 3: { // collection car 
     // no repairs price if car is <3yo
-        maintenance += 25 * days; //maintenance very expensive, does not depend on the age, the car is already old
+        maintenance = 25 * days; //maintenance very expensive, does not depend on the age, the car is already old
         break;
     }
     case 4: { //bike
-        maintenance += 0.8 * days;
+        maintenance = 0.8 * days;
     }
     case 5: { //motorcycle
-        maintenance += 2.6 * days;
+        maintenance = 2.6 * days;
     }
     case 6: { //bus
         double alpha = (cost - 262500) / 262500;
         if (alpha < 0) {
             alpha = 0;
         }
-        maintenance += (0.67 + alpha * 0.17) * kmPerDay * days; // maintenance cost in euros, positive correlation with bus price
+        maintenance = (0.67 + alpha * 0.17) * kmPerDay * days; // maintenance cost in euros, positive correlation with bus price
         break;
     }
     case 7: { //sports car
-        maintenance += 2.5 * days;
+        maintenance = 2.5 * days;
+        break;
     }
-
     }
+    //car prohibition
+    /*
+    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)) {
+        {if (workingDays!= (7-(int)(myCity->get("carProhibition")))) {
+        satisfaction /= workingDays/7;
+     }
+     
+    maintenance*=workingDays/7;
+    fuelInput*=workingDays/7;
+    CO2Emission*=workingDays/7;
+    energyUse*=workingDays/7;
+    passengers*=workingDays/7;
+    }
+    }
+    */
+    //car consumption tax
+    maintenance+=fuelInput*(int)(myCity->get("fuelTax"));
 }
 
 void Transport::turn(int dir, float delta) {
@@ -436,12 +484,12 @@ void Transport::turn(int dir, float delta) {
 
     if (dir == 1) {
         
-        if (transportType == 2) {
+        if (transportType == 5) {
             ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3((90 / M_PI) * sin(rot * 2), 0, -(180 / M_PI) * rot * 4));
             ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3((90 / M_PI) * sin(rot * 2), 0, -(180 / M_PI) * rot * 4));
             ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3((90 / M_PI) * sin(rot * 2), 0, 0));
         }
-        else {
+        else if ((transportType != 4)) {
             ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, -(90 / M_PI) * sin(rot * 2), -(180 / M_PI) * rot * 4));
             ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, -(90 / M_PI) * sin(rot * 2), -(180 / M_PI) * rot * 4));
             ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * rot * 4));
@@ -449,12 +497,12 @@ void Transport::turn(int dir, float delta) {
 
     }
     else {
-        if (transportType == 2) {
+        if (transportType == 5) {
             ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(-(90 / M_PI) * sin(rot * 2), 0, -(180 / M_PI) * rot * 4));
             ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(-(90 / M_PI) * sin(rot * 2), 0, -(180 / M_PI) * rot * 4));
             ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(-(90 / M_PI) * sin(rot * 2), 0, 0));
         }
-        else {
+        else if ((transportType != 4)) {
             ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, (90 / M_PI) * sin(rot * 2), -(180 / M_PI) * rot * 12));
             ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, (90 / M_PI) * sin(rot * 2), -(180 / M_PI) * rot * 12));
             ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * rot * 12));
@@ -478,10 +526,12 @@ void Transport::straight(float ratioDelta) {
     }
 
     position = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - prevPosition;
-    ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
-    ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
-    if (transportType != 2) { // not a two wheels
-        ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
+    if (transportType != 4) {
+        ((Mesh*)this->get_child(0))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
+        ((Mesh*)this->get_child(1))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
+        if (transportType != 5) { // not a two wheels
+            ((Mesh*)this->get_child(2))->set("rotation_degrees", Vector3(0, 0, -(180 / M_PI) * position));
+        }
     }
 }
 
@@ -490,9 +540,10 @@ int Transport::get_direction(Vector3 pos, double rot) {
     std::vector<int> out;
 
     if ((int)round(pos.x / 30) >= sizeof(traffic_system) or (int)round(pos.z / 30) >= sizeof((traffic_system[0]))) {
-        myCity->add_car();
+        myCity->remove_type_car(get_transportType());
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         return(0);
+
     }
     std::cout << "Car direction possible " << std::endl;
     int i = -1;
@@ -506,7 +557,7 @@ int Transport::get_direction(Vector3 pos, double rot) {
     
 
     if (out.size() == 0) {
-        myCity->add_car();
+        myCity->remove_type_car(get_transportType());
         this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->remove_child(this);
         return(0);
     }

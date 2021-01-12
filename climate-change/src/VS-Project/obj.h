@@ -34,6 +34,11 @@ namespace godot {
         bool MenuVisible;
         bool PanelsOn{ false };
 
+        Node* myCity;
+
+        void add_city_counters();
+        void subtract_city_counters();
+
         static void _register_methods();
         virtual void _init();
         virtual void _process(float delta);
@@ -59,7 +64,7 @@ namespace godot {
         bool updatable{ false };
         //void test_update();
 
-        real_t MenuSize{ 300 };
+        real_t MenuSize{ 200 };
         real_t InfoBoxWidth{ 300 };
 
         Vector3 get_position();
@@ -71,7 +76,7 @@ namespace godot {
         double energyUse = 0; //amount of energy used by the building in kWh
         double energyperDay = 0; //amount of energy used by the building in kWh
         double maintenance = 0; //maintenace and working cost in euros
-        double averageWage = 0; //average wage of the people in the building
+        double averageWage = 10000; //average wage of the people in the building
         double CO2Emission{ 1 }; // kg of CO2 emitted
         double buildingTime = 0; // years needed to build a new building
         double satisfaction{ 1 }; // on scale of 10
@@ -102,9 +107,9 @@ namespace godot {
         // POLICIES (need to not be functions !) :
 
         // Changing the coal power plant efficiency (constructor creates subcritical plant of 38% efficiency) :
-        bool efficiency_supercritical = 0; // set to false when equals 0, true when given 1
+        double efficiency_supercritical = 0; // set to false when equals 0, true when given 1
                                           // improve efficiency to supercritical type of plant (42% energy converted to electricity)
-        bool efficiency_cogeneration = 0; // set to false when equals 0, true when given 1
+        double efficiency_cogeneration = 0; // set to false when equals 0, true when given 1
                                           //improve efficiency to cogeneration type of plant (47% energy converted to electricity)
 
         //Law prohibiting coal power plants :
@@ -114,23 +119,42 @@ namespace godot {
         double nuclear_prohibited = 0; //set to false when equals 0, true when given 1
         
         //Law imposing maximum amount of CO2 emitted for each factory per day (Goods factories class), the imput value is in kg per day and per factory :
-        double maximum_CO2 = -1; //default when there is no policy, should be between 0-42 kg when policy is implemented
+        double maximum_CO2 = 0; //default when there is no policy, should be between 0-42 kg when policy is implemented
 
         //Subsidies to "green" factories, so those which have a low emission of harmful chemicals and heavy metals : 
-        double subsidy_green = -1; //default when policy is not on, should be between 1000 - 100 000 euros per factory
+        double subsidy_green = 0; //default when policy is not on, should be between 1000 - 100 000 euros per factory
 
         //Subsidies for helping households, buildings to install solar panels (these help poorer households to have less environmental impact)
+        
+        
         double solar_panel_subsidies;
+        double solar_panel_subsidies_housing;
+        // range from 0 to solarCost
+
+
         //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if solar panels can be installed
 
          //Subsidies for helping households, buildings to install rooftop wind turbines  (these help poorer households to have less environmental impact)
-        bool wind_turbine_subsidies(); 
+        
+        double wind_turbine_subsidies;
+        
+        // range from 0 to windCost
+
         //could be changed to a function thatreturns the amount of money the subsididy gives which will be compared to an income to decide if wind turbines can be installed
 
          //Subsidies for helping households, buildings to change their windows to double glazing (these help poorer households to have less environmental impact)
-        bool double_glazing_subsidies();
-        //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if it is possible
+        
+        double double_glazing_subsidies;
+        //range from 0 to 1000
 
+        //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if it is possible
+        
+        //law prohibiting pesticides
+        double pesticideProhibited; // 0 if pestices are allowed, 1 if pesticides are prohibited
+        //law prohibiting GMO
+		double GMOProhibited; // 0 if GMO is allowed, 1 if pesticides GMO prohibited
+        //law prohibiting fertilizer
+		double fertilizerProhibited; // 0 if fertilizers are allowed, 1 if fertilizers are prohibited
         /*
         //Ads to promote vegetarianism, and reduce meat production in the city
         bool ad_vegetarian(); //not sure what form ads should take */

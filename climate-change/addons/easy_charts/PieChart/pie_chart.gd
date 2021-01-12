@@ -91,7 +91,7 @@ func _ready():
 	pass
 
 func plot_placeholder() -> void:
-	datas = [
+	data = [
 		["United States",46],
 		["Great Britain",27],
 		["China",26],
@@ -106,9 +106,9 @@ func plot_placeholder() -> void:
 		Color.green,
 		Color.blue
 	]
-	plot_from_array(datas)
+	plot_from_array(data)
 
-func structure_datas(database: Array, are_values_columns: bool, x_values_index: int):
+func structure_datas(database: Array):
 	# @labels_index can be either a column or a row relative to x values
 	clean_variables()
 	are_values_columns = invert_chart != are_values_columns
@@ -125,7 +125,8 @@ func structure_datas(database: Array, are_values_columns: bool, x_values_index: 
 				else:
 					if row != 0:
 						var y_data = database[row][column]
-						if y_data.is_valid_float() or y_data.is_valid_integer():
+						if typeof(y_data) == TYPE_INT or typeof(y_data) == TYPE_REAL:
+						#if y_data.is_valid_float() or y_data.is_valid_integer():
 							t_vals.append(y_data as float)
 						else:
 							t_vals.append(y_data.replace(",", ".") as float)
@@ -224,4 +225,3 @@ func _gui_input(event : InputEvent):
 			mouse_on_slice = false
 			hide_data()
 			update()
-			

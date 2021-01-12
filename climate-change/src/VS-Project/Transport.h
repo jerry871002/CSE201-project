@@ -12,7 +12,7 @@ namespace godot {
         GODOT_CLASS(Transport, KinematicBody)
     public:
         Transport();
-
+        Transport(int type);
         void transport_type();
 
         // godot functions
@@ -32,23 +32,24 @@ namespace godot {
 
         double occupancyRate, capacity, kmPerDay;
         double passengers, co2PerKm, fuelPerKm; // CO2 in kg
-        double test ;
-        double CO2Emission ; // co2 output for the whole duration of simulation
-        double maintenance ; // maintenance cost for the whole duration of simulation
-        double fuelInput ; // fuel needed for the whole duration of simulation
-        double energyUse ; //energy needed for the whole duration of simulation
-        double age ; //age in days
-        double employment ;
-        double cost ;
-        double buildingTime ;
-        double satisfaction ;
+        double test;
+        double CO2Emission; // co2 output for the whole duration of simulation
+        double maintenance; // maintenance cost for the whole duration of simulation
+        double fuelInput; // fuel needed for the whole duration of simulation
+        double energyUse; //energy needed for the whole duration of simulation
+        double age; //age in days
+        double employment;
+        double cost;
+        double buildingTime;
+        double satisfaction;
         double get_satisfaction();
 		double get_co2emissions();
 		double get_energyuse();
 		double get_environmentalcost();
-
-        void set_transportType(int type);
-        int get_transportType();
+        double lifetime; //in years
+        double pricePerMonth; // in euros
+        double weight; //in tonnes
+        double workingDays;//number  of days when cars are not prohibited
 
         /*
         * 0 - electic car
@@ -59,6 +60,19 @@ namespace godot {
         * 5 - motorcycle
         * 6 - bus
         * 7 - sports car
+        */
+        void set_transportType(int type);
+        int get_transportType();
+
+        /*
+        * 0 - electic car
+        * 1 - big american car
+        * 2 - normal car
+        * 3 - old collection car/Bugatti
+        * 4 - bike
+        * 5 - motorcycle
+        * 6 - bus
+        * 7 - sports car/Chiron
         */
         int transportType;
 
@@ -80,8 +94,7 @@ namespace godot {
         Vector3 center;
 
         City* myCity = new City();
-        //int traffic[2][3][4][3] = { {{{0, 1, 0},{0, 0, 1},{0, 0, 1},{0, 0, 1}},		{{0, 0, 1},{0, 1, 0},{0, 0, 1},{0, 0, 1}},		{ {0, 1, 1},{0, 1, 1},{0, 0, 1},{0, 0, 1}}},
-        //                            { {{0, 0, 1},{0, 0, 1},{0, 0, 1},{0, 1, 0}}	,		{{0, 0, 1},{0, 0, 1},{1, 1, 0},{0, 1, 1}},		 { {0, 0, 1},{0, 0, 1},{0, 1, 1},{0, 0, 1}}} };
+        
     };
 
     class Pedestrian : public KinematicBody {

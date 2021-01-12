@@ -12,7 +12,7 @@ namespace godot {
 		GODOT_SUBCLASS(Production, Structure)
 
 	public:
-		virtual String class_name();
+		
 		Production();
 		~Production();
 
@@ -54,6 +54,8 @@ namespace godot {
 		virtual double get_cadmium_emission();
 		virtual double get_nickel_emission();
 
+		virtual void simulate_step(double days);
+
 	};
 
 	/// <summary>
@@ -63,12 +65,12 @@ namespace godot {
 	class AgriculturalProduction : public Production {
 		GODOT_SUBCLASS(AgriculturalProduction, Production)
 	public:
-		virtual String class_name();
+		
 		virtual String get_object_type() { return "Agricultural Production"; };
 
 		AgriculturalProduction();
 		~AgriculturalProduction();
-        AgriculturalProduction(int type);
+		AgriculturalProduction(int type);
 		void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
 		//void test();
 		double get_satisfaction();
@@ -78,32 +80,25 @@ namespace godot {
 		void agriculture_type(int type);
 		double waterConsumption; // per day 
 		int agricultureType; // 0 - wheat, 1 - meat, 2 - vegetables
-		bool pesticide; // true if pesticides are used
-		bool GMO; // true if GMO is used
-		bool fertilizer; // true if fertilizer is used
 		double requiredLand; //size of the field in km^2
 		double fertility; //per km^2 output in kg
 		double production; //how much output per day in kg
-		void fertilizer_on(); // puts fertilizer to true 
-		void fertilizer_off(); // puts fertilizer to false
-		void GMO_on(); // puts GMO to true 
-		void GMO_off(); // puts GMO to false
-		void pesticide_on(); // puts pesticide to true 
-		void pesticide_off(); // puts pesticide to false
+		//for previous values to compare 
+		double pesticideBefore, fertilizerBefore, GMOBefore;
 	};
 
 	/// <summary>
 	/// GOODS FACTORIES
 	/// </summary>
-	
+
 	/* This class models the manufacturing and industry secotrs.
-	Its purpose is to simulate the factories/companies in enough detail in order to see a change in pollution, employment and energy usage given policies 
+	Its purpose is to simulate the factories/companies in enough detail in order to see a change in pollution, employment and energy usage given policies
 	related to it (taxes, subsidies, charges, prohibitions...) */
 
 	class GoodsFactories : public Production {
 		GODOT_SUBCLASS(GoodsFactories, Production)
 	public:
-		virtual String class_name();
+		
 		GoodsFactories();
 		~GoodsFactories();
 		virtual String get_object_type() { return "Goods Factory"; };
@@ -117,14 +112,14 @@ namespace godot {
 	/// SERVICES
 	/// </summary>
 
-	/* This class models to the following sectors : education and health services, trade, professional and business services, leisure 
+	/* This class models to the following sectors : education and health services, trade, professional and business services, leisure
 	and hospitality, financial activities, public administration, information and other services.
 	Its purpose is to model primarly the employment, emissions and energy usage of this sector in an overall way */
 
 	class Services : public Production {
 		GODOT_SUBCLASS(Services, Production)
 	public:
-		virtual String class_name();
+		
 		Services();
 		~Services();
 		virtual String get_object_type() { return "Services"; };

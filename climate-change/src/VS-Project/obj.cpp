@@ -151,12 +151,51 @@ void Structure::_register_methods()
     //register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
 
     register_property<Structure, double>("solar_panel_subsidies", &Structure::solar_panel_subsidies, 0);
-
+    register_property<Structure, double>("efficiency_supercritical", &Structure::efficiency_supercritical, 0);
+    register_property<Structure, double>("efficiency_cogeneration", &Structure::efficiency_cogeneration, 0);
+    register_property<Structure, double>("nuclear_prohibited", &Structure::nuclear_prohibited, 0);
+    register_property<Structure, double>("coal_prohibited", &Structure::coal_prohibited, 0);
+    register_property<Structure, double>("maximum_CO2", &Structure::maximum_CO2, 0);
+    register_property<Structure, double>("subsidy_green", &Structure::subsidy_green, 0);
+    register_property<Structure, double>("pesticideProhibited", &Structure::pesticideProhibited, 0);
+    register_property<Structure, double>("GMOProhibited", &Structure::GMOProhibited, 0);
+    register_property<Structure, double>("fertilizerProhibited", &Structure::fertilizerProhibited, 0);
+    register_property<Structure, double>("solar_panel_subsidies_housing", &Structure::solar_panel_subsidies_housing, 0);
+    register_property<Structure, double>("wind_turbine_subsidies", &Structure::wind_turbine_subsidies, 0);
 }
 
 void Structure::_init()
 {
 
+}
+
+void Structure::_ready()
+{
+    object_scale = this->get("scale");
+
+    myCity = this->get_tree()->get_root()->get_node("Main/3Dworld");
+
+    // COUNT UP ALL THE INITIAL VARIABLES
+
+    add_city_counters();
+   
+
+}
+
+void Structure::add_city_counters() {
+    myCity->set("income", double(myCity->get("income")) + double(this->get("averageWage")));
+    myCity->set("carbonEmission", double(myCity->get("carbonEmission")) + double(this->get("CO2Emission")));
+    myCity->set("energyDemand", double(myCity->get("energyDemand")) + double(this->get("energyUse")));
+    myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) + double(this->get("employment")));
+    myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) + double(this->get("satisfaction")));
+}
+
+void Structure::subtract_city_counters() {
+    myCity->set("income", double(myCity->get("income")) - double(this->get("averageWage")));
+    myCity->set("carbonEmission", double(myCity->get("carbonEmission")) - double(this->get("CO2Emission")));
+    myCity->set("energyDemand", double(myCity->get("energyDemand")) - double(this->get("energyUse")));
+    myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) - double(this->get("employment")));
+    myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) - double(this->get("satisfaction")));
 }
 
 Vector3 Structure::get_position() {
@@ -172,9 +211,13 @@ void Structure::_process(float delta)
 {
     
     if (this->get("updatable")) {
-        Godot::print("This is a: " + this->get_object_type());
-        std::cout << "DEBUG: simulate step should be called now " << std::endl;
-        this->simulate_step((double)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("time_speed"))*5); // will run the lowest level simulate step function
+
+        subtract_city_counters();
+
+        this->simulate_step((double)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) - age); // will run the lowest level simulate step function
+       
+        add_city_counters();
+
         this->set("updatable", false);
     }
 
@@ -193,8 +236,8 @@ void Structure::_process(float delta)
 
 void Structure::simulate_step(double days) {
 
-    std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
-
+    //std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
+    age += days;
 }
 
 /*
@@ -274,6 +317,8 @@ void Structure::_input(InputEvent* e)
 
 void Structure::show_menu()
 {
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
+    
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", get_object_info());
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
 
@@ -305,10 +350,7 @@ String Structure::get_object_info()
     return  info;
 }
 
-void Structure::_ready()
-{
-    object_scale = this->get("scale");
-}
+
 
 void godot::Structure::_on_Area_mouse_entered()
 {
@@ -337,19 +379,3 @@ void godot::Structure::_on_Area_mouse_exited()
 
 
 
-bool Structure::wind_turbine_subsidies() {
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}
-
-
-bool Structure::double_glazing_subsidies(){
-    return false;
-    /* need to add possibility of turning true (not definitive) if clicked
-    if () {
-    return true;
-    }*/
-}

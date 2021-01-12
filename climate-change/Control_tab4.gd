@@ -1,14 +1,17 @@
 extends Control
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var data : Array = [
+	["Country", "Votes"],
+	["USA", 20],
+	["UK", 55],
+	["FRA", 10],
+	["GER", 15]
+]
 
-
-# Called when the node enters the scene tree for the first time.
+# Called wen the node enters the scene tree for the first time.
 func _ready():
-	$PieChart.plot()
+	$PieChart.plot_from_array(data)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
