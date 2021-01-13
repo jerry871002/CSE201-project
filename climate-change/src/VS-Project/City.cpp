@@ -545,7 +545,7 @@ void City::generate_initial_city_graphics()
     for (std::vector<Structure*>::iterator it = all_structures.begin(); it != all_structures.end(); ++it)
     {
         int randomcarint = rand() % 3;
-        if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car((Vector3)((Node*)(*it))->get("translate")); }
+        if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car((Vector3)((Node*)(*it))->get("translation")); }
     }
    
 
