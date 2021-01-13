@@ -103,6 +103,11 @@ namespace godot {
         double stat = 0; //stat example
         double stats[10][366]; //stats array
         Array statsCarbonEmission{}; //written stats for carbonEmission
+        Array statsIncome{};
+        Array statsEnergyDemand{};
+        Array statsEnergySupply{};
+        Array statsUnemployment{};
+
         void update_date();
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation
