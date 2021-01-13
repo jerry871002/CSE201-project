@@ -7,6 +7,8 @@
 #include <Viewport.hpp>
 #include <SceneTree.hpp>
 #include <string>
+#include <random>
+
 
 using namespace godot;
 
@@ -26,7 +28,7 @@ String Housing::get_object_info()
 
 	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
 	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy used by the building in kWh: " + to_godot_string(this->energyUse) + String("\n");
+	info += "Energy used by the building in kWh: " + to_godot_string((double)(this->get("energyUse"))) + String("\n");
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	info += "Number of inhabitants: " + to_godot_string((int)this->get("numberOfInhabitants")) + String("\n");
 	if (get_object_type() == String("House")) {
@@ -229,6 +231,62 @@ void Housing::panel_added_probability(){
     if (panelCost < 0) {
 		panelCost = 0; //cannot have a negative solar panel cost
 	}
+	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
+
+	panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + (this->solarSatisfaction/10)*15 + housingIncomeIndexed*35)/100;
+
+	if (PanelsOn == true) {
+		panel_probability = 0;
+	}
+
+	else if (rooftopWindTurbineOn == true) {
+		panel_probability = 0;
+	}
+}
+
+void Housing::double_glazing_added_probability(){
+	double doubleGlazingCost;
+    double glazing_subsidies = this->get("double_glazing_subsidies"); // input from user of how much are the subsidies
+    // double income_indexed = 0.5;
+	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
+    doubleGlazingCost = windowCost * this->windowNumber - double_glazing_subsidies;
+
+    if (doubleGlazingCost < 0) {
+		doubleGlazingCost = 0; //cannot have a negative solar panel cost
+	}
+
+	double_glazing_probability = (((windowCost - doubleGlazingCost)/windowCost)*50 + (this->doubleGlazingSatisfaction/10)*15 + housingIncomeIndexed*35)/100;
+
+	if (doubleGlazingOn == true) {
+		double_glazing_probability = 0;
+	}
+}
+
+void Housing::roof_wind_turbines_added_probability(){
+	double turbineCost;
+    double wind_subsidies = this->get("wind_turbine_subsidies"); // input from user of how much are the subsidies
+    // double income_indexed = 0.5;
+	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
+    turbineCost = this->windCost - wind_turbine_subsidies;  
+    if (turbineCost < 0) {
+		turbineCost = 0; //cannot have a negative solar panel cost
+	}
+
+	roof_wind_turbines_probability = (((this->windCost - turbineCost)/this->windCost)*50 + (this->windSatisfaction/10)*15 + housingIncomeIndexed*35)/100;
+
+	if (rooftopWindTurbineOn == true) {
+		roof_wind_turbines_probability = 0;
+	}
+}
+
+/*void Housing::panel_added_probability(){
+	double panelCost;
+    double panel_subsidies = this->get("solar_panel_subsidies_housing"); // input from user of how much are the subsidies
+    // double income_indexed = 0.5;
+    panelCost = this->solarCost - panel_subsidies;  
+    if (panelCost < 0) {
+		panelCost = 0; //cannot have a negative solar panel cost
+	}
 
 	panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + (this->solarSatisfaction/10)*25 + housingIncome*25)/100;
 
@@ -271,7 +329,7 @@ void Housing::roof_wind_turbines_added_probability(){
 	if (rooftopWindTurbineOn == true) {
 		roof_wind_turbines_probability = 0;
 	}
-}
+}*/
 
 
 ///	HOUSE CLASS
@@ -327,6 +385,13 @@ void House::_register_methods()
 	register_property<House, int>("houseType", &House::set_houseType, &House::get_houseType, 1);
 }
 
+
+double Housing::normalGenerator(double mean, double stdDev){
+    static std::default_random_engine generator(time(0));
+    std::normal_distribution<double> distribution(mean,stdDev);
+    return distribution(generator); 
+}
+
 void House::set_houseType(int type)
 {
 	this->houseType = type;
@@ -347,14 +412,21 @@ void House::set_houseType(int type)
 		//minimum wage 53 € per day - get money even on saturday and saturday 
 		// i take max to be 333€
 
-		this->housingIncome = (rand() % (6) + 1);
+		this->numberOfInhabitants = (rand() % (6) + 1);
+		
+
 		if (this->numberOfInhabitants >= 2) {
 			//have two salaries 
-			housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
+			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
+		
+			housingIncome = normalGenerator((minIncome + maxIncome) / 2, 20) + normalGenerator((minIncome + maxIncome) / 2, 20);
+		
 		}
 
 		else {
-			housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
+			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
+			housingIncome = normalGenerator((minIncome + maxIncome) / 2, 20);
+
 		}
 
 		std::cout << "HOUSE INITIALIZE TYPE 1 DEBUG 2" << std::endl;
@@ -385,12 +457,12 @@ void House::set_houseType(int type)
 		srand((int)time(0));
 		this->numberOfInhabitants = (rand() % (6) + 1);
 		if (this->numberOfInhabitants >= 2) {
-			housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
+			housingIncome = normalGenerator((minIncome + maxIncome) / 2, 20) + normalGenerator((minIncome + maxIncome) / 2, 20);
 
 		}
 
 		else {
-			housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
+			housingIncome = normalGenerator((minIncome + maxIncome) / 2, 20) + normalGenerator((minIncome + maxIncome) / 2, 20);
 		}
 
 		std::cout << "HOUSE INITIALIZE TYPE 2 DEBUG 2" << std::endl;
@@ -635,12 +707,16 @@ Building::Building() {
 	maintenance = 0.1765; //cost in euros per kWh
 
 	srand((int)time(0));
-	//5 appartments pay between 200-400 € per month, this is coownership budget
+	
 	housingIncome = 0;
-	this->numberOfInhabitants = (rand() % (10) + 20);
+	double incomeEach;
+	this->numberOfInhabitants = (rand() % (10) + 20); //between 20 and 30 inhabitants in a building
 	for (int i = 0; i < numberOfInhabitants; i++) {
-		housingIncome += (rand() % (maxIncome - minIncome)) + minIncome;
+		incomeEach += normalGenerator((minIncome + maxIncome) / 2, 20) + normalGenerator((minIncome + maxIncome) / 2, 20);
 	}
+	
+	housingIncome = incomeEach / this->numberOfInhabitants;
+	
 
 	if (buildingType == 1) { //Low level house
 		doubleGlazingOn = false;

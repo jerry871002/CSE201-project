@@ -39,6 +39,7 @@ namespace godot {
 		int solarPanelAge = 0;
 		int doubleGlazingAge = 0;
 		int rooftopWindTurbineAge = 0;
+		double normalGenerator(double mean, double stdDev);
 
 
 
