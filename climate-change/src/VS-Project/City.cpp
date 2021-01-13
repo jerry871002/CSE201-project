@@ -789,11 +789,11 @@ String City::get_button_info_text() {
     if (this->active_button == String("PanelSubsidyForShops"))
     {
         //this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
-        return String("Please input a value between 0 and 450. This will be a solar panel subsidy for shops in euros.");
+        return String("Please input a value between 0 and 450. This will be a solar panel subsidy for shops (restaurants, small shops and malls) in euros.");
     }
     else if (this->active_button == String("ChangePanelProbabilityForRestaurants"))
     {
-        return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for restaurants in the city.");
+        return String("Please input a value between 0 and 800. This value will be the new wind Turbine subsidy for shops (restaurants, small shops and malls) in euros.");
     }
     else if (this->active_button == String("EfficiencySupercriticalCoalPlant"))
     {
@@ -929,20 +929,37 @@ void City::implement_policies(double value) {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
-    else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) {
-        if (value >= 0 && value < 1) {
-            Godot::print("PANEL PROBABILITY WILL BE CHANGED ONLY FOR RESTAURANTS");
-            for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
-            {
-                if ((String)(*it)->get("object_type") == (String)("Restaurant")) {
-                    (*it)->set("panel_probability", value);
-                }
+   else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) {    ///I can Changed the name here
+		if (value >= 0 && value <= 800) {
+			Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON SHOPS IMPLEMENTED");
+			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
+			{
+				//if ((String)(*it)->get("object_type") == (String)("Restaurant")) {}
+				(*it)->set("wind_turbine_subsidies", value);
+				
             }
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
+
+	//##########
+	else if (this->active_button == String("WindturbinesHousing")) {
+        if (value >= 0 && value <= 800) {
+            Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON HOUSING IMPLEMENTED");
+            for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+            {
+                (*it)->set("wind_turbine_subsidies", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+
+	///######
+
     else if (this->active_button == String("EfficiencySupercriticalCoalPlant")) {
         if (value == 0 || value == 1) {
             Godot::print("THE COAL POWER PLANTS WILL CHANGE THEIR EFFICIENCY");
