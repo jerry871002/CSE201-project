@@ -715,7 +715,7 @@ Building::Building() {
 	srand((int)time(0));
 	
 	housingIncome = 0;
-	double incomeEach;
+	double incomeEach =0;
 	
 
 	this->numberOfInhabitants = (rand() % (10) + 20);
