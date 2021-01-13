@@ -107,6 +107,7 @@ namespace godot {
         Array statsEnergy{}; //written stats for energy demand and supply
         Array statsUnemployment{}; //written stats for population - number of employees
         Array statsTotalSatisfaction{}; //written stats for population - number of employees
+        Array statsPopulation{}; //written stats for population
         void update_date();
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation

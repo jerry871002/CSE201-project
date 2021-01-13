@@ -195,6 +195,13 @@ void City::_physics_process(float delta) {
     }
     */
 
+   // initialize stats arrays :
+   Array title{};
+   title.push_back(to_godot_string("Date"));
+
+   title.push_back(to_godot_string("Carbon Emissions ()"));
+   statsCarbonEmission.push_back(title);
+
     if (bool(this->time_speed))
     {
         (*structures_iterator)->set("updatable", true);
@@ -2022,6 +2029,15 @@ void City::write_stat_history_to_file() {
             statsTotalSatisfaction.pop_front();
         }
     statsTotalSatisfaction.push_back(newTotalSatisfaction);
+
+    Array newPopulation{};
+    newPopulation.push_back(return_word_date_godot());
+    newPopulation.push_back((int)(population + 0.5));
+
+    if (statsPopulation.size() > 1462) { //4years
+            statsPopulation.pop_front();
+        }
+    statsPopulation.push_back(newPopulation);
 
 }
 
