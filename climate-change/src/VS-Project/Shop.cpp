@@ -130,6 +130,8 @@ String Shop::get_object_info()
     }
     info += "SUBSIDY for Panels: " + to_godot_string((int)this->get("solar_panel_subsidies")) + String("\n");
     info += "Panels get Added PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
+    info += "SUBSIDY for Wind Turbines: " + to_godot_string((int)this->get("wind_turbine_subsidies")) + String("\n");
+    info += "Wind Turbine get Added PROBABILITY: " + to_godot_string((double)this->windTurbine_probability) + String("\n");
     info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
     info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
     
@@ -196,7 +198,7 @@ void Shop::simulate_step(double days) {
         if (r > temp3)
         {
             PanelsOn = true;
-            panels_age = 100;
+            panels_age = this->solarLifetime;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
             std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
@@ -228,8 +230,8 @@ void Shop::simulate_step(double days) {
         if (r > temp3)
         {
             WindTurbineOn = true;
-            windTurbineAge = 70;
-            this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);  //need to have correct meshcomponent
+            windTurbineAge = this->windLifetime;
+            this->get_node("MeshComponents/windTurbine")->set("visible", WindTurbineOn);  //need to have correct meshcomponent
             std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
