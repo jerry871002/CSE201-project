@@ -2015,7 +2015,7 @@ void City::write_stat_history_to_file() {
 
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
-    newCarbonEmission.push_back((int)(carbonEmission/10^6 + 0.5));
+    newCarbonEmission.push_back((int)(carbonEmission/1000000 + 0.5));
 
     if (statsCarbonEmission.size() > 100) {  
             statsCarbonEmission.pop_front();
