@@ -356,7 +356,7 @@ void City::generate_initial_city_graphics()
 
                 std::cout << "DEBUG: about to calculate probability" << std::endl;
                 // 2x2 buildings
-                float mallprob = calculate_building_prob(20, 130, 0.25, dist);
+                float mallprob = calculate_building_prob(20, 130, 0.4, dist);
                 float nuclearprob = calculate_building_prob(190, 240, 0.8, dist);
                 float coalprob = calculate_building_prob(190, 240, 0.8, dist);
                 float geoprob = calculate_building_prob(190, 240, 0.8, dist);
@@ -375,16 +375,16 @@ void City::generate_initial_city_graphics()
 
                 dist = pos.distance_to(center);
 
-                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
+                float restaurantprob = calculate_building_prob(0, 150, 1.2, dist) + calculate_building_prob(260, 300, 0.2, dist);
                 float shopprob = calculate_building_prob(0, 200, 1.2, dist) + calculate_building_prob(260, 300, 0.2, dist);
-                float buildingprob = calculate_building_prob(180, 210, 1.5, dist) + calculate_building_prob(-100, 150, 1, dist);
+                float buildingprob = calculate_building_prob(180, 210, 1.2, dist) + calculate_building_prob(-100, 150, 1, dist);
                 float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                 float lowhouseprob = calculate_building_prob(-200, 200, 5, dist) + calculate_building_prob(270,310,0.25, dist);
                 float highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
 
-                std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
-                std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
-                std::cout << "DEBUG: restaurantprob  : " << restaurantprob << std::endl;
+                //std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
+                //std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
+                //std::cout << "DEBUG: restaurantprob  : " << restaurantprob << std::endl;
 
 
                 float smallerprob = restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob;
@@ -414,26 +414,52 @@ void City::generate_initial_city_graphics()
 
                             Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
 
-                            restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
+                            restaurantprob = calculate_building_prob(0, 150, 1.2, dist) + calculate_building_prob(260, 300, 0.2, dist);
                             shopprob = calculate_building_prob(0, 200, 1.2, dist) + calculate_building_prob(260, 300, 0.2, dist);
-                            buildingprob = calculate_building_prob(180, 210, 1.5, dist) + calculate_building_prob(-100, 150, 1, dist);
+                            buildingprob = calculate_building_prob(180, 210, 1.2, dist) + calculate_building_prob(-100, 150, 1, dist);
                             windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                             lowhouseprob = calculate_building_prob(-200, 200, 5, dist) + calculate_building_prob(270, 310, 0.25, dist);
                             highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
 
                             double type = (double((double)rand() / (double)RAND_MAX) * (restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
 
-                            if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
-                            else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos + pos1, LowHouseScene); }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos + pos1, BuildingScene); }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos + pos1, WindmillScene); }
-                            else { add_house(pos + pos1, HighHouseScene); }
+                            if (type < (double)(restaurantprob)) { 
+                                add_shop(pos + pos1, RestaurantScene); 
+                                int randompdint = rand() % 3;
+                                if (randompdint == 0) {
+                                    if (PDScene.is_valid()) {
+                                        std::cout << "DEBUG: adding pedestrian" << std::endl;
+                                        Node* node;
 
+                                        node = PDScene->instance();
 
-                            int randompdint = rand() % 5;
-                            if (randompdint == 0) {
-                                if (PDScene.is_valid()) {
+                                        node->set("translation", (pos + pos1 + Vector3(-7, 0, -9)));
+
+                                        this->add_child(node);
+                                    }
+                                }
+                            }
+                            else if (type < (double)(restaurantprob + shopprob)) { 
+                                add_shop(pos + pos1, ShopScene);
+                                int randompdint = rand() % 3;
+                                if (randompdint == 0) {
+                                    if (PDScene.is_valid()) {
+                                        std::cout << "DEBUG: adding pedestrian" << std::endl;
+                                        Node* node;
+
+                                        node = PDScene->instance();
+
+                                        node->set("translation", (pos + pos1 + Vector3(-7, 0, -9)));
+
+                                        this->add_child(node);
+                                    }
+                                }
+                            }
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { 
+                                add_house(pos + pos1, LowHouseScene); 
+                                int randompdint = rand() % 5;
+                                if (randompdint == 0) {
+                                    if (PDScene.is_valid()) {
                                     std::cout << "DEBUG: adding pedestrian" << std::endl;
                                     Node* node;
 
@@ -444,14 +470,36 @@ void City::generate_initial_city_graphics()
                                     this->add_child(node);
                                 }
                             }
-                            int randomcarint = rand() % 3;
-                            if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car(pos + pos1); }
+                            }
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { 
+                                add_house(pos + pos1, BuildingScene);
+                                int randompdint = rand() % 5;
+                                if (randompdint == 0) {
+                                    if (PDScene.is_valid()) {
+                                        std::cout << "DEBUG: adding pedestrian" << std::endl;
+                                        Node* node;
+
+                                        node = PDScene->instance();
+
+                                        node->set("translation", (pos + pos1 + Vector3(-7, 0, -9)));
+
+                                        this->add_child(node);
+                                    }
+                                }
+                            }
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos + pos1, WindmillScene); }
+                            else { add_house(pos + pos1, HighHouseScene); }
+
+
+                            
 
                         }
                     }
                     
                 }
             }
+            /*    this stuff was for that ring around the fields
+            
             else
             {
                 
@@ -489,10 +537,18 @@ void City::generate_initial_city_graphics()
                         }
                     }
                 }
-            }
+            }*/
            
         }
     }
+    transport_to_add();
+
+    for (std::vector<Structure*>::iterator it = all_structures.begin(); it != all_structures.end(); ++it)
+    {
+        int randomcarint = rand() % 3;
+        if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car(((Node*)(*it))->get("translation")); }
+    }
+   
 
     //   shuffles all the vectors so that buildings arent updated in a noticeable pattern
     std::random_shuffle(all_structures.begin(), all_structures.end());
@@ -2108,7 +2164,13 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
 
 }
 
-   
+
+double City::return_unemployment_rate() {
+    if (population != 0) {
+        return (1 - this->numberOfEmployees / this->population);
+    }
+    else { return 0; }
+}
 
 
 
