@@ -143,7 +143,7 @@ void Transport::set_transportType(int type)
         occupancyRate = occupancyo(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeo(7, 2);
         buildingTime = timeo(gen); // building time of 1 collection (replica i think) car car, not so fast
-        satisfaction = 9.6;
+        satisfaction = 7.6;
         lifetime = 20;
         pricePerMonth = 25 * 30;
         weight = 2;
@@ -284,7 +284,6 @@ void Transport::_physics_process(float delta) {
     if (this->physics_counter == 2) {
         this->physics_counter == 0;
         //delta = delta / 2;
-        std::cout << "Value of transport type : " << this->transportType << std::endl;
     }
 
     prevPositionVec = this->get_global_transform().get_origin();
@@ -555,12 +554,10 @@ int Transport::get_direction(Vector3 pos, double rot) {
         return(0);
 
     }
-    std::cout << "Car direction possible " << std::endl;
     int i = -1;
     for (const int& n : (traffic_system)[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
             out.push_back(i);
-            std::cout << i << " ";
         }
         i++;
     }

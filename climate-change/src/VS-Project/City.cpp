@@ -182,10 +182,9 @@ void City::_physics_process(float delta) {
     // TO UPDATE TRANSPORT STATS
     /*
     if ((transportType != 6) && (transportType != 5) && (transportType != 4)) {
-        satisfaction *= carProhibition / 7;
-        energyUse *= carProhibition / 7;
-        fuelInput *= carProhibition / 7;
-        CO2Emission *= carProhibition / 7;
+        satisfaction *=1- carProhibition / 7;
+        energyUse *= 1-carProhibition / 7;
+        CO2Emission *=1- carProhibition / 7;
     }
     */
 
@@ -2003,7 +2002,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 * 0 - electic car
 * 1 - big american car
 * 2 - normal car
-* 3 - old collection car
+* 3 - old collection cars
 * 4 - bike
 * 5 - motorcycle
 * 6 - bus
@@ -2035,13 +2034,10 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     
     for (int i = 0; i < 8; i++) {
         alpha[i] = (satisfactions[i] / satisfactionsSum) * all_houses.size();
-        if ((i == 4) || (i == 5)) {
+        if (i == 4) {
             alpha[i] *= sqrt(airQuality);
         }
-
-        //std::normal_distribution <double> alpharandomiser(1000, 500);
-        alpha[i] = normalGenerator(alpha[i], (double)(alpha[i] / 10.0));
-        //alpha[i] = fmax(alpharandomiser(gen), 0);
+        alpha[i] = fmax(normalGenerator(alpha[i], all_houses.size()/100 ), 0.01);
     
     }
 
