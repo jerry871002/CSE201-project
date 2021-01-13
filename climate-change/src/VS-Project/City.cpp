@@ -230,7 +230,7 @@ void City::_physics_process(float delta) {
         { 
             // CALLED EVERY YEAR
 
-            budget = 10000; 
+            this->budget += 1000*all_structures.size(); 
         }
         
         (this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")->get_node("DirectionalLight"))->set("rotation_degrees", Vector3(-45 - sin((M_PI * (2 * (double)(day_tick % 365)) / 365)) * 25 / 2 - 12.5, 45, 0));
@@ -342,8 +342,8 @@ void City::generate_initial_city_graphics()
                 float nuclearprob = calculate_building_prob(190, 240, 0.8, dist);
                 float coalprob = calculate_building_prob(190, 240, 0.8, dist);
                 float geoprob = calculate_building_prob(190, 240, 0.8, dist);
-                float fieldprob = calculate_building_prob(260, 350, 1, dist);
-                float pastureprob = calculate_building_prob(240, 350, 2, dist);
+                float fieldprob = calculate_building_prob(230, 320, 1, dist);
+                float pastureprob = calculate_building_prob(230, 320, 2, dist);
                 float factoryprob = calculate_building_prob(170, 200, 0.01, dist);
 
                 if (hasgeo) { geoprob = 0; }
@@ -359,7 +359,7 @@ void City::generate_initial_city_graphics()
 
                 float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
                 float shopprob = calculate_building_prob(0, 200, 1.2, dist) + calculate_building_prob(260, 300, 0.2, dist);
-                float buildingprob = calculate_building_prob(180, 230, 1.5, dist) + calculate_building_prob(-100, 150, 1, dist);
+                float buildingprob = calculate_building_prob(180, 210, 1.5, dist) + calculate_building_prob(-100, 150, 1, dist);
                 float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                 float lowhouseprob = calculate_building_prob(-200, 200, 5, dist) + calculate_building_prob(270,310,0.25, dist);
                 float highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
@@ -398,7 +398,7 @@ void City::generate_initial_city_graphics()
 
                             restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
                             shopprob = calculate_building_prob(0, 200, 1.2, dist) + calculate_building_prob(260, 300, 0.2, dist);
-                            buildingprob = calculate_building_prob(180, 230, 1.5, dist) + calculate_building_prob(-100, 150, 1, dist);
+                            buildingprob = calculate_building_prob(180, 210, 1.5, dist) + calculate_building_prob(-100, 150, 1, dist);
                             windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                             lowhouseprob = calculate_building_prob(-200, 200, 5, dist) + calculate_building_prob(270, 310, 0.25, dist);
                             highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
@@ -453,7 +453,7 @@ void City::generate_initial_city_graphics()
 
                             float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
                             float shopprob = calculate_building_prob(0, 200, 1.2, dist) + calculate_building_prob(260, 300, 0.2, dist);
-                            float buildingprob = calculate_building_prob(180, 230, 1.5, dist) + calculate_building_prob(-100, 150, 1, dist);
+                            float buildingprob = calculate_building_prob(180, 210, 1.5, dist) + calculate_building_prob(-100, 150, 1, dist);
                             float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
                             float lowhouseprob = calculate_building_prob(-200, 200, 5, dist) + calculate_building_prob(270, 310, 0.25, dist);
                             float highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
@@ -475,6 +475,7 @@ void City::generate_initial_city_graphics()
            
         }
     }
+
     //   shuffles all the vectors so that buildings arent updated in a noticeable pattern
     std::random_shuffle(all_structures.begin(), all_structures.end());
     std::random_shuffle(all_energies.begin(), all_energies.end());
@@ -482,8 +483,13 @@ void City::generate_initial_city_graphics()
     std::random_shuffle(all_shops.begin(), all_shops.end());
     std::random_shuffle(all_production.begin(), all_production.end());
 
+    std::random_shuffle(trees_vector.begin(), trees_vector.end());
+
+    trees_iterator = trees_vector.begin();
 
 
+
+    this->budget += 1000 * all_structures.size();
 
     std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
 }
@@ -743,7 +749,7 @@ String City::get_button_info_text() {
     }
     else if (this->active_button == String("TreesBudget"))
     {
-        return String("This is a policy implementing a budget for planting and growing more trees in residential and commercial areas. Please input a value between 0 and - in euros per year.");
+        return String("This is a policy implementing a budget for planting and growing more trees in residential and commercial areas. It costs 5000 euros to surround a single building with trees. Please input the number of buildings you wish to plant trees around.");
     }
     else {
         return String("No information has been specified for this policy.");
@@ -778,7 +784,7 @@ void City::_on_Validate_pressed()
     }
 }
 
-void City::trigger_notification(String text = String("Seems like there was a mistake. Please try again."))
+void City::trigger_notification(String text = String("It appears that some sort of mistake has occured. Please try again."))
 {
     //std::cout << "INVALID INPUT: EXPECTED FLOAT IN SPECIFIED RANGE" << std::endl;
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("text", text);
@@ -1029,6 +1035,24 @@ void City::implement_policies(double value) {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
+    else if (this->active_button == String("TreesBudget")) {
+    if (trees_iterator == trees_vector.end()){ this->trigger_notification(String("All possible buildings now have trees ! This is a good thing. However, you cannot add any more.")); }
+    if (value >= 0) {
+        Godot::print("TREES ARE BEING ADDED");
+        this->houses_with_trees += int(value);
+
+        for (int i = 0; i < int(value); ++i) {
+            (*trees_iterator)->get_node("MeshComponents/Trees")->set("visible", true);
+            trees_iterator++;
+            budget -= 5000;
+            houses_with_trees++;
+            if (trees_iterator == trees_vector.end()) { this->trigger_notification(String("All possible buildings now have trees ! This is a good thing. However, you cannot add any more.")); break; }
+        }
+    }
+    else {
+        this->trigger_notification(String("The value you provided was not possible. Please try planting trees again."));
+    }
+    }
 }
 
 void City::_on_Game_Speed_changed()
@@ -1114,11 +1138,13 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
         node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
         node->set("translation", pos);
         node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0));
+        node->get_node("MeshComponents/Trees")->set("visible", false);
         //std::cout << "DEBUG: add child" << std::endl;
         this->add_child(node);
         //std::cout << "DEBUG: add shop to vector" << std::endl;
         all_shops.push_back((Shop*)node);
         all_structures.push_back((Structure*)node);
+        if (scene != MallScene){ trees_vector.push_back((Structure*)node); }
 
         //std::cout << "DEBUG: traffic stuff called" << std::endl;
 
@@ -1150,11 +1176,13 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
         node->set("translation", pos);
         node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0));
+        node->get_node("MeshComponents/Trees")->set("visible", false);
         //std::cout << "DEBUG: add child" << std::endl;
         this->add_child(node);
         //std::cout << "DEBUG: add house to vector" << std::endl;
         all_houses.push_back((Housing*)node);
         all_structures.push_back((Structure*)node);
+        trees_vector.push_back((Structure*)node);
 
 
         // traffic stuff
@@ -1185,7 +1213,7 @@ void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
         //std::cout << "DEBUG: setting scale and translation" << std::endl;
         node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
         node->set("translation", pos);
-        node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0));
+        if (scene != WindmillScene) { node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0)); }
         //std::cout << "DEBUG: add child" << std::endl;
         this->add_child(node);
         //std::cout << "DEBUG: add shop to vector" << std::endl;
@@ -1519,6 +1547,10 @@ void City::simulation_transport()
 {
 
     //std::cout << "Simulation TRANSPORT" << std::endl;
+
+
+    // WHAT IS ALL THIS DOING HERE ??
+    // why are we still setting everything to 0 and setting population to 50000 ?
 
     this->income = 0;
     this->population = 50000;

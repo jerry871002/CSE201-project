@@ -148,6 +148,15 @@ namespace godot {
         std::vector<Production*> all_production;
         std::vector<Transport*> all_transports;
 
+
+
+        // trees attributes
+        std::vector<Structure*> trees_vector;
+        std::vector<Structure*>::iterator trees_iterator;
+        int houses_with_trees{ 0 };
+
+
+
         String active_button;
         void implement_policies(double);
         bool notification_active{ false };
