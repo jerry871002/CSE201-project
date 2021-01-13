@@ -250,6 +250,12 @@ void City::_physics_process(float delta) {
 
         int* datenumber = return_date(int(this->day_tick));
 
+        if (datenumber[0] == 1)
+        {
+
+        }
+
+
         
         if (datenumber[0] == 1) 
         {   
