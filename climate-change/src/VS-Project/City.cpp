@@ -1515,6 +1515,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
                 traffic_system[x][y][1][1] = 1;
             }
             traffic_system[x][y][0][1] = 1;
+            traffic_system[x][y][0][2] = 1;
             if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
                 traffic_system[x][y][0][0] = 1;
             }
@@ -2102,7 +2103,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 		satisfactionsSum += satisfactions[i];
 	}
    
-    airQuality = pow(2, -carbonEmission/ (all_structures.size() * 30 * 30 * 10));
+    airQuality = pow(1.01, -carbonEmission/ (all_structures.size() * 30 * 30 * 10));
 
     std::cout << "Current air quality is: " << airQuality << std::endl;
 
@@ -2111,9 +2112,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         alpha[i] = (satisfactions[i] / satisfactionsSum) * all_houses.size();
         if (i == 4) {
             alpha[i] *= sqrt(airQuality);
-        }
-        alpha[i] = fmax(normalGenerator(alpha[i], all_houses.size()/100 ), 0.01);
-    
+        }   
     }
 
     double costs[8] = { electicCar.cost - electricCarSubsidy , bigCar.cost + weightTax*bigCar.weight, car.cost,collectionCar.cost + weightTax * collectionCar.weight , bike.cost - bikeSubsidy , motorcycle.cost, bus.cost - busSubsidy, sportsCar.cost };
@@ -2139,7 +2138,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         double choice[8] = { 0 };
         for (int i = 0; i < 8; i++) {
 
-            probabilities[i] = alpha[i] * 30*((double)((*it)->get("housingIncome")) / pricesPerMonth[i]) / alphaSum;
+            probabilities[i] = fmax(normalGenerator(alpha[i], all_houses.size() / 100), 0.01) * 30*((double)((*it)->get("housingIncome")) / pricesPerMonth[i]) / alphaSum;
             //std::cout << "Housing Incomr is : " << (double)((*it)->get("housingIncome")) << std::endl;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];

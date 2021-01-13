@@ -139,14 +139,14 @@ void Housing::simulate_step(double days) {
         }
         else {}
     }
+
     else if (int(this->doubleGlazingAge) > days) {
         this->doubleGlazingAge -= int(days);
     }
+
     else {
         this->doubleGlazingAge = 0;
-        doubleGlazingOn = false;
-        
-        
+        doubleGlazingOn = false; 
     }
 
 	if (int(this->rooftopWindTurbineAge) == 0) {
@@ -168,10 +168,10 @@ void Housing::simulate_step(double days) {
         }
         else {}
     }
-    else if (int(this->rooftopWindTurbineAge) > days)
-    {
+    else if (int(this->rooftopWindTurbineAge) > days) {
         this->rooftopWindTurbineAge -= int(days);
     }
+
     else {
         this->rooftopWindTurbineAge = 0;
         rooftopWindTurbineOn = false;
@@ -193,7 +193,7 @@ void Housing::simulate_step(double days) {
 	}
 
 	if (this->solarPanelAge >= solarLifetime) {
-		//Then the solar panels are removed and we have 
+		//The solar panels are removed after a certain amount of time (the average lifetime of a panel)
 		this->PanelsOn = false;
 		this->solarPanelAge = 0;
 	}
@@ -209,12 +209,9 @@ void Housing::simulate_step(double days) {
 	} 
 };
 
-
 double Housing::get_max_income() {
     return this->maxIncome;
 }
-
-
 
 double Housing::get_min_income() {
     return this->minIncome;
@@ -237,6 +234,8 @@ void Housing::panel_added_probability(){
     if (panelCost < 0) {
 		panelCost = 0; //cannot have a negative solar panel cost
 	}
+
+	//convert housingIncome to a value between 0 and 1 to be used in the probbility
 	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
 
 	panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + (this->solarSatisfaction/10)*15 + housingIncomeIndexed*35)/100;
@@ -245,6 +244,7 @@ void Housing::panel_added_probability(){
 		panel_probability = 0;
 	}
 
+	//We do not want to put wind turbines if there are already solar panels
 	else if (rooftopWindTurbineOn == true) {
 		panel_probability = 0;
 	}
@@ -285,67 +285,48 @@ void Housing::roof_wind_turbines_added_probability(){
 	}
 }
 
-/*void Housing::panel_added_probability(){
-	double panelCost;
-    double panel_subsidies = this->get("solar_panel_subsidies_housing"); // input from user of how much are the subsidies
-    // double income_indexed = 0.5;
-    panelCost = this->solarCost - panel_subsidies;  
-    if (panelCost < 0) {
-		panelCost = 0; //cannot have a negative solar panel cost
-	}
-
-	panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + (this->solarSatisfaction/10)*25 + housingIncome*25)/100;
-
-	if (PanelsOn == true) {
-		panel_probability = 0;
-	}
-
-	else if (rooftopWindTurbineOn == true) {
-		panel_probability = 0;
-	}
-}
-
-void Housing::double_glazing_added_probability(){
-	double doubleGlazingCost;
-    double glazing_subsidies = this->get("double_glazing_subsidies"); // input from user of how much are the subsidies
-    // double income_indexed = 0.5;
-    doubleGlazingCost = windowCost * this->windowNumber - double_glazing_subsidies;  
-    if (doubleGlazingCost < 0) {
-		doubleGlazingCost = 0; //cannot have a negative solar panel cost
-	}
-
-	double_glazing_probability = (((windowCost - doubleGlazingCost)/windowCost)*50 + (this->doubleGlazingSatisfaction/10)*25 + housingIncome*25)/100;
-
-	if (doubleGlazingOn == true) {
-		double_glazing_probability = 0;
-	}
-}
-
-void Housing::roof_wind_turbines_added_probability(){
-	double turbineCost;
-    double wind_subsidies = this->get("wind_turbine_subsidies"); // input from user of how much are the subsidies
-    // double income_indexed = 0.5;
-    turbineCost = this->windCost - wind_turbine_subsidies;  
-    if (turbineCost < 0) {
-		turbineCost = 0; //cannot have a negative solar panel cost
-	}
-
-	roof_wind_turbines_probability = (((this->windCost - turbineCost)/this->windCost)*50 + (this->windSatisfaction/10)*25 + housingIncome*25)/100;
-
-	if (rooftopWindTurbineOn == true) {
-		roof_wind_turbines_probability = 0;
-	}
-}*/
-
 
 ///	HOUSE CLASS
 /* This is the class that represents the houses in the city. There are two typed of houses : 
 --> low-level houses: houses with bad insulation, that consume a lot of energy because of that 
 --> high-level houses: houses with either solar panels or rooftop wind turbine (one or the other is chosen randomly when building a new house
 */
-
 double House::get_co2emissions() {
     return 0.0065 * this->energyUse;
+}
+
+double House::get_energyuse() {
+	double panelsF = 1;
+	double turbineF = 1;
+	double glazingF = 1;
+	if (this->PanelsOn) {
+			panelsF = 0.6;
+		}
+
+	if (this->rooftopWindTurbineOn) {
+			turbineF = 0.9;
+		}
+	
+	if (this->houseType == 1) { // If its a low level house then double glazing decrease energyuse 
+			if (this->doubleGlazingOn) {
+				glazingF = 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
+			}
+		}
+	
+
+    return (double)(this->energyUse)*panelsF*turbineF*glazingF;
+}
+
+double House::get_environmentalcost() {
+    return this->environmentalCost;
+}
+
+/*double House::get_satisfaction() {
+    return this->satisfaction;
+}*/
+
+/*double House::get_co2emissions() {
+    return 0.0065 * this->energyUse; //0.0065 is the amount of CO2 emissions per kwH
 }
 
 double House::get_energyuse() {
@@ -371,7 +352,7 @@ double House::get_energyuse() {
 
 double House::get_environmentalcost() {
     return this->environmentalCost;
-}
+}*/
 
 House::House() 
 {
@@ -671,8 +652,40 @@ bool House::rooftop_wind_turbines() {
 /// <summary>
 ///	BUILDING CLASS
 /// </summary>
-
 double Building::get_co2emissions() {
+    return 0.0065 * this->energyUse;
+}
+
+double Building::get_energyuse() {
+	double panelsF = 1;
+	double turbineF = 1;
+	double glazingF = 1;
+	if (this->PanelsOn) {
+			panelsF = 0.6;
+		}
+
+	if (this->rooftopWindTurbineOn) {
+			turbineF = 0.9;
+		}
+	
+	if (this->buildingType == 1) { // If its a low level house then double glazing decrease energyuse 
+			if (this->doubleGlazingOn) {
+				glazingF = 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
+			}
+		}
+	
+
+    return (double)(this->energyUse)*panelsF*turbineF*glazingF;
+}
+
+	
+
+
+double Building::get_environmentalcost() {
+    return this->environmentalCost;
+}
+
+/*double Building::get_co2emissions() {
     return 0.0065 * this->energyUse;
 }
 
@@ -700,6 +713,7 @@ double Building::get_energyuse() {
 double Building::get_environmentalcost() {
     return this->environmentalCost;
 }
+*/
 
 
 
