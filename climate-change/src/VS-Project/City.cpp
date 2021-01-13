@@ -152,8 +152,7 @@ void City::_register_methods()
     //statistics:
     register_property<City, Array>("statsCarbonEmission", &City::statsCarbonEmission, {});
     register_property<City, Array>("statsIncome", &City::statsIncome, {});
-    register_property<City, Array>("statsEnergyDemand", &City::statsEnergyDemand, {});
-    register_property<City, Array>("statsEnergySupply", &City::statsEnergySupply, {});
+    register_property<City, Array>("statsEnergy", &City::statsEnergy, {});
     register_property<City, Array>("statsUnemployment", &City::statsUnemployment, {});
 
 };
@@ -1935,7 +1934,7 @@ void City::write_stat_history_to_file() {
     statsCarbonEmission.push_back(newCarbonEmission);
 
 
-    Array newIncome{};
+    Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
     newIncome.push_back((int)(income + 0.5));
 
@@ -1945,24 +1944,15 @@ void City::write_stat_history_to_file() {
     statsIncome.push_back(newIncome);
 
 
-    Array newEnergyDemand{};
-    newEnergyDemand.push_back(return_word_date_godot());
-    newEnergyDemand.push_back((int)(energyDemand + 0.5));
+    Array newEnergy{};
+    newEnergy.push_back(return_word_date_godot());
+    newEnergy.push_back((int)(energyDemand + 0.5));
+    newEnergy.push_back((int)(energySupply + 0.5));
 
-    if (statsEnergyDemand.size() > 1462) { //4years
-            statsEnergyDemand.pop_front();
+    if (statsEnergy.size() > 1462) { //4years
+            statsEnergy.pop_front();
         }
-    statsEnergyDemand.push_back(newEnergyDemand);
-
-
-    Array newEnergySupply{};
-    newEnergySupply.push_back(return_word_date_godot());
-    newEnergySupply.push_back((int)(energySupply + 0.5));
-
-    if (statsEnergySupply.size() > 1462) { //4years
-            statsEnergySupply.pop_front();
-        }
-    statsEnergySupply.push_back(newEnergySupply);
+    statsEnergy.push_back(newEnergy);
 
 
     Array newUnemployment{};
@@ -1974,32 +1964,16 @@ void City::write_stat_history_to_file() {
         }
     statsUnemployment.push_back(newUnemployment);
 
-    
-    //std::cout << "DEBUG: WRITE STAT FUNC "  << std::endl;
-    /*
 
-    stat+=50;
-    int *date; 
-    date = return_date(day_tick);
-    int day = *date;
-    int month = *(date+1);
-    int year = *(date+2);
-    
-    if (day==1 && month==1 && year!=1 && year!=2) {
-        daycount=0;
-        int leap = (year-1)%4;
-        add_data("alltimestats", std::to_string(year-1), std::to_string(find_avg(stats[0],leap)));
-        double stats[10][366];
-        remove(::get_path("statsyear" + std::to_string(year-2)).c_str());
-    }
-    
-    add_data("datas" + std::to_string(year), return_word_date(day_tick), std::to_string(0));
+    Array newTotalSatisfaction{}; //to be finished
+    newTotalSatisfaction.push_back(return_word_date_godot());
+    newTotalSatisfaction.push_back((int)(10*totalSatisfaction + 0.5));
 
-    delete_line("statsyear" + std::to_string(year), return_word_date(day_tick-365));
-    
-    stats[0][daycount]=stat;
-    daycount+=1;
-    */
+    if (statsTotalSatisfaction.size() > 1462) { //4years
+            statsTotalSatisfaction.pop_front();
+        }
+    statsTotalSatisfaction.push_back(newTotalSatisfaction);
+
 }
 
 
