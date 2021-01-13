@@ -101,6 +101,7 @@ namespace godot {
         int days_since_last_simulation;
         int daycount = 0; //keeps track of the in-game days per year
         Array statsCarbonEmission{}; //written stats for carbon emissions
+        Array statsEnvironmentalCost{}; //written stats for environmental cost
         Array statsIncome{}; //written stats for GDP
         Array statsEnergy{}; //written stats for energy demand and supply
         Array statsUnemployment{}; //written stats for population - number of employees
