@@ -360,8 +360,12 @@ texture = ExtResource( 52 )
 region_rect = Rect2( 0, 0, 208, 207 )
 
 [sub_resource type="StyleBoxTexture" id=74]
+texture = ExtResource( 52 )
+region_rect = Rect2( 0, 0, 208, 207 )
 
 [sub_resource type="StyleBoxTexture" id=75]
+texture = ExtResource( 52 )
+region_rect = Rect2( 0, 0, 208, 207 )
 
 [sub_resource type="StyleBoxTexture" id=76]
 texture = ExtResource( 52 )
