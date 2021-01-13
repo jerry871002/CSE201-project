@@ -18,6 +18,7 @@
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
+#include <Array.hpp>
 
 #include <StaticBody.hpp>
 
@@ -99,7 +100,7 @@ namespace godot {
         int daycount = 0; //keeps track of the in-game days per year
         double stat = 0; //stat example
         double stats[10][366]; //stats array
-        double statsCarbonEmission[366]; //written stats for carbonEmission
+        Array statsCarbonEmission{}; //written stats for carbonEmission
         void update_date();
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation
@@ -237,8 +238,6 @@ namespace godot {
         double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
         double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;
         double airQuality;
-        //double* incomes;
-        //int incomesLen;
         int numberOfHouses;
         int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
         int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month

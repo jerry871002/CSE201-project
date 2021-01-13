@@ -148,7 +148,7 @@ void City::_register_methods()
     register_property<City, int>("totalSatisfaction", &City::totalSatisfaction, 0.0);
 
     //statistics:
-    //register_property<City, double[366]>("statsCarbonEmission", &City::statsCarbonEmission, {});
+    register_property<City, Array>("statsCarbonEmission", &City::statsCarbonEmission, {});
 
 };
 
