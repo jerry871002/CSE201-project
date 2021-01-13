@@ -405,13 +405,13 @@ void House::set_houseType(int type)
 			//have two salaries 
 			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
 		
-			housingIncome = normalGenerator(50,70) + normalGenerator(50,70);
+			housingIncome = fmax(minIncome, normalGenerator(50,70)) + fmax(minIncome, normalGenerator(50,70));
 		
 		}
 
 		else {
 			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
-			housingIncome = normalGenerator(50,70);
+			housingIncome = fmax(minIncome, normalGenerator(50,70));
 
 		}
 
@@ -443,12 +443,12 @@ void House::set_houseType(int type)
 		srand((int)time(0));
 		this->numberOfInhabitants = (rand() % (6) + 1);
 		if (this->numberOfInhabitants >= 2) {
-			housingIncome = normalGenerator(50, 70) + normalGenerator(50, 70);
+			housingIncome = fmax(minIncome, normalGenerator(50,70)) + fmax(minIncome, normalGenerator(50,70));
 
 		}
 
 		else {
-			housingIncome = normalGenerator(50, 70);
+			housingIncome = fmax(minIncome, normalGenerator(50,70));
 		}
 
 		std::cout << "HOUSE INITIALIZE TYPE 2 DEBUG 2" << std::endl;
@@ -735,7 +735,7 @@ Building::Building() {
 	this->buildingType = (rand() % 2 + 1);
 
 	for (int i = 0; i < numberOfInhabitants/2; i++) { //I took half inhabitants are children
-		incomeEach += normalGenerator(50,70);
+		incomeEach += fmax(minIncome, normalGenerator(50,70));
 	}
 	
 	//This is to compute an average wage in the building so that the probability functions to add solar panels etc still work the same as for a house
