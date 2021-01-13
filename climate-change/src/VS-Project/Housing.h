@@ -35,7 +35,7 @@ namespace godot {
 		int solarPanelCost = 1500;
 		int numberOfInhabitants = 0;
 		int maxIncome=333; //max income per day, should be defined by sim team
-		int minIncome=53; // min income per day, I put values for now so that it compiles
+		int minIncome=40; // min income per day, I put values for now so that it compiles
 		int solarPanelAge = 0;
 		int doubleGlazingAge = 0;
 		int rooftopWindTurbineAge = 0;
