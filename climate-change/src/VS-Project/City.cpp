@@ -184,6 +184,14 @@ we update `day_tick` and execute simulation()
 void City::_physics_process(float delta) {
 
     // CALLED EVERY PHYSICS FRAME (60 FPS)
+    // TO UPDATE TRANSPORT STATS
+    /*
+    if ((transportType != 6) && (transportType != 5) && (transportType != 4)) {
+        satisfaction *=1- carProhibition / 7;
+        energyUse *= 1-carProhibition / 7;
+        CO2Emission *=1- carProhibition / 7;
+    }
+    */
 
     if (bool(this->time_speed))
     {
@@ -304,12 +312,14 @@ void City::_input(InputEvent*)
         this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
         this->notification_active = false;
         this->notification_counter = 0;
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
     }
 
     if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->get("visible")) {
         this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
         this->notification_active = false;
         this->notification_counter = 0;
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
     }
 
     if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))
@@ -644,12 +654,14 @@ void City::_on_ExitButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
 
 }
 
 void City::_on_Exit_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
@@ -677,12 +689,14 @@ void City::_on_ResetButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
 
 }
 
 void City::_on_Reset_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
@@ -732,6 +746,7 @@ void City::_on_Reset_confirmed()
 void City::_on_TransportMenuButton_pressed() 
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
 
     String transportInfo = String("INFORMATION") + String("\n");
     transportInfo += String("Transport") + String("\n");
@@ -739,7 +754,7 @@ void City::_on_TransportMenuButton_pressed()
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", transportInfo);
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
-    
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("position", Vector2((get_viewport()->get_size().x) / 2, (get_viewport()->get_size().y) / 2));
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
 }
@@ -753,6 +768,7 @@ void City::_on_Menu_pressed(String name)
     hide_menus();
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
 
@@ -780,11 +796,11 @@ String City::get_button_info_text() {
     if (this->active_button == String("PanelSubsidyForShops"))
     {
         //this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
-        return String("Please input a value between 0 and 450. This will be a solar panel subsidy for shops in euros.");
+        return String("Please input a value between 0 and 450. This will be a solar panel subsidy for shops (restaurants, small shops and malls) in euros.");
     }
     else if (this->active_button == String("ChangePanelProbabilityForRestaurants"))
     {
-        return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for restaurants in the city.");
+        return String("Please input a value between 0 and 800. This value will be the new wind Turbine subsidy for shops (restaurants, small shops and malls) in euros.");
     }
     else if (this->active_button == String("EfficiencySupercriticalCoalPlant"))
     {
@@ -874,6 +890,7 @@ void City::hide_menus()
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuProduction")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
 }
 
 void City::_on_Validate_pressed()
@@ -883,6 +900,7 @@ void City::_on_Validate_pressed()
     String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
 
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
     this->_on_Game_Speed_changed();
@@ -920,20 +938,37 @@ void City::implement_policies(double value) {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
-    else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) {
-        if (value >= 0 && value < 1) {
-            Godot::print("PANEL PROBABILITY WILL BE CHANGED ONLY FOR RESTAURANTS");
-            for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
-            {
-                if ((String)(*it)->get("object_type") == (String)("Restaurant")) {
-                    (*it)->set("panel_probability", value);
-                }
+   else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) {    ///I can Changed the name here
+		if (value >= 0 && value <= 800) {
+			Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON SHOPS IMPLEMENTED");
+			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
+			{
+				//if ((String)(*it)->get("object_type") == (String)("Restaurant")) {}
+				(*it)->set("wind_turbine_subsidies", value);
+				
             }
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
+
+	//##########
+	else if (this->active_button == String("WindturbinesHousing")) {
+        if (value >= 0 && value <= 800) {
+            Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON HOUSING IMPLEMENTED");
+            for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+            {
+                (*it)->set("wind_turbine_subsidies", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+
+	///######
+
     else if (this->active_button == String("EfficiencySupercriticalCoalPlant")) {
         if (value == 0 || value == 1) {
             Godot::print("THE COAL POWER PLANTS WILL CHANGE THEIR EFFICIENCY");
@@ -1496,6 +1531,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
                 traffic_system[x][y][1][1] = 1;
             }
             traffic_system[x][y][0][1] = 1;
+            traffic_system[x][y][0][2] = 1;
             if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
                 traffic_system[x][y][0][0] = 1;
             }
@@ -2033,7 +2069,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 * 0 - electic car
 * 1 - big american car
 * 2 - normal car
-* 3 - old collection car
+* 3 - old collection cars
 * 4 - bike
 * 5 - motorcycle
 * 6 - bus
@@ -2050,7 +2086,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 	Transport bus = Transport(6);
 	Transport sportsCar = Transport(7);
 
-    double satisfactions[8] = { electicCar.satisfaction, bigCar.satisfaction, car.satisfaction, collectionCar.satisfaction, bike.satisfaction, motorcycle.satisfaction, bus.satisfaction, sportsCar.satisfaction };
+    double satisfactions[8] = { electicCar.satisfaction * ((double)(7 - carProhibition) / 7), bigCar.satisfaction * ((double)(7 - carProhibition) / 7), car.satisfaction * ((double)(7 - carProhibition) / 7), collectionCar.satisfaction * ((double)(7 - carProhibition) / 7), bike.satisfaction * pow(((double)(1+ carProhibition) / 7), 0.2), motorcycle.satisfaction , bus.satisfaction, sportsCar.satisfaction * ((double)(7 - carProhibition) / 7) };
     double satisfactionsSum = 0;
     double alpha[8] = { 0 };
 
@@ -2058,24 +2094,19 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 		satisfactionsSum += satisfactions[i];
 	}
    
-    airQuality = pow(2, -carbonEmission/ (all_structures.size() * 30 * 30 * 10));
+    airQuality = pow(1.01, -carbonEmission/ (all_structures.size() * 30 * 30 * 10));
 
     std::cout << "Current air quality is: " << airQuality << std::endl;
 
     
     for (int i = 0; i < 8; i++) {
         alpha[i] = (satisfactions[i] / satisfactionsSum) * all_houses.size();
-        if ((i == 4) || (i == 5)) {
+        if (i == 4) {
             alpha[i] *= sqrt(airQuality);
-        }
-
-        //std::normal_distribution <double> alpharandomiser(1000, 500);
-        alpha[i] = normalGenerator(alpha[i], (double)(alpha[i] / 10.0));
-        //alpha[i] = fmax(alpharandomiser(gen), 0);
-    
+        }   
     }
 
-    double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
+    double costs[8] = { electicCar.cost - electricCarSubsidy , bigCar.cost + weightTax*bigCar.weight, car.cost,collectionCar.cost + weightTax * collectionCar.weight , bike.cost - bikeSubsidy , motorcycle.cost, bus.cost - busSubsidy, sportsCar.cost };
     double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth+fuelTax*bigCar.fuelInput*30, car.pricePerMonth+fuelTax*car.fuelInput*30,collectionCar.pricePerMonth+fuelTax*collectionCar.fuelInput*30, bike.pricePerMonth, 
 	motorcycle.pricePerMonth+fuelTax*motorcycle.fuelInput*30, bus.pricePerMonth/(bus.capacity*30)+fuelTax*bus.fuelInput*30, sportsCar.pricePerMonth+fuelTax*sportsCar.fuelInput*30};
     double probabilities[8] = {0};
@@ -2098,8 +2129,8 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         double choice[8] = { 0 };
         for (int i = 0; i < 8; i++) {
 
-            probabilities[i] = alpha[i] * 30*((double)((*it)->get("housingIncome")) / pricesPerMonth[i]) / alphaSum;
-            //std::cout << "Housing Incomr is : " << (double)((*it)->get("housingIncome")) << std::endl;
+            probabilities[i] = fmax(normalGenerator(alpha[i], all_houses.size() / 100), 0.01) * (30*((double)((*it)->get("housingIncome")) / pricesPerMonth[i])) / alphaSum;
+            std::cout << "Housing Incomr is : " << (double)((*it)->get("housingIncome")) << std::endl;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
