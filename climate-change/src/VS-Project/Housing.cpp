@@ -637,7 +637,10 @@ Building::Building() {
 	srand((int)time(0));
 	//5 appartments pay between 200-400 € per month, this is coownership budget
 	housingIncome = 0;
+
 	this->numberOfInhabitants = (rand() % (10) + 20);
+	this->buildingType = (rand() % 2 + 1);
+
 	for (int i = 0; i < numberOfInhabitants; i++) {
 		housingIncome += (rand() % (maxIncome - minIncome)) + minIncome;
 	}
