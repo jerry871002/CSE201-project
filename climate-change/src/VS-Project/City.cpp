@@ -147,6 +147,8 @@ void City::_register_methods()
     register_property<City, double>("energySupply", &City::energySupply, 0.0);
     register_property<City, int>("totalSatisfaction", &City::totalSatisfaction, 0.0);
 
+    //statistics:
+    register_property<City, double[366]>("statsCarbonEmission", &City::statsCarbonEmission, {});
 
 };
 
@@ -1818,8 +1820,11 @@ void delete_line(std::string documentName, std::string dataToDelete) {
 
 
 void City::write_stat_history_to_file() {
+
+
     
     //std::cout << "DEBUG: WRITE STAT FUNC "  << std::endl;
+    /*
 
     stat+=50;
     int *date; 
@@ -1842,6 +1847,7 @@ void City::write_stat_history_to_file() {
     
     stats[0][daycount]=stat;
     daycount+=1;
+    */
 }
 
 

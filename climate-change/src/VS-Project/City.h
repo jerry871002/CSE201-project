@@ -99,7 +99,8 @@ namespace godot {
         int daycount = 0; //keeps track of the in-game days per year
         double stat = 0; //stat example
         double stats[10][366]; //stats array
-        void update_date();     
+        double statsCarbonEmission[366]; //written stats for carbonEmission
+        void update_date();
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation
         string return_word_date(int days); // returns the date from days :day/month/year as a string with words
