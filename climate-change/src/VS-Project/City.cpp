@@ -47,7 +47,7 @@ int traffic_system[citysize][citysize][4][3] = { 0 }; //sets everything to non-e
 City::City() {
 
     income = 0;
-    population = 0;
+    population = 50000;
     numberOfEmployees = 0;
     carbonEmission = 0;
     energyDemand = 0;
@@ -148,7 +148,7 @@ void City::_register_methods()
     register_property<City, int>("totalSatisfaction", &City::totalSatisfaction, 0.0);
 
     //statistics:
-    //register_property<City, double[366]>("statsCarbonEmission", &City::statsCarbonEmission, {});
+    register_property<City, Array>("statsCarbonEmission", &City::statsCarbonEmission, {});
 
 };
 
@@ -224,7 +224,7 @@ void City::_physics_process(float delta) {
         if (datenumber[0] == 1) 
         {   
             // CALLED EVERY MONTH
-            
+
             //transport_to_add();
         }
 
@@ -1928,9 +1928,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     double satisfactionsSum = 0;
     double alpha[8] = { 0 };
 
-    airQuality = 1 - (double) (all_structures.size() * 30 * 30 * 10) / carbonEmission;
-	
-    for (int i =0 ; i < 8; i++){
+	for (int i =0 ; i < 8; i++){
 		satisfactionsSum += satisfactions[i];
 	}
    
