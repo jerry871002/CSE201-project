@@ -413,9 +413,9 @@ shape = SubResource( 1 )
 [node name="ColorRect" type="ColorRect" parent="2Dworld/Blur2"]
 material = SubResource( 3 )
 margin_left = 1761.0
-margin_top = -5.0
+margin_top = -9.69061
 margin_right = 1982.0
-margin_bottom = 1148.0
+margin_bottom = 1143.31
 rect_pivot_offset = Vector2( 536.625, 1828.64 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -456,11 +456,11 @@ __meta__ = {
 }
 
 [node name="SatisfactionLabel" type="Label" parent="2Dworld/Infographics/PieSatisfaction"]
-margin_left = 88.4497
-margin_top = 179.353
-margin_right = 200.45
-margin_bottom = 215.353
-rect_scale = Vector2( 3, 3 )
+margin_left = 138.781
+margin_top = 174.634
+margin_right = 250.782
+margin_bottom = 210.634
+rect_scale = Vector2( 2, 2 )
 custom_fonts/font = ExtResource( 12 )
 text = "Satisfaction:"
 align = 1
@@ -496,11 +496,11 @@ __meta__ = {
 }
 
 [node name="CO2Label" type="Label" parent="2Dworld/Infographics/PieCO2"]
-margin_left = 77.8352
-margin_top = 131.342
-margin_right = 188.835
-margin_bottom = 180.342
-rect_scale = Vector2( 3, 3 )
+margin_left = 137.604
+margin_top = 142.352
+margin_right = 248.604
+margin_bottom = 193.352
+rect_scale = Vector2( 2, 2 )
 custom_fonts/font = ExtResource( 12 )
 text = "CO2
 Emission:"
@@ -537,13 +537,14 @@ __meta__ = {
 }
 
 [node name="IncomeLabel" type="Label" parent="2Dworld/Infographics/PieIncome"]
-margin_left = 87.0
-margin_top = 166.0
-margin_right = 198.0
-margin_bottom = 197.0
-rect_scale = Vector2( 3, 3 )
+margin_left = 142.05
+margin_top = 169.146
+margin_right = 253.05
+margin_bottom = 220.146
+rect_scale = Vector2( 2, 2 )
 custom_fonts/font = ExtResource( 12 )
-text = "Income :"
+text = "Average
+Income :"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -577,11 +578,11 @@ __meta__ = {
 }
 
 [node name="EmployeesLabel" type="Label" parent="2Dworld/Infographics/PieEmployees"]
-margin_left = 87.6978
-margin_top = 128.13
-margin_right = 198.698
-margin_bottom = 206.13
-rect_scale = Vector2( 3, 3 )
+margin_left = 138.03
+margin_top = 145.432
+margin_right = 249.03
+margin_bottom = 223.432
+rect_scale = Vector2( 2, 2 )
 custom_fonts/font = ExtResource( 12 )
 text = "No. of
 Employees :"
@@ -601,11 +602,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PiePowerSupply" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 113.255
-margin_top = 519.217
-margin_right = 613.255
-margin_bottom = 1019.22
+[node name="PieUnemployement" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 114.818
+margin_top = 675.57
+margin_right = 614.818
+margin_bottom = 1175.57
 rect_scale = Vector2( 0.3, 0.3 )
 value = 20.0
 texture_under = ExtResource( 15 )
@@ -617,23 +618,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PowerSupplyLabel" type="Label" parent="2Dworld/Infographics/PiePowerSupply"]
-margin_left = 92.0996
-margin_top = 193.557
-margin_right = 203.099
-margin_bottom = 242.557
-rect_scale = Vector2( 3, 3 )
+[node name="UnemployementLabel" type="Label" parent="2Dworld/Infographics/PieUnemployement"]
+margin_left = 100.364
+margin_top = 204.074
+margin_right = 257.364
+margin_bottom = 253.074
+rect_scale = Vector2( 2, 2 )
 custom_fonts/font = ExtResource( 12 )
-text = "Power Use :"
+text = "Unemployement:"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PowerSupplyValue" type="Label" parent="2Dworld/Infographics/PiePowerSupply"]
-margin_left = 86.4663
+[node name="UnemployementValue" type="Label" parent="2Dworld/Infographics/PieUnemployement"]
+margin_left = 84.2139
 margin_top = 264.731
-margin_right = 197.466
+margin_right = 195.214
 margin_bottom = 313.731
 rect_scale = Vector2( 3, 3 )
 align = 1
@@ -642,10 +643,10 @@ __meta__ = {
 }
 
 [node name="PiePowerDemand" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 112.541
-margin_top = 657.944
-margin_right = 612.541
-margin_bottom = 1157.94
+margin_left = 114.104
+margin_top = 531.298
+margin_right = 614.104
+margin_bottom = 1031.3
 rect_scale = Vector2( 0.3, 0.3 )
 value = 20.0
 texture_under = ExtResource( 15 )
@@ -658,11 +659,11 @@ __meta__ = {
 }
 
 [node name="PowerDemandLabel" type="Label" parent="2Dworld/Infographics/PiePowerDemand"]
-margin_left = 89.8369
-margin_top = 122.688
-margin_right = 200.837
-margin_bottom = 173.688
-rect_scale = Vector2( 3, 3 )
+margin_left = 135.45
+margin_top = 147.854
+margin_right = 246.45
+margin_bottom = 198.854
+rect_scale = Vector2( 2, 2 )
 custom_fonts/font = ExtResource( 12 )
 text = "Power 
 Demand :"

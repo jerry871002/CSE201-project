@@ -115,6 +115,7 @@ void City::_register_methods()
     register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
     register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
     register_method((char*)"change_pie_chart", &City::change_pie_chart);
+	register_method((char*)"change_pie_label", &City::change_pie_label);
 
     
     register_method((char*)"add_shop", &City::add_shop);
@@ -1079,16 +1080,22 @@ void City::_on_Game_Speed_changed()
     time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
 
     hide_menus();
-
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
-    change_pie_chart(totalSatisfaction, "PieSatisfaction", true);
-    change_pie_chart(carbonEmission, "PieCO2", false);
-	change_pie_chart(income, "PieIncome", true);
-    change_pie_chart(numberOfEmployees, "PieEmployees", true);
-    change_pie_chart(energySupply, "PiePowerSupply", false);
-    change_pie_chart(energyDemand, "PiePowerDemand", false);
+    change_pie_chart(100*(totalSatisfaction/(10*all_structures.size())), "PieSatisfaction", true); 
+    change_pie_chart(value_pie_chart_C02(carbonEmission, 1000000), "PieCO2", false); 
+	change_pie_chart(100*(income/population), "PieIncome", true); 
+    change_pie_chart(energyDemand, "PieUnemployement", false); //EnergyDemand variable is temporary
+    change_pie_chart(value_pie_chart_C02(energyDemand, 100000), "PiePowerDemand", false);
+
+	change_pie_label(totalSatisfaction, "PieSatisfaction");
+	change_pie_label(carbonEmission, "PieCO2");
+	change_pie_label(income, "PieIncome");
+	change_pie_label(numberOfEmployees, "PieEmployees");
+	change_pie_label(energyDemand, "PieUnemployement");
+	change_pie_label(energyDemand, "PiePowerDemand");
+
 
 }
 
@@ -2025,25 +2032,27 @@ double City::normalGenerator(double mean, double stdDev){
     return distribution(generator); 
 }
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
-int City::value_pie_chart(int value) {
-    int newvalue = (int)(100 * (1 - (1 / (value + 1))));
+// 100000 pour power demand et 1 million pour C02
+int City::value_pie_chart_C02(int value, int growth) {
+    int newvalue = (int)(100 * (1- pow(value/growth,-1)));
     return newvalue;
 }
 
 void City::change_pie_chart(int value, NodePath name, bool isPositive)
 {
     TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
-	Label* label = ((Label*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name)->get_child(1));
-
-
     if (isPositive) {
-        node->set_tint_progress(Color(min(2 - (double)value_pie_chart(value) / 5, 1.0), min((double)value_pie_chart(value) / 5, 1.0), 0, 1.0));
+        node->set_tint_progress(Color(min(2 - (double)value / 50, 1.0), min((double)value / 50, 1.0), 0, 1.0));
     }
     else {
-        node->set_tint_progress(Color(min((double)value_pie_chart(value) / 5, 1.0), min(2 - (double)value_pie_chart(value) / 5, 1.0), 0, 1.0));  
+        node->set_tint_progress(Color(min((double)value / 50, 1.0), min(2 - (double)value / 50, 1.0), 0, 1.0));  
     }
-    node->set("value", value_pie_chart(value));
-    std::string standardString = std::to_string((int)value);
+    node->set("value", value);
+}
+
+void City::change_pie_label(int value, NodePath name){
+	Label* label = ((Label*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name)->get_child(1));
+	std::string standardString = std::to_string((int)value);
     godot::String godotString = godot::String(standardString.c_str());
 	label->set("text", godotString);
 }
