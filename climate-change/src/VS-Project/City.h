@@ -237,8 +237,6 @@ namespace godot {
         double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
         double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;
         double airQuality;
-        //double* incomes;
-        //int incomesLen;
         int numberOfHouses;
         int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
         int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month
