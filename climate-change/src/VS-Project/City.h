@@ -219,6 +219,9 @@ namespace godot {
 
         //to generate random numbers
         double normalGenerator(double mean, double stdDev);
+
+        double return_unemployment_rate();
+
     private:
         // city indices
 
