@@ -179,6 +179,15 @@ we update `day_tick` and execute simulation()
 void City::_physics_process(float delta) {
 
     // CALLED EVERY PHYSICS FRAME (60 FPS)
+    // TO UPDATE TRANSPORT STATS
+    /*
+    if ((transportType != 6) && (transportType != 5) && (transportType != 4)) {
+        satisfaction *= carProhibition / 7;
+        energyUse *= carProhibition / 7;
+        fuelInput *= carProhibition / 7;
+        CO2Emission *= carProhibition / 7;
+    }
+    */
 
     if (bool(this->time_speed))
     {
@@ -2011,7 +2020,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 	Transport bus = Transport(6);
 	Transport sportsCar = Transport(7);
 
-    double satisfactions[8] = { electicCar.satisfaction, bigCar.satisfaction, car.satisfaction, collectionCar.satisfaction, bike.satisfaction, motorcycle.satisfaction, bus.satisfaction, sportsCar.satisfaction };
+    double satisfactions[8] = { electicCar.satisfaction * ((double)(7 - carProhibition) / 7), bigCar.satisfaction * ((double)(7 - carProhibition) / 7), car.satisfaction * ((double)(7 - carProhibition) / 7), collectionCar.satisfaction * ((double)(7 - carProhibition) / 7), bike.satisfaction * pow(((double)(1+ carProhibition) / 7), 0.2), motorcycle.satisfaction , bus.satisfaction, sportsCar.satisfaction * ((double)(7 - carProhibition) / 7) };
     double satisfactionsSum = 0;
     double alpha[8] = { 0 };
 
@@ -2036,7 +2045,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     
     }
 
-    double costs[8] = { electicCar.cost, bigCar.cost, car.cost,collectionCar.cost, bike.cost, motorcycle.cost, bus.cost, sportsCar.cost };
+    double costs[8] = { electicCar.cost - electricCarSubsidy , bigCar.cost + weightTax*bigCar.weight, car.cost,collectionCar.cost + weightTax * collectionCar.weight , bike.cost - bikeSubsidy , motorcycle.cost, bus.cost - busSubsidy, sportsCar.cost };
     double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth+fuelTax*bigCar.fuelInput*30, car.pricePerMonth+fuelTax*car.fuelInput*30,collectionCar.pricePerMonth+fuelTax*collectionCar.fuelInput*30, bike.pricePerMonth, 
 	motorcycle.pricePerMonth+fuelTax*motorcycle.fuelInput*30, bus.pricePerMonth/(bus.capacity*30)+fuelTax*bus.fuelInput*30, sportsCar.pricePerMonth+fuelTax*sportsCar.fuelInput*30};
     double probabilities[8] = {0};
