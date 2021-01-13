@@ -1266,6 +1266,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="3dButton" type="Button" parent="2Dworld"]
+margin_left = 242.54
+margin_top = 31.1328
+margin_right = 379.54
+margin_bottom = 68.1328
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "2D MENU"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ExitConfirmationBox" type="Control" parent="2Dworld"]
 margin_left = 768.94
 margin_top = 208.649
@@ -1356,5 +1368,6 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/ResetConfirmationBox/ConfirmReset" to="3Dworld" method="_on_Reset_confirmed"]
 [connection signal="pressed" from="2Dworld/ResetConfirmationBox/CancelReset" to="3Dworld" method="_on_Reset_cancelled"]
 [connection signal="pressed" from="2Dworld/ExitButton" to="3Dworld" method="_on_ExitButton_pressed"]
+[connection signal="pressed" from="2Dworld/3dButton" to="3Dworld" method="_on_3dButton_pressed"]
 [connection signal="pressed" from="2Dworld/ExitConfirmationBox/ConfirmExit" to="3Dworld" method="_on_Exit_confirmed"]
 [connection signal="pressed" from="2Dworld/ExitConfirmationBox/CancelExit" to="3Dworld" method="_on_Exit_cancelled"]

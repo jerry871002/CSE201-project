@@ -112,6 +112,7 @@ void City::_register_methods()
     register_method((char*)"_on_Reset_confirmed", &City::_on_Reset_confirmed);
     register_method((char*)"_on_Reset_cancelled", &City::_on_Reset_cancelled);
     register_method((char*)"_on_ExitButton_pressed", &City::_on_ExitButton_pressed);
+	register_method((char*)"_on_3dButton_pressed", &City::_on_3dButton_pressed);
     register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
     register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
     register_method((char*)"_on_TransportMenuButton_pressed", &City::_on_TransportMenuButton_pressed);
@@ -657,6 +658,11 @@ void City::_on_ExitButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
 
+}
+
+void City::_on_3dButton_pressed()
+{
+	this->get_tree()->get_root()->get_node("Main/2Dworld")->set("visible", false);
 }
 
 void City::_on_Exit_cancelled()
