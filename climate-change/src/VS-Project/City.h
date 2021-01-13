@@ -123,6 +123,7 @@ namespace godot {
         
 
         void change_pie_chart(int value, NodePath name, bool isPositive);
+		void change_pie_label(int value, NodePath name);
 
         bool ClickActive{ false };
 
@@ -186,7 +187,7 @@ namespace godot {
         double return_energySupply();
         double return_environmentalCost();
         double return_totalSatisfaction();
-		int value_pie_chart(int);
+		int value_pie_chart_C02(int,int);
 
         float calculate_building_prob(float, float, float, double);
 
