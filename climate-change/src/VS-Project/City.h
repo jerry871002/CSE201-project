@@ -80,9 +80,11 @@ namespace godot {
         void _on_Reset_confirmed();
         void _on_Reset_cancelled();
         void _on_ExitButton_pressed();
+		void _on_3dButton_pressed();
         void _on_Exit_confirmed();
         void _on_Exit_cancelled();
         void _on_TransportMenuButton_pressed();
+
 
         // INITIAL GRAPHICAL SETUP
 
@@ -101,6 +103,7 @@ namespace godot {
         int days_since_last_simulation;
         int daycount = 0; //keeps track of the in-game days per year
         Array statsCarbonEmission{}; //written stats for carbon emissions
+        Array statsEnvironmentalCost{}; //written stats for environmental cost
         Array statsIncome{}; //written stats for GDP
         Array statsEnergy{}; //written stats for energy demand and supply
         Array statsUnemployment{}; //written stats for population - number of employees

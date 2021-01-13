@@ -112,6 +112,7 @@ void City::_register_methods()
     register_method((char*)"_on_Reset_confirmed", &City::_on_Reset_confirmed);
     register_method((char*)"_on_Reset_cancelled", &City::_on_Reset_cancelled);
     register_method((char*)"_on_ExitButton_pressed", &City::_on_ExitButton_pressed);
+	register_method((char*)"_on_3dButton_pressed", &City::_on_3dButton_pressed);
     register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
     register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
     register_method((char*)"_on_TransportMenuButton_pressed", &City::_on_TransportMenuButton_pressed);
@@ -149,12 +150,16 @@ void City::_register_methods()
     register_property<City, double>("energyDemand", &City::energyDemand, 0.0);
     register_property<City, double>("energySupply", &City::energySupply, 0.0);
     register_property<City, int>("totalSatisfaction", &City::totalSatisfaction, 0.0);
+    register_property<City, double>("environmentalCost", &City::environmentalCost, 0.0);
 
     //statistics:
     register_property<City, Array>("statsCarbonEmission", &City::statsCarbonEmission, {});
     register_property<City, Array>("statsIncome", &City::statsIncome, {});
     register_property<City, Array>("statsEnergy", &City::statsEnergy, {});
     register_property<City, Array>("statsUnemployment", &City::statsUnemployment, {});
+    register_property<City, Array>("statsTotalSatisfaction", &City::statsTotalSatisfaction, {});
+    register_property<City, Array>("statsPopulation", &City::statsPopulation, {});
+    register_property<City, Array>("statsEnvironmentalCost", &City::statsEnvironmentalCost, {});
 
 };
 
@@ -198,8 +203,36 @@ void City::_physics_process(float delta) {
    Array title{};
    title.push_back(to_godot_string("Date"));
 
-   title.push_back(to_godot_string("Carbon Emissions ()"));
+   title.push_back(to_godot_string("Carbon emissions in thousands of tons"));
    statsCarbonEmission.push_back(title);
+   title.pop_back();
+
+   title.push_back(to_godot_string("Environmental cost in euros"));
+   statsEnvironmentalCost.push_back(title);
+   title.pop_back();
+
+   title.push_back(to_godot_string("GDP in euros"));
+   statsIncome.push_back(title);
+   title.pop_back();
+
+   title.push_back(to_godot_string("Energy demand in kWh"));
+   title.push_back(to_godot_string("Energy production in kWh"));
+   statsEnergy.push_back(title);
+   title.pop_back();
+   title.pop_back();
+
+   title.push_back(to_godot_string("Unemployment in %"));
+   statsUnemployment.push_back(title);
+   title.pop_back();
+
+   title.push_back(to_godot_string("Total satisfaction in the city from 0 to 10"));
+   statsTotalSatisfaction.push_back(title);
+   title.pop_back();
+
+   title.push_back(to_godot_string("Population in number of people"));
+   statsPopulation.push_back(title);
+   title.pop_back();
+
 
     if (bool(this->time_speed))
     {
@@ -233,8 +266,6 @@ void City::_physics_process(float delta) {
     if (this->date_counter > 1)
     {
         // CALLED EVERY GAME DAY
-
-        write_stat_history_to_file();
         
         /*
         for (int i = 0; i < statsCarbonEmission.size(); ++i) {
@@ -250,18 +281,15 @@ void City::_physics_process(float delta) {
 
         int* datenumber = return_date(int(this->day_tick));
 
-        if (datenumber[0] == 1)
-        {
-
+        if (datenumber[0] == 1 || datenumber[0] == 15) {
+            write_stat_history_to_file();
         }
-
 
         
         if (datenumber[0] == 1) 
         {   
             // CALLED EVERY MONTH
-
-           transport_to_add();
+            transport_to_add();
         }
 
         if (datenumber[0] == 1 && datenumber[1] == 1) 
@@ -670,6 +698,11 @@ void City::_on_ExitButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
 
+}
+
+void City::_on_3dButton_pressed()
+{
+	this->get_tree()->get_root()->get_node("Main/2Dworld")->set("visible", false);
 }
 
 void City::_on_Exit_cancelled()
@@ -1982,19 +2015,29 @@ void City::write_stat_history_to_file() {
 
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
-    newCarbonEmission.push_back((int)(carbonEmission + 0.5));
+    newCarbonEmission.push_back((int)(carbonEmission/10^6 + 0.5));
 
-    if (statsCarbonEmission.size() > 1462) { //4years
+    if (statsCarbonEmission.size() > 100) {  
             statsCarbonEmission.pop_front();
         }
     statsCarbonEmission.push_back(newCarbonEmission);
+
+
+    Array newEnvironmentalCost{};
+    newEnvironmentalCost.push_back(return_word_date_godot());
+    newEnvironmentalCost.push_back((int)(environmentalCost + 0.5));
+
+    if (statsEnvironmentalCost.size() > 100) {  
+            statsEnvironmentalCost.pop_front();
+        }
+    statsEnvironmentalCost.push_back(newEnvironmentalCost);
 
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
     newIncome.push_back((int)(income + 0.5));
 
-    if (statsIncome.size() > 1462) { //4years
+    if (statsIncome.size() > 100) {  
             statsIncome.pop_front();
         }
     statsIncome.push_back(newIncome);
@@ -2005,7 +2048,7 @@ void City::write_stat_history_to_file() {
     newEnergy.push_back((int)(energyDemand + 0.5));
     newEnergy.push_back((int)(energySupply + 0.5));
 
-    if (statsEnergy.size() > 1462) { //4years
+    if (statsEnergy.size() > 100) {  
             statsEnergy.pop_front();
         }
     statsEnergy.push_back(newEnergy);
@@ -2015,7 +2058,7 @@ void City::write_stat_history_to_file() {
     newUnemployment.push_back(return_word_date_godot());
     newUnemployment.push_back((int)(100-100*(numberOfEmployees/population) + 0.5));
 
-    if (statsUnemployment.size() > 1462) { //4years
+    if (statsUnemployment.size() > 100) {  
             statsUnemployment.pop_front();
         }
     statsUnemployment.push_back(newUnemployment);
@@ -2025,7 +2068,7 @@ void City::write_stat_history_to_file() {
     newTotalSatisfaction.push_back(return_word_date_godot());
     newTotalSatisfaction.push_back((int)(10*totalSatisfaction + 0.5));
 
-    if (statsTotalSatisfaction.size() > 1462) { //4years
+    if (statsTotalSatisfaction.size() > 100) {  
             statsTotalSatisfaction.pop_front();
         }
     statsTotalSatisfaction.push_back(newTotalSatisfaction);
@@ -2034,7 +2077,7 @@ void City::write_stat_history_to_file() {
     newPopulation.push_back(return_word_date_godot());
     newPopulation.push_back((int)(population + 0.5));
 
-    if (statsPopulation.size() > 1462) { //4years
+    if (statsPopulation.size() > 100) {  
             statsPopulation.pop_front();
         }
     statsPopulation.push_back(newPopulation);
