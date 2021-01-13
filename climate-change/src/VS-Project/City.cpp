@@ -114,6 +114,8 @@ void City::_register_methods()
     register_method((char*)"_on_ExitButton_pressed", &City::_on_ExitButton_pressed);
     register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
     register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
+    register_method((char*)"_on_TransportMenuButton_pressed", &City::_on_TransportMenuButton_pressed);
+
     register_method((char*)"change_pie_chart", &City::change_pie_chart);
 
     
@@ -727,6 +729,22 @@ void City::_on_Reset_confirmed()
     this->get_tree()->reload_current_scene();
 }
 
+
+
+void City::_on_TransportMenuButton_pressed() 
+{
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
+
+    String transportInfo = String("INFORMATION") + String("\n");
+    transportInfo += String("Transport") + String("\n");
+    transportInfo += String((int)(current_car_quantities[0])) + String("Electric Cars") + String("\n");
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", transportInfo);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
+    
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("position", Vector2((get_viewport()->get_size().x) / 2, (get_viewport()->get_size().y) / 2));
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
+}
 
 
 void City::_on_Menu_pressed(String name)
