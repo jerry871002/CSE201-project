@@ -100,14 +100,12 @@ namespace godot {
         int day_tick; // keeps track of the in-game days
         int days_since_last_simulation;
         int daycount = 0; //keeps track of the in-game days per year
-        double stat = 0; //stat example
-        double stats[10][366]; //stats array
-        Array statsCarbonEmission{}; //written stats for carbonEmission
-        Array statsIncome{};
-        Array statsEnergyDemand{};
-        Array statsEnergySupply{};
-        Array statsUnemployment{};
-
+        Array statsCarbonEmission{}; //written stats for carbon emissions
+        Array statsIncome{}; //written stats for GDP
+        Array statsEnergy{}; //written stats for energy demand and supply
+        Array statsUnemployment{}; //written stats for population - number of employees
+        Array statsTotalSatisfaction{}; //written stats for population - number of employees
+        Array statsPopulation{}; //written stats for population
         void update_date();
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation
@@ -125,6 +123,7 @@ namespace godot {
         
 
         void change_pie_chart(int value, NodePath name, bool isPositive);
+		void change_pie_label(int value, NodePath name);
 
         bool ClickActive{ false };
 
@@ -188,7 +187,7 @@ namespace godot {
         double return_energySupply();
         double return_environmentalCost();
         double return_totalSatisfaction();
-		int value_pie_chart(int);
+		int value_pie_chart_C02(int,int);
 
         float calculate_building_prob(float, float, float, double);
 

@@ -117,6 +117,7 @@ void City::_register_methods()
     register_method((char*)"_on_TransportMenuButton_pressed", &City::_on_TransportMenuButton_pressed);
 
     register_method((char*)"change_pie_chart", &City::change_pie_chart);
+	register_method((char*)"change_pie_label", &City::change_pie_label);
 
     
     register_method((char*)"add_shop", &City::add_shop);
@@ -152,8 +153,7 @@ void City::_register_methods()
     //statistics:
     register_property<City, Array>("statsCarbonEmission", &City::statsCarbonEmission, {});
     register_property<City, Array>("statsIncome", &City::statsIncome, {});
-    register_property<City, Array>("statsEnergyDemand", &City::statsEnergyDemand, {});
-    register_property<City, Array>("statsEnergySupply", &City::statsEnergySupply, {});
+    register_property<City, Array>("statsEnergy", &City::statsEnergy, {});
     register_property<City, Array>("statsUnemployment", &City::statsUnemployment, {});
 
 };
@@ -193,6 +193,13 @@ void City::_physics_process(float delta) {
         CO2Emission *=1- carProhibition / 7;
     }
     */
+
+   // initialize stats arrays :
+   Array title{};
+   title.push_back(to_godot_string("Date"));
+
+   title.push_back(to_godot_string("Carbon Emissions ()"));
+   statsCarbonEmission.push_back(title);
 
     if (bool(this->time_speed))
     {
@@ -313,12 +320,14 @@ void City::_input(InputEvent*)
         this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
         this->notification_active = false;
         this->notification_counter = 0;
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
     }
 
     if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->get("visible")) {
         this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
         this->notification_active = false;
         this->notification_counter = 0;
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
     }
 
     if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))
@@ -653,12 +662,14 @@ void City::_on_ExitButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
 
 }
 
 void City::_on_Exit_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
@@ -686,12 +697,14 @@ void City::_on_ResetButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
 
 }
 
 void City::_on_Reset_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
@@ -741,6 +754,7 @@ void City::_on_Reset_confirmed()
 void City::_on_TransportMenuButton_pressed() 
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
 
     String transportInfo = String("INFORMATION") + String("\n");
     transportInfo += String("Transport") + String("\n");
@@ -748,7 +762,7 @@ void City::_on_TransportMenuButton_pressed()
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", transportInfo);
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
-    
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("position", Vector2((get_viewport()->get_size().x) / 2, (get_viewport()->get_size().y) / 2));
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
 }
@@ -762,6 +776,7 @@ void City::_on_Menu_pressed(String name)
     hide_menus();
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
 
@@ -789,11 +804,11 @@ String City::get_button_info_text() {
     if (this->active_button == String("PanelSubsidyForShops"))
     {
         //this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
-        return String("Please input a value between 0 and 450. This will be a solar panel subsidy for shops in euros.");
+        return String("Please input a value between 0 and 450. This will be a solar panel subsidy for shops (restaurants, small shops and malls) in euros.");
     }
     else if (this->active_button == String("ChangePanelProbabilityForRestaurants"))
     {
-        return String("Please input a value between 0 and 1. This value will be the new probability that solar panels are installed in a year for restaurants in the city.");
+        return String("Please input a value between 0 and 800. This value will be the new wind Turbine subsidy for shops (restaurants, small shops and malls) in euros.");
     }
     else if (this->active_button == String("EfficiencySupercriticalCoalPlant"))
     {
@@ -883,6 +898,7 @@ void City::hide_menus()
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuProduction")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
 }
 
 void City::_on_Validate_pressed()
@@ -892,6 +908,7 @@ void City::_on_Validate_pressed()
     String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
 
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
     this->_on_Game_Speed_changed();
@@ -929,20 +946,37 @@ void City::implement_policies(double value) {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
-    else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) {
-        if (value >= 0 && value < 1) {
-            Godot::print("PANEL PROBABILITY WILL BE CHANGED ONLY FOR RESTAURANTS");
-            for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
-            {
-                if ((String)(*it)->get("object_type") == (String)("Restaurant")) {
-                    (*it)->set("panel_probability", value);
-                }
+   else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) {    ///I can Changed the name here
+		if (value >= 0 && value <= 800) {
+			Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON SHOPS IMPLEMENTED");
+			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
+			{
+				//if ((String)(*it)->get("object_type") == (String)("Restaurant")) {}
+				(*it)->set("wind_turbine_subsidies", value);
+				
             }
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
+
+	//##########
+	else if (this->active_button == String("WindturbinesHousing")) {
+        if (value >= 0 && value <= 800) {
+            Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON HOUSING IMPLEMENTED");
+            for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+            {
+                (*it)->set("wind_turbine_subsidies", value);
+            }
+        }
+        else {
+            this->trigger_notification(String("The value you provided was not in the specified range."));
+        }
+    }
+
+	///######
+
     else if (this->active_button == String("EfficiencySupercriticalCoalPlant")) {
         if (value == 0 || value == 1) {
             Godot::print("THE COAL POWER PLANTS WILL CHANGE THEIR EFFICIENCY");
@@ -1180,16 +1214,22 @@ void City::_on_Game_Speed_changed()
     time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
 
     hide_menus();
-
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
-    change_pie_chart(totalSatisfaction, "PieSatisfaction", true);
-    change_pie_chart(carbonEmission, "PieCO2", false);
-	change_pie_chart(income, "PieIncome", true);
-    change_pie_chart(numberOfEmployees, "PieEmployees", true);
-    change_pie_chart(energySupply, "PiePowerSupply", false);
-    change_pie_chart(energyDemand, "PiePowerDemand", false);
+    change_pie_chart(100*(totalSatisfaction/(10*all_structures.size())), "PieSatisfaction", true); 
+    change_pie_chart(value_pie_chart_C02(carbonEmission, 1000000), "PieCO2", false); 
+	change_pie_chart(100*(income/population), "PieIncome", true); 
+    change_pie_chart(energyDemand, "PieUnemployement", false); //EnergyDemand variable is temporary
+    change_pie_chart(value_pie_chart_C02(energyDemand, 100000), "PiePowerDemand", false);
+
+	change_pie_label(totalSatisfaction, "PieSatisfaction");
+	change_pie_label(carbonEmission, "PieCO2");
+	change_pie_label(income, "PieIncome");
+	change_pie_label(numberOfEmployees, "PieEmployees");
+	change_pie_label(energyDemand, "PieUnemployement");
+	change_pie_label(energyDemand, "PiePowerDemand");
+
 
 }
 
@@ -1944,7 +1984,7 @@ void City::write_stat_history_to_file() {
     statsCarbonEmission.push_back(newCarbonEmission);
 
 
-    Array newIncome{};
+    Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
     newIncome.push_back((int)(income + 0.5));
 
@@ -1954,24 +1994,15 @@ void City::write_stat_history_to_file() {
     statsIncome.push_back(newIncome);
 
 
-    Array newEnergyDemand{};
-    newEnergyDemand.push_back(return_word_date_godot());
-    newEnergyDemand.push_back((int)(energyDemand + 0.5));
+    Array newEnergy{};
+    newEnergy.push_back(return_word_date_godot());
+    newEnergy.push_back((int)(energyDemand + 0.5));
+    newEnergy.push_back((int)(energySupply + 0.5));
 
-    if (statsEnergyDemand.size() > 1462) { //4years
-            statsEnergyDemand.pop_front();
+    if (statsEnergy.size() > 1462) { //4years
+            statsEnergy.pop_front();
         }
-    statsEnergyDemand.push_back(newEnergyDemand);
-
-
-    Array newEnergySupply{};
-    newEnergySupply.push_back(return_word_date_godot());
-    newEnergySupply.push_back((int)(energySupply + 0.5));
-
-    if (statsEnergySupply.size() > 1462) { //4years
-            statsEnergySupply.pop_front();
-        }
-    statsEnergySupply.push_back(newEnergySupply);
+    statsEnergy.push_back(newEnergy);
 
 
     Array newUnemployment{};
@@ -1983,32 +2014,25 @@ void City::write_stat_history_to_file() {
         }
     statsUnemployment.push_back(newUnemployment);
 
-    
-    //std::cout << "DEBUG: WRITE STAT FUNC "  << std::endl;
-    /*
 
-    stat+=50;
-    int *date; 
-    date = return_date(day_tick);
-    int day = *date;
-    int month = *(date+1);
-    int year = *(date+2);
-    
-    if (day==1 && month==1 && year!=1 && year!=2) {
-        daycount=0;
-        int leap = (year-1)%4;
-        add_data("alltimestats", std::to_string(year-1), std::to_string(find_avg(stats[0],leap)));
-        double stats[10][366];
-        remove(::get_path("statsyear" + std::to_string(year-2)).c_str());
-    }
-    
-    add_data("datas" + std::to_string(year), return_word_date(day_tick), std::to_string(0));
+    Array newTotalSatisfaction{}; //to be finished
+    newTotalSatisfaction.push_back(return_word_date_godot());
+    newTotalSatisfaction.push_back((int)(10*totalSatisfaction + 0.5));
 
-    delete_line("statsyear" + std::to_string(year), return_word_date(day_tick-365));
-    
-    stats[0][daycount]=stat;
-    daycount+=1;
-    */
+    if (statsTotalSatisfaction.size() > 1462) { //4years
+            statsTotalSatisfaction.pop_front();
+        }
+    statsTotalSatisfaction.push_back(newTotalSatisfaction);
+
+    Array newPopulation{};
+    newPopulation.push_back(return_word_date_godot());
+    newPopulation.push_back((int)(population + 0.5));
+
+    if (statsPopulation.size() > 1462) { //4years
+            statsPopulation.pop_front();
+        }
+    statsPopulation.push_back(newPopulation);
+
 }
 
 
@@ -2185,25 +2209,27 @@ double City::normalGenerator(double mean, double stdDev){
     return distribution(generator); 
 }
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
-int City::value_pie_chart(int value) {
-    int newvalue = (int)(100 * (1 - (1 / (value + 1))));
+// 100000 pour power demand et 1 million pour C02
+int City::value_pie_chart_C02(int value, int growth) {
+    int newvalue = (int)(100 * (1- pow(value/growth,-1)));
     return newvalue;
 }
 
 void City::change_pie_chart(int value, NodePath name, bool isPositive)
 {
     TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
-	Label* label = ((Label*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name)->get_child(1));
-
-
     if (isPositive) {
-        node->set_tint_progress(Color(min(2 - (double)value_pie_chart(value) / 5, 1.0), min((double)value_pie_chart(value) / 5, 1.0), 0, 1.0));
+        node->set_tint_progress(Color(min(2 - (double)value / 50, 1.0), min((double)value / 50, 1.0), 0, 1.0));
     }
     else {
-        node->set_tint_progress(Color(min((double)value_pie_chart(value) / 5, 1.0), min(2 - (double)value_pie_chart(value) / 5, 1.0), 0, 1.0));  
+        node->set_tint_progress(Color(min((double)value / 50, 1.0), min(2 - (double)value / 50, 1.0), 0, 1.0));  
     }
-    node->set("value", value_pie_chart(value));
-    std::string standardString = std::to_string((int)value);
+    node->set("value", value);
+}
+
+void City::change_pie_label(int value, NodePath name){
+	Label* label = ((Label*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name)->get_child(1));
+	std::string standardString = std::to_string((int)value);
     godot::String godotString = godot::String(standardString.c_str());
 	label->set("text", godotString);
 }
