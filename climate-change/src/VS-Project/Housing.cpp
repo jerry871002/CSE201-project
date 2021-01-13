@@ -373,15 +373,14 @@ double House::get_environmentalcost() {
     return this->environmentalCost;
 }
 
-House::House() {
+House::House() 
+{
 
-	
 }
 
 void House::_ready()
 {
 	this->Housing::_ready();
-	//this->house_type();
 }
 
 void House::_register_methods()
