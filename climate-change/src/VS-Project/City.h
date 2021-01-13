@@ -113,7 +113,7 @@ namespace godot {
         void simulation_housing();
         void simulation_energy();
         void simulation_production();
-        void simulation_transport();
+        
 
         void change_pie_chart(int value, NodePath name, bool isPositive);
 
@@ -220,7 +220,7 @@ namespace godot {
         // city indices
 
         double income;
-        double population;
+        int population;
         double numberOfEmployees;
         double carbonEmission;
         double energyDemand;

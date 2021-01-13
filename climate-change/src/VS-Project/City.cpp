@@ -140,7 +140,7 @@ void City::_register_methods()
 
 
     register_property<City, double>("income", &City::income, 0.0);
-    register_property<City, double>("population", &City::population, 0.0);
+    register_property<City, int>("population", &City::population, 0);
     register_property<City, double>("numberOfEmployees", &City::numberOfEmployees, 0.0);
     register_property<City, double>("carbonEmission", &City::carbonEmission, 0.0);
     register_property<City, double>("energyDemand", &City::energyDemand, 0.0);
@@ -490,6 +490,23 @@ void City::generate_initial_city_graphics()
 
 
     this->budget += 1000 * all_structures.size();
+
+    // loop to ensure population and employees match up by tweaking the population
+    while (population < numberOfEmployees * 1.02 || population > numberOfEmployees * 1.10) {
+        if (population < numberOfEmployees * 1.02) {
+            for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+            {
+                (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") + (int)(rand() % 3));
+            }
+        }
+        if (population > numberOfEmployees * 1.10) {
+            for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
+            {
+                (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") - (int)(rand() % 2));
+            }
+        }
+
+    }
 
     std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
 }
@@ -1542,72 +1559,6 @@ void City::simulation_housing()
     */
 
 }
-
-void City::simulation_transport()
-{
-
-    //std::cout << "Simulation TRANSPORT" << std::endl;
-
-
-    // WHAT IS ALL THIS DOING HERE ??
-    // why are we still setting everything to 0 and setting population to 50000 ?
-
-    this->income = 0;
-    this->population = 50000;
-    this->carbonEmission = 0;
-    this->numberOfEmployees = 0;
-    this->energyDemand = 0;
-    this->energySupply = 0;
-    this->totalSatisfaction = 50;
-
-    for (std::vector<Transport*>::iterator it = all_transports.begin(); it != all_transports.end(); ++it)
-    {
-        // run the vechicle simulation
-        // count up all the vehicle stuff
-    }
-
-    // COUNT UP ALL INDICES FOR EVERYTHING
-
-    for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
-    {
-        this->carbonEmission += (double)((*it)->get("CO2Emission"));
-        this->numberOfEmployees += (double)((*it)->get("employment"));
-        this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
-        // this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10; 
-        this->energyDemand += (double)((*it)->get("energyUse"));
-        this->environmentalCost += (double)((*it)->get("environmentalCost"));
-    }
-
-    for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
-    {
-        this->carbonEmission += (double)((*it)->get("CO2Emission"));
-
-        // this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;        satisfaction should be changed in the function below, with the day tick %4
-        //max/min income
-    }
-
-    for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
-    {
-        this->carbonEmission += (double)((*it)->get("CO2Emission"));
-        //this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
-        this->energySupply += (double)((*it)->get("energyperDay"));
-        this->numberOfEmployees += (double)((*it)->get("employment"));
-        this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
-    }
-
-    for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
-    {
-        this->carbonEmission += (double)((*it)->get("CO2Emission"));
-        //this->totalSatisfaction += (double)((*it)->get("satisfaction")) * 10;
-        this->energyDemand += (double)((*it)->get("energyUse"));
-        this->environmentalCost += (double)((*it)->get("environmentalCost"));
-        this->numberOfEmployees += (double)((*it)->get("employment"));
-        this->income += (double)((*it)->get("employment")) * (double)((*it)->get("averageWage"));
-        //factoryGDP
-    }
-
-}
-
 
 
 

@@ -48,7 +48,9 @@ void Housing::_register_methods()
 	register_method((char*)"_ready", &Housing::_ready);
 	register_method((char*)"_process", &Housing::_process);
 	register_property<Housing, int>("housingIncome", &Housing::housingIncome, 0);
+	
 }
+
 
 void Housing::_ready()
 {
@@ -193,6 +195,8 @@ double Housing::get_max_income() {
     return this->maxIncome;
 }
 
+
+
 double Housing::get_min_income() {
     return this->minIncome;
 }
@@ -311,8 +315,8 @@ House::House() {
         //minimum wage 53 € per day - get money even on saturday and saturday 
         // i take max to be 333€
 
-        numberOfInhabitants = (rand() % (6) + 1);
-        if (numberOfInhabitants >= 2) {
+        this->numberOfInhabitants = (rand() % (6) + 1);
+        if (this->numberOfInhabitants >= 2) {
             //have two salaries 
 			housingIncome = (rand() % (maxIncome-minIncome)) + minIncome + (rand() % (maxIncome-minIncome)) + minIncome;
 		}
@@ -345,8 +349,8 @@ House::House() {
 		rooftopWindTurbineOn = false;
 
 		srand((int)time(0));
-        numberOfInhabitants = (rand() % (6) + 1);
-        if (numberOfInhabitants >= 2) {
+        this->numberOfInhabitants = (rand() % (6) + 1);
+        if (this->numberOfInhabitants >= 2) {
             housingIncome = (rand() % (maxIncome-minIncome)) + minIncome + (rand() % (maxIncome-minIncome)) + minIncome;
 		
         }

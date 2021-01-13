@@ -82,6 +82,8 @@ namespace godot {
         double satisfaction{ 1 }; // on scale of 10
         double environmentalCost = 0; // environmental and health costs in euros 
         double age = 0; //age of each particular object in days
+        int numberOfInhabitants{ 0 }; // only for housing, 0 for everything else, put it here to be able to update city counters
+
 
         // The following will be city-wide counters that will be updated every day : 
         // income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply
@@ -181,6 +183,9 @@ namespace godot {
         double windLifetime = 5; // years of energy production warranty
 
 
+
+        int get_inhabitants();
+        void set_inhabitants(int);
         virtual double get_maintenance();
         virtual void set_maintenance(double maintenance);
         virtual double get_age();

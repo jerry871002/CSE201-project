@@ -53,6 +53,16 @@ void Structure::set_satisfaction(double sat) {
     this->satisfaction = sat;
 }
 
+
+// these are only for houses
+int Structure::get_inhabitants() {
+    return this->numberOfInhabitants;
+}
+
+void Structure::set_inhabitants(int value) {
+    this->numberOfInhabitants = value;
+}
+
 double Structure::get_age() {
     return this->age;
 }
@@ -147,6 +157,7 @@ void Structure::_register_methods()
     register_property<Structure, double>("environmentalCost", &Structure::set_environmental_cost, &Structure::get_environmental_cost, 1);
     register_property<Structure, double>("buildingTime", &Structure::set_building_time, &Structure::get_building_time, 1);
     register_property<Structure, double>("age", &Structure::set_age, &Structure::get_age, 1);
+    register_property<Structure, int>("numberOfInhabitants", &Structure::set_inhabitants, &Structure::get_inhabitants, 0);
 
     //register_method((char*)"get_co2emissions", &Structure::get_co2emissions);
 
@@ -162,6 +173,7 @@ void Structure::_register_methods()
     register_property<Structure, double>("fertilizerProhibited", &Structure::fertilizerProhibited, 0);
     register_property<Structure, double>("solar_panel_subsidies_housing", &Structure::solar_panel_subsidies_housing, 0);
     register_property<Structure, double>("wind_turbine_subsidies", &Structure::wind_turbine_subsidies, 0);
+
 }
 
 void Structure::_init()
@@ -188,6 +200,8 @@ void Structure::add_city_counters() {
     myCity->set("energyDemand", double(myCity->get("energyDemand")) + double(this->get("energyUse")));
     myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) + double(this->get("employment")));
     myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) + double(this->get("satisfaction")));
+    myCity->set("population", int(myCity->get("population")) + int(this->get("numberOfInhabitants")));
+
 }
 
 void Structure::subtract_city_counters() {
@@ -196,6 +210,7 @@ void Structure::subtract_city_counters() {
     myCity->set("energyDemand", double(myCity->get("energyDemand")) - double(this->get("energyUse")));
     myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) - double(this->get("employment")));
     myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) - double(this->get("satisfaction")));
+    myCity->set("population", int(myCity->get("population")) - int(this->get("numberOfInhabitants")));
 }
 
 Vector3 Structure::get_position() {

@@ -33,18 +33,25 @@ namespace godot {
 		int windowCost = 200;
 		int windowNumber;
 		int solarPanelCost = 1500;
-		double numberOfInhabitants = 0;
+		int numberOfInhabitants = 0;
 		int maxIncome=333; //max income per day, should be defined by sim team
 		int minIncome=53; // min income per day, I put values for now so that it compiles
 		int solarPanelAge = 0;
 		int doubleGlazingAge = 0;
 		int rooftopWindTurbineAge = 0;
+
+
+
 		double set_max_income();
 		double set_min_income();
 		double get_max_income();
 		double get_min_income();
 		double get_solar_panel_age();
-		double get_double_glazing_age();	
+		double get_double_glazing_age();
+
+
+
+
 		int doubleGlazingSatisfaction = 5;
 
 	private:
@@ -86,6 +93,7 @@ namespace godot {
 		double get_co2emissions();
 		double get_energyuse();
 		double get_environmentalcost();
+		
 		
 		int buildingType;
 		double coOwnershipBudget = 0;
