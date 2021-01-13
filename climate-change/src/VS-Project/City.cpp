@@ -220,12 +220,12 @@ void City::_physics_process(float delta) {
 
         statsCarbonEmission.push_back(carbonEmission);
         
-
+        /*
         for (int i = 0; i < statsCarbonEmission.size(); ++i) {
             Godot::print(String(statsCarbonEmission[i]));
         }
         Godot::print("Array should be printed now");
-        
+        */
         
         day_tick++;
         std::cout << "Day tick : " << (this->day_tick) << endl;
@@ -1155,8 +1155,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             this->add_child((Node*)node);
             ((Transport*)node)->set("transportType", type);
 
-            //((Transport*)node)->transport_type();
-
+            
             //income -= node->cost;
             //all_transports.push_back((Transport*)node);         THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
         }
