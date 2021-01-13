@@ -494,19 +494,25 @@ void City::generate_initial_city_graphics()
     this->budget += 1000 * all_structures.size();
 
     // loop to ensure population and employees match up by tweaking the population
+    
     while (population < numberOfEmployees * 1.02 || population > numberOfEmployees * 1.10) {
         if (population < numberOfEmployees * 1.02) {
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
             {
+                this->population -= (int)(*it)->get("numberOfInhabitants");
                 (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") + (int)(rand() % 3));
+                this->population += (int)(*it)->get("numberOfInhabitants");
             }
         }
         if (population > numberOfEmployees * 1.10) {
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
             {
+                this->population -= (int)(*it)->get("numberOfInhabitants");
                 (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") - (int)(rand() % 2));
+                this->population += (int)(*it)->get("numberOfInhabitants");
             }
         }
+        
 
     }
 
@@ -1191,6 +1197,12 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         Node* node;
         //std::cout << "DEBUG: instanciating" << std::endl;
         node = scene->instance();
+        if (scene == LowHouseScene) {
+            ((House*)node)->set("houseType", 1.0); //((House*)node)->house_type();
+        } 
+        if (scene == HighHouseScene) {
+            ((House*)node)->set("houseType", 2.0); //((House*)node)->house_type();
+        }
         //std::cout << "DEBUG: setting scale and translation" << std::endl;
         node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
         node->set("translation", pos);
@@ -1202,8 +1214,10 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         all_houses.push_back((Housing*)node);
         all_structures.push_back((Structure*)node);
         trees_vector.push_back((Structure*)node);
+        
+        
 
-
+         
         // traffic stuff
         //std::cout << "DEBUG: traffic stuff called" << std::endl;
         //double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building
@@ -1216,6 +1230,8 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
        // std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
         traffic_preparation(x, y);
         //std::cout << "DEBUG: add house done" << std::endl;
+
+        std::cout << "DEBUG: ADD HOUSE DONE" << std::endl;
     }
 }
 

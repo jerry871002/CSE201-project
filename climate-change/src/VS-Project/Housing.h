@@ -67,7 +67,14 @@ namespace godot {
 		~House();
 		virtual String get_object_type() { return "House"; };
 
+		static void _register_methods();
+		virtual void _ready();
+
+		void set_houseType(int type);
+		int get_houseType();
+
 		virtual void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
+		void house_type();
 		bool solar_panel(); 
 		bool double_glazing(); // improve insulation
 		bool rooftop_wind_turbines();

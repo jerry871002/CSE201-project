@@ -25,6 +25,7 @@ void Shop::_ready()
 {
     this->Structure::_ready();
     this->get_node("MeshComponents/SolarPanels")->set("visible", false);
+    this->get_node("MeshComponents/WindTurbine")->set("visible", false);
 }
 
 Shop::Shop()

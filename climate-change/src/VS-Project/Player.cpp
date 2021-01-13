@@ -88,7 +88,6 @@ void Player::_process(float delta)
 		worldEnv->get_environment()->set("glow_enabled", false);
 	}
 	this->translate(motion);
-	//this->move_and_collide(motion);
 	this->set_rotation_degrees(rotation);
 	this->update_camera_angle();
 
@@ -102,6 +101,10 @@ void Player::_physics_process(float delta)
 void Player::_input(InputEvent* e)
 {
 	motion = Vector3(0, 0, 0);
+
+	// HIDE NOTIFICATION BOX
+
+	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
 
 	// MOUSE MOTION EVENTS
 

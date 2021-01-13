@@ -28,6 +28,15 @@ String Housing::get_object_info()
 	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
 	info += "Energy used by the building in kWh: " + to_godot_string(this->energyUse) + String("\n");
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+	info += "Number of inhabitants: " + to_godot_string((int)this->get("numberOfInhabitants")) + String("\n");
+	if (get_object_type() == String("House")) {
+		info += "This is a house of type: " + to_godot_string((int)this->get("houseType")) + String("\n");
+	}
+	info += "SUBSIDY PANELS: " + to_godot_string((int)this->get("solar_panel_subsidies_housing")) + String("\n");
+	info += "PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
+	info += "SUBSIDY TURBINES: " + to_godot_string((int)this->get("wind_turbine_subsidies")) + String("\n");
+	info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");
+	
 	return info;
 }
 
@@ -55,6 +64,8 @@ void Housing::_register_methods()
 void Housing::_ready()
 {
 	this->Structure::_ready();
+	this->get_node("MeshComponents/SolarPanels")->set("visible", false);
+	this->get_node("MeshComponents/WindTurbine")->set("visible", false);
 }
 
 void Housing::_process(float delta) {
@@ -73,7 +84,7 @@ void Housing::simulate_step(double days) {
 
 	if (int(this->solarPanelAge) == 0) {
 
-        //
+        
         double temp1 = double(1.0 - this->panel_probability);
         double temp2 = double(days / 365.0);
         double temp3 = pow(temp1, temp2);
@@ -126,8 +137,8 @@ void Housing::simulate_step(double days) {
     else {
         this->doubleGlazingAge = 0;
         doubleGlazingOn = false;
-        this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
-        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+        
+        
     }
 
 	if (int(this->rooftopWindTurbineAge) == 0) {
@@ -145,7 +156,7 @@ void Housing::simulate_step(double days) {
             rooftopWindTurbineOn = true;
             rooftopWindTurbineAge = 100;
             this->get_node("MeshComponents/WindTurbine")->set("visible", rooftopWindTurbineOn);
-            //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+
         }
         else {}
     }
@@ -156,11 +167,11 @@ void Housing::simulate_step(double days) {
     else {
         this->rooftopWindTurbineAge = 0;
         rooftopWindTurbineOn = false;
-        this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
-        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+        this->get_node("MeshComponents/WindTurbine")->set("visible", rooftopWindTurbineOn);
+
     } 
 
-	age += days; 
+	
 	if (this->PanelsOn) {
 		this->solarPanelAge += days;
 	}
@@ -300,75 +311,117 @@ double House::get_environmentalcost() {
 
 House::House() {
 
-	maxIncome=333; 
-	minIncome=53; 
 	
-    switch (houseType){
-	case 1: { //Low level house
+}
+
+void House::_ready()
+{
+	this->Housing::_ready();
+	//this->house_type();
+}
+
+void House::_register_methods()
+{
+	register_method((char*)"_ready", &House::_ready);
+	register_method((char*)"house_type", &House::house_type);
+	register_property<House, int>("houseType", &House::set_houseType, &House::get_houseType, 1);
+}
+
+void House::set_houseType(int type)
+{
+	this->houseType = type;
+	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
+
+	std::cout << "HOUSE INITIALIZE TYPE CALLED" << type << std::endl;
+	maxIncome = 333;
+	minIncome = 53;
+
+	if (type == 1) {
+		std::cout << "HOUSE INITIALIZE TYPE 1" << std::endl; //Low level house
 	//definition of low level house, has no solar panels, no double glazing and no wind turbines on roof 
 		PanelsOn = false;
 		doubleGlazingOn = false;
 		rooftopWindTurbineOn = false;
 
+		std::cout << "HOUSE INITIALIZE TYPE 1 DEBUG 1" << std::endl;
 
 		srand((int)time(0));
-        //minimum wage 53 € per day - get money even on saturday and saturday 
-        // i take max to be 333€
+		//minimum wage 53 € per day - get money even on saturday and saturday 
+		// i take max to be 333€
 
-        this->numberOfInhabitants = (rand() % (6) + 1);
-        if (this->numberOfInhabitants >= 2) {
-            //have two salaries 
-			housingIncome = (rand() % (maxIncome-minIncome)) + minIncome + (rand() % (maxIncome-minIncome)) + minIncome;
+		this->numberOfInhabitants = (rand() % (6) + 1);
+		if (this->numberOfInhabitants >= 2) {
+			//have two salaries 
+			housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
 		}
 
-        else {
-            housingIncome = (rand() % (maxIncome-minIncome)) + minIncome;
-        }
-        
-        
-        //Attributes for a low level house 
-        cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
-        energyUse= 68.49; //25000kWh per year i.e. 13.69 kWh per day (from heating and all )
-        maintenance = 0.1765; //cost in euros per kWh
-        CO2Emission = 0.0065; //6.5g per kWh
-        buildingTime = 140; //in average, building a house takes about 140 days
-        satisfaction = 3; //assuming we are on a scale from 0 to 10
+		else {
+			housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
+		}
 
-        //attributes special to this class
-        windowNumber = 5; 
-        age = 0; // set the age of the house at 0 
-            
-		break;
+		std::cout << "HOUSE INITIALIZE TYPE 1 DEBUG 2" << std::endl;
+
+		//Attributes for a low level house 
+		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
+		energyUse = 68.49; //25000kWh per year i.e. 13.69 kWh per day (from heating and all )
+		maintenance = 0.1765; //cost in euros per kWh
+		CO2Emission = 0.0065; //6.5g per kWh
+		buildingTime = 140; //in average, building a house takes about 140 days
+		satisfaction = 3; //assuming we are on a scale from 0 to 10
+
+		//attributes special to this class
+		windowNumber = 5;
+		age = 0; // set the age of the house at 0 
+
 	}
-
-	case 2:  { // High Level House 
+	else {
+		std::cout << "HOUSE INITIALIZE TYPE 2" << std::endl; // High Level House 
 		//has properties : double glazing 
 
 		PanelsOn = false;
 		doubleGlazingOn = true;
 		rooftopWindTurbineOn = false;
 
+		std::cout << "HOUSE INITIALIZE TYPE 2 DEBUG 1" << std::endl;
+
 		srand((int)time(0));
-        this->numberOfInhabitants = (rand() % (6) + 1);
-        if (this->numberOfInhabitants >= 2) {
-            housingIncome = (rand() % (maxIncome-minIncome)) + minIncome + (rand() % (maxIncome-minIncome)) + minIncome;
-		
-        }
-		
+		this->numberOfInhabitants = (rand() % (6) + 1);
+		if (this->numberOfInhabitants >= 2) {
+			housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
+
+		}
+
 		else {
-            housingIncome = (rand() % (maxIncome-minIncome)) + minIncome;
-        }
-        //attributes from structure class
-        cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
-        energyUse = 54.79; //20000kWh per year i.e. 54.79 kWh per day (from heating and all )
-        maintenance = 0.1765; //cost in euros per kWh
-        CO2Emission = 0.0065; //6.5g per kWh
-        buildingTime = 140; //in average, building a house takes about 140 days
-        satisfaction = 10; //assuming we are on a scale from 0 to 10
-        age = 0;
-		break;
+			housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
+		}
+
+		std::cout << "HOUSE INITIALIZE TYPE 2 DEBUG 2" << std::endl;
+
+		//attributes from structure class
+		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
+		energyUse = 54.79; //20000kWh per year i.e. 54.79 kWh per day (from heating and all )
+		maintenance = 0.1765; //cost in euros per kWh
+		CO2Emission = 0.0065; //6.5g per kWh
+		buildingTime = 140; //in average, building a house takes about 140 days
+		satisfaction = 10; //assuming we are on a scale from 0 to 10
+		age = 0;
 	}
-	}
+
+	std::cout << "HOUSE INITIALIZE TYPE DONE" << std::endl;
+
+}
+
+int House::get_houseType()
+{
+	return this->houseType;
+}
+
+void House::house_type() 
+{
+
+	int type = this->get("houseType");
+
+	
 }
 
 House::~House() {
