@@ -47,7 +47,7 @@ int traffic_system[citysize][citysize][4][3] = { 0 }; //sets everything to non-e
 City::City() {
 
     income = 0;
-    population = 50000;
+    population = 0; //please don't change it, computed in 
     numberOfEmployees = 0;
     carbonEmission = 0;
     energyDemand = 0;
@@ -1114,7 +1114,7 @@ void City::_on_Game_Speed_changed()
 
 
 void City::add_car(Vector3 pos) { //adds a car at a location given by the vector with a shift
-
+    std::cout << "CURRENT air quality is: " << airQuality << std::endl;
 
     const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
     const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
@@ -1964,19 +1964,19 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 		satisfactionsSum += satisfactions[i];
 	}
    
-    airQuality = 1 - (double)(all_structures.size() * 30 * 30 * 10) / carbonEmission;
+    airQuality = pow(2, -carbonEmission/ (all_structures.size() * 30 * 30 * 10));
 
     std::cout << "Current air quality is: " << airQuality << std::endl;
 
     
     for (int i = 0; i < 8; i++) {
-        alpha[i] = satisfactions[i] / satisfactionsSum * numberOfHouses;
+        alpha[i] = (satisfactions[i] / satisfactionsSum) * all_houses.size();
         if ((i == 4) || (i == 5)) {
             alpha[i] *= sqrt(airQuality);
         }
 
         //std::normal_distribution <double> alpharandomiser(1000, 500);
-        //alpha[i] = normalGenerator(alpha[i], alpha[i] / 4);
+        alpha[i] = normalGenerator(alpha[i], (double)(alpha[i] / 10.0));
         //alpha[i] = fmax(alpharandomiser(gen), 0);
     
     }
@@ -2004,8 +2004,8 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         double choice[8] = { 0 };
         for (int i = 0; i < 8; i++) {
 
-            probabilities[i] = alpha[i] * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i]) / alphaSum;
-            std::cout << "Housing Incomr is : " << (double)((*it)->get("housingIncome")) << std::endl;
+            probabilities[i] = alpha[i] * 30*((double)((*it)->get("housingIncome")) / pricesPerMonth[i]) / alphaSum;
+            //std::cout << "Housing Incomr is : " << (double)((*it)->get("housingIncome")) << std::endl;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }

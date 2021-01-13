@@ -49,6 +49,7 @@ Transport::Transport() {
 
 Transport::Transport(int type){
     transportType = type;
+    transport_type();
 }
 
 void Transport::transport_type() {
