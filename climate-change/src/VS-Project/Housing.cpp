@@ -333,8 +333,6 @@ void House::set_houseType(int type)
 	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
 
 	std::cout << "HOUSE INITIALIZE TYPE CALLED" << type << std::endl;
-	maxIncome = 333;
-	minIncome = 53;
 
 	if (type == 1) {
 		std::cout << "HOUSE INITIALIZE TYPE 1" << std::endl; //Low level house
@@ -349,7 +347,7 @@ void House::set_houseType(int type)
 		//minimum wage 53 € per day - get money even on saturday and saturday 
 		// i take max to be 333€
 
-		this->numberOfInhabitants = (rand() % (6) + 1);
+		this->housingIncome = (rand() % (6) + 1);
 		if (this->numberOfInhabitants >= 2) {
 			//have two salaries 
 			housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
@@ -629,48 +627,40 @@ double Building::get_environmentalcost() {
 
 
 Building::Building() {
-    switch (buildingType){
-	case 1: { //Low level house
-		doubleGlazingOn = false;
-		rooftopWindTurbineOn = false;
-		PanelsOn = false;
+	PanelsOn = false;
+	rooftopWindTurbineOn = false;
+	age = 0;
+	windowNumber = 30;
+	cost = 1000000; //counting price of lot + cost of workforce + cost of all materials used
+	maintenance = 0.1765; //cost in euros per kWh
 
-		srand((int)time(0));
-		//5 appartments pay between 200-400 € per month, this is coownership budget
-		housingIncome = (rand() % (66-33) + 33); 
-		
-		cost = 1000000; //counting price of lot + cost of workforce + cost of all materials used
-		energyUse = 365; // 266.25 kWh/m^2 per year which gives 133125 kWh per year i.e 365 kwH per day
-		maintenance = 0.1765; //cost in euros per kWh
-		CO2Emission = 0.0065; //6.5g per kWh
-		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
-		satisfaction = 3;
-		windowNumber = 30;
-		age = 0;
-		break;
+	srand((int)time(0));
+	//5 appartments pay between 200-400 € per month, this is coownership budget
+	housingIncome = 0;
+	this->numberOfInhabitants = (rand() % (10) + 20);
+	for (int i = 0; i < numberOfInhabitants; i++) {
+		housingIncome += (rand() % (maxIncome - minIncome)) + minIncome;
 	}
 
-	case 2:  {
+	if (buildingType == 1) { //Low level house
+		doubleGlazingOn = false;
+	
+		energyUse = 365; // 266.25 kWh/m^2 per year which gives 133125 kWh per year i.e 365 kwH per day
+		CO2Emission = 0.0065; //6.5g per kWh
+		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
+		satisfaction = 3;	
+	}
+
+	else {
 		doubleGlazingOn = true;
-		rooftopWindTurbineOn = false;
-		PanelsOn = false;
 
-		//We consider a 500 m^2 building 
-		srand((int)time(0));
-		//5 appartments pay between 300-500 € per month
-		housingIncome = (rand() % (83-50) + 50);
-
-		cost = 1000000; //counting price of lot + cost of workforce + cost of all materials used
-		energyUse = 292; // 213 kWh/m^2 per year which gives 106500 kWh per year i.e 292 kwH per day
-		maintenance = 0.1765; //cost in euros per kWh
+		energyUse = 292; // 213 kWh/m^2 per year which gives 106500 kWh per year i.e 292 kwH per day	
 		CO2Emission = 0.0065; //6.5g per kWh
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
 		satisfaction = 7;
-		age = 0;
-		break;
+		
 	}
-	
-	}
+
 }
 
 Building::~Building() {

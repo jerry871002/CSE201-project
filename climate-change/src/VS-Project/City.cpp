@@ -195,9 +195,7 @@ void City::_physics_process(float delta) {
     {   
         // CALLED EVERY 5 SECONDS
 
-        
-
-        //add_car();
+        add_car();
 
         (this->simulation_counter) -= 5;
         
@@ -241,7 +239,7 @@ void City::_physics_process(float delta) {
         {   
             // CALLED EVERY MONTH
 
-            //transport_to_add();
+           transport_to_add();
         }
 
         if (datenumber[0] == 1 && datenumber[1] == 1) 
@@ -1213,6 +1211,8 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             this->add_child((Node*)node);
             ((Transport*)node)->set("transportType", type);
 
+            //((Transport*)node)->transport_type();
+
             //income -= node->cost;
             //all_transports.push_back((Transport*)node);         THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
         }
@@ -2020,6 +2020,10 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 		satisfactionsSum += satisfactions[i];
 	}
    
+    airQuality = 1 - (double)(all_structures.size() * 30 * 30 * 10) / carbonEmission;
+
+    std::cout << "Current air quality is: " << airQuality << std::endl;
+
     
     for (int i = 0; i < 8; i++) {
         alpha[i] = satisfactions[i] / satisfactionsSum * numberOfHouses;
