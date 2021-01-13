@@ -2138,8 +2138,8 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         double choice[8] = { 0 };
         for (int i = 0; i < 8; i++) {
 
-            probabilities[i] = fmax(normalGenerator(alpha[i], all_houses.size() / 100), 0.01) * 30*((double)((*it)->get("housingIncome")) / pricesPerMonth[i]) / alphaSum;
-            //std::cout << "Housing Incomr is : " << (double)((*it)->get("housingIncome")) << std::endl;
+            probabilities[i] = fmax(normalGenerator(alpha[i], all_houses.size() / 100), 0.01) * (30*((double)((*it)->get("housingIncome")) / pricesPerMonth[i])) / alphaSum;
+            std::cout << "Housing Incomr is : " << (double)((*it)->get("housingIncome")) << std::endl;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
