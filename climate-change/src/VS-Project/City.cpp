@@ -114,6 +114,8 @@ void City::_register_methods()
     register_method((char*)"_on_ExitButton_pressed", &City::_on_ExitButton_pressed);
     register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
     register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
+    register_method((char*)"_on_TransportMenuButton_pressed", &City::_on_TransportMenuButton_pressed);
+
     register_method((char*)"change_pie_chart", &City::change_pie_chart);
 
     
@@ -149,6 +151,10 @@ void City::_register_methods()
 
     //statistics:
     register_property<City, Array>("statsCarbonEmission", &City::statsCarbonEmission, {});
+    register_property<City, Array>("statsIncome", &City::statsIncome, {});
+    register_property<City, Array>("statsEnergyDemand", &City::statsEnergyDemand, {});
+    register_property<City, Array>("statsEnergySupply", &City::statsEnergySupply, {});
+    register_property<City, Array>("statsUnemployment", &City::statsUnemployment, {});
 
 };
 
@@ -221,12 +227,7 @@ void City::_physics_process(float delta) {
     {
         // CALLED EVERY GAME DAY
 
-        
-        if (statsCarbonEmission.size() > 1001) {
-            statsCarbonEmission.pop_front();
-        }
-
-        statsCarbonEmission.push_back(carbonEmission);
+        write_stat_history_to_file();
         
         /*
         for (int i = 0; i < statsCarbonEmission.size(); ++i) {
@@ -552,7 +553,7 @@ void City::generate_initial_city_graphics()
     for (std::vector<Structure*>::iterator it = all_structures.begin(); it != all_structures.end(); ++it)
     {
         int randomcarint = rand() % 3;
-        if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car(((Node*)(*it))->get("translation")); }
+        if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car((Vector3)((Node*)(*it))->get("translation")); }
     }
    
 
@@ -735,6 +736,22 @@ void City::_on_Reset_confirmed()
     this->get_tree()->reload_current_scene();
 }
 
+
+
+void City::_on_TransportMenuButton_pressed() 
+{
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
+
+    String transportInfo = String("INFORMATION") + String("\n");
+    transportInfo += String("Transport") + String("\n");
+    transportInfo += String((int)(current_car_quantities[0])) + String("Electric Cars") + String("\n");
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", transportInfo);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
+    
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("position", Vector2((get_viewport()->get_size().x) / 2, (get_viewport()->get_size().y) / 2));
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
+}
 
 
 void City::_on_Menu_pressed(String name)
@@ -1916,6 +1933,54 @@ void delete_line(std::string documentName, std::string dataToDelete) {
 
 void City::write_stat_history_to_file() {
 
+    Array newCarbonEmission{};
+    newCarbonEmission.push_back(return_word_date_godot());
+    newCarbonEmission.push_back((int)(carbonEmission + 0.5));
+
+    if (statsCarbonEmission.size() > 1462) { //4years
+            statsCarbonEmission.pop_front();
+        }
+    statsCarbonEmission.push_back(newCarbonEmission);
+
+
+    Array newIncome{};
+    newIncome.push_back(return_word_date_godot());
+    newIncome.push_back((int)(income + 0.5));
+
+    if (statsIncome.size() > 1462) { //4years
+            statsIncome.pop_front();
+        }
+    statsIncome.push_back(newIncome);
+
+
+    Array newEnergyDemand{};
+    newEnergyDemand.push_back(return_word_date_godot());
+    newEnergyDemand.push_back((int)(energyDemand + 0.5));
+
+    if (statsEnergyDemand.size() > 1462) { //4years
+            statsEnergyDemand.pop_front();
+        }
+    statsEnergyDemand.push_back(newEnergyDemand);
+
+
+    Array newEnergySupply{};
+    newEnergySupply.push_back(return_word_date_godot());
+    newEnergySupply.push_back((int)(energySupply + 0.5));
+
+    if (statsEnergySupply.size() > 1462) { //4years
+            statsEnergySupply.pop_front();
+        }
+    statsEnergySupply.push_back(newEnergySupply);
+
+
+    Array newUnemployment{};
+    newUnemployment.push_back(return_word_date_godot());
+    newUnemployment.push_back((int)(100-100*(numberOfEmployees/population) + 0.5));
+
+    if (statsUnemployment.size() > 1462) { //4years
+            statsUnemployment.pop_front();
+        }
+    statsUnemployment.push_back(newUnemployment);
 
     
     //std::cout << "DEBUG: WRITE STAT FUNC "  << std::endl;

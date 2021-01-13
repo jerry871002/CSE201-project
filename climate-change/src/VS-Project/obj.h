@@ -129,8 +129,8 @@ namespace godot {
         //Subsidies for helping households, buildings to install solar panels (these help poorer households to have less environmental impact)
         
         
-        double solar_panel_subsidies;
-        double solar_panel_subsidies_housing;
+        double solar_panel_subsidies{ 0 };
+        double solar_panel_subsidies_housing{ 0 };
         // range from 0 to solarCost
 
 
@@ -138,7 +138,7 @@ namespace godot {
 
          //Subsidies for helping households, buildings to install rooftop wind turbines  (these help poorer households to have less environmental impact)
         
-        double wind_turbine_subsidies;
+        double wind_turbine_subsidies{ 0 };
         
         // range from 0 to windCost
 
@@ -146,7 +146,7 @@ namespace godot {
 
          //Subsidies for helping households, buildings to change their windows to double glazing (these help poorer households to have less environmental impact)
         
-        double double_glazing_subsidies;
+        double double_glazing_subsidies{ 0 };
         //range from 0 to 1000
 
         //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if it is possible
