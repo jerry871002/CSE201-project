@@ -102,10 +102,6 @@ void Player::_input(InputEvent* e)
 {
 	motion = Vector3(0, 0, 0);
 
-	// HIDE NOTIFICATION BOX
-
-	this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
-
 	// MOUSE MOTION EVENTS
 
 	if (e->get_class() == "InputEventMouseMotion")
@@ -118,6 +114,9 @@ void Player::_input(InputEvent* e)
 
 	if (e->is_action_pressed("ui_turn"))
 	{
+		// HIDE NOTIFICATION BOX
+		this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false); 
+
 		mouse_p = this->get_viewport()->get_mouse_position();
 		i->set_mouse_mode(i->MOUSE_MODE_CAPTURED);
 	}
