@@ -710,7 +710,11 @@ Building::Building() {
 	
 	housingIncome = 0;
 	double incomeEach;
-	this->numberOfInhabitants = (rand() % (10) + 20); //between 20 and 30 inhabitants in a building
+	
+
+	this->numberOfInhabitants = (rand() % (10) + 20);
+	this->buildingType = (rand() % 2 + 1);
+
 	for (int i = 0; i < numberOfInhabitants; i++) {
 		incomeEach += normalGenerator((minIncome + maxIncome) / 2, 20) + normalGenerator((minIncome + maxIncome) / 2, 20);
 	}
