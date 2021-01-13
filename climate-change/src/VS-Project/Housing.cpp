@@ -463,7 +463,7 @@ void House::set_houseType(int type)
 		srand((int)time(0));
 		this->numberOfInhabitants = (rand() % (6) + 1);
 		if (this->numberOfInhabitants >= 2) {
-			housingIncome = normalGenerator(50, 20) + normalGenerator(50, 70);
+			housingIncome = normalGenerator(50, 70) + normalGenerator(50, 70);
 
 		}
 
