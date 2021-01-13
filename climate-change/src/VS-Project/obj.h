@@ -129,8 +129,8 @@ namespace godot {
         //Subsidies for helping households, buildings to install solar panels (these help poorer households to have less environmental impact)
         
         
-        double solar_panel_subsidies;
-        double solar_panel_subsidies_housing;
+        double solar_panel_subsidies{ 0 };
+        double solar_panel_subsidies_housing{ 0 };
         // range from 0 to solarCost
 
 
@@ -138,7 +138,7 @@ namespace godot {
 
          //Subsidies for helping households, buildings to install rooftop wind turbines  (these help poorer households to have less environmental impact)
         
-        double wind_turbine_subsidies;
+        double wind_turbine_subsidies{ 0 };
         
         // range from 0 to windCost
 
@@ -146,7 +146,7 @@ namespace godot {
 
          //Subsidies for helping households, buildings to change their windows to double glazing (these help poorer households to have less environmental impact)
         
-        double double_glazing_subsidies;
+        double double_glazing_subsidies{ 0 };
         //range from 0 to 1000
 
         //could be changed to a function that returns the amount of money the subsididy gives which will be compared to an income to decide if it is possible
@@ -168,7 +168,7 @@ namespace godot {
         double solarSatisfaction = 9; //ratings of these solar panels by surveys
         double solarCost = 450; //cost in euros for one new solar panel (product and installation)
         double solarEnergy = 7.45; //average kWh produced per day
-        double solarLifetime = 9125; //years of energy production warranty
+        double solarLifetime = 150; //true value is 9125 days of energy production warranty. Set at 150 so that we can see the change happen graphically
         // I think this solarLifeTime variable should be in days i.e. 9125 instead of 25. Can be changed back if you don't agree.
 
 
@@ -180,7 +180,7 @@ namespace godot {
         double windSatisfaction = 6; //public opinion on rooftop wind turbines
         double windCost = 800; //cost in euros for a new turbine with its tower
         double windEnergy = 1.1; //average kWh produced per day
-        double windLifetime = 5; // years of energy production warranty
+        double windLifetime = 150; // 5 years is true value of energy production warranty, however set value 150 to see a change in the graphics
 
 
 

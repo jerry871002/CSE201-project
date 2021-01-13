@@ -88,7 +88,6 @@ void Player::_process(float delta)
 		worldEnv->get_environment()->set("glow_enabled", false);
 	}
 	this->translate(motion);
-	//this->move_and_collide(motion);
 	this->set_rotation_degrees(rotation);
 	this->update_camera_angle();
 
@@ -115,6 +114,9 @@ void Player::_input(InputEvent* e)
 
 	if (e->is_action_pressed("ui_turn"))
 	{
+		// HIDE NOTIFICATION BOX
+		this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false); 
+
 		mouse_p = this->get_viewport()->get_mouse_position();
 		i->set_mouse_mode(i->MOUSE_MODE_CAPTURED);
 	}

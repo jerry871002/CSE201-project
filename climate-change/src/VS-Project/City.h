@@ -18,6 +18,7 @@
 #include <InputEventMouse.hpp>
 #include <InputEventMouseMotion.hpp>
 #include <InputEventMouseButton.hpp>
+#include <Array.hpp>
 
 #include <StaticBody.hpp>
 
@@ -30,6 +31,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <algorithm>
+#include <random>
 
 
 using namespace std;
@@ -80,6 +82,7 @@ namespace godot {
         void _on_ExitButton_pressed();
         void _on_Exit_confirmed();
         void _on_Exit_cancelled();
+        void _on_TransportMenuButton_pressed();
 
         // INITIAL GRAPHICAL SETUP
 
@@ -97,9 +100,11 @@ namespace godot {
         int day_tick; // keeps track of the in-game days
         int days_since_last_simulation;
         int daycount = 0; //keeps track of the in-game days per year
-        double stat = 0; //stat example
-        double stats[10][366]; //stats array
-        double statsCarbonEmission[366]; //written stats for carbonEmission
+        Array statsCarbonEmission{}; //written stats for carbon emissions
+        Array statsIncome{}; //written stats for GDP
+        Array statsEnergy{}; //written stats for energy demand and supply
+        Array statsUnemployment{}; //written stats for population - number of employees
+        Array statsTotalSatisfaction{}; //written stats for population - number of employees
         void update_date();
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation
@@ -218,6 +223,9 @@ namespace godot {
 
         //to generate random numbers
         double normalGenerator(double mean, double stdDev);
+
+        double return_unemployment_rate();
+
     private:
         // city indices
 
@@ -238,8 +246,6 @@ namespace godot {
         double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
         double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;
         double airQuality;
-        //double* incomes;
-        //int incomesLen;
         int numberOfHouses;
         int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
         int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month

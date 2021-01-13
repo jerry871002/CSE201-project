@@ -21,12 +21,15 @@ namespace godot {
 		virtual String get_object_info();
 
 		virtual void simulate_step(double days);
-		double panel_probability{ 0.75 };
-		double double_glazing_probability{ 0.75 };
+
+		double panel_probability{ 0.0 };
+		double double_glazing_probability{ 0.0 };
+		double roof_wind_turbines_probability{ 0.0 };
+
 		void panel_added_probability();
 		void double_glazing_added_probability();
 		void roof_wind_turbines_added_probability();
-		double roof_wind_turbines_probability{ 0.75 };
+		
 		int housingIncome;
 		bool doubleGlazingOn{ false };
 		bool rooftopWindTurbineOn{ false };;
@@ -35,10 +38,13 @@ namespace godot {
 		int solarPanelCost = 1500;
 		int numberOfInhabitants = 0;
 		int maxIncome=333; //max income per day, should be defined by sim team
-		int minIncome=53; // min income per day, I put values for now so that it compiles
+		int minIncome=40; // min income per day, I put values for now so that it compiles
+
+
 		int solarPanelAge = 0;
 		int doubleGlazingAge = 0;
 		int rooftopWindTurbineAge = 0;
+		double normalGenerator(double mean, double stdDev);
 
 
 
@@ -67,7 +73,14 @@ namespace godot {
 		~House();
 		virtual String get_object_type() { return "House"; };
 
+		static void _register_methods();
+		virtual void _ready();
+
+		void set_houseType(int type);
+		int get_houseType();
+
 		virtual void simulate_step(double days); //updates attribute by adding to their previous values as a function of time (days since last step)
+		void house_type();
 		bool solar_panel(); 
 		bool double_glazing(); // improve insulation
 		bool rooftop_wind_turbines();

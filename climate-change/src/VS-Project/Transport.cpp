@@ -45,14 +45,20 @@ template <typename T> void align_on_axis(T obj) {
 
 Transport::Transport() {
     transportType = 4;
+    set_transportType(transportType);
 }
 
 Transport::Transport(int type){
     transportType = type;
+    set_transportType(transportType);
 }
 
-void Transport::transport_type() {
-    workingDays = 7 - (int)(myCity->get("carProhibition"));
+
+
+void Transport::set_transportType(int type)
+{
+    this->transportType = type;
+    std::cout << "setter is used for transport type value : " << this->transportType << std::endl;
     // initialize graphical variables
     motion = Vector3(0, 0, 0);
     rot = (M_PI / 2);
@@ -69,7 +75,7 @@ void Transport::transport_type() {
     // random device class instance, source of 'true' randomness for initializing random seed
     std::random_device rd;
     std::mt19937 gen(rd());
-    switch (transportType) {
+    switch (type) {
     case 0: { //electric car
         co2PerKm = 0;
         capacity = 5;
@@ -79,13 +85,13 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmt(70, 15);
         kmPerDay = kmt(gen); // average km per day for this car using gaussian
         std::normal_distribution <double> costt(42000, 8500); //cost randomised using gaussian
-        cost = costt(gen)-(int)myCity->get("electricCarSubsidy");
+        cost = costt(gen);
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
         satisfaction = 7.45;
         energyUse = 0.119 * kmPerDay;
         lifetime = 15;
-        pricePerMonth = 1.09*30*workingDays/7;
+        pricePerMonth = 1.09 * 30 ;
         weight = 1.7;
         break;
     }
@@ -103,9 +109,8 @@ void Transport::transport_type() {
         buildingTime = timeg(gen); // building time of 1 car, very fast
         satisfaction = 9.3;
         lifetime = 12;
-        pricePerMonth = 1.25*30*workingDays/7;
+        pricePerMonth = 1.25 * 30;
         weight = 2.5;
-        cost += ((double)(myCity->get("weightTax"))) * weight;  //weight tax directly on car cost
         break;
     }
     case 2: { //normal family car 
@@ -122,7 +127,7 @@ void Transport::transport_type() {
         buildingTime = timeg(gen); // building time of 1 car, very fast
         satisfaction = 7.3;
         lifetime = 15;
-        pricePerMonth = 0.15*30*workingDays/7;
+        pricePerMonth = 0.15 * 30;
         weight = 0.98;
         break;
     }
@@ -138,18 +143,17 @@ void Transport::transport_type() {
         occupancyRate = occupancyo(gen); // average percentage occupancy of the car: number of people in the car / capacity
         std::normal_distribution <double> timeo(7, 2);
         buildingTime = timeo(gen); // building time of 1 collection (replica i think) car car, not so fast
-        satisfaction = 9.6;
+        satisfaction = 7.6;
         lifetime = 20;
-        pricePerMonth = 25*30*workingDays/7;
+        pricePerMonth = 25 * 30;
         weight = 2;
-        cost += ((double)(myCity->get("weightTax"))) * weight; //weight tax directly on car cost
         break;
     }
     case 4: { //bike
         fuelPerKm = 0;
         co2PerKm = 0;
         std::normal_distribution <double> costbike(370, 30);
-        cost = costbike(gen)-(int)(myCity->get("bikeSubsidy")); // cost of 1 bike in euros, randomised using gaussian
+        cost = costbike(gen); // cost of 1 bike in euros, randomised using gaussian
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.04; //really fast, in days (1 hour )
@@ -157,7 +161,7 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmbike(18, 7);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
         lifetime = 5;
-        pricePerMonth = 0.8*30;
+        pricePerMonth = 0.8 * 30;
         weight = 0.15; //not true but in order for the tax to not be applied
         break;
     }
@@ -173,7 +177,7 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmbike(30, 10);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
         lifetime = 12;
-        pricePerMonth = 2.6*30;
+        pricePerMonth = 2.6 * 30;
         weight = 0.01; //not true but in order for the tax to not be applied
         break;
     }
@@ -181,7 +185,7 @@ void Transport::transport_type() {
         fuelPerKm = 0.26; //in liters
         co2PerKm = 1.25; //in kg
         std::normal_distribution <double> costb(230500, 20000);
-        cost = costb(gen)- (int)(myCity->get("busSubsidy")); // cost of 1 bus in euros, randomised using gaussian
+        cost = costb(gen); // cost of 1 bus in euros, randomised using gaussian
         double alpha = (cost - 262500) / 262500;
         if (alpha < 0) {
             alpha = 0;
@@ -206,7 +210,7 @@ void Transport::transport_type() {
         kmPerDay = kmb(gen); // kilometres per day,  randomised for each bus
         employment = 1 + round(alpha * 2);
         lifetime = 16;
-        pricePerMonth = (0.67+0.18*alpha) * kmPerDay * 30;
+        pricePerMonth = (0.67 + 0.18 * alpha) * kmPerDay * 30;
         weight = 11; //not true but in order for the tax to not be applied
         break;
     }
@@ -227,21 +231,26 @@ void Transport::transport_type() {
         std::normal_distribution <double> kmsp(80, 20);
         kmPerDay = kmsp(gen); // kilometres per day,  randomised for each car
         lifetime = 10;
-        pricePerMonth = 2.5*30*workingDays/7;
+        pricePerMonth = 2.5 * 30;
         weight = 1.5;
         break;
     }
     }
     pricePerMonth += cost / (12 * lifetime);
-    fuelInput = fuelPerKm*kmPerDay; //in 1 day
-    CO2Emission = co2PerKm*kmPerDay; //in 1 day
+    fuelInput = fuelPerKm * kmPerDay; //in 1 day
+    CO2Emission = co2PerKm * kmPerDay; //in 1 day
     //car prohibition
-    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)){
-        satisfaction*=workingDays/7;
-        energyUse*=workingDays/7;
-        fuelInput*=workingDays/7;
-        CO2Emission*=workingDays/7;
-    }
+
+
+}
+
+int Transport::get_transportType()
+{
+    return this->transportType;
+}
+
+void Transport::transport_type() {
+    
 }
 
 void Transport::_register_methods() {
@@ -275,7 +284,6 @@ void Transport::_physics_process(float delta) {
     if (this->physics_counter == 2) {
         this->physics_counter == 0;
         //delta = delta / 2;
-        std::cout << "Value of transport type : " << this->transportType << std::endl;
     }
 
     prevPositionVec = this->get_global_transform().get_origin();
@@ -364,6 +372,7 @@ void Transport::simulate_step(double days) {
     co2PerKm *= pow(1.05, years); //increase in emissions with each year
     fuelInput = days*fuelPerKm*kmPerDay; //in the time period
     CO2Emission = days*co2PerKm*kmPerDay; //in the time period
+
     age += days; //total number of days 
     /*fuelInput += fuelPerKm * kmPerDay * days; //litres of fuel for car
     CO2Emission += co2PerKm * kmPerDay * days;*/ // co2 emissions per car
@@ -545,12 +554,10 @@ int Transport::get_direction(Vector3 pos, double rot) {
         return(0);
 
     }
-    std::cout << "Car direction possible " << std::endl;
     int i = -1;
     for (const int& n : (traffic_system)[(int)round(pos.x / 30)][(int)round(pos.z / 30)][(int)rotInt]) {
         if (n == 1) {
             out.push_back(i);
-            std::cout << i << " ";
         }
         i++;
     }
@@ -581,17 +588,6 @@ double Transport::get_energyuse(){
 
 double Transport::get_environmentalcost(){
     return 0; //at least for now
-}
-
-void Transport::set_transportType(int type)
-{
-    this->transportType = type;
-    std::cout << "setter is used for transport type value : " << this->transportType << std::endl;
-}
-
-int Transport::get_transportType()
-{
-    return this->transportType;
 }
 
 Pedestrian::Pedestrian() {
