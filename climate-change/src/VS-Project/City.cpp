@@ -64,9 +64,7 @@ City::City() {
     // in order to find date
     daycount = 0;
     numberOfHouses = 0;
-
-    // in order to write stats to csv files
-    stat = 0;
+    
 	//policies for transport
     fuelTax = 0;
 	weightTax = 0;
