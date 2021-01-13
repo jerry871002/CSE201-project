@@ -212,6 +212,20 @@ void City::_physics_process(float delta) {
     if (this->date_counter > 1)
     {
         // CALLED EVERY GAME DAY
+
+        
+        if (statsCarbonEmission.size() > 1001) {
+            statsCarbonEmission.pop_front();
+        }
+
+        statsCarbonEmission.push_back(carbonEmission);
+        
+
+        for (int i = 0; i < statsCarbonEmission.size(); ++i) {
+            Godot::print(String(statsCarbonEmission[i]));
+        }
+        Godot::print("Array should be printed now");
+        
         
         day_tick++;
         std::cout << "Day tick : " << (this->day_tick) << endl;
