@@ -62,16 +62,28 @@
 code = "shader_type canvas_item;
 
 uniform float blur_amount = 3.0;
+uniform float brightness = 0.5;
+uniform float contrast = 1.0;
+uniform float saturation = 1.0;
 
 void fragment()
 {
-	COLOR = textureLod(SCREEN_TEXTURE, SCREEN_UV, blur_amount);
+    vec3 c = textureLod(SCREEN_TEXTURE, SCREEN_UV, blur_amount).rgb;
+
+    c.rgb = mix(vec3(0.0), c.rgb, brightness);
+    c.rgb = mix(vec3(0.5), c.rgb, contrast);
+    c.rgb = mix(vec3(dot(vec3(1.0), c.rgb) * 0.33333), c.rgb, saturation);
+
+    COLOR.rgb = c;
 }
 "
 
 [sub_resource type="ShaderMaterial" id=3]
 shader = SubResource( 2 )
 shader_param/blur_amount = 3.0
+shader_param/brightness = 0.5
+shader_param/contrast = 1.0
+shader_param/saturation = 1.0
 
 [sub_resource type="Theme" id=4]
 
@@ -460,26 +472,16 @@ position = Vector2( 39.1995, 28.5087 )
 
 [node name="Blur2" type="Node2D" parent="2Dworld"]
 
-[node name="ColorRect" type="ColorRect" parent="2Dworld/Blur2"]
-material = SubResource( 3 )
-margin_left = 1761.0
-margin_top = -5.0
-margin_right = 1982.0
-margin_bottom = 1148.0
-rect_pivot_offset = Vector2( 536.625, 1828.64 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Blur3" type="Node2D" parent="2Dworld"]
 
 [node name="ColorRect" type="ColorRect" parent="2Dworld/Blur3"]
 material = SubResource( 3 )
-margin_left = -29.5874
-margin_top = -18.0
-margin_right = 1778.41
-margin_bottom = 131.0
+margin_left = -49.0
+margin_top = -30.0
+margin_right = 1957.0
+margin_bottom = 60.0
 rect_pivot_offset = Vector2( 536.625, 1828.64 )
+color = Color( 0.0352941, 0.0352941, 0.0352941, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -765,9 +767,10 @@ __meta__ = {
 position = Vector2( 500, 5 )
 
 [node name="HSlider" type="HSlider" parent="2Dworld/Slider"]
-margin_left = 250.0
-margin_right = 926.0
-margin_bottom = 72.0
+margin_left = 230.0
+margin_top = -18.0
+margin_right = 906.0
+margin_bottom = 22.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
@@ -780,10 +783,10 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="2Dworld/Slider"]
-margin_left = 20.0801
-margin_top = 4.19507
-margin_right = 221.08
-margin_bottom = 74.1951
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 191.0
+margin_bottom = 30.0
 rect_pivot_offset = Vector2( 108.465, 27.7958 )
 custom_fonts/font = ExtResource( 12 )
 text = "GAME SPEED "
@@ -795,9 +798,9 @@ __meta__ = {
 
 [node name="Label2" type="Label" parent="2Dworld/Slider"]
 margin_left = 225.0
-margin_top = 70.0
+margin_top = 25.0
 margin_right = 297.0
-margin_bottom = 140.0
+margin_bottom = 95.0
 custom_fonts/font = ExtResource( 12 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "II"
@@ -808,9 +811,9 @@ __meta__ = {
 
 [node name="Label3" type="Label" parent="2Dworld/Slider"]
 margin_left = 362.5
-margin_top = 70.0
+margin_top = 25.0
 margin_right = 467.5
-margin_bottom = 140.0
+margin_bottom = 95.0
 custom_fonts/font = ExtResource( 12 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "X1"
@@ -821,9 +824,9 @@ __meta__ = {
 
 [node name="Label4" type="Label" parent="2Dworld/Slider"]
 margin_left = 552.381
-margin_top = 70.0
+margin_top = 25.0
 margin_right = 624.381
-margin_bottom = 140.0
+margin_bottom = 95.0
 custom_fonts/font = ExtResource( 12 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "X2"
@@ -834,9 +837,9 @@ __meta__ = {
 
 [node name="Label5" type="Label" parent="2Dworld/Slider"]
 margin_left = 712.5
-margin_top = 70.0
+margin_top = 25.0
 margin_right = 784.5
-margin_bottom = 140.0
+margin_bottom = 95.0
 custom_fonts/font = ExtResource( 12 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "X4"
@@ -847,9 +850,9 @@ __meta__ = {
 
 [node name="Label6" type="Label" parent="2Dworld/Slider"]
 margin_left = 875.0
-margin_top = 70.0
+margin_top = 25.0
 margin_right = 947.0
-margin_bottom = 149.0
+margin_bottom = 104.0
 custom_fonts/font = ExtResource( 12 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "X8
@@ -862,6 +865,7 @@ __meta__ = {
 [node name="Menus" type="KinematicBody2D" parent="2Dworld"]
 
 [node name="MenuHousing" type="Node2D" parent="2Dworld/Menus"]
+visible = false
 position = Vector2( -1, 0 )
 scale = Vector2( 1.3, 1.3 )
 
@@ -922,7 +926,6 @@ __meta__ = {
 }
 
 [node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
-visible = false
 position = Vector2( -1, 0 )
 scale = Vector2( 1.3, 1.3 )
 
@@ -1192,10 +1195,10 @@ __meta__ = {
 }
 
 [node name="TransportMenuButton" type="Button" parent="2Dworld/Menus"]
-margin_left = 1718.58
-margin_top = -6.63586
-margin_right = 1868.58
-margin_bottom = 143.364
+margin_left = 1641.14
+margin_top = -25.0
+margin_right = 1721.14
+margin_bottom = 55.0
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 71 )
 custom_styles/pressed = SubResource( 72 )
@@ -1273,10 +1276,10 @@ __meta__ = {
 }
 
 [node name="ResetButton" type="Button" parent="2Dworld"]
-margin_left = 312.2
-margin_top = 20.0
-margin_right = 406.2
-margin_bottom = 62.0
+margin_left = 284.654
+margin_top = -5.0
+margin_right = 378.654
+margin_bottom = 35.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "RESET"
@@ -1308,8 +1311,8 @@ __meta__ = {
 [node name="CancelReset" type="Button" parent="2Dworld/ResetConfirmationBox"]
 margin_left = 106.118
 margin_top = 101.445
-margin_right = 204.118
-margin_bottom = 138.445
+margin_right = 211.118
+margin_bottom = 141.445
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CANCEL"
@@ -1318,10 +1321,10 @@ __meta__ = {
 }
 
 [node name="ExitButton" type="Button" parent="2Dworld"]
-margin_left = 430.272
-margin_top = 20.0
-margin_right = 567.272
-margin_bottom = 62.0
+margin_left = 395.329
+margin_top = -5.0
+margin_right = 532.329
+margin_bottom = 35.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "EXIT GAME"
@@ -1353,8 +1356,8 @@ __meta__ = {
 [node name="CancelExit" type="Button" parent="2Dworld/ExitConfirmationBox"]
 margin_left = 144.118
 margin_top = 153.191
-margin_right = 242.118
-margin_bottom = 190.191
+margin_right = 249.118
+margin_bottom = 193.191
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "CANCEL"
@@ -1364,9 +1367,9 @@ __meta__ = {
 
 [node name="GraphsButton" type="Button" parent="2Dworld"]
 margin_left = 1480.0
-margin_top = 20.0
+margin_top = -5.0
 margin_right = 1600.0
-margin_bottom = 62.0
+margin_bottom = 35.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "GRAPHS"
@@ -1408,8 +1411,6 @@ __meta__ = {
 margin_left = -0.999969
 margin_right = -1.0
 chart_name = "CO2 EMISSIONS"
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
 Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )
@@ -1437,9 +1438,9 @@ margin_bottom = 40.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1700.0
-margin_top = 20.0
+margin_top = -5.0
 margin_right = 1790.0
-margin_bottom = 62.0
+margin_bottom = 35.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "EXIT"
@@ -1449,9 +1450,9 @@ __meta__ = {
 
 [node name="GUI" type="MarginContainer" parent="."]
 anchor_right = 1.0
-margin_left = 60.0
+margin_left = 50.0
 margin_top = 30.0
-margin_right = -1612.0
+margin_right = -1622.0
 margin_bottom = 68.0
 theme = SubResource( 76 )
 __meta__ = {
@@ -1476,13 +1477,25 @@ text = "Year 1, January 1"
 margin_left = 161.0
 margin_right = 161.0
 margin_bottom = 38.0
+
+[node name="3dButton" type="Button" parent="."]
+margin_left = 187.283
+margin_top = 46.958
+margin_right = 324.283
+margin_bottom = 88.958
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "MENU"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button1" to="3Dworld" method="_on_Menu_pressed" binds= [ "SolarHousing" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button2" to="3Dworld" method="_on_Menu_pressed" binds= [ "WindturbinesHousing" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button3" to="3Dworld" method="_on_Menu_pressed" binds= [ "DoubleGlazingHousing" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button4" to="3Dworld" method="_on_Menu_pressed" binds= [ "TreesBudget" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Solar" to="3Dworld" method="_on_Menu_pressed" binds= [ "PanelSubsidyForShops" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "TreesBudget" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button5" to="3Dworld" method="_on_Menu_pressed" binds= [ "TreesBudget" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Button6" to="3Dworld" method="_on_Menu_pressed" binds= [ "WindTurbinesShop" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar" to="3Dworld" method="_on_Menu_pressed" binds= [ "CoalProhibition" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar2" to="3Dworld" method="_on_Menu_pressed" binds= [ "EfficiencyCogenerationCoalPlant" ]]
@@ -1496,9 +1509,9 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar5" to="3Dworld" method="_on_Menu_pressed" binds= [ "CarsProhibition" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar" to="3Dworld" method="_on_Menu_pressed" binds= [ "ConsumptionTransport" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar2" to="3Dworld" method="_on_Menu_pressed" binds= [ "BikeSubsidy" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ElectricSubsidy" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar3" to="3Dworld" method="_on_Menu_pressed" binds= [ "ElectricSubsidy" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar4" to="3Dworld" method="_on_Menu_pressed" binds= [ "BusSubsidy" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar6" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "WeightTransport" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar6" to="3Dworld" method="_on_Menu_pressed" binds= [ "WeightTransport" ]]
 [connection signal="pressed" from="2Dworld/Menus/TransportMenuButton" to="3Dworld" method="_on_TransportMenuButton_pressed"]
 [connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]
 [connection signal="pressed" from="2Dworld/ResetButton" to="3Dworld" method="_on_ResetButton_pressed"]
@@ -1509,3 +1522,4 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/ExitConfirmationBox/CancelExit" to="3Dworld" method="_on_Exit_cancelled"]
 [connection signal="pressed" from="2Dworld/GraphsButton" to="3Dworld" method="_on_GraphsButton_pressed"]
 [connection signal="pressed" from="2Dworld/GraphsExit" to="3Dworld" method="_on_GraphsExit_pressed"]
+[connection signal="pressed" from="3dButton" to="3Dworld" method="_on_3dButton_pressed"]
