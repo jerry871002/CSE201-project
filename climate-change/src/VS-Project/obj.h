@@ -53,6 +53,7 @@ namespace godot {
         virtual String get_type() { return this->get_object_type(); };
         virtual void set_object_type(String type) { object_type = type; };
 
+        int satisfaction_weight();
         virtual String get_main_type() { return "Default"; };
         virtual void show_menu();
         virtual String get_object_info();
