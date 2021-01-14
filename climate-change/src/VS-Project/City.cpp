@@ -2187,19 +2187,14 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
             alphaSum += alpha[i];
         }
         for (int i = 0; i < 8; i++) {
-            alpha[i] = 0.01 * alpha[i] / alphaSum;
+            alpha[i] = 1.5 * alpha[i] / alphaSum;
         }
-        alphaSum = 0;
-        for (int i = 0; i < 8; i++) {
-            alphaSum += alpha[i];
-        }
-
 
         double choice[8] = { 0 };
 
         for (int i = 0; i < 8; i++) {
 
-            probabilities[i] = alpha[i] * (30 * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i])) / alphaSum;
+            probabilities[i] = alpha[i] * (30 * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i]));
             
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
