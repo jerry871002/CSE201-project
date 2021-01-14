@@ -262,12 +262,16 @@ namespace godot {
                        // updated in the undate_time function
 
         //probability that a certain type of car will be added
-        double probabilityElectricCar, probabilityBigCar, probabilityCar, probabilityCollectionCar;
-        double probabilityBike, probabilityMotorcycle, probabilityBus, probabilitySportsCar;
         double airQuality;
         int numberOfHouses;
         int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
         int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month
+
+
+        // method for power plants
+        int workingPower{ 0 };
+        int get_workingPower();
+        void set_workingPower(int);
 
         
         const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");
