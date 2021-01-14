@@ -334,7 +334,7 @@ void Structure::_input(InputEvent* e)
         ((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", false);
         this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
-        this->get_viewport()->warp_mouse(Vector2(0,0));
+        this->get_viewport()->warp_mouse(Vector2(get_viewport()->get_size().x / 2, get_viewport()->get_size().y / 2));
 
         // SET INFO BOX SIZE AND POSITION
 
