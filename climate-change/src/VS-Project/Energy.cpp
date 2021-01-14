@@ -109,12 +109,12 @@ String Energy::get_object_info()
 {
 	String info = this->Structure::get_object_info();
 
-	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
-	info += "Employment: " + to_godot_string(this->employment) + String("\n");
-	info += "CO2 Emissions in tons per year: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy produced in kWh per year: " + to_godot_string((int)this->get("energyOutput")) + String("\n");
+	info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
+	info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
+	info += "CO2 Emissions in tons per year: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy produced in kWh per year: " + to_godot_string((int)(this->get("energyOutput"))) + String("\n");
 	info += "Environmental and health costs induced in euros per year: " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
-	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
 	return info;
 }
 
@@ -472,7 +472,7 @@ void CoalPowerPlant::simulate_step(double days)
 			maintenance += 10E6;
 			efficiencySup = false;
 		}
-		energyPerDay = 9589041 * (1 - 0.04);
+		energyPerDay = dailyDemand * (1 - 0.04);
 		maintenance = 0.054 * energyPerDay * 365;
 	}
 	if (efficiency_cogeneration == 1) {
@@ -480,7 +480,7 @@ void CoalPowerPlant::simulate_step(double days)
 			maintenance = 20E6;
 			efficiencyCo = false;
 		}
-		energyPerDay = 9589041 * (1 - 0.09);
+		energyPerDay = dailyDemand * (1 - 0.09);
 		maintenance = 0.058 * energyPerDay * 365;
 	}
 	else {
