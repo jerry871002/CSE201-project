@@ -1476,6 +1476,18 @@ text = "Year 1, January 1"
 margin_left = 161.0
 margin_right = 161.0
 margin_bottom = 38.0
+
+[node name="3dButton" type="Button" parent="."]
+margin_left = 187.283
+margin_top = 46.958
+margin_right = 324.283
+margin_bottom = 88.958
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "MENU"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button1" to="3Dworld" method="_on_Menu_pressed" binds= [ "SolarHousing" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button2" to="3Dworld" method="_on_Menu_pressed" binds= [ "WindturbinesHousing" ]]
@@ -1509,3 +1521,4 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/ExitConfirmationBox/CancelExit" to="3Dworld" method="_on_Exit_cancelled"]
 [connection signal="pressed" from="2Dworld/GraphsButton" to="3Dworld" method="_on_GraphsButton_pressed"]
 [connection signal="pressed" from="2Dworld/GraphsExit" to="3Dworld" method="_on_GraphsExit_pressed"]
+[connection signal="pressed" from="3dButton" to="3Dworld" method="_on_3dButton_pressed"]

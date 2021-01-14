@@ -17,6 +17,7 @@
 #include <DirectionalLight.hpp>
 #include <WorldEnvironment.hpp>
 #include <godot.hpp>
+#include <Node2D.hpp>
 
 #include <PoolArrays.hpp>
 #include <random>
@@ -73,6 +74,9 @@ City::City() {
     busSubsidy = 0;
     carProhibition = 0;
     srand((int)time(0));
+
+    // boolean for 3d menu button
+    bool MenuVisibility = false;
 }
 
 City::~City()
@@ -764,7 +768,8 @@ void City::_on_ExitButton_pressed()
 
 void City::_on_3dButton_pressed()
 {
-	this->get_tree()->get_root()->get_node("Main/2Dworld")->set("visible", false);
+    this->get_parent()->get_node("Main/2Dworld")->set("visible", MenuVisibility);
+    MenuVisibility = !MenuVisibility;
 }
 
 void City::_on_Exit_cancelled()
