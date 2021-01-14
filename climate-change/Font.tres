@@ -5,4 +5,6 @@
 [resource]
 size = 20
 use_mipmaps = true
+extra_spacing_top = -5
+extra_spacing_bottom = -5
 font_data = ExtResource( 1 )

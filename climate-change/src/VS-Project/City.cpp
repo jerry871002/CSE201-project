@@ -256,7 +256,7 @@ void City::_physics_process(float delta) {
         
         day_tick++;
         std::cout << "Day tick : " << (this->day_tick) << endl;
-        this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date_godot());
+        this->get_tree()->get_root()->get_node("Main/2DWorld/Date")->set("text", return_word_date_godot());
 
 
         int* datenumber = return_date(int(this->day_tick));
@@ -1716,96 +1716,6 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
         }
     }
 }
-
-
-
-
-void City::simulation_shops()
-{
-    //std::cout << "Simulation SHOPS" << std::endl;
-
-    day_tick += this->time_speed * 5;
-    this->days_since_last_simulation = 0;
-    Godot::print(return_word_date_godot());
-    this->get_tree()->get_root()->get_node("Main/GUI/GUIComponents/TimeControls/Date")->set("text", return_word_date_godot());
-
-
-    for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
-    {
-        (*it)->set("updatable", true);
-    }
-
-}
-
-void City::simulation_production()
-{
-    //std::cout << "Simulation PRODUCTION" << std::endl;
-
-    for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
-    {
-        (*it)->set("updatable", true);
-    }
-
-}
-
-void City::simulation_energy()
-{
-    //std::cout << "Simulation ENERGY" << std::endl;
-
-
-    for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
-    {
-        (*it)->set("updatable", true);
-    }
-
-}
-
-void City::simulation_housing()
-{
-
-    //std::cout << "Simulation HOUSING" << std::endl;
-
-    for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
-    {
-        (*it)->set("updatable", true);
-    }
-
-    /*
-    //   function which looks at a single random house at gives it the correct satisfaction then updates the total satisfaction
-    Housing* h = all_houses.at(rand() % all_houses.size());
-    double initialval = (double)(h->get("satisfaction"));
-    Vector3 pos = ((Structure*)h)->get_position();
-    double dist = 300;   // the distance where houses take into account the satisfaction
-    int obj_count = 0;
-    double tothouseSat = 0.0;
-    this->totalSatisfaction = (totalSatisfaction * all_houses.size() - initialval);
-    for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
-    {
-        if (((Structure*)(*it))->is_other_structure_within_distance(pos, dist)) {
-            tothouseSat += (double)((*it)->get("satisfaction")) * 10;
-            obj_count++;
-        }
-    }
-    for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
-    {
-        if (((Structure*)(*it))->is_other_structure_within_distance(pos, dist)) {
-            tothouseSat += (double)((*it)->get("satisfaction")) * 10;
-            obj_count++;
-        }
-    }
-    for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
-    {
-        if (((Structure*)(*it))->is_other_structure_within_distance(pos, dist)) {
-            tothouseSat += (double)((*it)->get("satisfaction")) * 10;
-            obj_count++;
-        }
-    }
-    tothouseSat /= obj_count;
-    this->totalSatisfaction = (totalSatisfaction + tothouseSat) / all_houses.size();
-    */
-
-}
-
 
 
 

@@ -46,7 +46,7 @@ then run:
 
 namespace godot {
     
-    const int citysize{ 20 };
+    const int citysize{ 40 };
 
     class Transport;
 
@@ -138,10 +138,6 @@ namespace godot {
 
         int rolling_simulation_counter{ -1 };
 
-        void simulation_shops();
-        void simulation_housing();
-        void simulation_energy();
-        void simulation_production();
         
 
         void change_pie_chart(int value, NodePath name, bool isPositive);
