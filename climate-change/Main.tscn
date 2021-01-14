@@ -1239,9 +1239,9 @@ __meta__ = {
 
 [node name="ResetButton" type="Button" parent="2Dworld"]
 margin_left = 312.2
-margin_top = 25.0
+margin_top = 20.0
 margin_right = 406.2
-margin_bottom = 67.0
+margin_bottom = 62.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "RESET"
@@ -1284,7 +1284,7 @@ __meta__ = {
 
 [node name="ExitButton" type="Button" parent="2Dworld"]
 margin_left = 430.272
-margin_top = 25.0
+margin_top = 20.0
 margin_right = 567.272
 margin_bottom = 62.0
 mouse_default_cursor_shape = 2
@@ -1327,9 +1327,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="GraphsButton" type="Button" parent="2Dworld"]
+margin_left = 1480.0
+margin_top = 20.0
+margin_right = 1600.0
+margin_bottom = 62.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "GRAPHS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="TabContainer" type="TabContainer" parent="2Dworld"]
-margin_right = 1915.0
-margin_bottom = 1068.0
+margin_left = 300.0
+margin_top = 400.0
+margin_right = 2215.0
+margin_bottom = 1468.0
 rect_scale = Vector2( 0.6, 0.6 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1442,3 +1456,4 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/ExitButton" to="3Dworld" method="_on_ExitButton_pressed"]
 [connection signal="pressed" from="2Dworld/ExitConfirmationBox/ConfirmExit" to="3Dworld" method="_on_Exit_confirmed"]
 [connection signal="pressed" from="2Dworld/ExitConfirmationBox/CancelExit" to="3Dworld" method="_on_Exit_cancelled"]
+[connection signal="pressed" from="2Dworld/GraphsButton" to="3Dworld" method="_on_GraphsButton_pressed"]

@@ -247,6 +247,11 @@ void City::_physics_process(float delta) {
         }
         Godot::print("Array should be printed now");
         */
+
+        std::cout << "HousingCO2 = " << HousingCO2 << std::endl;
+        std::cout << "ShopsCO2 = " << ShopsCO2 << std::endl;
+        std::cout << "EnergyCO2 = " << EnergyCO2 << std::endl;
+        std::cout << "ProductionCO2 = " << ProductionCO2 << std::endl;
         
         day_tick++;
         std::cout << "Day tick : " << (this->day_tick) << endl;
