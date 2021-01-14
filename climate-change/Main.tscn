@@ -865,6 +865,7 @@ __meta__ = {
 [node name="Menus" type="KinematicBody2D" parent="2Dworld"]
 
 [node name="MenuHousing" type="Node2D" parent="2Dworld/Menus"]
+visible = false
 position = Vector2( -1, 0 )
 scale = Vector2( 1.3, 1.3 )
 
@@ -925,7 +926,6 @@ __meta__ = {
 }
 
 [node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
-visible = false
 position = Vector2( -1, 0 )
 scale = Vector2( 1.3, 1.3 )
 
@@ -1477,13 +1477,25 @@ text = "Year 1, January 1"
 margin_left = 161.0
 margin_right = 161.0
 margin_bottom = 38.0
+
+[node name="3dButton" type="Button" parent="."]
+margin_left = 187.283
+margin_top = 46.958
+margin_right = 324.283
+margin_bottom = 88.958
+mouse_default_cursor_shape = 2
+theme = ExtResource( 8 )
+text = "MENU"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="value_changed" from="2Dworld/Slider/HSlider" to="3Dworld" method="_on_Game_Speed_changed"]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button1" to="3Dworld" method="_on_Menu_pressed" binds= [ "SolarHousing" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button2" to="3Dworld" method="_on_Menu_pressed" binds= [ "WindturbinesHousing" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button3" to="3Dworld" method="_on_Menu_pressed" binds= [ "DoubleGlazingHousing" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button4" to="3Dworld" method="_on_Menu_pressed" binds= [ "TreesBudget" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Solar" to="3Dworld" method="_on_Menu_pressed" binds= [ "PanelSubsidyForShops" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "TreesBudget" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button5" to="3Dworld" method="_on_Menu_pressed" binds= [ "TreesBudget" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Button6" to="3Dworld" method="_on_Menu_pressed" binds= [ "WindTurbinesShop" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar" to="3Dworld" method="_on_Menu_pressed" binds= [ "CoalProhibition" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar2" to="3Dworld" method="_on_Menu_pressed" binds= [ "EfficiencyCogenerationCoalPlant" ]]
@@ -1497,9 +1509,9 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar5" to="3Dworld" method="_on_Menu_pressed" binds= [ "CarsProhibition" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar" to="3Dworld" method="_on_Menu_pressed" binds= [ "ConsumptionTransport" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar2" to="3Dworld" method="_on_Menu_pressed" binds= [ "BikeSubsidy" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ElectricSubsidy" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar3" to="3Dworld" method="_on_Menu_pressed" binds= [ "ElectricSubsidy" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar4" to="3Dworld" method="_on_Menu_pressed" binds= [ "BusSubsidy" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar6" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "WeightTransport" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar6" to="3Dworld" method="_on_Menu_pressed" binds= [ "WeightTransport" ]]
 [connection signal="pressed" from="2Dworld/Menus/TransportMenuButton" to="3Dworld" method="_on_TransportMenuButton_pressed"]
 [connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]
 [connection signal="pressed" from="2Dworld/ResetButton" to="3Dworld" method="_on_ResetButton_pressed"]
@@ -1510,3 +1522,4 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/ExitConfirmationBox/CancelExit" to="3Dworld" method="_on_Exit_cancelled"]
 [connection signal="pressed" from="2Dworld/GraphsButton" to="3Dworld" method="_on_GraphsButton_pressed"]
 [connection signal="pressed" from="2Dworld/GraphsExit" to="3Dworld" method="_on_GraphsExit_pressed"]
+[connection signal="pressed" from="3dButton" to="3Dworld" method="_on_3dButton_pressed"]
