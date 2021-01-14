@@ -390,7 +390,9 @@ void House::set_houseType(int type)
 
 		//attributes special to this class
 		windowNumber = 5;
-		age = 0; // set the age of the house at 0 
+		srand((int)time(0));
+		age = (rand() % (20) + 1);
+		
 
 	}
 	else {
@@ -419,7 +421,8 @@ void House::set_houseType(int type)
 		CO2Emission = 3.51; //tons per year
 		buildingTime = 140; //in average, building a house takes about 140 days
 		satisfaction = 10; //assuming we are on a scale from 0 to 10
-		age = 0;
+		srand((int)time(0));
+		age = (rand() % (20) + 1);
 	}
 
 }
@@ -497,7 +500,9 @@ double Building::get_environmentalcost() {
 Building::Building() {
 	PanelsOn = false;
 	rooftopWindTurbineOn = false;
-	age = 0;
+	srand((int)time(0));
+	age = (rand() % (20) + 1);
+
 	windowNumber = 30;
 	cost = 1000000; //counting price of lot + cost of workforce + cost of all materials used
 	maintenance = 0.1765; //cost in euros per kWh
