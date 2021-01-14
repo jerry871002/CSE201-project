@@ -205,7 +205,7 @@ enabled=PoolStringArray( "..", "easy_charts", "lod" )
 
 [gdnative]
 
-singletons=[  ]
+singletons=[ "res://GDLib.gdnlib" ]
 
 [input]
 
