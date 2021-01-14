@@ -159,6 +159,15 @@ void City::_register_methods()
     register_property<City, Array>("statsPopulation", &City::statsPopulation, {});
     register_property<City, Array>("statsEnvironmentalCost", &City::statsEnvironmentalCost, {});
 
+    register_property<City, double>("HousingCO2", &City::HousingCO2, 0.0);
+    register_property<City, double>("EnergyCO2", &City::EnergyCO2, 0.0);
+    register_property<City, double>("ShopsCO2", &City::ShopsCO2, 0.0);
+    register_property<City, double>("ProductionCO2", &City::ProductionCO2, 0.0);
+    register_property<City, Array>("statsCarbonEmissionHousing", &City::statsCarbonEmissionHousing, {});
+    register_property<City, Array>("statsCarbonEmissionShops", &City::statsCarbonEmissionShops, {});
+    register_property<City, Array>("statsCarbonEmissionEnergy", &City::statsCarbonEmissionEnergy, {});
+    register_property<City, Array>("statsCarbonEmissionProduction", &City::statsCarbonEmissionProduction, {});
+
 };
 
 void City::_init()
@@ -2015,6 +2024,42 @@ void delete_line(std::string documentName, std::string dataToDelete) {
 
 void City::write_stat_history_to_file() {
 
+    Array newCarbonEmissionHousing{};
+    newCarbonEmissionHousing.push_back(return_word_date_godot());
+    newCarbonEmissionHousing.push_back((int)(HousingCO2 / pow(10, 6) + 0.5));
+
+    if (statsCarbonEmissionHousing.size() > 100) {
+        statsCarbonEmissionHousing.pop_front();
+    }
+    statsCarbonEmissionHousing.push_back(newCarbonEmissionHousing);
+
+    Array newCarbonEmissionShops{};
+    newCarbonEmissionShops.push_back(return_word_date_godot());
+    newCarbonEmissionShops.push_back((int)(ShopsCO2 / pow(10, 6) + 0.5));
+
+    if (statsCarbonEmissionShops.size() > 100) {
+        statsCarbonEmissionShops.pop_front();
+    }
+    statsCarbonEmissionShops.push_back(newCarbonEmissionShops);
+
+    Array newCarbonEmissionEnergy{};
+    newCarbonEmissionEnergy.push_back(return_word_date_godot());
+    newCarbonEmissionEnergy.push_back((int)(EnergyCO2 / pow(10, 6) + 0.5));
+
+    if (statsCarbonEmissionEnergy.size() > 100) {
+        statsCarbonEmissionEnergy.pop_front();
+    }
+    statsCarbonEmissionEnergy.push_back(newCarbonEmissionEnergy);
+
+    Array newCarbonEmissionProduction{};
+    newCarbonEmissionProduction.push_back(return_word_date_godot());
+    newCarbonEmissionProduction.push_back((int)(ProductionCO2 / pow(10, 6) + 0.5));
+
+    if (statsCarbonEmissionProduction.size() > 100) {
+        statsCarbonEmissionProduction.pop_front();
+    }
+    statsCarbonEmissionProduction.push_back(newCarbonEmissionProduction);
+    
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
     newCarbonEmission.push_back((int)(carbonEmission/pow(10,6) + 0.5));
