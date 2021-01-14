@@ -305,7 +305,15 @@ double House::get_co2emissions() {
 	double panelsF = 1;
 	
 	if (this->PanelsOn) { panelsF = 0.7; };
-	return (double)((this->CO2Emission)  * panelsF);
+
+	double trees = 0;
+	
+	if (this->get_node("MeshComponents/Trees")->get("visible")) {
+		trees = 0.2;  // 10 trees absorb 200 kilos of co2 a year
+	}
+	
+	
+	return (double)(((this->CO2Emission)-trees)  * panelsF);
 }
 
 double House::get_energyuse() {
@@ -481,9 +489,15 @@ void House::simulate_step(double days) {
 /// </summary>
 double Building::get_co2emissions() {
 	double panelsF = 1;
-	double turbineF = 1;
 	if (this->PanelsOn) { panelsF = 0.7; };
-	return (double)((this->CO2Emission) * panelsF);
+
+	double trees = 0;
+	
+	if (this->get_node("MeshComponents/Trees")->get("visible")) {
+		trees = 0.2;  // 10 trees absorb 200 kilos of co2 a year
+	}
+
+	return (double)(((this->CO2Emission)-trees) * panelsF);
 }
 
 double Building::get_energyuse() {
