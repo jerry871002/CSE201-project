@@ -114,6 +114,8 @@ void City::_register_methods()
     register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
     register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
     register_method((char*)"_on_TransportMenuButton_pressed", &City::_on_TransportMenuButton_pressed);
+    register_method((char*)"_on_GraphsButton_pressed", &City::_on_GraphsButton_pressed);
+    register_method((char*)"_on_GraphsExit_pressed", & City::_on_GraphsExit_pressed);
 
     register_method((char*)"change_pie_chart", &City::change_pie_chart);
 	register_method((char*)"change_pie_label", &City::change_pie_label);
@@ -315,7 +317,7 @@ void City::_input(InputEvent*)
         add_car();
     }
 
-    if (i->is_action_pressed("ui_turn"))
+    if (i->is_action_pressed("ui_turn") && !(this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->get("visible")))
     {
         hide_menus();
 
@@ -641,6 +643,9 @@ void City::set_initial_visible_components()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitButton")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", false);
 
+    this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/GraphsExit")->set("visible", false);
+
 }
 
 
@@ -655,19 +660,25 @@ void City::_ready()
     this->generate_initial_city_graphics();
     structures_iterator = all_structures.begin();
     this->set_initial_visible_components();
+    this->initialize_stats();
 
+    
+    
+}
 
+void City::initialize_stats() {
     // initialize stats arrays :
     Array titleCarbonEmission{};
     titleCarbonEmission.push_back(String("Date"));
     titleCarbonEmission.push_back(String("Carbon emissions in thousands of tons"));
     statsCarbonEmission.push_back(titleCarbonEmission);
 
+
     Array titleEnvironmentalCost{};
     titleEnvironmentalCost.push_back(String("Date"));
     titleEnvironmentalCost.push_back(String("Environmental cost in billions of euros"));
     statsEnvironmentalCost.push_back(titleEnvironmentalCost);
-    
+
     Array titleIncome{};
     titleIncome.push_back(String("Date"));
     titleIncome.push_back(String("GDP in billions of euros"));
@@ -693,7 +704,39 @@ void City::_ready()
     titlePopulation.push_back(String("Date"));
     titlePopulation.push_back(String("Population in number of people"));
     statsPopulation.push_back(titlePopulation);
-    
+
+    Array newStat{};
+    newStat.push_back(String("0"));
+    newStat.push_back(0);
+
+    statsCarbonEmission.push_back(newStat);
+    statsEnvironmentalCost.push_back(newStat);
+    statsIncome.push_back(newStat);
+    statsEnergy.push_back(newStat);
+    statsUnemployment.push_back(newStat);
+    statsTotalSatisfaction.push_back(newStat);
+    statsPopulation.push_back(newStat);
+}
+
+void City::_on_GraphsButton_pressed() 
+{
+    this->_on_Reset_cancelled();
+    this->_on_Exit_cancelled();
+    this->time_speed = 0;
+    hide_menus();
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/GraphsExit")->set("visible", true);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->set("visible", true);
+
+}
+
+void City::_on_GraphsExit_pressed() {
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/GraphsExit")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->set("visible", false);
+    this->_on_Game_Speed_changed();
 }
 
 void City::_on_ExitButton_pressed()

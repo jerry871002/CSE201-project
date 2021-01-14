@@ -84,12 +84,14 @@ namespace godot {
         void _on_Exit_confirmed();
         void _on_Exit_cancelled();
         void _on_TransportMenuButton_pressed();
+        void _on_GraphsButton_pressed();
+        void _on_GraphsExit_pressed();
 
 
         // INITIAL GRAPHICAL SETUP
 
         
-
+        void initialize_stats();
         void generate_initial_city_graphics();
         void set_initial_visible_components();
 
