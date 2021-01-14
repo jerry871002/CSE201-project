@@ -343,11 +343,13 @@ void City::_input(InputEvent*)
         this->notification_active = false;
         this->notification_counter = 0;
         this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
     }
 
     if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))
     {
         this->_on_Validate_pressed();
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
     }
 };
 
@@ -783,7 +785,7 @@ void City::_on_Exit_confirmed()
 
 void City::_on_ResetButton_pressed()
 {
-
+    
     this->_on_Exit_cancelled();
     this->time_speed = 0;
 
@@ -2369,10 +2371,10 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
 {
     TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
     if (isPositive) {
-        node->set_tint_progress(Color(min(2 - (double)value / 50, 1.0), min((double)value / 50, 1.0), 0, 1.0));
+        node->set_tint_progress(Color(min(2 - (double)value / 50, 0.99), min((double)value / 50, 0.99), 0, 1.0));
     }
     else {
-        node->set_tint_progress(Color(min((double)value / 50, 1.0), min(2 - (double)value / 50, 1.0), 0, 1.0));  
+        node->set_tint_progress(Color(min((double)value / 50, 0.99), min(2 - (double)value / 50, 0.99), 0, 1.0));  
     }
     node->set("value", value);
 }

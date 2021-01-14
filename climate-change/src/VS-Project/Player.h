@@ -27,7 +27,7 @@ namespace godot {
 		double CameraAngleDeg;
 		const Vector3 StartPosition{ Vector3(400, 100, 400) };
 		const Vector3 StartRotation{ Vector3(0, 0, 0) };
-		const double MaxHeight{ 300 };
+		const double MaxHeight{ 250 };
 		const double MinHeight{ 20 };
 		void update_camera_angle();
 

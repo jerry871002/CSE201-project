@@ -11,7 +11,7 @@ export var enable_lod := true
 export(float, 0.0, 1000.0, 0.1) var lod_0_max_distance := 200
 
 # The maximum LOD 1 (medium quality) distance in units.
-export(float, 0.0, 1000.0, 0.1) var lod_1_max_distance := 460
+export(float, 0.0, 1000.0, 0.1) var lod_1_max_distance := 500
 
 # The maximum LOD 2 (low quality) distance in units.
 # Past this distance, all LOD variants are hidden.
