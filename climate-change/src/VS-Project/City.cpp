@@ -1328,7 +1328,7 @@ void City::_on_Game_Speed_changed()
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
     change_pie_chart(100*(totalSatisfaction/(10*all_structures.size())), "PieSatisfaction", true); 
     change_pie_chart(value_pie_chart_C02(carbonEmission, 1000000), "PieCO2", false); 
-	change_pie_chart(100*(income/population), "PieIncome", true); 
+	change_pie_chart(income/(population*100), "PieIncome", true); 
     change_pie_chart(energyDemand, "PieUnemployement", false); //EnergyDemand variable is temporary
     change_pie_chart(value_pie_chart_C02(energyDemand, 100000), "PiePowerDemand", false);
 
