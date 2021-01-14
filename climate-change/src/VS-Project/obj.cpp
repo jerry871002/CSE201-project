@@ -46,12 +46,10 @@ Structure::Structure(double cost, double energyUse, double maintenance, double s
 Structure::~Structure() {}
 
 double Structure::get_satisfaction() {
-    if (this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall" ) {
-        if (this->get_node("MeshComponents/Trees")->get("visible")) {
-            return ((this->satisfaction) + 4);
-        }
+    if ((this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall" ) && (this->get_node("MeshComponents/Trees")->get("visible"))) {
+        return ((this->satisfaction) + 4);
     }
-    else{ return this->satisfaction; }
+    return this->satisfaction;
 }
 
 void Structure::set_satisfaction(double sat) {

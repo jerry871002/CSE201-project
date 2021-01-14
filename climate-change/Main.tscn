@@ -374,7 +374,7 @@ size = 60
 use_mipmaps = true
 font_data = ExtResource( 10 )
 
-[sub_resource type="StyleBoxFlat" id=76]
+[sub_resource type="StyleBoxFlat" id=75]
 content_margin_left = 40.0
 content_margin_right = 40.0
 bg_color = Color( 0.14902, 0.14902, 0.14902, 1 )
@@ -385,7 +385,7 @@ border_color = Color( 1, 1, 1, 1 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 
-[sub_resource type="StyleBoxFlat" id=77]
+[sub_resource type="StyleBoxFlat" id=76]
 content_margin_left = 40.0
 content_margin_right = 40.0
 bg_color = Color( 0.14902, 0.14902, 0.14902, 1 )
@@ -396,7 +396,7 @@ border_color = Color( 0.14902, 0.14902, 0.14902, 1 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 
-[sub_resource type="StyleBoxFlat" id=75]
+[sub_resource type="StyleBoxFlat" id=77]
 bg_color = Color( 0.14902, 0.14902, 0.14902, 1 )
 border_width_left = 3
 border_width_top = 3
@@ -1449,9 +1449,9 @@ margin_top = 2.74565
 margin_right = 1872.4
 margin_bottom = 1022.75
 mouse_default_cursor_shape = 2
-custom_styles/tab_fg = SubResource( 76 )
-custom_styles/tab_bg = SubResource( 77 )
-custom_styles/panel = SubResource( 75 )
+custom_styles/tab_fg = SubResource( 75 )
+custom_styles/tab_bg = SubResource( 76 )
+custom_styles/panel = SubResource( 77 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1493,10 +1493,10 @@ Chart_Style/template = 2
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 8.0
-margin_top = 61.0
-margin_right = -8.0
-margin_bottom = -8.0
+margin_left = 3.0
+margin_top = 48.0
+margin_right = -3.0
+margin_bottom = -3.0
 mouse_default_cursor_shape = 2
 
 [node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Tabs2"]
