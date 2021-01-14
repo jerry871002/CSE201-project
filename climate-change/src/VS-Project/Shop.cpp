@@ -57,7 +57,7 @@ String Shop::get_object_info()
     String info = this->Structure::get_object_info();
 
     info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
-    info += "Employement: " + to_godot_string(this->employment) + String("\n");
+    info += "Employement: " + to_godot_string((int)(this->employment)) + String("\n");
     if (this->PanelsOn) {
         info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string(this->panels_age) + String("\n");
     }
@@ -68,7 +68,7 @@ String Shop::get_object_info()
     info += "Panels get Added PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
     info += "SUBSIDY for Wind Turbines: " + to_godot_string((int)this->get("wind_turbine_subsidies")) + String("\n");
     info += "Wind Turbine get Added PROBABILITY: " + to_godot_string((double)this->windTurbine_probability) + String("\n");
-    info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
+    info += "CO2 Emissions: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
     info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
     
     return info;
@@ -417,7 +417,7 @@ SmallShop::SmallShop(){
         case 1: {
             std::uniform_real_distribution <double> energyusepeyear1(5000, 15000); // Micro business have an average energy consumption between 5000-15000 KWh per year
             energyuseperyear = energyusepeyear1(gen);
-            energyUse = energyuseperyear/365;
+            energyUse = energyuseperyear;
             satisfaction = 6;
 
             CO2Emission = 250;  //these are approximates as specific data is very hard to find
@@ -428,7 +428,7 @@ SmallShop::SmallShop(){
         case 2: {
             std::uniform_real_distribution <double> energyusepeyear2(15000, 30000); // Micro business have an average energy consumption between 5000-15000 KWh per year
             energyuseperyear = energyusepeyear2(gen);
-            energyUse = energyuseperyear/365;
+            energyUse = energyuseperyear;
             satisfaction = 6;
             CO2Emission = 300;  //these are approximates as specific data is very hard to find
             std::uniform_real_distribution <double> totalemployees2(5, 15);	
@@ -438,7 +438,7 @@ SmallShop::SmallShop(){
         case 3: {
             std::uniform_real_distribution <double> energyusepeyear3(30000, 45000); // Micro business have an average energy consumption between 5000-15000 KWh per year
             energyuseperyear = energyusepeyear3(gen);
-            energyUse = energyuseperyear/365;
+            energyUse = energyuseperyear;
             satisfaction = 6;
 
             CO2Emission = 360;  //these are approximates as specific data is very hard to find
