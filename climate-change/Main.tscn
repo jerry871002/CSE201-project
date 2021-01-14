@@ -862,6 +862,7 @@ __meta__ = {
 [node name="Menus" type="KinematicBody2D" parent="2Dworld"]
 
 [node name="MenuHousing" type="Node2D" parent="2Dworld/Menus"]
+visible = false
 position = Vector2( -1, 0 )
 scale = Vector2( 1.3, 1.3 )
 
@@ -922,7 +923,6 @@ __meta__ = {
 }
 
 [node name="MenuShop" type="Node2D" parent="2Dworld/Menus"]
-visible = false
 position = Vector2( -1, 0 )
 scale = Vector2( 1.3, 1.3 )
 
@@ -1408,8 +1408,6 @@ __meta__ = {
 margin_left = -0.999969
 margin_right = -1.0
 chart_name = "CO2 EMISSIONS"
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
 Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )
@@ -1494,7 +1492,7 @@ __meta__ = {
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button3" to="3Dworld" method="_on_Menu_pressed" binds= [ "DoubleGlazingHousing" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuHousing/Button4" to="3Dworld" method="_on_Menu_pressed" binds= [ "TreesBudget" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Solar" to="3Dworld" method="_on_Menu_pressed" binds= [ "PanelSubsidyForShops" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button5" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "TreesBudget" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuShop/Button5" to="3Dworld" method="_on_Menu_pressed" binds= [ "TreesBudget" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuShop/Button6" to="3Dworld" method="_on_Menu_pressed" binds= [ "WindTurbinesShop" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar" to="3Dworld" method="_on_Menu_pressed" binds= [ "CoalProhibition" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuEnergy/Solar2" to="3Dworld" method="_on_Menu_pressed" binds= [ "EfficiencyCogenerationCoalPlant" ]]
@@ -1508,9 +1506,9 @@ __meta__ = {
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar5" to="3Dworld" method="_on_Menu_pressed" binds= [ "CarsProhibition" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar" to="3Dworld" method="_on_Menu_pressed" binds= [ "ConsumptionTransport" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar2" to="3Dworld" method="_on_Menu_pressed" binds= [ "BikeSubsidy" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar3" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "ElectricSubsidy" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar3" to="3Dworld" method="_on_Menu_pressed" binds= [ "ElectricSubsidy" ]]
 [connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar4" to="3Dworld" method="_on_Menu_pressed" binds= [ "BusSubsidy" ]]
-[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar6" to="3Dworld" method="_on_MenuShop_pressed" binds= [ "WeightTransport" ]]
+[connection signal="pressed" from="2Dworld/Menus/MenuTransport/Solar6" to="3Dworld" method="_on_Menu_pressed" binds= [ "WeightTransport" ]]
 [connection signal="pressed" from="2Dworld/Menus/TransportMenuButton" to="3Dworld" method="_on_TransportMenuButton_pressed"]
 [connection signal="pressed" from="2Dworld/PoliciesInput/Button" to="3Dworld" method="_on_Validate_pressed"]
 [connection signal="pressed" from="2Dworld/ResetButton" to="3Dworld" method="_on_ResetButton_pressed"]
