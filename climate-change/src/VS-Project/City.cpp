@@ -783,7 +783,7 @@ void City::_on_Exit_confirmed()
 
 void City::_on_ResetButton_pressed()
 {
-
+    
     this->_on_Exit_cancelled();
     this->time_speed = 0;
 
@@ -2369,10 +2369,10 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
 {
     TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
     if (isPositive) {
-        node->set_tint_progress(Color(min(2 - (double)value / 50, 1.0), min((double)value / 50, 1.0), 0, 1.0));
+        node->set_tint_progress(Color(min(2 - (double)value / 50, 0.99), min((double)value / 50, 0.99), 0, 1.0));
     }
     else {
-        node->set_tint_progress(Color(min((double)value / 50, 1.0), min(2 - (double)value / 50, 1.0), 0, 1.0));  
+        node->set_tint_progress(Color(min((double)value / 50, 0.99), min(2 - (double)value / 50, 0.99), 0, 1.0));  
     }
     node->set("value", value);
 }

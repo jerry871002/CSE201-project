@@ -386,38 +386,6 @@ font_data = ExtResource( 10 )
 
 [node name="3Dworld" type="Spatial" parent="."]
 script = ExtResource( 1 )
-time_speed = null
-day_tick = null
-budget = null
-fuelTax = null
-weightTax = null
-bikeSubsidy = null
-electricCarSubsidy = null
-busSubsidy = null
-carProhibition = null
-income = null
-population = null
-numberOfEmployees = null
-carbonEmission = null
-energyDemand = null
-energySupply = null
-totalSatisfaction = null
-environmentalCost = null
-statsCarbonEmission = null
-statsIncome = null
-statsEnergy = null
-statsUnemployment = null
-statsTotalSatisfaction = null
-statsPopulation = null
-statsEnvironmentalCost = null
-HousingCO2 = null
-EnergyCO2 = null
-ShopsCO2 = null
-ProductionCO2 = null
-statsCarbonEmissionHousing = null
-statsCarbonEmissionShops = null
-statsCarbonEmissionEnergy = null
-statsCarbonEmissionProduction = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="3Dworld"]
 environment = ExtResource( 2 )
@@ -441,7 +409,6 @@ directional_shadow_max_distance = 1000.0
 [node name="Player" type="KinematicBody" parent="3Dworld"]
 transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 100, 0 )
 script = ExtResource( 4 )
-movable = null
 
 [node name="ClippedCamera" type="ClippedCamera" parent="3Dworld/Player"]
 transform = Transform( 1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 0, 0 )
@@ -460,10 +427,10 @@ position = Vector2( 39.1995, 28.5087 )
 
 [node name="ColorRect" type="ColorRect" parent="2Dworld/Blur2"]
 material = SubResource( 3 )
-margin_left = 1761.0
-margin_top = -5.0
-margin_right = 1982.0
-margin_bottom = 1148.0
+margin_left = 1709.33
+margin_top = -53.1085
+margin_right = 1930.33
+margin_bottom = 1099.89
 rect_pivot_offset = Vector2( 536.625, 1828.64 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -473,10 +440,10 @@ __meta__ = {
 
 [node name="ColorRect" type="ColorRect" parent="2Dworld/Blur3"]
 material = SubResource( 3 )
-margin_left = -29.5874
-margin_top = -18.0
-margin_right = 1778.41
-margin_bottom = 131.0
+margin_left = -200.0
+margin_top = -109.0
+margin_right = 1991.0
+margin_bottom = 90.0
 rect_pivot_offset = Vector2( 536.625, 1828.64 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -760,7 +727,7 @@ __meta__ = {
 }
 
 [node name="Slider" type="Node2D" parent="2Dworld"]
-position = Vector2( 500, 5 )
+position = Vector2( 500, -15 )
 
 [node name="HSlider" type="HSlider" parent="2Dworld/Slider"]
 margin_left = 250.0
@@ -1189,9 +1156,9 @@ __meta__ = {
 }
 
 [node name="TransportMenuButton" type="Button" parent="2Dworld/Menus"]
-margin_left = 1718.58
+margin_left = 1716.8
 margin_top = -6.63586
-margin_right = 1868.58
+margin_right = 1866.8
 margin_bottom = 143.364
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 71 )
@@ -1271,9 +1238,8 @@ __meta__ = {
 
 [node name="ResetButton" type="Button" parent="2Dworld"]
 margin_left = 312.2
-margin_top = 20.0
 margin_right = 406.2
-margin_bottom = 62.0
+margin_bottom = 42.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "RESET"
@@ -1316,9 +1282,8 @@ __meta__ = {
 
 [node name="ExitButton" type="Button" parent="2Dworld"]
 margin_left = 430.272
-margin_top = 20.0
 margin_right = 567.272
-margin_bottom = 62.0
+margin_bottom = 42.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "EXIT GAME"
@@ -1361,9 +1326,8 @@ __meta__ = {
 
 [node name="GraphsButton" type="Button" parent="2Dworld"]
 margin_left = 1480.0
-margin_top = 20.0
 margin_right = 1600.0
-margin_bottom = 62.0
+margin_bottom = 42.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 8 )
 text = "GRAPHS"
@@ -1405,8 +1369,6 @@ __meta__ = {
 margin_left = -0.999969
 margin_right = -1.0
 chart_name = "CO2 EMISSIONS"
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
 Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )
