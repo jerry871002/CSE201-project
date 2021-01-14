@@ -66,9 +66,9 @@ City::City() {
     daycount = 0;
     numberOfHouses = 0;
 
-	//policies for transport
+    //policies for transport
     fuelTax = 0;
-	weightTax = 0;
+    weightTax = 0;
     bikeSubsidy = 0;
     electricCarSubsidy = 0;
     busSubsidy = 0;
@@ -114,17 +114,17 @@ void City::_register_methods()
     register_method((char*)"_on_Reset_confirmed", &City::_on_Reset_confirmed);
     register_method((char*)"_on_Reset_cancelled", &City::_on_Reset_cancelled);
     register_method((char*)"_on_ExitButton_pressed", &City::_on_ExitButton_pressed);
-	register_method((char*)"_on_3dButton_pressed", &City::_on_3dButton_pressed);
+    register_method((char*)"_on_3dButton_pressed", &City::_on_3dButton_pressed);
     register_method((char*)"_on_Exit_confirmed", &City::_on_Exit_confirmed);
     register_method((char*)"_on_Exit_cancelled", &City::_on_Exit_cancelled);
     register_method((char*)"_on_TransportMenuButton_pressed", &City::_on_TransportMenuButton_pressed);
     register_method((char*)"_on_GraphsButton_pressed", &City::_on_GraphsButton_pressed);
-    register_method((char*)"_on_GraphsExit_pressed", & City::_on_GraphsExit_pressed);
+    register_method((char*)"_on_GraphsExit_pressed", &City::_on_GraphsExit_pressed);
 
     register_method((char*)"change_pie_chart", &City::change_pie_chart);
-	register_method((char*)"change_pie_label", &City::change_pie_label);
+    register_method((char*)"change_pie_label", &City::change_pie_label);
 
-    
+
     register_method((char*)"add_shop", &City::add_shop);
     register_method((char*)"add_energy", &City::add_energy);
     register_method((char*)"add_house", &City::add_house);
@@ -139,10 +139,10 @@ void City::_register_methods()
     register_property<City, double>("budget", &City::budget, 10000);
 
     //Transport policies methods :
-    register_property<City, double>("fuelTax",&City::fuelTax, 0.0);
+    register_property<City, double>("fuelTax", &City::fuelTax, 0.0);
     register_property<City, double>("weightTax", &City::weightTax, 0.0);
-    register_property<City, double>("bikeSubsidy", &City::bikeSubsidy,0.0);
-    register_property<City, double>("electricCarSubsidy", &City::electricCarSubsidy,0.0);
+    register_property<City, double>("bikeSubsidy", &City::bikeSubsidy, 0.0);
+    register_property<City, double>("electricCarSubsidy", &City::electricCarSubsidy, 0.0);
     register_property<City, double>("busSubsidy", &City::busSubsidy, 0.0);
     register_property<City, double>("carProhibition", &City::carProhibition, 0.0);
 
@@ -227,39 +227,39 @@ void City::_physics_process(float delta) {
 
         this->date_counter += double(delta) * this->time_speed;
     }
-    
+
     if (simulation_counter > 5)
-    {   
+    {
         // CALLED EVERY 5 SECONDS
 
         add_car();
 
         (this->simulation_counter) -= 5;
-        
+
         std::cout << "income = " << (double)(this->get("income")) << std::endl;
         std::cout << "population = " << (double)(this->get("population")) << std::endl;
-        std::cout << "numberOfEmployees = " << (double)(this->get("numberOfEmployees")) << std::endl; 
+        std::cout << "numberOfEmployees = " << (double)(this->get("numberOfEmployees")) << std::endl;
         std::cout << "carbonEmission = " << (double)(this->get("carbonEmission")) << std::endl;
         std::cout << "energyDemand = " << (double)(this->get("energyDemand")) << std::endl;
         std::cout << "energySupply = " << (double)(this->get("energySupply")) << std::endl;
         std::cout << "environmentalCost = " << (double)(this->get("environmentalCost")) << std::endl;
-        
+
     }
 
     if (this->date_counter > 1)
     {
         // CALLED EVERY GAME DAY
-        
+
         /*
         for (int i = 0; i < statsCarbonEmission.size(); ++i) {
             Godot::print(String(statsCarbonEmission[i]));
         }
         Godot::print("Array should be printed now");
         */
-        
+
         day_tick++;
         std::cout << "Day tick : " << (this->day_tick) << endl;
-        this->get_tree()->get_root()->get_node("Main/2DWorld/Date")->set("text", return_word_date_godot());
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Date")->set("text", return_word_date_godot());
 
 
         int* datenumber = return_date(int(this->day_tick));
@@ -268,23 +268,23 @@ void City::_physics_process(float delta) {
             write_stat_history_to_file();
         }
 
-        
-        if (datenumber[0] == 1) 
-        {   
+
+        if (datenumber[0] == 1)
+        {
             // CALLED EVERY MONTH
             transport_to_add();
         }
 
-        if (datenumber[0] == 1 && datenumber[1] == 1) 
-        { 
+        if (datenumber[0] == 1 && datenumber[1] == 1)
+        {
             // CALLED EVERY YEAR
 
-            this->budget += 1000*all_structures.size(); 
+            this->budget += 1000 * all_structures.size();
         }
-        
+
         (this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")->get_node("DirectionalLight"))->set("rotation_degrees", Vector3(-45 - sin((M_PI * (2 * (double)(day_tick % 365)) / 365)) * 25 / 2 - 12.5, 45, 0));
         ((WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")))->set("fog_color", Color(0.77, 0.8, 0.86, (1 - airQuality) * 0.11));
-        
+
         (this->date_counter)--;
 
     }
@@ -303,8 +303,8 @@ void City::_physics_process(float delta) {
 
 
 void City::update_date() {
-    
-    
+
+
 }
 
 void City::_input(InputEvent*)
@@ -337,7 +337,7 @@ void City::_input(InputEvent*)
         this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
         this->notification_active = false;
         this->notification_counter = 0;
-        
+
 
     }
 
@@ -346,13 +346,13 @@ void City::_input(InputEvent*)
         this->notification_active = false;
         this->notification_counter = 0;
         this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
-       
+
     }
 
     if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))
     {
         this->_on_Validate_pressed();
-       
+
 
     }
 };
@@ -417,6 +417,7 @@ void City::generate_initial_city_graphics()
                 float lowhouseprob = calculate_building_prob(-200, 170, 5, dist) + calculate_building_prob(220,260,0.25, dist);
                 float highhouseprob = calculate_building_prob(-140, 170, 4, dist) + calculate_building_prob(230, 260, 0.7, dist);
 
+
                 //std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
                 //std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
                 //std::cout << "DEBUG: restaurantprob  : " << restaurantprob << std::endl;
@@ -428,7 +429,7 @@ void City::generate_initial_city_graphics()
 
                 std::cout << "DEBUG: done calculate probability" << std::endl;
 
-                double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + coalprob + geoprob+nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
+                double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + coalprob + geoprob + nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
                 //std::cout << "DEBUG: Add buildings" << std::endl;
 
                 if (!(minimumonefactory) && factoryprob != 0) {  add_production(bigbuildingpos, FactoryScene); minimumonefactory = true; }
@@ -442,7 +443,12 @@ void City::generate_initial_city_graphics()
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob + geoprob)) {   add_energy(bigbuildingpos, GeothermalPowerPlantScene); hasgeo = true; }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob + geoprob + coalprob)) {   add_energy(bigbuildingpos, CoalPowerPlantScene); hascoal = true; }
                 else {
+
                    //  in the case of a 1x1 building, plop down 4 1x1 in the slot
+
+
+                    //std::cout << "DEBUG: Add else" << std::endl;
+
                     srand(int((x + 1) * (z + 1) * (int)(time(0))));
 
                     for (int x1 = 0; x1 < 2; x1++)
@@ -462,8 +468,8 @@ void City::generate_initial_city_graphics()
 
                             double type = (double((double)rand() / (double)RAND_MAX) * (restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
 
-                            if (type < (double)(restaurantprob)) { 
-                                add_shop(pos + pos1, RestaurantScene); 
+                            if (type < (double)(restaurantprob)) {
+                                add_shop(pos + pos1, RestaurantScene);
                                 int randompdint = rand() % 3;
                                 if (randompdint == 0) {
                                     if (PDScene.is_valid()) {
@@ -478,7 +484,7 @@ void City::generate_initial_city_graphics()
                                     }
                                 }
                             }
-                            else if (type < (double)(restaurantprob + shopprob)) { 
+                            else if (type < (double)(restaurantprob + shopprob)) {
                                 add_shop(pos + pos1, ShopScene);
                                 int randompdint = rand() % 3;
                                 if (randompdint == 0) {
@@ -494,23 +500,22 @@ void City::generate_initial_city_graphics()
                                     }
                                 }
                             }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { 
-                                add_house(pos + pos1, LowHouseScene); 
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) {
+                                add_house(pos + pos1, LowHouseScene);
                                 int randompdint = rand() % 5;
                                 if (randompdint == 0) {
-                                    if (PDScene.is_valid()) {
-                                
+                                    if (PDScene.is_valid()) {                             
                                     Node* node;
 
-                                    node = PDScene->instance();
+                                        node = PDScene->instance();
 
-                                    node->set("translation", (pos + pos1 + Vector3(-7, 0, -9)));
+                                        node->set("translation", (pos + pos1 + Vector3(-7, 0, -9)));
 
-                                    this->add_child(node);
+                                        this->add_child(node);
+                                    }
                                 }
                             }
-                            }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { 
+                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) {
                                 add_house(pos + pos1, BuildingScene);
                                 int randompdint = rand() % 5;
                                 if (randompdint == 0) {
@@ -530,14 +535,14 @@ void City::generate_initial_city_graphics()
                             else { add_house(pos + pos1, HighHouseScene); }
                         }
                     }
-                    
+
                 }
             }
             /*    this stuff was for that ring around the fields
-            
+
             else
             {
-                
+
                 for (int x1 = 0; x1 < 2; x1++)
                 {
                     for (int z1 = 0; z1 < 2; z1++) {
@@ -573,7 +578,7 @@ void City::generate_initial_city_graphics()
                     }
                 }
             }*/
-           
+
         }
     }
     transport_to_add();
@@ -583,7 +588,7 @@ void City::generate_initial_city_graphics()
         int randomcarint = rand() % 2;
         if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car((Vector3)((Node*)(*it))->get("translation")); }
     }
-   
+
 
     //   shuffles all the vectors so that buildings arent updated in a noticeable pattern
     std::random_shuffle(all_structures.begin(), all_structures.end());
@@ -601,7 +606,7 @@ void City::generate_initial_city_graphics()
     this->budget += 1000 * all_structures.size();
 
     // loop to ensure population and employees match up by tweaking the population
-    
+
     while (population < numberOfEmployees * 1.02 || population > numberOfEmployees * 1.10) {
         if (population < numberOfEmployees * 1.02) {
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
@@ -619,7 +624,7 @@ void City::generate_initial_city_graphics()
                 this->population += (int)(*it)->get("numberOfInhabitants");
             }
         }
-        
+
 
     }
 
@@ -657,7 +662,7 @@ void City::set_initial_visible_components()
 
 void City::_ready()
 {
-
+    static default_random_engine generator(time(0));
     //std::cout << "DEBUG: Ready started" << std::endl;
     // citysize = 10;
 
@@ -667,7 +672,7 @@ void City::_ready()
     this->initialize_stats();
 
     this->_on_Game_Speed_changed();
-    
+
 }
 
 void City::initialize_stats() {
@@ -711,13 +716,14 @@ void City::initialize_stats() {
 
 }
 
-void City::_on_GraphsButton_pressed() 
+void City::_on_GraphsButton_pressed()
 {
     this->_on_Reset_cancelled();
     this->_on_Exit_cancelled();
     this->time_speed = 0;
+    this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
     hide_menus();
-    
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/GraphsExit")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->set("visible", true);
@@ -725,10 +731,11 @@ void City::_on_GraphsButton_pressed()
 }
 
 void City::_on_GraphsExit_pressed() {
-    
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/GraphsExit")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
     this->_on_Game_Speed_changed();
 }
 
@@ -748,7 +755,7 @@ void City::_on_ExitButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
-    
+
 
 }
 
@@ -761,7 +768,7 @@ void City::_on_3dButton_pressed()
 void City::_on_Exit_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
-    
+
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", false);
@@ -776,7 +783,7 @@ void City::_on_Exit_confirmed()
 
 void City::_on_ResetButton_pressed()
 {
-    
+
     this->_on_Exit_cancelled();
     this->time_speed = 0;
 
@@ -790,14 +797,14 @@ void City::_on_ResetButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
-    
+
 
 }
 
 void City::_on_Reset_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
-    
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
@@ -810,18 +817,35 @@ void City::_on_Reset_confirmed()
 
 
 
-void City::_on_TransportMenuButton_pressed() 
+void City::_on_TransportMenuButton_pressed()
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
-    
 
+    /*
+    * 0 - electic car
+    * 1 - big american car
+    * 2 - normal car
+    * 3 - old collection cars
+    * 4 - bike
+    * 5 - motorcycle
+    * 6 - bus
+    * 7 - sports car
+    */
     String transportInfo = String("INFORMATION") + String("\n");
     transportInfo += String("Transport") + String("\n");
-    transportInfo += String((int)(current_car_quantities[0])) + String("Electric Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[0])) + String("Electric Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[1])) + String("American Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[2])) + String("Normal Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[3])) + String("Collection Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[4])) + String("Bicycles") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[5])) + String("Motorcycles") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[6])) + String("Bus") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[7])) + String("Sports Cars") + String("\n");
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", transportInfo);
 
     this->time_speed = 0;
+    this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
@@ -838,7 +862,7 @@ void City::_on_Menu_pressed(String name)
     hide_menus();
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
-    
+
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
 
@@ -960,7 +984,7 @@ void City::hide_menus()
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuProduction")->set("visible", false);
-    
+
 }
 
 void City::_on_Validate_pressed()
@@ -970,7 +994,7 @@ void City::_on_Validate_pressed()
     String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
-    
+
 
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
     this->_on_Game_Speed_changed();
@@ -1009,14 +1033,14 @@ void City::implement_policies(double value) {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
-   else if (this->active_button == String("WindTurbinesShop")) {    ///I can Changed the name here
-		if (value >= 0 && value <= 800) {
-			Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON SHOPS IMPLEMENTED");
-			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
-			{
-				//if ((String)(*it)->get("object_type") == (String)("Restaurant")) {}
-				(*it)->set("wind_turbine_subsidies", value);
-				
+    else if (this->active_button == String("WindTurbinesShop")) {    ///I can Changed the name here
+        if (value >= 0 && value <= 800) {
+            Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON SHOPS IMPLEMENTED");
+            for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
+            {
+                //if ((String)(*it)->get("object_type") == (String)("Restaurant")) {}
+                (*it)->set("wind_turbine_subsidies", value);
+
             }
             this->trigger_notification(String("This wind turbine subsidy has been implemented. This will push businesses to utilize wind energy."));
         }
@@ -1025,8 +1049,8 @@ void City::implement_policies(double value) {
         }
     }
 
-	//##########
-	else if (this->active_button == String("WindturbinesHousing")) {
+    //##########
+    else if (this->active_button == String("WindturbinesHousing")) {
         if (value >= 0 && value <= 800) {
             Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON HOUSING IMPLEMENTED");
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
@@ -1040,7 +1064,7 @@ void City::implement_policies(double value) {
         }
     }
 
-	///######
+    ///######
 
     else if (this->active_button == String("EfficiencySupercriticalCoalPlant")) {
         if (value == 0 || value == 1) {
@@ -1077,7 +1101,7 @@ void City::implement_policies(double value) {
             Godot::print("THE LAW PROHIBITING OR ALLOWING THE USE OF NUCLEAR POWER WILL BE IMPLEMENTED");
             for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
             {
-                 (*it)->set("nuclear_prohibited", value);
+                (*it)->set("nuclear_prohibited", value);
             }
             this->trigger_notification(String("The sun has set on the city's nuclear power plant. Will citizens appreciate this move?"));
         }
@@ -1099,7 +1123,7 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("MaximumCarbonFactories")) {
-        if (42>=value && value>= 0) {
+        if (42 >= value && value >= 0) {
             Godot::print("MAXIMUM EMISSIONS ON FACTORIES IMPLEMENTED");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
@@ -1174,11 +1198,11 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("SolarHousing")) {
-        if (value >= 0 && value<=450) {
+        if (value >= 0 && value <= 450) {
             Godot::print("SOLAR PANELS SUBSIDIES ON HOUSING IMPLEMENTED");
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
             {
-                 (*it)->set("solar_panel_subsidies_housing", value);
+                (*it)->set("solar_panel_subsidies_housing", value);
             }
             this->trigger_notification(String("You have changed the incentive for citizens to buy solar panels for their homes."));
         }
@@ -1213,7 +1237,7 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("ConsumptionTransport")) {
-        if (value >= 0 && value <= 2) { 
+        if (value >= 0 && value <= 2) {
             Godot::print("TAX ON CAR CONSUMPTION IMPLEMENTED");
             fuelTax = value;
             if (value > 0) { this->trigger_notification(String("Fuel tax implemented ! Yellow jackets are being bought up in shops around the city.")); }
@@ -1224,18 +1248,18 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("WeightTransport")) {
-        if (value >= 0 && value <= 5000) { 
+        if (value >= 0 && value <= 5000) {
             Godot::print("TAX ON CAR WEIGHT IMPLEMENTED");
             weightTax = value;
             this->trigger_notification(String("Policy implemented."));
         }
-      
+
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
     else if (this->active_button == String("BikeSubsidy")) {
-        if (value >= 0 && value <= 250) { 
+        if (value >= 0 && value <= 250) {
             Godot::print("BIKE SUBSIDY IMPLEMENTED");
             bikeSubsidy = value;
             this->trigger_notification(String("Bike subsidy implemented."));
@@ -1245,9 +1269,9 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("ElectricSubsidy")) {
-        if (value >= 0 && value <= 30000) { 
+        if (value >= 0 && value <= 30000) {
             Godot::print("ELECTRIC CAR SUBSIDY IMPLEMENTED");
-            electricCarSubsidy =  value;
+            electricCarSubsidy = value;
             this->trigger_notification(String("Policy implemented."));
         }
         else {
@@ -1255,7 +1279,7 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("BusSubsidy")) {
-        if (value >= 0 && value <= 60000) { 
+        if (value >= 0 && value <= 60000) {
             Godot::print("BUS SUBSIDY IMPLEMENTED");
             busSubsidy = value;
             this->trigger_notification(String("Bus incentives implemented."));
@@ -1265,7 +1289,7 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("CarsProhibition")) {
-        if (value >= 0 && value <= 7) { 
+        if (value >= 0 && value <= 7) {
             Godot::print("CARS PROHIBITION ON CERTAIN DAYS IMPLEMENTED");
             carProhibition = value;
             this->trigger_notification(String("The rules about car circulation have been implemented!"));
@@ -1275,23 +1299,23 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("TreesBudget")) {
-    if (trees_iterator == trees_vector.end()){ this->trigger_notification(String("All possible buildings now have trees ! This is a good thing. However, you cannot add any more.")); }
-    else if (value >= 0) {
-        Godot::print("TREES ARE BEING ADDED");
-        this->houses_with_trees += int(value);
+        if (trees_iterator == trees_vector.end()) { this->trigger_notification(String("All possible buildings now have trees ! This is a good thing. However, you cannot add any more.")); }
+        else if (value >= 0) {
+            Godot::print("TREES ARE BEING ADDED");
+            this->houses_with_trees += int(value);
 
-        for (int i = 0; i < int(value); ++i) {
-            (*trees_iterator)->get_node("MeshComponents/Trees")->set("visible", true);
-            trees_iterator++;
-            budget -= 5000;
-            houses_with_trees++;
-            if (trees_iterator == trees_vector.end()) { this->trigger_notification(String("All possible buildings now have trees ! This is a good thing. However, you cannot add any more.")); break; }
+            for (int i = 0; i < int(value); ++i) {
+                (*trees_iterator)->get_node("MeshComponents/Trees")->set("visible", true);
+                trees_iterator++;
+                budget -= 5000;
+                houses_with_trees++;
+                if (trees_iterator == trees_vector.end()) { this->trigger_notification(String("All possible buildings now have trees ! This is a good thing. However, you cannot add any more.")); break; }
+            }
+            this->trigger_notification(String("Trees have been added to " + String(value) + " buildings. What a happy sight."));
         }
-        this->trigger_notification(String("Trees have been added to " + String(value) + " buildings. What a happy sight."));
-    }
-    else {
-        this->trigger_notification(String("The value you provided was not possible. Please try planting trees again."));
-    }
+        else {
+            this->trigger_notification(String("The value you provided was not possible. Please try planting trees again."));
+        }
     }
 }
 
@@ -1303,18 +1327,18 @@ void City::_on_Game_Speed_changed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
-    change_pie_chart(100*(totalSatisfaction/(10*all_structures.size())), "PieSatisfaction", true); 
-    change_pie_chart(value_pie_chart_C02(carbonEmission, 1000000), "PieCO2", false); 
-	change_pie_chart(income/(population*100), "PieIncome", true); 
+    change_pie_chart(100 * (totalSatisfaction / (10 * all_structures.size())), "PieSatisfaction", true);
+    change_pie_chart(value_pie_chart_C02(carbonEmission, 1000000), "PieCO2", false);
+    change_pie_chart(income / (population * 100), "PieIncome", true);
     change_pie_chart(energyDemand, "PieUnemployement", false); //EnergyDemand variable is temporary
     change_pie_chart(value_pie_chart_C02(energyDemand, 100000), "PiePowerDemand", false);
 
-	change_pie_label(totalSatisfaction, "PieSatisfaction");
-	change_pie_label(carbonEmission, "PieCO2");
-	change_pie_label(income, "PieIncome");
-	change_pie_label(numberOfEmployees, "PieEmployees");
-	change_pie_label(energyDemand, "PieUnemployement");
-	change_pie_label(energyDemand, "PiePowerDemand");
+    change_pie_label(totalSatisfaction, "PieSatisfaction");
+    change_pie_label(carbonEmission, "PieCO2");
+    change_pie_label(income, "PieIncome");
+    change_pie_label(numberOfEmployees, "PieEmployees");
+    change_pie_label(energyDemand, "PieUnemployement");
+    change_pie_label(energyDemand, "PiePowerDemand");
 
 
 }
@@ -1362,7 +1386,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             this->add_child((Node*)node);
             ((Transport*)node)->set("transportType", type);
 
-            
+
             //income -= node->cost;
             //all_transports.push_back((Transport*)node);         THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
         }
@@ -1391,7 +1415,7 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
         //std::cout << "DEBUG: add shop to vector" << std::endl;
         all_shops.push_back((Shop*)node);
         all_structures.push_back((Structure*)node);
-        if (scene != MallScene){ trees_vector.push_back((Structure*)node); }
+        if (scene != MallScene) { trees_vector.push_back((Structure*)node); }
 
         //std::cout << "DEBUG: traffic stuff called" << std::endl;
 
@@ -1421,7 +1445,7 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         node = scene->instance();
         if (scene == LowHouseScene) {
             ((House*)node)->set("houseType", 1.0); //((House*)node)->house_type();
-        } 
+        }
         if (scene == HighHouseScene) {
             ((House*)node)->set("houseType", 2.0); //((House*)node)->house_type();
         }
@@ -1436,10 +1460,10 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         all_houses.push_back((Housing*)node);
         all_structures.push_back((Structure*)node);
         trees_vector.push_back((Structure*)node);
-        
-        
 
-         
+
+
+
         // traffic stuff
         //std::cout << "DEBUG: traffic stuff called" << std::endl;
         //double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building
@@ -1609,7 +1633,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
             }
         }
         else { // the case when it's a 2 by 2 building
-             std::cout << "DEBUG: updating traffic for BIG building coordinates : " << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
+            std::cout << "DEBUG: updating traffic for BIG building coordinates : " << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
             if (number == 3) {
                 x = x - 1;
             }
@@ -1739,7 +1763,7 @@ double find_avg(double array[], int leap) {
     return sum / size;
 }
 
- std::string City::return_word_date(int days) {
+std::string City::return_word_date(int days) {
 
     int* datenumber = return_date(int(days));
     std::string date = "Year ";
@@ -1920,7 +1944,8 @@ void change_data(std::string documentName, std::string dataToChange, std::string
             std::string sub = line.substr(0, pos);
             if (sub == dataToChange) {
                 temp << sub << ";" << newValue << '\n';
-            } else {
+            }
+            else {
                 temp << line << '\n';
             }
         }
@@ -2005,74 +2030,74 @@ void City::write_stat_history_to_file() {
         statsCarbonEmissionProduction.pop_front();
     }
     statsCarbonEmissionProduction.push_back(newCarbonEmissionProduction);
-    
+
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
-    newCarbonEmission.push_back((int)(carbonEmission/pow(10,6) + 0.5));
+    newCarbonEmission.push_back((int)(carbonEmission / pow(10, 6) + 0.5));
 
-    if (statsCarbonEmission.size() > 100) {  
-            statsCarbonEmission.pop_front();
-        }
+    if (statsCarbonEmission.size() > 100) {
+        statsCarbonEmission.pop_front();
+    }
     statsCarbonEmission.push_back(newCarbonEmission);
 
 
     Array newEnvironmentalCost{};
     newEnvironmentalCost.push_back(return_word_date_godot());
-    newEnvironmentalCost.push_back((int)(environmentalCost/pow(10,9) + 0.5));
+    newEnvironmentalCost.push_back((int)(environmentalCost / pow(10, 9) + 0.5));
 
-    if (statsEnvironmentalCost.size() > 100) {  
-            statsEnvironmentalCost.pop_front();
-        }
+    if (statsEnvironmentalCost.size() > 100) {
+        statsEnvironmentalCost.pop_front();
+    }
     statsEnvironmentalCost.push_back(newEnvironmentalCost);
 
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
-    newIncome.push_back((int)(income/pow(10,9) + 0.5));
+    newIncome.push_back((int)(income / pow(10, 9) + 0.5));
 
-    if (statsIncome.size() > 100) {  
-            statsIncome.pop_front();
-        }
+    if (statsIncome.size() > 100) {
+        statsIncome.pop_front();
+    }
     statsIncome.push_back(newIncome);
 
 
     Array newEnergy{};
     newEnergy.push_back(return_word_date_godot());
-    newEnergy.push_back((int)(energyDemand/pow(10,6) + 0.5));
-    newEnergy.push_back((int)(energySupply/pow(10,6) + 0.5));
+    newEnergy.push_back((int)(energyDemand / pow(10, 6) + 0.5));
+    newEnergy.push_back((int)(energySupply / pow(10, 6) + 0.5));
 
-    if (statsEnergy.size() > 100) {  
-            statsEnergy.pop_front();
-        }
+    if (statsEnergy.size() > 100) {
+        statsEnergy.pop_front();
+    }
     statsEnergy.push_back(newEnergy);
 
 
     Array newUnemployment{};
     newUnemployment.push_back(return_word_date_godot());
-    newUnemployment.push_back((int)(100-100*(numberOfEmployees/population) + 0.5));
+    newUnemployment.push_back((int)(100 - 100 * (numberOfEmployees / population) + 0.5));
 
-    if (statsUnemployment.size() > 100) {  
-            statsUnemployment.pop_front();
-        }
+    if (statsUnemployment.size() > 100) {
+        statsUnemployment.pop_front();
+    }
     statsUnemployment.push_back(newUnemployment);
 
 
     Array newTotalSatisfaction{}; //to be finished
     newTotalSatisfaction.push_back(return_word_date_godot());
-    newTotalSatisfaction.push_back((int)(10*totalSatisfaction + 0.5));
+    newTotalSatisfaction.push_back((int)(10 * totalSatisfaction + 0.5));
 
-    if (statsTotalSatisfaction.size() > 100) {  
-            statsTotalSatisfaction.pop_front();
-        }
+    if (statsTotalSatisfaction.size() > 100) {
+        statsTotalSatisfaction.pop_front();
+    }
     statsTotalSatisfaction.push_back(newTotalSatisfaction);
 
     Array newPopulation{};
     newPopulation.push_back(return_word_date_godot());
     newPopulation.push_back((int)(population + 0.5));
 
-    if (statsPopulation.size() > 100) {  
-            statsPopulation.pop_front();
-        }
+    if (statsPopulation.size() > 100) {
+        statsPopulation.pop_front();
+    }
     statsPopulation.push_back(newPopulation);
 
 }
@@ -2103,7 +2128,7 @@ double City::return_energySupply() {
     return energySupply;
 }
 
-void City::remove_type_car(int type){
+void City::remove_type_car(int type) {
     if (current_car_quantities[type] > 0) {
         current_car_quantities[type] -= 1;
     }
@@ -2113,7 +2138,7 @@ int City::most_missing_type() {
     int min = 0;
     std::cout << "missing_car_quantities   ";
     for (int i = 0; i < 8; i++) {
-        if(missing_car_quantities[min] > missing_car_quantities[i]){
+        if (missing_car_quantities[min] > missing_car_quantities[i]) {
             min = i;
         }
         std::cout << missing_car_quantities[i] << "  ";
@@ -2130,72 +2155,52 @@ int City::most_missing_type() {
 
 void City::transport_to_add() { //now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
                                // the finction goes through all the buidlings  to get the wage as income
-  /*
-* 0 - electic car
-* 1 - big american car
-* 2 - normal car
-* 3 - old collection cars
-* 4 - bike
-* 5 - motorcycle
-* 6 - bus
-* 7 - sports car
-*/
     std::random_device rd;
     std::mt19937 gen(rd());
-	Transport electicCar = Transport(0);
-	Transport bigCar = Transport(1);
-	Transport car = Transport(2);
-	Transport collectionCar = Transport(3);
-	Transport bike = Transport(4);
-	Transport motorcycle = Transport(5);
-	Transport bus = Transport(6);
-	Transport sportsCar = Transport(7);
+    Transport electicCar = Transport(0);
+    Transport bigCar = Transport(1);
+    Transport car = Transport(2);
+    Transport collectionCar = Transport(3);
+    Transport bike = Transport(4);
+    Transport motorcycle = Transport(5);
+    Transport bus = Transport(6);
+    Transport sportsCar = Transport(7);
 
-    double satisfactions[8] = { electicCar.satisfaction * ((double)(7 - carProhibition) / 7), bigCar.satisfaction * ((double)(7 - carProhibition) / 7), car.satisfaction * ((double)(7 - carProhibition) / 7), collectionCar.satisfaction * ((double)(7 - carProhibition) / 7), bike.satisfaction * pow(((double)(1+ carProhibition) / 7), 0.2), motorcycle.satisfaction , bus.satisfaction, sportsCar.satisfaction * ((double)(7 - carProhibition) / 7) };
-    double satisfactionsSum = 0;
-    double alpha[8] = { 0 };
-
-	for (int i =0 ; i < 8; i++){
-		satisfactionsSum += satisfactions[i];
-	}
-   
-    airQuality = pow(1.01, -carbonEmission/ (all_structures.size() * 30 * 30 * 10));
+    airQuality = pow(1.01, -carbonEmission / (all_structures.size() * 30 * 30 * 10));
 
     std::cout << "Current air quality is: " << airQuality << std::endl;
 
-    
-    for (int i = 0; i < 8; i++) {
-        alpha[i] = (satisfactions[i] / satisfactionsSum) * all_houses.size();
-        if (i == 4) {
-            alpha[i] *= sqrt(airQuality);
-        }   
-    }
-
-    double costs[8] = { electicCar.cost - electricCarSubsidy , bigCar.cost + weightTax*bigCar.weight, car.cost,collectionCar.cost + weightTax * collectionCar.weight , bike.cost - bikeSubsidy , motorcycle.cost, bus.cost - busSubsidy, sportsCar.cost };
-    double pricesPerMonth[8] = {electicCar.pricePerMonth, bigCar.pricePerMonth+fuelTax*bigCar.fuelInput*30, car.pricePerMonth+fuelTax*car.fuelInput*30,collectionCar.pricePerMonth+fuelTax*collectionCar.fuelInput*30, bike.pricePerMonth, 
-	motorcycle.pricePerMonth+fuelTax*motorcycle.fuelInput*30, bus.pricePerMonth/(bus.capacity*30)+fuelTax*bus.fuelInput*30, sportsCar.pricePerMonth+fuelTax*sportsCar.fuelInput*30};
-    double probabilities[8] = {0};
+    double alpha[8] = { electicCar.satisfaction * ((double)(7 - carProhibition) / 7), bigCar.satisfaction * ((double)(7 - carProhibition) / 7), car.satisfaction * ((double)(7 - carProhibition) / 7), collectionCar.satisfaction * ((double)(7 - carProhibition) / 7), bike.satisfaction * pow(((double)(1 + carProhibition) / 7), 0.2) * sqrt(airQuality), motorcycle.satisfaction , bus.satisfaction, sportsCar.satisfaction * ((double)(7 - carProhibition) / 7) };
+    double costs[8] = { electicCar.cost - electricCarSubsidy , bigCar.cost + weightTax * bigCar.weight, car.cost,collectionCar.cost + weightTax * collectionCar.weight , bike.cost - bikeSubsidy , motorcycle.cost, bus.cost - busSubsidy, sportsCar.cost };
+    double pricesPerMonth[8] = { electicCar.pricePerMonth + costs[0] / 15, bigCar.pricePerMonth + fuelTax * bigCar.fuelInput / 12 + costs[1] / 15, car.pricePerMonth + fuelTax * car.fuelInput / 12 +costs[2] / 15,collectionCar.pricePerMonth + fuelTax * collectionCar.fuelInput / 12 +costs[3] / 15, bike.pricePerMonth + costs[4] / 15,
+    motorcycle.pricePerMonth + fuelTax * motorcycle.fuelInput / 12 + costs[5] / 15, bus.pricePerMonth / bus.capacity, sportsCar.pricePerMonth + fuelTax * sportsCar.fuelInput / 12 + costs[7] / 15 };
+    double probabilities[8] = { 0 };
     double quantities[8] = { 0 };
     double alphaSum = 0;
+    int capacity[8] = { 4, 4, 5, 2, 1 ,1, 20, 2 };
 
-    for (int i = 0; i < 8; i++) {
-        alphaSum += alpha[i];
-    }
-	for (int i = 0;i<8; i++){
-   		alpha[i] =0.01*alpha[i]/alphaSum;
-	}
-    alphaSum = 0;
-    for (int i = 0; i < 8; i++) {
-        alphaSum += alpha[i];
-    }
+
 
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it) {
- 
+        for (int i = 0; i < 8; i++) {
+            alpha[i] = fmax(normalGenerator(alpha[i], alpha[i] / 3), 0.01);
+            alphaSum += alpha[i];
+        }
+        for (int i = 0; i < 8; i++) {
+            alpha[i] = 0.01 * alpha[i] / alphaSum;
+        }
+        alphaSum = 0;
+        for (int i = 0; i < 8; i++) {
+            alphaSum += alpha[i];
+        }
+
+
         double choice[8] = { 0 };
+
         for (int i = 0; i < 8; i++) {
 
-            probabilities[i] = fmax(normalGenerator(alpha[i], all_houses.size() / 100), 0.01) * (30*((double)((*it)->get("housingIncome")) / pricesPerMonth[i])) / alphaSum;
-            std::cout << "Housing Incomr is : " << (double)((*it)->get("housingIncome")) << std::endl;
+            probabilities[i] = alpha[i] * (30 * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i])) / alphaSum;
+            
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
@@ -2203,6 +2208,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
                 choice[i] = 0;
             }
         }
+
         int maxIndex = 0;
         double maxChoice = choice[0];
         for (int i = 1; i < 8; i++) {
@@ -2214,34 +2220,13 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         quantities[maxIndex] += 1;
     }
 
-    double quantitiesSum = 0;
     for (int i = 0; i < 8; i++) {
-        quantitiesSum += quantities[i];
-    }
-    std::cout << quantitiesSum << endl;
-
-    // NO NEED FOR THOSE
-    probabilityElectricCar = quantities[0] / quantitiesSum;
-    probabilityBigCar = quantities[1] / quantitiesSum;
-    probabilityCar = quantities[2] / quantitiesSum;
-    probabilityCollectionCar = quantities[3] / quantitiesSum;
-    probabilityBike = quantities[4] / quantitiesSum;
-    probabilityMotorcycle = quantities[5] / quantitiesSum;
-    probabilityBus = quantities[6] / quantitiesSum;
-    probabilitySportsCar = quantities[7] / quantitiesSum;
-
-    /*
-    for (int i = 0; i < 8; i++) {
-        quantities[i] = quantities[i] / quantitiesSum;
-    }
-    */
-    for (int i = 0; i < 8; i++) {
-        missing_car_quantities[i] = current_car_quantities[i] - quantities[i];
+        missing_car_quantities[i] = current_car_quantities[i] - quantities[i] / capacity[i];
 
         if (missing_car_quantities[i] > 0) {
             missing_car_quantities[i] = 0;
         }
-    } 
+    }
 }
 
 //generate random alphas for previous function
@@ -2249,12 +2234,12 @@ double City::normalGenerator(double mean, double stdDev)
 {
     static default_random_engine generator(time(0));
     normal_distribution<double> distribution(mean, fmax(stdDev, 0.001));
-    return distribution(generator); 
+    return distribution(generator);
 }
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
 // 100000 pour power demand et 1 million pour C02
 int City::value_pie_chart_C02(int value, int growth) {
-    int newvalue = (int)(100 * (1- pow(value/growth,-1)));
+    int newvalue = (int)(100 * (1 - pow(value / growth, -1)));
     return newvalue;
 }
 
@@ -2265,16 +2250,16 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
         node->set_tint_progress(Color(min(2 - (double)value / 50, 0.99), min((double)value / 50, 0.99), 0, 1.0));
     }
     else {
-        node->set_tint_progress(Color(min((double)value / 50, 0.99), min(2 - (double)value / 50, 0.99), 0, 1.0));  
+        node->set_tint_progress(Color(min((double)value / 50, 0.99), min(2 - (double)value / 50, 0.99), 0, 1.0));
     }
     node->set("value", value);
 }
 
-void City::change_pie_label(int value, NodePath name){
-	Label* label = ((Label*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name)->get_child(1));
-	std::string standardString = std::to_string((int)value);
+void City::change_pie_label(int value, NodePath name) {
+    Label* label = ((Label*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name)->get_child(1));
+    std::string standardString = std::to_string((int)value);
     godot::String godotString = godot::String(standardString.c_str());
-	label->set("text", godotString);
+    label->set("text", godotString);
 }
 
 
@@ -2283,7 +2268,7 @@ void City::change_pie_label(int value, NodePath name){
 // auxiliary function to simplify ring city generation
 
 float City::calculate_building_prob(float roota, float rootb, float proportion, double dist) {
-    if (dist < (citysize*roota/20) || dist > (citysize*rootb/20)) { return 0; }
+    if (dist < (citysize * roota / 20) || dist >(citysize * rootb / 20)) { return 0; }
     else {
 
         // function which calculates coefficients of quadratic equation for a building distribution
@@ -2294,7 +2279,7 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
         double c = double(a * roota * rootb);
 
         // returns specific probability 
-        return float(a * pow(((20*dist/(citysize))), 2) + b * (20 * dist / (citysize)) + c);
+        return float(a * pow(((20 * dist / (citysize))), 2) + b * (20 * dist / (citysize)) + c);
 
 
         // test line to verify that the integral is the proportion
@@ -2328,9 +2313,9 @@ void City::set_workingPower(int s) {
 //in order to check for errors on mac
 int main() {
     City c = City();
-	while (true) {
-    	c._physics_process(1);
-	}
+    while (true) {
+        c._physics_process(1);
+    }
     std::cout << "DEBUG: TOTAL CARBON EMISSION = " << c.return_carbonEmission() << std::endl;
     return 0;
 }
