@@ -574,9 +574,9 @@ void City::generate_initial_city_graphics()
     }
     transport_to_add();
 
-    for (std::vector<Structure*>::iterator it = all_structures.begin(); it != all_structures.end(); ++it)
+    for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
     {
-        int randomcarint = rand() % 3;
+        int randomcarint = rand() % 2;
         if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car((Vector3)((Node*)(*it))->get("translation")); }
     }
    
