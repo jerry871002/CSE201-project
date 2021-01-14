@@ -662,7 +662,7 @@ void City::_ready()
     this->set_initial_visible_components();
     this->initialize_stats();
 
-    
+    this->_on_Game_Speed_changed();
     
 }
 
@@ -2352,9 +2352,10 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 }
 
 //generate random alphas for previous function
-double City::normalGenerator(double mean, double stdDev){
+double City::normalGenerator(double mean, double stdDev)
+{
     static default_random_engine generator(time(0));
-    normal_distribution<double> distribution(mean,stdDev);
+    normal_distribution<double> distribution(mean, fmax(stdDev, 0.001));
     return distribution(generator); 
 }
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
