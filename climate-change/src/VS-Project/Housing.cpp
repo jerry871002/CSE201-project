@@ -27,8 +27,8 @@ String Housing::get_object_info()
 	String info = this->Structure::get_object_info();
 
 	info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
-	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy used by the building in kWh: " + to_godot_string((double)(this->get("energyUse"))) + String("\n");
+	info += "CO2 Emissions: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy used by the building in kWh: " + to_godot_string((int)(this->get("energyUse"))) + String("\n");
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	info += "Number of inhabitants: " + to_godot_string((int)this->get("numberOfInhabitants")) + String("\n");
 	if (get_object_type() == String("House")) {
@@ -382,7 +382,7 @@ void House::set_houseType(int type)
 
 		//Attributes for a low level house 
 		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
-		energyUse = 68.49; //25000kWh per year i.e. 13.69 kWh per day (from heating and all )
+		energyUse = 68.49*365; //25000kWh per year i.e. 13.69 kWh per day (from heating and all )
 		maintenance = 0.1765; //cost in euros per kWh
 		CO2Emission = 3.51; //6.5g per kWh
 		buildingTime = 140; //in average, building a house takes about 140 days
@@ -414,7 +414,7 @@ void House::set_houseType(int type)
 
 		//attributes from structure class
 		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
-		energyUse = 54.79; //20000kWh per year i.e. 54.79 kWh per day (from heating and all )
+		energyUse = 54.79*365; //20000kWh per year i.e. 54.79 kWh per day (from heating and all )
 		maintenance = 0.1765; //cost in euros per kWh
 		CO2Emission = 3.51; 
 		buildingTime = 140; //in average, building a house takes about 140 days
@@ -454,7 +454,7 @@ void House::simulate_step(double days) {
 
 	}
 
-	maintenance = 0.1765 * energyUse * days;
+	maintenance = 0.1765 * energyUse ;
 	//CO2Emission = 0.0065 * energyUse * days; 
 
 }
@@ -523,7 +523,7 @@ Building::Building() {
 		doubleGlazingOn = false;
 
 		//Initializing the values:
-		energyUse = 365; // 266.25 kWh/m^2 per year which gives 133125 kWh per year i.e 365 kwH per day
+		energyUse = 365*365; // 266.25 kWh/m^2 per year which gives 133125 kWh per year i.e 365 kwH per day
 		CO2Emission = 17.55; //tons per year from gas heating 
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
 		satisfaction = 3;	
@@ -533,7 +533,7 @@ Building::Building() {
 		doubleGlazingOn = true;
 
 		//Initializing the values:
-		energyUse = 292; // 213 kWh/m^2 per year which gives 106500 kWh per year i.e 292 kwH per day	
+		energyUse = 292*365; // 213 kWh/m^2 per year which gives 106500 kWh per year i.e 292 kwH per day	
 		CO2Emission = 17.55; //6.5g per kWh
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
 		satisfaction = 7;
@@ -551,7 +551,7 @@ void Building::simulate_step(double days) {
 
 	this->Housing::simulate_step(days);
 
-	maintenance = 0.1765 * energyUse * days;
+	maintenance = 0.1765 * energyUse;
 	//CO2Emission = 0.0065 * energyUse * days;  
 	
 }
