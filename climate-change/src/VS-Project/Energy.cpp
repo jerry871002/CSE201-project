@@ -472,7 +472,7 @@ void CoalPowerPlant::simulate_step(double days)
 			maintenance += 10E6;
 			efficiencySup = false;
 		}
-		energyPerDay = dailyDemand * (1 - 0.04);
+		energyPerDay = dailyDemand - (dailyDemand*0.04);
 		maintenance = 0.054 * energyPerDay * 365;
 	}
 	if (efficiency_cogeneration == 1) {
@@ -480,7 +480,7 @@ void CoalPowerPlant::simulate_step(double days)
 			maintenance = 20E6;
 			efficiencyCo = false;
 		}
-		energyPerDay = dailyDemand * (1 - 0.09);
+		energyPerDay = dailyDemand - (dailyDemand * 0.09);
 		maintenance = 0.058 * energyPerDay * 365;
 	}
 	else {

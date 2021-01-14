@@ -1006,6 +1006,7 @@ void City::implement_policies(double value) {
             {
                 (*it)->set("solar_panel_subsidies", value);
             }
+            this->trigger_notification(String("This solar panel subsidy has been implemented. This will push businesses to buy solar panels."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1020,6 +1021,7 @@ void City::implement_policies(double value) {
 				(*it)->set("wind_turbine_subsidies", value);
 				
             }
+            this->trigger_notification(String("This wind turbine subsidy has been implemented. This will push businesses to utilize wind energy."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1034,6 +1036,7 @@ void City::implement_policies(double value) {
             {
                 (*it)->set("wind_turbine_subsidies", value);
             }
+            this->trigger_notification(String("This wind turbine subsidy has been implemented. This will push citizens to harness wind energy."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1051,6 +1054,7 @@ void City::implement_policies(double value) {
                     (*it)->set("efficiency_supercritical", value);
                 }
             }
+            this->trigger_notification(String("Thanks to your city's expertise, the coal plant has now reached super critical efficiency levels."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1065,6 +1069,7 @@ void City::implement_policies(double value) {
                     (*it)->set("efficiency_cogeneration", value);
                 }
             }
+            this->trigger_notification(String("Policy implemented !"));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1077,6 +1082,7 @@ void City::implement_policies(double value) {
             {
                  (*it)->set("nuclear_prohibited", value);
             }
+            this->trigger_notification(String("The sun has set on the city's nuclear power plant. Will citizens appreciate this move?"));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1089,6 +1095,7 @@ void City::implement_policies(double value) {
             {
                 (*it)->set("coal_prohibited", value);
             }
+            this->trigger_notification(String("The sun has set on the city's coal power plant. Another blow for the fossil fuel industry."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1103,6 +1110,7 @@ void City::implement_policies(double value) {
                     (*it)->set("maximum_CO2", value);
                 }
             }
+            this->trigger_notification(String("Carbon maximum policy implemented !"));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1117,6 +1125,7 @@ void City::implement_policies(double value) {
                     (*it)->set("subsidy_green", value);
                 }
             }
+            this->trigger_notification(String("Much to every capitalist's delight, factories are now being subsidized."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1131,6 +1140,7 @@ void City::implement_policies(double value) {
                     (*it)->set("pesticideProhibited", value);
                 }
             }
+            this->trigger_notification(String("Pesticides have now been prohibited ! Crickets, weevils and other pests celebrate."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1145,6 +1155,7 @@ void City::implement_policies(double value) {
                     (*it)->set("GMOProhibited", value);
                 }
             }
+            this->trigger_notification(String("GMOs have now been prohibited ! Whether this decision is popular remains to be seen."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1159,6 +1170,7 @@ void City::implement_policies(double value) {
                     (*it)->set("fertilizerProhibited", value);
                 }
             }
+            this->trigger_notification(String("Synthetic fertilizers have now been prohibited ! Farmers across the city's outskirts scratch their heads."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1171,6 +1183,7 @@ void City::implement_policies(double value) {
             {
                  (*it)->set("solar_panel_subsidies_housing", value);
             }
+            this->trigger_notification(String("You have changed the incentive for citizens to buy solar panels for their homes."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1183,18 +1196,20 @@ void City::implement_policies(double value) {
             {
                 (*it)->set("wind_turbine_subsidies", value);
             }
+            this->trigger_notification(String("You have changed the incentive for citizens to buy wind turbines for their homes."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
-    else if (this->active_button == String("DoulbleGlazingHousing")) {
+    else if (this->active_button == String("DoubleGlazingHousing")) {
         if (value >= 0 && value <= 1000) {
             Godot::print("DOUBLE GLAZING SUBSIDIES ON HOUSING IMPLEMENTED");
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
             {
                 (*it)->set("double_glazing_subsidies", value);
             }
+            this->trigger_notification(String("Double glazing policy implemented."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1204,6 +1219,8 @@ void City::implement_policies(double value) {
         if (value >= 0 && value <= 2) { 
             Godot::print("TAX ON CAR CONSUMPTION IMPLEMENTED");
             fuelTax = value;
+            if (value > 0) { this->trigger_notification(String("Fuel tax implemented ! Yellow jackets are being bought up in shops around the city.")); }
+            else { this->trigger_notification(String("You have completely eliminated the fuel tax. Automobilists and Formula 1 enthusiasts rejoice.")); }
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1213,7 +1230,9 @@ void City::implement_policies(double value) {
         if (value >= 0 && value <= 5000) { 
             Godot::print("TAX ON CAR WEIGHT IMPLEMENTED");
             weightTax = value;
+            this->trigger_notification(String("Policy implemented."));
         }
+      
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
@@ -1222,6 +1241,7 @@ void City::implement_policies(double value) {
         if (value >= 0 && value <= 250) { 
             Godot::print("BIKE SUBSIDY IMPLEMENTED");
             bikeSubsidy = value;
+            this->trigger_notification(String("Bike subsidy implemented."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1231,6 +1251,7 @@ void City::implement_policies(double value) {
         if (value >= 0 && value <= 30000) { 
             Godot::print("ELECTRIC CAR SUBSIDY IMPLEMENTED");
             electricCarSubsidy =  value;
+            this->trigger_notification(String("Policy implemented."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1240,6 +1261,7 @@ void City::implement_policies(double value) {
         if (value >= 0 && value <= 60000) { 
             Godot::print("BUS SUBSIDY IMPLEMENTED");
             busSubsidy = value;
+            this->trigger_notification(String("Bus incentives implemented."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1249,6 +1271,7 @@ void City::implement_policies(double value) {
         if (value >= 0 && value <= 7) { 
             Godot::print("CARS PROHIBITION ON CERTAIN DAYS IMPLEMENTED");
             carProhibition = value;
+            this->trigger_notification(String("The rules about car circulation have been implemented!"));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1256,7 +1279,7 @@ void City::implement_policies(double value) {
     }
     else if (this->active_button == String("TreesBudget")) {
     if (trees_iterator == trees_vector.end()){ this->trigger_notification(String("All possible buildings now have trees ! This is a good thing. However, you cannot add any more.")); }
-    if (value >= 0) {
+    else if (value >= 0) {
         Godot::print("TREES ARE BEING ADDED");
         this->houses_with_trees += int(value);
 
@@ -1267,6 +1290,7 @@ void City::implement_policies(double value) {
             houses_with_trees++;
             if (trees_iterator == trees_vector.end()) { this->trigger_notification(String("All possible buildings now have trees ! This is a good thing. However, you cannot add any more.")); break; }
         }
+        this->trigger_notification(String("Trees have been added to " + String(value) + " buildings. What a happy sight."));
     }
     else {
         this->trigger_notification(String("The value you provided was not possible. Please try planting trees again."));

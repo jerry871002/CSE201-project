@@ -56,20 +56,20 @@ String Shop::get_object_info()
 {
     String info = this->Structure::get_object_info();
 
-    info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
+    
     info += "Employement: " + to_godot_string((int)(this->employment)) + String("\n");
     if (this->PanelsOn) {
-        info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string(this->panels_age) + String("\n");
+        info += "Panels are displayed" + String("\n") + "This building's solar panels are " + to_godot_string(this->panels_age) + " days old." + String("\n");
     }
     else {
         info += "Panels are not displayed" + String("\n");
     }
-    info += "SUBSIDY for Panels: " + to_godot_string((int)this->get("solar_panel_subsidies")) + String("\n");
+    info += "SUBSIDY for Panels: " + to_godot_string((int)(this->get("solar_panel_subsidies"))) + String("\n");
     info += "Panels get Added PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
-    info += "SUBSIDY for Wind Turbines: " + to_godot_string((int)this->get("wind_turbine_subsidies")) + String("\n");
+    info += "SUBSIDY for Wind Turbines: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
     info += "Wind Turbine get Added PROBABILITY: " + to_godot_string((double)this->windTurbine_probability) + String("\n");
     info += "CO2 Emissions: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
-    info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+    info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
     
     return info;
 }
@@ -79,6 +79,12 @@ double Shop::get_satisfaction() {
     if (this->PanelsOn) { satis += 1.6; };
     if (this->WindTurbineOn) { satis += 0.9; };  //Increase satisfaction if more eco friendly
     if (satis > 9.5) { satis = 9.5;}  // Always room for increased satisfaction
+    if (this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall") {
+        if (this->get_node("MeshComponents/Trees")->get("visible")) {
+            satis += 4; // 4 is huge but its cause trees need to have a noticeable effect on the city 
+        }
+    }
+
     return satis;
 }
 
@@ -88,7 +94,7 @@ double Shop::get_co2emissions() {
     double turbineF = 1;  
     if (this->PanelsOn) { panelsF = 0.7; };
     if (this->WindTurbineOn) { turbineF = 0.5; };
-    return (double)(this->CO2Emission)*turbineF*panelsF;
+    return (double)((this->CO2Emission)*turbineF*panelsF);
 }
 
 double Shop::get_energyuse() {

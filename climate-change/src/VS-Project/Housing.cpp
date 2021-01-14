@@ -27,22 +27,22 @@ String Housing::get_object_info()
 	String info = this->Structure::get_object_info();
 
 	info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
-	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy used by the building in kWh: " + to_godot_string((double)(this->get("energyUse"))) + String("\n");
-	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
-	info += "Number of inhabitants: " + to_godot_string((int)this->get("numberOfInhabitants")) + String("\n");
+	info += "CO2 Emissions: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy used by the building in kWh: " + to_godot_string((int)(this->get("energyUse"))) + String("\n");
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
+	info += "Number of inhabitants: " + to_godot_string((int)(this->get("numberOfInhabitants"))) + String("\n");
 	if (get_object_type() == String("House")) {
-		info += "This is a house of type: " + to_godot_string((int)this->get("houseType")) + String("\n");
+		info += "This is a house of type: " + to_godot_string((int)(this->get("houseType"))) + String("\n");
 	}
-	info += "SUBSIDY PANELS: " + to_godot_string((int)this->get("solar_panel_subsidies_housing")) + String("\n");
+	info += "SUBSIDY PANELS: " + to_godot_string((int)(this->get("solar_panel_subsidies_housing"))) + String("\n");
 	info += "PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
 	if (this->PanelsOn) {
-		info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string(this->solarPanelAge) + String("\n");
+		info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string((int)(this->solarPanelAge)) + String("\n");
 	}
 	else {
 		info += "Panels are not displayed" + String("\n");
 	}
-	info += "SUBSIDY TURBINES: " + to_godot_string((int)this->get("wind_turbine_subsidies")) + String("\n");
+	info += "SUBSIDY TURBINES: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
 	info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");
 	
 	return info;
@@ -103,7 +103,7 @@ void Housing::simulate_step(double days) {
         if (r > temp3)
         {
             PanelsOn = true;
-            solarPanelAge = 100;
+            solarPanelAge = this->solarLifetime;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
             //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
@@ -225,6 +225,16 @@ double Housing::get_double_glazing_age() {
     return this->doubleGlazingAge;
 }
 
+double Housing::get_satisfaction() {
+	if (this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall") {
+		if (this->get_node("MeshComponents/Trees")->get("visible")) {
+			return ((this->satisfaction) + 4);
+		}
+	}
+	else { return this->satisfaction; }
+
+}
+
 
 void Housing::panel_added_probability(){
 	double panelCost;
@@ -292,7 +302,10 @@ void Housing::roof_wind_turbines_added_probability(){
 --> high-level houses: houses with either solar panels or rooftop wind turbine (one or the other is chosen randomly when building a new house
 */
 double House::get_co2emissions() {
-    return this->CO2Emission;
+	double panelsF = 1;
+	
+	if (this->PanelsOn) { panelsF = 0.7; };
+	return (double)((this->CO2Emission)  * panelsF);
 }
 
 double House::get_energyuse() {
@@ -460,13 +473,17 @@ void House::simulate_step(double days) {
 	//maintenance = 0.1765 * energyUse * days;
 	//CO2Emission = 0.0065 * energyUse * days; 
 
+
 }
 
 /// <summary>
 ///	BUILDING CLASS
 /// </summary>
 double Building::get_co2emissions() {
-    return this->CO2Emission;
+	double panelsF = 1;
+	double turbineF = 1;
+	if (this->PanelsOn) { panelsF = 0.7; };
+	return (double)((this->CO2Emission) * panelsF);
 }
 
 double Building::get_energyuse() {
