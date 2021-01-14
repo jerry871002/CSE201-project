@@ -349,6 +349,7 @@ void Structure::_input(InputEvent* e)
 
         // AJUST POSITION OF MENU TO ENSURE IT IS VISIBLE
 
+        /*
         if (get_viewport()->get_size().x - mousePos.x <= MenuSize)
         {
             if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize - (get_viewport()->get_size().x - mousePos.x); }
@@ -374,6 +375,9 @@ void Structure::_input(InputEvent* e)
             else { mousePos.x += MenuSize - mousePos.y; }
             mousePos.y = MenuSize;
         }
+        */
+
+        mousePos = Vector2(real_t((double)(get_viewport()->get_size().x) / 2), real_t((double)(get_viewport()->get_size().y) / 2));
 
         (this->get_tree()->get_root()->get_node("Main/2Dworld/Menus"))->set("position", mousePos);
 
