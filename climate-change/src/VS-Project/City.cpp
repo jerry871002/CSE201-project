@@ -359,6 +359,7 @@ void City::generate_initial_city_graphics()
     bool hasnuclear = false;
     bool hascoal = false;
     bool hasgeo = false;
+    bool minimumonefactory = false;
     double dist;
 
     for (int x = 1; x < (citysize / 2) + 1; x++)
@@ -384,13 +385,13 @@ void City::generate_initial_city_graphics()
 
                 std::cout << "DEBUG: about to calculate probability" << std::endl;
                 // 2x2 buildings
-                float mallprob = calculate_building_prob(20, 130, 0.4, dist);
-                float nuclearprob = calculate_building_prob(190, 240, 0.8, dist);
-                float coalprob = calculate_building_prob(190, 240, 0.8, dist);
-                float geoprob = calculate_building_prob(190, 240, 0.8, dist);
-                float fieldprob = calculate_building_prob(230, 320, 1, dist);
-                float pastureprob = calculate_building_prob(230, 320, 2, dist);
-                float factoryprob = calculate_building_prob(170, 200, 0.01, dist);
+                float mallprob = calculate_building_prob(20, 140, 0.4, dist);
+                float nuclearprob = calculate_building_prob(170, 230, 0.8, dist);
+                float coalprob = calculate_building_prob(170, 230, 0.8, dist);
+                float geoprob = calculate_building_prob(170, 230, 0.8, dist);
+                float fieldprob = calculate_building_prob(220, 320, 1, dist);
+                float pastureprob = calculate_building_prob(220, 320, 2, dist);
+                float factoryprob = calculate_building_prob(160, 200, 0.2, dist);
 
                 if (hasgeo) { geoprob = 0; }
                 if (hasnuclear) { nuclearprob = 0; }
@@ -423,6 +424,9 @@ void City::generate_initial_city_graphics()
 
                 double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + coalprob + geoprob+nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
                 //std::cout << "DEBUG: Add buildings" << std::endl;
+
+                if (!(minimumonefactory) && factoryprob != 0) { std::cout << "DEBUG: Add FactoryScene" << std::endl;  add_production(bigbuildingpos, FactoryScene); minimumonefactory = true; }
+
                 if (bigbuildingmaybe < (double)(mallprob)) { std::cout << "DEBUG: Add mall" << std::endl;  add_shop(bigbuildingpos, MallScene); }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob)) { std::cout << "DEBUG: Add NuclearPowerPlantScene" << std::endl;  add_energy(bigbuildingpos, NuclearPowerPlantScene); hasnuclear = true; }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob)) { std::cout << "DEBUG: Add FieldScene" << std::endl;  add_production(bigbuildingpos, FieldScene); }
