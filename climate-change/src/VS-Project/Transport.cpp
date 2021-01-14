@@ -89,15 +89,15 @@ void Transport::set_transportType(int type)
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
         satisfaction = 7.45;
-        energyUse = 0.119 * kmPerDay;
+        energyUse = 0.119 * kmPerDay*365; //in 1 year
         lifetime = 15;
         pricePerMonth = 1.09 * 30 ;
         weight = 1.7;
         break;
     }
     case 1: {  // big american car
-        co2PerKm = 0.328;
-        fuelPerKm = 0.24;
+        co2PerKm = 0.328; //in kg
+        fuelPerKm = 0.24; //in litres
         std::normal_distribution <double> costg(85000, 12000);
         cost = costg(gen); // cost of 1 car in euros, randomised using gaussian
         capacity = 8;
@@ -114,8 +114,8 @@ void Transport::set_transportType(int type)
         break;
     }
     case 2: { //normal family car 
-        co2PerKm = 0.115;
-        fuelPerKm = 0.078;
+        co2PerKm = 0.115; //in kg
+        fuelPerKm = 0.078; //in litres
         std::normal_distribution <double> costf(14000, 3000);
         cost = costf(gen); // cost of 1 car in euros, randomised using gaussian
         capacity = 4;
@@ -132,8 +132,8 @@ void Transport::set_transportType(int type)
         break;
     }
     case 3: { //old collection car 
-        co2PerKm = 0.4;
-        fuelPerKm = 0.22;
+        co2PerKm = 0.4; //in kg
+        fuelPerKm = 0.22; //in litres
         std::normal_distribution <double> costo(40000, 7000);
         cost = costo(gen); // cost of 1 car in euros, randomised using gaussian
         capacity = 2;
@@ -150,8 +150,8 @@ void Transport::set_transportType(int type)
         break;
     }
     case 4: { //bike
-        fuelPerKm = 0;
-        co2PerKm = 0;
+        fuelPerKm = 0; //in litres
+        co2PerKm = 0; //in kg
         std::normal_distribution <double> costbike(370, 30);
         cost = costbike(gen); // cost of 1 bike in euros, randomised using gaussian
         capacity = 1;
@@ -215,8 +215,8 @@ void Transport::set_transportType(int type)
         break;
     }
     case 7: { //sports car
-        fuelPerKm = 0.22;
-        co2PerKm = 0.5;
+        fuelPerKm = 0.22;  //in litres
+        co2PerKm = 0.5; //in kg
         std::normal_distribution <double> costsp(52000, 7000);
         cost = costsp(gen); // cost of 1 car in euros, randomised using gaussian
         capacity = 2;
@@ -237,11 +237,19 @@ void Transport::set_transportType(int type)
     }
     }
     pricePerMonth += cost / (12 * lifetime);
-    fuelInput = fuelPerKm * kmPerDay; //in 1 day
-    CO2Emission = co2PerKm * kmPerDay; //in 1 day
+    fuelInput = fuelPerKm * kmPerDay * 365; // litres of fuel in 1 year
+    CO2Emission =365 * co2PerKm * kmPerDay / 1000; // tonnes of co2 in 1 year
+    
     //car prohibition
-
-
+    /*
+    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)) {
+    workingDays= (7-(int)(myCity->get("carProhibition")
+    maintenance*=workingDays/7;
+    fuelInput*=workingDays/7;
+    CO2Emission*=workingDays/7;
+    energyUse*=workingDays/7;
+    passengers*=workingDays/7;
+    }
 }
 
 int Transport::get_transportType()
@@ -370,95 +378,93 @@ void Transport::_physics_process(float delta) {
 void Transport::simulate_step(double days) {
     int years = floor((age + days) / 365 - age / 365);
     co2PerKm *= pow(1.05, years); //increase in emissions with each year
-    fuelInput = days*fuelPerKm*kmPerDay; //in the time period
-    CO2Emission = days*co2PerKm*kmPerDay; //in the time period
-
     age += days; //total number of days 
     /*fuelInput += fuelPerKm * kmPerDay * days; //litres of fuel for car
     CO2Emission += co2PerKm * kmPerDay * days;*/ // co2 emissions per car
-    passengers = capacity * occupancyRate * days; //number of people that used the car in given period
+    passengers = capacity * occupancyRate * 365; //number of people that used the car in 1 year period
     switch (transportType) {
+        //maintenance in euros per year
     case 0: { //electric car
         if (age <= 365) {
-            maintenance = 1.09 * days; //maintenance service price per day if car is less than 1 yo
+            maintenance = 1.09 * 365; //maintenance service price per day if car is less than 1 yo
         }
         else if (age <= 730) {
-            maintenance = 1.67 * days; //maintenance service price per day if car is less than 2 yo
+            maintenance = 1.67 * 365; //maintenance service price per day if car is less than 2 yo
         }
         else if (age <= 1095) {
-            maintenance = 1.1 * days; //maintenance service price per day if car is less than 3 yo
+            maintenance = 1.1 * 365; //maintenance service price per day if car is less than 3 yo
         }
         if (age <= 1460) {
-            maintenance = 1.94 * days; // maintenance service price per day is car is less than 4 yo
+            maintenance = 1.94 * 365; // maintenance service price per day is car is less than 4 yo
         }
         else {
-            maintenance = 2.2 * days; // maintenance service price per day if car is more than 4 yo
+            maintenance = 2.2 * 365; // maintenance service price per day if car is more than 4 yo
         }
         break;
     }
     case 1: { // big american car
     // no repairs price if car is <3yo
         if (age <= 365) {
-            maintenance = 1.25 * days; //maintenance price per day if car is less than 1 yo
+            maintenance = 1.25 * 365; //maintenance price per day if car is less than 1 yo
         }
         else if (age <= 730) {
-            maintenance = 1.92 * days; //maintenance price per day if car is less than 2 yo
+            maintenance = 1.92 * 365; //maintenance price per day if car is less than 2 yo
         }
         else if (age <= 1095) {
-            maintenance = 1.95 * days; //maintenance price per day if car is less than 3 yo
+            maintenance = 1.95 * 365; //maintenance price per day if car is less than 3 yo
         }
         if (age <= 1460) {
-            maintenance = 1.86 * days; // repairs price per day is car is less than 4 yo
-            maintenance = 5.7 * days; //maintenance price per day if car is less than 4 yo
+            maintenance = 1.86 * 365; // repairs price per day is car is less than 4 yo
+            maintenance = 5.7 * 365; //maintenance price per day if car is less than 4 yo
         }
         else {
-            maintenance = 2.78 * days; //repairs price per day if car is more than 4 yo
-            maintenance = 3.21 * days; //maintenance price per day if car is more than 4 yo
+            maintenance = 2.78 * 365; //repairs price per day if car is more than 4 yo
+            maintenance = 3.21 * 365; //maintenance price per day if car is more than 4 yo
         }
         break;
     }
     case 2: { // normal family car
     // no repairs price if car is <3yo
         if (age <= 365) {
-            maintenance = 0.15 * days; //maintenance price per day if car is less than 1 yo
+            maintenance = 0.15 * 365; //maintenance price per day if car is less than 1 yo
         }
         else if (age <= 730) {
-            maintenance = 0.5 * days; //maintenance price per day if car is less than 2 yo
+            maintenance = 0.5 * 365; //maintenance price per day if car is less than 2 yo
         }
         else if (age <= 1095) {
-            maintenance = 1.05 * days; //maintenance price per day if car is less than 3 yo
+            maintenance = 1.05 * 365; //maintenance price per day if car is less than 3 yo
         }
         if (age <= 1460) {
-            maintenance = 0.765 * days; // repairs price per day is car is less than 4 yo
-            maintenance += 2.70 * days; //maintenance price per day if car is less than 4 yo
+            maintenance = 0.765 * 365; // repairs price per day is car is less than 4 yo
+            maintenance += 2.70 * 365; //maintenance price per day if car is less than 4 yo
         }
         else {
-            maintenance = 1.17 * days; //repairs price per day if car is more than 4 yo
-            maintenance = 2.26 * days; //maintenance price per day if car is more than 4 yo
+            maintenance = 1.17 * 365; //repairs price per day if car is more than 4 yo
+            maintenance = 2.26 * 365; //maintenance price per day if car is more than 4 yo
         }
         break;
     }
     case 3: { // collection car 
     // no repairs price if car is <3yo
-        maintenance = 25 * days; //maintenance very expensive, does not depend on the age, the car is already old
+        maintenance = 25 * 365; //maintenance very expensive, does not depend on the age, the car is already old
         break;
     }
     case 4: { //bike
-        maintenance = 0.8 * days;
+        maintenance = 0.8 * 365;
     }
     case 5: { //motorcycle
-        maintenance = 2.6 * days;
+        maintenance = 2.6 * 365;
     }
     case 6: { //bus
         double alpha = (cost - 262500) / 262500;
         if (alpha < 0) {
             alpha = 0;
         }
-        maintenance = (0.67 + alpha * 0.17) * kmPerDay * days; // maintenance cost in euros, positive correlation with bus price
+        maintenance = (0.67 + alpha * 0.17) * kmPerDay *365; // maintenance cost in euros, positive correlation with bus price
         break;
     }
     case 7: { //sports car
-        maintenance = 2.5 * days;
+        maintenance = 2.5 * 365;
         break;
     }
     }
