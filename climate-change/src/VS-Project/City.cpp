@@ -831,16 +831,16 @@ void City::_on_TransportMenuButton_pressed()
     * 6 - bus
     * 7 - sports car
     */
-    String transportInfo = String("INFORMATION") + String("\n");
-    transportInfo += String("Transport") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[0])) + String("Electric Cars") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[1])) + String("American Cars") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[2])) + String("Normal Cars") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[3])) + String("Collection Cars") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[4])) + String("Bicycles") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[5])) + String("Motorcycles") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[6])) + String("Bus") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[7])) + String("Sports Cars") + String("\n");
+    String transportInfo = String("TRANSPORT INFORMATION") + String("\n");
+    transportInfo += String(" \n");
+    transportInfo += to_godot_string((int)(current_car_quantities[0])) + String(" Electric Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[1])) + String(" American Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[2])) + String(" Normal Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[3])) + String(" Collection Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[4])) + String(" Bicycles") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[5])) + String(" Motorcycles") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[6])) + String(" Bus") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[7])) + String(" Sports Cars") + String("\n");
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", transportInfo);
 
