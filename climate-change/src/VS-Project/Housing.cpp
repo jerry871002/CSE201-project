@@ -27,22 +27,22 @@ String Housing::get_object_info()
 	String info = this->Structure::get_object_info();
 
 	info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
-	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy used by the building in kWh: " + to_godot_string((double)(this->get("energyUse"))) + String("\n");
-	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
-	info += "Number of inhabitants: " + to_godot_string((int)this->get("numberOfInhabitants")) + String("\n");
+	info += "CO2 Emissions: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy used by the building in kWh: " + to_godot_string((int)(this->get("energyUse"))) + String("\n");
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
+	info += "Number of inhabitants: " + to_godot_string((int)(this->get("numberOfInhabitants"))) + String("\n");
 	if (get_object_type() == String("House")) {
-		info += "This is a house of type: " + to_godot_string((int)this->get("houseType")) + String("\n");
+		info += "This is a house of type: " + to_godot_string((int)(this->get("houseType"))) + String("\n");
 	}
-	info += "SUBSIDY PANELS: " + to_godot_string((int)this->get("solar_panel_subsidies_housing")) + String("\n");
+	info += "SUBSIDY PANELS: " + to_godot_string((int)(this->get("solar_panel_subsidies_housing"))) + String("\n");
 	info += "PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
 	if (this->PanelsOn) {
-		info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string(this->solarPanelAge) + String("\n");
+		info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string((int)(this->solarPanelAge)) + String("\n");
 	}
 	else {
 		info += "Panels are not displayed" + String("\n");
 	}
-	info += "SUBSIDY TURBINES: " + to_godot_string((int)this->get("wind_turbine_subsidies")) + String("\n");
+	info += "SUBSIDY TURBINES: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
 	info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");
 	
 	return info;
