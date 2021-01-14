@@ -324,7 +324,7 @@ Restaurant::Restaurant() {
         averageWage = 11*8;		// Euros per hour , Slightly above minimum wage in france
         std::normal_distribution <double> totalemployees1(25, 8);	// 9 out 10 restaurants have less than 50 employees
         employment = totalemployees1(gen) * (1 + ((diningSize - 12.5) / 12.5)); // number of employees influenced by size of restaurent
-        CO2Emission = 825 * ((1 + ((diningSize - 13 / 13))) / 10); //on average 301 tons of CO2 per year, hence 825kg per day. 
+        CO2Emission = 301 * ((1 + ((diningSize - 13 / 13))) / 10); //on average 301 tons of CO2 per year, hence 825kg per day. 
         buildingTime = 60; //On average a casual restaurant takes 12 weeks to set up
 
         break;
@@ -337,7 +337,7 @@ Restaurant::Restaurant() {
         averageWage = 12.5*8;		// Euros per hour, Slightly above minimum wage in france
         std::normal_distribution <double> totalemployees2(30, 10);	// 9 out 10 restaurants have less than 50 employees
         employment = totalemployees2(gen) * (1 + ((diningSize - 13.5) / 13.5)); // number of employees influenced by size of restaurent
-        CO2Emission = 825 * ((1 + ((diningSize - 13 / 13))) / 10); // need to find more info on this
+        CO2Emission = 301 * ((1 + ((diningSize - 13 / 13))) / 10); // need to find more info on this
         buildingTime = 70; //On average a casual restaurant takes 14 weeks to set up
         break;
     }
@@ -349,7 +349,7 @@ Restaurant::Restaurant() {
         averageWage = 14*8;		// Higher than other types as more luxurious 
         std::normal_distribution <double> totalemployees3(35, 7);	// 9 out 10 restaurants have less than 50 employees
         employment = totalemployees3(gen) * (1 + ((diningSize - 12.5) / 12.5)); // number of employees influenced by size of restaurent
-        CO2Emission = 825 * ((1 + ((diningSize - 13 / 13))) / 10); // need to find more info on this
+        CO2Emission = 301 * ((1 + ((diningSize - 13 / 13))) / 10); // need to find more info on this
         buildingTime = 80; //On average a casual restaurant takes 16 weeks to set up
 
         break;
@@ -420,7 +420,7 @@ SmallShop::SmallShop(){
             energyUse = energyuseperyear/365;
             satisfaction = 6;
 
-            CO2Emission = 500;
+            CO2Emission = 250;  //these are approximates as specific data is very hard to find
             std::uniform_real_distribution <double> totalemployees1(1, 5);	
             employment = totalemployees1(gen);
         }
@@ -430,7 +430,7 @@ SmallShop::SmallShop(){
             energyuseperyear = energyusepeyear2(gen);
             energyUse = energyuseperyear/365;
             satisfaction = 6;
-            CO2Emission = 600;
+            CO2Emission = 300;  //these are approximates as specific data is very hard to find
             std::uniform_real_distribution <double> totalemployees2(5, 15);	
             employment = totalemployees2(gen);
             }
@@ -441,7 +441,7 @@ SmallShop::SmallShop(){
             energyUse = energyuseperyear/365;
             satisfaction = 6;
 
-            CO2Emission = 700;
+            CO2Emission = 360;  //these are approximates as specific data is very hard to find
             std::uniform_real_distribution <double> totalemployees3(10,20);	
             employment = totalemployees3(gen);
             }
@@ -470,7 +470,7 @@ Mall::Mall(){
     cost = mediancost(gen);
     
     satisfaction = 7;
-    CO2Emission = 0;
+    CO2Emission = 1500;  //Impossible to find specific data about malls in general, Used an estimate from averages of restaurants and small shops, and energy use of a mall
 
     buildingTime = 365*3; //Around 3 years, but can vary a lot
     environmentalCost = 0; 
