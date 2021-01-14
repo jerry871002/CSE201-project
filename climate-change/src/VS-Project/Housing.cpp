@@ -292,7 +292,7 @@ void Housing::roof_wind_turbines_added_probability(){
 --> high-level houses: houses with either solar panels or rooftop wind turbine (one or the other is chosen randomly when building a new house
 */
 double House::get_co2emissions() {
-    return 0.0065 * this->energyUse;
+    return this->CO2Emission;
 }
 
 double House::get_energyuse() {
@@ -321,38 +321,6 @@ double House::get_environmentalcost() {
     return this->environmentalCost;
 }
 
-/*double House::get_satisfaction() {
-    return this->satisfaction;
-}*/
-
-/*double House::get_co2emissions() {
-    return 0.0065 * this->energyUse; //0.0065 is the amount of CO2 emissions per kwH
-}
-
-double House::get_energyuse() {
-	double factor = 1;
-	if (this->PanelsOn) {
-			this->energyUse -= solarEnergy;
-		}
-
-	if (this->rooftopWindTurbineOn) {
-			this->energyUse -= windEnergy;
-		}
-	switch (houseType){
-		case 1: { // If its a low level house then double glazing decrease energyuse 
-			if (this->doubleGlazingOn) {
-				factor = 0.25; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
-			}
-		}
-		break;
-	}
-
-    return (double)(this->energyUse)*factor;
-}
-
-double House::get_environmentalcost() {
-    return this->environmentalCost;
-}*/
 
 House::House() 
 {
@@ -412,13 +380,11 @@ void House::set_houseType(int type)
 
 		}
 
-
-
 		//Attributes for a low level house 
 		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
 		energyUse = 68.49; //25000kWh per year i.e. 13.69 kWh per day (from heating and all )
 		maintenance = 0.1765; //cost in euros per kWh
-		CO2Emission = 0.0065; //6.5g per kWh
+		CO2Emission = 3.51; //6.5g per kWh
 		buildingTime = 140; //in average, building a house takes about 140 days
 		satisfaction = 3; //assuming we are on a scale from 0 to 10
 
@@ -450,7 +416,7 @@ void House::set_houseType(int type)
 		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
 		energyUse = 54.79; //20000kWh per year i.e. 54.79 kWh per day (from heating and all )
 		maintenance = 0.1765; //cost in euros per kWh
-		CO2Emission = 0.0065; //6.5g per kWh
+		CO2Emission = 3.51; 
 		buildingTime = 140; //in average, building a house takes about 140 days
 		satisfaction = 10; //assuming we are on a scale from 0 to 10
 		age = 0;
@@ -489,162 +455,15 @@ void House::simulate_step(double days) {
 	}
 
 	maintenance = 0.1765 * energyUse * days;
-	CO2Emission = 0.0065 * energyUse * days; 
-
-	/*switch (houseType){
-		
-
-		case 1: { // If its a low level house then added solar panels decrease energyuse 
-			if (PanelOn) {
-				energyUse -= solarEnergy;
-			}
-			
-			if (doubleGlazingOn) {
-				energyUse -= energyUse * 0.25 ; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
-			}
-
-			if (rooftopWindTurbineOn) {
-				energyUse -= windEnergy;
-			}
-
-			maintenance += 0.1765 * energyUse * days;
-			CO2Emission += 0.0065 * energyUse * days; 
-		}
-
-		case 2: { //If it's a high level house, no improvements can be made, so simulate step is as follows :
-			maintenance += 0.1765 * energyUse * days;
-			CO2Emission += 0.0065 * energyUse * days; 
-		}
-
-		break;
-	}*/
+	//CO2Emission = 0.0065 * energyUse * days; 
 
 }
-
-
-
-
-
-/*
-bool House::solar_panel() {
-	if (rooftop_wind_turbines() == true) {
-		//we cannot have solar panels and wind turbines on the same house
-		//a message should appear, saying that the solar_panels cannot be installed 
-		return false;
-		//return PanelsOff
-	}
-
-	else {
-		if (houseIncome > 25) { //the people that live in the house have enough money to install solar panels so they can 
-			solarPanelAge = 0; 
-			if (satisfaction < 10) {
-				satisfaction += 1;
-			}
-
-			return PanelsOn;
-		}
-
-		else {
-			/*
-			if (solar_panel_subsidies() == true) {
-				//then the household gets financial help and can install the solar_panels
-				solarPanelAge = 0; 
-				if (satisfaction < 10) {
-					satisfaction += 1;
-				}
-
-				return PanelsOn;
-			}
-
-			else {
-				//return PanelsOff;
-				return false;
-			}
-			
-		}
-	}
-	                            
-}
-
-//placeholder must change 
-
-bool House::double_glazing() {
-	if (houseIncome > 150) {
-		doubleGlazingAge = 0;
-		return true;	
-	}
-
-	else {
-		if (double_glazing_subsidies() == true) {
-				//then the household gets financial help
-				doubleGlazingAge = 0; 
-				if (satisfaction < 10) {
-					satisfaction += 1;
-				}
-
-				return true;
-			}
-
-			else {
-				return false;
-			}
-	}
-} 
-
-bool House::rooftop_wind_turbines() {
-	if (solar_panel() == true) {
-		//we cannot have solar panels and wind turbines on the same house
-		//a message should appear, saying that the turbines cannot be installed 
-		return false;
-		//return PanelsOff
-	}
-
-	else {
-		if (houseIncome > 280) { //the people that live in the house have enough money to install wind turbines so they can 
-			rooftopWindTurbineAge = 0; 
-			if (satisfaction < 10) {
-				satisfaction += 1;
-			}
-
-			return true;
-		}
-
-		else {
-			if (wind_turbine_subsidies() == true) {
-				//then the household gets financial help and can install the wind turbines
-				rooftopWindTurbineAge = 0; 
-				if (satisfaction < 10) {
-					satisfaction += 1;
-				}
-
-				return true;
-			}
-
-			else {
-				//return PanelsOff;
-				return false;
-			}
-		}
-	}
-}
-
-*/
-
-
-
-
-
-
-
-
-
-
 
 /// <summary>
 ///	BUILDING CLASS
 /// </summary>
 double Building::get_co2emissions() {
-    return 0.0065 * this->energyUse;
+    return this->CO2Emission;
 }
 
 double Building::get_energyuse() {
@@ -670,42 +489,9 @@ double Building::get_energyuse() {
 }
 
 	
-
-
 double Building::get_environmentalcost() {
     return this->environmentalCost;
 }
-
-/*double Building::get_co2emissions() {
-    return 0.0065 * this->energyUse;
-}
-
-double Building::get_energyuse() {
-	double factor = 1;
-	if (this->PanelsOn) {
-			this->energyUse -= solarEnergy;
-		}
-
-	if (this->rooftopWindTurbineOn) {
-			this->energyUse -= windEnergy;
-		}
-	switch (buildingType){
-		case 1: { // If its a low level house then double glazing decrease energyuse 
-			if (this->doubleGlazingOn) {
-				factor = 0.25; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
-			}
-		}
-		break;
-	}
-
-    return (double)(this->energyUse)*factor;
-}
-
-double Building::get_environmentalcost() {
-    return this->environmentalCost;
-}
-*/
-
 
 
 Building::Building() {
@@ -738,7 +524,7 @@ Building::Building() {
 
 		//Initializing the values:
 		energyUse = 365; // 266.25 kWh/m^2 per year which gives 133125 kWh per year i.e 365 kwH per day
-		CO2Emission = 0.0065; //6.5g per kWh
+		CO2Emission = 17.55; //tons per year from gas heating 
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
 		satisfaction = 3;	
 	}
@@ -748,7 +534,7 @@ Building::Building() {
 
 		//Initializing the values:
 		energyUse = 292; // 213 kWh/m^2 per year which gives 106500 kWh per year i.e 292 kwH per day	
-		CO2Emission = 0.0065; //6.5g per kWh
+		CO2Emission = 17.55; //6.5g per kWh
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
 		satisfaction = 7;
 	}
