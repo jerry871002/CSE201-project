@@ -46,7 +46,12 @@ Structure::Structure(double cost, double energyUse, double maintenance, double s
 Structure::~Structure() {}
 
 double Structure::get_satisfaction() {
-    return this->satisfaction;
+    if (this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall" ) {
+        if (this->get_node("MeshComponents/Trees")->get("visible")) {
+            return ((this->satisfaction) + 4);
+        }
+    }
+    else{ return this->satisfaction; }
 }
 
 void Structure::set_satisfaction(double sat) {
@@ -389,8 +394,9 @@ template<typename T> String to_godot_string(T s)
 
 String Structure::get_object_info()
 {
-    String info = String("INFORMATION") + String("\n");
-    info += this->get_main_type() + String(" >> ") + this->get_object_type() + String("\n");
+    String info = String("STRUCTURE INFORMATION") + String("\n");
+    info += "This building is a(n) " + this->get_main_type() + " building. Specifically, it is a " + this->get_object_type() +"." + String("\n");
+    info += "This building is " + to_godot_string((int)((((int)this->get("age"))/365))) + " years and " + to_godot_string((int)((((int)this->get("age")) % 365))) + "days old."+ String("\n");
     return  info;
 }
 
