@@ -147,7 +147,7 @@ NuclearPowerPlant::NuclearPowerPlant() {
 
 	//fixed values after constructor :
 	std::normal_distribution <double> employees(800, 50);
-	employment = employees(gen); // approximate number of employees in 1 plant 
+	employment = (int)(employees(gen)); // approximate number of employees in 1 plant 
 	std::normal_distribution <double> sat(2, 0.1);
 	satisfaction = sat(gen); // on scale of 10
 	std::normal_distribution <double> money(10E9, 10E6);
@@ -166,13 +166,16 @@ void NuclearPowerPlant::simulate_step(double days)
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
 
-	age += days;
-	std::normal_distribution <double> energy(20000000, 300000);
+	age += (int)(days);
+	double cityPowerDemand = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("energyDemand");
+	double dailyDemand = cityPowerDemand / 365;
+	std::normal_distribution <double> energy(dailyDemand, 1000);
 	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 
 	if (age >= 127890) {
 		// 35 years is the average lifetime of a nuclear power plant, it then has to be replaced by a new plant or different power plant
 		energyPerDay = 0;
+		employment = 0;
 		//send message on screen for closure
 	}
 
@@ -180,6 +183,7 @@ void NuclearPowerPlant::simulate_step(double days)
 
 	if (nuclear_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
+		employment = 0;
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
@@ -192,8 +196,12 @@ void NuclearPowerPlant::simulate_step(double days)
 			}
 		}
 	}
+	else {
+		std::normal_distribution <double> employees(800, 50);
+		employment = (int)(employees(gen));
+	}
 
-	energyOutput = energyPerDay * 365; // total kWh produced by a standard plant per year
+	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant per year
 
 	fissileMaterial = 1.4E-7 * energyPerDay * 365;
 	naturalUranium = 3.4E-8 * energyPerDay * 365;
@@ -233,7 +241,7 @@ Windmill::Windmill() {
 	age = 0;
 	maintenance = 7.45E-4; //maintenace and working cost in euros per kWh
 	std::normal_distribution <double> employees(1.29, 0.02);
-	employment = employees(gen); // average number of employees for one windmill
+	employment = (int)(employees(gen)); // average number of employees for one windmill
 	std::normal_distribution <double> sat(8, 0.1);
 	satisfaction = sat(gen); // on scale of 10
 	CO2Emission = 0.011E-3; // tons of CO2 emitted per kWh
@@ -256,7 +264,7 @@ void Windmill::_process(float delta)
 
 void Windmill::simulate_step(double days)
 {
-	age += days;
+	age += (int)(days);
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
@@ -269,10 +277,11 @@ void Windmill::simulate_step(double days)
 	if (age >= 7300) {
 		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
 		energyPerDay = 0;
+		employment = 0;
 		//send message on screen for closure
 	}
 
-	energyOutput = energyPerDay * 365; // total kWh produced by a standard plant 
+	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
 
 	CO2Emission = 0.011E-3 * energyPerDay * 365;
 	environmentalCost = 0.0009 * energyPerDay * 365;
@@ -307,7 +316,7 @@ GeothermalPowerPlant::GeothermalPowerPlant()
 	std::normal_distribution <double> build(8, 1);
 	buildingTime = build(gen); // years needed to build a new plant (plus research needed)
 	std::normal_distribution <double> employees(50, 2);
-	employment = employees(gen); // average number of employees linked to one plant
+	employment = (int)(employees(gen)); // average number of employees linked to one plant
 
 	CO2Emission = 0.09E-3; // tons of CO2 emitted per kWh
 	H2SEmission = 8.2E-8; //tons of H2S emitted per kWh
@@ -327,7 +336,7 @@ void godot::GeothermalPowerPlant::_process(float delta)
 
 void GeothermalPowerPlant::simulate_step(double days)
 {
-	age += days;
+	age += (int)(days);
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
@@ -340,10 +349,11 @@ void GeothermalPowerPlant::simulate_step(double days)
 	if (age >= 10950){
 		// 30 years is the average lifetime of a geothermal plant, it then has to be replaced by a new plant or different power plant
 		energyPerDay = 0;
+		employment = 0;
 		//send message on screen for closure
 	}
 	
-	energyOutput = energyPerDay * 365; // total kWh produced by a standard plant 
+	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
 
 	maintenance = 0.08 * energyPerDay * 365;
 	if (age >= 3650) {
@@ -382,7 +392,7 @@ CoalPowerPlant::CoalPowerPlant()
 	std::normal_distribution <double> build(8, 1);
 	buildingTime = build(gen); // years needed to build a new plant
 	std::normal_distribution <double> employees(800, 20);
-	employment = employees(gen); // approximate number of employees in 1 plant 
+	employment = (int)(employees(gen)); // approximate number of employees in 1 plant 
 	std::normal_distribution <double> sat(4, 0.1);
 	satisfaction = sat(gen); // on scale of 10
 
@@ -411,7 +421,7 @@ void godot::CoalPowerPlant::_process(float delta)
 
 void CoalPowerPlant::simulate_step(double days)
 {
-	age += days;
+	age += (int)(days);
 	double efficiency_supercritical = this->get("efficiency_supercritical"); // input from user
 	double efficiency_cogeneration = this->get("efficiency_cogeneration"); // input from user
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
@@ -419,12 +429,15 @@ void CoalPowerPlant::simulate_step(double days)
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::normal_distribution <double> energy(9589041, 500000);
+	double cityPowerDemand = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("energyDemand");
+	double dailyDemand = cityPowerDemand / 365;
+	std::normal_distribution <double> energy(dailyDemand, 1000);
 	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 	
 	if (age >= 18250){
 		// 50 years is the average lifetime of a coal fired plant, it then has to be replaced by a new coal plant or different power plant
 		energyPerDay = 0;
+		employment = 0;
 		//send message on screen for closure
 	}
 
@@ -432,6 +445,7 @@ void CoalPowerPlant::simulate_step(double days)
 
 	if (coal_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
+		employment = 0;
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
@@ -444,8 +458,12 @@ void CoalPowerPlant::simulate_step(double days)
 			}
 		}
 	}
+	else {
+		std::normal_distribution <double> employees(800, 20);
+		employment = (int)(employees(gen));
+	}
 	
-	energyOutput = energyPerDay * 365; // total kWh produced by a standard plant 
+	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
 	bool efficiencySup = true;
 	bool efficiencyCo = true;
 	
