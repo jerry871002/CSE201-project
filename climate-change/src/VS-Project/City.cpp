@@ -64,7 +64,7 @@ City::City() {
     // in order to find date
     daycount = 0;
     numberOfHouses = 0;
-    
+
 	//policies for transport
     fuelTax = 0;
 	weightTax = 0;
@@ -199,35 +199,35 @@ void City::_physics_process(float delta) {
 
    // initialize stats arrays :
    Array title{};
-   title.push_back(to_godot_string("Date"));
+   title.push_back(String("Date"));
 
-   title.push_back(to_godot_string("Carbon emissions in thousands of tons"));
+   title.push_back(String("Carbon emissions in thousands of tons"));
    statsCarbonEmission.push_back(title);
    title.pop_back();
 
-   title.push_back(to_godot_string("Environmental cost in euros"));
+   title.push_back(String("Environmental cost in euros"));
    statsEnvironmentalCost.push_back(title);
    title.pop_back();
 
-   title.push_back(to_godot_string("GDP in euros"));
+   title.push_back(String("GDP in euros"));
    statsIncome.push_back(title);
    title.pop_back();
 
-   title.push_back(to_godot_string("Energy demand in kWh"));
-   title.push_back(to_godot_string("Energy production in kWh"));
+   title.push_back(String("Energy demand in kWh"));
+   title.push_back(String("Energy production in kWh"));
    statsEnergy.push_back(title);
    title.pop_back();
    title.pop_back();
 
-   title.push_back(to_godot_string("Unemployment in %"));
+   title.push_back(String("Unemployment in %"));
    statsUnemployment.push_back(title);
    title.pop_back();
 
-   title.push_back(to_godot_string("Total satisfaction in the city from 0 to 10"));
+   title.push_back(String("Total satisfaction in the city from 0 to 10"));
    statsTotalSatisfaction.push_back(title);
    title.pop_back();
 
-   title.push_back(to_godot_string("Population in number of people"));
+   title.push_back(String("Population in number of people"));
    statsPopulation.push_back(title);
    title.pop_back();
 
