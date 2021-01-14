@@ -651,6 +651,8 @@ void City::_ready()
     statsCarbonEmission.push_back(title);
     title.pop_back();
 
+    /*
+
     title.push_back(String("Environmental cost in billions of euros"));
     statsEnvironmentalCost.push_back(title);
     title.pop_back();
@@ -676,7 +678,7 @@ void City::_ready()
     title.push_back(String("Population in number of people"));
     statsPopulation.push_back(title);
     title.pop_back();
-
+    */
 }
 
 void City::_on_ExitButton_pressed()
