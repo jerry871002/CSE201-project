@@ -334,7 +334,8 @@ void City::_input(InputEvent*)
         this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
         this->notification_active = false;
         this->notification_counter = 0;
-        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
+        
+
     }
 
     if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->get("visible")) {
@@ -342,13 +343,14 @@ void City::_input(InputEvent*)
         this->notification_active = false;
         this->notification_counter = 0;
         this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
-        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
+       
     }
 
     if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))
     {
         this->_on_Validate_pressed();
-        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
+       
+
     }
 };
 
@@ -710,19 +712,6 @@ void City::initialize_stats() {
     titlePopulation.push_back(String("Population in number of people"));
     statsPopulation.push_back(titlePopulation);
 
-    Array newStat{};
-    newStat.push_back(String("."));
-    newStat.push_back(1);
-
-    statsCarbonEmission.push_back(newStat);
-    statsEnvironmentalCost.push_back(newStat);
-    statsIncome.push_back(newStat);
-    statsEnergy.push_back(newStat);
-    statsUnemployment.push_back(newStat);
-    statsTotalSatisfaction.push_back(newStat);
-    statsPopulation.push_back(newStat);
-
-
 }
 
 void City::_on_GraphsButton_pressed() 
@@ -731,7 +720,7 @@ void City::_on_GraphsButton_pressed()
     this->_on_Exit_cancelled();
     this->time_speed = 0;
     hide_menus();
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
+    
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/GraphsExit")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->set("visible", true);
@@ -739,7 +728,7 @@ void City::_on_GraphsButton_pressed()
 }
 
 void City::_on_GraphsExit_pressed() {
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
+    
     this->get_tree()->get_root()->get_node("Main/2Dworld/GraphsExit")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->set("visible", false);
@@ -762,7 +751,7 @@ void City::_on_ExitButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
+    
 
 }
 
@@ -775,7 +764,8 @@ void City::_on_3dButton_pressed()
 void City::_on_Exit_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
+    
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
@@ -803,14 +793,14 @@ void City::_on_ResetButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
+    
 
 }
 
 void City::_on_Reset_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
+    
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
@@ -818,40 +808,6 @@ void City::_on_Reset_cancelled()
 
 void City::_on_Reset_confirmed()
 {
-
-    /*
-
-    this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
-    int city_child_count = this->get_child_count();
-    for (int i = city_child_count - 1; i >= 0; --i) {
-        if (this->get_child(i)->get("name") != String("WorldEnvironment") && this->get_child(i)->get("name") != String("Player")) {
-            this->remove_child(this->get_child(i));
-        }
-    }
-    Node* PlayerNode = this->get_node("Player");
-    this->remove_child(PlayerNode);
-    this->add_child(PlayerNode);
-    income = 0;
-    population = 50000;
-    numberOfEmployees = 0;
-    carbonEmission = 0;
-    energyDemand = 0;
-    energySupply = 0;
-    environmentalCost = 0;
-    totalSatisfaction = 50;
-    time_speed = 1;
-    //timer = 0;
-    day_tick = 0;
-    days_since_last_simulation = 0;
-    // in order to find date
-    daycount = 0;
-    // in order to write stats to csv files
-    stat = 0;
-    srand((int)time(0));
-    this->_init();
-    this->_ready();
-    */
-
     this->get_tree()->reload_current_scene();
 }
 
@@ -860,7 +816,7 @@ void City::_on_Reset_confirmed()
 void City::_on_TransportMenuButton_pressed() 
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
+    
 
     String transportInfo = String("INFORMATION") + String("\n");
     transportInfo += String("Transport") + String("\n");
@@ -885,7 +841,7 @@ void City::_on_Menu_pressed(String name)
     hide_menus();
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
+    
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
 
@@ -1007,7 +963,7 @@ void City::hide_menus()
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuHousing")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuProduction")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
+    
 }
 
 void City::_on_Validate_pressed()
@@ -1017,7 +973,7 @@ void City::_on_Validate_pressed()
     String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
+    
 
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
     this->_on_Game_Speed_changed();
