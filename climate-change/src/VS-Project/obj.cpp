@@ -361,7 +361,8 @@ void Structure::_input(InputEvent* e)
 void Structure::show_menu()
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
+    
+
     
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", get_object_info());
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
