@@ -2,7 +2,7 @@ extends Control
 
 
 var data : Array  =  [
-	["Year", "Votes"],
+	["Year", "VotesVotesVotesVotesVotesVotesVotesVotesVotesVotesVotes"],
 	["2014", 20],
 	["2015", 60],
 	["2016", 10]
@@ -31,6 +31,7 @@ func _ready():
 
 func repeat_me():
 	print(get_tree().get_root().get_node("Main/3Dworld").get("statsCarbonEmission"))
+	#$LineChart.plot_from_array(data)
 	$LineChart.plot_from_array(get_tree().get_root().get_node("Main/3Dworld").get("statsCarbonEmission"))
 
 

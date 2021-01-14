@@ -160,7 +160,7 @@ void Shop::simulate_step(double days) {
         {
             WindTurbineOn = true;
             windTurbineAge = this->windLifetime;
-            this->get_node("MeshComponents/windTurbine")->set("visible", WindTurbineOn);  //need to have correct meshcomponent
+            this->get_node("MeshComponents/WindTurbine")->set("visible", WindTurbineOn);  //need to have correct meshcomponent
             std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
@@ -172,7 +172,7 @@ void Shop::simulate_step(double days) {
     else {
         this->windTurbineAge = 0;
         WindTurbineOn = false;
-        this->get_node("MeshComponents/windTurbine")->set("visible", PanelsOn);
+        this->get_node("MeshComponents/WindTurbine")->set("visible", PanelsOn);
         std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
 

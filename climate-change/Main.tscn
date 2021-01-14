@@ -424,7 +424,6 @@ shape = SubResource( 1 )
 position = Vector2( 39.1995, 28.5087 )
 
 [node name="Blur2" type="Node2D" parent="2Dworld"]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="2Dworld/Blur2"]
 material = SubResource( 3 )
@@ -438,7 +437,6 @@ __meta__ = {
 }
 
 [node name="Blur3" type="Node2D" parent="2Dworld"]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="2Dworld/Blur3"]
 material = SubResource( 3 )
@@ -455,10 +453,10 @@ __meta__ = {
 position = Vector2( 1658.04, 38.8548 )
 
 [node name="PieSatisfaction" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 107.153
-margin_top = 153.249
-margin_right = 607.153
-margin_bottom = 653.249
+margin_left = 60.8264
+margin_top = 117.613
+margin_right = 560.826
+margin_bottom = 617.613
 rect_scale = Vector2( 0.3, 0.3 )
 min_value = 1.0
 value = 44.0
@@ -497,10 +495,10 @@ __meta__ = {
 }
 
 [node name="PieCO2" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 107.965
-margin_top = 294.758
-margin_right = 607.965
-margin_bottom = 794.758
+margin_left = 61.6384
+margin_top = 259.122
+margin_right = 561.638
+margin_bottom = 759.122
 rect_scale = Vector2( 0.3, 0.3 )
 value = 20.0
 texture_under = ExtResource( 15 )
@@ -538,10 +536,10 @@ __meta__ = {
 }
 
 [node name="PieIncome" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 107.393
-margin_top = 434.613
-margin_right = 607.393
-margin_bottom = 934.613
+margin_left = 61.0664
+margin_top = 398.977
+margin_right = 561.066
+margin_bottom = 898.977
 rect_scale = Vector2( 0.3, 0.3 )
 value = 20.0
 texture_under = ExtResource( 15 )
@@ -578,10 +576,10 @@ __meta__ = {
 }
 
 [node name="PieEmployees" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 107.321
-margin_top = 572.688
-margin_right = 607.321
-margin_bottom = 1072.69
+margin_left = 60.9944
+margin_top = 537.052
+margin_right = 560.994
+margin_bottom = 1037.05
 rect_scale = Vector2( 0.3, 0.3 )
 value = 20.0
 texture_under = ExtResource( 15 )
@@ -618,11 +616,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PiePowerSupply" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 108.216
-margin_top = 710.725
-margin_right = 608.216
-margin_bottom = 1210.73
+[node name="PieUnemployement" type="TextureProgress" parent="2Dworld/Infographics"]
+margin_left = 61.8894
+margin_top = 675.089
+margin_right = 561.889
+margin_bottom = 1175.09
 rect_scale = Vector2( 0.3, 0.3 )
 value = 20.0
 texture_under = ExtResource( 15 )
@@ -634,7 +632,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PowerSupplyLabel" type="Label" parent="2Dworld/Infographics/PiePowerSupply"]
+[node name="PowerSupplyLabel" type="Label" parent="2Dworld/Infographics/PieUnemployement"]
 margin_left = 92.0996
 margin_top = 193.557
 margin_right = 203.099
@@ -647,7 +645,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PowerSupplyValue" type="Label" parent="2Dworld/Infographics/PiePowerSupply"]
+[node name="PowerSupplyValue" type="Label" parent="2Dworld/Infographics/PieUnemployement"]
 margin_left = 86.4663
 margin_top = 264.731
 margin_right = 197.466
@@ -659,10 +657,10 @@ __meta__ = {
 }
 
 [node name="PiePowerDemand" type="TextureProgress" parent="2Dworld/Infographics"]
-margin_left = 107.502
-margin_top = 849.452
-margin_right = 607.502
-margin_bottom = 1349.45
+margin_left = 61.1753
+margin_top = 813.816
+margin_right = 561.175
+margin_bottom = 1313.82
 rect_scale = Vector2( 0.3, 0.3 )
 value = 20.0
 texture_under = ExtResource( 15 )
@@ -1159,10 +1157,10 @@ __meta__ = {
 }
 
 [node name="TransportMenuButton" type="Button" parent="2Dworld/Menus"]
-margin_left = 1764.91
-margin_top = 29.0
-margin_right = 1914.91
-margin_bottom = 179.0
+margin_left = 1718.58
+margin_top = -6.63586
+margin_right = 1868.58
+margin_bottom = 143.364
 mouse_default_cursor_shape = 2
 custom_styles/hover = SubResource( 71 )
 custom_styles/pressed = SubResource( 72 )
@@ -1296,18 +1294,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="3dButton" type="Button" parent="2Dworld"]
-margin_left = 242.54
-margin_top = 31.1328
-margin_right = 379.54
-margin_bottom = 68.1328
-mouse_default_cursor_shape = 2
-theme = ExtResource( 8 )
-text = "2D MENU"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="ExitConfirmationBox" type="Control" parent="2Dworld"]
 margin_left = 768.94
 margin_top = 208.649
@@ -1354,8 +1340,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
-margin_right = 36.0
-margin_bottom = 20.0
+margin_right = -4.0
+margin_bottom = -4.0
 
 [node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Tabs"]
 
@@ -1371,7 +1357,7 @@ __meta__ = {
 
 [node name="LineChart" parent="2Dworld/TabContainer/Tabs/Node2D/Control" instance=ExtResource( 54 )]
 margin_left = 3.05176e-05
-chart_name = "BONJOUR LES GENS"
+chart_name = "CO2 EMISSIONS"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
 Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )
@@ -1386,7 +1372,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
-margin_right = 36.0
+margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Tabs2"]
@@ -1454,6 +1440,5 @@ margin_bottom = 38.0
 [connection signal="pressed" from="2Dworld/ResetConfirmationBox/ConfirmReset" to="3Dworld" method="_on_Reset_confirmed"]
 [connection signal="pressed" from="2Dworld/ResetConfirmationBox/CancelReset" to="3Dworld" method="_on_Reset_cancelled"]
 [connection signal="pressed" from="2Dworld/ExitButton" to="3Dworld" method="_on_ExitButton_pressed"]
-[connection signal="pressed" from="2Dworld/3dButton" to="3Dworld" method="_on_3dButton_pressed"]
 [connection signal="pressed" from="2Dworld/ExitConfirmationBox/ConfirmExit" to="3Dworld" method="_on_Exit_confirmed"]
 [connection signal="pressed" from="2Dworld/ExitConfirmationBox/CancelExit" to="3Dworld" method="_on_Exit_cancelled"]
