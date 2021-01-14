@@ -647,7 +647,7 @@ void City::_ready()
     Array title{};
     title.push_back(String("Date"));
 
-    title.push_back(String("Carbon emissions in thousands of tons"));
+    title.push_back(String("Carb"));
     statsCarbonEmission.push_back(title);
     title.pop_back();
 
