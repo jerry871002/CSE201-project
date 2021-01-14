@@ -247,7 +247,7 @@ void GoodsFactories::simulate_step(double days)
 		if (60000 >= subsidy_green >= 30000) {
 			value = 7;
 		}
-		if (maximum_CO2 > 60000) {
+		if (subsidy_green > 60000) {
 			value = 5;
 		}
 		srand((int)time(0));
@@ -282,36 +282,36 @@ void GoodsFactories::simulate_step(double days)
 			employment = 0;
 		}
 		std::normal_distribution <double> co2(maximum_CO2, 0.5);
-		CO2Emission = (co2(gen) * employment) * green;
+		CO2Emission = (co2(gen) * employment) * green * 0.001 * 365; // ton per year
 	}
 	else {
 		std::normal_distribution <double> co2(42.5, 0.5);
-		CO2Emission = (co2(gen) * employment) * green;
+		CO2Emission = (co2(gen) * employment) * green * 0.001 * 365;
 	}
 
 	std::normal_distribution <double> mercury(2.3E-7, 1E-8);
-	mercuryEmission = (mercury(gen) * employment) * green;
+	mercuryEmission = (mercury(gen) * employment) * green * 0.001 * 365;
 	std::normal_distribution <double> arsenic(2.4E-7, 1E-8);
-	arsenicEmission = (arsenic(gen) * employment) * green;
+	arsenicEmission = (arsenic(gen) * employment) * green * 0.001 * 365;
 	std::normal_distribution <double> cadmium(1.E-7, 5E-9);
-	cadmiumEmission = (cadmium(gen) * employment) * green;
+	cadmiumEmission = (cadmium(gen) * employment) * green * 0.001 * 365;
 	std::normal_distribution <double> nickel(1.85E-6, 5E-8);
-	nickelEmission = (nickel(gen) * employment) * green;
+	nickelEmission = (nickel(gen) * employment) * green * 0.001 * 365;
 	std::normal_distribution <double> lead(3.7E-6, 5E-8);
-	leadEmission = (lead(gen) * employment) * green;
+	leadEmission = (lead(gen) * employment) * green * 0.001 * 365;
 	std::normal_distribution <double> so2(0.04, 0.001);
-	SO2Emission = (so2(gen) * employment) * green;
+	SO2Emission = (so2(gen) * employment) * green * 0.001 * 365;
 	std::normal_distribution <double> nh3(0.05, 0.0025);
-	NH3Emission = (nh3(gen) * employment) * green;
+	NH3Emission = (nh3(gen) * employment) * green * 0.001 * 365;
 	std::normal_distribution <double> nox(0.05, 0.0025);
-	NOxEmission = (nox(gen) * employment) * green;
+	NOxEmission = (nox(gen) * employment) * green * 0.001 * 365;
 	std::normal_distribution <double> vocs(0.075, 0.005);
-	VOCsEmission = (vocs(gen) * employment) * green;
+	VOCsEmission = (vocs(gen) * employment) * green * 0.001 * 365;
 	std::normal_distribution <double> pm(0.5, 0.15);
-	PMEmission = (pm(gen) * employment) * green;
+	PMEmission = (pm(gen) * employment) * green * 0.001 * 365;
 
 	std::normal_distribution <double> energy(100, 10);
-	energyUse = energy(gen) * employment * green;
+	energyUse = energy(gen) * employment * green * 365;
 }
 
 /// <summary>
@@ -350,15 +350,15 @@ void Services::simulate_step(double days)
 
 
 	std::normal_distribution <double> energy(250000, 5000);
-	energyUse = energy(gen);
+	energyUse = energy(gen) * 365;
 	std::normal_distribution <double> pm(1010, 70);
-	PMEmission = pm(gen);
+	PMEmission = pm(gen) * 0.001 * 365;
 	std::normal_distribution <double> arsenic(0.002, 0.0001);
-	arsenicEmission = arsenic(gen);
+	arsenicEmission = arsenic(gen) * 0.001 * 365;
 	std::normal_distribution <double> nickel(0.012, 0.001);
-	nickelEmission = nickel(gen);
+	nickelEmission = nickel(gen) * 0.001 * 365;
 	std::normal_distribution <double> lead(0.021, 0.002);
-	leadEmission = lead(gen);
+	leadEmission = lead(gen) * 0.001 * 365;
 }
 
 // INOFRMATION DISPLAY
