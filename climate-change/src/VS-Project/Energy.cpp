@@ -163,6 +163,9 @@ void NuclearPowerPlant::simulate_step(double days)
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
+	double coal_prohibited = this->get("coal_prohibited"); // input from user
+	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
+
 	age += days;
 	std::normal_distribution <double> energy(20000000, 300000);
 	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
@@ -254,6 +257,10 @@ void Windmill::_process(float delta)
 void Windmill::simulate_step(double days)
 {
 	age += days;
+
+	double coal_prohibited = this->get("coal_prohibited"); // input from user
+	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(25000, 5000);
@@ -321,6 +328,9 @@ void godot::GeothermalPowerPlant::_process(float delta)
 void GeothermalPowerPlant::simulate_step(double days)
 {
 	age += days;
+
+	double coal_prohibited = this->get("coal_prohibited"); // input from user
+	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -402,6 +412,10 @@ void godot::CoalPowerPlant::_process(float delta)
 void CoalPowerPlant::simulate_step(double days)
 {
 	age += days;
+	double efficiency_supercritical = this->get("efficiency_supercritical"); // input from user
+	double efficiency_cogeneration = this->get("efficiency_cogeneration"); // input from user
+	double coal_prohibited = this->get("coal_prohibited"); // input from user
+	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
 
 	std::random_device rd;
 	std::mt19937 gen(rd());

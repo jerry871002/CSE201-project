@@ -233,6 +233,9 @@ void GoodsFactories::simulate_step(double days)
 {
 	this->Production::simulate_step(days);
 
+	double maximum_CO2 = this->get("maximum_CO2"); // input from user
+	double subsidy_green = this->get("subsidy_green"); // input from user
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
@@ -379,8 +382,8 @@ String Production::get_object_info()
 	String info = this->Structure::get_object_info();
 	info += "Age: " + to_godot_string(this->age) + String("\n");
 	info += "Employment: " + to_godot_string(this->employment) + String("\n");
-	info += "Energy used by the building in kWh: " + to_godot_string(this->energyUse) + String("\n");
-	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy used by the building in kWh per year: " + to_godot_string(this->energyUse) + String("\n");
+	info += "CO2 Emissions per ton per year: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
 	if (subsidy == true) {
 		info += "This factory receives a green subsidy" + String("\n");
 	}
