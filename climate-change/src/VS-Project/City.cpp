@@ -644,41 +644,42 @@ void City::_ready()
 
 
     // initialize stats arrays :
-    Array title{};
-    title.push_back(String("Date"));
+    Array titleCarbonEmission{};
+    titleCarbonEmission.push_back(String("Date"));
+    titleCarbonEmission.push_back(String("Carbon emissions in thousands of tons"));
+    statsCarbonEmission.push_back(titleCarbonEmission);
 
-    title.push_back(String("Carbon emissions in thousands of tons"));
-    statsCarbonEmission.push_back(title);
-    //title.pop_back();
+    Array titleEnvironmentalCost{};
+    titleEnvironmentalCost.push_back(String("Date"));
+    titleEnvironmentalCost.push_back(String("Environmental cost in billions of euros"));
+    statsEnvironmentalCost.push_back(titleEnvironmentalCost);
+    
+    Array titleIncome{};
+    titleIncome.push_back(String("Date"));
+    titleIncome.push_back(String("GDP in billions of euros"));
+    statsIncome.push_back(titleIncome);
 
-    /*
+    Array titleEnergy{};
+    titleEnergy.push_back(String("Date"));
+    titleEnergy.push_back(String("Energy demand in GWh"));
+    titleEnergy.push_back(String("Energy production in GWh"));
+    statsEnergy.push_back(titleEnergy);
 
-    title.push_back(String("Environmental cost in billions of euros"));
-    statsEnvironmentalCost.push_back(title);
-    title.pop_back();
+    Array titleUnemployment{};
+    titleUnemployment.push_back(String("Date"));
+    titleUnemployment.push_back(String("Unemployment in %"));
+    statsUnemployment.push_back(titleUnemployment);
 
-    title.push_back(String("GDP in billions of euros"));
-    statsIncome.push_back(title);
-    title.pop_back();
+    Array titleTotalSatisfaction{};
+    titleTotalSatisfaction.push_back(String("Date"));
+    titleTotalSatisfaction.push_back(String("Total satisfaction in the city from 0 to 10"));
+    statsTotalSatisfaction.push_back(titleTotalSatisfaction);
 
-    title.push_back(String("Energy demand in GWh"));
-    title.push_back(String("Energy production in GWh"));
-    statsEnergy.push_back(title);
-    title.pop_back();
-    title.pop_back();
-
-    title.push_back(String("Unemployment in %"));
-    statsUnemployment.push_back(title);
-    title.pop_back();
-
-    title.push_back(String("Total satisfaction in the city from 0 to 10"));
-    statsTotalSatisfaction.push_back(title);
-    title.pop_back();
-
-    title.push_back(String("Population in number of people"));
-    statsPopulation.push_back(title);
-    title.pop_back();
-    */
+    Array titlePopulation{};
+    titlePopulation.push_back(String("Date"));
+    titlePopulation.push_back(String("Population in number of people"));
+    statsPopulation.push_back(titlePopulation);
+    
 }
 
 void City::_on_ExitButton_pressed()
