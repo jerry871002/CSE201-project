@@ -185,6 +185,7 @@ This function calls simulation() every second
 everytime the integer part of `delta_counter` changes
 we update `day_tick` and execute simulation()
 */
+
 void City::_physics_process(float delta) {
 
     // CALLED EVERY PHYSICS FRAME (60 FPS)
@@ -196,40 +197,6 @@ void City::_physics_process(float delta) {
         CO2Emission *=1- carProhibition / 7;
     }
     */
-
-   // initialize stats arrays :
-   Array title{};
-   title.push_back(String("Date"));
-
-   title.push_back(String("Carbon emissions in thousands of tons"));
-   statsCarbonEmission.push_back(title);
-   title.pop_back();
-
-   title.push_back(String("Environmental cost in euros"));
-   statsEnvironmentalCost.push_back(title);
-   title.pop_back();
-
-   title.push_back(String("GDP in euros"));
-   statsIncome.push_back(title);
-   title.pop_back();
-
-   title.push_back(String("Energy demand in kWh"));
-   title.push_back(String("Energy production in kWh"));
-   statsEnergy.push_back(title);
-   title.pop_back();
-   title.pop_back();
-
-   title.push_back(String("Unemployment in %"));
-   statsUnemployment.push_back(title);
-   title.pop_back();
-
-   title.push_back(String("Total satisfaction in the city from 0 to 10"));
-   statsTotalSatisfaction.push_back(title);
-   title.pop_back();
-
-   title.push_back(String("Population in number of people"));
-   statsPopulation.push_back(title);
-   title.pop_back();
 
 
     if (bool(this->time_speed))
@@ -675,6 +642,40 @@ void City::_ready()
     structures_iterator = all_structures.begin();
     this->set_initial_visible_components();
 
+
+    // initialize stats arrays :
+    Array title{};
+    title.push_back(String("Date"));
+
+    title.push_back(String("Carbon emissions in thousands of tons"));
+    statsCarbonEmission.push_back(title);
+    title.pop_back();
+
+    title.push_back(String("Environmental cost in billions of euros"));
+    statsEnvironmentalCost.push_back(title);
+    title.pop_back();
+
+    title.push_back(String("GDP in billions of euros"));
+    statsIncome.push_back(title);
+    title.pop_back();
+
+    title.push_back(String("Energy demand in GWh"));
+    title.push_back(String("Energy production in GWh"));
+    statsEnergy.push_back(title);
+    title.pop_back();
+    title.pop_back();
+
+    title.push_back(String("Unemployment in %"));
+    statsUnemployment.push_back(title);
+    title.pop_back();
+
+    title.push_back(String("Total satisfaction in the city from 0 to 10"));
+    statsTotalSatisfaction.push_back(title);
+    title.pop_back();
+
+    title.push_back(String("Population in number of people"));
+    statsPopulation.push_back(title);
+    title.pop_back();
 
 }
 
@@ -2013,7 +2014,7 @@ void City::write_stat_history_to_file() {
 
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
-    newCarbonEmission.push_back((int)(carbonEmission/1000000 + 0.5));
+    newCarbonEmission.push_back((int)(carbonEmission/10^6 + 0.5));
 
     if (statsCarbonEmission.size() > 100) {  
             statsCarbonEmission.pop_front();
@@ -2023,7 +2024,7 @@ void City::write_stat_history_to_file() {
 
     Array newEnvironmentalCost{};
     newEnvironmentalCost.push_back(return_word_date_godot());
-    newEnvironmentalCost.push_back((int)(environmentalCost + 0.5));
+    newEnvironmentalCost.push_back((int)(environmentalCost/10^9 + 0.5));
 
     if (statsEnvironmentalCost.size() > 100) {  
             statsEnvironmentalCost.pop_front();
@@ -2033,7 +2034,7 @@ void City::write_stat_history_to_file() {
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
-    newIncome.push_back((int)(income + 0.5));
+    newIncome.push_back((int)(income/10^9 + 0.5));
 
     if (statsIncome.size() > 100) {  
             statsIncome.pop_front();
@@ -2043,8 +2044,8 @@ void City::write_stat_history_to_file() {
 
     Array newEnergy{};
     newEnergy.push_back(return_word_date_godot());
-    newEnergy.push_back((int)(energyDemand + 0.5));
-    newEnergy.push_back((int)(energySupply + 0.5));
+    newEnergy.push_back((int)(energyDemand/10^6 + 0.5));
+    newEnergy.push_back((int)(energySupply/10^6 + 0.5));
 
     if (statsEnergy.size() > 100) {  
             statsEnergy.pop_front();
