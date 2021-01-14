@@ -193,7 +193,6 @@ RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
 
 window/size/width=3840
 window/size/height=2160
-window/size/borderless=true
 window/size/fullscreen=true
 window/dpi/allow_hidpi=true
 window/vsync/use_vsync=false

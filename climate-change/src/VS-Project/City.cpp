@@ -256,7 +256,7 @@ void City::_physics_process(float delta) {
         
         day_tick++;
         std::cout << "Day tick : " << (this->day_tick) << endl;
-        this->get_tree()->get_root()->get_node("Main/2DWorld/Date")->set("text", return_word_date_godot());
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Date")->set("text", return_word_date_godot());
 
 
         int* datenumber = return_date(int(this->day_tick));
