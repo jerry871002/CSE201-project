@@ -256,7 +256,7 @@ void City::_physics_process(float delta) {
         
         day_tick++;
         std::cout << "Day tick : " << (this->day_tick) << endl;
-        this->get_tree()->get_root()->get_node("Main/2DWorld/Date")->set("text", return_word_date_godot());
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Date")->set("text", return_word_date_godot());
 
 
         int* datenumber = return_date(int(this->day_tick));
@@ -719,6 +719,7 @@ void City::_on_GraphsButton_pressed()
     this->_on_Reset_cancelled();
     this->_on_Exit_cancelled();
     this->time_speed = 0;
+    this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
     hide_menus();
     
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
@@ -732,6 +733,7 @@ void City::_on_GraphsExit_pressed() {
     this->get_tree()->get_root()->get_node("Main/2Dworld/GraphsExit")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->set("visible", false);
+    this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
     this->_on_Game_Speed_changed();
 }
 
@@ -817,14 +819,31 @@ void City::_on_TransportMenuButton_pressed()
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
     
-
+    /*
+    * 0 - electic car
+    * 1 - big american car
+    * 2 - normal car
+    * 3 - old collection cars
+    * 4 - bike
+    * 5 - motorcycle
+    * 6 - bus
+    * 7 - sports car
+    */
     String transportInfo = String("INFORMATION") + String("\n");
     transportInfo += String("Transport") + String("\n");
-    transportInfo += String((int)(current_car_quantities[0])) + String("Electric Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[0])) + String("Electric Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[1])) + String("American Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[2])) + String("Normal Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[3])) + String("Collection Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[4])) + String("Bicycles") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[5])) + String("Motorcycles") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[6])) + String("Bus") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[7])) + String("Sports Cars") + String("\n");
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", transportInfo);
 
     this->time_speed = 0;
+    this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
