@@ -334,8 +334,11 @@ void Structure::_input(InputEvent* e)
         ((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", false);
         this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
+        this->get_viewport()->warp_mouse(Vector2(0,0));
+
         // SET INFO BOX SIZE AND POSITION
 
+        /*
         ((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 260));
 
         if (mousePos.x > (get_viewport()->get_size().x) / 2) 
@@ -346,9 +349,11 @@ void Structure::_input(InputEvent* e)
             real_t AdaptedWidth = ((Vector2)(((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->get("rect_size"))).x;
             (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x - AdaptedWidth - 60, 200));
         }
+        */
 
         // AJUST POSITION OF MENU TO ENSURE IT IS VISIBLE
 
+        /*
         if (get_viewport()->get_size().x - mousePos.x <= MenuSize)
         {
             if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize - (get_viewport()->get_size().x - mousePos.x); }
@@ -374,9 +379,12 @@ void Structure::_input(InputEvent* e)
             else { mousePos.x += MenuSize - mousePos.y; }
             mousePos.y = MenuSize;
         }
+        
+
+        mousePos = Vector2(real_t((double)(get_viewport()->get_size().x) / 2), real_t((double)(get_viewport()->get_size().y) / 2));
 
         (this->get_tree()->get_root()->get_node("Main/2Dworld/Menus"))->set("position", mousePos);
-
+        */
 
         show_menu();
     }
