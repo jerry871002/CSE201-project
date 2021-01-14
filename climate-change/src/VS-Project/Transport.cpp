@@ -240,16 +240,7 @@ void Transport::set_transportType(int type)
     fuelInput = fuelPerKm * kmPerDay * 365; // litres of fuel in 1 year
     CO2Emission =365 * co2PerKm * kmPerDay / 1000; // tonnes of co2 in 1 year
     
-    //car prohibition
-    /*
-    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)) {
-    workingDays= (7-(int)(myCity->get("carProhibition")
-    maintenance*=workingDays/7;
-    fuelInput*=workingDays/7;
-    CO2Emission*=workingDays/7;
-    energyUse*=workingDays/7;
-    passengers*=workingDays/7;
-    }
+
 }
 
 int Transport::get_transportType()
@@ -381,6 +372,8 @@ void Transport::simulate_step(double days) {
     age += days; //total number of days 
     /*fuelInput += fuelPerKm * kmPerDay * days; //litres of fuel for car
     CO2Emission += co2PerKm * kmPerDay * days;*/ // co2 emissions per car
+    fuelInput = fuelPerKm * kmPerDay * 365; // litres of fuel in 1 year
+    CO2Emission =365 * co2PerKm * kmPerDay / 1000; // tonnes of co2 in 1 year
     passengers = capacity * occupancyRate * 365; //number of people that used the car in 1 year period
     switch (transportType) {
         //maintenance in euros per year
