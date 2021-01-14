@@ -1085,7 +1085,7 @@ void City::implement_policies(double value) {
             Godot::print("THE COAL POWER PLANTS WILL CHANGE THEIR EFFICIENCY");
             for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
             {
-                if ((String)(*it)->get("object_type") == (String)("Coal Power Plant")) {
+                if (((*it)->get("object_type")).operator String() == (String)("Coal Power Plant")) {
                     (*it)->set("efficiency_supercritical", value);
                 }
             }
@@ -1099,7 +1099,7 @@ void City::implement_policies(double value) {
             Godot::print("THE COAL POWER PLANTS WILL CHANGE THEIR EFFICIENCY");
             for (std::vector<Energy*>::iterator it = all_energies.begin(); it != all_energies.end(); ++it)
             {
-                if ((String)(*it)->get("object_type") == (String)("Coal Power Plant")) {
+                if (((*it)->get("object_type")).operator String() == (String)("Coal Power Plant")) {
                     (*it)->set("efficiency_cogeneration", value);
                 }
             }
@@ -1137,7 +1137,7 @@ void City::implement_policies(double value) {
             Godot::print("MAXIMUM EMISSIONS ON FACTORIES IMPLEMENTED");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
-                if ((String)(*it)->get("object_type") == (String)("Goods Factory")) {
+                if (((*it)->get("object_type")).operator String() == (String)("Goods Factory")) {
                     (*it)->set("maximum_CO2", value);
                 }
             }
@@ -1151,7 +1151,7 @@ void City::implement_policies(double value) {
             Godot::print("GREEN SUBSIDY FOR FACTORIES IMPLEMENTED");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
-                if ((String)(*it)->get("object_type") == (String)("Goods Factory")) {
+                if (((*it)->get("object_type")).operator String() == (String)("Goods Factory")) {
                     (*it)->set("subsidy_green", value);
                 }
             }
@@ -1165,7 +1165,7 @@ void City::implement_policies(double value) {
             Godot::print("PROHIBITION OF PESTICIDES");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
-                if ((String)(*it)->get("object_type") == (String)("Agricultural Production")) {
+                if (((*it)->get("object_type")).operator String() == (String)("Agricultural Production")) {
                     (*it)->set("pesticideProhibited", value);
                 }
             }
@@ -1179,7 +1179,7 @@ void City::implement_policies(double value) {
             Godot::print("PROHIBITION OF GMOs");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
-                if ((String)(*it)->get("object_type") == (String)("Agricultural Production")) {
+                if (((*it)->get("object_type")).operator String() == (String)("Agricultural Production")) {
                     (*it)->set("GMOProhibited", value);
                 }
             }
@@ -1193,7 +1193,7 @@ void City::implement_policies(double value) {
             Godot::print("PROHIBITION OF FERTILIZERS");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
-                if ((String)(*it)->get("object_type") == (String)("Agricultural Production")) {
+                if (((*it)->get("object_type")).operator String() == (String)("Agricultural Production")) {
                     (*it)->set("fertilizerProhibited", value);
                 }
             }

@@ -50,7 +50,7 @@ if env['platform'] == "osx":
     env['target_path'] += 'osx/'
     cpp_library += '.osx'
     env.Append(CCFLAGS=['-arch', 'x86_64'])
-    env.Append(CXXFLAGS=['-std=c++17'])
+    env.Append(CXXFLAGS=['-std=c++14'])
     env.Append(LINKFLAGS=['-arch', 'x86_64'])
     if env['target'] in ('debug', 'd'):
         env.Append(CCFLAGS=['-g', '-O2'])
@@ -98,8 +98,8 @@ env.Append(LIBS=[cpp_library])
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 env.Append(CPPPATH=['VS-Project/'])
-# sources = Glob('VS-Project/*.cpp')
-sources = Glob('VS-Project/City.cpp')
+sources = Glob('VS-Project/GodotLibrary.cpp')
+sources += Glob('VS-Project/City.cpp')
 sources += Glob('VS-Project/Energy.cpp')
 sources += Glob('VS-Project/Housing.cpp')
 sources += Glob('VS-Project/obj.cpp')
