@@ -112,17 +112,17 @@ void AgriculturalProduction::simulate_step(double days)
 		GMOBefore = GMOProhibited;
 		pesticideBefore = pesticideProhibited;
 		fertilizerBefore = fertilizerProhibited;
-		production = requiredLand * fertility * days; //output over the time period
-		waterConsumption = requiredLand * fertility * days * 1500;
-		CO2Emission = 0.45 * requiredLand * fertility * days;
-		maintenance = 144 * days * requiredLand;
+		production = requiredLand * fertility; //output over the time period
+		waterConsumption = requiredLand * production * 1000* 1500;
+		CO2Emission = 0.4 * production; //co2 tonne per year
+		maintenance = 144 * 365 * requiredLand; //maintenance in euros per year
 		if (fertilizerProhibited == 0) {
-			maintenance += 45 * requiredLand * days;
+			maintenance += 45 * requiredLand * 365;
 			CO2Emission += 0.3 * CO2Emission;
 		}
-		if (pesticideProhibited == 0) {
-			CO2Emission += 9400 * requiredLand * days;
-			maintenance += 25 * requiredLand * days;
+		if (pesticideProhibited == 0) { //depends on the land size
+			CO2Emission += 9.4 * requiredLand;
+			maintenance += 25 * requiredLand*365;
 		}
 		break;
 	}
@@ -154,13 +154,13 @@ void AgriculturalProduction::agriculture_type(int type) {
 		std::mt19937 gen(rd());
 		std::normal_distribution <double> wheatfieldsize(1.74, 0.04);
 		requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
-		std::normal_distribution <double> wheatferltility(464000, 40000);
-		fertility = wheatferltility(gen); //production of wheat per km^2
+		std::normal_distribution <double> wheatferltility(464, 40);
+		fertility = wheatferltility(gen); //production of wheat in tonne per km^2
 		std::normal_distribution <double> wheatfieldcost(595000, 1000);
 		cost = wheatfieldcost(gen) * requiredLand; //of land in euros
-		production = fertility * requiredLand; //output of wheat in kg per day
-		waterConsumption = 1500 * production; //water litres per day
-		CO2Emission = 0.59 * production; //co2 kg per day
+		production = fertility * requiredLand; //output of wheat in tonne per year
+		waterConsumption = 1500 * production*1000; //water litres per year
+		CO2Emission = 0.52 * production; //co2 tonne per year
 		pesticideProhibited = 0;
 		fertilizerProhibited = 0;
 		GMOProhibited = 0;
