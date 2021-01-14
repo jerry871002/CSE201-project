@@ -111,9 +111,9 @@ String Energy::get_object_info()
 
 	info += "Age of the building in days: " + to_godot_string((double)(this->get("age"))) + String("\n");
 	info += "Employment: " + to_godot_string(this->employment) + String("\n");
-	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy produced in kWh: " + to_godot_string((int)this->get("energyOutput")) + String("\n");
-	info += "Environmental and health costs induced in euros: " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
+	info += "CO2 Emissions in tons per year: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy produced in kWh per year: " + to_godot_string((int)this->get("energyOutput")) + String("\n");
+	info += "Environmental and health costs induced in euros per year: " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	return info;
 }
@@ -139,8 +139,8 @@ NuclearPowerPlant::NuclearPowerPlant() {
 	//300 millirem per year from natural background sources of radiation
 	nuclearWaste = 3.4E-9; //tons of high level nuclear waste produced per kWh (it is stored to be reused when radiation decays)
 	naturalUranium = 3.4E-8; //tons of natural uranium necessary per kWh
-	fissileMaterial = 1.4E-7; //kg of fissile material needed per kWh
-	CO2Emission = 0.012; // kg of CO2 emitted per kWh
+	fissileMaterial = 1.4E-10; //tons of fissile material needed per kWh
+	CO2Emission = 0.012E-3; // tons of CO2 emitted per kWh
 
 	maintenance = 0.04; //maintenace and working cost in euros per kWh
 	environmentalCost = 0.0019; // environmental and health costs in euros per kWh
@@ -162,6 +162,9 @@ void NuclearPowerPlant::simulate_step(double days)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
+
+	double coal_prohibited = this->get("coal_prohibited"); // input from user
+	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
 
 	age += days;
 	std::normal_distribution <double> energy(20000000, 300000);
@@ -190,15 +193,15 @@ void NuclearPowerPlant::simulate_step(double days)
 		}
 	}
 
-	energyOutput = energyPerDay * days; // total kWh produced by a standard plant 
+	energyOutput = energyPerDay * 365; // total kWh produced by a standard plant per year
 
-	fissileMaterial = 1.4E-7 * energyPerDay * days;
-	naturalUranium = 3.4E-8 * energyPerDay * days;
-	CO2Emission = 0.012 * energyPerDay * days;
-	nuclearWaste = 3.4E-9 * energyPerDay * days;
-	radiation = 1.4E-12 * energyPerDay * days;
-	environmentalCost = 0.019 * energyPerDay * days;
-	maintenance = 0.04 * energyPerDay * days;
+	fissileMaterial = 1.4E-7 * energyPerDay * 365;
+	naturalUranium = 3.4E-8 * energyPerDay * 365;
+	CO2Emission = 0.012E-3 * energyPerDay * 365; //ton per year
+	nuclearWaste = 3.4E-9 * energyPerDay * 365;
+	radiation = 1.4E-12 * energyPerDay * 365;
+	environmentalCost = 0.019 * energyPerDay * 365;
+	maintenance = 0.04 * energyPerDay * 365;
 	if (age >= 3650) {
 		maintenance = 0.04 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
 	}
@@ -233,7 +236,7 @@ Windmill::Windmill() {
 	employment = employees(gen); // average number of employees for one windmill
 	std::normal_distribution <double> sat(8, 0.1);
 	satisfaction = sat(gen); // on scale of 10
-	CO2Emission = 0.011; // kg of CO2 emitted per kWh
+	CO2Emission = 0.011E-3; // tons of CO2 emitted per kWh
 	std::normal_distribution <double> money(4E6, 300000);
 	cost = money(gen); // cost in euros to build a new windmill
 	std::normal_distribution <double> build(0.04, 0.005);
@@ -254,6 +257,10 @@ void Windmill::_process(float delta)
 void Windmill::simulate_step(double days)
 {
 	age += days;
+
+	double coal_prohibited = this->get("coal_prohibited"); // input from user
+	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(25000, 5000);
@@ -265,11 +272,11 @@ void Windmill::simulate_step(double days)
 		//send message on screen for closure
 	}
 
-	energyOutput = energyPerDay * days; // total kWh produced by a standard plant 
+	energyOutput = energyPerDay * 365; // total kWh produced by a standard plant 
 
-	CO2Emission = 0.011 * energyPerDay * days;
-	environmentalCost = 0.0009 * energyPerDay * days;
-	maintenance = 7.45E-4 * energyPerDay * days;
+	CO2Emission = 0.011E-3 * energyPerDay * 365;
+	environmentalCost = 0.0009 * energyPerDay * 365;
+	maintenance = 7.45E-4 * energyPerDay * 365;
 }
 
 /// <summary>
@@ -302,10 +309,10 @@ GeothermalPowerPlant::GeothermalPowerPlant()
 	std::normal_distribution <double> employees(50, 2);
 	employment = employees(gen); // average number of employees linked to one plant
 
-	CO2Emission = 0.09; // kg of CO2 emitted per kWh
-	H2SEmission = 8.2E-5; //kg of H2S emitted per kWh
-	CH4Emission = 1.6E-5; //kg of CH4 emitted per kWh
-	NH3Emission = 1.7E-5; //kg of NH3 emitted per kWh
+	CO2Emission = 0.09E-3; // tons of CO2 emitted per kWh
+	H2SEmission = 8.2E-8; //tons of H2S emitted per kWh
+	CH4Emission = 1.6E-8; //tons of CH4 emitted per kWh
+	NH3Emission = 1.7E-8; //tons of NH3 emitted per kWh
 	maintenance = 0.08; //maintenace and working cost in euros per kWh
 	environmentalCost = 0.0015; // environmental and health costs in euros per kWh
 }
@@ -322,6 +329,9 @@ void GeothermalPowerPlant::simulate_step(double days)
 {
 	age += days;
 
+	double coal_prohibited = this->get("coal_prohibited"); // input from user
+	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(32800, 1500);
@@ -333,21 +343,21 @@ void GeothermalPowerPlant::simulate_step(double days)
 		//send message on screen for closure
 	}
 	
-	energyOutput += energyPerDay * days; // total kWh produced by a standard plant 
+	energyOutput = energyPerDay * 365; // total kWh produced by a standard plant 
 
-	maintenance = 0.08 * energyPerDay * days;
+	maintenance = 0.08 * energyPerDay * 365;
 	if (age >= 3650) {
 		maintenance = 0.08 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
 	}
 	if (age >= 7300) {
 		maintenance = 0.08; // after 20 years the maintenance and working costs double
 	}
-	CO2Emission = 0.09 * energyPerDay * days;
-	NH3Emission = 1.7E-5 * energyPerDay * days;
-	CH4Emission = 1.6E-5 * energyPerDay * days;
-	H2SEmission = 8.2E-5 * energyPerDay * days;
+	CO2Emission = 0.09E-3 * energyPerDay * 365;
+	NH3Emission = 1.7E-8 * energyPerDay * 365;
+	CH4Emission = 1.6E-8 * energyPerDay * 365;
+	H2SEmission = 8.2E-8 * energyPerDay * 365;
 
-	environmentalCost = 0.0015 * energyPerDay * days;
+	environmentalCost = 0.0015 * energyPerDay * 365;
 }
 
 
@@ -376,12 +386,12 @@ CoalPowerPlant::CoalPowerPlant()
 	std::normal_distribution <double> sat(4, 0.1);
 	satisfaction = sat(gen); // on scale of 10
 
-	CO2Emission = 0.868; // kg of CO2 emitted per kWh
-	SO2Emission = 0.00152; // kg of SO2 emitted per kWh
-	NOxEmission = 8.49E-4; // kg of NOx emitted per kWh
-	PMEmission = 4E-5; //kg of total PM emitted per kWh
-	ashOutput = 0.0619; // kg of ash produced per kWh
-	mercuryEmission = 1.137E-8; // kg of mercury emitted per kWh
+	CO2Emission = 0.868E-3; // tons of CO2 emitted per kWh
+	SO2Emission = 0.00152E-3; // tons of SO2 emitted per kWh
+	NOxEmission = 8.49E-7; // tons of NOx emitted per kWh
+	PMEmission = 4E-8; //tons of total PM emitted per kWh
+	ashOutput = 0.0619E-3; // tons of ash produced per kWh
+	mercuryEmission = 1.137E-11; // tons of mercury emitted per kWh
 	coal = 4.06E-4; // tons of coal needed to produce 1 kWh
 	maintenance = 0.05; //maintenace and working cost in euros per kWh
 	environmentalCost = 0.06; // environmental and health costs in euros per kWh
@@ -402,6 +412,10 @@ void godot::CoalPowerPlant::_process(float delta)
 void CoalPowerPlant::simulate_step(double days)
 {
 	age += days;
+	double efficiency_supercritical = this->get("efficiency_supercritical"); // input from user
+	double efficiency_cogeneration = this->get("efficiency_cogeneration"); // input from user
+	double coal_prohibited = this->get("coal_prohibited"); // input from user
+	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -431,7 +445,7 @@ void CoalPowerPlant::simulate_step(double days)
 		}
 	}
 	
-	energyOutput = energyPerDay * days; // total kWh produced by a standard plant 
+	energyOutput = energyPerDay * 365; // total kWh produced by a standard plant 
 	bool efficiencySup = true;
 	bool efficiencyCo = true;
 	
@@ -441,7 +455,7 @@ void CoalPowerPlant::simulate_step(double days)
 			efficiencySup = false;
 		}
 		energyPerDay = 9589041 * (1 - 0.04);
-		maintenance = 0.054 * energyPerDay * days;
+		maintenance = 0.054 * energyPerDay * 365;
 	}
 	if (efficiency_cogeneration == 1) {
 		if (efficiencyCo == true) {
@@ -449,10 +463,10 @@ void CoalPowerPlant::simulate_step(double days)
 			efficiencyCo = false;
 		}
 		energyPerDay = 9589041 * (1 - 0.09);
-		maintenance = 0.058 * energyPerDay * days;
+		maintenance = 0.058 * energyPerDay * 365;
 	}
 	else {
-		maintenance = 0.05 * energyPerDay * days;
+		maintenance = 0.05 * energyPerDay * 365;
 	}
 	if (age >= 3650) {
 		maintenance = 0.05 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
@@ -461,12 +475,12 @@ void CoalPowerPlant::simulate_step(double days)
 		maintenance = 0.05; // after 30 years the maintenance and working costs double
 	}
 
-	coal = 4.06E-4 * energyPerDay * days;
-	CO2Emission = 0.868 * energyPerDay * days;
-	SO2Emission = 0.00152 * energyPerDay * days;
-	NOxEmission = 8.49E-4 * energyPerDay * days;
-	PMEmission = 4E-5 * energyPerDay * days;
-	ashOutput = 0.0619 * energyPerDay * days;
-	mercuryEmission = 1.137E-8 * energyPerDay * days;
-	environmentalCost = 0.06 * energyPerDay * days;
+	coal = 4.06E-4 * energyPerDay * 365;
+	CO2Emission = 0.868E-3 * energyPerDay * 365;
+	SO2Emission = 0.00152E-3 * energyPerDay * 365;
+	NOxEmission = 8.49E-7 * energyPerDay * 365;
+	PMEmission = 4E-8 * energyPerDay * 365;
+	ashOutput = 0.0619E-3 * energyPerDay * 365;
+	mercuryEmission = 1.137E-11 * energyPerDay * 365;
+	environmentalCost = 0.06 * energyPerDay * 365;
 }
