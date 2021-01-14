@@ -341,7 +341,10 @@ surfaces/3 = {
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 script = ExtResource( 1 )
 
-[node name="Particles" type="Particles" parent="."]
+[node name="Smoke" type="Spatial" parent="."]
+script = ExtResource( 3 )
+
+[node name="Particles-lod1" type="Particles" parent="Smoke"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.651888, 3.12702, 0.6 )
 amount = 30
 lifetime = 8.0

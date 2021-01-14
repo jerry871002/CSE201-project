@@ -213,7 +213,7 @@ void NuclearPowerPlant::simulate_step(double days)
 void godot::NuclearPowerPlant::_process(float delta)
 {
 	this->Structure::_process(delta); 
-	this->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	this->get_node("Smoke")->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
 }
 
 /// <summary>
@@ -322,7 +322,7 @@ GeothermalPowerPlant::~GeothermalPowerPlant() {}
 void godot::GeothermalPowerPlant::_process(float delta)
 {
 	this->Structure::_process(delta);
-	this->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	this->get_node("Smoke")->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
 }
 
 void GeothermalPowerPlant::simulate_step(double days)
@@ -406,7 +406,7 @@ CoalPowerPlant::~CoalPowerPlant()
 void godot::CoalPowerPlant::_process(float delta)
 {
 	this->Structure::_process(delta);
-	this->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	this->get_node("Smoke")->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
 }
 
 void CoalPowerPlant::simulate_step(double days)
