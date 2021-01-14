@@ -909,7 +909,7 @@ String City::get_button_info_text() {
         //this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
         return String("Please input a value between 0 and 450. This will be a solar panel subsidy for shops (restaurants, small shops and malls) in euros.");
     }
-    else if (this->active_button == String("ChangePanelProbabilityForRestaurants"))
+    else if (this->active_button == String("WindTurbinesShop"))
     {
         return String("Please input a value between 0 and 800. This value will be the new wind Turbine subsidy for shops (restaurants, small shops and malls) in euros.");
     }
@@ -1049,7 +1049,7 @@ void City::implement_policies(double value) {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
-   else if (this->active_button == String("ChangePanelProbabilityForRestaurants")) {    ///I can Changed the name here
+   else if (this->active_button == String("WindTurbinesShop")) {    ///I can Changed the name here
 		if (value >= 0 && value <= 800) {
 			Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON SHOPS IMPLEMENTED");
 			for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
