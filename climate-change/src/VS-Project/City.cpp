@@ -343,11 +343,13 @@ void City::_input(InputEvent*)
         this->notification_active = false;
         this->notification_counter = 0;
         this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
     }
 
     if (i->is_action_pressed("ui_accept") && this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->get("visible"))
     {
         this->_on_Validate_pressed();
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", true);
     }
 };
 
