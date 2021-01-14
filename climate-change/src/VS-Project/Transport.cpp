@@ -274,10 +274,8 @@ void Transport::_ready() {
 }
 
 
-void Transport::_physics_process(float delta) {
-
-    
-
+void Transport::_physics_process(float delta) 
+{
     (this->physics_counter)++;
 
     if (this->physics_counter == 2) {

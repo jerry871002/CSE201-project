@@ -46,7 +46,7 @@ then run:
 
 namespace godot {
     
-    const int citysize{ 50 };
+    const int citysize{ 20 };
 
     class Transport;
 

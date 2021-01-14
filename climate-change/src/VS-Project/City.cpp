@@ -706,8 +706,8 @@ void City::initialize_stats() {
     statsPopulation.push_back(titlePopulation);
 
     Array newStat{};
-    newStat.push_back(String("0"));
-    newStat.push_back(0);
+    newStat.push_back(String("."));
+    newStat.push_back(1);
 
     statsCarbonEmission.push_back(newStat);
     statsEnvironmentalCost.push_back(newStat);
@@ -716,6 +716,8 @@ void City::initialize_stats() {
     statsUnemployment.push_back(newStat);
     statsTotalSatisfaction.push_back(newStat);
     statsPopulation.push_back(newStat);
+
+
 }
 
 void City::_on_GraphsButton_pressed() 
@@ -859,6 +861,9 @@ void City::_on_TransportMenuButton_pressed()
     transportInfo += String((int)(current_car_quantities[0])) + String("Electric Cars") + String("\n");
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", transportInfo);
+
+    this->time_speed = 0;
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("position", Vector2((get_viewport()->get_size().x) / 2, (get_viewport()->get_size().y) / 2));
@@ -1367,7 +1372,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             }
 
             std::cout << "INSTANCE DONE A CAR OF TYPE: " << type << std::endl;
-            node->set("scale", Vector3(10, 10, 10));
+            node->set("scale", Vector3(15, 15, 15));
             node->set("translation", pos + Vector3(-13, 0.2, -13));
 
             std::cout << "ADD A CAR OF TYPE: " << type << std::endl;

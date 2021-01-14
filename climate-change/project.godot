@@ -195,6 +195,7 @@ window/size/width=1920
 window/size/height=1080
 window/size/resizable=false
 window/dpi/allow_hidpi=true
+window/vsync/use_vsync=false
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
@@ -266,5 +267,6 @@ ui_turn={
 
 [rendering]
 
+threads/thread_model=2
 quality/shadows/filter_mode=2
 quality/filters/msaa=2
