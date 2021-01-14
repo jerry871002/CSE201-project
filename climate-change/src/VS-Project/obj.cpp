@@ -199,12 +199,14 @@ void Structure::_ready()
 
 }
 
+
+
 void Structure::add_city_counters() {
     myCity->set("income", double(myCity->get("income")) + double(this->get("averageWage")));
     myCity->set("carbonEmission", double(myCity->get("carbonEmission")) + double(this->get("CO2Emission")));
     myCity->set("energyDemand", double(myCity->get("energyDemand")) + double(this->get("energyUse")));
     myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) + double(this->get("employment")));
-    myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) + double(this->get("satisfaction")));
+    myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) + satisfaction_weight() * double(this->get("satisfaction")));
     myCity->set("population", int(myCity->get("population")) + int(this->get("numberOfInhabitants")));
 
     if (this->get_main_type() == String("Housing")) {
@@ -227,8 +229,8 @@ void Structure::subtract_city_counters() {
     myCity->set("income", double(myCity->get("income")) - double(this->get("averageWage")));
     myCity->set("carbonEmission", double(myCity->get("carbonEmission")) - double(this->get("CO2Emission")));
     myCity->set("energyDemand", double(myCity->get("energyDemand")) - double(this->get("energyUse")));
-    myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) - double(this->get("employment")));
-    myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) - double(this->get("satisfaction")));
+    myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) -  double(this->get("employment")));
+    myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) - satisfaction_weight() * double(this->get("satisfaction")));
     myCity->set("population", int(myCity->get("population")) - int(this->get("numberOfInhabitants")));
 
     if (this->get_main_type() == String("Housing")) {
@@ -253,6 +255,23 @@ Vector3 Structure::get_position() {
 bool Structure::is_other_structure_within_distance(Vector3 other, double distance) {
     Vector3 pos = get_position();
     return  (sqrtf(other[0] * pos[0] + other[1] * pos[1] + other[2] * pos[2]) <= distance);
+}
+
+int Structure::satisfaction_weight() {
+    String type = this->get_main_type();
+    if (type == "Energy") {
+        return 10;
+    } 
+    if (type == "Housing") {
+        return 1;
+    }
+    if (type == "Production") {
+        return 5;
+    }
+    if (type == "Shop") {
+        return 3;
+    }
+    return 1;
 }
 
 void Structure::_process(float delta)
@@ -366,7 +385,8 @@ void Structure::_input(InputEvent* e)
 void Structure::show_menu()
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/TransportMenuButton")->set("visible", false);
+    
+
     
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", get_object_info());
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);

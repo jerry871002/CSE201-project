@@ -86,6 +86,8 @@ namespace godot {
         void _on_TransportMenuButton_pressed();
         void _on_GraphsButton_pressed();
         void _on_GraphsExit_pressed();
+        bool MenuVisibility;
+
 
 
         // INITIAL GRAPHICAL SETUP

@@ -27,22 +27,22 @@ String Housing::get_object_info()
 	String info = this->Structure::get_object_info();
 
 	info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
-	info += "CO2 Emissions: " + to_godot_string((double)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy used by the building in kWh: " + to_godot_string((double)(this->get("energyUse"))) + String("\n");
-	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
-	info += "Number of inhabitants: " + to_godot_string((int)this->get("numberOfInhabitants")) + String("\n");
+	info += "CO2 Emissions: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
+	info += "Energy used by the building in kWh: " + to_godot_string((int)(this->get("energyUse"))) + String("\n");
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
+	info += "Number of inhabitants: " + to_godot_string((int)(this->get("numberOfInhabitants"))) + String("\n");
 	if (get_object_type() == String("House")) {
-		info += "This is a house of type: " + to_godot_string((int)this->get("houseType")) + String("\n");
+		info += "This is a house of type: " + to_godot_string((int)(this->get("houseType"))) + String("\n");
 	}
-	info += "SUBSIDY PANELS: " + to_godot_string((int)this->get("solar_panel_subsidies_housing")) + String("\n");
+	info += "SUBSIDY PANELS: " + to_godot_string((int)(this->get("solar_panel_subsidies_housing"))) + String("\n");
 	info += "PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
 	if (this->PanelsOn) {
-		info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string(this->solarPanelAge) + String("\n");
+		info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string((int)(this->solarPanelAge)) + String("\n");
 	}
 	else {
 		info += "Panels are not displayed" + String("\n");
 	}
-	info += "SUBSIDY TURBINES: " + to_godot_string((int)this->get("wind_turbine_subsidies")) + String("\n");
+	info += "SUBSIDY TURBINES: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
 	info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");
 	
 	return info;
@@ -403,7 +403,9 @@ void House::set_houseType(int type)
 
 		//attributes special to this class
 		windowNumber = 5;
-		age = 0; // set the age of the house at 0 
+		srand((int)time(0));
+		age = (rand() % (20) + 1);
+		
 
 	}
 	else {
@@ -432,7 +434,8 @@ void House::set_houseType(int type)
 		CO2Emission = 3.51; //tons per year
 		buildingTime = 140; //in average, building a house takes about 140 days
 		satisfaction = 10; //assuming we are on a scale from 0 to 10
-		age = 0;
+		srand((int)time(0));
+		age = (rand() % (20) + 1);
 	}
 
 }
@@ -514,7 +517,9 @@ double Building::get_environmentalcost() {
 Building::Building() {
 	PanelsOn = false;
 	rooftopWindTurbineOn = false;
-	age = 0;
+	srand((int)time(0));
+	age = (rand() % (20) + 1);
+
 	windowNumber = 30;
 	cost = 1000000; //counting price of lot + cost of workforce + cost of all materials used
 	maintenance = 0.1765; //cost in euros per kWh
