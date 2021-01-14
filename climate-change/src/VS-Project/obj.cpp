@@ -202,6 +202,20 @@ void Structure::add_city_counters() {
     myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) + double(this->get("satisfaction")));
     myCity->set("population", int(myCity->get("population")) + int(this->get("numberOfInhabitants")));
 
+    if (this->get_main_type() == String("Housing")) {
+        myCity->set("HousingCO2", int(myCity->get("HousingCO2")) + int(this->get("CO2Emission")));
+    } else if (this->get_main_type() == String("Energy")) {
+        myCity->set("EnergyCO2", int(myCity->get("EnergyCO2")) + int(this->get("CO2Emission")));
+    }
+    else if(this->get_main_type() == String("Production")) {
+        myCity->set("ProductionCO2", int(myCity->get("ProductionCO2")) + int(this->get("CO2Emission")));
+    }
+    else if(this->get_main_type() == String("Shop")) {
+        myCity->set("ShopsCO2", int(myCity->get("ShopsCO2")) + int(this->get("CO2Emission")));
+    }
+
+    
+
 }
 
 void Structure::subtract_city_counters() {
@@ -211,6 +225,20 @@ void Structure::subtract_city_counters() {
     myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) - double(this->get("employment")));
     myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) - double(this->get("satisfaction")));
     myCity->set("population", int(myCity->get("population")) - int(this->get("numberOfInhabitants")));
+
+    if (this->get_main_type() == String("Housing")) {
+        myCity->set("HousingCO2", int(myCity->get("HousingCO2")) - int(this->get("CO2Emission")));
+    }
+    else if (this->get_main_type() == String("Energy")) {
+        myCity->set("EnergyCO2", int(myCity->get("EnergyCO2")) - int(this->get("CO2Emission")));
+    }
+    else if (this->get_main_type() == String("Production")) {
+        myCity->set("ProductionCO2", int(myCity->get("ProductionCO2")) - int(this->get("CO2Emission")));
+    }
+    else if (this->get_main_type() == String("Shop")) {
+        myCity->set("ShopsCO2", int(myCity->get("ShopsCO2")) - int(this->get("CO2Emission")));
+    }
+
 }
 
 Vector3 Structure::get_position() {

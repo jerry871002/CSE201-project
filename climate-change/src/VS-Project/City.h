@@ -102,13 +102,28 @@ namespace godot {
         int day_tick; // keeps track of the in-game days
         int days_since_last_simulation;
         int daycount = 0; //keeps track of the in-game days per year
+
+
         Array statsCarbonEmission{}; //written stats for carbon emissions
+
+        double HousingCO2;
+        double ShopsCO2;
+        double ProductionCO2;
+        double EnergyCO2;
+        Array statsCarbonEmissionHousing{};
+        Array statsCarbonEmissionProduction{};
+        Array statsCarbonEmissionEnergy{};
+        Array statsCarbonEmissionShops{};
+
         Array statsEnvironmentalCost{}; //written stats for environmental cost
         Array statsIncome{}; //written stats for GDP
         Array statsEnergy{}; //written stats for energy demand and supply
         Array statsUnemployment{}; //written stats for population - number of employees
         Array statsTotalSatisfaction{}; //written stats for population - number of employees
         Array statsPopulation{}; //written stats for population
+
+
+
         void update_date();
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation

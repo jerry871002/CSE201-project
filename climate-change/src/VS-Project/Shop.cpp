@@ -154,14 +154,14 @@ void Shop::simulate_step(double days) {
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        std::cout << "DEBUG: WINDTURBINE AGE = " << std::to_string(this->windTurbineAge) << " AND TURBINE PROBABILITY = " << std::to_string(this->windTurbine_probability) << std::endl;
-        std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->windTurbine_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
+        //std::cout << "DEBUG: WINDTURBINE AGE = " << std::to_string(this->windTurbineAge) << " AND TURBINE PROBABILITY = " << std::to_string(this->windTurbine_probability) << std::endl;
+        //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->windTurbine_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             WindTurbineOn = true;
             windTurbineAge = this->windLifetime;
             this->get_node("MeshComponents/WindTurbine")->set("visible", WindTurbineOn);  //need to have correct meshcomponent
-            std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
+            //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
     }
@@ -172,8 +172,8 @@ void Shop::simulate_step(double days) {
     else {
         this->windTurbineAge = 0;
         WindTurbineOn = false;
-        this->get_node("MeshComponents/WindTurbine")->set("visible", PanelsOn);
-        std::cout << "DEBUG: PANEL REMOVED" << std::endl;
+        this->get_node("MeshComponents/WindTurbine")->set("visible", WindTurbineOn);
+        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
 
 }

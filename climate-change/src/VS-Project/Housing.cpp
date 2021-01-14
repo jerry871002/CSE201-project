@@ -383,17 +383,14 @@ void House::set_houseType(int type)
 	this->houseType = type;
 	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
 
-	std::cout << "HOUSE INITIALIZE TYPE CALLED" << type << std::endl;
-
 	if (type == 1) {
-		std::cout << "HOUSE INITIALIZE TYPE 1" << std::endl; //Low level house
+	//Low level house
 	//definition of low level house, has no solar panels, no double glazing and no wind turbines on roof 
 		PanelsOn = false;
 		doubleGlazingOn = false;
 		rooftopWindTurbineOn = false;
 
-		std::cout << "HOUSE INITIALIZE TYPE 1 DEBUG 1" << std::endl;
-
+		
 		srand((int)time(0));
 		//minimum wage 53 € per day - get money even on saturday and saturday 
 		// i take max to be 333€
@@ -415,7 +412,7 @@ void House::set_houseType(int type)
 
 		}
 
-		std::cout << "HOUSE INITIALIZE TYPE 1 DEBUG 2" << std::endl;
+
 
 		//Attributes for a low level house 
 		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
@@ -431,14 +428,12 @@ void House::set_houseType(int type)
 
 	}
 	else {
-		std::cout << "HOUSE INITIALIZE TYPE 2" << std::endl; // High Level House 
+		// High Level House 
 		//has properties : double glazing 
 
 		PanelsOn = false;
 		doubleGlazingOn = true;
 		rooftopWindTurbineOn = false;
-
-		std::cout << "HOUSE INITIALIZE TYPE 2 DEBUG 1" << std::endl;
 
 		srand((int)time(0));
 		this->numberOfInhabitants = (rand() % (6) + 1);
@@ -451,8 +446,6 @@ void House::set_houseType(int type)
 			housingIncome = fmax(minIncome, normalGenerator(50,70));
 		}
 
-		std::cout << "HOUSE INITIALIZE TYPE 2 DEBUG 2" << std::endl;
-
 		//attributes from structure class
 		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
 		energyUse = 54.79; //20000kWh per year i.e. 54.79 kWh per day (from heating and all )
@@ -462,8 +455,6 @@ void House::set_houseType(int type)
 		satisfaction = 10; //assuming we are on a scale from 0 to 10
 		age = 0;
 	}
-
-	std::cout << "HOUSE INITIALIZE TYPE DONE" << std::endl;
 
 }
 
