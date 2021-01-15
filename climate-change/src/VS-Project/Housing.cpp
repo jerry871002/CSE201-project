@@ -404,7 +404,7 @@ void House::set_houseType(int type)
 		maintenance = 0.1765; //cost in euros per kWh
 		CO2Emission = 3.51; ////tons per year 
 		buildingTime = 140; //in average, building a house takes about 140 days
-		this->set("satisfaction",3);
+		this->satisfaction = 3;
 		//satisfaction = 3; //assuming we are on a scale from 0 to 10
 
 		//attributes special to this class
@@ -439,7 +439,7 @@ void House::set_houseType(int type)
 		maintenance = 0.1765; //cost in euros per kWh
 		CO2Emission = 3.51; //tons per year
 		buildingTime = 140; //in average, building a house takes about 140 days
-		this->set("satisfaction",10);
+		this->satisfaction = 10;
 		//satisfaction = 10; //assuming we are on a scale from 0 to 10
 		srand((int)time(0));
 		age = (rand() % (20) + 1);
@@ -561,7 +561,7 @@ Building::Building() {
 		energyUse = 133125; // 266.25 kWh/m^2 per year which gives 133125 kWh per year i.e 365 kwH per day
 		CO2Emission = 17.55; //tons per year from gas heating 
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
-		this->set("satisfaction",3);
+		this->satisfaction = 3;
 	
 	}
 
@@ -572,7 +572,7 @@ Building::Building() {
 		energyUse = 106500; // 213 kWh/m^2 per year which gives 106500 kWh per year i.e 292 kwH per day	
 		CO2Emission = 17.55; //6.5g per kWh
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
-		this->set("satisfaction",7);
+		this->satisfaction = 7;
 	}
 
 }
