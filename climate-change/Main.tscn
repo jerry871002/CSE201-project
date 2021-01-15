@@ -444,6 +444,7 @@ statsCarbonEmissionHousing = null
 statsCarbonEmissionShops = null
 statsCarbonEmissionEnergy = null
 statsCarbonEmissionProduction = null
+workingPower = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="3Dworld"]
 environment = ExtResource( 2 )
@@ -977,7 +978,6 @@ __meta__ = {
 }
 
 [node name="Menus" type="KinematicBody2D" parent="2Dworld"]
-visible = false
 position = Vector2( 960, 540 )
 
 [node name="MenuHousing" type="Node2D" parent="2Dworld/Menus"]
