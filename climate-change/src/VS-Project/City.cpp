@@ -296,7 +296,7 @@ void City::_physics_process(float delta) {
         }
 
         (this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")->get_node("DirectionalLight"))->set("rotation_degrees", Vector3(-45 - sin((M_PI * (2 * (double)(day_tick % 365)) / 365)) * 25 / 2 - 12.5, 45, 0));
-        ((WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")))->set("fog_color", Color(0.77, 0.8, 0.86, (1 - airQuality) * 0.11));
+        ((WorldEnvironment*)(this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")->get_node("WorldEnvironment")))->set("fog_color", Color(0.729412, 0.796078, 0.862745, fmax(0.99 - airQuality, 0) * 0.11));
 
         (this->date_counter)--;
 
