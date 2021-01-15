@@ -76,8 +76,25 @@ void Structure::set_age(double age) {
 
 double Structure::get_co2emissions() {
     //std::cout << "DEBUG: STRUCTURE GET EMISSIONS" << std::endl;
+    if (this->get_main_type() == "Housing") {
+        double panelsF = 1;
+	
+        if (this->PanelsOn) { panelsF = 0.7; };
+
+        double trees = 0;
+        
+        if (this->get_node("MeshComponents/Trees")->get("visible")) {
+            trees = 0.2;  // 10 trees absorb 200 kilos of co2 a year
+        }
+
+	    return (double)(((this->CO2Emission)-trees)  * panelsF);
+    }
+
     return this->CO2Emission;
+
 }
+
+
 void Structure::set_co2emissions(double emission) {
     this->CO2Emission = emission;
 }

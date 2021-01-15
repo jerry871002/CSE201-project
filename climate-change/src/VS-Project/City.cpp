@@ -230,7 +230,7 @@ void City::_physics_process(float delta) {
     {
         // CALLED EVERY 5 SECONDS
 
-        add_car();
+        add_car(Vector3(-1,-1,-1)); // specific case, where cars are randomly assigned
 
         (this->simulation_counter) -= 5;
 
@@ -805,6 +805,8 @@ void City::_on_Exit_confirmed()
 void City::_on_ResetButton_pressed()
 {
 
+
+
     this->_on_Exit_cancelled();
     this->time_speed = 0;
 
@@ -834,6 +836,35 @@ void City::_on_Reset_cancelled()
 void City::_on_Reset_confirmed()
 {
     this->set("workingPower", 0);
+
+    // RESET STATS
+
+    HousingCO2 = 0;
+    ShopsCO2 = 0;
+    ProductionCO2 = 0;
+    EnergyCO2 = 0;
+    income = 0;
+    population = 0;
+    numberOfEmployees = 0;
+    carbonEmission = 0;
+    energyDemand = 0;
+    energySupply = 0;
+    environmentalCost = 0;
+    totalSatisfactioWeight = 0;
+    totalSatisfaction = 0;
+
+    statsCarbonEmissionHousing = { };
+    statsCarbonEmissionProduction = { };
+    statsCarbonEmissionEnergy = { };
+    statsCarbonEmissionShops = { };
+    statsEnvironmentalCost = { };
+    statsIncome = { };
+    statsEnergy = { };
+    statsUnemployment = { };
+    statsTotalSatisfaction = { };
+    statsPopulation = { };
+
+
     this->get_tree()->reload_current_scene();
 }
 
@@ -1363,6 +1394,14 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/Bike.tscn", "PackedScene");
     const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/Cybertruck.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
+
+    if (pos == Vector3(-1, -1, -1)) {
+        int chosenhouse = rand() % all_houses.size();
+        std::vector<Housing*>::iterator addcariterator;
+        addcariterator += chosenhouse;
+        pos = (Vector3)((Node*)(*addcariterator))->get("translation");
+        
+    }
 
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid() && BusScene.is_valid() && AmericanCarScene.is_valid() && BikeScene.is_valid() && ElectricCarScene.is_valid() && NormalCarScene.is_valid())
     {
