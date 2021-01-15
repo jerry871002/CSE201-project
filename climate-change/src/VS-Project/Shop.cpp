@@ -56,8 +56,8 @@ String Shop::get_object_info()
 {
     String info = this->Structure::get_object_info();
 
-    
-    info += "Employement: " + to_godot_string((int)(this->employment)) + String("\n");
+    info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
+    info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
     if (this->PanelsOn) {
         info += "Panels are displayed" + String("\n") + "This building's solar panels are " + to_godot_string(this->panels_age) + " days old." + String("\n");
     }

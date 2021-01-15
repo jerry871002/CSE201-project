@@ -25,7 +25,7 @@ template<typename T> String to_godot_string(T s)
 String Housing::get_object_info()
 {
 	String info = this->Structure::get_object_info();
-
+	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
 	info += "Energy used by the building in kWh: " + to_godot_string((int)(this->get("energyUse"))) + String("\n");
 	info +=  to_godot_string((int)(this->get("numberOfInhabitants"))) + " people live in this house, which has a satisfaction of "+to_godot_string((int)(this->get("satisfaction")))+ String("\n");
 	if (get_object_type() == String("House")) {

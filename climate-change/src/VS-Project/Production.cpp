@@ -227,6 +227,8 @@ GoodsFactories::GoodsFactories() {
 	std::normal_distribution <double> employees(100, 60);
 	employment = employees(gen); // number of employees in the factory 
 	factoryGDP = employment * 90; //in euros per year
+	std::normal_distribution <double> sat(5, 3);
+	satisfaction = sat(gen);
 
 	energyUse = 100 * employment; //amount of kWh needed for one factory per day
 
@@ -261,7 +263,6 @@ void GoodsFactories::simulate_step(double days)
 
 	if (subsidy_green > 0) {
 		int value = 10;
-		subsidy = true;
 		if (subsidy_green <= 30000) {
 			value = 10;
 		}
@@ -274,6 +275,7 @@ void GoodsFactories::simulate_step(double days)
 		srand((int)time(0));
 		double chance = (rand() % (value));
 		if (chance < 6) {
+			subsidy = true;
 			std::normal_distribution <double> employees(150, 60);
 			employment = employees(gen); // number of employees in the factory 
 			green = 1 - (employment * 0.005);
@@ -295,12 +297,18 @@ void GoodsFactories::simulate_step(double days)
 		double chance = (rand() % (maxi));
 		if (employment <= 60 && chance < 2) {
 			employment = 0;
+			factory_closed = true;
+			age = 0;
 		}
 		if (60 < employment <= 120 && chance < 4) {
 			employment = 0;
+			factory_closed = true;
+			age = 0;
 		}
 		if (employment > 120 && chance < 6) {
 			employment = 0;
+			factory_closed = true;
+			age = 0;
 		}
 		std::normal_distribution <double> co2(maximum_CO2, 0.5);
 		CO2Emission = (co2(gen) * employment) * green * 0.001 * 365; // ton per year
@@ -333,10 +341,6 @@ void GoodsFactories::simulate_step(double days)
 
 	std::normal_distribution <double> energy(100, 10);
 	energyUse = energy(gen) * employment * green * 365;
-
-	if (employment == 0) {
-		factory_closed = true;
-	}
 }
 
 /// <summary>
@@ -403,11 +407,12 @@ String Production::get_object_info()
 {
 	String info = this->Structure::get_object_info();
 	if (subsidy == true && factory_closed == false) {
-		info += "This factory receives a green subsidy" + String("\n");
+		info += "This factory receives a green subsidy which helps it grow and cause less environmental damage." + String("\n");
 	}
 	if (factory_closed == true) {
-		info += "This factory is closed" + String("\n");
+		info += "This factory is closed due to the taxes linked to the maximum carbon law." + String("\n");
 	}
+	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
 	info += "Age: " + to_godot_string((int)(this->age)) + String("\n");
 	info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
 	info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
