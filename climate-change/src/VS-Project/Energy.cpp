@@ -142,12 +142,10 @@ NuclearPowerPlant::NuclearPowerPlant() {
 	fissileMaterial = 1.4E-10; //tons of fissile material needed per kWh
 	CO2Emission = 0.012E-3; // tons of CO2 emitted per kWh
 
-	maintenance = 0.04; //maintenace and working cost in euros per kWh
-	environmentalCost = 0.0019; // environmental and health costs in euros per kWh
+	maintenance = 0; //maintenace and working cost in euros per year
+	environmentalCost = 0; // environmental and health costs in euros per year
 
-	//fixed values after constructor :
-	std::normal_distribution <double> employees(800, 50);
-	employment = (int)(employees(gen)); // approximate number of employees in 1 plant 
+	employment = 0; 
 	std::normal_distribution <double> sat(2, 0.1);
 	satisfaction = sat(gen); // on scale of 10
 	std::normal_distribution <double> money(10E9, 10E6);
@@ -160,17 +158,22 @@ NuclearPowerPlant::~NuclearPowerPlant() {}
 
 void NuclearPowerPlant::simulate_step(double days)
 {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
 	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
-	this->get_node("Smoke")->set("visible", false);
 	if (working == 1) {
 		running = 1;
 		newBuilt = false;
 		age += (int)(days);
 		this->get_node("Smoke")->set("visible", true);
+		std::normal_distribution <double> employees(800, 50);
+		employment = (int)(employees(gen));
 	}
-
-	std::random_device rd;
-	std::mt19937 gen(rd());
+	else {
+		running = 0;
+		this->get_node("Smoke")->set("visible", false);
+	}
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
@@ -185,6 +188,7 @@ void NuclearPowerPlant::simulate_step(double days)
 		age = 0;
 		energyPerDay = 0; //forced closure of the plant
 		employment = 0;
+		this->get_node("Smoke")->set("visible", false);
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
@@ -196,10 +200,6 @@ void NuclearPowerPlant::simulate_step(double days)
 				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 2);
 			}
 		}
-	}
-	else {
-		std::normal_distribution <double> employees(800, 50);
-		employment = (int)(employees(gen));
 	}
 
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant per year
@@ -241,9 +241,8 @@ Windmill::Windmill() {
 	turnSpeed = 1;
 
 	age = 0;
-	maintenance = 7.45E-4; //maintenace and working cost in euros per kWh
-	std::normal_distribution <double> employees(1.29, 0.02);
-	employment = (int)(employees(gen)); // average number of employees for one windmill
+	maintenance = 0; //maintenace and working cost in euros per kWh
+	employment = 0; // average number of employees for one windmill
 	std::normal_distribution <double> sat(8, 0.1);
 	satisfaction = sat(gen); // on scale of 10
 	CO2Emission = 0.011E-3; // tons of CO2 emitted per kWh
@@ -251,7 +250,7 @@ Windmill::Windmill() {
 	cost = money(gen); // cost in euros to build a new windmill
 	std::normal_distribution <double> build(0.04, 0.005);
 	buildingTime =build(gen); // years needed to build a new windmill (approximatley half a month)
-	environmentalCost = 0.0009; // environmental and health costs in euros per kWh
+	environmentalCost = 0; // environmental and health costs in euros per kWh
 	requiredLand = 6070; // square meters of land needed for installing one windmill
 }
 
@@ -266,19 +265,24 @@ void Windmill::_process(float delta)
 
 void Windmill::simulate_step(double days)
 {
-	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
+	std::random_device rd;
+	std::mt19937 gen(rd());
 
+	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
 	if (working == 2) {
 		running = 1;
 		newBuilt = false;
 		age += (int)(days);
+		std::normal_distribution <double> employees(1.29, 0.02);
+		employment = (int)(employees(gen));
+	}
+	else {
+		running = 0;
 	}
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
 
-	std::random_device rd;
-	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(25000, 5000);
 	energyPerDay = energy(gen)*running; //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
 	
@@ -309,10 +313,6 @@ void Windmill::simulate_step(double days)
 				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 2);
 			}
 		}
-	}
-	else {
-		std::normal_distribution <double> employees(1.29, 0.02);
-		employment = (int)(employees(gen));
 	}
 
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
@@ -349,15 +349,14 @@ GeothermalPowerPlant::GeothermalPowerPlant()
 	satisfaction = sat(gen); // on scale of 10
 	std::normal_distribution <double> build(8, 1);
 	buildingTime = build(gen); // years needed to build a new plant (plus research needed)
-	std::normal_distribution <double> employees(50, 2);
-	employment = (int)(employees(gen)); // average number of employees linked to one plant
+	employment = 0; // average number of employees linked to one plant
 
 	CO2Emission = 0.09E-3; // tons of CO2 emitted per kWh
 	H2SEmission = 8.2E-8; //tons of H2S emitted per kWh
 	CH4Emission = 1.6E-8; //tons of CH4 emitted per kWh
 	NH3Emission = 1.7E-8; //tons of NH3 emitted per kWh
-	maintenance = 0.08; //maintenace and working cost in euros per kWh
-	environmentalCost = 0.0015; // environmental and health costs in euros per kWh
+	maintenance = 0; //maintenace and working cost in euros per kWh
+	environmentalCost = 0; // environmental and health costs in euros per kWh
 }
 
 GeothermalPowerPlant::~GeothermalPowerPlant() {}
@@ -371,20 +370,26 @@ void godot::GeothermalPowerPlant::_process(float delta)
 
 void GeothermalPowerPlant::simulate_step(double days)
 {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
 	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
-	this->get_node("Smoke")->set("visible", false);
 	if (working == 2) {
 		running = 1;
 		newBuilt = false;
 		age += (int)(days);
 		this->get_node("Smoke")->set("visible", true);
+		std::normal_distribution <double> employees(1.29, 0.02);
+		employment = (int)(employees(gen));
+	}
+	else {
+		running = 0;
+		this->get_node("Smoke")->set("visible", false);
 	}
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
 
-	std::random_device rd;
-	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(32800, 1500);
 	energyPerDay = energy(gen); //kWh produced by in one day
 	
@@ -415,10 +420,6 @@ void GeothermalPowerPlant::simulate_step(double days)
 				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 2);
 			}
 		}
-	}
-	else {
-		std::normal_distribution <double> employees(1.29, 0.02);
-		employment = (int)(employees(gen));
 	}
 	
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
@@ -490,13 +491,22 @@ void godot::CoalPowerPlant::_process(float delta)
 
 void CoalPowerPlant::simulate_step(double days)
 {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
 	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
-	this->get_node("Smoke")->set("visible", false);
 	if (working == 0) {
 		running = 1;
 		newBuilt = false;
 		age += (int)(days);
 		this->get_node("Smoke")->set("visible", true);
+
+		std::normal_distribution <double> employees(800, 20);
+		employment = (int)(employees(gen));
+	}
+	else {
+		running = 0;
+		this->get_node("Smoke")->set("visible", false);
 	}
 
 	double efficiency_supercritical = this->get("efficiency_supercritical"); // input from user
@@ -504,8 +514,6 @@ void CoalPowerPlant::simulate_step(double days)
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
 
-	std::random_device rd;
-	std::mt19937 gen(rd());
 	double cityPowerDemand = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("energyDemand");
 	double dailyDemand = cityPowerDemand / 365;
 	std::normal_distribution <double> energy(dailyDemand, 1000);
@@ -527,10 +535,6 @@ void CoalPowerPlant::simulate_step(double days)
 				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 2);
 			}
 		}
-	}
-	else {
-		std::normal_distribution <double> employees(800, 20);
-		employment = (int)(employees(gen));
 	}
 	
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
