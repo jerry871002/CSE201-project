@@ -404,7 +404,6 @@ String Production::get_object_info()
 	info += "Age: " + to_godot_string((int)(this->age)) + String("\n");
 	info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
 	info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
-	info += "CO2 Emissions per ton per year: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	return info;
 }

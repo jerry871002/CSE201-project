@@ -68,7 +68,6 @@ String Shop::get_object_info()
     info += "Panels get Added PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
     info += "SUBSIDY for Wind Turbines: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
     info += "Wind Turbine get Added PROBABILITY: " + to_godot_string((double)this->windTurbine_probability) + String("\n");
-    info += "CO2 Emissions: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
     info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
     
     return info;
