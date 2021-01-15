@@ -539,7 +539,7 @@ margin_bottom = 150.0
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = ExtResource( 12 )
 text = "Satisf-
-action:"
+action"
 align = 1
 valign = 2
 __meta__ = {
@@ -580,7 +580,7 @@ margin_bottom = 150.0
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = ExtResource( 12 )
 text = "CO2
-Emission:"
+emission"
 align = 1
 valign = 2
 __meta__ = {
@@ -614,13 +614,14 @@ __meta__ = {
 }
 
 [node name="IncomeLabel" type="Label" parent="2Dworld/Infographics/PieIncome"]
-margin_left = 79.9995
-margin_top = 73.334
-margin_right = 192.0
-margin_bottom = 123.334
+margin_left = 84.314
+margin_top = 92.9694
+margin_right = 196.314
+margin_bottom = 142.969
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = ExtResource( 12 )
-text = "Income :"
+text = "Avg
+income"
 align = 1
 valign = 2
 __meta__ = {
@@ -638,7 +639,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PieEmployees" type="TextureProgress" parent="2Dworld/Infographics"]
+[node name="PieBudget" type="TextureProgress" parent="2Dworld/Infographics"]
 margin_left = 60.994
 margin_top = 550.0
 margin_right = 560.994
@@ -653,22 +654,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EmployeesLabel" type="Label" parent="2Dworld/Infographics/PieEmployees"]
+[node name="EmployeesLabel" type="Label" parent="2Dworld/Infographics/PieBudget"]
 margin_left = 80.0
 margin_top = 100.0
 margin_right = 192.0
 margin_bottom = 150.0
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = ExtResource( 12 )
-text = "No. of
-Employees :"
+text = "City
+budget"
 align = 1
 valign = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EmployeesValue" type="Label" parent="2Dworld/Infographics/PieEmployees"]
+[node name="EmployeesValue" type="Label" parent="2Dworld/Infographics/PieBudget"]
 margin_left = 80.0
 margin_top = 280.0
 margin_right = 192.0
@@ -696,12 +697,13 @@ __meta__ = {
 
 [node name="PowerSupplyLabel" type="Label" parent="2Dworld/Infographics/PieUnemployement"]
 margin_left = 80.0
-margin_top = 73.3333
+margin_top = 100.0
 margin_right = 192.0
-margin_bottom = 123.333
+margin_bottom = 150.0
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = ExtResource( 12 )
-text = "Power Use :"
+text = "Unem-
+ployment"
 align = 1
 valign = 2
 __meta__ = {
@@ -741,8 +743,8 @@ margin_right = 192.0
 margin_bottom = 150.0
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = ExtResource( 12 )
-text = "Power 
-Demand :"
+text = "Avg 
+power use"
 align = 1
 valign = 2
 __meta__ = {
@@ -922,6 +924,7 @@ __meta__ = {
 }
 
 [node name="Blur" type="Node2D" parent="2Dworld"]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="2Dworld/Blur"]
 material = ExtResource( 56 )
@@ -1416,6 +1419,7 @@ __meta__ = {
 }
 
 [node name="TabContainer" type="TabContainer" parent="2Dworld"]
+visible = false
 margin_left = 12.4002
 margin_top = 2.74565
 margin_right = 1872.4
