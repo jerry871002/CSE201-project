@@ -2181,6 +2181,10 @@ double City::return_carbonEmission() {
     return carbonEmission;
 }
 
+double City::return_environmentalCost() {
+    return environmentalCost;
+}
+
 double City::return_energyDemand() {
     return energyDemand;
 }

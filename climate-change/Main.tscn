@@ -1460,6 +1460,7 @@ Chart_Style/font_color = Color( 1, 1, 1, 0.392157 )
 Chart_Style/template = 2
 
 [node name="Tabs2" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1482,11 +1483,9 @@ __meta__ = {
 
 [node name="LineChart" parent="2Dworld/TabContainer/Tabs2/Node2D/Control" instance=ExtResource( 54 )]
 chart_name = "Environmental cost"
+source = ""
+delimiter = ";"
 Chart_Style/function_colors = PoolColorArray( 0.117647, 0.117647, 0.117647, 1, 0.117647, 0.117647, 0.117647, 1, 0.117647, 0.117647, 0.117647, 1, 0.117647, 0.117647, 0.117647, 1 )
-Chart_Style/box_color = Color( 0.117647, 0.117647, 0.117647, 1 )
-Chart_Style/v_lines_color = Color( 0.792157, 0.792157, 0.792157, 1 )
-Chart_Style/h_lines_color = Color( 0.792157, 0.792157, 0.792157, 1 )
-Chart_Style/font_color = Color( 0.117647, 0.117647, 0.117647, 1 )
 
 [node name="GraphsExit" type="Button" parent="2Dworld"]
 anchor_right = 1.0

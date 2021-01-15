@@ -202,6 +202,7 @@ namespace godot {
         double return_income();
         double return_numberOfEmployees();
         double return_carbonEmission();
+        double return_environmentalCost();
         double return_energyDemand();
         double return_energySupply();
         double return_environmentalCost();
