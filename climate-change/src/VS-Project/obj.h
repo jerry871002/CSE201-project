@@ -65,7 +65,7 @@ namespace godot {
         bool updatable{ false };
         //void test_update();
 
-        real_t MenuSize{ 200 };
+        real_t MenuSize{ 400 };
         real_t InfoBoxWidth{ 300 };
 
         Vector3 get_position();

@@ -2,4 +2,5 @@
 .vscode/
 .vs/
 *.os
+a.out
 climate-change/src/.sconsign.dblite
