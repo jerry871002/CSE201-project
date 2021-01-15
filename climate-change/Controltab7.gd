@@ -1,13 +1,6 @@
 extends Control
 
 
-var data : Array  =  [
-	["Year", "VotesVotesVotesVotesVotesVotesVotesVotesVotesVotesVotes"],
-	["2014", 20],
-	["2015", 60],
-	["2016", 10]
-]
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,11 +23,13 @@ func _ready():
 
 
 func repeat_me():
-	#print(get_tree().get_root().get_node("Main/3Dworld").get("statsEnvironmentalCost"))
+	#print(get_tree().get_root().get_node("Main/3Dworld").get("statsPopulation"))
 	#$LineChart.plot_from_array(data)
-	$LineChart.plot_from_array(get_tree().get_root().get_node("Main/3Dworld").get("statsCarbonEmissionSplit"))
+	$LineChart.plot_from_array(get_tree().get_root().get_node("Main/3Dworld").get("statsEnergy"))
+	#statsCarbonEmissionSplit
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
+#	pass
 #	pass
