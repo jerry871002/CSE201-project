@@ -210,6 +210,8 @@ namespace godot {
         double return_energyDemand();
         double return_energySupply();
         double return_totalSatisfaction();
+
+
         
 		int value_pie_chart_C02(int,int);
 
@@ -267,6 +269,9 @@ namespace godot {
 
         double budget; //yearly budget that can be used t proomote the policies
                        // updated in the undate_time function
+        double get_budget();
+        void set_budget(double);
+
 
         //probability that a certain type of car will be added
         double airQuality;
@@ -278,6 +283,11 @@ namespace godot {
         int workingPower{ 0 };
         int get_workingPower();
         void set_workingPower(int);
+
+
+
+        bool factoryyearsubsidy{ false };
+        double yearlyfactorysubsidy{ 0 };
 
         
         const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");

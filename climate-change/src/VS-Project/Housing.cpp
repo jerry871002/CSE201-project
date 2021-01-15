@@ -225,12 +225,8 @@ double Housing::get_double_glazing_age() {
 }
 
 double Housing::get_satisfaction() {
-	if (this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall") {
-		if (this->get_node("MeshComponents/Trees")->get("visible")) {
-			return ((this->satisfaction) + 4);
-		}
-	}
-	else { return this->satisfaction; }
+	
+	return this->satisfaction;
 
 }
 
@@ -549,8 +545,7 @@ Building::Building() {
 	housingIncome = 0;
 	double incomeEach = 0;
 	
-
-	this->numberOfInhabitants = (rand() % (10) + 50);
+	this->numberOfInhabitants = (int)((rand() % (10)) + 50);
 	this->buildingType = (rand() % 2 + 1);
 
 	for (int i = 0; i < numberOfInhabitants/2; i++) { //I took half inhabitants are children
