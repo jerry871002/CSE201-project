@@ -129,7 +129,7 @@ void AgriculturalProduction::simulate_step(double days)
 
 	case(1): {
 		production = (requiredLand * fertility)/1000; //reqquired land taken so that this is production in ton per year
-		waterConsumption = production * 1000 * 22; //liters per kg so had to convert production back to kg
+		waterConsumption = production*1000 * 22; //liters per kg so had to convert production back to kg
 		CO2Emission = 19.18 * production;
 
 		/*std::random_device rd;
@@ -162,8 +162,8 @@ void AgriculturalProduction::agriculture_type(int type) {
 		fertility = wheatferltility(gen); //production of wheat in tonne per km^2
 		std::normal_distribution <double> wheatfieldcost(595000, 1000);
 		cost = wheatfieldcost(gen) * requiredLand; //of land in euros
-		production = (fertility * requiredLand)/1000; //output of wheat in tonne per year
-		waterConsumption = 1500 * production * 1000; //water litres per year
+		production = fertility * requiredLand; //output of wheat in tonne per year
+		waterConsumption = 1500 * production*1000; //water litres per year
 		CO2Emission = 0.52 * production; //co2 tonne per year
 		pesticideProhibited = 0;
 		fertilizerProhibited = 0;
@@ -182,7 +182,7 @@ void AgriculturalProduction::agriculture_type(int type) {
 		requiredLand = foodformeatfieldsize(gen); // size
 		std::normal_distribution <double> cropsfertility(200000, 50000); //soze of field giving a yearly production for our city
 		fertility = cropsfertility(gen); 
-		production = fertility * requiredLand; //
+		production = (fertility * requiredLand) / 1000; //
 		waterConsumption = 22 * production; //22L of water per 1 kg of production
 		CO2Emission = 19.18 * production; //co2 kg for production 
 		energyUse = 0;
