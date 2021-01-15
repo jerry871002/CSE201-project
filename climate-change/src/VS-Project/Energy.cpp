@@ -266,7 +266,11 @@ Windmill::~Windmill() {}
 void Windmill::_process(float delta)
 {
 	this->Structure::_process(delta);
-	rot -= delta * turnSpeed * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"));
+	int SPEED = 0;
+	if ((bool)running) {
+		SPEED = int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"));
+	}
+	rot -= delta * turnSpeed * SPEED;
 	((Mesh*)this->get_node("MeshComponents/Blades"))->set("rotation_degrees", Vector3(0, -130, double((180 / 3.1415926535) * rot)));
 }
 

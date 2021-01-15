@@ -681,6 +681,7 @@ void City::_ready()
     this->generate_initial_city_graphics();
     structures_iterator = all_structures.begin();
     this->set_initial_visible_components();
+
     this->initialize_stats();
 
     this->_on_Game_Speed_changed();
@@ -725,6 +726,18 @@ void City::initialize_stats() {
     titlePopulation.push_back(String("Date"));
     titlePopulation.push_back(String("Population in number of people"));
     statsPopulation.push_back(titlePopulation);
+
+    Array newStat{};
+    newStat.push_back(String("."));
+    newStat.push_back(0);
+
+    statsCarbonEmission.push_back(newStat);
+    statsEnvironmentalCost.push_back(newStat);
+    statsIncome.push_back(newStat);
+    statsEnergy.push_back(newStat);
+    statsUnemployment.push_back(newStat);
+    statsTotalSatisfaction.push_back(newStat);
+    statsPopulation.push_back(newStat);
 
 }
 
@@ -824,6 +837,7 @@ void City::_on_Reset_cancelled()
 
 void City::_on_Reset_confirmed()
 {
+    this->set("workingPower", 0);
     this->get_tree()->reload_current_scene();
 }
 
