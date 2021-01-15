@@ -427,7 +427,7 @@ SmallShop::SmallShop(){
         }
         break;
         case 2: {
-            std::uniform_real_distribution <double> energyusepeyear2(15000, 30000); // Micro business have an average energy consumption between 5000-15000 KWh per year
+            std::uniform_real_distribution <double> energyusepeyear2(15000, 30000); // Small business have an average energy consumption between 15000-30000 KWh per year
             energyuseperyear = energyusepeyear2(gen);
             energyUse = energyuseperyear;
             satisfaction = 6;
@@ -437,7 +437,7 @@ SmallShop::SmallShop(){
             }
             break;
         case 3: {
-            std::uniform_real_distribution <double> energyusepeyear3(30000, 45000); // Micro business have an average energy consumption between 5000-15000 KWh per year
+            std::uniform_real_distribution <double> energyusepeyear3(30000, 45000); // Medium business have an average energy consumption between 30000-45000 KWh per year
             energyuseperyear = energyusepeyear3(gen);
             energyUse = energyuseperyear;
             satisfaction = 6;
@@ -474,9 +474,13 @@ Mall::Mall(){
     CO2Emission = 50;  //Impossible to find specific data about malls in general, Used an estimate from averages of restaurants and small shops, and energy use of a mall
 
     buildingTime = 365*3; //Around 3 years, but can vary a lot
-    environmentalCost = 0; 
+    environmentalCost = 0; //No data found for this
 
-    energyUse = 0;
+    std::uniform_real_distribution <double> energyusepeyeargen1(300000, 500000);
+    energyUse = energyusepeyeargen1(gen);
+
+    std::uniform_real_distribution <int> employmentgen1(150, 300);
+    employment = employmentgen1(gen);
 }
 
 Mall::~Mall(){}
