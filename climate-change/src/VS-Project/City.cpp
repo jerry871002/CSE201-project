@@ -806,6 +806,8 @@ void City::_on_Exit_confirmed()
 void City::_on_ResetButton_pressed()
 {
 
+
+
     this->_on_Exit_cancelled();
     this->time_speed = 0;
 
@@ -835,6 +837,35 @@ void City::_on_Reset_cancelled()
 void City::_on_Reset_confirmed()
 {
     this->set("workingPower", 0);
+
+    // RESET STATS
+
+    HousingCO2 = 0;
+    ShopsCO2 = 0;
+    ProductionCO2 = 0;
+    EnergyCO2 = 0;
+    income = 0;
+    population = 0;
+    numberOfEmployees = 0;
+    carbonEmission = 0;
+    energyDemand = 0;
+    energySupply = 0;
+    environmentalCost = 0;
+    totalSatisfactioWeight = 0;
+    totalSatisfaction = 0;
+
+    statsCarbonEmissionHousing = { };
+    statsCarbonEmissionProduction = { };
+    statsCarbonEmissionEnergy = { };
+    statsCarbonEmissionShops = { };
+    statsEnvironmentalCost = { };
+    statsIncome = { };
+    statsEnergy = { };
+    statsUnemployment = { };
+    statsTotalSatisfaction = { };
+    statsPopulation = { };
+
+
     this->get_tree()->reload_current_scene();
 }
 
