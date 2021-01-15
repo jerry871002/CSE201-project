@@ -90,20 +90,7 @@ double Shop::get_satisfaction() {
 
 double Shop::get_co2emissions() {
     //std::cout << "DEBUG: SHOP GET EMISSIONS" << std::endl;
-    double panelsF = 1;
-    double turbineF = 1;  
-    if (this->PanelsOn) { panelsF = 0.7; };
-    if (this->WindTurbineOn) { turbineF = 0.5; };
-
-    double trees = 0;
-    if (this->get_object_type() != "Mall") {
-        if (this->get_node("MeshComponents/Trees")->get("visible")) {
-            trees = 0.2;  // 10 trees absorb 200 kilos of co2 a year
-        }
-    }
-    
-
-    return (double)(((this->CO2Emission)-trees)*turbineF*panelsF);
+    return (double)(this->CO2Emission);
 }
 
 double Shop::get_energyuse() {
