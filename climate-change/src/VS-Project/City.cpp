@@ -678,11 +678,11 @@ void City::_ready()
     //std::cout << "DEBUG: Ready started" << std::endl;
     // citysize = 10;
 
+    this->initialize_stats();
+
     this->generate_initial_city_graphics();
     structures_iterator = all_structures.begin();
     this->set_initial_visible_components();
-
-    this->initialize_stats();
 
     this->_on_Game_Speed_changed();
 
@@ -2018,7 +2018,7 @@ void City::write_stat_history_to_file() {
 
     Array newCarbonEmissionShops{};
     newCarbonEmissionShops.push_back(return_word_date_godot());
-    newCarbonEmissionShops.push_back((int)(ShopsCO2 / pow(10, 6) + 0.5));
+    newCarbonEmissionShops.push_back((int)((ShopsCO2 / pow(10, 6)) + 0.5));
 
     if (statsCarbonEmissionShops.size() > 100) {
         statsCarbonEmissionShops.pop_front();
@@ -2027,7 +2027,7 @@ void City::write_stat_history_to_file() {
 
     Array newCarbonEmissionEnergy{};
     newCarbonEmissionEnergy.push_back(return_word_date_godot());
-    newCarbonEmissionEnergy.push_back((int)(EnergyCO2 / pow(10, 6) + 0.5));
+    newCarbonEmissionEnergy.push_back((int)((EnergyCO2 / pow(10, 6)) + 0.5));
 
     if (statsCarbonEmissionEnergy.size() > 100) {
         statsCarbonEmissionEnergy.pop_front();
@@ -2036,7 +2036,7 @@ void City::write_stat_history_to_file() {
 
     Array newCarbonEmissionProduction{};
     newCarbonEmissionProduction.push_back(return_word_date_godot());
-    newCarbonEmissionProduction.push_back((int)(ProductionCO2 / pow(10, 6) + 0.5));
+    newCarbonEmissionProduction.push_back((int)((ProductionCO2 / pow(10, 6)) + 0.5));
 
     if (statsCarbonEmissionProduction.size() > 100) {
         statsCarbonEmissionProduction.pop_front();
@@ -2045,7 +2045,7 @@ void City::write_stat_history_to_file() {
 
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
-    newCarbonEmission.push_back((int)(carbonEmission / pow(10, 6) + 0.5));
+    newCarbonEmission.push_back((int)((carbonEmission / pow(10, 3)) + 0.5));
 
     if (statsCarbonEmission.size() > 100) {
         statsCarbonEmission.pop_front();
@@ -2055,7 +2055,7 @@ void City::write_stat_history_to_file() {
 
     Array newEnvironmentalCost{};
     newEnvironmentalCost.push_back(return_word_date_godot());
-    newEnvironmentalCost.push_back((int)(environmentalCost / pow(10, 9) + 0.5));
+    newEnvironmentalCost.push_back((int)((environmentalCost / pow(10, 9)) + 0.5));
 
     if (statsEnvironmentalCost.size() > 100) {
         statsEnvironmentalCost.pop_front();
@@ -2065,7 +2065,7 @@ void City::write_stat_history_to_file() {
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
-    newIncome.push_back((int)(income / pow(10, 9) + 0.5));
+    newIncome.push_back((int)((income / pow(10, 9)) + 0.5));
 
     if (statsIncome.size() > 100) {
         statsIncome.pop_front();
@@ -2075,8 +2075,8 @@ void City::write_stat_history_to_file() {
 
     Array newEnergy{};
     newEnergy.push_back(return_word_date_godot());
-    newEnergy.push_back((int)(energyDemand / pow(10, 6) + 0.5));
-    newEnergy.push_back((int)(energySupply / pow(10, 6) + 0.5));
+    newEnergy.push_back((int)((energyDemand / pow(10, 6)) + 0.5));
+    newEnergy.push_back((int)((energySupply / pow(10, 6)) + 0.5));
 
     if (statsEnergy.size() > 100) {
         statsEnergy.pop_front();
@@ -2086,7 +2086,7 @@ void City::write_stat_history_to_file() {
 
     Array newUnemployment{};
     newUnemployment.push_back(return_word_date_godot());
-    newUnemployment.push_back((int)(100 - 100 * (numberOfEmployees / population) + 0.5));
+    newUnemployment.push_back((int)(100 - 100 * fmin((double)1, (double)(numberOfEmployees / population)) + 0.5));
 
     if (statsUnemployment.size() > 100) {
         statsUnemployment.pop_front();
