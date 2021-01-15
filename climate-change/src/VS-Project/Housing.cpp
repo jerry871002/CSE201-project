@@ -8,7 +8,6 @@
 #include <SceneTree.hpp>
 #include <string>
 #include <random>
-#include "City.h"
 
 
 using namespace godot;
@@ -226,23 +225,12 @@ double Housing::get_double_glazing_age() {
 }
 
 double Housing::get_satisfaction() {
-	std::cout << "DEBUG: HOUSING  satisfaction : " << (this->satisfaction) << std::endl;
-	double panelsF = 0;
-	double roofturbineF = 0;
-	double treesF = 0;
-	if (this->PanelsOn) { panelsF= 2; };
-    if (this->rooftopWindTurbineOn) { roofturbineF = 1.1; };
 	if (this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall") {
 		if (this->get_node("MeshComponents/Trees")->get("visible")) {
-			treesF = 2;
+			return ((this->satisfaction) + 4);
 		}
 	}
-	if (this->satisfaction + panelsF + roofturbineF + treesF > 10){
-		return 10;
-	}
-	else {
-		return this->satisfaction + panelsF + roofturbineF + treesF;
-	}
+	else { return this->satisfaction; }
 
 }
 
@@ -328,7 +316,7 @@ double House::get_co2emissions() {
 }
 
 double House::get_energyuse() {
-	//std::cout << "DEBUG: get energyuse called in House" << std::endl;
+	std::cout << "DEBUG: get energyuse called in House" << std::endl;
 	double panelsF = 1;
 	double turbineF = 1;
 	double glazingF = 1;
@@ -347,9 +335,9 @@ double House::get_energyuse() {
 		}
 	
 
-	//std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
-	//std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
-	//std::cout << "DEBUG: energy use  : " << double(this->energyUse) << std::endl;
+	std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
+	std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
+	std::cout << "DEBUG: energy use  : " << double(this->energyUse) << std::endl;
 
 
     return ((double)(this->energyUse))*panelsF*turbineF*glazingF;
@@ -389,9 +377,9 @@ void House::set_houseType(int type)
 	this->houseType = type;
 	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
 
-	double employees = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
-	double population = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
-	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
+	double employees = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("numberOfEmployees");
+	double population = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("population");
+	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / population)) + 0.5);
 
 	if (type == 1) {
 	//Low level house
@@ -487,7 +475,7 @@ void House::set_houseType(int type)
 		maintenance = 0.1765; //cost in euros per kWh
 		this->CO2Emission = 3.51; //tons per year
 		buildingTime = 140; //in average, building a house takes about 140 days
-		this->satisfaction = 8;
+		this->satisfaction = 7;
 		//satisfaction = 10; //assuming we are on a scale from 0 to 10
 		srand((int)time(0));
 		this->age = (rand() % (20 * 365) + 1);
@@ -543,7 +531,7 @@ double Building::get_co2emissions() {
 }
 
 double Building::get_energyuse() {
-	//std::cout << "DEBUG: get energyuse called in Building" << std::endl;
+	std::cout << "DEBUG: get energyuse called in Building" << std::endl;
 	double panelsF = 1;
 	double turbineF = 1;
 	double glazingF = 1;
@@ -589,9 +577,9 @@ Building::Building() {
 	housingIncome = 0;
 	double incomeEach = 0;
 	
-	double employees = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
-	double population = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
-	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
+	double employees = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("numberOfEmployees");
+	double population = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("population");
+	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / population)) + 0.5);
 
 	this->numberOfInhabitants = (rand() % (10) + 50);
 	this->buildingType = (rand() % 2 + 1);
@@ -627,7 +615,7 @@ Building::Building() {
 
 		//Initializing the values:
 		energyUse = 106500; // 213 kWh/m^2 per year which gives 106500 kWh per year i.e 292 kwH per day	
-		CO2Emission = 17.55; //6.5g per kWh
+		CO2Emission = 17.55;
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
 		this->satisfaction = 7;
 	}
