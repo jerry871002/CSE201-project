@@ -64,6 +64,10 @@ namespace godot {
 		virtual double get_uranium();
 		virtual double get_fissile_material();
 		virtual double get_coal();
+
+		//Variables for overall energy simulation : 
+		bool newBuilt = false;
+		int running;
 	};
 
 	/// <summary>

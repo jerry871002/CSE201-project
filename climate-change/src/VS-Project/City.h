@@ -188,7 +188,7 @@ namespace godot {
         void implement_policies(double);
         bool notification_active{ false };
         int notification_counter{ 0 };
-        int notification_timeout{ 60 };
+        int notification_timeout{ 180 };
         void trigger_notification(String);
         String get_button_info_text();
         void hide_menus();
@@ -256,6 +256,7 @@ namespace godot {
         double energyDemand;
         double energySupply;
         double environmentalCost;
+        int totalSatisfactioWeight{ 0 };
         int totalSatisfaction;
 
 
@@ -264,7 +265,6 @@ namespace godot {
 
         //probability that a certain type of car will be added
         double airQuality;
-        int numberOfHouses;
         int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
         int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month
 
@@ -289,7 +289,7 @@ namespace godot {
         const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/Cybertruck.tscn", "PackedScene");
         const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
 
-
+        
         const Ref<PackedScene> WindmillScene = ResourceLoader::get_singleton()->load("res://Resources/WindMill.tscn", "PackedScene");
         const Ref<PackedScene> LowHouseScene = ResourceLoader::get_singleton()->load("res://Resources/LowHouse.tscn", "PackedScene");
         const Ref<PackedScene> HighHouseScene = ResourceLoader::get_singleton()->load("res://Resources/HighHouse.tscn", "PackedScene");

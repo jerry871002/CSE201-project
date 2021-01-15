@@ -128,8 +128,8 @@ void AgriculturalProduction::simulate_step(double days)
 	}
 
 	case(1): {
-		production = (requiredLand * fertility)/1000; //reqquired land taken so that this is production in ton per year
-		waterConsumption = production*1000 * 22; //liters per kg so had to convert production back to kg
+		production = (requiredLand * fertility); //required land taken so that this is production in ton per year
+		waterConsumption = production * 1000 * 22; //liters per kg so had to convert production back to kg
 		CO2Emission = 19.18 * production;
 
 		/*std::random_device rd;
@@ -178,13 +178,13 @@ void AgriculturalProduction::agriculture_type(int type) {
 	case 1: { // meat
 		std::random_device rd;
 		std::mt19937 gen(rd());
-		std::normal_distribution <double> foodformeatfieldsize(2, 0.1);
+		std::normal_distribution <double> foodformeatfieldsize(2, 0.1); //size of field giving a yearly production for our city
 		requiredLand = foodformeatfieldsize(gen); // size
-		std::normal_distribution <double> cropsfertility(200000, 50000); //soze of field giving a yearly production for our city
+		std::normal_distribution <double> cropsfertility(200, 50); //  ton per square meter
 		fertility = cropsfertility(gen); 
-		production = fertility * requiredLand; //
-		waterConsumption = 22 * production; //22L of water per 1 kg of production
-		CO2Emission = 19.18 * production; //co2 kg for production 
+		production = (fertility * requiredLand);
+		waterConsumption = 22 * production * 1000; //22L of water per 1 kg of production
+		CO2Emission = 19.18 * production; //co2 per ton of production
 		energyUse = 0;
 		environmentalCost = 0;   
 		satisfaction = 2;
@@ -227,20 +227,22 @@ GoodsFactories::GoodsFactories() {
 	std::normal_distribution <double> employees(100, 60);
 	employment = employees(gen); // number of employees in the factory 
 	factoryGDP = employment * 90; //in euros per year
+	std::normal_distribution <double> sat(5, 3);
+	satisfaction = sat(gen);
 
 	energyUse = 100 * employment; //amount of kWh needed for one factory per day
 
-	CO2Emission = 42.5 * employment; //kg of CO2 emitted per day 
-	mercuryEmission = 2.3E-7 * employment; //kg of mercury per day 
-	arsenicEmission = 2.4E-7 * employment; //kg of arsenic per day
-	cadmiumEmission = 1.E-7 * employment; //kg of cadmium per day
-	nickelEmission = 1.85E-6 * employment; //kg of nickel per day
-	leadEmission = 3.7E-6 * employment; //kg of lead per day
-	SO2Emission = 0.04 * employment; //kg of sulfure dioxide emitted per day
-	NH3Emission = 0.05 * employment; // kg of NH3 emitted per day
-	NOxEmission = 0.05 * employment; //kg of nitrogen oxides emitted per day
-	VOCsEmission = 0.075 * employment; // kg of volatile organic compounds emitted
-	PMEmission = 0.5 * employment; //kg of particulate matter emitted per day
+	CO2Emission = 42.5E-3 * employment; //ton of CO2 emitted per day 
+	mercuryEmission = 2.3E-10 * employment; //ton of mercury per day 
+	arsenicEmission = 2.4E-10 * employment; //ton of arsenic per day
+	cadmiumEmission = 1.E-10 * employment; //ton of cadmium per day
+	nickelEmission = 1.85E-9 * employment; //ton of nickel per day
+	leadEmission = 3.7E-9 * employment; //ton of lead per day
+	SO2Emission = 0.04E-3 * employment; //ton of sulfure dioxide emitted per day
+	NH3Emission = 0.05E-3 * employment; // ton of NH3 emitted per day
+	NOxEmission = 0.05E-3 * employment; //ton of nitrogen oxides emitted per day
+	VOCsEmission = 0.075E-3 * employment; // ton of volatile organic compounds emitted
+	PMEmission = 0.5E-3 * employment; //ton of particulate matter emitted per day
 
 	subsidy = false;
 }
@@ -261,7 +263,6 @@ void GoodsFactories::simulate_step(double days)
 
 	if (subsidy_green > 0) {
 		int value = 10;
-		subsidy = true;
 		if (subsidy_green <= 30000) {
 			value = 10;
 		}
@@ -274,33 +275,40 @@ void GoodsFactories::simulate_step(double days)
 		srand((int)time(0));
 		double chance = (rand() % (value));
 		if (chance < 6) {
+			subsidy = true;
 			std::normal_distribution <double> employees(150, 60);
 			employment = employees(gen); // number of employees in the factory 
-			green = 1 - (employment * 0.02);
+			green = 1 - (employment * 0.005);
 		}
 	}
 
 	if (maximum_CO2 > 0) {
 		int maxi = 10;
 		if (maximum_CO2 >= 30) {
-			maxi = 10;
+			maxi = 6;
 		}
 		if (30 > maximum_CO2 >= 20) {
 			maxi = 8;
 		}
 		if (maximum_CO2 < 20) {
-			maxi = 6;
+			maxi = 10;
 		}
 		srand((int)time(0));
 		double chance = (rand() % (maxi));
-		if (employment <= 60 && chance < 1) {
+		if (employment <= 60 && chance < 2) {
 			employment = 0;
+			factory_closed = true;
+			age = 0;
 		}
-		if (60 < employment <= 120 && chance < 2) {
+		if (60 < employment <= 120 && chance < 4) {
 			employment = 0;
+			factory_closed = true;
+			age = 0;
 		}
-		if (employment > 120 && chance < 5) {
+		if (employment > 120 && chance < 6) {
 			employment = 0;
+			factory_closed = true;
+			age = 0;
 		}
 		std::normal_distribution <double> co2(maximum_CO2, 0.5);
 		CO2Emission = (co2(gen) * employment) * green * 0.001 * 365; // ton per year
@@ -398,13 +406,16 @@ template<typename T> String to_godot_string(T s)
 String Production::get_object_info()
 {
 	String info = this->Structure::get_object_info();
+	if (subsidy == true && factory_closed == false) {
+		info += "This factory receives a green subsidy which helps it grow and cause less environmental damage." + String("\n");
+	}
+	if (factory_closed == true) {
+		info += "This factory is closed due to the taxes linked to the maximum carbon law." + String("\n");
+	}
+	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
 	info += "Age: " + to_godot_string((int)(this->age)) + String("\n");
 	info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
 	info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
-	info += "CO2 Emissions per ton per year: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
-	if (subsidy == true) {
-		info += "This factory receives a green subsidy" + String("\n");
-	}
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	return info;
 }

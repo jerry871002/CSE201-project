@@ -25,25 +25,22 @@ template<typename T> String to_godot_string(T s)
 String Housing::get_object_info()
 {
 	String info = this->Structure::get_object_info();
-
-	info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
-	info += "CO2 Emissions: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
-	info += "Energy used by the building in kWh: " + to_godot_string((int)(this->get("energyUse"))) + String("\n");
-	info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
-	info += "Number of inhabitants: " + to_godot_string((int)(this->get("numberOfInhabitants"))) + String("\n");
+	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
+	info += "Yearly, the energy used by the building is " + to_godot_string((int)(this->get("energyUse"))) + " kWh." + String("\n");
+	info +=  to_godot_string((int)(this->get("numberOfInhabitants"))) + " people live in this house, which has a satisfaction of "+to_godot_string((int)(this->get("satisfaction")))+ String("\n");
 	if (get_object_type() == String("House")) {
 		info += "This is a house of type: " + to_godot_string((int)(this->get("houseType"))) + String("\n");
 	}
 	info += "SUBSIDY PANELS: " + to_godot_string((int)(this->get("solar_panel_subsidies_housing"))) + String("\n");
 	info += "PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
 	if (this->PanelsOn) {
-		info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string((int)(this->solarPanelAge)) + String("\n");
+		info += "This building has solar panels ! " + String("\n") + "The panels have " + to_godot_string((int)(this->solarPanelAge)) + " days left until they are rendered obsolete." + String("\n");
 	}
 	else {
-		info += "Panels are not displayed" + String("\n");
+		info += "This building has no solar panels. Quite sad." + String("\n");
 	}
 	info += "SUBSIDY TURBINES: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
-	info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");
+	// info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");  why does this need to be displayed to the user ??
 	
 	return info;
 }
@@ -317,6 +314,7 @@ double House::get_co2emissions() {
 }
 
 double House::get_energyuse() {
+	std::cout << "DEBUG: get energyuse called in House" << std::endl;
 	double panelsF = 1;
 	double turbineF = 1;
 	double glazingF = 1;
@@ -335,7 +333,12 @@ double House::get_energyuse() {
 		}
 	
 
-    return (double)(this->energyUse)*panelsF*turbineF*glazingF;
+	std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
+	std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
+	std::cout << "DEBUG: energy use  : " << double(this->energyUse) << std::endl;
+
+
+    return ((double)(this->energyUse))*panelsF*turbineF*glazingF;
 }
 
 double House::get_environmentalcost() {
@@ -407,7 +410,8 @@ void House::set_houseType(int type)
 		maintenance = 0.1765; //cost in euros per kWh
 		CO2Emission = 3.51; ////tons per year 
 		buildingTime = 140; //in average, building a house takes about 140 days
-		satisfaction = 3; //assuming we are on a scale from 0 to 10
+		this->satisfaction = 3;
+		//satisfaction = 3; //assuming we are on a scale from 0 to 10
 
 		//attributes special to this class
 		windowNumber = 5;
@@ -441,7 +445,8 @@ void House::set_houseType(int type)
 		maintenance = 0.1765; //cost in euros per kWh
 		CO2Emission = 3.51; //tons per year
 		buildingTime = 140; //in average, building a house takes about 140 days
-		satisfaction = 10; //assuming we are on a scale from 0 to 10
+		this->satisfaction = 10;
+		//satisfaction = 10; //assuming we are on a scale from 0 to 10
 		srand((int)time(0));
 		age = (rand() % (20) + 1);
 	}
@@ -472,11 +477,6 @@ void House::simulate_step(double days) {
 	//std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
 
 	this->Housing::simulate_step(days);
-	
-	if ((int)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) % 25 == 0) {
-		satisfaction = 0;
-
-	}
 
 	//maintenance = 0.1765 * energyUse * days;
 	//CO2Emission = 0.0065 * energyUse * days; 
@@ -501,6 +501,7 @@ double Building::get_co2emissions() {
 }
 
 double Building::get_energyuse() {
+	std::cout << "DEBUG: get energyuse called in Building" << std::endl;
 	double panelsF = 1;
 	double turbineF = 1;
 	double glazingF = 1;
@@ -518,6 +519,9 @@ double Building::get_energyuse() {
 			}
 		}
 	
+	std::cout << "PanelsOn for this building : " << PanelsOn << std::endl;
+	std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
+	std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
 
     return (double)(this->energyUse)*panelsF*turbineF*glazingF;
 }
@@ -544,7 +548,7 @@ Building::Building() {
 	double incomeEach = 0;
 	
 
-	this->numberOfInhabitants = (rand() % (10) + 20);
+	this->numberOfInhabitants = (rand() % (10) + 50);
 	this->buildingType = (rand() % 2 + 1);
 
 	for (int i = 0; i < numberOfInhabitants/2; i++) { //I took half inhabitants are children
@@ -562,7 +566,8 @@ Building::Building() {
 		energyUse = 133125; // 266.25 kWh/m^2 per year which gives 133125 kWh per year i.e 365 kwH per day
 		CO2Emission = 17.55; //tons per year from gas heating 
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
-		satisfaction = 3;	
+		this->satisfaction = 3;
+	
 	}
 
 	else { //High level building
@@ -572,7 +577,7 @@ Building::Building() {
 		energyUse = 106500; // 213 kWh/m^2 per year which gives 106500 kWh per year i.e 292 kwH per day	
 		CO2Emission = 17.55; //6.5g per kWh
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
-		satisfaction = 7;
+		this->satisfaction = 7;
 	}
 
 }

@@ -1,0 +1,30 @@
+Saga:
+This week i wrote functions to compute the probability that solar panels, wind turbines and double glazing are added on houses.
+For that I had to reorganize the code for the housing class. The next few days I will fix some of the things that aren't working perfectly.
+
+Anna:
+This week I finished wheat section in agriculrural production class and wrote how pesticide/fertilizer prohibition law policies modify some properties of wheat.
+Also I wrote a function in city which for each type of transport calculates probability that it will be added basing it on a model Eliott had written before in python. 
+Next week I am planning to work on transport policies.
+
+Samuel:
+This week I included the functions of edit_text_files.cpp in the main loop of the game. I ran into several problems regarding these functions.
+Mainly because of two issues: the differences in the godot string and the c++ string, and a problem in which godot cannot write into files,
+because of libraries issues. This last problem is still unsolved for now and I will be working on this the coming week. Moreover, I managed to
+retrieve all the attributes of the different buildings this week and am now defining our counters and indices based on this. I plan to finish
+this the coming week.
+
+Luca:
+This week and during the holidays, I finished fixing the bugs for plotting pie charts and line charts in Godot. Now, they are working perfectly. Moreover, I have worked with the algorithm team so as to make my charts functional. 
+In the next few days, I will continue to work with the algorithm team so as to display relevant data about the city with my charts.
+
+Vincent:
+In the past weeek I have mostly worked on generating the initial city and having the game start up correctly.
+For the next week I will work on helping to coordinate everyone together so as to be able to round up the project, as well as finishing parts of the simulation and generation.
+
+Paloma:
+During the holidays and throughout this week I finished coding the goods factories and services class. I also implemented efficiency policies on coal power plants, 
+policies prohibiting nuclear and coal plants and policies imposing maximum emissions or allowing subsidies to green factories. I helped the interface team displaying
+the information of each type of building on the interface. I also created the icons needed in the game for each policy and coded the text messages as well as the links to trigger
+the change in the classes concerned. This last week I am going to help finishing the implementation of all policies and check that they all run correctly. I will also help
+with the last things other teams might need, concerning for example statistics and data.

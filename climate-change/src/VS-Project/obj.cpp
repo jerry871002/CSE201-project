@@ -76,13 +76,57 @@ void Structure::set_age(double age) {
 
 double Structure::get_co2emissions() {
     //std::cout << "DEBUG: STRUCTURE GET EMISSIONS" << std::endl;
+    if (this->get_main_type() == "Housing") {
+        double panelsF = 1;
+	
+        if (this->PanelsOn) { panelsF = 0.7; };
+
+        double trees = 0;
+        
+        if (this->get_node("MeshComponents/Trees")->get("visible")) {
+            trees = 0.2;  // 10 trees absorb 200 kilos of co2 a year
+        }
+
+	    return (double)(((this->CO2Emission)-trees)  * panelsF);
+    }
+
     return this->CO2Emission;
+
 }
+
+
 void Structure::set_co2emissions(double emission) {
     this->CO2Emission = emission;
 }
 
 double Structure::get_energyuse() {
+    if (this->get_main_type() == "Housing") {
+        std::cout << "DEBUG: get energyuse called in Structure for housing" << std::endl;
+        double panelsF = 1;
+        double turbineF = 1;
+        double glazingF = 1;
+        if (this->PanelsOn) {
+            panelsF = 0.6;
+        }
+
+        if (((Housing*)this)->rooftopWindTurbineOn) {
+            turbineF = 0.9;
+        }
+        if (this->get_object_type() == "House") {
+            if (((House*)this)->houseType == 1) { // If its a low level house then double glazing decrease energyuse 
+                if (((House*)this)->doubleGlazingOn) {
+                    glazingF = 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
+                }
+            }
+        }
+
+        std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
+        std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
+        std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
+
+        return (double)(this->energyUse) * panelsF * turbineF * glazingF;
+    }
+    
     return this->energyUse;
 }
 void Structure::set_energyuse(double energyUse) {
@@ -332,57 +376,59 @@ void Structure::_input(InputEvent* e)
         ((Player*)(this->get_tree()->get_root()->get_node("Main/3Dworld/Player")))->set("movable", false);
         this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
-        this->get_viewport()->warp_mouse(Vector2(get_viewport()->get_size().x / 2, get_viewport()->get_size().y / 2));
-
         // SET INFO BOX SIZE AND POSITION
 
-        /*
-        ((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 260));
+        
+        //((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 260));
+
+        int ypos = (int)(((Vector2)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->get("rect_position"))).y);
+        int width = (int)(((Vector2)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->get("rect_size"))).x);
 
         if (mousePos.x > (get_viewport()->get_size().x) / 2) 
         {
-            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(60, 200));
+            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(60, ypos));
         }
         else {
-            real_t AdaptedWidth = ((Vector2)(((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->get("rect_size"))).x;
-            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x - AdaptedWidth - 60, 200));
+            (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x / 2 - width - 60, ypos));
         }
-        */
+        
 
         // AJUST POSITION OF MENU TO ENSURE IT IS VISIBLE
 
-        /*
+        
         if (get_viewport()->get_size().x - mousePos.x <= MenuSize)
         {
-            if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize - (get_viewport()->get_size().x - mousePos.x); }
-            else { mousePos.y += MenuSize - (get_viewport()->get_size().x - mousePos.x); }
-            mousePos.x = get_viewport()->get_size().x - MenuSize;
+            if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize /*- (get_viewport()->get_size().x - mousePos.x)*/; }
+            else { mousePos.y += MenuSize/* - (get_viewport()->get_size().x - mousePos.x)*/; }
+            //mousePos.x = get_viewport()->get_size().x - MenuSize;
+            mousePos.x -= MenuSize;
         }
         else if (mousePos.x <= MenuSize)
         {
-            if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize - mousePos.x; }
-            else { mousePos.y += MenuSize - mousePos.x; }
-            mousePos.x = MenuSize;
+            if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize /*- mousePos.x*/; }
+            else { mousePos.y += MenuSize /*- mousePos.x*/; }
+            mousePos.x += MenuSize;
         }
 
         if (get_viewport()->get_size().y - mousePos.y <= MenuSize) 
         {
-            if (mousePos.x > (get_viewport()->get_size().x / 2)) { mousePos.x -= MenuSize - (get_viewport()->get_size().y - mousePos.y); }
-            else { mousePos.x += MenuSize - (get_viewport()->get_size().y - mousePos.y); }
-            mousePos.y = get_viewport()->get_size().y - MenuSize;
+            if (mousePos.x > (get_viewport()->get_size().x / 2)) { mousePos.x -= MenuSize /*- (get_viewport()->get_size().y - mousePos.y)*/; }
+            else { mousePos.x += MenuSize /* - (get_viewport()->get_size().y - mousePos.y)*/; }
+            //mousePos.y = get_viewport()->get_size().y - MenuSize;
+            mousePos.y -= MenuSize;
         }
         else if (mousePos.y <= MenuSize)
         {
-            if (mousePos.x > (get_viewport()->get_size().x / 2)) { mousePos.x -= MenuSize - mousePos.y; }
-            else { mousePos.x += MenuSize - mousePos.y; }
-            mousePos.y = MenuSize;
+            if (mousePos.x > (get_viewport()->get_size().x / 2)) { mousePos.x -= MenuSize/* - mousePos.y*/; }
+            else { mousePos.x += MenuSize/* - mousePos.y*/; }
+            mousePos.y += MenuSize;
         }
         
 
-        mousePos = Vector2(real_t((double)(get_viewport()->get_size().x) / 2), real_t((double)(get_viewport()->get_size().y) / 2));
+        //mousePos = Vector2(real_t((double)(get_viewport()->get_size().x) / 2), real_t((double)(get_viewport()->get_size().y) / 2));
 
-        (this->get_tree()->get_root()->get_node("Main/2Dworld/Menus"))->set("position", mousePos);
-        */
+        (this->get_tree()->get_root()->get_node("Main/2Dworld/Menus"))->set("position", Vector2(mousePos.x / 2, mousePos.y / 2));
+        
 
         show_menu();
     }
@@ -420,9 +466,8 @@ template<typename T> String to_godot_string(T s)
 
 String Structure::get_object_info()
 {
-    String info = String("STRUCTURE INFORMATION") + String("\n");
-    info += "This building is a(n) " + this->get_main_type() + " building. Specifically, it is a " + this->get_object_type() +"." + String("\n");
-    info += "This building is " + to_godot_string((int)((((int)this->get("age"))/365))) + " years and " + to_godot_string((int)((((int)this->get("age")) % 365))) + "days old."+ String("\n");
+    String info = String("INFORMATION - ABOUT THIS STRUCTURE") + String("\n") + String("\n") + String("\n");
+    info += "This building is a(n) " + this->get_main_type() + " building. Specifically, it is a " + this->get_object_type() +"." + String("\n") + String("\n");
     return  info;
 }
 
@@ -450,7 +495,6 @@ void godot::Structure::_on_Area_mouse_exited()
     hover_animation_counter = 0;
 }
 
-//POLICIES (interface team needs to make them usable from screen)
 
 
 

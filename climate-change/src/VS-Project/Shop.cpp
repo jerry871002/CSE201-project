@@ -56,8 +56,8 @@ String Shop::get_object_info()
 {
     String info = this->Structure::get_object_info();
 
-    
-    info += "Employement: " + to_godot_string((int)(this->employment)) + String("\n");
+    info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
+    info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
     if (this->PanelsOn) {
         info += "Panels are displayed" + String("\n") + "This building's solar panels are " + to_godot_string(this->panels_age) + " days old." + String("\n");
     }
@@ -68,7 +68,6 @@ String Shop::get_object_info()
     info += "Panels get Added PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
     info += "SUBSIDY for Wind Turbines: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
     info += "Wind Turbine get Added PROBABILITY: " + to_godot_string((double)this->windTurbine_probability) + String("\n");
-    info += "CO2 Emissions: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
     info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
     
     return info;
@@ -90,20 +89,7 @@ double Shop::get_satisfaction() {
 
 double Shop::get_co2emissions() {
     //std::cout << "DEBUG: SHOP GET EMISSIONS" << std::endl;
-    double panelsF = 1;
-    double turbineF = 1;  
-    if (this->PanelsOn) { panelsF = 0.7; };
-    if (this->WindTurbineOn) { turbineF = 0.5; };
-
-    double trees = 0;
-    if (this->get_object_type() != "Mall") {
-        if (this->get_node("MeshComponents/Trees")->get("visible")) {
-            trees = 0.2;  // 10 trees absorb 200 kilos of co2 a year
-        }
-    }
-    
-
-    return (double)(((this->CO2Emission)-trees)*turbineF*panelsF);
+    return (double)(this->CO2Emission);
 }
 
 double Shop::get_energyuse() {
@@ -339,7 +325,7 @@ Restaurant::Restaurant() {
         averageWage = 11*8;		// Euros per hour , Slightly above minimum wage in france
         std::normal_distribution <double> totalemployees1(25, 8);	// 9 out 10 restaurants have less than 50 employees
         employment = totalemployees1(gen) * (1 + ((diningSize - 12.5) / 12.5)); // number of employees influenced by size of restaurent
-        CO2Emission = 301 * ((1 + ((diningSize - 13 / 13))) / 10); //on average 301 tons of CO2 per year, hence 825kg per day. 
+        CO2Emission = 3 * ((1 + ((diningSize - 13 / 13))) / 10); 
         buildingTime = 60; //On average a casual restaurant takes 12 weeks to set up
 
         break;
@@ -352,7 +338,7 @@ Restaurant::Restaurant() {
         averageWage = 12.5*8;		// Euros per hour, Slightly above minimum wage in france
         std::normal_distribution <double> totalemployees2(30, 10);	// 9 out 10 restaurants have less than 50 employees
         employment = totalemployees2(gen) * (1 + ((diningSize - 13.5) / 13.5)); // number of employees influenced by size of restaurent
-        CO2Emission = 301 * ((1 + ((diningSize - 13 / 13))) / 10); // need to find more info on this
+        CO2Emission = 3 * ((1 + ((diningSize - 13 / 13))) / 10); 
         buildingTime = 70; //On average a casual restaurant takes 14 weeks to set up
         break;
     }
@@ -364,7 +350,7 @@ Restaurant::Restaurant() {
         averageWage = 14*8;		// Higher than other types as more luxurious 
         std::normal_distribution <double> totalemployees3(35, 7);	// 9 out 10 restaurants have less than 50 employees
         employment = totalemployees3(gen) * (1 + ((diningSize - 12.5) / 12.5)); // number of employees influenced by size of restaurent
-        CO2Emission = 301 * ((1 + ((diningSize - 13 / 13))) / 10); // need to find more info on this
+        CO2Emission = 3 * ((1 + ((diningSize - 13 / 13))) / 10); // need to find more info on this
         buildingTime = 80; //On average a casual restaurant takes 16 weeks to set up
 
         break;
@@ -435,7 +421,7 @@ SmallShop::SmallShop(){
             energyUse = energyuseperyear;
             satisfaction = 6;
 
-            CO2Emission = 250;  //these are approximates as specific data is very hard to find
+            CO2Emission = 2.5;  //these are approximates as specific data is very hard to find
             std::uniform_real_distribution <double> totalemployees1(1, 5);	
             employment = totalemployees1(gen);
         }
@@ -445,7 +431,7 @@ SmallShop::SmallShop(){
             energyuseperyear = energyusepeyear2(gen);
             energyUse = energyuseperyear;
             satisfaction = 6;
-            CO2Emission = 300;  //these are approximates as specific data is very hard to find
+            CO2Emission = 3;  //these are approximates as specific data is very hard to find
             std::uniform_real_distribution <double> totalemployees2(5, 15);	
             employment = totalemployees2(gen);
             }
@@ -456,7 +442,7 @@ SmallShop::SmallShop(){
             energyUse = energyuseperyear;
             satisfaction = 6;
 
-            CO2Emission = 360;  //these are approximates as specific data is very hard to find
+            CO2Emission = 3.5;  //these are approximates as specific data is very hard to find
             std::uniform_real_distribution <double> totalemployees3(10,20);	
             employment = totalemployees3(gen);
             }
@@ -485,7 +471,7 @@ Mall::Mall(){
     cost = mediancost(gen);
     
     satisfaction = 7;
-    CO2Emission = 1500;  //Impossible to find specific data about malls in general, Used an estimate from averages of restaurants and small shops, and energy use of a mall
+    CO2Emission = 50;  //Impossible to find specific data about malls in general, Used an estimate from averages of restaurants and small shops, and energy use of a mall
 
     buildingTime = 365*3; //Around 3 years, but can vary a lot
     environmentalCost = 0; 

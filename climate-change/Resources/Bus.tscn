@@ -245,52 +245,55 @@ collision_mask = 2
 script = ExtResource( 7 )
 
 [node name="Mesh-lod2" type="Spatial" parent="."]
-transform = Transform( 0.2506, 0, 0, 0, -2.18791e-08, -0.2506, 0, 0.183535, -2.98738e-08, 0.268904, 0.044209, -0.0763413 )
+transform = Transform( 0.251, 0, 0, 0, 0.251, 0, 0, 0, 0.251, 0.268904, 0.049962, -0.0763413 )
 script = ExtResource( 2 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="Mesh-lod2"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null
 material/1 = null
 
 [node name="Mesh-lod1" type="MeshInstance" parent="Mesh-lod2"]
-transform = Transform( 1, 0, 0, 0, 1.2, 0, 0, -8.52651e-14, 1, 0, 5.36442e-07, 0 )
+transform = Transform( 1, 0, 0, 0, -1.95505e-07, -1, 0, 1.2, -1.62921e-07, 0, 5.36442e-07, 0 )
 visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Mesh-lod3" type="Spatial" parent="."]
-transform = Transform( 0.2506, 0, 0, 0, -2.18791e-08, -0.2506, 0, 0.183535, -2.98738e-08, 0.268904, 0.044209, 0.0763413 )
+transform = Transform( 0.251, 0, 0, 0, 0.251, 0, 0, 0, 0.251, 0.268904, 0.049962, 0.0763413 )
 script = ExtResource( 2 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="Mesh-lod3"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 mesh = SubResource( 3 )
 material/0 = null
 material/1 = null
 
 [node name="Mesh-lod1" type="MeshInstance" parent="Mesh-lod3"]
-transform = Transform( 1, 0, 0, 0, 1.2, 0, 0, -8.52651e-14, 1, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, -1.95505e-07, -1, 0, 1.2, -1.62921e-07, 0, 0, 0 )
 visible = false
 mesh = SubResource( 4 )
 material/0 = null
 
 [node name="Mesh-lod4" type="Spatial" parent="."]
-transform = Transform( 0.2506, 0, 0, 0, -2.18791e-08, -0.2506, 0, 0.183535, -2.98738e-08, -0.0246897, 0.044209, 0.0763022 )
+transform = Transform( 0.251, 0, 0, 0, 0.251, 0, 0, 0, 0.206, -0.0246897, 0.049962, 0.0855822 )
 script = ExtResource( 2 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="Mesh-lod4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, 0, 0 )
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 7.45058e-09, 0, 0 )
 mesh = SubResource( 5 )
 material/0 = null
 material/1 = null
 
 [node name="Mesh-lod1" type="MeshInstance" parent="Mesh-lod4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, 5.06639e-07, 0 )
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 7.45058e-09, 5.06639e-07, 0 )
 visible = false
 mesh = SubResource( 6 )
 material/0 = null
 
 [node name="LODSpatial4" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00575304, 0 )
 script = ExtResource( 2 )
 
 [node name="Mesh-lod0" type="MeshInstance" parent="LODSpatial4"]
