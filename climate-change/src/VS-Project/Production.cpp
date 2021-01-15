@@ -370,8 +370,8 @@ void GoodsFactories::simulate_step(double days)
 	std::normal_distribution <double> pm(0.5, 0.15);
 	PMEmission = (pm(gen) * employment) * green * 0.001 * 365;
 
-	std::normal_distribution <double> energy(10, 1);
-	energyUse = energy(gen) * employment * green * 365;
+	std::normal_distribution <double> energy(100, 10);
+	energyUse = energy(gen) * employment * green;
 }
 
 /// <summary>
