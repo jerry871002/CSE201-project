@@ -1461,6 +1461,7 @@ Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
 Chart_Style/template = 1
 
 [node name="CO2 Per Sector" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1494,6 +1495,7 @@ Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
 Chart_Style/template = 1
 
 [node name="GDP" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1525,6 +1527,7 @@ Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
 Chart_Style/template = 1
 
 [node name="Unemployment" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1555,6 +1558,7 @@ Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
 Chart_Style/template = 1
 
 [node name="Satisfaction" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1583,6 +1587,7 @@ Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
 Chart_Style/template = 1
 
 [node name="Population" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1612,6 +1617,7 @@ Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
 Chart_Style/template = 1
 
 [node name="Energy" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1641,6 +1647,7 @@ Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
 Chart_Style/template = 1
 
 [node name="Environmental Cost" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0

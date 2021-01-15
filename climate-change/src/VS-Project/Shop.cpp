@@ -95,9 +95,9 @@ double Shop::get_co2emissions() {
 double Shop::get_energyuse() {
     double panelsF = 1;
     double turbineF = 1;  
-    if (this->PanelsOn) { panelsF = 0.7; };
+    if (this->PanelsOn) { panelsF = 0.5; };
     if (this->WindTurbineOn) { turbineF = 0.9; };
-    return (double)(this->energyUse)*panelsF*turbineF;
+    return (double)((this->energyUse)*panelsF*turbineF);
 }
 
 double Shop::get_environmentalcost() {
@@ -303,7 +303,7 @@ void Shop::windTurbine_added_probability(){
 Restaurant::Restaurant() {
     shopType = 1;
 
-    energyUsePerSize = 38;          //On average 38kWh per square feet 
+    energyUsePerSize = 3000;          //On average 3000kWh per square feet per year
     
     std::random_device rd; 
     std::mt19937 gen(rd());	
@@ -387,9 +387,9 @@ void Restaurant::simulate_step(double days){
 double Restaurant::get_energyuse(){
     double panels = 1;
     double turbine = 1;  
-    if (this->PanelsOn) { panels = 0.7; };
-    if (this->WindTurbineOn) { turbine = 0.9;};
-    return (double)(this->energyUsePerSize)*(this->diningSize)*turbine*panels;
+    if (this->PanelsOn) { panels = 0.65; };
+    if (this->WindTurbineOn) { turbine = 0.8;};
+    return (double)((this->energyUsePerSize)*(this->diningSize)*turbine*panels);
 
 }
 
