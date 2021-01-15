@@ -46,10 +46,8 @@ namespace godot {
 		int rooftopWindTurbineAge = 0;
 		double normalGenerator(double mean, double stdDev);
 
-
-		//  why are these guys not used ??
-		//double set_max_income();
-		//double set_min_income();
+		double set_max_income();
+		double set_min_income();
 		double get_max_income();
 
 		double get_min_income();

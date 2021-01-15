@@ -731,18 +731,6 @@ void City::initialize_stats() {
     titlePopulation.push_back(String("Population in number of people"));
     statsPopulation.push_back(titlePopulation);
 
-    Array newStat{};
-    newStat.push_back(String("."));
-    newStat.push_back(0);
-
-    statsCarbonEmission.push_back(newStat);
-    statsEnvironmentalCost.push_back(newStat);
-    statsIncome.push_back(newStat);
-    statsEnergy.push_back(newStat);
-    statsUnemployment.push_back(newStat);
-    statsTotalSatisfaction.push_back(newStat);
-    statsPopulation.push_back(newStat);
-
 }
 
 void City::_on_GraphsButton_pressed()
