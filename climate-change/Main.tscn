@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=2]
+[gd_scene load_steps=136 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -57,6 +57,7 @@
 [ext_resource path="res://Controltab1.gd" type="Script" id=55]
 [ext_resource path="res://Blur.tres" type="Material" id=56]
 [ext_resource path="res://Ressources/Roboto/Roboto-Regular.ttf" type="DynamicFontData" id=57]
+[ext_resource path="res://Control_tab2.gd" type="Script" id=58]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -1456,7 +1457,6 @@ Chart_Style/font_color = Color( 1, 1, 1, 0.392157 )
 Chart_Style/template = 2
 
 [node name="Tabs2" type="Tabs" parent="2Dworld/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1468,8 +1468,22 @@ mouse_default_cursor_shape = 2
 [node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Tabs2"]
 
 [node name="Control" type="Control" parent="2Dworld/TabContainer/Tabs2/Node2D"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 101.0
+margin_top = 76.0
+margin_right = 1769.0
+margin_bottom = 936.0
+script = ExtResource( 58 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineChart" parent="2Dworld/TabContainer/Tabs2/Node2D/Control" instance=ExtResource( 54 )]
+chart_name = "Environmental cost"
+Chart_Style/function_colors = PoolColorArray( 0.117647, 0.117647, 0.117647, 1, 0.117647, 0.117647, 0.117647, 1, 0.117647, 0.117647, 0.117647, 1, 0.117647, 0.117647, 0.117647, 1 )
+Chart_Style/box_color = Color( 0.117647, 0.117647, 0.117647, 1 )
+Chart_Style/v_lines_color = Color( 0.792157, 0.792157, 0.792157, 1 )
+Chart_Style/h_lines_color = Color( 0.792157, 0.792157, 0.792157, 1 )
+Chart_Style/font_color = Color( 0.117647, 0.117647, 0.117647, 1 )
 
 [node name="GraphsExit" type="Button" parent="2Dworld"]
 anchor_right = 1.0

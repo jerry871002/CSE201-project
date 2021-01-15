@@ -206,12 +206,14 @@ void Housing::simulate_step(double days) {
 	} 
 };
 
-double Housing::get_max_income() {
-    return this->maxIncome;
-}
+
 
 double Housing::get_min_income() {
     return this->minIncome;
+}
+
+double Housing::get_max_income() {
+	return this->maxIncome;
 }
 
 double Housing::get_solar_panel_age() {
