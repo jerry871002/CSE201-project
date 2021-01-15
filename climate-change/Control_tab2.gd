@@ -30,7 +30,6 @@ func _ready():
 
 
 func repeat_me():
-	print(get_tree().get_root().get_node("Main/3Dworld").get("statsEnvironmentalCost"))
 	#$LineChart.plot_from_array(data)
 	$LineChart.plot_from_array(get_tree().get_root().get_node("Main/3Dworld").get("statsEnvironmentalCost"))
 

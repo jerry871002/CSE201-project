@@ -1,4 +1,4 @@
-[gd_scene load_steps=137 format=2]
+[gd_scene load_steps=140 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -59,6 +59,9 @@
 [ext_resource path="res://Ressources/Roboto/Roboto-Regular.ttf" type="DynamicFontData" id=57]
 [ext_resource path="res://Control_tab2.gd" type="Script" id=58]
 [ext_resource path="res://Controltab3.gd" type="Script" id=59]
+[ext_resource path="res://Controltab4.gd" type="Script" id=60]
+[ext_resource path="res://Controltab5.gd" type="Script" id=61]
+[ext_resource path="res://Controltab6.gd" type="Script" id=62]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -917,7 +920,6 @@ __meta__ = {
 }
 
 [node name="Blur" type="Node2D" parent="2Dworld"]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="2Dworld/Blur"]
 material = ExtResource( 56 )
@@ -1424,7 +1426,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tabs" type="Tabs" parent="2Dworld/TabContainer"]
+[node name="CO2 Emissions" type="Tabs" parent="2Dworld/TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1433,9 +1435,9 @@ margin_right = -3.0
 margin_bottom = -3.0
 mouse_default_cursor_shape = 2
 
-[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Tabs"]
+[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/CO2 Emissions"]
 
-[node name="Control" type="Control" parent="2Dworld/TabContainer/Tabs/Node2D"]
+[node name="Control" type="Control" parent="2Dworld/TabContainer/CO2 Emissions/Node2D"]
 margin_left = 100.0
 margin_top = 75.0
 margin_right = 1801.0
@@ -1445,20 +1447,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LineChart" parent="2Dworld/TabContainer/Tabs/Node2D/Control" instance=ExtResource( 54 )]
+[node name="LineChart" parent="2Dworld/TabContainer/CO2 Emissions/Node2D/Control" instance=ExtResource( 54 )]
 margin_left = -0.999969
 margin_right = -1.0
-chart_name = "CO2 EMISSIONS"
 Chart_Properties/are_values_columns = true
-Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
-Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/v_lines_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/h_lines_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/font_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/template = 2
+Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
+Chart_Style/box_color = Color( 0, 0, 0, 0 )
+Chart_Style/v_lines_color = Color( 0, 0, 0, 0 )
+Chart_Style/h_lines_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/template = 1
 
-[node name="Tabs2" type="Tabs" parent="2Dworld/TabContainer"]
-visible = false
+[node name="Environmental Cost" type="Tabs" parent="2Dworld/TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1467,9 +1467,9 @@ margin_right = -3.0
 margin_bottom = -3.0
 mouse_default_cursor_shape = 2
 
-[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Tabs2"]
+[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Environmental Cost"]
 
-[node name="Control" type="Control" parent="2Dworld/TabContainer/Tabs2/Node2D"]
+[node name="Control" type="Control" parent="2Dworld/TabContainer/Environmental Cost/Node2D"]
 margin_left = 101.0
 margin_top = 76.0
 margin_right = 1769.0
@@ -1479,17 +1479,42 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LineChart" parent="2Dworld/TabContainer/Tabs2/Node2D/Control" instance=ExtResource( 54 )]
-chart_name = "Environmental cost"
+[node name="LineChart" parent="2Dworld/TabContainer/Environmental Cost/Node2D/Control" instance=ExtResource( 54 )]
 Chart_Properties/are_values_columns = true
-Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
-Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/v_lines_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/h_lines_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/font_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/template = 2
+Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
+Chart_Style/box_color = Color( 0, 0, 0, 0 )
+Chart_Style/v_lines_color = Color( 0, 0, 0, 0 )
+Chart_Style/h_lines_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/template = 1
 
-[node name="Tabs3" type="Tabs" parent="2Dworld/TabContainer"]
+[node name="Income statistics" type="Tabs" parent="2Dworld/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 48.0
+margin_right = -3.0
+margin_bottom = -3.0
+
+[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Income statistics"]
+
+[node name="Control" type="Control" parent="2Dworld/TabContainer/Income statistics/Node2D"]
+margin_left = 65.0
+margin_top = 72.0
+margin_right = 1789.0
+margin_bottom = 948.0
+script = ExtResource( 59 )
+
+[node name="LineChart" parent="2Dworld/TabContainer/Income statistics/Node2D/Control" instance=ExtResource( 54 )]
+Chart_Properties/are_values_columns = true
+Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
+Chart_Style/box_color = Color( 0, 0, 0, 0 )
+Chart_Style/v_lines_color = Color( 0, 0, 0, 0 )
+Chart_Style/h_lines_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/template = 1
+
+[node name="Unemployment" type="Tabs" parent="2Dworld/TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1497,24 +1522,81 @@ margin_top = 48.0
 margin_right = -1817.0
 margin_bottom = -927.004
 
-[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Tabs3"]
+[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Unemployment"]
 
-[node name="Control" type="Control" parent="2Dworld/TabContainer/Tabs3/Node2D"]
-margin_left = 65.0
-margin_top = 72.0
-margin_right = 1789.0
-margin_bottom = 948.0
-script = ExtResource( 59 )
+[node name="Control" type="Control" parent="2Dworld/TabContainer/Unemployment/Node2D"]
+margin_left = 61.0
+margin_top = 92.0
+margin_right = 1802.0
+margin_bottom = 960.0
+script = ExtResource( 60 )
 
-[node name="LineChart" parent="2Dworld/TabContainer/Tabs3/Node2D/Control" instance=ExtResource( 54 )]
-chart_name = "Income statistics"
+[node name="LineChart" parent="2Dworld/TabContainer/Unemployment/Node2D/Control" instance=ExtResource( 54 )]
+margin_left = 8.0
+margin_top = 16.0
+margin_right = -1.0
+margin_bottom = -4.0
 Chart_Properties/are_values_columns = true
-Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
-Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/v_lines_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/h_lines_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/font_color = Color( 1, 1, 1, 0.392157 )
-Chart_Style/template = 2
+Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
+Chart_Style/box_color = Color( 0, 0, 0, 0 )
+Chart_Style/v_lines_color = Color( 0, 0, 0, 0 )
+Chart_Style/h_lines_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/template = 1
+
+[node name="Satisfaction" type="Tabs" parent="2Dworld/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 48.0
+margin_right = -3.0
+margin_bottom = -3.0
+
+[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Satisfaction"]
+
+[node name="Control" type="Control" parent="2Dworld/TabContainer/Satisfaction/Node2D"]
+margin_left = 65.0
+margin_top = 92.0
+margin_right = 1793.0
+margin_bottom = 964.0
+script = ExtResource( 61 )
+
+[node name="LineChart" parent="2Dworld/TabContainer/Satisfaction/Node2D/Control" instance=ExtResource( 54 )]
+margin_right = 30.0
+margin_bottom = 10.0
+Chart_Properties/are_values_columns = true
+Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
+Chart_Style/box_color = Color( 0, 0, 0, 0 )
+Chart_Style/v_lines_color = Color( 0, 0, 0, 0 )
+Chart_Style/h_lines_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/template = 1
+
+[node name="Population" type="Tabs" parent="2Dworld/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 48.0
+margin_right = -3.0
+margin_bottom = -3.0
+
+[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Population"]
+
+[node name="Control" type="Control" parent="2Dworld/TabContainer/Population/Node2D"]
+margin_left = 65.0
+margin_top = 84.0
+margin_right = 1797.0
+margin_bottom = 964.0
+script = ExtResource( 62 )
+
+[node name="LineChart" parent="2Dworld/TabContainer/Population/Node2D/Control" instance=ExtResource( 54 )]
+Chart_Properties/are_values_columns = true
+Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
+Chart_Style/box_color = Color( 0, 0, 0, 0 )
+Chart_Style/v_lines_color = Color( 0, 0, 0, 0 )
+Chart_Style/h_lines_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/template = 1
 
 [node name="GraphsExit" type="Button" parent="2Dworld"]
 anchor_right = 1.0

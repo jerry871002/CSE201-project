@@ -23,8 +23,9 @@ func _ready():
 
 
 func repeat_me():
+	print(get_tree().get_root().get_node("Main/3Dworld").get("statsUnemployment"))
 	#$LineChart.plot_from_array(data)
-	$LineChart.plot_from_array(get_tree().get_root().get_node("Main/3Dworld").get("statsIncome"))
+	$LineChart.plot_from_array(get_tree().get_root().get_node("Main/3Dworld").get("statsUnemployment"))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
