@@ -76,13 +76,57 @@ void Structure::set_age(double age) {
 
 double Structure::get_co2emissions() {
     //std::cout << "DEBUG: STRUCTURE GET EMISSIONS" << std::endl;
+    if (this->get_main_type() == "Housing") {
+        double panelsF = 1;
+	
+        if (this->PanelsOn) { panelsF = 0.7; };
+
+        double trees = 0;
+        
+        if (this->get_node("MeshComponents/Trees")->get("visible")) {
+            trees = 0.2;  // 10 trees absorb 200 kilos of co2 a year
+        }
+
+	    return (double)(((this->CO2Emission)-trees)  * panelsF);
+    }
+
     return this->CO2Emission;
+
 }
+
+
 void Structure::set_co2emissions(double emission) {
     this->CO2Emission = emission;
 }
 
 double Structure::get_energyuse() {
+    if (this->get_main_type() == "Housing") {
+        std::cout << "DEBUG: get energyuse called in Structure for housing" << std::endl;
+        double panelsF = 1;
+        double turbineF = 1;
+        double glazingF = 1;
+        if (this->PanelsOn) {
+            panelsF = 0.6;
+        }
+
+        if (((Housing*)this)->rooftopWindTurbineOn) {
+            turbineF = 0.9;
+        }
+        if (this->get_object_type() == "House") {
+            if (((House*)this)->houseType == 1) { // If its a low level house then double glazing decrease energyuse 
+                if (((House*)this)->doubleGlazingOn) {
+                    glazingF = 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
+                }
+            }
+        }
+
+        std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
+        std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
+        std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
+
+        return (double)(this->energyUse) * panelsF * turbineF * glazingF;
+    }
+    
     return this->energyUse;
 }
 void Structure::set_energyuse(double energyUse) {

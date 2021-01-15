@@ -314,6 +314,7 @@ double House::get_co2emissions() {
 }
 
 double House::get_energyuse() {
+	std::cout << "DEBUG: get energyuse called in House" << std::endl;
 	double panelsF = 1;
 	double turbineF = 1;
 	double glazingF = 1;
@@ -331,6 +332,11 @@ double House::get_energyuse() {
 			}
 		}
 	
+
+	std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
+	std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
+	std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
+
 
     return (double)(this->energyUse)*panelsF*turbineF*glazingF;
 }
@@ -500,6 +506,7 @@ double Building::get_co2emissions() {
 }
 
 double Building::get_energyuse() {
+	std::cout << "DEBUG: get energyuse called in Building" << std::endl;
 	double panelsF = 1;
 	double turbineF = 1;
 	double glazingF = 1;
@@ -517,6 +524,9 @@ double Building::get_energyuse() {
 			}
 		}
 	
+	std::cout << "PanelsOn for this building : " << PanelsOn << std::endl;
+	std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
+	std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
 
     return (double)(this->energyUse)*panelsF*turbineF*glazingF;
 }
