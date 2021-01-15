@@ -44,13 +44,13 @@ template <typename T> void align_on_axis(T obj) {
 
 
 Transport::Transport() {
-    transportType = 4;
-    set_transportType(transportType);
+    this->transportType = 4;
+    set_transportType(4);
 }
 
 Transport::Transport(int type){
-    transportType = type;
-    set_transportType(transportType);
+    this->transportType = type;
+    set_transportType(type);
 }
 
 
@@ -84,7 +84,7 @@ void Transport::set_transportType(int type)
         fuelPerKm = 0;
         std::normal_distribution <double> kmt(70, 15);
         kmPerDay = kmt(gen); // average km per day for this car using gaussian
-        std::normal_distribution <double> costt(42000, 8500); //cost randomised using gaussian
+        std::normal_distribution <double> costt(60000, 8500); //cost randomised using gaussian
         cost = costt(gen);
         std::normal_distribution <double> timet(4, 1);
         buildingTime = timet(gen); // building time of 1 electric car in days, taking tesla model 3
@@ -166,9 +166,9 @@ void Transport::set_transportType(int type)
         break;
     }
     case 5: { //motorcycle 
-        fuelPerKm = 0.044; //in liters
+        fuelPerKm = 0.044; //in literss
         co2PerKm = 0.11; //in kg
-        std::normal_distribution <double> costm(6200, 2000);
+        std::normal_distribution <double> costm(12000, 2000);
         cost = costm(gen); // cost of 1 motorcycle in euros, randomised using gaussian
         capacity = 1;
         occupancyRate = 1;
@@ -214,7 +214,7 @@ void Transport::set_transportType(int type)
         weight = 11; //not true but in order for the tax to not be applied
         break;
     }
-    case 7: { //sports car
+    default : { //sports car
         fuelPerKm = 0.22;  //in litres
         co2PerKm = 0.5; //in kg
         std::normal_distribution <double> costsp(52000, 7000);
@@ -236,6 +236,7 @@ void Transport::set_transportType(int type)
         break;
     }
     }
+
     pricePerMonth += cost / (12 * lifetime);
     fuelInput = fuelPerKm * kmPerDay * 365; // litres of fuel in 1 year
     CO2Emission =365 * co2PerKm * kmPerDay / 1000; // tonnes of co2 in 1 year

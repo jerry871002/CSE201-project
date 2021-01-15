@@ -2155,8 +2155,6 @@ int City::most_missing_type() {
 
 void City::transport_to_add() { //now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
                                // the finction goes through all the buidlings  to get the wage as income
-    std::random_device rd;
-    std::mt19937 gen(rd());
     Transport electicCar = Transport(0);
     Transport bigCar = Transport(1);
     Transport car = Transport(2);
@@ -2170,7 +2168,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 
     std::cout << "Current air quality is: " << airQuality << std::endl;
 
-    double alpha[8] = { electicCar.satisfaction * ((double)(7 - carProhibition) / 7), bigCar.satisfaction * ((double)(7 - carProhibition) / 7), car.satisfaction * ((double)(7 - carProhibition) / 7), collectionCar.satisfaction * ((double)(7 - carProhibition) / 7), bike.satisfaction * pow(((double)(1 + carProhibition) / 7), 0.2) * sqrt(airQuality), motorcycle.satisfaction , bus.satisfaction, sportsCar.satisfaction * ((double)(7 - carProhibition) / 7) };
+    double alpha[8] = { electicCar.satisfaction * ((double)(7 - carProhibition) / 7), bigCar.satisfaction * ((double)(7 - carProhibition) / 7), car.satisfaction * ((double)(7 - carProhibition) / 7), collectionCar.satisfaction * ((double)(7 - carProhibition) / 7), bike.satisfaction * pow(((double)(1 + carProhibition) / 7), 0.2) * sqrt(airQuality), motorcycle.satisfaction , bus.get_satisfaction(), sportsCar.satisfaction * ((double)(7 - carProhibition) / 7) };
     double costs[8] = { electicCar.cost - electricCarSubsidy , bigCar.cost + weightTax * bigCar.weight, car.cost,collectionCar.cost + weightTax * collectionCar.weight , bike.cost - bikeSubsidy , motorcycle.cost, bus.cost - busSubsidy, sportsCar.cost };
     double pricesPerMonth[8] = { electicCar.pricePerMonth + costs[0] / 15, bigCar.pricePerMonth + fuelTax * bigCar.fuelInput / 12 + costs[1] / 15, car.pricePerMonth + fuelTax * car.fuelInput / 12 +costs[2] / 15,collectionCar.pricePerMonth + fuelTax * collectionCar.fuelInput / 12 +costs[3] / 15, bike.pricePerMonth + costs[4] / 15,
     motorcycle.pricePerMonth + fuelTax * motorcycle.fuelInput / 12 + costs[5] / 15, bus.pricePerMonth / bus.capacity, sportsCar.pricePerMonth + fuelTax * sportsCar.fuelInput / 12 + costs[7] / 15 };
@@ -2183,19 +2181,24 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it) {
         for (int i = 0; i < 8; i++) {
+            std::cout << "Satisfaction: " << alpha[i] << std::endl;
             alpha[i] = fmax(normalGenerator(alpha[i], alpha[i] / 3), 0.01);
             alphaSum += alpha[i];
         }
         for (int i = 0; i < 8; i++) {
-            alpha[i] = 1 * alpha[i] / alphaSum;
+            alpha[i] = alpha[i] / (alphaSum * 1.0);
         }
 
         double choice[8] = { 0 };
 
         for (int i = 0; i < 8; i++) {
+            std::cout << "Alpha: " << alpha[i] << std::endl;
+            std::cout << "Income: " << (double)((*it)->get("housingIncome")) << std::endl;
+            std::cout << "Price month: " << pricesPerMonth[i] << std::endl;
 
-            probabilities[i] = alpha[i] * (30 * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i]));
+            probabilities[i] = pow(alpha[i], 0.5) * (30 * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i]));
             
+            std::cout << "Proba : " << probabilities[i] << std::endl;
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
