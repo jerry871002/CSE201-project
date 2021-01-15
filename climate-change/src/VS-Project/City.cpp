@@ -135,7 +135,7 @@ void City::_register_methods()
 
     register_property<City, float>("time_speed", &City::time_speed, 1.0);
     register_property<City, int>("day_tick", &City::day_tick, 0);
-    register_property<City, double>("budget", &City::budget, 10000);
+    register_property<City, double>("budget", &City::set_budget, &City::get_budget, 10000);
 
     //Transport policies methods :
     register_property<City, double>("fuelTax", &City::fuelTax, 0.0);
@@ -292,6 +292,19 @@ void City::_physics_process(float delta) {
         if (datenumber[0] == 1 && datenumber[1] == 1)
         {
             // CALLED EVERY YEAR
+            if (!(factoryyearsubsidy) && (yearlyfactorysubsidy > 0)) {   // take off factory subsidies if they havent been changed
+                for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+                {
+
+                    if (((*it)->get("object_type")).operator String() == (String)("Goods Factory")) {
+
+                        budget -= yearlyfactorysubsidy;
+
+                    }
+                }
+                this->trigger_notification(String("The goods factory subsidies were taken from the budget. "));
+            }
+            if (factoryyearsubsidy) { factoryyearsubsidy = false; }
 
             this->budget += 1000 * all_structures.size();
         }
@@ -315,11 +328,6 @@ void City::_physics_process(float delta) {
     }
 }
 
-
-void City::update_date() {
-
-
-}
 
 void City::_input(InputEvent*)
 {
@@ -407,13 +415,13 @@ void City::generate_initial_city_graphics()
                 // maximum possible distance from center is 300
 
                 // 2x2 buildings
-                float mallprob = calculate_building_prob(40, 90, 0.5, dist);
+                float mallprob = calculate_building_prob(40, 90, 0.35, dist);
                 float nuclearprob = calculate_building_prob(140, 180, 0.8, dist);
                 float coalprob = calculate_building_prob(140, 180, 0.5, dist);
                 float geoprob = calculate_building_prob(140, 180, 0.5, dist);
                 float fieldprob = calculate_building_prob(150, 320, 1.25, dist);
                 float pastureprob = calculate_building_prob(150, 320, 2, dist);
-                float factoryprob = calculate_building_prob(100, 200, 0.7, dist);
+                float factoryprob = calculate_building_prob(100, 200, 0.4, dist);
 
                 if (hasgeo) { geoprob = 0; }
                 if (hasnuclear) { nuclearprob = 0; }
@@ -973,7 +981,7 @@ String City::get_button_info_text() {
     }
     else if (this->active_button == String("SubsidyFactories"))
     {
-        return String("This is a subsidy for green factories, promoting the reduction of harmful chemicals and heavy metals emissions. Please input a value between 1000 and 100 000 euros per factory per year or 0 to remove the policy");
+        return String("This is a subsidy for green factories, promoting the reduction of harmful chemicals and heavy metals emissions. Please input a value between 1000 and 100 000 euros per factory per year. You will not be able to change this value until next year!");
     }
     else if (this->active_button == String("Pesticides"))
     {
@@ -1193,18 +1201,27 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("SubsidyFactories")) {
-        if ((100000 >= value && value >= 1000) || value == 0) {
-            Godot::print("GREEN SUBSIDY FOR FACTORIES IMPLEMENTED");
-            for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
-            {
-                if (((*it)->get("object_type")).operator String() == (String)("Goods Factory")) {
-                    (*it)->set("subsidy_green", value);
+        if (((100000 >= value && value >= 1000) || value == 0) && !(factoryyearsubsidy)) {
+            if ((100000 >= value && value >= 1000) || value == 0) {
+                Godot::print("GREEN SUBSIDY FOR FACTORIES IMPLEMENTED");
+                for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+                {
+
+                    if (((*it)->get("object_type")).operator String() == (String)("Goods Factory")) {
+                        (*it)->set("subsidy_green", value);
+                        budget -= value;
+                    }
                 }
+                factoryyearsubsidy = true;
+                yearlyfactorysubsidy = (double)value;
+                this->trigger_notification(String("Much to every capitalist's delight, factories are now being subsidized."));
             }
-            this->trigger_notification(String("Much to every capitalist's delight, factories are now being subsidized."));
-        }
-        else {
-            this->trigger_notification(String("The value you provided was not in the specified range."));
+            else if (factoryyearsubsidy) {
+                this->trigger_notification(String("You can only change this once a year ! You wouldn't want to confuse the markets, would you ? "));
+            }
+            else {
+                this->trigger_notification(String("The value you provided was not in the specified range."));
+            }
         }
     }
     else if (this->active_button == String("Pesticides")) {
@@ -1361,6 +1378,7 @@ void City::implement_policies(double value) {
 
             for (int i = 0; i < int(value); ++i) {
                 (*trees_iterator)->get_node("MeshComponents/Trees")->set("visible", true);
+                (*trees_iterator)->get_node("MeshComponents/Trees")->set("satisfaction", (double)(*trees_iterator)->get_node("MeshComponents/Trees")->get("satisfaction") + 4);
                 trees_iterator++;
                 budget -= 5000;
                 houses_with_trees++;
@@ -2257,7 +2275,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     Transport sportsCar = Transport(7);
 
 
-    airQuality = pow(1.01, -20 * carbonEmission / (all_structures.size() * 30 * 30 * 10)) + 0.2 * (trees_iterator - trees_vector.begin()) / (trees_vector.size());
+    airQuality = pow(1.4, -100 * carbonEmission / (all_structures.size() * 30 * 30 * 10)) + 0.2 * (trees_iterator - trees_vector.begin()) / (trees_vector.size());
 
     std::cout << "Current air quality is: " << airQuality << std::endl;
 
@@ -2394,6 +2412,13 @@ void City::set_workingPower(int s) {
     (this->workingPower) = s;
 }
 
+double City::get_budget() {
+    return this->budget;
+}
+void City::set_budget(double v) {
+    this->budget = v;
+}
+
 
 
 
@@ -2406,3 +2431,6 @@ int main() {
     std::cout << "DEBUG: TOTAL CARBON EMISSION = " << c.return_carbonEmission() << std::endl;
     return 0;
 }
+
+
+
