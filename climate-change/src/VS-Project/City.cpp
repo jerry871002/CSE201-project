@@ -1398,8 +1398,10 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     if (pos == Vector3(-1, -1, -1)) {
         int chosenhouse = rand() % all_houses.size();
         std::vector<Housing*>::iterator addcariterator;
+        addcariterator = all_houses.begin();
         addcariterator += chosenhouse;
         pos = (Vector3)((Node*)(*addcariterator))->get("translation");
+
         
     }
 
