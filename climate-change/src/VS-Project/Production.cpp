@@ -292,6 +292,8 @@ void GoodsFactories::simulate_step(double days)
 			std::normal_distribution <double> employees(150, 60);
 			employment = employees(gen); // number of employees in the factory 
 			green = 1 - (employment * 0.005);
+			std::normal_distribution <double> sat(7, 2);
+			satisfaction = sat(gen);
 		}
 	}
 
@@ -315,11 +317,17 @@ void GoodsFactories::simulate_step(double days)
 			employment = 0;
 			factory_closed = true;
 			age = 0;
+			this->get_child(0)->set("visible", false);
+			this->get_child(1)->set("visible", false);
+			satisfaction = 5;
 		}
 		if (60 < employment <= 120 && chance < 4) {
 			employment = 0;
 			factory_closed = true;
 			age = 0;
+			this->get_child(0)->set("visible", false);
+			this->get_child(1)->set("visible", false);
+			satisfaction = 5;
 		}
 		if (employment > 120 && chance < 6) {
 			employment = 0;
@@ -327,6 +335,7 @@ void GoodsFactories::simulate_step(double days)
 			age = 0;
 			this->get_child(0)->set("visible", false);
 			this->get_child(1)->set("visible", false);
+			satisfaction = 5;
 		}
 		else {
 			this->get_child(0)->set("visible", true);
