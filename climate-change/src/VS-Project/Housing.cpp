@@ -99,8 +99,8 @@ void Housing::simulate_step(double days) {
         //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->panel_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
-            PanelsOn = true;
-            solarPanelAge = this->solarLifetime;
+            this->PanelsOn = true;
+            this->solarPanelAge = this->solarLifetime;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
             //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
@@ -112,7 +112,7 @@ void Housing::simulate_step(double days) {
     }
     else {
         this->solarPanelAge = 0;
-        PanelsOn = false;
+        this->PanelsOn = false;
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
         //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
@@ -176,7 +176,7 @@ void Housing::simulate_step(double days) {
 
     } 
 
-	
+	/*
 	if (this->PanelsOn) {
 		this->solarPanelAge += days;
 	}
@@ -204,6 +204,7 @@ void Housing::simulate_step(double days) {
 		this->rooftopWindTurbineOn = false;
 		this->rooftopWindTurbineAge = 0;
 	} 
+	*/
 };
 
 
@@ -340,7 +341,7 @@ double House::get_energyuse() {
 	std::cout << "DEBUG: energy use  : " << double(this->energyUse) << std::endl;
 
 
-    return ((double)(this->energyUse))*panelsF*turbineF*glazingF;
+    return (double)((this->energyUse)*panelsF*turbineF*glazingF);
 }
 
 double House::get_environmentalcost() {
