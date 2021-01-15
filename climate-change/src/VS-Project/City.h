@@ -270,7 +270,7 @@ namespace godot {
                        // updated in the undate_time function
         double get_budget();
         void set_budget(double);
-
+        bool under_budget = { false };
 
         //probability that a certain type of car will be added
         double airQuality;
