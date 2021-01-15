@@ -335,11 +335,6 @@ void City::_physics_process(float delta) {
 }
 
 
-void City::update_date() {
-
-
-}
-
 void City::_input(InputEvent*)
 {
 
@@ -2286,7 +2281,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     Transport sportsCar = Transport(7);
 
 
-    airQuality = pow(1.01, -20 * carbonEmission / (all_structures.size() * 30 * 30 * 10)) + 0.2 * (trees_iterator - trees_vector.begin()) / (trees_vector.size());
+    airQuality = pow(1.4, -100 * carbonEmission / (all_structures.size() * 30 * 30 * 10)) + 0.2 * (trees_iterator - trees_vector.begin()) / (trees_vector.size());
 
     std::cout << "Current air quality is: " << airQuality << std::endl;
 
