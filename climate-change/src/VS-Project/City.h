@@ -255,6 +255,7 @@ namespace godot {
         double energyDemand;
         double energySupply;
         double environmentalCost;
+        int totalSatisfactioWeight{ 0 };
         int totalSatisfaction;
 
 
@@ -263,7 +264,6 @@ namespace godot {
 
         //probability that a certain type of car will be added
         double airQuality;
-        int numberOfHouses;
         int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
         int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month
 
