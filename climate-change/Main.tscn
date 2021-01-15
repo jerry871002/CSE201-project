@@ -1449,8 +1449,6 @@ __meta__ = {
 margin_left = -0.999969
 margin_right = -1.0
 chart_name = "CO2 EMISSIONS"
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
 Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )
@@ -1460,6 +1458,7 @@ Chart_Style/font_color = Color( 1, 1, 1, 0.392157 )
 Chart_Style/template = 2
 
 [node name="Tabs2" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
@@ -1482,11 +1481,13 @@ __meta__ = {
 
 [node name="LineChart" parent="2Dworld/TabContainer/Tabs2/Node2D/Control" instance=ExtResource( 54 )]
 chart_name = "Environmental cost"
-Chart_Style/function_colors = PoolColorArray( 0.117647, 0.117647, 0.117647, 1, 0.117647, 0.117647, 0.117647, 1, 0.117647, 0.117647, 0.117647, 1, 0.117647, 0.117647, 0.117647, 1 )
-Chart_Style/box_color = Color( 0.117647, 0.117647, 0.117647, 1 )
-Chart_Style/v_lines_color = Color( 0.792157, 0.792157, 0.792157, 1 )
-Chart_Style/h_lines_color = Color( 0.792157, 0.792157, 0.792157, 1 )
-Chart_Style/font_color = Color( 0.117647, 0.117647, 0.117647, 1 )
+Chart_Properties/are_values_columns = true
+Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
+Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )
+Chart_Style/v_lines_color = Color( 1, 1, 1, 0.392157 )
+Chart_Style/h_lines_color = Color( 1, 1, 1, 0.392157 )
+Chart_Style/font_color = Color( 1, 1, 1, 0.392157 )
+Chart_Style/template = 2
 
 [node name="GraphsExit" type="Button" parent="2Dworld"]
 anchor_right = 1.0

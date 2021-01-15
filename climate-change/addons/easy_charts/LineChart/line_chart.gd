@@ -251,7 +251,7 @@ func calculate_pass():
 
 	# calculate distance in pixel between 2 consecutive values/datas
 	x_pass = (SIZE.x - OFFSET.x) / (x_chors.size()-1 if x_chors.size()>1 else x_chors.size() )
-	y_pass = (origin.y - ChartName.get_rect().size.y*2) / (y_chors.size() - 1)
+	y_pass = (origin.y - ChartName.get_rect().size.y*2) / (y_chors.size())
 
 
 func calculate_coordinates():

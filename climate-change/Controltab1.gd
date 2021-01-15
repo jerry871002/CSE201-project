@@ -2,10 +2,7 @@ extends Control
 
 
 var data : Array  =  [
-	["Year", "VotesVotesVotesVotesVotesVotesVotesVotesVotesVotesVotes"],
-	["2014", 20],
-	["2015", 60],
-	["2016", 10]
+["Date", "Environmental cost in billions of euros"], ["Year 1, January 1", 0]
 ]
 
 
