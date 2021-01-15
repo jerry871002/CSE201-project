@@ -270,6 +270,7 @@ void Structure::add_city_counters() {
 void Structure::subtract_city_counters() {
     myCity->set("income", double(myCity->get("income")) - double(this->get("averageWage")));
     myCity->set("carbonEmission", double(myCity->get("carbonEmission")) - double(this->get("CO2Emission")));
+    myCity->set("environmentalCost", double(myCity->get("environmentalCost")) - double(this->get("environmentalCost")));
     myCity->set("energyDemand", double(myCity->get("energyDemand")) - double(this->get("energyUse")));
     myCity->set("numberOfEmployees", double(myCity->get("numberOfEmployees")) -  double(this->get("employment")));
     myCity->set("totalSatisfaction", double(myCity->get("totalSatisfaction")) - satisfaction_weight() * double(this->get("satisfaction")));
