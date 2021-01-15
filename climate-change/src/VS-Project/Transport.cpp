@@ -173,7 +173,7 @@ void Transport::set_transportType(int type)
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.12; //really fast, in days (3 hours )
-        satisfaction = 7;
+        satisfaction = 6;
         std::normal_distribution <double> kmbike(30, 10);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each motorcycle
         lifetime = 12;

@@ -2176,12 +2176,11 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     double quantities[8] = { 0 };
     double alphaSum = 0;
     double alpha[8] = { 0 };
-    int capacity[8] = { 4, 4, 5, 2, 1 ,1, 20, 2 };
+    int capacity[8] = { 3, 3, 3, 2, 1 ,1, 8, 2 };
 
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it) {
         
         for (int i = 0; i < 8; i++) {
-            //std::cout << "Satisfaction: " << alpha[i] << std::endl;
             alpha[i] = fmax(normalGenerator(satisfaction[i], satisfaction[i] / 2), 0.01);
             alphaSum += alpha[i];
         }
@@ -2192,13 +2191,10 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
         double choice[8] = { 0 };
 
         for (int i = 0; i < 8; i++) {
-            //std::cout << "Alpha: " << alpha[i] << std::endl;
-            //std::cout << "Income: " << (double)((*it)->get("housingIncome")) << std::endl;
-            //std::cout << "Price month: " << pricesPerMonth[i] << std::endl;
-
-            probabilities[i] = 5 * pow(alpha[i], 1.5) * (30 * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i]));
-            
-           std::cout << "Proba : " << probabilities[i] << " for type" << i << std::endl;
+            probabilities[i] = 1000 * alpha[i] * (30 * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i]));
+            // 1000 is one adjustement constant, how much people are willing to put on a car,
+            //higher, everybody can afford (prob > 1)any type and will choose the one he prefer (higher alpha)
+            // lower, price will restrict people more and more people won't spend money on transport (so sport or bike)
             if (probabilities[i] > 1) {
                 choice[i] = alpha[i];
             }
@@ -2207,7 +2203,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
             }
         }
 
-        int maxIndex = 0;
+        int maxIndex = -1; 
         double maxChoice = choice[0];
         for (int i = 1; i < 8; i++) {
             if (choice[i] > maxChoice) {
@@ -2215,7 +2211,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
                 maxIndex = i;
             }
         }
-        quantities[maxIndex] += 1;
+        if (maxIndex != -1) { quantities[maxIndex] += 1; }
     }
 
     for (int i = 0; i < 8; i++) {
