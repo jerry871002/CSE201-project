@@ -711,8 +711,7 @@ void City::initialize_stats() {
 
     Array titleEnergy{};
     titleEnergy.push_back(String("Date"));
-    titleEnergy.push_back(String("Energy demand in GWh"));
-    titleEnergy.push_back(String("Energy production in GWh"));
+    titleEnergy.push_back(String("Energy usage in GWh"));
     statsEnergy.push_back(titleEnergy);
 
     Array titleUnemployment{};
@@ -2124,7 +2123,6 @@ void City::write_stat_history_to_file() {
     Array newEnergy{};
     newEnergy.push_back(return_word_date_godot());
     newEnergy.push_back((int)((energyDemand / pow(10, 6)) + 0.5));
-    newEnergy.push_back((int)((energySupply) + 0.5));
 
     if (statsEnergy.size() > 100) {
         statsEnergy.pop_front();
