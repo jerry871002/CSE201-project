@@ -472,11 +472,6 @@ void House::simulate_step(double days) {
 	//std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
 
 	this->Housing::simulate_step(days);
-	
-	if ((int)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) % 25 == 0) {
-		satisfaction = 0;
-
-	}
 
 	//maintenance = 0.1765 * energyUse * days;
 	//CO2Emission = 0.0065 * energyUse * days; 
