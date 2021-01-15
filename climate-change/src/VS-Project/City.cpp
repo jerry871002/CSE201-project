@@ -1383,6 +1383,7 @@ void City::implement_policies(double value) {
 
             for (int i = 0; i < int(value); ++i) {
                 (*trees_iterator)->get_node("MeshComponents/Trees")->set("visible", true);
+                (*trees_iterator)->get_node("MeshComponents/Trees")->set("satisfaction", (double)(*trees_iterator)->get_node("MeshComponents/Trees")->get("satisfaction") + 4);
                 trees_iterator++;
                 budget -= 5000;
                 houses_with_trees++;
