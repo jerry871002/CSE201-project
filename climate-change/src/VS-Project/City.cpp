@@ -440,7 +440,7 @@ void City::generate_initial_city_graphics()
                 float smallerprob = restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob;
 
 
-                std::cout << "DEBUG: done calculate probability" << std::endl;
+                //std::cout << "DEBUG: done calculate probability" << std::endl;
 
                 double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + coalprob + geoprob + nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
                 
@@ -592,6 +592,7 @@ void City::generate_initial_city_graphics()
 
         }
     }
+    trees_iterator = trees_vector.begin();
     transport_to_add();
 
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
@@ -610,7 +611,7 @@ void City::generate_initial_city_graphics()
 
     std::random_shuffle(trees_vector.begin(), trees_vector.end());
 
-    trees_iterator = trees_vector.begin();
+    
 
 
 
@@ -639,6 +640,7 @@ void City::generate_initial_city_graphics()
 
     }
 
+    
     std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
 }
 
@@ -1683,7 +1685,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
             }
         }
         else { // the case when it's a 2 by 2 building
-            std::cout << "DEBUG: updating traffic for BIG building coordinates : " << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
+           // std::cout << "DEBUG: updating traffic for BIG building coordinates : " << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
             if (number == 3) {
                 x = x - 1;
             }
@@ -2185,7 +2187,7 @@ double City::return_income() {
 }
 
 double City::return_totalSatisfaction() {
-    return totalSatisfaction/totalSatisfactioWeight;
+    return (double) totalSatisfaction/totalSatisfactioWeight;
 }
 
 double City::return_numberOfEmployees() {
@@ -2255,7 +2257,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     Transport sportsCar = Transport(7);
 
 
-    airQuality = pow(1.01, -20 * carbonEmission / (all_structures.size() * 30 * 30 * 10));
+    airQuality = pow(1.01, -20 * carbonEmission / (all_structures.size() * 30 * 30 * 10)) + 0.2 * (trees_iterator - trees_vector.begin()) / (trees_vector.size());
 
     std::cout << "Current air quality is: " << airQuality << std::endl;
 

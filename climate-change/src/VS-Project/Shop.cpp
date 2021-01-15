@@ -93,17 +93,11 @@ double Shop::get_co2emissions() {
 }
 
 double Shop::get_energyuse() {
-    std::cout << "DEBUG: get energyuse called in SHOP" << std::endl;
     double panelsF = 1;
     double turbineF = 1;  
     if (this->PanelsOn) { panelsF = 0.5; };
     if (this->WindTurbineOn) { turbineF = 0.9; };
-
-    std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
-	std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
-	std::cout << "DEBUG: energy use  : " << double(this->energyUse) << std::endl;
     return (double)((this->energyUse)*panelsF*turbineF);
-
 }
 
 double Shop::get_environmentalcost() {
