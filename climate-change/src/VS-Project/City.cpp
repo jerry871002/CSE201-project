@@ -54,7 +54,7 @@ City::City() {
     energyDemand = 0;
     energySupply = 0;
     environmentalCost = 0;
-    totalSatisfaction = 10;
+    totalSatisfaction = 0;
 
     time_speed = 1;
 
@@ -144,7 +144,6 @@ void City::_register_methods()
     register_property<City, double>("electricCarSubsidy", &City::electricCarSubsidy, 0.0);
     register_property<City, double>("busSubsidy", &City::busSubsidy, 0.0);
     register_property<City, double>("carProhibition", &City::carProhibition, 0.0);
-
 
     register_property<City, double>("income", &City::income, 0.0);
     register_property<City, int>("population", &City::population, 0);
@@ -243,7 +242,7 @@ void City::_physics_process(float delta) {
         std::cout << "energySupply = " << (double)(this->get("energySupply")) << std::endl;
         std::cout << "environmentalCost = " << (double)(this->get("environmentalCost")) << std::endl;
       
-        change_pie_chart(100 * (totalSatisfaction / (10 * all_structures.size())), "PieSatisfaction", true);
+        change_pie_chart((int)return_totalSatisfaction(), "PieSatisfaction", true);
         change_pie_chart(value_pie_chart_C02(carbonEmission, 1000000), "PieCO2", false);
         change_pie_chart(income / (population * 100), "PieIncome", true);
         change_pie_chart(energyDemand, "PieUnemployement", false); //EnergyDemand variable is temporary
