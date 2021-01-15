@@ -128,9 +128,9 @@ void AgriculturalProduction::simulate_step(double days)
 	}
 
 	case(1): {
-		production = (requiredLand * fertility)/1000; //reqquired land taken so that this is production in ton per year
-		waterConsumption = production*1000 * 22; //liters per kg so had to convert production back to kg
-		CO2Emission = 19.18 * production;
+		// production = (requiredLand * fertility); //reqquired land taken so that this is production in ton per year
+		// waterConsumption = production*1000 * 22; //liters per kg so had to convert production back to kg
+		// CO2Emission = 19.18 * production;
 
 		/*std::random_device rd;
 		std::mt19937 gen(rd());
@@ -178,13 +178,13 @@ void AgriculturalProduction::agriculture_type(int type) {
 	case 1: { // meat
 		std::random_device rd;
 		std::mt19937 gen(rd());
-		std::normal_distribution <double> foodformeatfieldsize(2, 0.1);
+		std::normal_distribution <double> foodformeatfieldsize(2, 0.1); //size of field giving a yearly production for our city
 		requiredLand = foodformeatfieldsize(gen); // size
-		std::normal_distribution <double> cropsfertility(200000, 50000); //soze of field giving a yearly production for our city
+		std::normal_distribution <double> cropsfertility(200, 50); //  ton per square meter
 		fertility = cropsfertility(gen); 
-		production = (fertility * requiredLand) / 1000; //
-		waterConsumption = 22 * production; //22L of water per 1 kg of production
-		CO2Emission = 19.18 * production; //co2 kg for production 
+		production = (fertility * requiredLand);
+		waterConsumption = 22 * production * 1000; //22L of water per 1 kg of production
+		CO2Emission = 19.18 * production; //co2 per ton of production
 		energyUse = 0;
 		environmentalCost = 0;   
 		satisfaction = 2;
