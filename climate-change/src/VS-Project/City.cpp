@@ -102,7 +102,6 @@ int* return_date(int day_tick) {
 void City::_register_methods()
 {
     register_method((char*)"_physics_process", &City::_physics_process);
-    register_method((char*)"_physics_process", &City::_physics_process);
     register_method((char*)"_input", &City::_input);
     register_method((char*)"_ready", &City::_ready);
     register_method((char*)"_on_Menu_pressed", &City::_on_Menu_pressed);
@@ -219,6 +218,8 @@ void City::_physics_process(float delta) {
     */
 
 
+
+
     if (bool(this->time_speed))
     {
         (*structures_iterator)->set("updatable", true);
@@ -263,6 +264,11 @@ void City::_physics_process(float delta) {
     if (this->date_counter > 1)
     {
         // CALLED EVERY GAME DAY
+
+        if (budget < 0 && !(under_budget)) {
+            this->trigger_notification(String("You have gone into debt ! This is a serious issue."));
+            under_budget = true;
+        }
 
         /*
         for (int i = 0; i < statsCarbonEmission.size(); ++i) {
@@ -1383,7 +1389,7 @@ void City::implement_policies(double value) {
 
             for (int i = 0; i < int(value); ++i) {
                 (*trees_iterator)->get_node("MeshComponents/Trees")->set("visible", true);
-                (*trees_iterator)->get_node("MeshComponents/Trees")->set("satisfaction", (double)(*trees_iterator)->get_node("MeshComponents/Trees")->get("satisfaction") + 4);
+                (*trees_iterator)->set("satisfaction", (double)(*trees_iterator)->get("satisfaction") + 4);
                 trees_iterator++;
                 budget -= 5000;
                 houses_with_trees++;
