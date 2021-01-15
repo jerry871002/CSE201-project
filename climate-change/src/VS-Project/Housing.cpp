@@ -377,7 +377,10 @@ void House::set_houseType(int type)
 {
 	this->houseType = type;
 	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
-
+	double employees = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("numberOfEmployees");
+	double population = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("population");
+	int unemployment = ((int)(100 - 100 * fmin((double)1, (double)(employees / population)) + 0.5))*0.01;
+	
 	if (type == 1) {
 	//Low level house
 	//definition of low level house, has no solar panels, no double glazing and no wind turbines on roof 
@@ -392,18 +395,17 @@ void House::set_houseType(int type)
 
 		this->numberOfInhabitants = (rand() % (6) + 1);
 		
-
 		if (this->numberOfInhabitants >= 2) {
 			//have two salaries 
 			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
 		
-			housingIncome = fmax(minIncome, normalGenerator(50,70)) + fmax(minIncome, normalGenerator(50,70));
+			housingIncome = (fmax(minIncome, normalGenerator(50,70)) + fmax(minIncome, normalGenerator(50,70)))*(1-unemployment);
 		
 		}
 
 		else {
 			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
-			housingIncome = fmax(minIncome, normalGenerator(50,70));
+			housingIncome = fmax(minIncome, normalGenerator(50,70))*(1-unemployment);
 
 		}
 
@@ -434,12 +436,12 @@ void House::set_houseType(int type)
 		srand((int)time(0));
 		this->numberOfInhabitants = (rand() % (6) + 1);
 		if (this->numberOfInhabitants >= 2) {
-			housingIncome = fmax(minIncome, normalGenerator(50,70)) + fmax(minIncome, normalGenerator(50,70));
+			housingIncome = (fmax(minIncome, normalGenerator(50,70)) + fmax(minIncome, normalGenerator(50,70)))*(1-unemployment);
 
 		}
 
 		else {
-			housingIncome = fmax(minIncome, normalGenerator(50,70));
+			housingIncome = fmax(minIncome, normalGenerator(50,70))*(1-unemployment);
 		}
 
 		//attributes from structure class
@@ -554,12 +556,16 @@ Building::Building() {
 	this->numberOfInhabitants = (rand() % (10) + 50);
 	this->buildingType = (rand() % 2 + 1);
 
+	double employees = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("numberOfEmployees");
+	double population = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("population");
+	int unemployment = ((int)(100 - 100 * fmin((double)1, (double)(employees / population)) + 0.5)) * 0.01;
+
 	for (int i = 0; i < numberOfInhabitants/2; i++) { //I took half inhabitants are children
 		incomeEach += fmax(minIncome, normalGenerator(50,70));
 	}
 	
 	//This is to compute an average wage in the building so that the probability functions to add solar panels etc still work the same as for a house
-	housingIncome = incomeEach / this->numberOfInhabitants; 
+	housingIncome = (incomeEach / this->numberOfInhabitants)*(1-unemployment); 
 	
 
 	if (buildingType == 1) { //Low level building

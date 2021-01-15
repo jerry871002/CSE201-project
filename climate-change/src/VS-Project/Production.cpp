@@ -265,6 +265,7 @@ void godot::GoodsFactories::_process(float delta)
 void GoodsFactories::simulate_step(double days)
 {
 	this->Production::simulate_step(days);
+	age += days;
 
 	double maximum_CO2 = this->get("maximum_CO2"); // input from user
 	double subsidy_green = this->get("subsidy_green"); // input from user
@@ -340,6 +341,9 @@ void GoodsFactories::simulate_step(double days)
 		else {
 			this->get_child(0)->set("visible", true);
 			this->get_child(1)->set("visible", true);
+			std::normal_distribution <double> employees(100, 60);
+			employment = employees(gen);
+			factory_closed = false;
 		}
 		std::normal_distribution <double> co2(maximum_CO2, 0.5);
 		CO2Emission = (co2(gen) * employment) * green * 0.001 * 365; // ton per year
