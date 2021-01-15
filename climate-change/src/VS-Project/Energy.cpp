@@ -110,14 +110,15 @@ String Energy::get_object_info()
 	String info = this->Structure::get_object_info();
 	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
 	if (working == 0) {
-		info += "The city's energy demand is currently provided by a coal power plant. The nuclear and geothermal plants and all windmills are closed" + String("\n");
+		info += "The city's energy demand is currently provided by a coal power plant. The nuclear and geothermal plants and all windmills are closed." + String("\n");
 	}
 	if (working == 1) {
-		info += "The city's energy demand is currently provided by a nuclear power plant. The coal and geothermal plants and all windmills are closed" + String("\n");
+		info += "The city's energy demand is currently provided by a nuclear power plant. The coal and geothermal plants and all windmills are closed." + String("\n");
 	}
 	if (working == 2) {
-		info += "The city's energy demand is currently provided by a geothermal power plant together with windmills. The nuclear and coal plants are closed" + String("\n");
+		info += "The city's energy demand is currently provided by a geothermal power plant together with windmills. The nuclear and coal plants are closed." + String("\n");
 	}
+	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
 	info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
 	info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
 	info += "Energy produced in kWh per year: " + to_godot_string((int)(this->get("energyOutput"))) + String("\n");

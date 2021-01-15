@@ -422,8 +422,6 @@ String Structure::get_object_info()
 {
     String info = String("INFORMATION - ABOUT THIS STRUCTURE") + String("\n") + String("\n") + String("\n");
     info += "This building is a(n) " + this->get_main_type() + " building. Specifically, it is a " + this->get_object_type() +"." + String("\n") + String("\n");
-    info += "This building is " + to_godot_string((int)((((int)this->get("age"))/365))) + " years and " + to_godot_string((int)((((int)this->get("age")) % 365))) + "days old."+ String("\n");
-    info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + "metric tonnes of CO2 yearly." + String("\n");
     return  info;
 }
 
