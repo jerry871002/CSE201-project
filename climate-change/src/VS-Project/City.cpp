@@ -54,7 +54,7 @@ City::City() {
     energyDemand = 0;
     energySupply = 0;
     environmentalCost = 0;
-    totalSatisfaction = 10;
+    totalSatisfaction = 0;
 
     time_speed = 1;
 
@@ -64,8 +64,7 @@ City::City() {
 
     // in order to find date
     daycount = 0;
-    numberOfHouses = 0;
-
+    
     //policies for transport
     fuelTax = 0;
     weightTax = 0;
@@ -145,7 +144,6 @@ void City::_register_methods()
     register_property<City, double>("electricCarSubsidy", &City::electricCarSubsidy, 0.0);
     register_property<City, double>("busSubsidy", &City::busSubsidy, 0.0);
     register_property<City, double>("carProhibition", &City::carProhibition, 0.0);
-
 
     register_property<City, double>("income", &City::income, 0.0);
     register_property<City, int>("population", &City::population, 0);
@@ -244,7 +242,7 @@ void City::_physics_process(float delta) {
         std::cout << "energySupply = " << (double)(this->get("energySupply")) << std::endl;
         std::cout << "environmentalCost = " << (double)(this->get("environmentalCost")) << std::endl;
       
-        change_pie_chart(100 * (totalSatisfaction / (10 * all_structures.size())), "PieSatisfaction", true);
+        change_pie_chart((int)return_totalSatisfaction(), "PieSatisfaction", true);
         change_pie_chart(value_pie_chart_C02(carbonEmission, 1000000), "PieCO2", false);
         change_pie_chart(income / (population * 100), "PieIncome", true);
         change_pie_chart(energyDemand, "PieUnemployement", false); //EnergyDemand variable is temporary
@@ -1408,7 +1406,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
 void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 
     //std::cout << "DEBUG: add shop called" << std::endl;
-
+    totalSatisfactioWeight += 3;
     //std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
     if (scene.is_valid()) {
         //std::cout << "DEBUG: creating node" << std::endl;
@@ -1444,7 +1442,8 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 }
 
 void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
-    numberOfHouses += 1;
+
+    totalSatisfactioWeight += 1;
     //std::cout << "DEBUG: add house called" << std::endl;
 
     //std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
@@ -1494,7 +1493,7 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
 
     //std::cout << "DEBUG: add shop called" << std::endl;
-
+    totalSatisfactioWeight += 10;
     //std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
     if (scene.is_valid()) {
         //std::cout << "DEBUG: creating node" << std::endl;
@@ -1530,7 +1529,7 @@ void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
 void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
 
     //std::cout << "DEBUG: add shop called" << std::endl;
-
+    totalSatisfactioWeight += 5;
     //std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
     if (scene.is_valid()) {
         //std::cout << "DEBUG: creating node" << std::endl;
@@ -2119,7 +2118,7 @@ double City::return_income() {
 }
 
 double City::return_totalSatisfaction() {
-    return totalSatisfaction;
+    return totalSatisfaction/totalSatisfactioWeight;
 }
 
 double City::return_numberOfEmployees() {
