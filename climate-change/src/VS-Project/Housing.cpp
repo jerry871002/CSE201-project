@@ -99,8 +99,8 @@ void Housing::simulate_step(double days) {
         //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->panel_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
-            PanelsOn = true;
-            solarPanelAge = this->solarLifetime;
+            this->PanelsOn = true;
+            this->solarPanelAge = this->solarLifetime;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
 			this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", (double(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget"))- (double)this->get("solar_panel_subsidies_housing"))); // line that takes off from budget the subsidy
             //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
@@ -113,7 +113,7 @@ void Housing::simulate_step(double days) {
     }
     else {
         this->solarPanelAge = 0;
-        PanelsOn = false;
+        this->PanelsOn = false;
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
         //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
@@ -178,7 +178,7 @@ void Housing::simulate_step(double days) {
 
     } 
 
-	
+	/*
 	if (this->PanelsOn) {
 		this->solarPanelAge += days;
 	}
@@ -206,6 +206,7 @@ void Housing::simulate_step(double days) {
 		this->rooftopWindTurbineOn = false;
 		this->rooftopWindTurbineAge = 0;
 	} 
+	*/
 };
 
 
@@ -254,11 +255,12 @@ void Housing::panel_added_probability(){
 	if (PanelsOn == true) {
 		panel_probability = 0;
 	}
-
+	/*
 	//We do not want to put wind turbines if there are already solar panels
 	else if (rooftopWindTurbineOn == true) {
 		panel_probability = 0;
 	}
+	*/
 }
 
 void Housing::double_glazing_added_probability(){
@@ -342,7 +344,7 @@ double House::get_energyuse() {
 	std::cout << "DEBUG: energy use  : " << double(this->energyUse) << std::endl;
 
 
-    return ((double)(this->energyUse))*panelsF*turbineF*glazingF;
+    return (double)((this->energyUse)*panelsF*turbineF*glazingF);
 }
 
 double House::get_environmentalcost() {
@@ -378,7 +380,10 @@ void House::set_houseType(int type)
 {
 	this->houseType = type;
 	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
-
+	double employees = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("numberOfEmployees");
+	double population = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("population");
+	int unemployment = ((int)(100 - 100 * fmin((double)1, (double)(employees / population)) + 0.5))*0.01;
+	
 	if (type == 1) {
 	//Low level house
 	//definition of low level house, has no solar panels, no double glazing and no wind turbines on roof 
@@ -393,18 +398,17 @@ void House::set_houseType(int type)
 
 		this->numberOfInhabitants = (rand() % (6) + 1);
 		
-
 		if (this->numberOfInhabitants >= 2) {
 			//have two salaries 
 			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
 		
-			housingIncome = fmax(minIncome, normalGenerator(50,70)) + fmax(minIncome, normalGenerator(50,70));
+			housingIncome = (fmax(minIncome, normalGenerator(50,70)) + fmax(minIncome, normalGenerator(50,70)))*(1-unemployment);
 		
 		}
 
 		else {
 			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
-			housingIncome = fmax(minIncome, normalGenerator(50,70));
+			housingIncome = fmax(minIncome, normalGenerator(50,70))*(1-unemployment);
 
 		}
 
@@ -435,12 +439,12 @@ void House::set_houseType(int type)
 		srand((int)time(0));
 		this->numberOfInhabitants = (rand() % (6) + 1);
 		if (this->numberOfInhabitants >= 2) {
-			housingIncome = fmax(minIncome, normalGenerator(50,70)) + fmax(minIncome, normalGenerator(50,70));
+			housingIncome = (fmax(minIncome, normalGenerator(50,70)) + fmax(minIncome, normalGenerator(50,70)))*(1-unemployment);
 
 		}
 
 		else {
-			housingIncome = fmax(minIncome, normalGenerator(50,70));
+			housingIncome = fmax(minIncome, normalGenerator(50,70))*(1-unemployment);
 		}
 
 		//attributes from structure class
@@ -555,12 +559,16 @@ Building::Building() {
 	this->numberOfInhabitants = (rand() % (10) + 50);
 	this->buildingType = (rand() % 2 + 1);
 
+	double employees = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("numberOfEmployees");
+	double population = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("population");
+	int unemployment = ((int)(100 - 100 * fmin((double)1, (double)(employees / population)) + 0.5)) * 0.01;
+
 	for (int i = 0; i < numberOfInhabitants/2; i++) { //I took half inhabitants are children
 		incomeEach += fmax(minIncome, normalGenerator(50,70));
 	}
 	
 	//This is to compute an average wage in the building so that the probability functions to add solar panels etc still work the same as for a house
-	housingIncome = incomeEach / this->numberOfInhabitants; 
+	housingIncome = (incomeEach / this->numberOfInhabitants)*(1-unemployment); 
 	
 
 	if (buildingType == 1) { //Low level building

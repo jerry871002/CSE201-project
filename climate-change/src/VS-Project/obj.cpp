@@ -99,7 +99,8 @@ void Structure::set_co2emissions(double emission) {
     this->CO2Emission = emission;
 }
 
-double Structure::get_energyuse() {
+double Structure::get_energyuse() 
+{
     if (this->get_main_type() == "Housing") {
         std::cout << "DEBUG: get energyuse called in Structure for housing" << std::endl;
         double panelsF = 1;
