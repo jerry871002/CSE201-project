@@ -17,6 +17,8 @@ Production::Production() {
 Production::~Production() {
 }
 
+
+
 double Production::get_PMEemission()
 {
 	return this->PMEmission;
@@ -256,8 +258,8 @@ GoodsFactories::~GoodsFactories() {}
 void godot::GoodsFactories::_process(float delta)
 {
 	this->Structure::_process(delta);
-	this->get_node("Smoke")->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
-	this->get_node("Smoke")->get_child(1)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	this->get_child(0)->set("speed_scale", int(((this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	this->get_child(1)->set("speed_scale", int(((this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
 }
 
 void GoodsFactories::simulate_step(double days)
@@ -323,10 +325,12 @@ void GoodsFactories::simulate_step(double days)
 			employment = 0;
 			factory_closed = true;
 			age = 0;
-			this->get_node("Smoke")->set("visible", false);
+			this->get_child(0)->set("visible", false);
+			this->get_child(1)->set("visible", false);
 		}
 		else {
-			this->get_node("Smoke")->set("visible", true);
+			this->get_child(0)->set("visible", true);
+			this->get_child(1)->set("visible", true);
 		}
 		std::normal_distribution <double> co2(maximum_CO2, 0.5);
 		CO2Emission = (co2(gen) * employment) * green * 0.001 * 365; // ton per year
@@ -409,10 +413,6 @@ void Services::simulate_step(double days)
 }
 
 // INOFRMATION DISPLAY
-
-void Production::_register_methods()
-{
-}
 
 template<typename T> String to_godot_string(T s)
 {

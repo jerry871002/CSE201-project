@@ -19,7 +19,6 @@ namespace godot {
 		virtual String get_object_type() { return "Production"; };
 		String get_main_type() { return "Production"; };
 
-		static void _register_methods();
 		virtual String get_object_info();
 
 		bool subsidy = false; //needed to check whether the subsidy is given to the factory in the info display
