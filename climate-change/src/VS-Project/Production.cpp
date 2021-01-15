@@ -182,7 +182,7 @@ void AgriculturalProduction::agriculture_type(int type) {
 		requiredLand = foodformeatfieldsize(gen); // size
 		std::normal_distribution <double> cropsfertility(200000, 50000); //soze of field giving a yearly production for our city
 		fertility = cropsfertility(gen); 
-		production = fertility * requiredLand; //
+		production = (fertility * requiredLand) / 1000; //
 		waterConsumption = 22 * production; //22L of water per 1 kg of production
 		CO2Emission = 19.18 * production; //co2 kg for production 
 		energyUse = 0;
