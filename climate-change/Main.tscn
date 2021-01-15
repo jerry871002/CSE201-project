@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=2]
+[gd_scene load_steps=137 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -58,6 +58,7 @@
 [ext_resource path="res://Blur.tres" type="Material" id=56]
 [ext_resource path="res://Ressources/Roboto/Roboto-Regular.ttf" type="DynamicFontData" id=57]
 [ext_resource path="res://Control_tab2.gd" type="Script" id=58]
+[ext_resource path="res://Controltab3.gd" type="Script" id=59]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -1411,7 +1412,6 @@ __meta__ = {
 }
 
 [node name="TabContainer" type="TabContainer" parent="2Dworld"]
-visible = false
 margin_left = 12.4002
 margin_top = 2.74565
 margin_right = 1872.4
@@ -1481,6 +1481,33 @@ __meta__ = {
 
 [node name="LineChart" parent="2Dworld/TabContainer/Tabs2/Node2D/Control" instance=ExtResource( 54 )]
 chart_name = "Environmental cost"
+Chart_Properties/are_values_columns = true
+Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
+Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )
+Chart_Style/v_lines_color = Color( 1, 1, 1, 0.392157 )
+Chart_Style/h_lines_color = Color( 1, 1, 1, 0.392157 )
+Chart_Style/font_color = Color( 1, 1, 1, 0.392157 )
+Chart_Style/template = 2
+
+[node name="Tabs3" type="Tabs" parent="2Dworld/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 48.0
+margin_right = -1817.0
+margin_bottom = -927.004
+
+[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Tabs3"]
+
+[node name="Control" type="Control" parent="2Dworld/TabContainer/Tabs3/Node2D"]
+margin_left = 65.0
+margin_top = 72.0
+margin_right = 1789.0
+margin_bottom = 948.0
+script = ExtResource( 59 )
+
+[node name="LineChart" parent="2Dworld/TabContainer/Tabs3/Node2D/Control" instance=ExtResource( 54 )]
+chart_name = "Income statistics"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.721569, 0.658824, 0.0235294, 1, 0.47451, 0.631373, 0.0901961, 1, 0.172549, 0.580392, 0.2, 1, 0, 0.521569, 0.298039, 1, 0, 0.396078, 0.443137, 1, 0.184314, 0.282353, 0.345098, 1, 0.164706, 0.211765, 0.309804, 1, 0.152941, 0.160784, 0.290196, 1 )
 Chart_Style/box_color = Color( 1, 1, 1, 0.392157 )

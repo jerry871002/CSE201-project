@@ -205,7 +205,6 @@ namespace godot {
         double return_environmentalCost();
         double return_energyDemand();
         double return_energySupply();
-        double return_environmentalCost();
         double return_totalSatisfaction();
 		int value_pie_chart_C02(int,int);
 
