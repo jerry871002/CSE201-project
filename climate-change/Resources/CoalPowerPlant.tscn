@@ -342,6 +342,14 @@ script = ExtResource( 1 )
 [node name="Smoke" type="Spatial" parent="."]
 script = ExtResource( 3 )
 
+[node name="Particles-lod0" type="Particles" parent="Smoke"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.842132, 3.12702, 0.6 )
+amount = 30
+lifetime = 8.0
+visibility_aabb = AABB( -2, -2.91307, -1.88232, 4, 5.93942, 4 )
+process_material = SubResource( 5 )
+draw_pass_1 = SubResource( 7 )
+
 [node name="Particles-lod1" type="Particles" parent="Smoke"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.842132, 3.12702, 0.6 )
 amount = 30

@@ -176,7 +176,9 @@ void NuclearPowerPlant::simulate_step(double days)
 		// 35 years is the average lifetime of a nuclear power plant, it then has to be replaced by a new plant or different power plant
 		energyPerDay = 0;
 		employment = 0;
+
 		//send message on screen for closure
+		this->get_node("Smoke")->set("visible", false);
 	}
 
 	bool newBuilt = false;
@@ -184,6 +186,7 @@ void NuclearPowerPlant::simulate_step(double days)
 	if (nuclear_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
 		employment = 0;
+		this->get_node("Smoke")->set("visible", false);
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
@@ -199,6 +202,7 @@ void NuclearPowerPlant::simulate_step(double days)
 	else {
 		std::normal_distribution <double> employees(800, 50);
 		employment = (int)(employees(gen));
+		this->get_node("Smoke")->set("visible", true);
 	}
 
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant per year
@@ -211,10 +215,10 @@ void NuclearPowerPlant::simulate_step(double days)
 	environmentalCost = 0.019 * energyPerDay * 365;
 	maintenance = 0.04 * energyPerDay * 365;
 	if (age >= 3650) {
-		maintenance = 0.04 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
+		maintenance *= 0.25; // after 10 years the maintenance and working costs increase by 1/4
 	}
 	if (age >= 10950) {
-		maintenance = 0.04; // after 30 years the maintenance and working costs double
+		maintenance *= 2; // after 30 years the maintenance and working costs double
 	}
 }
 
@@ -222,6 +226,7 @@ void godot::NuclearPowerPlant::_process(float delta)
 {
 	this->Structure::_process(delta); 
 	this->get_node("Smoke")->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	this->get_node("Smoke")->get_child(1)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
 }
 
 /// <summary>
@@ -332,6 +337,7 @@ void godot::GeothermalPowerPlant::_process(float delta)
 {
 	this->Structure::_process(delta);
 	this->get_node("Smoke")->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	this->get_node("Smoke")->get_child(1)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
 }
 
 void GeothermalPowerPlant::simulate_step(double days)
@@ -351,6 +357,7 @@ void GeothermalPowerPlant::simulate_step(double days)
 		energyPerDay = 0;
 		employment = 0;
 		//send message on screen for closure
+		this->get_node("Smoke")->set("visible", false);
 	}
 	
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
@@ -417,6 +424,7 @@ void godot::CoalPowerPlant::_process(float delta)
 {
 	this->Structure::_process(delta);
 	this->get_node("Smoke")->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	this->get_node("Smoke")->get_child(1)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
 }
 
 void CoalPowerPlant::simulate_step(double days)
@@ -439,6 +447,7 @@ void CoalPowerPlant::simulate_step(double days)
 		energyPerDay = 0;
 		employment = 0;
 		//send message on screen for closure
+		this->get_node("Smoke")->set("visible", false);
 	}
 
 	bool newBuilt = false;
@@ -446,6 +455,7 @@ void CoalPowerPlant::simulate_step(double days)
 	if (coal_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
 		employment = 0;
+		this->get_node("Smoke")->set("visible", false);
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
@@ -461,6 +471,7 @@ void CoalPowerPlant::simulate_step(double days)
 	else {
 		std::normal_distribution <double> employees(800, 20);
 		employment = (int)(employees(gen));
+		this->get_node("Smoke")->set("visible", true);
 	}
 	
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
