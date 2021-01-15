@@ -391,7 +391,7 @@ void GeothermalPowerPlant::simulate_step(double days)
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
 
 	std::normal_distribution <double> energy(32800, 1500);
-	energyPerDay = energy(gen); //kWh produced by in one day
+	energyPerDay = energy(gen)*running; //kWh produced by in one day
 	
 	if (age >= 10950) {
 		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
@@ -517,7 +517,7 @@ void CoalPowerPlant::simulate_step(double days)
 	double cityPowerDemand = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("energyDemand");
 	double dailyDemand = cityPowerDemand / 365;
 	std::normal_distribution <double> energy(dailyDemand, 1000);
-	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
+	energyPerDay = energy(gen)*running; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 
 	if (coal_prohibited == 1 || age >= 18250) {
 		// 50 years is the average lifetime of a coal fired plant, it then has to be replaced by a new coal plant or different power plant

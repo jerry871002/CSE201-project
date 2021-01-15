@@ -398,13 +398,13 @@ template<typename T> String to_godot_string(T s)
 String Production::get_object_info()
 {
 	String info = this->Structure::get_object_info();
+	if (subsidy == true) {
+		info += "This factory receives a green subsidy" + String("\n");
+	}
 	info += "Age: " + to_godot_string((int)(this->age)) + String("\n");
 	info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
 	info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
 	info += "CO2 Emissions per ton per year: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
-	if (subsidy == true) {
-		info += "This factory receives a green subsidy" + String("\n");
-	}
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	return info;
 }
