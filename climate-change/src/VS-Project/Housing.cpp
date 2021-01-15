@@ -521,9 +521,9 @@ double Building::get_energyuse() {
 			}
 		}
 	
-	std::cout << "PanelsOn for this building : " << PanelsOn << std::endl;
-	std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
-	std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
+	//std::cout << "PanelsOn for this building : " << PanelsOn << std::endl;
+	//std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
+	//std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
 
     return (double)(this->energyUse)*panelsF*turbineF*glazingF;
 }
