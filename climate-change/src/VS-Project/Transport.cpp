@@ -75,7 +75,7 @@ void Transport::set_transportType(int type)
     // random device class instance, source of 'true' randomness for initializing random seed
     std::random_device rd;
     std::mt19937 gen(rd());
-    switch (type) {
+    switch ((int)type) {
     case 0: { //electric car
         co2PerKm = 0;
         capacity = 5;
