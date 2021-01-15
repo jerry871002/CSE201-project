@@ -156,6 +156,7 @@ void City::_register_methods()
 
     //statistics:
     register_property<City, Array>("statsCarbonEmission", &City::statsCarbonEmission, {});
+    register_property<City, Array>("statsCarbonEmissionSplit", &City::statsCarbonEmissionSplit, {});
     register_property<City, Array>("statsIncome", &City::statsIncome, {});
     register_property<City, Array>("statsEnergy", &City::statsEnergy, {});
     register_property<City, Array>("statsUnemployment", &City::statsUnemployment, {});
@@ -691,6 +692,13 @@ void City::initialize_stats() {
     titleCarbonEmission.push_back(String("Carbon emissions in thousands of tons"));
     statsCarbonEmission.push_back(titleCarbonEmission);
 
+    Array titleCarbonEmissionSplit{};
+    titleCarbonEmissionSplit.push_back(String("Date"));
+    titleCarbonEmissionSplit.push_back(String("Carbon emissions from Housing sector in thousands of tons"));
+    titleCarbonEmissionSplit.push_back(String("Carbon emissions from Shop sector in thousands of tons"));
+    titleCarbonEmissionSplit.push_back(String("Carbon emissions from Energy sector in thousands of tons"));
+    titleCarbonEmissionSplit.push_back(String("Carbon emissions from Production sector in thousands of tons"));
+    statsCarbonEmissionSplit.push_back(titleCarbonEmissionSplit);
 
     Array titleEnvironmentalCost{};
     titleEnvironmentalCost.push_back(String("Date"));
@@ -884,16 +892,16 @@ void City::_on_TransportMenuButton_pressed()
     * 6 - bus
     * 7 - sports car
     */
-    String transportInfo = String("INFORMATION") + String("\n");
-    transportInfo += String("Transport") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[0])) + String("Electric Cars") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[1])) + String("American Cars") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[2])) + String("Normal Cars") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[3])) + String("Collection Cars") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[4])) + String("Bicycles") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[5])) + String("Motorcycles") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[6])) + String("Bus") + String("\n");
-    transportInfo += to_godot_string((int)(current_car_quantities[7])) + String("Sports Cars") + String("\n");
+    String transportInfo = String("TRANSPORT INFORMATION") + String("\n");
+    transportInfo += String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[0])) + String(" Electric Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[1])) + String(" American Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[2])) + String(" Normal Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[3])) + String(" Collection Cars") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[4])) + String(" Bicycles") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[5])) + String(" Motorcycles") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[6])) + String(" Bus") + String("\n");
+    transportInfo += to_godot_string((int)(current_car_quantities[7])) + String(" Sports Cars") + String("\n");
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", transportInfo);
 
@@ -902,7 +910,7 @@ void City::_on_TransportMenuButton_pressed()
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("position", Vector2((get_viewport()->get_size().x) / 2, (get_viewport()->get_size().y) / 2));
+    
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
 }
 
@@ -2081,6 +2089,8 @@ void City::write_stat_history_to_file() {
     }
     statsCarbonEmissionProduction.push_back(newCarbonEmissionProduction);
 
+
+
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
     newCarbonEmission.push_back((int)((carbonEmission / pow(10, 3)) + 0.5));
@@ -2089,6 +2099,19 @@ void City::write_stat_history_to_file() {
         statsCarbonEmission.pop_front();
     }
     statsCarbonEmission.push_back(newCarbonEmission);
+
+
+    Array newCarbonEmissionSplit{};
+    newCarbonEmissionSplit.push_back(return_word_date_godot());
+    newCarbonEmissionSplit.push_back((int)(HousingCO2 / pow(10, 6) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(ShopsCO2 / pow(10, 6) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(EnergyCO2 / pow(10, 6) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(ProductionCO2 / pow(10, 6) + 0.5));
+
+    if (statsCarbonEmissionSplit.size() > 100) {
+        statsCarbonEmissionSplit.pop_front();
+    }
+    statsCarbonEmissionSplit.push_back(newCarbonEmissionSplit);
 
 
     Array newEnvironmentalCost{};
