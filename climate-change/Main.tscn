@@ -1,4 +1,4 @@
-[gd_scene load_steps=140 format=2]
+[gd_scene load_steps=142 format=2]
 
 [ext_resource path="res://City.gdns" type="Script" id=1]
 [ext_resource path="res://default_env.tres" type="Environment" id=2]
@@ -61,7 +61,9 @@
 [ext_resource path="res://Controltab3.gd" type="Script" id=59]
 [ext_resource path="res://Controltab4.gd" type="Script" id=60]
 [ext_resource path="res://Controltab5.gd" type="Script" id=61]
+[ext_resource path="res://Controltab6.gd" type="Script" id=62]
 [ext_resource path="res://Controltab7.gd" type="Script" id=63]
+[ext_resource path="res://Controltab8.gd" type="Script" id=64]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -1584,6 +1586,36 @@ Chart_Style/h_lines_color = Color( 1, 1, 1, 0.235294 )
 Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
 Chart_Style/template = 1
 
+[node name="Population" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 48.0
+margin_right = -3.0
+margin_bottom = -3.0
+
+[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Population"]
+
+[node name="Control" type="Control" parent="2Dworld/TabContainer/Population/Node2D"]
+margin_left = 65.0
+margin_top = 52.0
+margin_right = 1797.0
+margin_bottom = 928.0
+script = ExtResource( 62 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineChart" parent="2Dworld/TabContainer/Population/Node2D/Control" instance=ExtResource( 54 )]
+Chart_Properties/are_values_columns = true
+Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
+Chart_Style/box_color = Color( 0, 0, 0, 0 )
+Chart_Style/v_lines_color = Color( 0, 0, 0, 0 )
+Chart_Style/h_lines_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/template = 1
+
 [node name="Energy" type="Tabs" parent="2Dworld/TabContainer"]
 visible = false
 anchor_right = 1.0
@@ -1606,6 +1638,36 @@ __meta__ = {
 }
 
 [node name="LineChart" parent="2Dworld/TabContainer/Energy/Node2D/Control" instance=ExtResource( 54 )]
+Chart_Properties/are_values_columns = true
+Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
+Chart_Style/box_color = Color( 0, 0, 0, 0 )
+Chart_Style/v_lines_color = Color( 0, 0, 0, 0 )
+Chart_Style/h_lines_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/font_color = Color( 1, 1, 1, 0.235294 )
+Chart_Style/template = 1
+
+[node name="Environmental Cost" type="Tabs" parent="2Dworld/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 48.0
+margin_right = -3.0
+margin_bottom = -3.0
+
+[node name="Node2D" type="Node2D" parent="2Dworld/TabContainer/Environmental Cost"]
+
+[node name="Control" type="Control" parent="2Dworld/TabContainer/Environmental Cost/Node2D"]
+margin_left = 65.0
+margin_top = 52.0
+margin_right = 1797.0
+margin_bottom = 928.0
+script = ExtResource( 64 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineChart" parent="2Dworld/TabContainer/Environmental Cost/Node2D/Control" instance=ExtResource( 54 )]
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
 Chart_Style/box_color = Color( 0, 0, 0, 0 )
