@@ -51,6 +51,7 @@ namespace godot {
 		double get_max_income();
 
 		double get_min_income();
+		double get_max_income();
 		double get_solar_panel_age();
 		double get_double_glazing_age();
 		double get_satisfaction();
