@@ -292,6 +292,19 @@ void City::_physics_process(float delta) {
         if (datenumber[0] == 1 && datenumber[1] == 1)
         {
             // CALLED EVERY YEAR
+            if (!(factoryyearsubsidy) && (yearlyfactorysubsidy > 0)) {   // take off factory subsidies if they havent been changed
+                for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+                {
+
+                    if (((*it)->get("object_type")).operator String() == (String)("Goods Factory")) {
+
+                        budget -= yearlyfactorysubsidy;
+
+                    }
+                }
+                this->trigger_notification(String("The goods factory subsidies were taken from the budget. "));
+            }
+            if (factoryyearsubsidy) { factoryyearsubsidy = false; }
 
             this->budget += 1000 * all_structures.size();
         }
@@ -407,13 +420,13 @@ void City::generate_initial_city_graphics()
                 // maximum possible distance from center is 300
 
                 // 2x2 buildings
-                float mallprob = calculate_building_prob(40, 90, 0.5, dist);
+                float mallprob = calculate_building_prob(40, 90, 0.35, dist);
                 float nuclearprob = calculate_building_prob(140, 180, 0.8, dist);
                 float coalprob = calculate_building_prob(140, 180, 0.5, dist);
                 float geoprob = calculate_building_prob(140, 180, 0.5, dist);
                 float fieldprob = calculate_building_prob(150, 320, 1.25, dist);
                 float pastureprob = calculate_building_prob(150, 320, 2, dist);
-                float factoryprob = calculate_building_prob(100, 200, 0.7, dist);
+                float factoryprob = calculate_building_prob(100, 200, 0.4, dist);
 
                 if (hasgeo) { geoprob = 0; }
                 if (hasnuclear) { nuclearprob = 0; }
@@ -973,7 +986,7 @@ String City::get_button_info_text() {
     }
     else if (this->active_button == String("SubsidyFactories"))
     {
-        return String("This is a subsidy for green factories, promoting the reduction of harmful chemicals and heavy metals emissions. Please input a value between 1000 and 100 000 euros per factory per year or 0 to remove the policy");
+        return String("This is a subsidy for green factories, promoting the reduction of harmful chemicals and heavy metals emissions. Please input a value between 1000 and 100 000 euros per factory per year. You will not be able to change this value until next year!");
     }
     else if (this->active_button == String("Pesticides"))
     {
@@ -1193,18 +1206,27 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("SubsidyFactories")) {
-        if ((100000 >= value && value >= 1000) || value == 0) {
-            Godot::print("GREEN SUBSIDY FOR FACTORIES IMPLEMENTED");
-            for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
-            {
-                if (((*it)->get("object_type")).operator String() == (String)("Goods Factory")) {
-                    (*it)->set("subsidy_green", value);
+        if (((100000 >= value && value >= 1000) || value == 0) && !(factoryyearsubsidy)) {
+            if ((100000 >= value && value >= 1000) || value == 0) {
+                Godot::print("GREEN SUBSIDY FOR FACTORIES IMPLEMENTED");
+                for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+                {
+
+                    if (((*it)->get("object_type")).operator String() == (String)("Goods Factory")) {
+                        (*it)->set("subsidy_green", value);
+                        budget -= value;
+                    }
                 }
+                factoryyearsubsidy = true;
+                yearlyfactorysubsidy = (double)value;
+                this->trigger_notification(String("Much to every capitalist's delight, factories are now being subsidized."));
             }
-            this->trigger_notification(String("Much to every capitalist's delight, factories are now being subsidized."));
-        }
-        else {
-            this->trigger_notification(String("The value you provided was not in the specified range."));
+            else if (factoryyearsubsidy) {
+                this->trigger_notification(String("You can only change this once a year ! You wouldn't want to confuse the markets, would you ? "));
+            }
+            else {
+                this->trigger_notification(String("The value you provided was not in the specified range."));
+            }
         }
     }
     else if (this->active_button == String("Pesticides")) {

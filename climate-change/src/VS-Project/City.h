@@ -284,6 +284,11 @@ namespace godot {
         int get_workingPower();
         void set_workingPower(int);
 
+
+
+        bool factoryyearsubsidy{ false };
+        double yearlyfactorysubsidy{ 0 };
+
         
         const Ref<PackedScene> RestaurantScene = ResourceLoader::get_singleton()->load("res://Resources/Restaurant.tscn", "PackedScene");
         const Ref<PackedScene> ShopScene = ResourceLoader::get_singleton()->load("res://Resources/Shop.tscn", "PackedScene");
