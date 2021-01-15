@@ -408,7 +408,7 @@ void House::set_houseType(int type)
 		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
 		energyUse = 25000; //25000kWh per year i.e. 13.69 kWh per day (from heating and all )
 		maintenance = 0.1765; //cost in euros per kWh
-		CO2Emission = 3.51; ////tons per year 
+		this->CO2Emission = 3.51; ////tons per year 
 		buildingTime = 140; //in average, building a house takes about 140 days
 		this->satisfaction = 3;
 		//satisfaction = 3; //assuming we are on a scale from 0 to 10
@@ -416,7 +416,7 @@ void House::set_houseType(int type)
 		//attributes special to this class
 		windowNumber = 5;
 		srand((int)time(0));
-		age = (rand() % (20) + 1);
+		this->age = (rand() % (20*365) + 1);
 		
 
 	}
@@ -443,12 +443,12 @@ void House::set_houseType(int type)
 		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
 		energyUse = 20000; //20000kWh per year i.e. 54.79 kWh per day (from heating and all )
 		maintenance = 0.1765; //cost in euros per kWh
-		CO2Emission = 3.51; //tons per year
+		this->CO2Emission = 3.51; //tons per year
 		buildingTime = 140; //in average, building a house takes about 140 days
 		this->satisfaction = 10;
 		//satisfaction = 10; //assuming we are on a scale from 0 to 10
 		srand((int)time(0));
-		age = (rand() % (20) + 1);
+		this->age = (rand() % (20 * 365) + 1);
 	}
 
 }
@@ -536,7 +536,7 @@ Building::Building() {
 	PanelsOn = false;
 	rooftopWindTurbineOn = false;
 	srand((int)time(0));
-	age = (rand() % (20) + 1);
+	this->age = (rand() % (20 * 365) + 1);
 
 	windowNumber = 30;
 	cost = 1000000; //counting price of lot + cost of workforce + cost of all materials used
