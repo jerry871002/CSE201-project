@@ -240,20 +240,19 @@ void City::_physics_process(float delta) {
         std::cout << "numberOfEmployees = " << (double)(this->get("numberOfEmployees")) << std::endl;
         std::cout << "carbonEmission = " << (double)(this->get("carbonEmission")) << std::endl;
         std::cout << "energyDemand = " << (double)(this->get("energyDemand")) << std::endl;
-        std::cout << "energySupply = " << (double)(this->get("energySupply")) << std::endl;
         std::cout << "environmentalCost = " << (double)(this->get("environmentalCost")) << std::endl;
       
         change_pie_chart((int)return_totalSatisfaction(), "PieSatisfaction", true);
-        change_pie_chart(value_pie_chart_C02(carbonEmission, 1000000), "PieCO2", false);
-        change_pie_chart(income / (population * 100), "PieIncome", true);
-        change_pie_chart(energyDemand, "PieUnemployement", false); //EnergyDemand variable is temporary
+        change_pie_chart(value_pie_chart_C02(carbonEmission, 100000000), "PieCO2", false);
+        change_pie_chart(income / population, "PieIncome", true);
+        change_pie_chart(100-100*numberOfEmployees/population, "PieUnemployement", false); //EnergyDemand variable is temporary
         change_pie_chart(value_pie_chart_C02(energyDemand, 100000), "PiePowerDemand", false);
 
         change_pie_label(totalSatisfaction, "PieSatisfaction");
         change_pie_label(carbonEmission, "PieCO2");
         change_pie_label(income, "PieIncome");
         change_pie_label(numberOfEmployees, "PieEmployees");
-        change_pie_label(energyDemand, "PieUnemployement");
+        change_pie_label(100-100*numberOfEmployees/population, "PieUnemployement");
         change_pie_label(energyDemand, "PiePowerDemand");
 
     }
@@ -702,12 +701,12 @@ void City::initialize_stats() {
 
     Array titleEnvironmentalCost{};
     titleEnvironmentalCost.push_back(String("Date"));
-    titleEnvironmentalCost.push_back(String("Environmental cost in billions of euros"));
+    titleEnvironmentalCost.push_back(String("Environmental cost in millions of euros"));
     statsEnvironmentalCost.push_back(titleEnvironmentalCost);
 
     Array titleIncome{};
     titleIncome.push_back(String("Date"));
-    titleIncome.push_back(String("GDP in billions of euros"));
+    titleIncome.push_back(String("GDP in millions of euros"));
     statsIncome.push_back(titleIncome);
 
     Array titleEnergy{};
@@ -2091,10 +2090,10 @@ void City::write_stat_history_to_file() {
 
     Array newCarbonEmissionSplit{};
     newCarbonEmissionSplit.push_back(return_word_date_godot());
-    newCarbonEmissionSplit.push_back((int)(HousingCO2 / pow(10, 6) + 0.5));
-    newCarbonEmissionSplit.push_back((int)(ShopsCO2 / pow(10, 6) + 0.5));
-    newCarbonEmissionSplit.push_back((int)(EnergyCO2 / pow(10, 6) + 0.5));
-    newCarbonEmissionSplit.push_back((int)(ProductionCO2 / pow(10, 6) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(HousingCO2 / pow(10, 3) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(ShopsCO2 / pow(10, 3) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(EnergyCO2 / pow(10, 3) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(ProductionCO2 / pow(10, 3) + 0.5));
 
     if (statsCarbonEmissionSplit.size() > 100) {
         statsCarbonEmissionSplit.pop_front();
@@ -2104,7 +2103,7 @@ void City::write_stat_history_to_file() {
 
     Array newEnvironmentalCost{};
     newEnvironmentalCost.push_back(return_word_date_godot());
-    newEnvironmentalCost.push_back((int)((environmentalCost / pow(10, 9)) + 0.5));
+    newEnvironmentalCost.push_back((int)((environmentalCost / pow(10, 6)) + 0.5));
 
     if (statsEnvironmentalCost.size() > 100) {
         statsEnvironmentalCost.pop_front();
@@ -2114,7 +2113,7 @@ void City::write_stat_history_to_file() {
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
-    newIncome.push_back((int)((income / pow(10, 9)) + 0.5));
+    newIncome.push_back((int)((income / pow(10, 6)) + 0.5));
 
     if (statsIncome.size() > 100) {
         statsIncome.pop_front();
@@ -2125,7 +2124,7 @@ void City::write_stat_history_to_file() {
     Array newEnergy{};
     newEnergy.push_back(return_word_date_godot());
     newEnergy.push_back((int)((energyDemand / pow(10, 6)) + 0.5));
-    newEnergy.push_back((int)((energySupply / pow(10, 6)) + 0.5));
+    newEnergy.push_back((int)((energySupply) + 0.5));
 
     if (statsEnergy.size() > 100) {
         statsEnergy.pop_front();
