@@ -247,17 +247,18 @@ void City::_physics_process(float delta) {
         std::cout << "environmentalCost = " << (double)(this->get("environmentalCost")) << std::endl;
       
         change_pie_chart( (int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
-        change_pie_chart(value_pie_chart_C02(carbonEmission, 100000000), "PieCO2", false);
-        change_pie_chart(income / population, "PieIncome", true);
-        change_pie_chart(100-100*numberOfEmployees/population, "PieUnemployement", false); //EnergyDemand variable is temporary
-        change_pie_chart(value_pie_chart_C02(energyDemand, 100000), "PiePowerDemand", false);
+        change_pie_chart(value_pie_chart_C02(carbonEmission, 20000), "PieCO2", false);
+        change_pie_chart(income / (numberOfEmployees * 30), "PieIncome", true);
+        change_pie_chart(value_pie_chart_C02(budget, pow(10, 6)), "PieBudget", true);
+        change_pie_chart(25-100*numberOfEmployees/population, "PieUnemployement", false); //EnergyDemand variable is temporary
+        change_pie_chart(energyDemand / (all_structures.size() * 5000), "PiePowerDemand", false);
 
         change_pie_label( (int)(10 * return_totalSatisfaction()), "PieSatisfaction");
         change_pie_label(carbonEmission, "PieCO2");
-        change_pie_label(income, "PieIncome");
-        change_pie_label(numberOfEmployees, "PieEmployees");
+        change_pie_label(income / numberOfEmployees, "PieIncome");
+        change_pie_label(budget, "PieBudget");
         change_pie_label(100-100*numberOfEmployees/population, "PieUnemployement");
-        change_pie_label(energyDemand, "PiePowerDemand");
+        change_pie_label(energyDemand / all_structures.size(), "PiePowerDemand");
 
     }
 
@@ -2346,14 +2347,21 @@ int City::value_pie_chart_C02(int value, int growth) {
 
 void City::change_pie_chart(int value, NodePath name, bool isPositive)
 {
+    value = fmax(value, 0);
     TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
-    if (isPositive) {
-        node->set_tint_progress(Color(min(2 - (double)value / 50, 0.99), min((double)value / 50, 0.99), 0, 1.0));
+    if (value == 0) {
+        node->set_tint_progress(Color(1, 0, 0, 1.0));
+        node->set("value", 100);
     }
     else {
-        node->set_tint_progress(Color(min((double)value / 50, 0.99), min(2 - (double)value / 50, 0.99), 0, 1.0));
+        if (isPositive) {
+            node->set_tint_progress(Color(min(2 - (double)value / 50, 0.99), min((double)value / 50, 0.99), 0, 1.0));
+        }
+        else {
+            node->set_tint_progress(Color(min((double)value / 50, 0.99), min(2 - (double)value / 50, 0.99), 0, 1.0));
+        }
+        node->set("value", value);
     }
-    node->set("value", value);
 }
 
 void City::change_pie_label(int value, NodePath name) {

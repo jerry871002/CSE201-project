@@ -389,11 +389,9 @@ void House::set_houseType(int type)
 	this->houseType = type;
 	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
 
-	//double employees = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
-	//double population = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
-	double employees = 10000;
-	double population = 15000;
-	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / population)) + 0.5);
+	double employees = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
+	double population = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
+	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
 
 	if (type == 1) {
 	//Low level house
@@ -591,11 +589,9 @@ Building::Building() {
 	housingIncome = 0;
 	double incomeEach = 0;
 	
-	//double employees = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
-	//double population = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
-	double employees = 10000;
-	double population = 15000;
-	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / population)) + 0.5);
+	double employees = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
+	double population = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
+	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
 
 	this->numberOfInhabitants = (rand() % (10) + 50);
 	this->buildingType = (rand() % 2 + 1);

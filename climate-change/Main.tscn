@@ -1456,9 +1456,6 @@ __meta__ = {
 [node name="LineChart" parent="2Dworld/TabContainer/CO2 Emissions/Node2D/Control" instance=ExtResource( 54 )]
 margin_left = -0.999969
 margin_right = -1.0
-chart_name = ""
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
 Chart_Style/box_color = Color( 0, 0, 0, 0 )
@@ -1493,9 +1490,6 @@ __meta__ = {
 margin_left = 4.57764e-05
 margin_top = -32.0
 margin_bottom = -32.0
-chart_name = ""
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
 Chart_Style/box_color = Color( 0, 0, 0, 0 )
@@ -1528,9 +1522,6 @@ __meta__ = {
 [node name="LineChart" parent="2Dworld/TabContainer/GDP/Node2D/Control" instance=ExtResource( 54 )]
 margin_left = 4.00005
 margin_right = 4.0
-chart_name = ""
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
 Chart_Style/box_color = Color( 0, 0, 0, 0 )
@@ -1562,9 +1553,6 @@ margin_left = 8.0
 margin_top = 16.0
 margin_right = -1.0
 margin_bottom = -4.0
-chart_name = ""
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
 Chart_Style/box_color = Color( 0, 0, 0, 0 )
@@ -1594,9 +1582,6 @@ script = ExtResource( 61 )
 [node name="LineChart" parent="2Dworld/TabContainer/Satisfaction/Node2D/Control" instance=ExtResource( 54 )]
 margin_right = 30.0
 margin_bottom = 10.0
-chart_name = ""
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
 Chart_Style/box_color = Color( 0, 0, 0, 0 )
@@ -1627,9 +1612,6 @@ __meta__ = {
 }
 
 [node name="LineChart" parent="2Dworld/TabContainer/Population/Node2D/Control" instance=ExtResource( 54 )]
-chart_name = ""
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
 Chart_Style/box_color = Color( 0, 0, 0, 0 )
@@ -1660,9 +1642,6 @@ __meta__ = {
 }
 
 [node name="LineChart" parent="2Dworld/TabContainer/Energy/Node2D/Control" instance=ExtResource( 54 )]
-chart_name = ""
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
 Chart_Style/box_color = Color( 0, 0, 0, 0 )
@@ -1693,9 +1672,6 @@ __meta__ = {
 }
 
 [node name="LineChart" parent="2Dworld/TabContainer/Environmental Cost/Node2D/Control" instance=ExtResource( 54 )]
-chart_name = ""
-source = ""
-delimiter = ";"
 Chart_Properties/are_values_columns = true
 Chart_Style/function_colors = PoolColorArray( 0.968627, 0.666667, 0.160784, 1, 0.956863, 0.223529, 0.290196, 1, 0.352941, 0.419608, 0.482353, 1, 0.560784, 0.74902, 0.34902, 1, 0.313726, 0.270588, 0.219608, 1, 0.717647, 0.662745, 0.603922, 1, 0, 0.843137, 0.584314, 1, 1, 0.92549, 0.8, 1, 1, 0.537255, 0.505882, 1 )
 Chart_Style/box_color = Color( 0, 0, 0, 0 )
