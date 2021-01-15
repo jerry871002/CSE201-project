@@ -1,6 +1,6 @@
 [general]
 
-singleton=true
+singleton=false
 load_once=true
 symbol_prefix="godot_"
 reloadable=true
@@ -12,5 +12,5 @@ Windows.64="res://src/VS-Project/DLLExport/LibVS-Project-x64-Debug.dll"
 
 [dependencies]
 
-OSX.64=[  ]
-Windows.64=[  ]
+OSX.64=[ "res://src/VS-Project/DLLExport/LibVS-Project-x64-Debug.dll" ]
+Windows.64=[ "res://src/VS-Project/DLLExport/LibVS-Project-x64-Debug.dll" ]

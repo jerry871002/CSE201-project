@@ -243,6 +243,19 @@ void City::_physics_process(float delta) {
         std::cout << "energyDemand = " << (double)(this->get("energyDemand")) << std::endl;
         std::cout << "energySupply = " << (double)(this->get("energySupply")) << std::endl;
         std::cout << "environmentalCost = " << (double)(this->get("environmentalCost")) << std::endl;
+      
+        change_pie_chart(100 * (totalSatisfaction / (10 * all_structures.size())), "PieSatisfaction", true);
+        change_pie_chart(value_pie_chart_C02(carbonEmission, 1000000), "PieCO2", false);
+        change_pie_chart(income / (population * 100), "PieIncome", true);
+        change_pie_chart(energyDemand, "PieUnemployement", false); //EnergyDemand variable is temporary
+        change_pie_chart(value_pie_chart_C02(energyDemand, 100000), "PiePowerDemand", false);
+
+        change_pie_label(totalSatisfaction, "PieSatisfaction");
+        change_pie_label(carbonEmission, "PieCO2");
+        change_pie_label(income, "PieIncome");
+        change_pie_label(numberOfEmployees, "PieEmployees");
+        change_pie_label(energyDemand, "PieUnemployement");
+        change_pie_label(energyDemand, "PiePowerDemand");
 
     }
 
@@ -1326,20 +1339,6 @@ void City::_on_Game_Speed_changed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
-    change_pie_chart(100 * (totalSatisfaction / (10 * all_structures.size())), "PieSatisfaction", true);
-    change_pie_chart(value_pie_chart_C02(carbonEmission, 1000000), "PieCO2", false);
-    change_pie_chart(income / (population * 100), "PieIncome", true);
-    change_pie_chart(energyDemand, "PieUnemployement", false); //EnergyDemand variable is temporary
-    change_pie_chart(value_pie_chart_C02(energyDemand, 100000), "PiePowerDemand", false);
-
-    change_pie_label(totalSatisfaction, "PieSatisfaction");
-    change_pie_label(carbonEmission, "PieCO2");
-    change_pie_label(income, "PieIncome");
-    change_pie_label(numberOfEmployees, "PieEmployees");
-    change_pie_label(energyDemand, "PieUnemployement");
-    change_pie_label(energyDemand, "PiePowerDemand");
-
-
 }
 
 
