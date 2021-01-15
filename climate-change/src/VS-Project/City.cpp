@@ -2186,7 +2186,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
             alphaSum += alpha[i];
         }
         for (int i = 0; i < 8; i++) {
-            alpha[i] = 1.5 * alpha[i] / alphaSum;
+            alpha[i] = 1 * alpha[i] / alphaSum;
         }
 
         double choice[8] = { 0 };
