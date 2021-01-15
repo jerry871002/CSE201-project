@@ -168,10 +168,13 @@ void City::_register_methods()
     register_property<City, double>("EnergyCO2", &City::EnergyCO2, 0.0);
     register_property<City, double>("ShopsCO2", &City::ShopsCO2, 0.0);
     register_property<City, double>("ProductionCO2", &City::ProductionCO2, 0.0);
+    register_property<City, double>("TransportCO2", &City::TransportCO2, 0.0);
+
     register_property<City, Array>("statsCarbonEmissionHousing", &City::statsCarbonEmissionHousing, {});
     register_property<City, Array>("statsCarbonEmissionShops", &City::statsCarbonEmissionShops, {});
     register_property<City, Array>("statsCarbonEmissionEnergy", &City::statsCarbonEmissionEnergy, {});
     register_property<City, Array>("statsCarbonEmissionProduction", &City::statsCarbonEmissionProduction, {});
+    register_property<City, Array>("statsCarbonEmissionTransport", &City::statsCarbonEmissionTransport, {});
 
     //powerplant method register: 
      register_property<City, int>("workingPower", &City::set_workingPower, &City::get_workingPower, 0);
@@ -697,6 +700,7 @@ void City::initialize_stats() {
     titleCarbonEmissionSplit.push_back(String("Carbon emissions from Shop sector in thousands of tons"));
     titleCarbonEmissionSplit.push_back(String("Carbon emissions from Energy sector in thousands of tons"));
     titleCarbonEmissionSplit.push_back(String("Carbon emissions from Production sector in thousands of tons"));
+    //titleCarbonEmissionSplit.push_back(String("Carbon emissions from Transport sector in thousands of tons"));
     statsCarbonEmissionSplit.push_back(titleCarbonEmissionSplit);
 
     Array titleEnvironmentalCost{};
@@ -2075,6 +2079,17 @@ void City::write_stat_history_to_file() {
     }
     statsCarbonEmissionProduction.push_back(newCarbonEmissionProduction);
 
+    update_transport_emissions();
+
+    Array newCarbonEmissionTransport{};
+    newCarbonEmissionTransport.push_back(return_word_date_godot());
+    newCarbonEmissionTransport.push_back((int)((TransportCO2 / pow(10, 6)) + 0.5));
+
+    if (statsCarbonEmissionTransport.size() > 100) {
+        statsCarbonEmissionTransport.pop_front();
+    }
+    statsCarbonEmissionTransport.push_back(newCarbonEmissionTransport);
+
 
 
     Array newCarbonEmission{};
@@ -2093,6 +2108,7 @@ void City::write_stat_history_to_file() {
     newCarbonEmissionSplit.push_back((int)(ShopsCO2 / pow(10, 3) + 0.5));
     newCarbonEmissionSplit.push_back((int)(EnergyCO2 / pow(10, 3) + 0.5));
     newCarbonEmissionSplit.push_back((int)(ProductionCO2 / pow(10, 3) + 0.5));
+    //newCarbonEmissionSplit.push_back((int)(TransportCO2 / pow(10, 3) + 0.5));
 
     if (statsCarbonEmissionSplit.size() > 100) {
         statsCarbonEmissionSplit.pop_front();
@@ -2215,6 +2231,16 @@ int City::most_missing_type() {
 
 }
 
+void City::update_transport_emissions() 
+{
+    double emission = 0;
+    double emissions[8] = {0, 0.328 * 36.5, 0.115 * 36.5, 0.4 * 36.5, 0, 0.11 * 36.5, 1.25 * 36.5, 0.5 * 36.5 };
+    for (int i = 0; i < 8; i++) {
+        emission += current_car_quantities[i] * emissions[i];
+    }
+    TransportCO2 = emission;
+}
+
 void City::transport_to_add() { //now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
                                // the finction goes through all the buidlings  to get the wage as income
     Transport electicCar = Transport(0);
@@ -2231,10 +2257,10 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
 
     std::cout << "Current air quality is: " << airQuality << std::endl;
 
-    double satisfaction[8] = { electicCar.satisfaction * ((double)(7 - carProhibition) / 7.0), bigCar.satisfaction * ((double)(7 - carProhibition) / 7.0), car.satisfaction * ((double)(7 - carProhibition) / 7.0), collectionCar.satisfaction * ((double)(7 - carProhibition) / 7.0), bike.satisfaction * (1.0 + pow(((double)(carProhibition) / 7.0), 0.2)) * sqrt(airQuality), motorcycle.satisfaction , bus.get_satisfaction(), sportsCar.satisfaction * ((double)(7 - carProhibition) / 7.0) };
+    double satisfaction[8] = { electicCar.satisfaction, bigCar.satisfaction * ((double)(7 - carProhibition) / 7.0), car.satisfaction * ((double)(7 - carProhibition) / 7.0), collectionCar.satisfaction * ((double)(7 - carProhibition) / 7.0), bike.satisfaction * (1.0 + pow(((double)(carProhibition) / 7.0), 0.2)) * sqrt(airQuality), motorcycle.satisfaction , bus.get_satisfaction(), sportsCar.satisfaction * ((double)(7 - carProhibition) / 7.0) };
     double costs[8] = { electicCar.cost - electricCarSubsidy , bigCar.cost + weightTax * bigCar.weight, car.cost,collectionCar.cost + weightTax * collectionCar.weight , bike.cost - bikeSubsidy , motorcycle.cost, bus.cost - busSubsidy, sportsCar.cost };
-    double pricesPerMonth[8] = { electicCar.pricePerMonth + costs[0] / 15, bigCar.pricePerMonth + fuelTax * bigCar.fuelInput / 12 + costs[1] / 15, car.pricePerMonth + fuelTax * car.fuelInput / 12 +costs[2] / 15,collectionCar.pricePerMonth + fuelTax * collectionCar.fuelInput / 12 +costs[3] / 15, bike.pricePerMonth + costs[4] / 15,
-    motorcycle.pricePerMonth + fuelTax * motorcycle.fuelInput / 12 + costs[5] / 15, bus.pricePerMonth / bus.capacity, sportsCar.pricePerMonth + fuelTax * sportsCar.fuelInput / 12 + costs[7] / 15 };
+    double pricesPerMonth[8] = { electicCar.pricePerMonth + costs[0] / 15, bigCar.pricePerMonth + fuelTax * bigCar.fuelInput / 12 + costs[1] / 15, car.pricePerMonth + fuelTax * car.fuelInput / 12 +costs[2] / 15,collectionCar.pricePerMonth + fuelTax * collectionCar.fuelInput / 12 +costs[3] / 15, bike.pricePerMonth + costs[4] / 5,
+    motorcycle.pricePerMonth + fuelTax * motorcycle.fuelInput / 12 + costs[5] / 10, bus.pricePerMonth / bus.capacity, sportsCar.pricePerMonth + fuelTax * sportsCar.fuelInput / 12 + costs[7] / 15 };
     double probabilities[8] = { 0 };
     double quantities[8] = { 0 };
     double alphaSum = 0;
