@@ -555,8 +555,7 @@ Building::Building() {
 	housingIncome = 0;
 	double incomeEach = 0;
 	
-
-	this->numberOfInhabitants = (rand() % (10) + 50);
+	this->numberOfInhabitants = (int)((rand() % (10)) + 50);
 	this->buildingType = (rand() % 2 + 1);
 
 	double employees = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("numberOfEmployees");

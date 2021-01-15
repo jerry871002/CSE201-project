@@ -135,7 +135,7 @@ void City::_register_methods()
 
     register_property<City, float>("time_speed", &City::time_speed, 1.0);
     register_property<City, int>("day_tick", &City::day_tick, 0);
-    register_property<City, double>("budget", &City::budget, 10000);
+    register_property<City, double>("budget", &City::set_budget, &City::get_budget, 10000);
 
     //Transport policies methods :
     register_property<City, double>("fuelTax", &City::fuelTax, 0.0);
@@ -2394,6 +2394,13 @@ void City::set_workingPower(int s) {
     (this->workingPower) = s;
 }
 
+double City::get_budget() {
+    return this->budget;
+}
+void City::set_budget(double v) {
+    this->budget = v;
+}
+
 
 
 
@@ -2406,3 +2413,6 @@ int main() {
     std::cout << "DEBUG: TOTAL CARBON EMISSION = " << c.return_carbonEmission() << std::endl;
     return 0;
 }
+
+
+
