@@ -245,13 +245,13 @@ void City::_physics_process(float delta) {
         std::cout << "energyDemand = " << (double)(this->get("energyDemand")) << std::endl;
         std::cout << "environmentalCost = " << (double)(this->get("environmentalCost")) << std::endl;
       
-        change_pie_chart(10 * (int)return_totalSatisfaction(), "PieSatisfaction", true);
+        change_pie_chart( (int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
         change_pie_chart(value_pie_chart_C02(carbonEmission, 100000000), "PieCO2", false);
         change_pie_chart(income / population, "PieIncome", true);
         change_pie_chart(100-100*numberOfEmployees/population, "PieUnemployement", false); //EnergyDemand variable is temporary
         change_pie_chart(value_pie_chart_C02(energyDemand, 100000), "PiePowerDemand", false);
 
-        change_pie_label(10 * (int)return_totalSatisfaction(), "PieSatisfaction");
+        change_pie_label( (int)(10 * return_totalSatisfaction()), "PieSatisfaction");
         change_pie_label(carbonEmission, "PieCO2");
         change_pie_label(income, "PieIncome");
         change_pie_label(numberOfEmployees, "PieEmployees");
@@ -2158,7 +2158,7 @@ void City::write_stat_history_to_file() {
 
     Array newTotalSatisfaction{}; //to be finished
     newTotalSatisfaction.push_back(return_word_date_godot());
-    newTotalSatisfaction.push_back((int)(10 * totalSatisfaction + 0.5));
+    newTotalSatisfaction.push_back( (int)(10 * return_totalSatisfaction()));
 
     if (statsTotalSatisfaction.size() > 100) {
         statsTotalSatisfaction.pop_front();
@@ -2253,7 +2253,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     Transport sportsCar = Transport(7);
 
 
-    airQuality = pow(1.01, -carbonEmission / (all_structures.size() * 30 * 30 * 10));
+    airQuality = pow(1.01, -20 * carbonEmission / (all_structures.size() * 30 * 30 * 10));
 
     std::cout << "Current air quality is: " << airQuality << std::endl;
 
