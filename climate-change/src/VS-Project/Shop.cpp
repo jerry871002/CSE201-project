@@ -479,7 +479,7 @@ Mall::Mall(){
     std::uniform_real_distribution <double> energyusepeyeargen1(300000, 500000);
     energyUse = energyusepeyeargen1(gen);
 
-    std::uniform_real_distribution <int> employmentgen1(150, 300);
+    std::uniform_real_distribution <double> employmentgen1(150, 300);
     employment = employmentgen1(gen);
 }
 
