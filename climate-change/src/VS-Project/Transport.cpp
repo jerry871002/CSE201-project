@@ -44,8 +44,7 @@ template <typename T> void align_on_axis(T obj) {
 
 
 Transport::Transport() {
-    this->transportType = 4;
-    set_transportType(4);
+
 }
 
 Transport::Transport(int type){
