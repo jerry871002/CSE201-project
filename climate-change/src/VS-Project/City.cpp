@@ -437,12 +437,11 @@ void City::generate_initial_city_graphics()
 
                 float smallerprob = restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob;
 
-                //std::cout << "DEBUG: About to create a random shop" << std::endl;
 
                 std::cout << "DEBUG: done calculate probability" << std::endl;
 
                 double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + coalprob + geoprob + nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
-                //std::cout << "DEBUG: Add buildings" << std::endl;
+                
 
                 if (!(minimumonefactory) && factoryprob != 0) {  add_production(bigbuildingpos, FactoryScene); minimumonefactory = true; }
                 else if (!(minimumonemall) && mallprob != 0) { add_shop(bigbuildingpos, MallScene); minimumonemall = true; }
@@ -459,7 +458,6 @@ void City::generate_initial_city_graphics()
                    //  in the case of a 1x1 building, plop down 4 1x1 in the slot
 
 
-                    //std::cout << "DEBUG: Add else" << std::endl;
 
                     srand(int((x + 1) * (z + 1) * (int)(time(0))));
 
