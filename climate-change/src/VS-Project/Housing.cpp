@@ -226,7 +226,7 @@ double Housing::get_double_glazing_age() {
 
 double Housing::get_satisfaction() {
 	
-	else { return this->satisfaction; }
+	return this->satisfaction;
 
 }
 
