@@ -8,6 +8,7 @@
 #include <SceneTree.hpp>
 #include <string>
 #include <random>
+#include "City.h"
 
 
 using namespace godot;
@@ -377,8 +378,10 @@ void House::set_houseType(int type)
 	this->houseType = type;
 	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
 
-	double employees = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("numberOfEmployees");
-	double population = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("population");
+	//double employees = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
+	//double population = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
+	double employees = 10000;
+	double population = 15000;
 	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / population)) + 0.5);
 
 	if (type == 1) {
@@ -577,8 +580,10 @@ Building::Building() {
 	housingIncome = 0;
 	double incomeEach = 0;
 	
-	double employees = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("numberOfEmployees");
-	double population = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("population");
+	//double employees = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
+	//double population = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
+	double employees = 10000;
+	double population = 15000;
 	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / population)) + 0.5);
 
 	this->numberOfInhabitants = (rand() % (10) + 50);
