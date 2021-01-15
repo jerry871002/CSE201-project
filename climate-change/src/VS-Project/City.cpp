@@ -1100,23 +1100,6 @@ void City::implement_policies(double value) {
         }
     }
 
-    //##########
-    else if (this->active_button == String("WindturbinesHousing")) {
-        if (value >= 0 && value <= 800) {
-            Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON HOUSING IMPLEMENTED");
-            for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
-            {
-                (*it)->set("wind_turbine_subsidies", value);
-            }
-            this->trigger_notification(String("This wind turbine subsidy has been implemented. This will push citizens to harness wind energy."));
-        }
-        else {
-            this->trigger_notification(String("The value you provided was not in the specified range."));
-        }
-    }
-
-    ///######
-
     else if (this->active_button == String("EfficiencySupercriticalCoalPlant")) {
         if (value == 0 || value == 1) {
             Godot::print("THE COAL POWER PLANTS WILL CHANGE THEIR EFFICIENCY");

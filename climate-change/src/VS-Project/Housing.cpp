@@ -253,11 +253,12 @@ void Housing::panel_added_probability(){
 	if (PanelsOn == true) {
 		panel_probability = 0;
 	}
-
+	/*
 	//We do not want to put wind turbines if there are already solar panels
 	else if (rooftopWindTurbineOn == true) {
 		panel_probability = 0;
 	}
+	*/
 }
 
 void Housing::double_glazing_added_probability(){
