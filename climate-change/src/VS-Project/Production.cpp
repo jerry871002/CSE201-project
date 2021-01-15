@@ -236,7 +236,7 @@ GoodsFactories::GoodsFactories() {
 	std::normal_distribution <double> sat(5, 3);
 	satisfaction = sat(gen);
 
-	energyUse = 10 * employment; //amount of kWh needed for one factory per day
+	energyUse = 100 * employment; //amount of kWh needed for one factory per day
 
 	CO2Emission = 42.5E-3 * employment; //ton of CO2 emitted per day 
 	mercuryEmission = 2.3E-10 * employment; //ton of mercury per day 
@@ -265,7 +265,6 @@ void godot::GoodsFactories::_process(float delta)
 void GoodsFactories::simulate_step(double days)
 {
 	this->Production::simulate_step(days);
-	age += days;
 
 	double maximum_CO2 = this->get("maximum_CO2"); // input from user
 	double subsidy_green = this->get("subsidy_green"); // input from user
@@ -341,9 +340,6 @@ void GoodsFactories::simulate_step(double days)
 		else {
 			this->get_child(0)->set("visible", true);
 			this->get_child(1)->set("visible", true);
-			std::normal_distribution <double> employees(100, 60);
-			employment = employees(gen);
-			factory_closed = false;
 		}
 		std::normal_distribution <double> co2(maximum_CO2, 0.5);
 		CO2Emission = (co2(gen) * employment) * green * 0.001 * 365; // ton per year
@@ -375,7 +371,7 @@ void GoodsFactories::simulate_step(double days)
 	PMEmission = (pm(gen) * employment) * green * 0.001 * 365;
 
 	std::normal_distribution <double> energy(100, 10);
-	energyUse = energy(gen) * employment * green;
+	energyUse = energy(gen) * employment * green * 365;
 }
 
 /// <summary>
@@ -390,7 +386,7 @@ Services::Services() {
 	std::normal_distribution <double> employees(30000, 1000);
 	employment = employees(gen); // number of employees of the whole city in the service sector 
 
-	energyUse = 25000; //amount of kWh needed thorughout the sector per day
+	energyUse = 250000; //amount of kWh needed thorughout the sector per day
 
 	PMEmission = 1010; //kg of particulate matter emitted per day
 	arsenicEmission = 0.002; //kg of arsenic per day
