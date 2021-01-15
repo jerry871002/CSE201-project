@@ -183,6 +183,7 @@ void NuclearPowerPlant::simulate_step(double days)
 		running = 0;
 		this->get_node("Smoke")->set("visible", false);
 		satisfaction = 5;
+		employment = 0;
 	}
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
@@ -292,6 +293,7 @@ void Windmill::simulate_step(double days)
 	else {
 		running = 0;
 		satisfaction = 5;
+		employment = 0;
 	}
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
@@ -397,6 +399,7 @@ void GeothermalPowerPlant::simulate_step(double days)
 		satisfaction = sat(gen); // on scale of 10
 	}
 	else {
+		employment = 0;
 		running = 0;
 		this->get_node("Smoke")->set("visible", false);
 		satisfaction = 5;
@@ -523,6 +526,7 @@ void CoalPowerPlant::simulate_step(double days)
 		running = 0;
 		this->get_node("Smoke")->set("visible", false);
 		satisfaction = 5;
+		employment = 0;
 	}
 
 	double efficiency_supercritical = this->get("efficiency_supercritical"); // input from user
