@@ -160,49 +160,46 @@ NuclearPowerPlant::~NuclearPowerPlant() {}
 
 void NuclearPowerPlant::simulate_step(double days)
 {
+	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
+	this->get_node("Smoke")->set("visible", false);
+	if (working == 1) {
+		running = 1;
+		newBuilt = false;
+		age += (int)(days);
+		this->get_node("Smoke")->set("visible", true);
+	}
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
 
-	age += (int)(days);
 	double cityPowerDemand = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("energyDemand");
 	double dailyDemand = cityPowerDemand / 365;
 	std::normal_distribution <double> energy(dailyDemand, 1000);
-	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
+	energyPerDay = energy(gen)*running; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 
-	if (age >= 127890) {
+	if (nuclear_prohibited == 1 || age >= 127890) {
 		// 35 years is the average lifetime of a nuclear power plant, it then has to be replaced by a new plant or different power plant
-		energyPerDay = 0;
-		employment = 0;
-
-		//send message on screen for closure
-		this->get_node("Smoke")->set("visible", false);
-	}
-
-	bool newBuilt = false;
-
-	if (nuclear_prohibited == 1) {
+		age = 0;
 		energyPerDay = 0; //forced closure of the plant
 		employment = 0;
-		this->get_node("Smoke")->set("visible", false);
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
-			double probability = (rand() % (4));
-			if (probability <= 2 && coal_prohibited == 0) {
-				//build coal power plant
+			double probability = (rand() % (10));
+			if (probability <= 8 && coal_prohibited == 0) {
+				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 0);
 			}
 			else {
-				//build geothermal power plant
+				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 2);
 			}
 		}
 	}
 	else {
 		std::normal_distribution <double> employees(800, 50);
 		employment = (int)(employees(gen));
-		this->get_node("Smoke")->set("visible", true);
 	}
 
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant per year
@@ -269,7 +266,13 @@ void Windmill::_process(float delta)
 
 void Windmill::simulate_step(double days)
 {
-	age += (int)(days);
+	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
+
+	if (working == 2) {
+		running = 1;
+		newBuilt = false;
+		age += (int)(days);
+	}
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
@@ -277,13 +280,39 @@ void Windmill::simulate_step(double days)
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::normal_distribution <double> energy(25000, 5000);
-	energyPerDay = energy(gen); //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
+	energyPerDay = energy(gen)*running; //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
 	
 	if (age >= 7300) {
 		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
+		age = 0; //set to 0 again
 		energyPerDay = 0;
 		employment = 0;
-		//send message on screen for closure
+		if (newBuilt == false) {
+			newBuilt = true;
+			srand((int)time(0));
+			double probability = (rand() % (10));
+			if (nuclear_prohibited == 0 && coal_prohibited == 0) {
+				if (probability <= 7) {
+					this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 0);
+				}
+				else {
+					this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 1);
+				}
+			}
+			if (nuclear_prohibited == 1 && coal_prohibited == 0) {
+				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 0);
+			}
+			if (nuclear_prohibited == 0 && coal_prohibited == 1) {
+				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 1);
+			}
+			else {
+				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 2);
+			}
+		}
+	}
+	else {
+		std::normal_distribution <double> employees(1.29, 0.02);
+		employment = (int)(employees(gen));
 	}
 
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
@@ -342,7 +371,14 @@ void godot::GeothermalPowerPlant::_process(float delta)
 
 void GeothermalPowerPlant::simulate_step(double days)
 {
-	age += (int)(days);
+	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
+	this->get_node("Smoke")->set("visible", false);
+	if (working == 2) {
+		running = 1;
+		newBuilt = false;
+		age += (int)(days);
+		this->get_node("Smoke")->set("visible", true);
+	}
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
 	double nuclear_prohibited = this->get("nuclear_prohibited"); // input from user
@@ -352,12 +388,37 @@ void GeothermalPowerPlant::simulate_step(double days)
 	std::normal_distribution <double> energy(32800, 1500);
 	energyPerDay = energy(gen); //kWh produced by in one day
 	
-	if (age >= 10950){
-		// 30 years is the average lifetime of a geothermal plant, it then has to be replaced by a new plant or different power plant
+	if (age >= 10950) {
+		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
+		age = 0; //set to 0 again
 		energyPerDay = 0;
 		employment = 0;
-		//send message on screen for closure
-		this->get_node("Smoke")->set("visible", false);
+		if (newBuilt == false) {
+			newBuilt = true;
+			srand((int)time(0));
+			double probability = (rand() % (10));
+			if (nuclear_prohibited == 0 && coal_prohibited == 0) {
+				if (probability <= 7) {
+					this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 0);
+				}
+				else {
+					this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 1);
+				}
+			}
+			if (nuclear_prohibited == 1 && coal_prohibited == 0) {
+				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 0);
+			}
+			if (nuclear_prohibited == 0 && coal_prohibited == 1) {
+				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 1);
+			}
+			else {
+				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 2);
+			}
+		}
+	}
+	else {
+		std::normal_distribution <double> employees(1.29, 0.02);
+		employment = (int)(employees(gen));
 	}
 	
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
@@ -429,7 +490,15 @@ void godot::CoalPowerPlant::_process(float delta)
 
 void CoalPowerPlant::simulate_step(double days)
 {
-	age += (int)(days);
+	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
+	this->get_node("Smoke")->set("visible", false);
+	if (working == 0) {
+		running = 1;
+		newBuilt = false;
+		age += (int)(days);
+		this->get_node("Smoke")->set("visible", true);
+	}
+
 	double efficiency_supercritical = this->get("efficiency_supercritical"); // input from user
 	double efficiency_cogeneration = this->get("efficiency_cogeneration"); // input from user
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
@@ -441,37 +510,27 @@ void CoalPowerPlant::simulate_step(double days)
 	double dailyDemand = cityPowerDemand / 365;
 	std::normal_distribution <double> energy(dailyDemand, 1000);
 	energyPerDay = energy(gen); //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
-	
-	if (age >= 18250){
+
+	if (coal_prohibited == 1 || age >= 18250) {
 		// 50 years is the average lifetime of a coal fired plant, it then has to be replaced by a new coal plant or different power plant
-		energyPerDay = 0;
-		employment = 0;
-		//send message on screen for closure
-		this->get_node("Smoke")->set("visible", false);
-	}
-
-	bool newBuilt = false;
-
-	if (coal_prohibited == 1) {
 		energyPerDay = 0; //forced closure of the plant
 		employment = 0;
-		this->get_node("Smoke")->set("visible", false);
+		age = 0;
 		if (newBuilt == false) {
 			newBuilt = true;
 			srand((int)time(0));
-			double probability = (rand() % (4));
-			if (probability <= 2 && nuclear_prohibited == 0) {
-				//build coal power plant
+			double probability = (rand() % (10));
+			if (probability <= 8 && nuclear_prohibited == 0) {
+				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 1);
 			}
 			else {
-				//build geothermal power plant
+				this->get_tree()->get_root()->get_node("Main/3Dworld")->set("workingPower", 2);
 			}
 		}
 	}
 	else {
 		std::normal_distribution <double> employees(800, 20);
 		employment = (int)(employees(gen));
-		this->get_node("Smoke")->set("visible", true);
 	}
 	
 	energyOutput = (int)(energyPerDay * 365); // total kWh produced by a standard plant 
