@@ -128,9 +128,9 @@ void AgriculturalProduction::simulate_step(double days)
 	}
 
 	case(1): {
-		// production = (requiredLand * fertility); //reqquired land taken so that this is production in ton per year
-		// waterConsumption = production*1000 * 22; //liters per kg so had to convert production back to kg
-		// CO2Emission = 19.18 * production;
+		production = (requiredLand * fertility); //required land taken so that this is production in ton per year
+		waterConsumption = production * 1000 * 22; //liters per kg so had to convert production back to kg
+		CO2Emission = 19.18 * production;
 
 		/*std::random_device rd;
 		std::mt19937 gen(rd());
