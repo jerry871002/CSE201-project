@@ -119,6 +119,7 @@ namespace godot {
         Array statsCarbonEmissionEnergy{};
         Array statsCarbonEmissionShops{};
 
+        Array statsCarbonEmissionSplit{}; //written stats for carbon emissions per sector
         Array statsEnvironmentalCost{}; //written stats for environmental cost
         Array statsIncome{}; //written stats for GDP
         Array statsEnergy{}; //written stats for energy demand and supply

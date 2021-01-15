@@ -158,6 +158,7 @@ void City::_register_methods()
 
     //statistics:
     register_property<City, Array>("statsCarbonEmission", &City::statsCarbonEmission, {});
+    register_property<City, Array>("statsCarbonEmissionSplit", &City::statsCarbonEmissionSplit, {});
     register_property<City, Array>("statsIncome", &City::statsIncome, {});
     register_property<City, Array>("statsEnergy", &City::statsEnergy, {});
     register_property<City, Array>("statsUnemployment", &City::statsUnemployment, {});
@@ -682,6 +683,13 @@ void City::initialize_stats() {
     titleCarbonEmission.push_back(String("Carbon emissions in thousands of tons"));
     statsCarbonEmission.push_back(titleCarbonEmission);
 
+    Array titleCarbonEmissionSplit{};
+    titleCarbonEmissionSplit.push_back(String("Date"));
+    titleCarbonEmissionSplit.push_back(String("Carbon emissions from Housing sector in thousands of tons"));
+    titleCarbonEmissionSplit.push_back(String("Carbon emissions from Shop sector in thousands of tons"));
+    titleCarbonEmissionSplit.push_back(String("Carbon emissions from Energy sector in thousands of tons"));
+    titleCarbonEmissionSplit.push_back(String("Carbon emissions from Production sector in thousands of tons"));
+    statsCarbonEmissionSplit.push_back(titleCarbonEmissionSplit);
 
     Array titleEnvironmentalCost{};
     titleEnvironmentalCost.push_back(String("Date"));
@@ -2031,6 +2039,8 @@ void City::write_stat_history_to_file() {
     }
     statsCarbonEmissionProduction.push_back(newCarbonEmissionProduction);
 
+
+
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
     newCarbonEmission.push_back((int)(carbonEmission / pow(10, 6) + 0.5));
@@ -2039,6 +2049,19 @@ void City::write_stat_history_to_file() {
         statsCarbonEmission.pop_front();
     }
     statsCarbonEmission.push_back(newCarbonEmission);
+
+
+    Array newCarbonEmissionSplit{};
+    newCarbonEmissionSplit.push_back(return_word_date_godot());
+    newCarbonEmissionSplit.push_back((int)(HousingCO2 / pow(10, 6) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(ShopsCO2 / pow(10, 6) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(EnergyCO2 / pow(10, 6) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(ProductionCO2 / pow(10, 6) + 0.5));
+
+    if (statsCarbonEmissionSplit.size() > 100) {
+        statsCarbonEmissionSplit.pop_front();
+    }
+    statsCarbonEmissionSplit.push_back(newCarbonEmissionSplit);
 
 
     Array newEnvironmentalCost{};
