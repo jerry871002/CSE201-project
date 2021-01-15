@@ -285,13 +285,16 @@ void GoodsFactories::simulate_step(double days)
 	if (maximum_CO2 > 0) {
 		int maxi = 10;
 		if (maximum_CO2 >= 30) {
-			maxi = 6;
+			maxi = 10;
 		}
 		if (30 > maximum_CO2 >= 20) {
 			maxi = 8;
 		}
 		if (maximum_CO2 < 20) {
-			maxi = 10;
+			maxi = 6;
+		}
+		if (maximum_CO2 < 10) {
+			maxi = 4;
 		}
 		srand((int)time(0));
 		double chance = (rand() % (maxi));
