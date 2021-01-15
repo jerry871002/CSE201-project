@@ -2081,11 +2081,11 @@ void City::write_stat_history_to_file() {
     }
     statsCarbonEmissionProduction.push_back(newCarbonEmissionProduction);
 
-    update_transport_emissions();
+    this->update_transport_emissions();
 
     Array newCarbonEmissionTransport{};
     newCarbonEmissionTransport.push_back(return_word_date_godot());
-    newCarbonEmissionTransport.push_back((int)((TransportCO2 / pow(10, 6)) + 0.5));
+    newCarbonEmissionTransport.push_back((int)(((this->TransportCO2) / pow(10, 6)) + 0.5));
 
     if (statsCarbonEmissionTransport.size() > 100) {
         statsCarbonEmissionTransport.remove(1);
@@ -2096,7 +2096,7 @@ void City::write_stat_history_to_file() {
 
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
-    newCarbonEmission.push_back((int)(((carbonEmission + TransportCO2) / pow(10, 3)) + 0.5));
+    newCarbonEmission.push_back((int)(((carbonEmission + (this->TransportCO2)) / pow(10, 3)) + 0.5));
 
     if (statsCarbonEmission.size() > 100) {
         statsCarbonEmission.remove(1);
@@ -2110,7 +2110,7 @@ void City::write_stat_history_to_file() {
     newCarbonEmissionSplit.push_back((int)(ShopsCO2 / pow(10, 3) + 0.5));
     newCarbonEmissionSplit.push_back((int)(EnergyCO2 / pow(10, 3) + 0.5));
     newCarbonEmissionSplit.push_back((int)(ProductionCO2 / pow(10, 3) + 0.5));
-    newCarbonEmissionSplit.push_back((int)(TransportCO2 / pow(10, 3) + 0.5));
+    newCarbonEmissionSplit.push_back((int)((this->TransportCO2) / pow(10, 3) + 0.5));
 
     if (statsCarbonEmissionSplit.size() > 100) {
         statsCarbonEmissionSplit.remove(1);
