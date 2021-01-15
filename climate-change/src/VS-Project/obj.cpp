@@ -380,9 +380,6 @@ void Structure::_input(InputEvent* e)
 
         // SET INFO BOX SIZE AND POSITION
 
-        
-        //((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 260));
-
         int ypos = (int)(((Vector2)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->get("rect_position"))).y);
         int width = (int)(((Vector2)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->get("rect_size"))).x);
 
@@ -393,11 +390,9 @@ void Structure::_input(InputEvent* e)
         else {
             (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x / 2 - width - 60, ypos));
         }
-        
 
         // AJUST POSITION OF MENU TO ENSURE IT IS VISIBLE
 
-        
         if (get_viewport()->get_size().x - mousePos.x <= MenuSize)
         {
             if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize /*- (get_viewport()->get_size().x - mousePos.x)*/; }
@@ -409,7 +404,7 @@ void Structure::_input(InputEvent* e)
         {
             if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize /*- mousePos.x*/; }
             else { mousePos.y += MenuSize /*- mousePos.x*/; }
-            mousePos.x += MenuSize;
+            mousePos.x += MenuSize + 100;
         }
 
         if (get_viewport()->get_size().y - mousePos.y <= MenuSize) 

@@ -359,7 +359,7 @@ void City::_input(InputEvent*)
         this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
         this->notification_active = false;
         this->notification_counter = 0;
-        this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
+        
 
     }
 
@@ -700,7 +700,7 @@ void City::initialize_stats() {
     titleCarbonEmissionSplit.push_back(String("Carbon emissions from Shop sector in thousands of tons"));
     titleCarbonEmissionSplit.push_back(String("Carbon emissions from Energy sector in thousands of tons"));
     titleCarbonEmissionSplit.push_back(String("Carbon emissions from Production sector in thousands of tons"));
-    //titleCarbonEmissionSplit.push_back(String("Carbon emissions from Transport sector in thousands of tons"));
+    titleCarbonEmissionSplit.push_back(String("Carbon emissions from Transport sector in thousands of tons"));
     statsCarbonEmissionSplit.push_back(titleCarbonEmissionSplit);
 
     Array titleEnvironmentalCost{};
@@ -883,6 +883,8 @@ void City::_on_TransportMenuButton_pressed()
     * 7 - sports car
     */
     String transportInfo = String("TRANSPORT INFORMATION") + String("\n");
+    transportInfo += String("\n");
+    transportInfo += String("Your city contains:") + String("\n");
     transportInfo += String("\n");
     transportInfo += to_godot_string((int)(current_car_quantities[0])) + String(" Electric Cars") + String("\n");
     transportInfo += to_godot_string((int)(current_car_quantities[1])) + String(" American Cars") + String("\n");
@@ -2048,7 +2050,7 @@ void City::write_stat_history_to_file() {
     newCarbonEmissionHousing.push_back((int)(HousingCO2 / pow(10, 6) + 0.5));
 
     if (statsCarbonEmissionHousing.size() > 100) {
-        statsCarbonEmissionHousing.pop_front();
+        statsCarbonEmissionHousing.remove(1);
     }
     statsCarbonEmissionHousing.push_back(newCarbonEmissionHousing);
 
@@ -2057,7 +2059,7 @@ void City::write_stat_history_to_file() {
     newCarbonEmissionShops.push_back((int)((ShopsCO2 / pow(10, 6)) + 0.5));
 
     if (statsCarbonEmissionShops.size() > 100) {
-        statsCarbonEmissionShops.pop_front();
+        statsCarbonEmissionShops.remove(1);
     }
     statsCarbonEmissionShops.push_back(newCarbonEmissionShops);
 
@@ -2066,7 +2068,7 @@ void City::write_stat_history_to_file() {
     newCarbonEmissionEnergy.push_back((int)((EnergyCO2 / pow(10, 6)) + 0.5));
 
     if (statsCarbonEmissionEnergy.size() > 100) {
-        statsCarbonEmissionEnergy.pop_front();
+        statsCarbonEmissionEnergy.remove(1);
     }
     statsCarbonEmissionEnergy.push_back(newCarbonEmissionEnergy);
 
@@ -2075,7 +2077,7 @@ void City::write_stat_history_to_file() {
     newCarbonEmissionProduction.push_back((int)((ProductionCO2 / pow(10, 6)) + 0.5));
 
     if (statsCarbonEmissionProduction.size() > 100) {
-        statsCarbonEmissionProduction.pop_front();
+        statsCarbonEmissionProduction.remove(1);
     }
     statsCarbonEmissionProduction.push_back(newCarbonEmissionProduction);
 
@@ -2086,7 +2088,7 @@ void City::write_stat_history_to_file() {
     newCarbonEmissionTransport.push_back((int)((TransportCO2 / pow(10, 6)) + 0.5));
 
     if (statsCarbonEmissionTransport.size() > 100) {
-        statsCarbonEmissionTransport.pop_front();
+        statsCarbonEmissionTransport.remove(1);
     }
     statsCarbonEmissionTransport.push_back(newCarbonEmissionTransport);
 
@@ -2094,10 +2096,10 @@ void City::write_stat_history_to_file() {
 
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
-    newCarbonEmission.push_back((int)((carbonEmission / pow(10, 3)) + 0.5));
+    newCarbonEmission.push_back((int)(((carbonEmission + TransportCO2) / pow(10, 3)) + 0.5));
 
     if (statsCarbonEmission.size() > 100) {
-        statsCarbonEmission.pop_front();
+        statsCarbonEmission.remove(1);
     }
     statsCarbonEmission.push_back(newCarbonEmission);
 
@@ -2108,10 +2110,10 @@ void City::write_stat_history_to_file() {
     newCarbonEmissionSplit.push_back((int)(ShopsCO2 / pow(10, 3) + 0.5));
     newCarbonEmissionSplit.push_back((int)(EnergyCO2 / pow(10, 3) + 0.5));
     newCarbonEmissionSplit.push_back((int)(ProductionCO2 / pow(10, 3) + 0.5));
-    //newCarbonEmissionSplit.push_back((int)(TransportCO2 / pow(10, 3) + 0.5));
+    newCarbonEmissionSplit.push_back((int)(TransportCO2 / pow(10, 3) + 0.5));
 
     if (statsCarbonEmissionSplit.size() > 100) {
-        statsCarbonEmissionSplit.pop_front();
+        statsCarbonEmissionSplit.remove(1);
     }
     statsCarbonEmissionSplit.push_back(newCarbonEmissionSplit);
 
@@ -2121,7 +2123,7 @@ void City::write_stat_history_to_file() {
     newEnvironmentalCost.push_back((int)((environmentalCost / pow(10, 6)) + 0.5));
 
     if (statsEnvironmentalCost.size() > 100) {
-        statsEnvironmentalCost.pop_front();
+        statsEnvironmentalCost.remove(1);
     }
     statsEnvironmentalCost.push_back(newEnvironmentalCost);
 
@@ -2131,7 +2133,7 @@ void City::write_stat_history_to_file() {
     newIncome.push_back((int)((income / pow(10, 6)) + 0.5));
 
     if (statsIncome.size() > 100) {
-        statsIncome.pop_front();
+        statsIncome.remove(1);
     }
     statsIncome.push_back(newIncome);
 
@@ -2141,7 +2143,7 @@ void City::write_stat_history_to_file() {
     newEnergy.push_back((int)((energyDemand / pow(10, 6)) + 0.5));
 
     if (statsEnergy.size() > 100) {
-        statsEnergy.pop_front();
+        statsEnergy.remove(1);
     }
     statsEnergy.push_back(newEnergy);
 
@@ -2151,7 +2153,7 @@ void City::write_stat_history_to_file() {
     newUnemployment.push_back((int)(100 - 100 * fmin((double)1, (double)(numberOfEmployees / population)) + 0.5));
 
     if (statsUnemployment.size() > 100) {
-        statsUnemployment.pop_front();
+        statsUnemployment.remove(1);
     }
     statsUnemployment.push_back(newUnemployment);
 
@@ -2161,7 +2163,7 @@ void City::write_stat_history_to_file() {
     newTotalSatisfaction.push_back( (int)(10 * return_totalSatisfaction()));
 
     if (statsTotalSatisfaction.size() > 100) {
-        statsTotalSatisfaction.pop_front();
+        statsTotalSatisfaction.remove(1);
     }
     statsTotalSatisfaction.push_back(newTotalSatisfaction);
 
@@ -2170,7 +2172,7 @@ void City::write_stat_history_to_file() {
     newPopulation.push_back((int)(population + 0.5));
 
     if (statsPopulation.size() > 100) {
-        statsPopulation.pop_front();
+        statsPopulation.remove(1);
     }
     statsPopulation.push_back(newPopulation);
 
@@ -2234,7 +2236,7 @@ int City::most_missing_type() {
 void City::update_transport_emissions() 
 {
     double emission = 0;
-    double emissions[8] = {0, 0.328 * 36.5, 0.115 * 36.5, 0.4 * 36.5, 0, 0.11 * 36.5, 1.25 * 36.5, 0.5 * 36.5 };
+    double emissions[8] = {0, 0.328 * 365, 0.115 * 365, 0.4 * 365, 0, 0.11 * 365, 1.25 * 365, 0.5 * 365 };
     for (int i = 0; i < 8; i++) {
         emission += current_car_quantities[i] * emissions[i];
     }
