@@ -230,7 +230,7 @@ void City::_physics_process(float delta) {
     {
         // CALLED EVERY 5 SECONDS
 
-        add_car();
+        add_car(Vector3(-1,-1,-1)); // specific case, where cars are randomly assigned
 
         (this->simulation_counter) -= 5;
 
@@ -1394,6 +1394,16 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     const Ref<PackedScene> BikeScene = ResourceLoader::get_singleton()->load("res://Resources/Bike.tscn", "PackedScene");
     const Ref<PackedScene> ElectricCarScene = ResourceLoader::get_singleton()->load("res://Resources/Cybertruck.tscn", "PackedScene");
     const Ref<PackedScene> NormalCarScene = ResourceLoader::get_singleton()->load("res://Resources/Clio.tscn", "PackedScene");
+
+    if (pos == Vector3(-1, -1, -1)) {
+        int chosenhouse = rand() % all_houses.size();
+        std::vector<Housing*>::iterator addcariterator;
+        addcariterator = all_houses.begin();
+        addcariterator += chosenhouse;
+        pos = (Vector3)((Node*)(*addcariterator))->get("translation");
+
+        
+    }
 
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid() && BusScene.is_valid() && AmericanCarScene.is_valid() && BikeScene.is_valid() && ElectricCarScene.is_valid() && NormalCarScene.is_valid())
     {

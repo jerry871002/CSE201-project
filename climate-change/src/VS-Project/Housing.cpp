@@ -26,7 +26,7 @@ String Housing::get_object_info()
 {
 	String info = this->Structure::get_object_info();
 	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
-	info += "Energy used by the building in kWh: " + to_godot_string((int)(this->get("energyUse"))) + String("\n");
+	info += "Yearly, the energy used by the building is " + to_godot_string((int)(this->get("energyUse"))) + " kWh." + String("\n");
 	info +=  to_godot_string((int)(this->get("numberOfInhabitants"))) + " people live in this house, which has a satisfaction of "+to_godot_string((int)(this->get("satisfaction")))+ String("\n");
 	if (get_object_type() == String("House")) {
 		info += "This is a house of type: " + to_godot_string((int)(this->get("houseType"))) + String("\n");
@@ -37,7 +37,7 @@ String Housing::get_object_info()
 		info += "This building has solar panels ! " + String("\n") + "The panels have " + to_godot_string((int)(this->solarPanelAge)) + " days left until they are rendered obsolete." + String("\n");
 	}
 	else {
-		info += "This building has no solar panels. Very sad." + String("\n");
+		info += "This building has no solar panels. Quite sad." + String("\n");
 	}
 	info += "SUBSIDY TURBINES: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
 	// info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");  why does this need to be displayed to the user ??
@@ -335,10 +335,10 @@ double House::get_energyuse() {
 
 	std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
 	std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
-	std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
+	std::cout << "DEBUG: energy use  : " << double(this->energyUse) << std::endl;
 
 
-    return (double)(this->energyUse)*panelsF*turbineF*glazingF;
+    return ((double)(this->energyUse))*panelsF*turbineF*glazingF;
 }
 
 double House::get_environmentalcost() {
@@ -477,11 +477,6 @@ void House::simulate_step(double days) {
 	//std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
 
 	this->Housing::simulate_step(days);
-	
-	if ((int)(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("day_tick")) % 25 == 0) {
-		satisfaction = 0;
-
-	}
 
 	//maintenance = 0.1765 * energyUse * days;
 	//CO2Emission = 0.0065 * energyUse * days; 
