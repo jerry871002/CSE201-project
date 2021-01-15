@@ -185,8 +185,8 @@ namespace godot {
 
 
 
-        int get_inhabitants();
-        void set_inhabitants(int);
+        virtual int get_inhabitants();
+        virtual void set_inhabitants(int);
         virtual double get_maintenance();
         virtual void set_maintenance(double maintenance);
         virtual double get_age();
