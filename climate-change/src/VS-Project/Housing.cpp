@@ -26,24 +26,21 @@ String Housing::get_object_info()
 {
 	String info = this->Structure::get_object_info();
 
-	info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
-	info += "CO2 Emissions: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
 	info += "Energy used by the building in kWh: " + to_godot_string((int)(this->get("energyUse"))) + String("\n");
-	info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
-	info += "Number of inhabitants: " + to_godot_string((int)(this->get("numberOfInhabitants"))) + String("\n");
+	info +=  to_godot_string((int)(this->get("numberOfInhabitants"))) + " people live in this house, which has a satisfaction of "+to_godot_string((int)(this->get("satisfaction")))+ String("\n");
 	if (get_object_type() == String("House")) {
 		info += "This is a house of type: " + to_godot_string((int)(this->get("houseType"))) + String("\n");
 	}
 	info += "SUBSIDY PANELS: " + to_godot_string((int)(this->get("solar_panel_subsidies_housing"))) + String("\n");
 	info += "PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
 	if (this->PanelsOn) {
-		info += "Panels are displayed" + String("\n") + "Panel age = " + to_godot_string((int)(this->solarPanelAge)) + String("\n");
+		info += "This building has solar panels ! " + String("\n") + "The panels have " + to_godot_string((int)(this->solarPanelAge)) + " days left until they are rendered obsolete." + String("\n");
 	}
 	else {
-		info += "Panels are not displayed" + String("\n");
+		info += "This building has no solar panels. Very sad." + String("\n");
 	}
 	info += "SUBSIDY TURBINES: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
-	info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");
+	// info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");  why does this need to be displayed to the user ??
 	
 	return info;
 }
