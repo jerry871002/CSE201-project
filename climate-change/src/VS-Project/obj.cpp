@@ -453,7 +453,6 @@ void godot::Structure::_on_Area_mouse_exited()
     hover_animation_counter = 0;
 }
 
-//POLICIES (interface team needs to make them usable from screen)
 
 
 

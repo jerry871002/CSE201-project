@@ -108,10 +108,18 @@ template<typename T> String to_godot_string(T s)
 String Energy::get_object_info()
 {
 	String info = this->Structure::get_object_info();
-
+	int working = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("workingPower");
+	if (working == 0) {
+		info += "The city's energy demand is currently provided by a coal power plant. The nuclear and geothermal plants and all windmills are closed" + String("\n");
+	}
+	if (working == 1) {
+		info += "The city's energy demand is currently provided by a nuclear power plant. The coal and geothermal plants and all windmills are closed" + String("\n");
+	}
+	if (working == 2) {
+		info += "The city's energy demand is currently provided by a geothermal power plant together with windmills. The nuclear and coal plants are closed" + String("\n");
+	}
 	info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
 	info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
-	info += "CO2 Emissions in tons per year: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
 	info += "Energy produced in kWh per year: " + to_godot_string((int)(this->get("energyOutput"))) + String("\n");
 	info += "Environmental and health costs induced in euros per year: " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
@@ -183,8 +191,7 @@ void NuclearPowerPlant::simulate_step(double days)
 	std::normal_distribution <double> energy(dailyDemand, 1000);
 	energyPerDay = energy(gen)*running; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 
-	if (nuclear_prohibited == 1 || age >= 127890) {
-		// 35 years is the average lifetime of a nuclear power plant, it then has to be replaced by a new plant or different power plant
+	if (nuclear_prohibited == 1 || age >= 2000) {
 		age = 0;
 		energyPerDay = 0; //forced closure of the plant
 		employment = 0;
@@ -290,7 +297,7 @@ void Windmill::simulate_step(double days)
 	std::normal_distribution <double> energy(25000, 5000);
 	energyPerDay = energy(gen)*running; //kWh produced by a standard windmill in one day (average size of 2.5MW windmill)
 	
-	if (age >= 7300) {
+	if (age >= 2000) {
 		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
 		age = 0; //set to 0 again
 		energyPerDay = 0;
@@ -397,7 +404,7 @@ void GeothermalPowerPlant::simulate_step(double days)
 	std::normal_distribution <double> energy(32800, 1500);
 	energyPerDay = energy(gen)*running; //kWh produced by in one day
 	
-	if (age >= 10950) {
+	if (age >= 2000) {
 		// 20 years is the average lifetime of a windmill, it then has to be replaced by a new one or destroyed
 		age = 0; //set to 0 again
 		energyPerDay = 0;
@@ -523,7 +530,7 @@ void CoalPowerPlant::simulate_step(double days)
 	std::normal_distribution <double> energy(dailyDemand, 1000);
 	energyPerDay = energy(gen)*running; //kWh produced by standard plant in one day, we consider it to be the same for every plant in our simulation
 
-	if (coal_prohibited == 1 || age >= 18250) {
+	if (coal_prohibited == 1 || age >= 2000) {
 		// 50 years is the average lifetime of a coal fired plant, it then has to be replaced by a new coal plant or different power plant
 		energyPerDay = 0; //forced closure of the plant
 		employment = 0;
@@ -565,10 +572,10 @@ void CoalPowerPlant::simulate_step(double days)
 		maintenance = 0.05 * energyPerDay * 365;
 	}
 	if (age >= 3650) {
-		maintenance = 0.05 * 0.25; // after 10 years the maintenance and working costs increase by 1/4
+		maintenance = 0.05 * 0.25 * running; // after 10 years the maintenance and working costs increase by 1/4
 	}
 	if (age >= 10950) {
-		maintenance = 0.05; // after 30 years the maintenance and working costs double
+		maintenance = 0.05 * running; // after 30 years the maintenance and working costs double
 	}
 
 	coal = 4.06E-4 * energyPerDay * 365;

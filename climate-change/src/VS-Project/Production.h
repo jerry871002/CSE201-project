@@ -56,6 +56,7 @@ namespace godot {
 
 		virtual void simulate_step(double days);
 
+		bool factory_closed = false;
 	};
 
 	/// <summary>

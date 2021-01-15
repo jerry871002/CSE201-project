@@ -230,17 +230,17 @@ GoodsFactories::GoodsFactories() {
 
 	energyUse = 100 * employment; //amount of kWh needed for one factory per day
 
-	CO2Emission = 42.5 * employment; //kg of CO2 emitted per day 
-	mercuryEmission = 2.3E-7 * employment; //kg of mercury per day 
-	arsenicEmission = 2.4E-7 * employment; //kg of arsenic per day
-	cadmiumEmission = 1.E-7 * employment; //kg of cadmium per day
-	nickelEmission = 1.85E-6 * employment; //kg of nickel per day
-	leadEmission = 3.7E-6 * employment; //kg of lead per day
-	SO2Emission = 0.04 * employment; //kg of sulfure dioxide emitted per day
-	NH3Emission = 0.05 * employment; // kg of NH3 emitted per day
-	NOxEmission = 0.05 * employment; //kg of nitrogen oxides emitted per day
-	VOCsEmission = 0.075 * employment; // kg of volatile organic compounds emitted
-	PMEmission = 0.5 * employment; //kg of particulate matter emitted per day
+	CO2Emission = 42.5E-3 * employment; //ton of CO2 emitted per day 
+	mercuryEmission = 2.3E-10 * employment; //ton of mercury per day 
+	arsenicEmission = 2.4E-10 * employment; //ton of arsenic per day
+	cadmiumEmission = 1.E-10 * employment; //ton of cadmium per day
+	nickelEmission = 1.85E-9 * employment; //ton of nickel per day
+	leadEmission = 3.7E-9 * employment; //ton of lead per day
+	SO2Emission = 0.04E-3 * employment; //ton of sulfure dioxide emitted per day
+	NH3Emission = 0.05E-3 * employment; // ton of NH3 emitted per day
+	NOxEmission = 0.05E-3 * employment; //ton of nitrogen oxides emitted per day
+	VOCsEmission = 0.075E-3 * employment; // ton of volatile organic compounds emitted
+	PMEmission = 0.5E-3 * employment; //ton of particulate matter emitted per day
 
 	subsidy = false;
 }
@@ -276,30 +276,30 @@ void GoodsFactories::simulate_step(double days)
 		if (chance < 6) {
 			std::normal_distribution <double> employees(150, 60);
 			employment = employees(gen); // number of employees in the factory 
-			green = 1 - (employment * 0.02);
+			green = 1 - (employment * 0.005);
 		}
 	}
 
 	if (maximum_CO2 > 0) {
 		int maxi = 10;
 		if (maximum_CO2 >= 30) {
-			maxi = 10;
+			maxi = 6;
 		}
 		if (30 > maximum_CO2 >= 20) {
 			maxi = 8;
 		}
 		if (maximum_CO2 < 20) {
-			maxi = 6;
+			maxi = 10;
 		}
 		srand((int)time(0));
 		double chance = (rand() % (maxi));
-		if (employment <= 60 && chance < 1) {
+		if (employment <= 60 && chance < 2) {
 			employment = 0;
 		}
-		if (60 < employment <= 120 && chance < 2) {
+		if (60 < employment <= 120 && chance < 4) {
 			employment = 0;
 		}
-		if (employment > 120 && chance < 5) {
+		if (employment > 120 && chance < 6) {
 			employment = 0;
 		}
 		std::normal_distribution <double> co2(maximum_CO2, 0.5);
@@ -333,6 +333,10 @@ void GoodsFactories::simulate_step(double days)
 
 	std::normal_distribution <double> energy(100, 10);
 	energyUse = energy(gen) * employment * green * 365;
+
+	if (employment == 0) {
+		factory_closed = true;
+	}
 }
 
 /// <summary>
@@ -398,13 +402,15 @@ template<typename T> String to_godot_string(T s)
 String Production::get_object_info()
 {
 	String info = this->Structure::get_object_info();
-	if (subsidy == true) {
+	if (subsidy == true && factory_closed == false) {
 		info += "This factory receives a green subsidy" + String("\n");
+	}
+	if (factory_closed == true) {
+		info += "This factory is closed" + String("\n");
 	}
 	info += "Age: " + to_godot_string((int)(this->age)) + String("\n");
 	info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
 	info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
-	info += "CO2 Emissions per ton per year: " + to_godot_string((int)(this->get("CO2Emission"))) + String("\n");
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	return info;
 }
