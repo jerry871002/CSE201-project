@@ -102,6 +102,7 @@ void Housing::simulate_step(double days) {
             PanelsOn = true;
             solarPanelAge = this->solarLifetime;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
+			this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", (double(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget"))- (double)this->get("solar_panel_subsidies_housing"))); // line that takes off from budget the subsidy
             //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
@@ -161,6 +162,7 @@ void Housing::simulate_step(double days) {
             rooftopWindTurbineOn = true;
             rooftopWindTurbineAge = 100;
             this->get_node("MeshComponents/WindTurbine")->set("visible", rooftopWindTurbineOn);
+			this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", (double(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget")) - (double)this->get("wind_turbine_subsidies"))); // line that takes off from budget the subsidy
 
         }
         else {}

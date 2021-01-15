@@ -130,6 +130,7 @@ void Shop::simulate_step(double days) {
             PanelsOn = true;
             panels_age = this->solarLifetime;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
+            this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", (double(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget")) - (double)this->get("solar_panel_subsidies"))); // line that takes off from budget the subsidy
             //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
@@ -162,6 +163,7 @@ void Shop::simulate_step(double days) {
             WindTurbineOn = true;
             windTurbineAge = this->windLifetime;
             this->get_node("MeshComponents/WindTurbine")->set("visible", WindTurbineOn);  //need to have correct meshcomponent
+            this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", (double(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget")) - (double)this->get("wind_turbine_subsidies"))); // line that takes off from budget the subsidy
             //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
@@ -179,6 +181,7 @@ void Shop::simulate_step(double days) {
 
 }
 
+// This function isn't actually being called !! Its redundant
 void Shop::panels_get_added() {
     PanelsOn = true;
     panels_age = this->solarLifetime;   // set the panels age here ! when they are just built

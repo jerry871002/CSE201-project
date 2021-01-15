@@ -251,6 +251,9 @@ namespace godot {
 
         double return_unemployment_rate();
 
+        bool factoryyearsubsidy{ false };
+        double yearlyfactorysubsidy{ 0 };
+
     private:
         // city indices
 

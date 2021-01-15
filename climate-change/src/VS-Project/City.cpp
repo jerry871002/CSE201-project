@@ -293,6 +293,20 @@ void City::_physics_process(float delta) {
         {
             // CALLED EVERY YEAR
 
+            if (!(factoryyearsubsidy) && (yearlyfactorysubsidy > 0)){   // take off factory subsidies if they havent been changed
+                for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
+                {
+
+                    if (((*it)->get("object_type")).operator String() == (String)("Goods Factory")) {
+                        
+                        budget -= yearlyfactorysubsidy;
+
+                    }
+                }
+                this->trigger_notification(String("The goods factory subsidies were taken from the budget. "));
+            }
+            if (factoryyearsubsidy) { factoryyearsubsidy = false; }
+
             this->budget += 1000 * all_structures.size();
         }
 
@@ -413,7 +427,7 @@ void City::generate_initial_city_graphics()
                 float geoprob = calculate_building_prob(140, 180, 0.5, dist);
                 float fieldprob = calculate_building_prob(150, 320, 1.25, dist);
                 float pastureprob = calculate_building_prob(150, 320, 2, dist);
-                float factoryprob = calculate_building_prob(100, 200, 0.7, dist);
+                float factoryprob = calculate_building_prob(100, 200, 0.4, dist);
 
                 if (hasgeo) { geoprob = 0; }
                 if (hasnuclear) { nuclearprob = 0; }
@@ -969,7 +983,7 @@ String City::get_button_info_text() {
     }
     else if (this->active_button == String("SubsidyFactories"))
     {
-        return String("This is a subsidy for green factories, promoting the reduction of harmful chemicals and heavy metals emissions. Please input a value between 1000 and 100 000 euros per factory per year or 0 to remove the policy");
+        return String("This is a subsidy for green factories, promoting the reduction of harmful chemicals and heavy metals emissions. Please input a value between 1000 and 100 000 euros per factory per year. You will not be able to change this value until next year!");
     }
     else if (this->active_button == String("Pesticides"))
     {
@@ -1189,15 +1203,22 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("SubsidyFactories")) {
-        if ((100000 >= value && value >= 1000) || value == 0) {
+        if (((100000 >= value && value >= 1000) || value == 0) && !(factoryyearsubsidy)) {
             Godot::print("GREEN SUBSIDY FOR FACTORIES IMPLEMENTED");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
+                
                 if (((*it)->get("object_type")).operator String() == (String)("Goods Factory")) {
                     (*it)->set("subsidy_green", value);
+                    budget -= value;
                 }
             }
+            factoryyearsubsidy = true;
+            yearlyfactorysubsidy = (double)value;
             this->trigger_notification(String("Much to every capitalist's delight, factories are now being subsidized."));
+        }
+        else if (factoryyearsubsidy) {
+            this->trigger_notification(String("You can only change this once a year ! You wouldn't want to confuse the markets, would you ? "));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1358,7 +1379,7 @@ void City::implement_policies(double value) {
             for (int i = 0; i < int(value); ++i) {
                 (*trees_iterator)->get_node("MeshComponents/Trees")->set("visible", true);
                 trees_iterator++;
-                budget -= 5000;
+                this->budget -= 5000;
                 houses_with_trees++;
                 if (trees_iterator == trees_vector.end()) { this->trigger_notification(String("All possible buildings now have trees ! This is a good thing. However, you cannot add any more.")); break; }
             }
