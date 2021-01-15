@@ -133,7 +133,6 @@ namespace godot {
 
 
 
-        void update_date();
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation
         string return_word_date(int days); // returns the date from days :day/month/year as a string with words
