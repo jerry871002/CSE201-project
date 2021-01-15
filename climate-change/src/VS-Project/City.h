@@ -114,10 +114,14 @@ namespace godot {
         double ShopsCO2;
         double ProductionCO2;
         double EnergyCO2;
+        double TransportCO2;
+        void update_transport_emissions();
+
         Array statsCarbonEmissionHousing{};
         Array statsCarbonEmissionProduction{};
         Array statsCarbonEmissionEnergy{};
         Array statsCarbonEmissionShops{};
+        Array statsCarbonEmissionTransport{};
 
         Array statsCarbonEmissionSplit{}; //written stats for carbon emissions per sector
         Array statsEnvironmentalCost{}; //written stats for environmental cost
@@ -206,6 +210,7 @@ namespace godot {
         double return_energyDemand();
         double return_energySupply();
         double return_totalSatisfaction();
+        
 		int value_pie_chart_C02(int,int);
 
         float calculate_building_prob(float, float, float, double);

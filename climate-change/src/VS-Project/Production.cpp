@@ -4,6 +4,10 @@
 #include <Math.hpp>
 #include <random>
 #include <string>
+#include <SceneTree.hpp>
+#include <Viewport.hpp>
+#include "City.h"
+
 using namespace godot;
 
 
@@ -158,7 +162,7 @@ void AgriculturalProduction::agriculture_type(int type) {
 		std::mt19937 gen(rd());
 		std::normal_distribution <double> wheatfieldsize(1.74, 0.04);
 		requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
-		std::normal_distribution <double> wheatferltility(464, 40);
+		std::normal_distribution <double> wheatferltility(0.464, 0.004);
 		fertility = wheatferltility(gen); //production of wheat in tonne per km^2
 		std::normal_distribution <double> wheatfieldcost(595000, 1000);
 		cost = wheatfieldcost(gen) * requiredLand; //of land in euros
@@ -180,7 +184,7 @@ void AgriculturalProduction::agriculture_type(int type) {
 		std::mt19937 gen(rd());
 		std::normal_distribution <double> foodformeatfieldsize(2, 0.1); //size of field giving a yearly production for our city
 		requiredLand = foodformeatfieldsize(gen); // size
-		std::normal_distribution <double> cropsfertility(200, 50); //  ton per square meter
+		std::normal_distribution <double> cropsfertility(0.2, 0.005); //  ton per square meter
 		fertility = cropsfertility(gen); 
 		production = (fertility * requiredLand);
 		waterConsumption = 22 * production * 1000; //22L of water per 1 kg of production
@@ -249,6 +253,13 @@ GoodsFactories::GoodsFactories() {
 
 GoodsFactories::~GoodsFactories() {}
 
+void godot::GoodsFactories::_process(float delta)
+{
+	this->Structure::_process(delta);
+	this->get_node("Smoke")->get_child(0)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+	this->get_node("Smoke")->get_child(1)->set("speed_scale", int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed")));
+}
+
 void GoodsFactories::simulate_step(double days)
 {
 	this->Production::simulate_step(days);
@@ -312,6 +323,10 @@ void GoodsFactories::simulate_step(double days)
 			employment = 0;
 			factory_closed = true;
 			age = 0;
+			this->get_node("Smoke")->set("visible", false);
+		}
+		else {
+			this->get_node("Smoke")->set("visible", true);
 		}
 		std::normal_distribution <double> co2(maximum_CO2, 0.5);
 		CO2Emission = (co2(gen) * employment) * green * 0.001 * 365; // ton per year
