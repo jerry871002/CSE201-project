@@ -46,9 +46,7 @@ Structure::Structure(double cost, double energyUse, double maintenance, double s
 Structure::~Structure() {}
 
 double Structure::get_satisfaction() {
-    if ((this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall" ) && (this->get_node("MeshComponents/Trees")->get("visible"))) {
-        return ((this->satisfaction) + 4);
-    }
+    
     return this->satisfaction;
 }
 
@@ -99,7 +97,8 @@ void Structure::set_co2emissions(double emission) {
     this->CO2Emission = emission;
 }
 
-double Structure::get_energyuse() {
+double Structure::get_energyuse() 
+{
     if (this->get_main_type() == "Housing") {
         std::cout << "DEBUG: get energyuse called in Structure for housing" << std::endl;
         double panelsF = 1;
@@ -379,9 +378,6 @@ void Structure::_input(InputEvent* e)
 
         // SET INFO BOX SIZE AND POSITION
 
-        
-        //((Label*)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")))->set("rect_size", Vector2(InfoBoxWidth, (get_viewport()->get_size().y) - 260));
-
         int ypos = (int)(((Vector2)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->get("rect_position"))).y);
         int width = (int)(((Vector2)(this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->get("rect_size"))).x);
 
@@ -392,11 +388,9 @@ void Structure::_input(InputEvent* e)
         else {
             (this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox"))->set("rect_position", Vector2(get_viewport()->get_size().x / 2 - width - 60, ypos));
         }
-        
 
         // AJUST POSITION OF MENU TO ENSURE IT IS VISIBLE
 
-        
         if (get_viewport()->get_size().x - mousePos.x <= MenuSize)
         {
             if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize /*- (get_viewport()->get_size().x - mousePos.x)*/; }
@@ -408,7 +402,7 @@ void Structure::_input(InputEvent* e)
         {
             if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize /*- mousePos.x*/; }
             else { mousePos.y += MenuSize /*- mousePos.x*/; }
-            mousePos.x += MenuSize;
+            mousePos.x += MenuSize + 100;
         }
 
         if (get_viewport()->get_size().y - mousePos.y <= MenuSize) 

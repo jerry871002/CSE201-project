@@ -155,8 +155,6 @@ NuclearPowerPlant::NuclearPowerPlant() {
 	environmentalCost = 0; // environmental and health costs in euros per year
 
 	employment = 0; 
-	std::normal_distribution <double> sat(2, 0.1);
-	satisfaction = sat(gen); // on scale of 10
 	std::normal_distribution <double> money(10E9, 10E6);
 	cost = money(gen); // cost in euros to build a new plant
 	std::normal_distribution <double> build(5, 1);
@@ -178,10 +176,14 @@ void NuclearPowerPlant::simulate_step(double days)
 		this->get_node("Smoke")->set("visible", true);
 		std::normal_distribution <double> employees(800, 50);
 		employment = (int)(employees(gen));
+		std::normal_distribution <double> sat(2, 1);
+		satisfaction = sat(gen); // on scale of 10
 	}
 	else {
 		running = 0;
 		this->get_node("Smoke")->set("visible", false);
+		satisfaction = 5;
+		employment = 0;
 	}
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
@@ -251,8 +253,6 @@ Windmill::Windmill() {
 	age = 0;
 	maintenance = 0; //maintenace and working cost in euros per kWh
 	employment = 0; // average number of employees for one windmill
-	std::normal_distribution <double> sat(8, 0.1);
-	satisfaction = sat(gen); // on scale of 10
 	CO2Emission = 0.011E-3; // tons of CO2 emitted per kWh
 	std::normal_distribution <double> money(4E6, 300000);
 	cost = money(gen); // cost in euros to build a new windmill
@@ -287,9 +287,13 @@ void Windmill::simulate_step(double days)
 		age += (int)(days);
 		std::normal_distribution <double> employees(1.29, 0.02);
 		employment = (int)(employees(gen));
+		std::normal_distribution <double> sat(8, 1);
+		satisfaction = sat(gen); // on scale of 10
 	}
 	else {
 		running = 0;
+		satisfaction = 5;
+		employment = 0;
 	}
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
@@ -357,8 +361,6 @@ GeothermalPowerPlant::GeothermalPowerPlant()
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::normal_distribution <double> sat(8, 0.1);
-	satisfaction = sat(gen); // on scale of 10
 	std::normal_distribution <double> build(8, 1);
 	buildingTime = build(gen); // years needed to build a new plant (plus research needed)
 	employment = 0; // average number of employees linked to one plant
@@ -393,10 +395,14 @@ void GeothermalPowerPlant::simulate_step(double days)
 		this->get_node("Smoke")->set("visible", true);
 		std::normal_distribution <double> employees(1.29, 0.02);
 		employment = (int)(employees(gen));
+		std::normal_distribution <double> sat(8, 1);
+		satisfaction = sat(gen); // on scale of 10
 	}
 	else {
+		employment = 0;
 		running = 0;
 		this->get_node("Smoke")->set("visible", false);
+		satisfaction = 5;
 	}
 
 	double coal_prohibited = this->get("coal_prohibited"); // input from user
@@ -474,8 +480,6 @@ CoalPowerPlant::CoalPowerPlant()
 	buildingTime = build(gen); // years needed to build a new plant
 	std::normal_distribution <double> employees(800, 20);
 	employment = (int)(employees(gen)); // approximate number of employees in 1 plant 
-	std::normal_distribution <double> sat(4, 0.1);
-	satisfaction = sat(gen); // on scale of 10
 
 	CO2Emission = 0.868E-3; // tons of CO2 emitted per kWh
 	SO2Emission = 0.00152E-3; // tons of SO2 emitted per kWh
@@ -515,10 +519,14 @@ void CoalPowerPlant::simulate_step(double days)
 
 		std::normal_distribution <double> employees(800, 20);
 		employment = (int)(employees(gen));
+		std::normal_distribution <double> sat(4, 1);
+		satisfaction = sat(gen); // on scale of 10
 	}
 	else {
 		running = 0;
 		this->get_node("Smoke")->set("visible", false);
+		satisfaction = 5;
+		employment = 0;
 	}
 
 	double efficiency_supercritical = this->get("efficiency_supercritical"); // input from user

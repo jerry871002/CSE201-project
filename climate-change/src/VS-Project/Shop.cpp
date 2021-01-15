@@ -78,11 +78,7 @@ double Shop::get_satisfaction() {
     if (this->PanelsOn) { satis += 1.6; };
     if (this->WindTurbineOn) { satis += 0.9; };  //Increase satisfaction if more eco friendly
     if (satis > 9.5) { satis = 9.5;}  // Always room for increased satisfaction
-    if (this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall") {
-        if (this->get_node("MeshComponents/Trees")->get("visible")) {
-            satis += 4; // 4 is huge but its cause trees need to have a noticeable effect on the city 
-        }
-    }
+    
 
     return satis;
 }
