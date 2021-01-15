@@ -1410,6 +1410,7 @@ __meta__ = {
 }
 
 [node name="TabContainer" type="TabContainer" parent="2Dworld"]
+visible = false
 margin_left = 12.4002
 margin_top = 2.74565
 margin_right = 1872.4
