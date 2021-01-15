@@ -46,9 +46,7 @@ Structure::Structure(double cost, double energyUse, double maintenance, double s
 Structure::~Structure() {}
 
 double Structure::get_satisfaction() {
-    if ((this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall" ) && (this->get_node("MeshComponents/Trees")->get("visible"))) {
-        return ((this->satisfaction) + 4);
-    }
+    
     return this->satisfaction;
 }
 
