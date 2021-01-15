@@ -335,10 +335,10 @@ double House::get_energyuse() {
 
 	std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
 	std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
-	std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
+	std::cout << "DEBUG: energy use  : " << double(this->energyUse) << std::endl;
 
 
-    return (double)(this->energyUse)*panelsF*turbineF*glazingF;
+    return ((double)(this->energyUse))*panelsF*turbineF*glazingF;
 }
 
 double House::get_environmentalcost() {
