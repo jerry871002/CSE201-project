@@ -157,7 +157,7 @@ void Transport::set_transportType(int type)
         capacity = 1;
         occupancyRate = 1;
         buildingTime = 0.04; //really fast, in days (1 hour )
-        satisfaction = 6.9; //meduim satisfaction
+        satisfaction = 3; //meduim satisfaction
         std::normal_distribution <double> kmbike(18, 7);
         kmPerDay = kmbike(gen); // kilometres per day,  randomised for each bike
         lifetime = 5;
@@ -202,7 +202,7 @@ void Transport::set_transportType(int type)
         }
         std::normal_distribution <double> buildingb(22, 3);
         buildingTime = buildingb(gen); // construction time for 1 bus, in days
-        satisfaction = 6.85;
+        satisfaction = 3;
         if (satisfaction > 10) {
             satisfaction = 10;
         }
