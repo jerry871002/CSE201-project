@@ -847,14 +847,28 @@ void City::_on_Reset_cancelled()
 
 void City::_on_Reset_confirmed()
 {
+    // RESET GAME SETTINGS
+    this->time_speed = 1.0;
+    this->day_tick = 0;
+    this->set_budget(10000);
+
+    // RESET TRANSPORT POLICIES
+    this->fuelTax = 0;
+    this->weightTax = 0;
+    this->bikeSubsidy = 0;
+    this->electricCarSubsidy = 0;
+    this->busSubsidy = 0;
+    this->carProhibition = 0;
+
+    // RESET OTHER POLICIES
     this->set("workingPower", 0);
 
     // RESET STATS
-
     HousingCO2 = 0;
     ShopsCO2 = 0;
     ProductionCO2 = 0;
     EnergyCO2 = 0;
+    TransportCO2 = 0;
     income = 0;
     population = 0;
     numberOfEmployees = 0;
@@ -865,18 +879,22 @@ void City::_on_Reset_confirmed()
     totalSatisfactioWeight = 0;
     totalSatisfaction = 0;
 
+    // RESET ARRAYS
     statsCarbonEmissionHousing = { };
     statsCarbonEmissionProduction = { };
     statsCarbonEmissionEnergy = { };
     statsCarbonEmissionShops = { };
     statsEnvironmentalCost = { };
+    statsCarbonEmission = {};
+    statsCarbonEmissionSplit = {};
+    statsEnvironmentalCost = {};
     statsIncome = { };
     statsEnergy = { };
     statsUnemployment = { };
     statsTotalSatisfaction = { };
     statsPopulation = { };
 
-
+    // RELOAD SCENE
     this->get_tree()->reload_current_scene();
 }
 
