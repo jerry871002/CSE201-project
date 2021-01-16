@@ -1381,7 +1381,7 @@ void City::implement_policies(double value) {
                 houses_with_trees++;
                 if (trees_iterator == trees_vector.end()) { this->trigger_notification(String("All possible buildings now have trees ! This is a good thing. However, you cannot add any more.")); break; }
             }
-            this->trigger_notification(String("Trees have been added to " + String(value) + " buildings. What a happy sight."));
+            this->trigger_notification(String("Trees have been added to that many buildings. What a happy sight."));
         }
         else {
             this->trigger_notification(String("The value you provided was not possible. Please try planting trees again."));
