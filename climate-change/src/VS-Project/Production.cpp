@@ -278,11 +278,9 @@ void GoodsFactories::simulate_step(double days)
 		int value = 10;
 		if (subsidy_green <= 30000) {
 			value = 10;
-		}
-		if (60000 >= subsidy_green >= 30000) {
+		} else if (30000 <= subsidy_green && subsidy_green <= 60000) {
 			value = 7;
-		}
-		if (subsidy_green > 60000) {
+		} else if (subsidy_green > 60000) {
 			value = 5;
 		}
 		srand((int)time(0));
@@ -301,14 +299,11 @@ void GoodsFactories::simulate_step(double days)
 		int maxi = 10;
 		if (maximum_CO2 >= 30) {
 			maxi = 10;
-		}
-		if (30 > maximum_CO2 >= 20) {
+		} else if (20 <= maximum_CO2 && maximum_CO2 < 30) {
 			maxi = 8;
-		}
-		if (maximum_CO2 < 20) {
+		} else if (10 <= maximum_CO2 && maximum_CO2 < 20) {
 			maxi = 6;
-		}
-		if (maximum_CO2 < 10) {
+		} else if (maximum_CO2 < 10) {
 			maxi = 4;
 		}
 		srand((int)time(0));
@@ -321,7 +316,7 @@ void GoodsFactories::simulate_step(double days)
 			this->get_child(1)->set("visible", false);
 			satisfaction = 5;
 		}
-		if (60 < employment <= 120 && chance < 4) {
+		if (60 < employment && employment <= 120 && chance < 4) {
 			employment = 0;
 			factory_closed = true;
 			age = 0;

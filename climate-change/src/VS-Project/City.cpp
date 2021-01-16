@@ -16,7 +16,7 @@
 #include <Label.hpp>
 #include <DirectionalLight.hpp>
 #include <WorldEnvironment.hpp>
-#include <godot.hpp>
+#include <Godot.hpp>
 #include <Node2D.hpp>
 
 #include <PoolArrays.hpp>
@@ -819,14 +819,28 @@ void City::_on_Reset_cancelled()
 
 void City::_on_Reset_confirmed()
 {
+    // RESET GAME SETTINGS
+    this->time_speed = 1.0;
+    this->day_tick = 0;
+    this->set_budget(10000);
+
+    // RESET TRANSPORT POLICIES
+    this->fuelTax = 0;
+    this->weightTax = 0;
+    this->bikeSubsidy = 0;
+    this->electricCarSubsidy = 0;
+    this->busSubsidy = 0;
+    this->carProhibition = 0;
+
+    // RESET OTHER POLICIES
     this->set("workingPower", 0);
 
     // RESET STATS
-
     HousingCO2 = 0;
     ShopsCO2 = 0;
     ProductionCO2 = 0;
     EnergyCO2 = 0;
+    TransportCO2 = 0;
     income = 0;
     population = 0;
     numberOfEmployees = 0;
@@ -837,18 +851,22 @@ void City::_on_Reset_confirmed()
     totalSatisfactioWeight = 0;
     totalSatisfaction = 0;
 
+    // RESET ARRAYS
     statsCarbonEmissionHousing = { };
     statsCarbonEmissionProduction = { };
     statsCarbonEmissionEnergy = { };
     statsCarbonEmissionShops = { };
     statsEnvironmentalCost = { };
+    statsCarbonEmission = {};
+    statsCarbonEmissionSplit = {};
+    statsEnvironmentalCost = {};
     statsIncome = { };
     statsEnergy = { };
     statsUnemployment = { };
     statsTotalSatisfaction = { };
     statsPopulation = { };
 
-
+    // RELOAD SCENE
     this->get_tree()->reload_current_scene();
 }
 
@@ -2128,7 +2146,7 @@ void City::write_stat_history_to_file() {
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
-    newIncome.push_back((int)((max(budget, 0) / pow(10, 3)) + 0.5));
+    newIncome.push_back((int)((max(budget, 0.0) / pow(10, 3)) + 0.5));
 
     if (statsIncome.size() > 100) {
         statsIncome.remove(1);
@@ -2385,7 +2403,7 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
 
 double City::return_unemployment_rate() {
     if (population != 0) {
-        return min(0,(1 - this->numberOfEmployees / this->population));
+        return min(0.0, (1 - this->numberOfEmployees / this->population));
     }
     else { return 0; }
 }
