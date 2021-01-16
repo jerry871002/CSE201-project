@@ -97,48 +97,49 @@ void AgriculturalProduction::simulate_step(double days)
 	this->Production::simulate_step(days);
 
 	switch (agricultureType) {
-		case 0: { // wheat
-			if ((fertilizerBefore == 0) && (fertilizerProhibited == 1)) {
-				fertility *= 0.65;
-				satisfaction /= 0.95;
-			}
-			else if ((fertilizerBefore == 1) && (fertilizerProhibited == 0)) {
-				fertility /= 0.65;
-				satisfaction *= 0.95;
-			}
-			if ((pesticideBefore == 0) && (pesticideProhibited == 1)) {
-				fertility /= 1.15;
-				satisfaction /= 0.85;
-			}
-			else if ((pesticideBefore == 1) && (pesticideProhibited == 0)) {
-				fertility *= 1.15;
-				satisfaction *= 0.85;
-			}
-			GMOBefore = GMOProhibited;
-			pesticideBefore = pesticideProhibited;
-			fertilizerBefore = fertilizerProhibited;
-			production = requiredLand * fertility; //output over the time period
-			waterConsumption = requiredLand * production * 1000* 1500;
-			CO2Emission = 0.4 * production; //co2 tonne per year
-			maintenance = 144 * 365 * requiredLand; //maintenance in euros per year
-			if (fertilizerProhibited == 0) {
-				maintenance += 45 * requiredLand * 365;
-				CO2Emission += 0.3 * CO2Emission;
-			}
-			if (pesticideProhibited == 0) { //depends on the land size
-				CO2Emission += 9.4 * requiredLand;
-				maintenance += 25 * requiredLand*365;
-			}
-			break;
+	case 0: { // wheat
+		if ((fertilizerBefore == 0) && (fertilizerProhibited == 1)) {
+			fertility *= 0.65;
+			satisfaction /= 0.95;
 		}
-
-		case 1: {
-			production = (requiredLand * fertility); //required land taken so that this is production in ton per year
-			waterConsumption = production * 1000 * 22; //liters per kg so had to convert production back to kg
-			CO2Emission = 19.18 * production;
-			break;
+		else if ((fertilizerBefore == 1) && (fertilizerProhibited == 0)) {
+			fertility /= 0.65;
+			satisfaction *= 0.95;
 		}
+		if ((pesticideBefore == 0) && (pesticideProhibited == 1)) {
+			fertility /= 1.15;
+			satisfaction /= 0.85;
+		}
+		else if ((pesticideBefore == 1) && (pesticideProhibited == 0)) {
+			fertility *= 1.15;
+			satisfaction *= 0.85;
+		}
+		GMOBefore = GMOProhibited;
+		pesticideBefore = pesticideProhibited;
+		fertilizerBefore = fertilizerProhibited;
+		production = requiredLand * fertility; //output over the time period
+		waterConsumption = requiredLand * production * 1000 * 1500;
+		CO2Emission = 0.4 * production; //co2 tonne per year
+		maintenance = 144 * 365 * requiredLand; //maintenance in euros per year
+		if (fertilizerProhibited == 0) {
+			maintenance += 45 * requiredLand * 365;
+			CO2Emission += 0.3 * CO2Emission;
+		}
+		if (pesticideProhibited == 0) { //depends on the land size
+			CO2Emission += 9.4 * requiredLand;
+			maintenance += 25 * requiredLand * 365;
+		}
+		break;
 	}
+	case(1): {
+		production = (requiredLand * fertility); //required land taken so that this is production in ton per year
+		waterConsumption = production * 1000 * 22; //liters per kg so had to convert production back to kg
+		CO2Emission = 19.18 * production;
+
+		break;
+	}
+	}
+
 }
 
 
@@ -411,16 +412,34 @@ template<typename T> String to_godot_string(T s)
 String Production::get_object_info()
 {
 	String info = this->Structure::get_object_info();
-	if (subsidy == true && factory_closed == false) {
-		info += "This factory receives a green subsidy which helps it grow and causes less environmental damage." + String("\n");
+	if (this->get_object_type() == "GoodsFactories") {
+		if (subsidy == true && factory_closed == false) {
+			info += "This factory receives a green subsidy which helps it grow and causes less environmental damage." + String("\n");
+		}
+		if (factory_closed == true) {
+			info += "This factory is closed due to the taxes linked to the maximum carbon law. Citizens are unhappy because of this move." + String("\n");
+		}
+		info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
+
+		info += "This building employs " + to_godot_string((int)(this->employment)) + " hard-working citizens." + String("\n");
+		info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
+		info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	}
-	if (factory_closed == true) {
-		info += "This factory is closed due to the taxes linked to the maximum carbon law. Citizens are unhappy because of this move." + String("\n");
+	if (this->get_object_type() == "AgriculturalProduction") {
+		if ((((AgriculturalProduction*)this)->agricultureType) == 0){
+			info += "At the moment, this field produces wheat." + String("\n");
+		}
+		if ((((AgriculturalProduction*)this)->agricultureType) == 1) {
+			info += "At the moment, this field produces animal fodder for meat production." + String("\n");
+		}
+		if ((((AgriculturalProduction*)this)->agricultureType) == 2) {
+			info += "At the moment, this field produces vegetables." + String("\n");
+		}
+		if (pesticideProhibited==1){info+= "Pesticides are strictly prohibited." + String("\n");}
+		else { info += "Pesticides are allowed, although supervised by the township." + String("\n");}
+		if (fertilizerProhibited == 1) { info += "Fertilizers are completely banned." + String("\n"); }
+		else { info += "Fertilizers are allowed, although regulated." + String("\n"); }
+		// 0 - wheat, 1 - meat, 2 - vegetables
 	}
-	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
-	
-	info += "This building employs " + to_godot_string((int)(this->employment)) + " hard-working citizens." + String("\n");
-	info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
-	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	return info;
 }

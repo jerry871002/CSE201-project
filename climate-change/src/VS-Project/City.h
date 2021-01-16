@@ -209,7 +209,7 @@ namespace godot {
 
 
         
-		int value_pie_chart_C02(int,int);
+		int r_plus_to_percentage(int,int);
 
         float calculate_building_prob(float, float, float, double);
 
