@@ -25,7 +25,7 @@ namespace godot {
 		const double MaxCameraAngle{ 50 };
 		const double MinCameraAngle{ 20 };
 		double CameraAngleDeg;
-		const Vector3 StartPosition{ Vector3(600, 100, 600) };
+		const Vector3 StartPosition{ Vector3(600, 300, 600) };
 		const Vector3 StartRotation{ Vector3(0, 0, 0) };
 		const double MaxHeight{ 300 };
 		const double MinHeight{ 20 };
