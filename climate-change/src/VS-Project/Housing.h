@@ -55,9 +55,10 @@ namespace godot {
 		double get_solar_panel_age();
 		double get_double_glazing_age();
 		double get_satisfaction();
-
-
-
+		
+		int get_inhabitants();
+		void set_inhabitants(int);
+		
 
 		int doubleGlazingSatisfaction = 5;
 

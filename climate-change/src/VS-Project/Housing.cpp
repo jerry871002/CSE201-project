@@ -29,16 +29,19 @@ String Housing::get_object_info()
 	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
 	info += "Yearly, the energy used by the building is " + to_godot_string((int)(this->get("energyUse"))) + " kWh." + String("\n");
 	info +=  to_godot_string((int)(this->get("numberOfInhabitants"))) + " people live in this house, which has a satisfaction of "+to_godot_string((int)(this->get("satisfaction")))+ String("\n");
+	
 	if (get_object_type() == String("House")) {
-		info += "This is a house of type: " + to_godot_string((int)(this->get("houseType"))) + String("\n");
+		if ((int)(this->get("houseType"))==1){ info += "This is an old house, it probably is not as climate efficient." + String("\n");
+		}
+		else{ info += "This is a modern house, it likely is constrcuted with energy efficieny in mind." + String("\n"); }
 	}
-	info += "SUBSIDY PANELS: " + to_godot_string((int)(this->get("solar_panel_subsidies_housing"))) + String("\n");
+	
 	info += "PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
 	if (this->PanelsOn) {
 		info += "This building has solar panels ! " + String("\n") + "The panels have " + to_godot_string((int)(this->solarPanelAge)) + " days left until they are rendered obsolete." + String("\n");
 	}
 	else {
-		info += "This building has no solar panels. Quite sad." + String("\n");
+		info += "This building has no solar panels. Quite sad. This household would receive " + to_godot_string((int)(this->get("solar_panel_subsidies_housing"))) + " in currency if they installed solar panels." + String("\n");
 	}
 	info += "SUBSIDY TURBINES: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
 	// info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");  why does this need to be displayed to the user ??
@@ -210,7 +213,13 @@ void Housing::simulate_step(double days) {
 	} 
 };
 
+int Housing::get_inhabitants() {
+	return this->numberOfInhabitants;
+}
 
+void Housing::set_inhabitants(int value) {
+	this->numberOfInhabitants = value;
+}
 
 double Housing::get_min_income() {
     return this->minIncome;
@@ -237,7 +246,7 @@ double Housing::get_satisfaction() {
     if (this->rooftopWindTurbineOn) { roofturbineF = 1.1; };
 	if (this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall") {
 		if (this->get_node("MeshComponents/Trees")->get("visible")) {
-			treesF = 2;
+			treesF = 3;
 		}
 	}
 	if (this->satisfaction + panelsF + roofturbineF + treesF > 10){
