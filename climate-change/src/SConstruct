@@ -50,7 +50,7 @@ if env['platform'] == "osx":
     env['target_path'] += 'osx/'
     cpp_library += '.osx'
     env.Append(CCFLAGS=['-arch', 'x86_64'])
-    env.Append(CXXFLAGS=['-std=c++14'])
+    env.Append(CXXFLAGS=['-std=c++14']) # since `random_shuffle` is removed in c++17
     env.Append(LINKFLAGS=['-arch', 'x86_64'])
     if env['target'] in ('debug', 'd'):
         env.Append(CCFLAGS=['-g', '-O2'])
@@ -107,13 +107,6 @@ sources += Glob('VS-Project/Player.cpp')
 sources += Glob('VS-Project/Production.cpp')
 sources += Glob('VS-Project/Transport.cpp')
 sources += Glob('VS-Project/Shop.cpp')
-# exclude_files = Glob('VS-Project/*Test.cpp')
-# exclude_files += Glob('VS-Project/edit_text_files.cpp')
-# exclude_files += Glob('VS-Project/main_loop.cpp')
-
-# we don't need to compile the unit test files into our dynamic library
-# for file in exclude_files:
-#     sources.remove(file)
 
 print('There are {} files to compile...'.format(len(sources)))
 for source_file in sources:
