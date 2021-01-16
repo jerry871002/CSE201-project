@@ -256,7 +256,7 @@ void Housing::panel_added_probability(){
 	}
 
 	//convert housingIncome to a value between 0 and 1 to be used in the probbility
-	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
+	double housingIncomeIndexed = 1 - (((double)this->maxIncome - this->housingIncome) / this->maxIncome);
 
 	panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + (this->solarSatisfaction/10)*15 + housingIncomeIndexed*35)/100;
 
@@ -274,14 +274,14 @@ void Housing::double_glazing_added_probability(){
 	double doubleGlazingCost;
     double glazing_subsidies = this->get("double_glazing_subsidies"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
-	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
-    doubleGlazingCost = windowCost * this->windowNumber - double_glazing_subsidies;
+	double housingIncomeIndexed = 1 - (((double)this->maxIncome - this->housingIncome) / this->maxIncome);
+    doubleGlazingCost = (double)windowCost * this->windowNumber - double_glazing_subsidies;
 
     if (doubleGlazingCost < 0) {
 		doubleGlazingCost = 0; //cannot have a negative solar panel cost
 	}
 
-	double_glazing_probability = (((windowCost - doubleGlazingCost)/windowCost)*50 + (this->doubleGlazingSatisfaction/10)*15 + housingIncomeIndexed*35)/100;
+	double_glazing_probability = (((windowCost - doubleGlazingCost)/windowCost)*50 + ((double)this->doubleGlazingSatisfaction/10)*15 + housingIncomeIndexed*35)/100;
 
 	if (doubleGlazingOn == true) {
 		double_glazing_probability = 0;
@@ -292,7 +292,7 @@ void Housing::roof_wind_turbines_added_probability(){
 	double turbineCost;
     double wind_subsidies = this->get("wind_turbine_subsidies"); // input from user of how much are the subsidies
     // double income_indexed = 0.5;
-	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
+	double housingIncomeIndexed = 1 - (((double)this->maxIncome - this->housingIncome) / this->maxIncome);
     turbineCost = this->windCost - wind_turbine_subsidies;  
     if (turbineCost < 0) {
 		turbineCost = 0; //cannot have a negative solar panel cost
@@ -419,7 +419,7 @@ void House::_ready()
 		//attributes special to this class
 		windowNumber = 5;
 		srand((int)time(0));
-		this->age = (rand() % (20 * 365) + 1);
+		this->age = ((int)rand() % (20 * 365) + 1);
 
 
 	}
@@ -464,7 +464,7 @@ void House::_ready()
 		this->satisfaction = 7;
 		//satisfaction = 10; //assuming we are on a scale from 0 to 10
 		srand((int)time(0));
-		this->age = (rand() % (20 * 365) + 1);
+		this->age = ((int)rand() % (20 * 365) + 1);
 	}
 
 
@@ -545,7 +545,7 @@ void House::set_houseType(int type)
 		//attributes special to this class
 		windowNumber = 5;
 		srand((int)time(0));
-		this->age = (rand() % (20*365) + 1);
+		this->age = ((int)rand() % (20*365) + 1);
 		
 
 	}
@@ -590,7 +590,7 @@ void House::set_houseType(int type)
 		this->satisfaction = 8;
 		//satisfaction = 10; //assuming we are on a scale from 0 to 10
 		srand((int)time(0));
-		this->age = (rand() % (20 * 365) + 1);
+		this->age = ((int)rand() % (20 * 365) + 1);
 	}
 
 }
@@ -682,7 +682,7 @@ void Building::_ready() {
 	PanelsOn = false;
 	rooftopWindTurbineOn = false;
 	srand((int)time(0));
-	this->age = (rand() % (20 * 365) + 1);
+	this->age = ((int)rand() % (20 * 365) + 1);
 
 	windowNumber = 30;
 	cost = 1000000; //counting price of lot + cost of workforce + cost of all materials used
@@ -744,6 +744,3 @@ void Building::_ready() {
 void Building::simulate_step(double days) {
 	this->Housing::simulate_step(days);
 }
-	
-
-
