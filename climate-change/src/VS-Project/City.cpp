@@ -1376,6 +1376,7 @@ void City::implement_policies(double value) {
             for (int i = 0; i < int(value); ++i) {
                 (*trees_iterator)->get_node("MeshComponents/Trees")->set("visible", true);
                 (*trees_iterator)->set("satisfaction", (double)(*trees_iterator)->get("satisfaction") + 4);
+                this->totalSatisfaction += 10/((double)(this->all_structures.size()));
                 trees_iterator++;
                 budget -= 5000;
                 houses_with_trees++;
@@ -1386,6 +1387,7 @@ void City::implement_policies(double value) {
         else {
             this->trigger_notification(String("The value you provided was not possible. Please try planting trees again."));
         }
+        
     }
 }
 
