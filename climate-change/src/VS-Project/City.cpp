@@ -267,8 +267,15 @@ void City::_physics_process(float delta) {
         // CALLED EVERY GAME DAY
 
         if (budget < 0 && !(under_budget)) {
-            this->trigger_notification(String("You have gone into debt ! This is a serious issue."));
+            this->trigger_notification(String("You have gone into debt ! This is a serious issue. If you are not in the black next year, your term as mayor will be abruptly ended!"));
             under_budget = true;
+        }
+
+        if (under_budget) {
+            if (budget >= 0) { under_budget = false;  this->trigger_notification(String("You have gone climbed out of debt ! Congratulations ! Does this mean re-election?"));
+            }
+            else { this->_on_Reset_confirmed(); this->trigger_notification(String("Game over ! You overspent the town's budget in two consecutive years. Better luck this time."));
+            }
         }
 
         /*
@@ -1299,7 +1306,7 @@ void City::implement_policies(double value) {
             {
                 (*it)->set("double_glazing_subsidies", value);
             }
-            this->trigger_notification(String("Double glazing policy implemented."));
+            this->trigger_notification(String("Double glazing policy implemented. This is quite costly, but only well off, modern houses will install them."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1320,7 +1327,7 @@ void City::implement_policies(double value) {
         if (value >= 0 && value <= 5000) {
             Godot::print("TAX ON CAR WEIGHT IMPLEMENTED");
             weightTax = value;
-            this->trigger_notification(String("Policy implemented."));
+            this->trigger_notification(String("Heavy cars will now be taxed higher. Pickup truck drivers are up in arms."));
         }
 
         else {
@@ -1331,7 +1338,7 @@ void City::implement_policies(double value) {
         if (value >= 0 && value <= 250) {
             Godot::print("BIKE SUBSIDY IMPLEMENTED");
             bikeSubsidy = value;
-            this->trigger_notification(String("Bike subsidy implemented."));
+            this->trigger_notification(String("Bike subsidy implemented. Two wheelers are now increasingly common on the city sidewalks and roads."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1341,7 +1348,7 @@ void City::implement_policies(double value) {
         if (value >= 0 && value <= 30000) {
             Godot::print("ELECTRIC CAR SUBSIDY IMPLEMENTED");
             electricCarSubsidy = value;
-            this->trigger_notification(String("Policy implemented."));
+            this->trigger_notification(String("Policy implemented. Some citizens complained it still wasn't enough to buy the new Tesla."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1361,7 +1368,7 @@ void City::implement_policies(double value) {
         if (value >= 0 && value <= 7) {
             Godot::print("CARS PROHIBITION ON CERTAIN DAYS IMPLEMENTED");
             carProhibition = value;
-            this->trigger_notification(String("The rules about car circulation have been implemented!"));
+            this->trigger_notification(String("The rules about car circulation have been implemented! Commuters are angered."));
         }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
@@ -1435,13 +1442,13 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             std::cout << "INSTANCE A CAR OF TYPE: " << type << std::endl;
 
             switch (type) {
-            case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; break;
+            case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; budget -= electricCarSubsidy; break;
             case 1: node = AmericanCarScene->instance(); current_car_quantities[1] += 1; break;
             case 2: node = NormalCarScene->instance(); current_car_quantities[2] += 1; break;
             case 3: node = OldCarScene->instance(); current_car_quantities[3] += 1; break;
-            case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; break;
+            case 4: node = BikeScene->instance(); current_car_quantities[4] += 1; budget -= bikeSubsidy; break;
             case 5: node = MotoScene->instance(); current_car_quantities[5] += 1; break;
-            case 6: node = BusScene->instance(); current_car_quantities[6] += 1; break;
+            case 6: node = BusScene->instance(); current_car_quantities[6] += 1; budget -= busSubsidy; break;
             case 7: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
             default: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
             }
@@ -2404,7 +2411,7 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
 
 double City::return_unemployment_rate() {
     if (population != 0) {
-        return (1 - this->numberOfEmployees / this->population);
+        return min(0,(1 - this->numberOfEmployees / this->population));
     }
     else { return 0; }
 }
