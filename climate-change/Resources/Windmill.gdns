@@ -3,7 +3,6 @@
 [ext_resource path="res://GDLib.gdnlib" type="GDNativeLibrary" id=1]
 
 [resource]
-resource_local_to_scene = true
 resource_name = "Windmill"
 class_name = "Windmill"
 library = ExtResource( 1 )
