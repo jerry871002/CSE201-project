@@ -489,11 +489,7 @@ void House::set_houseType(int type)
 	this->houseType = type;
 	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
 
-	//double employees = (double)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
-	//int population = (int)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
-	double employees = 80;
-	int population = 100;
-	double unemployment = (double)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
+	double unemployment = 0;
 
 	if (type == 1) {
 	//Low level house

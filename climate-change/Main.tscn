@@ -1305,9 +1305,9 @@ __meta__ = {
 
 [node name="InvalidInputNotification" type="Label" parent="2Dworld"]
 margin_left = 525.0
-margin_top = 400.0
+margin_top = 919.0
 margin_right = 1425.0
-margin_bottom = 550.0
+margin_bottom = 1030.0
 theme = SubResource( 6 )
 custom_styles/normal = ExtResource( 13 )
 custom_fonts/font = ExtResource( 12 )
