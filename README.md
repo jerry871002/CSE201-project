@@ -3,6 +3,8 @@
 C++ project for understanding the link between human activities and social environmental effects.
 Aim is for the user to have a better understanding of how certain environmental policies work and their impact on different objectives. 
 
+
+
 ## Members
 | name surname | github username | trello username | [role] |
 |:------------:|:---------------:|:---------------:|:------:|
@@ -38,7 +40,26 @@ Aim is for the user to have a better understanding of how certain environmental 
 - Anna
 - Paloma
 
-## How to compile and run our project
+
+#########################################
+#### How to compile and run our project
+
+
+####
+!!! MINIMUM REQUIREMENTS !!!
+
+This game features a large amount of 3D Graphics and will not run on every computer.
+Make sure you have a capable computer before going through the steps below .
+
+Windows recommended specs:
+Dedicated GPU or i7-10700 integrated graphics or better 
+16 GB RAM 
+
+MacBook minimum specs:
+MacBook Air 2016
+
+####
+
 ### Windows
 1. Install the standard version of Godot via [this page](https://godotengine.org/download)
 2. Install the IDE VS Community from this page [this page]https://visualstudio.microsoft.com/fr/downloads/
@@ -78,3 +99,5 @@ Aim is for the user to have a better understanding of how certain environmental 
 ![](https://i.imgur.com/WhzN7eD.png)
 12. Save it in any place you want, by double clicking on the dmg file, you will see the game inside it
 13. Enjoy the game :)
+
+#########################################
