@@ -257,7 +257,7 @@ void City::_physics_process(float delta) {
         change_pie_label(carbonEmission, "PieCO2");
         change_pie_label(income / numberOfEmployees, "PieIncome");
         change_pie_label(budget, "PieBudget");
-        change_pie_label(100-100*numberOfEmployees/population, "PieUnemployement");
+        change_pie_label(fmax(100 - 100 * numberOfEmployees / population, 0), "PieUnemployement");
         change_pie_label(energyDemand / all_structures.size(), "PiePowerDemand");
 
     }
@@ -2156,7 +2156,7 @@ void City::write_stat_history_to_file() {
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
-    newIncome.push_back((int)((income / pow(10, 6)) + 0.5));
+    newIncome.push_back((int)((max(budget, 0) / pow(10, 6)) + 0.5));
 
     if (statsIncome.size() > 100) {
         statsIncome.remove(1);
@@ -2350,8 +2350,9 @@ double City::normalGenerator(double mean, double stdDev)
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
 // 100000 pour power demand et 1 million pour C02
 int City::value_pie_chart_C02(int value, int growth) {
-    int newvalue = (int)(100 * (1 - pow(value / growth, -1)));
-    return newvalue;
+    if (value > 0) {return  (int)(100 * (1 - pow(value / growth, -1))); }
+    return (value);
+ 
 }
 
 void City::change_pie_chart(int value, NodePath name, bool isPositive)
@@ -2359,7 +2360,8 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
     value = fmax(value, 0);
     TextureProgress* node = ((TextureProgress*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name));
     if (value == 0) {
-        node->set_tint_progress(Color(1, 0, 0, 1.0));
+        if (isPositive) { node->set_tint_progress(Color(1, 0, 0, 1.0)); }
+        else { node->set_tint_progress(Color(0, 1, 0, 1.0)); }
         node->set("value", 100);
     }
     else {
