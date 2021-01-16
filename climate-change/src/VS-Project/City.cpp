@@ -238,17 +238,17 @@ void City::_physics_process(float delta) {
       
         change_pie_chart((int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
         change_pie_chart(value_pie_chart_C02(carbonEmission, 20000), "PieCO2", false);
-        change_pie_chart(income / (numberOfEmployees * 30), "PieIncome", true);
+        change_pie_chart(income / fmax(1, (numberOfEmployees * 30)), "PieIncome", true);
         change_pie_chart(value_pie_chart_C02(budget, pow(10, 4)), "PieBudget", true);
-        change_pie_chart(4 * (100 - 100 * numberOfEmployees / fmax(population,1)), "PieUnemployement", false); //EnergyDemand variable is temporary
-        change_pie_chart(value_pie_chart_C02(energyDemand / fmax(all_structures.size(), 1), 25000), "PiePowerDemand", false);
+        change_pie_chart(4 * (100 - 100 * numberOfEmployees / fmax(1, population)), "PieUnemployement", false); //EnergyDemand variable is temporary
+        change_pie_chart(value_pie_chart_C02(energyDemand / fmax(1, all_structures.size()), 25000), "PiePowerDemand", false);
 
         change_pie_label((int)(10 * return_totalSatisfaction()), "PieSatisfaction");
         change_pie_label(carbonEmission, "PieCO2");
-        change_pie_label(income / fmax(numberOfEmployees,1), "PieIncome");
+        change_pie_label(income / fmax(1, numberOfEmployees), "PieIncome");
         change_pie_label(budget, "PieBudget");
-        change_pie_label(fmax(100 - 100 * numberOfEmployees / fmax(population, 1), 0), "PieUnemployement");
-        change_pie_label(energyDemand / fmax(all_structures.size(),1), "PiePowerDemand");
+        change_pie_label(fmax(100 - 100 * numberOfEmployees / fmax(1, population), 0), "PieUnemployement");
+        change_pie_label(energyDemand / all_structures.size(), "PiePowerDemand");
 
     }
 
@@ -396,7 +396,7 @@ void City::generate_initial_city_graphics()
     bool minimumonefactory = false;
     bool minimumonemall = false;
     double dist;
-
+    std::cout << "DEBUG: starting city generation" << std::endl;
     for (int x = 1; x < (citysize / 2) + 1; x++)
     {
         for (int z = 1; z < (citysize / 2) + 1; z++)
@@ -549,7 +549,9 @@ void City::generate_initial_city_graphics()
         }
     }
     trees_iterator = trees_vector.begin();
+    std::cout << "DEBUG: transport to add" << std::endl;
     transport_to_add();
+    std::cout << "DEBUG: transport to add done" << std::endl;
 
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
     {
@@ -557,7 +559,7 @@ void City::generate_initial_city_graphics()
         if (randomcarint == 0) { add_car((Vector3)((Node*)(*it))->get("translation")); }
     }
 
-
+    std::cout << "DEBUG: vectors about to shuffle" << std::endl;
     //   shuffles all the vectors so that buildings arent updated in a noticeable pattern
     std::random_shuffle(all_structures.begin(), all_structures.end());
     std::random_shuffle(all_energies.begin(), all_energies.end());
@@ -599,6 +601,7 @@ void City::generate_initial_city_graphics()
 
 
     }
+    std::cout << "DEBUG: city generation done" << std::endl;
 }
 
 
@@ -2093,7 +2096,7 @@ double City::return_income() {
 }
 
 double City::return_totalSatisfaction() {
-    return (double) totalSatisfaction/totalSatisfactioWeight;
+    return (double) totalSatisfaction/fmax(1, totalSatisfactioWeight);
 }
 
 double City::return_numberOfEmployees() {
@@ -2183,13 +2186,13 @@ void City::transport_to_add() {
             alphaSum += alpha[i];
         }
         for (int i = 0; i < 8; i++) {
-            alpha[i] = alpha[i] / fmax(alphaSum,1);
+            alpha[i] = alpha[i] / fmax(1, alphaSum);
         }
 
         double choice[8] = { 0 };
 
         for (int i = 0; i < 8; i++) {
-            probabilities[i] = 1000 * alpha[i] * (30 * ((double)((*it)->get("housingIncome")) /  fmax(pricesPerMonth[i],1)));
+            probabilities[i] = 1000 * alpha[i] * (30 * ((double)((*it)->get("housingIncome")) / fmax(1, pricesPerMonth[i])));
             // 1000 is one adjustement constant, how much people are willing to put on a car,
             //higher, everybody can afford (prob > 1)any type and will choose the one he prefer (higher alpha)
             // lower, price will restrict people more and more people won't spend money on transport (so sport or bike)
@@ -2213,7 +2216,7 @@ void City::transport_to_add() {
     }
 
     for (int i = 0; i < 8; i++) {
-        missing_car_quantities[i] = current_car_quantities[i] - quantities[i] / capacity[i];
+        missing_car_quantities[i] = current_car_quantities[i] - quantities[i] / fmax(1, capacity[i]);
 
         if (missing_car_quantities[i] > 0) {
             missing_car_quantities[i] = 0;
@@ -2231,7 +2234,7 @@ double City::normalGenerator(double mean, double stdDev)
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
 // 100000 pour power demand et 1 million pour C02
 int City::value_pie_chart_C02(int value, int growth) {
-    if (value > 0) { return  (int)(100 * (1 - pow(value / fmax( growth,0.0001), -1))); }
+    if (value > 0) {return  (int)(100 * (1 - pow(value / fmax(1, growth), -1))); }
     return (value);
  
 }
@@ -2249,10 +2252,10 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
     }
     else {
         if (isPositive) {
-            node->set_tint_progress(Color(min(2 - (double)value / 50, 0.99), min((double)value / 50, 0.99), 0, 1.0));
+            node->set_tint_progress(Color(fmin(2 - (double)value / 50, 0.99), fmin((double)value / 50, 0.99), 0, 1.0));
         }
         else {
-            node->set_tint_progress(Color(min((double)value / 50, 0.99), min(2 - (double)value / 50, 0.99), 0, 1.0));
+            node->set_tint_progress(Color(fmin((double)value / 50, 0.99), fmin(2 - (double)value / 50, 0.99), 0, 1.0));
         }
         node->set("value", value);
     }
@@ -2277,14 +2280,14 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
         double c = double(a * roota * rootb);
 
         // returns specific probability 
-        return float(a * pow(((20 * dist / (citysize))), 2) + b * (20 * dist / (citysize)) + c);
+        return float(a * pow(((20 * dist / fmax(1, citysize))), 2) + b * (20 * dist / fmax(1, citysize)) + c);
     }
 }
 
 // function that returns unemployment rate
 double City::return_unemployment_rate() {
     if (population != 0) {
-        return min(0.0, (1 - this->numberOfEmployees / this->population));
+        return fmin(0.0, (1 - this->numberOfEmployees / this->population));
     }
     else { return 0; }
 }
