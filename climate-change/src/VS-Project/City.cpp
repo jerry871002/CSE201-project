@@ -2156,7 +2156,7 @@ void City::write_stat_history_to_file() {
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
-    newIncome.push_back((int)((max(income, 0) / pow(10, 6)) + 0.5));
+    newIncome.push_back((int)((max(budget, 0) / pow(10, 6)) + 0.5));
 
     if (statsIncome.size() > 100) {
         statsIncome.remove(1);
