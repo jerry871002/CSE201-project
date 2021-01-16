@@ -138,13 +138,6 @@ void AgriculturalProduction::simulate_step(double days)
 		waterConsumption = production * 1000 * 22; //liters per kg so had to convert production back to kg
 		CO2Emission = 19.18 * production;
 
-		/*std::random_device rd;
-		std::mt19937 gen(rd());
-		std::normal_distribution <double> foodformeatfieldsize(1.2, 0.04);
-		requiredLand = foodformeatfieldsize(gen);
-		CO2Emission += 27144;
-		waterConsumption += 31135;
-		production += 1415;*/
 		break;
 	}
 	}
@@ -428,16 +421,34 @@ template<typename T> String to_godot_string(T s)
 String Production::get_object_info()
 {
 	String info = this->Structure::get_object_info();
-	if (subsidy == true && factory_closed == false) {
-		info += "This factory receives a green subsidy which helps it grow and causes less environmental damage." + String("\n");
+	if (this->get_object_type() == "GoodsFactories") {
+		if (subsidy == true && factory_closed == false) {
+			info += "This factory receives a green subsidy which helps it grow and causes less environmental damage." + String("\n");
+		}
+		if (factory_closed == true) {
+			info += "This factory is closed due to the taxes linked to the maximum carbon law. Citizens are unhappy because of this move." + String("\n");
+		}
+		info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
+
+		info += "This building employs " + to_godot_string((int)(this->employment)) + " hard-working citizens." + String("\n");
+		info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
+		info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	}
-	if (factory_closed == true) {
-		info += "This factory is closed due to the taxes linked to the maximum carbon law. Citizens are unhappy because of this move." + String("\n");
+	if (this->get_object_type() == "AgriculturalProduction") {
+		if ((((AgriculturalProduction*)this)->agricultureType) == 0){
+			info += "At the moment, this field produces wheat." + String("\n");
+		}
+		if ((((AgriculturalProduction*)this)->agricultureType) == 1) {
+			info += "At the moment, this field produces animal fodder for meat production." + String("\n");
+		}
+		if ((((AgriculturalProduction*)this)->agricultureType) == 2) {
+			info += "At the moment, this field produces vegetables." + String("\n");
+		}
+		if (pesticideProhibited==1){info+= "Pesticides are strictly prohibited." + String("\n");}
+		else { info += "Pesticides are allowed, although supervised by the township." + String("\n");}
+		if (fertilizerProhibited == 1) { info += "Fertilizers are completely banned." + String("\n"); }
+		else { info += "Fertilizers are allowed, although regulated." + String("\n"); }
+		// 0 - wheat, 1 - meat, 2 - vegetables
 	}
-	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
-	
-	info += "This building employs " + to_godot_string((int)(this->employment)) + " hard-working citizens." + String("\n");
-	info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
-	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	return info;
 }
