@@ -39,6 +39,10 @@ Aim is for the user to have a better understanding of how certain environmental 
 - Paloma
 
 ## How to compile and run our project
+Please be aware that a powerful computer is strongly recommended / necessary to run the final version of the simulation.
+
+For example, most of the portable computers of our team members are unable / struggle to run.
+
 ### Windows
 1. Install the standard version of Godot via [this page](https://godotengine.org/download)
 2. Install the IDE VS Community from this page [this page](https://visualstudio.microsoft.com/fr/downloads/)
