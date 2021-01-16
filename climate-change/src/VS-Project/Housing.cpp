@@ -357,6 +357,115 @@ House::House()
 void House::_ready()
 {
 	this->Housing::_ready();
+	int type = 1;
+	this->houseType = type;
+	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
+
+	double employees = (double)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
+	int population = (int)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
+	double unemployment = (double)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
+
+	if (type == 1) {
+		//Low level house
+		//definition of low level house, has no solar panels, no double glazing and no wind turbines on roof 
+		PanelsOn = false;
+		doubleGlazingOn = false;
+		rooftopWindTurbineOn = false;
+
+
+		srand((int)time(0));
+		//minimum wage 53 € per day - get money even on saturday and saturday 
+		// i take max to be 333€
+
+		this->numberOfInhabitants = (rand() % (6) + 1);
+
+
+		if (this->numberOfInhabitants >= 2) {
+			//have two salaries 
+			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
+			srand((int)time(0));
+			double probability = (rand() % (100));
+			if (probability <= unemployment) {
+				housingIncome = 23 * 2;
+			}
+			else {
+				housingIncome = fmax(minIncome, normalGenerator(50, 70)) + fmax(minIncome, normalGenerator(50, 70));
+			}
+		}
+
+		else {
+			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
+			srand((int)time(0));
+			double probability = (rand() % (100));
+			if (probability <= unemployment) {
+				housingIncome = 23;
+			}
+			else {
+				housingIncome = fmax(minIncome, normalGenerator(50, 70));
+			}
+		}
+
+		//Attributes for a low level house 
+		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
+		energyUse = 25000; //25000kWh per year i.e. 13.69 kWh per day (from heating and all )
+		maintenance = 0.1765; //cost in euros per kWh
+		this->CO2Emission = 3.51; ////tons per year 
+		buildingTime = 140; //in average, building a house takes about 140 days
+		this->satisfaction = 3;
+		//satisfaction = 3; //assuming we are on a scale from 0 to 10
+
+		//attributes special to this class
+		windowNumber = 5;
+		srand((int)time(0));
+		this->age = (rand() % (20 * 365) + 1);
+
+
+	}
+	else {
+		// High Level House 
+		//has properties : double glazing 
+
+		PanelsOn = false;
+		doubleGlazingOn = true;
+		rooftopWindTurbineOn = false;
+
+		srand((int)time(0));
+		this->numberOfInhabitants = (rand() % (6) + 1);
+		if (this->numberOfInhabitants >= 2) {
+			srand((int)time(0));
+			double probability = (rand() % (100));
+			if (probability <= unemployment) {
+				housingIncome = 23 * 2;
+			}
+			else {
+				housingIncome = fmax(minIncome, normalGenerator(50, 70)) + fmax(minIncome, normalGenerator(50, 70));
+			}
+		}
+
+		else {
+			srand((int)time(0));
+			double probability = (rand() % (100));
+			if (probability <= unemployment) {
+				housingIncome = 23;
+			}
+			else {
+				housingIncome = fmax(minIncome, normalGenerator(50, 70));
+			}
+		}
+
+		//attributes from structure class
+		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
+		energyUse = 20000; //20000kWh per year i.e. 54.79 kWh per day (from heating and all )
+		maintenance = 0.1765; //cost in euros per kWh
+		this->CO2Emission = 3.51; //tons per year
+		buildingTime = 140; //in average, building a house takes about 140 days
+		this->satisfaction = 7;
+		//satisfaction = 10; //assuming we are on a scale from 0 to 10
+		srand((int)time(0));
+		this->age = (rand() % (20 * 365) + 1);
+	}
+
+	
 }
 
 void House::_register_methods()
@@ -378,9 +487,9 @@ void House::set_houseType(int type)
 	this->houseType = type;
 	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
 
-	double employees = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
-	double population = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
-	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
+	double employees = (double)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
+	int population = (int)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
+	double unemployment = (double)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
 
 	if (type == 1) {
 	//Low level house
@@ -563,7 +672,22 @@ double Building::get_environmentalcost() {
 }
 
 
+void Building::_register_methods()
+{
+	register_method((char*)"_ready", &Building::_ready);
+	register_method((char*)"_process", &Building::_process);
+}
+
 Building::Building() {
+	
+}
+
+Building::~Building() {
+
+}
+
+void Building::_ready() {
+	this->Housing::_ready();
 	PanelsOn = false;
 	rooftopWindTurbineOn = false;
 	srand((int)time(0));
@@ -574,18 +698,18 @@ Building::Building() {
 	maintenance = 0.1765; //cost in euros per kWh
 
 	srand((int)time(0));
-	
+
 	housingIncome = 0;
 	double incomeEach = 0;
-	
-	double employees = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
-	double population = ((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
-	int unemployment = (int)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
+
+	double employees = (double)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
+	int population = (int)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
+	double unemployment = (double)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
 
 	this->numberOfInhabitants = (rand() % (10) + 50);
 	this->buildingType = (rand() % 2 + 1);
 
-	for (int i = 0; i < numberOfInhabitants/2; i++) { //I took half inhabitants are children
+	for (int i = 0; i < numberOfInhabitants / 2; i++) { //I took half inhabitants are children
 		srand((int)time(0));
 		double probability = (rand() % (100));
 		if (probability <= unemployment) {
@@ -595,10 +719,10 @@ Building::Building() {
 			incomeEach += fmax(minIncome, normalGenerator(50, 70));
 		}
 	}
-	
+
 	//This is to compute an average wage in the building so that the probability functions to add solar panels etc still work the same as for a house
-	housingIncome = incomeEach / this->numberOfInhabitants; 
-	
+	housingIncome = incomeEach / this->numberOfInhabitants;
+
 
 	if (buildingType == 1) { //Low level building
 		doubleGlazingOn = false;
@@ -608,7 +732,7 @@ Building::Building() {
 		CO2Emission = 17.55; //tons per year from gas heating 
 		buildingTime = 450; //Time it takes to build an appartment building is about 15 months 
 		this->satisfaction = 3;
-	
+
 	}
 
 	else { //High level building
@@ -621,9 +745,6 @@ Building::Building() {
 		this->satisfaction = 7;
 	}
 
-}
-
-Building::~Building() {
 
 }
 
