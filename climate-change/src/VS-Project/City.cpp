@@ -717,7 +717,7 @@ void City::initialize_stats() {
 
     Array titleIncome{};
     titleIncome.push_back(String("Date"));
-    titleIncome.push_back(String("GDP in millions of euros"));
+    titleIncome.push_back(String("Budget in thousands of euros"));
     statsIncome.push_back(titleIncome);
 
     Array titleEnergy{};
@@ -1376,7 +1376,7 @@ void City::implement_policies(double value) {
             for (int i = 0; i < int(value); ++i) {
                 (*trees_iterator)->get_node("MeshComponents/Trees")->set("visible", true);
                 (*trees_iterator)->set("satisfaction", (double)(*trees_iterator)->get("satisfaction") + 4);
-                this->totalSatisfaction += 10/((double)(this->all_structures.size()));
+                this->totalSatisfaction += 10/((double)(this->all_houses.size() + this->all_shops.size()));
                 trees_iterator++;
                 budget -= 5000;
                 houses_with_trees++;
@@ -2149,7 +2149,7 @@ void City::write_stat_history_to_file() {
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
-    newIncome.push_back((int)((max(budget, 0) / pow(10, 6)) + 0.5));
+    newIncome.push_back((int)((max(budget, 0) / pow(10, 3)) + 0.5));
 
     if (statsIncome.size() > 100) {
         statsIncome.remove(1);
