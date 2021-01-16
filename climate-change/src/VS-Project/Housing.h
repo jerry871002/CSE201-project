@@ -58,7 +58,7 @@ namespace godot {
 		
 		int get_inhabitants();
 		void set_inhabitants(int);
-		
+
 
 		int doubleGlazingSatisfaction = 5;
 
@@ -88,6 +88,8 @@ namespace godot {
 		double get_energyuse();
 		double get_environmentalcost();
 		int houseType;
+
+		void housing_initialize();
 
 		
 	};
