@@ -402,7 +402,7 @@ void Structure::_input(InputEvent* e)
         {
             if (mousePos.y > (get_viewport()->get_size().y / 2)) { mousePos.y -= MenuSize /*- mousePos.x*/; }
             else { mousePos.y += MenuSize /*- mousePos.x*/; }
-            mousePos.x += MenuSize + 100;
+            mousePos.x += 2 * MenuSize;
         }
 
         if (get_viewport()->get_size().y - mousePos.y <= MenuSize) 
