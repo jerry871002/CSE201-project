@@ -74,13 +74,20 @@ String Shop::get_object_info()
 }
 
 double Shop::get_satisfaction() {
-    double satis = this->satisfaction;
-    if (this->PanelsOn) { satis += 1.6; };
-    if (this->WindTurbineOn) { satis += 0.9; };  //Increase satisfaction if more eco friendly
-    if (satis > 9.5) { satis = 9.5;}  // Always room for increased satisfaction
+
+    double panelsF = 0;
+	double roofturbineF = 0;
+    if (this->PanelsOn) { panelsF= 2; };
+    if (this->WindTurbineOn) { roofturbineF = 1.1; }; //Increase satisfaction if more eco friendly
     
 
-    return satis;
+	if (this->satisfaction + panelsF + roofturbineF  > 9.8){
+		return 9.8;
+	}
+	else {
+		return this->satisfaction += panelsF + roofturbineF ;
+	}
+
 }
 
 double Shop::get_co2emissions() {
