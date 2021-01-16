@@ -240,15 +240,15 @@ void City::_physics_process(float delta) {
         change_pie_chart(value_pie_chart_C02(carbonEmission, 20000), "PieCO2", false);
         change_pie_chart(income / (numberOfEmployees * 30), "PieIncome", true);
         change_pie_chart(value_pie_chart_C02(budget, pow(10, 4)), "PieBudget", true);
-        change_pie_chart(4 * (100 - 100 * numberOfEmployees / population), "PieUnemployement", false); //EnergyDemand variable is temporary
-        change_pie_chart(value_pie_chart_C02(energyDemand / all_structures.size(), 25000), "PiePowerDemand", false);
+        change_pie_chart(4 * (100 - 100 * numberOfEmployees / fmax(population,1)), "PieUnemployement", false); //EnergyDemand variable is temporary
+        change_pie_chart(value_pie_chart_C02(energyDemand / fmax(all_structures.size(), 1), 25000), "PiePowerDemand", false);
 
         change_pie_label((int)(10 * return_totalSatisfaction()), "PieSatisfaction");
         change_pie_label(carbonEmission, "PieCO2");
-        change_pie_label(income / numberOfEmployees, "PieIncome");
+        change_pie_label(income / fmax(numberOfEmployees,1), "PieIncome");
         change_pie_label(budget, "PieBudget");
-        change_pie_label(fmax(100 - 100 * numberOfEmployees / population, 0), "PieUnemployement");
-        change_pie_label(energyDemand / all_structures.size(), "PiePowerDemand");
+        change_pie_label(fmax(100 - 100 * numberOfEmployees / fmax(population, 1), 0), "PieUnemployement");
+        change_pie_label(energyDemand / fmax(all_structures.size(),1), "PiePowerDemand");
 
     }
 
@@ -434,8 +434,8 @@ void City::generate_initial_city_graphics()
 
                 dist = pos.distance_to(center);
 
-                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
-                float shopprob = calculate_building_prob(0, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
+                float restaurantprob = calculate_building_prob(-10, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
+                float shopprob = calculate_building_prob(-10, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
                 float buildingprob = calculate_building_prob(125, 170, 1.2, dist) + calculate_building_prob(-150, 150, 1, dist);
                 float windmillprob = calculate_building_prob(40, 160, 0.02, dist) + calculate_building_prob(200, 270, 0.15, dist);
                 float lowhouseprob = calculate_building_prob(-200, 170, 5, dist) + calculate_building_prob(200,260,0.12, dist);
@@ -466,8 +466,8 @@ void City::generate_initial_city_graphics()
 
                             Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
 
-                            restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
-                            shopprob = calculate_building_prob(0, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
+                            restaurantprob = calculate_building_prob(-10, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
+                            shopprob = calculate_building_prob(-10, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
                             buildingprob = calculate_building_prob(125, 170, 1.2, dist) + calculate_building_prob(-150, 150, 1, dist);
                             windmillprob = calculate_building_prob(40, 160, 0.02, dist) + calculate_building_prob(200, 270, 0.15, dist);
                             lowhouseprob = calculate_building_prob(-200, 170, 5, dist) + calculate_building_prob(200, 260, 0.12, dist);
@@ -579,9 +579,11 @@ void City::generate_initial_city_graphics()
         if (population < numberOfEmployees * 1.02) {
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
             {
-                this->population -= (int)(*it)->get("numberOfInhabitants");
-                (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") + (int)(rand() % 3));
-                this->population += (int)(*it)->get("numberOfInhabitants");
+                if ((*it)->get_object_type() == "Building") {
+                    this->population -= (int)(*it)->get("numberOfInhabitants");
+                    (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") + (int)(rand() % 3));
+                    this->population += (int)(*it)->get("numberOfInhabitants");
+                }
             }
         }
         if (population > numberOfEmployees * 1.10) {
@@ -2183,13 +2185,13 @@ void City::transport_to_add() {
             alphaSum += alpha[i];
         }
         for (int i = 0; i < 8; i++) {
-            alpha[i] = alpha[i] / alphaSum;
+            alpha[i] = alpha[i] / fmax(alphaSum,1);
         }
 
         double choice[8] = { 0 };
 
         for (int i = 0; i < 8; i++) {
-            probabilities[i] = 1000 * alpha[i] * (30 * ((double)((*it)->get("housingIncome")) / pricesPerMonth[i]));
+            probabilities[i] = 1000 * alpha[i] * (30 * ((double)((*it)->get("housingIncome")) /  fmax(pricesPerMonth[i],1)));
             // 1000 is one adjustement constant, how much people are willing to put on a car,
             //higher, everybody can afford (prob > 1)any type and will choose the one he prefer (higher alpha)
             // lower, price will restrict people more and more people won't spend money on transport (so sport or bike)
@@ -2231,7 +2233,7 @@ double City::normalGenerator(double mean, double stdDev)
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
 // 100000 pour power demand et 1 million pour C02
 int City::value_pie_chart_C02(int value, int growth) {
-    if (value > 0) {return  (int)(100 * (1 - pow(value / growth, -1))); }
+    if (value > 0) { return  (int)(100 * (1 - pow(value / fmax( growth,0.0001), -1))); }
     return (value);
  
 }
