@@ -105,7 +105,6 @@ Transport::Transport(int type){
 void Transport::set_transportType(int type)
 {
     this->transportType = type;
-    std::cout << "setter is used for transport type value : " << this->transportType << std::endl;
     // initialize graphical variables
     motion = Vector3(0, 0, 0);
     rot = (M_PI / 2);
@@ -724,7 +723,6 @@ void Pedestrian::_ready() {
 * Animation function 
 */
 void Pedestrian::_process(float delta) {
-    //std::cout << position << endl;
     player->set_speed_scale(int(myCity->get("time_speed"))); //TO BE CHANGED
 
     if (rot >= (M_PI / 2)) {

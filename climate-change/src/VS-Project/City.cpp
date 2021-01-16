@@ -228,8 +228,11 @@ void City::_physics_process(float delta) {
     if (simulation_counter > 5)
     {
         // CALLED EVERY 5 SECONDS
-
-        add_car(Vector3(-1,-1,-1)); // specific case, where cars are randomly assigned
+        Vector2 center = Vector2(15.0 * citysize + 60, 15.0 * citysize + 60);
+        add_car(Vector3(center.x - 15 * citysize / 4, 0, center.y - 15 * citysize / 4)); // specific case, where cars are randomly assigned
+        add_car(Vector3(center.x - 15 * citysize / 4, 0, center.y + 15 * citysize / 4));
+        add_car(Vector3(center.x + 15 * citysize / 4, 0, center.y - 15 * citysize / 4));
+        add_car(Vector3(center.x + 15 * citysize / 4, 0, center.y + 15 * citysize / 4));
 
         (this->simulation_counter) -= 5;
       
@@ -261,16 +264,14 @@ void City::_physics_process(float delta) {
         */
 
         day_tick++;
-        std::cout << "Day tick : " << (this->day_tick) << endl;
-        this->get_tree()->get_root()->get_node("Main/2Dworld/Date")->set("text", return_word_date_godot());
 
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Date")->set("text", return_word_date_godot());
 
         int* datenumber = return_date(int(this->day_tick));
 
         if (datenumber[0] == 1 || datenumber[0] == 15) {
             write_stat_history_to_file();
         }
-
 
         if (datenumber[0] == 1)
         {
@@ -343,13 +344,6 @@ void City::_input(InputEvent*)
 {
 
     Input* i = Input::get_singleton();
-
-
-    if (i->is_action_pressed("ui_test"))
-    {
-        transport_to_add();
-        add_car();
-    }
 
     if (i->is_action_pressed("ui_turn") && !(this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->get("visible")))
     {
@@ -440,8 +434,8 @@ void City::generate_initial_city_graphics()
 
                 dist = pos.distance_to(center);
 
-                float restaurantprob = calculate_building_prob(0, 150, 1.2, dist) + calculate_building_prob(200, 260, 0.1, dist);
-                float shopprob = calculate_building_prob(0, 170, 1.3, dist) + calculate_building_prob(200, 260, 0.15, dist);
+                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
+                float shopprob = calculate_building_prob(0, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
                 float buildingprob = calculate_building_prob(125, 170, 1.2, dist) + calculate_building_prob(-150, 150, 1, dist);
                 float windmillprob = calculate_building_prob(40, 160, 0.02, dist) + calculate_building_prob(200, 270, 0.15, dist);
                 float lowhouseprob = calculate_building_prob(-200, 170, 5, dist) + calculate_building_prob(200,260,0.12, dist);
@@ -472,8 +466,8 @@ void City::generate_initial_city_graphics()
 
                             Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
 
-                            restaurantprob = calculate_building_prob(0, 150, 1.2, dist) + calculate_building_prob(200, 260, 0.1, dist);
-                            shopprob = calculate_building_prob(0, 170, 1.3, dist) + calculate_building_prob(200, 260, 0.15, dist);
+                            restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
+                            shopprob = calculate_building_prob(0, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
                             buildingprob = calculate_building_prob(125, 170, 1.2, dist) + calculate_building_prob(-150, 150, 1, dist);
                             windmillprob = calculate_building_prob(40, 160, 0.02, dist) + calculate_building_prob(200, 270, 0.15, dist);
                             lowhouseprob = calculate_building_prob(-200, 170, 5, dist) + calculate_building_prob(200, 260, 0.12, dist);
@@ -560,7 +554,7 @@ void City::generate_initial_city_graphics()
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
     {
         int randomcarint = rand() % 2;
-        if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car((Vector3)((Node*)(*it))->get("translation")); }
+        if (randomcarint == 0) { add_car((Vector3)((Node*)(*it))->get("translation")); }
     }
 
 
@@ -603,9 +597,6 @@ void City::generate_initial_city_graphics()
 
 
     }
-
-    
-    std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
 }
 
 
@@ -1375,8 +1366,6 @@ void City::_on_Game_Speed_changed()
 
 //adds a car at a location given by the vector with a shift
 void City::add_car(Vector3 pos) {
-    std::cout << "CURRENT air quality is: " << airQuality << std::endl;
-
     const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
     const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
@@ -1399,12 +1388,11 @@ void City::add_car(Vector3 pos) {
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid() && BusScene.is_valid() && AmericanCarScene.is_valid() && BikeScene.is_valid() && ElectricCarScene.is_valid() && NormalCarScene.is_valid())
     {
         int type = most_missing_type();
-        std::cout << "The most missing type is currently : " << type << std::endl;
+
         if (type != -1) {
 
             //int type = rand() % 3;
-            Node* node;
-            std::cout << "INSTANCE A CAR OF TYPE: " << type << std::endl;
+            Node* node;;
 
             switch (type) {
             case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; budget -= electricCarSubsidy; break;
@@ -1418,11 +1406,9 @@ void City::add_car(Vector3 pos) {
             default: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
             }
 
-            std::cout << "INSTANCE DONE A CAR OF TYPE: " << type << std::endl;
             node->set("scale", Vector3(15, 15, 15));
             node->set("translation", pos + Vector3(-13, 0.2, -13));
 
-            std::cout << "ADD A CAR OF TYPE: " << type << std::endl;
             this->add_child((Node*)node);
             ((Transport*)node)->set("transportType", type);
         }
@@ -1482,8 +1468,6 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         double y = pos.z / 30; // can be int only for small building
 
         traffic_preparation(x, y);
-
-        std::cout << "DEBUG: ADD HOUSE DONE" << std::endl;
     }
 }
 
@@ -1539,7 +1523,6 @@ void City::traffic_preparation(double x, double y) {
     if (x < sizeOfCity && y < sizeOfCity) {
         if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
             positionOfBuildings[int(x)][int(y)] = 1;
-            //std::cout << " SMALL BUILDING CREATED" << std::endl;
         }
         else {
             positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
@@ -1547,7 +1530,6 @@ void City::traffic_preparation(double x, double y) {
             positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
             positionOfBuildings[int(x)][int(y) + 1] = 5;
         }
-        //std::cout << "DEBUG: call the function update traffic" << std::endl;
         update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
     }
 }
@@ -2142,12 +2124,10 @@ void City::remove_type_car(int type) {
 
 int City::most_missing_type() {
     int min = 0;
-    std::cout << "missing_car_quantities   ";
     for (int i = 0; i < 8; i++) {
         if (missing_car_quantities[min] > missing_car_quantities[i]) {
             min = i;
         }
-        std::cout << missing_car_quantities[i] << "  ";
     }
     if (missing_car_quantities[min] < 0) {
         missing_car_quantities[min] += 1;
@@ -2184,10 +2164,7 @@ void City::transport_to_add() {
     Transport bus = Transport(6);
     Transport sportsCar = Transport(7);
 
-
     airQuality = pow(1.4, -100 * carbonEmission / (all_structures.size() * 30 * 30 * 10)) + 0.2 * (trees_iterator - trees_vector.begin()) / (trees_vector.size());
-
-    std::cout << "Current air quality is: " << airQuality << std::endl;
 
     double satisfaction[8] = { electicCar.satisfaction, bigCar.satisfaction * ((double)(7 - carProhibition) / 7.0), car.satisfaction * ((double)(7 - carProhibition) / 7.0), collectionCar.satisfaction * ((double)(7 - carProhibition) / 7.0), bike.satisfaction * (1.0 + pow(((double)(carProhibition) / 7.0), 0.2)) * sqrt(airQuality), motorcycle.satisfaction , bus.get_satisfaction(), sportsCar.satisfaction * ((double)(7 - carProhibition) / 7.0) };
     double costs[8] = { electicCar.cost - electricCarSubsidy , bigCar.cost + weightTax * bigCar.weight, car.cost,collectionCar.cost + weightTax * collectionCar.weight , bike.cost - bikeSubsidy , motorcycle.cost, bus.cost - busSubsidy, sportsCar.cost };

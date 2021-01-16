@@ -93,7 +93,6 @@ double Shop::get_satisfaction() {
 }
 
 double Shop::get_co2emissions() {
-    //std::cout << "DEBUG: SHOP GET EMISSIONS" << std::endl;
     return (double)(this->CO2Emission);
 }
 
@@ -112,7 +111,6 @@ double Shop::get_environmentalcost() {
 
 void Shop::simulate_step(double days) {
     age += days;
-    //std::cout << "DEBUG: SHOP SIMULATION CALLED" << std::endl;
 
     this->Structure::simulate_step(days);
 
@@ -128,15 +126,12 @@ void Shop::simulate_step(double days) {
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        //std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->panels_age) << " AND PANEL PROBABILITY = " << std::to_string(this->panel_probability) << std::endl;
-        //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->panel_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             PanelsOn = true;
             panels_age = this->solarLifetime;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
             this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", (double(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget")) - (double)this->get("solar_panel_subsidies"))); // line that takes off from budget the subsidy
-            //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
     }
@@ -148,7 +143,6 @@ void Shop::simulate_step(double days) {
         this->panels_age = 0;
         PanelsOn = false;
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
-        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
 
     // Now similar step for wind turbine policy
@@ -161,14 +155,11 @@ void Shop::simulate_step(double days) {
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        //std::cout << "DEBUG: WINDTURBINE AGE = " << std::to_string(this->windTurbineAge) << " AND TURBINE PROBABILITY = " << std::to_string(this->windTurbine_probability) << std::endl;
-        //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->windTurbine_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             WindTurbineOn = true;
             windTurbineAge = this->windLifetime;
             this->get_node("MeshComponents/WindTurbine")->set("visible", WindTurbineOn);  //need to have correct meshcomponent
-            //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
     }
@@ -181,7 +172,6 @@ void Shop::simulate_step(double days) {
         WindTurbineOn = false;
         this->get_node("MeshComponents/WindTurbine")->set("visible", WindTurbineOn);
         this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", (double(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget")) - (double)this->get("wind_turbine_subsidies"))); // line that takes off from budget the subsidy
-        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
 
 }
@@ -189,7 +179,6 @@ void Shop::simulate_step(double days) {
 void Shop::panels_get_added() {
     PanelsOn = true;
     panels_age = this->solarLifetime;   // set the panels age here ! when they are just built
-    // std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
     double budget = this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget");
     this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", budget - (double)(this->get("solar_panel_subsidies")));
     // set the panels age here ! when they are just built
@@ -239,7 +228,6 @@ void Shop::panel_added_probability(){
         break;
 
     default:
-        //std::cout << "DEBUG: SHOP set initial investment error" << std::endl;
         break;
     }
     panel_probability = (((this->solarCost - panelCost)/this->solarCost)*50 + ((initial_investment + this->solarSatisfaction/10)/2)*25 + income_indexed*25)/100;
@@ -252,7 +240,6 @@ void Shop::panel_added_probability(){
 void Shop::windTurbine_get_added() {
     WindTurbineOn = true;
     windTurbineAge = this->windLifetime;   // set the panels age here ! when they are just built
-    // std::cout << "DEBUG: PANEL ADDED IN PANELS GET ADDED" << std::endl;
 }
 
 void Shop::windTurbine_added_probability(){
@@ -295,7 +282,6 @@ void Shop::windTurbine_added_probability(){
         break;
 
     default:
-        std::cout << "DEBUG: SHOP set initial investment error" << std::endl;
         break;
     }
 
@@ -371,9 +357,6 @@ Restaurant::Restaurant() {
 Restaurant::~Restaurant() {}
 
 void Restaurant::simulate_step(double days){
-
-    //std::cout << "DEBUG: RESTAURANT SIMULATION CALLED" << std::endl;
-
     this->Shop::simulate_step(days);
 
 	//double shock;
@@ -462,7 +445,6 @@ SmallShop::~SmallShop(){}
 
 
 void SmallShop::simulate_step(double days){
-    //std::cout << "DEBUG: SMALLSHOP SIMULATION CALLED" << std::endl;
     this->Shop::simulate_step(days);
 }
 
@@ -493,7 +475,6 @@ Mall::Mall(){
 Mall::~Mall(){}
 
 void Mall::simulate_step(double days) {
-    //std::cout << "DEBUG: MALL SIMULATION CALLED" << std::endl;
     this->Shop::simulate_step(days);
 }
 

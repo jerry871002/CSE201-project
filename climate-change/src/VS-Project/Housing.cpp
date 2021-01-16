@@ -83,8 +83,6 @@ void Housing::_process(float delta) {
 }
 
 void Housing::simulate_step(double days) {
-
-	//std::cout << "DEBUG: HOUSING SIMULATION CALLED" << std::endl;
 	this->Structure::simulate_step(days); 
 	this->Housing::panel_added_probability();	
 	this->Housing::double_glazing_added_probability();
@@ -98,15 +96,12 @@ void Housing::simulate_step(double days) {
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        //std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->solarPanelAge) << " AND PANEL PROBABILITY = " << std::to_string(this->panel_probability) << std::endl;
-        //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->panel_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             PanelsOn = true;
             solarPanelAge = this->solarLifetime;
             this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
 			this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", (double(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget")) - (double)this->get("solar_panel_subsidies_housing"))); // line that takes off from budget the subsidy
-            //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
     }
@@ -118,7 +113,6 @@ void Housing::simulate_step(double days) {
         this->solarPanelAge = 0;
         this->PanelsOn = false;
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
-        //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
 
 	if (int(this->doubleGlazingAge) == 0) {
@@ -129,15 +123,12 @@ void Housing::simulate_step(double days) {
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        //std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->doubleGlazingAge) << " AND PANEL PROBABILITY = " << std::to_string(this->double_glazing_probability) << std::endl;
-        //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->double_glazing_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
+
         if (r > temp3)
         {
             doubleGlazingOn = true;
 			this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", (double(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget")) - (double)this->get("double_glazing_subsidies"))); // line that takes off from budget the subsidy
             doubleGlazingAge = 100;
-            
-            //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
         }
         else {}
     }
@@ -159,8 +150,6 @@ void Housing::simulate_step(double days) {
         double temp3 = pow(temp1, temp2);
 
         double r = double(rand()) / double((RAND_MAX + 1.)); // gives  double between 0 and 1 
-        //std::cout << "DEBUG: PANEL AGE = " << std::to_string(this->rooftopWindTurbineAge) << " AND PANEL PROBABILITY = " << std::to_string(this->roof_wind_turbines_probability) << std::endl;
-        //std::cout << "DEBUG: BEFORE PANEL ADDED IN SIMULATE STEP  r =" << r << " and prob = " << (pow(double(1 - double(this->roof_wind_turbines_probability)), double(days / 365.0))) << std::endl; //double(days / 365.0)
         if (r > temp3)
         {
             rooftopWindTurbineOn = true;
@@ -237,7 +226,6 @@ double Housing::get_double_glazing_age() {
 }
 
 double Housing::get_satisfaction() {
-	std::cout << "DEBUG: HOUSING  satisfaction : " << (this->satisfaction) << std::endl;
 	double panelsF = 0;
 	double roofturbineF = 0;
 	double treesF = 0;
@@ -339,7 +327,6 @@ double House::get_co2emissions() {
 }
 
 double House::get_energyuse() {
-	std::cout << "DEBUG: get energyuse called in House" << std::endl;
 	double panelsF = 1;
 	double turbineF = 1;
 	double glazingF = 1;
@@ -357,12 +344,6 @@ double House::get_energyuse() {
 			}
 		}
 	
-
-	std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
-	std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
-	std::cout << "DEBUG: energy use  : " << double(this->energyUse) << std::endl;
-
-
     return ((double)(this->energyUse))*panelsF*turbineF*glazingF;
 }
 
@@ -381,7 +362,6 @@ void House::_ready()
 	this->Housing::_ready();
 	int type = 1;
 	this->houseType = type;
-	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
 
 	double employees = (double)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
 	int population = (int)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
@@ -510,7 +490,6 @@ double Housing::normalGenerator(double mean, double stdDev){
 void House::set_houseType(int type)
 {
 	this->houseType = type;
-	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
 
 	double unemployment = 0;
 
@@ -637,14 +616,8 @@ House::~House() {
 
 void House::simulate_step(double days) {
 
-	//std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
 
 	this->Housing::simulate_step(days);
-
-	//maintenance = 0.1765 * energyUse * days;
-	//CO2Emission = 0.0065 * energyUse * days; 
-
-
 }
 
 /// <summary>
@@ -664,7 +637,6 @@ double Building::get_co2emissions() {
 }
 
 double Building::get_energyuse() {
-	std::cout << "DEBUG: get energyuse called in Building" << std::endl;
 	double panelsF = 1;
 	double turbineF = 1;
 	double glazingF = 1;
@@ -681,10 +653,6 @@ double Building::get_energyuse() {
 				glazingF = 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
 			}
 		}
-	
-	//std::cout << "PanelsOn for this building : " << PanelsOn << std::endl;
-	//std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
-	//std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
 
     return (double)(this->energyUse)*panelsF*turbineF*glazingF;
 }
@@ -774,14 +742,7 @@ void Building::_ready() {
 }
 
 void Building::simulate_step(double days) {
-
-	//std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
-
 	this->Housing::simulate_step(days);
-
-	//maintenance = 0.1765 * energyUse * days;
-	//CO2Emission = 0.0065 * energyUse * days;  
-	
 }
 	
 
