@@ -16,7 +16,7 @@
 #include <Label.hpp>
 #include <DirectionalLight.hpp>
 #include <WorldEnvironment.hpp>
-#include <godot.hpp>
+#include <Godot.hpp>
 #include <Node2D.hpp>
 
 #include <PoolArrays.hpp>
@@ -2177,7 +2177,7 @@ void City::write_stat_history_to_file() {
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
-    newIncome.push_back((int)((max(budget, 0) / pow(10, 3)) + 0.5));
+    newIncome.push_back((int)((max(budget, 0.0) / pow(10, 3)) + 0.5));
 
     if (statsIncome.size() > 100) {
         statsIncome.remove(1);
@@ -2434,7 +2434,7 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
 
 double City::return_unemployment_rate() {
     if (population != 0) {
-        return min(0,(1 - this->numberOfEmployees / this->population));
+        return min(0.0, (1 - this->numberOfEmployees / this->population));
     }
     else { return 0; }
 }
