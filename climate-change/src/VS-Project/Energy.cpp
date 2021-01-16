@@ -119,10 +119,10 @@ String Energy::get_object_info()
 		info += "The city's energy demand is currently provided by a geothermal power plant together with windmills. The nuclear and coal plants are closed." + String("\n");
 	}
 	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
-	info += "Age of the building in days: " + to_godot_string((int)(this->get("age"))) + String("\n");
-	info += "Employment: " + to_godot_string((int)(this->employment)) + String("\n");
+ 
+	info += "This building employs " + to_godot_string((int)(this->employment)) + "men and women." + String("\n");
 	info += "Energy produced in kWh per year: " + to_godot_string((int)(this->get("energyOutput"))) + String("\n");
-	info += "Environmental and health costs induced in euros per year: " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
+	info += "The environmental and health costs induced in euros per year, through the operation of this building, is " + to_godot_string((int)this->get("environmentalCost")) + String("\n");
 	info += "Satisfaction meter, out of 10: " + to_godot_string((int)(this->get("satisfaction"))) + String("\n");
 	return info;
 }
