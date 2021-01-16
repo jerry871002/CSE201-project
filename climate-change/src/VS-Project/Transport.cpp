@@ -12,12 +12,23 @@
 
 using namespace godot;
 
-
+/**
+ * Get the traffic system global variable
+ */
 extern int traffic_system[citysize][citysize][4][3];
 
-// helper functions
+/**
+ * Compute the perfect speed for the car
+ *
+ * The fonction takes 5 arguments:
+ * Speed is the current speed of the car that is gonna be recomputed and changed
+ * Acc is the current acceleration of the car, changed is the speed is to small
+ * delta is godot's delta
+ * Others arguments are not used and will be use on V2 to comptute the real acceleration
+ *
+ * No return, acc and speed are passed by reference
+ */
 void compute_speed(double& Speed, double &Acc, float delta, Vector3 prevPos, Vector3 pos) {
-    //Speed = (pos - prevPos).dot((pos - prevPos).normalized()) / (10 * delta);
     if ((Speed <= 0.8 && Acc > 0) or (Acc < 0 and Speed + Acc * delta > 0.2)) {
         Speed += Acc * delta;
     }
@@ -28,32 +39,69 @@ void compute_speed(double& Speed, double &Acc, float delta, Vector3 prevPos, Vec
 
 }
 
+
+/**
+* Compute the acceleration of the car
+*
+* The functions takes 3 arguments:
+* Acc is the acceleration attributes and is gonna be recomputed
+* Speed0 and Speed1 are respectively the current and the final speed
+* d is the distance the car needs to reach the desire speed Speed1
+*
+* No return, Acc is passed by reference
+*/
 void ComputeAcceleration(double& Acc, double Speed0, double Speed1, double d) {
     Acc = fmin(10 * (pow(Speed1, 2) - pow(Speed0, 2)) / (2 * d), 0);
 }
 
+
+/**
+* Template function to round the position of any object
+*
+* For any type of object and for its vector position, the function snap its position
+* on a grid of size 1.
+*
+*No return, position vector is passed by reference
+*/
 template <typename T> void round_position(T obj, Vector3& Motion) {
     Vector3 motion = obj->get_global_transform().get_origin();
     motion.x = round(motion.x); motion.z = round(motion.z);
     obj->set_translation(motion);
 }
 
+
+/**
+* Template function to round the rotation of any object
+* 
+* The fonctions take an object and aligned it to the axis of the game.
+* In others terms, the function rounds the rotation at ±90deg
+*/
 template <typename T> void align_on_axis(T obj) {
     obj->set_rotation_degrees(Vector3(round(obj->get_rotation_degrees().x / 90) * 90, round(obj->get_rotation_degrees().y / 90) * 90, round(obj->get_rotation_degrees().z / 90) * 90));
 }
 
 
+/**
+* Constructor is empty since godot can not create an object with an argument
+*/
 Transport::Transport() {
-
 }
 
+/**
+* Other constructor with an arguments, used only in city to get data attributes of transports not in the godot scene
+*/
 Transport::Transport(int type){
     this->transportType = type;
     set_transportType(type);
 }
 
 
-
+/**
+* Real constructor of transport, taking the type as argument
+*
+* This function is used after putting the object transport in the godot scene.
+* Set all the data atributes of the transport type depending on the type
+*/
 void Transport::set_transportType(int type)
 {
     this->transportType = type;
@@ -243,6 +291,9 @@ void Transport::set_transportType(int type)
 
 }
 
+/**
+* Type getter
+*/
 int Transport::get_transportType()
 {
     return this->transportType;
@@ -252,6 +303,11 @@ void Transport::transport_type() {
     
 }
 
+/** 
+* Register methods
+*
+* Contains godot usual functions, transport_type method and transportType property with getter and setter
+*/
 void Transport::_register_methods() {
     register_method((char*)"_init", &Transport::_init);
     register_method((char*)"_physics_process", &Transport::_physics_process);
@@ -266,71 +322,96 @@ void Transport::_init() {
     
 }
 
+/**
+* Godot ready functio
+*
+* Initialized variables depending on objects from godot scenes
+*/
 void Transport::_ready() {
     prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
     prevPositionVec = this->get_global_transform().get_origin();
     myCity = (City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")));
-    transport_type();
 }
 
-
+/**
+* Main loop for transport animation
+*/
 void Transport::_physics_process(float delta) 
 {
-    (this->physics_counter)++;
-
-    if (this->physics_counter == 2) {
-        this->physics_counter == 0;
-        //delta = delta / 2;
-    }
-
     prevPositionVec = this->get_global_transform().get_origin();
    
-   
+    /// If rotation is bigger than the 90deg, the car is in a straight line
     if (rot >= (M_PI / 2)) {
         
-        int gameSpeed = myCity->get("time_speed");
-        if (gameSpeed != 0) { straight(fmin(0.04, delta) / delta); }
+        int gameSpeed = myCity->get("time_speed");	///< Get the time speed from city
+	/**
+	* If game speed 0, the cars are paused
+	* Otherwise, the car go straight with a minimum delta (*), indeed, if fps are low then delta is gonna be big
+	* and cars will move by more than 1 each frame.
+	* Indeed, the speed of cars is linked to delta, hence, their speed is the same no matter fps is not (*)
+	*/
+        if (gameSpeed != 0) { straight(fmin(0.04, delta) / delta); }	
        
-        Vector3 p = this->get_global_transform().get_origin();
-        switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the car on the road if problems
+        int real_rot = (int)(((this->get_rotation_degrees().y) / 90) + 4) % 4; ///< Get on which axe is the car   
+	/**
+	* The following lines are finding where is the car on the map and put it back on the road
+	*/
+	Vector3 p = this->get_global_transform().get_origin();	///< Get the position of the car
+        switch (real_rot) {                                
         case 0: this->set("translation", Vector3(p.x, 0, p.z + 28 - fmod(p.z + 28, 30) - 13)); break;
         case 2: this->set("translation", Vector3(p.x, 0, p.z + 2 - fmod(p.z + 2, 30) + 13)); break;
         case 3: this->set("translation", Vector3(p.x + 2 - fmod(p.x + 2, 30) + 13, 0, p.z)); break;
         case 1: this->set("translation", Vector3(p.x + 28 - fmod(p.x + 28, 30) - 13, 0, p.z)); break;
         default: break; }
-
-        int real_rot = round(this->get_rotation_degrees().y / 90);
-
+	
+	/**
+	* If the car is closed to the end of the road, the new acceleration is computed to make it slow down
+	* The car slow down on the x axis (because of the road signs) and before turning right (small turn radius)
+	*/
         if (position >= 13 && Acc > 0 && real_rot % 2 == 0) {
             ComputeAcceleration(Acc, SPEED_T, 0.2, 5);
         }
         else if (position >= 18 && Acc > 0 && real_rot % 2 == 1 && dir == 1) {
-            // Decrease also the speed before turning right (small radius)
             ComputeAcceleration(Acc, SPEED_T, 0.7, 4);
         }
-
-        
-
+	
+	/**
+	* Condition for the car reaching the end of the road
+	* The acceleration is positive again and the rotation is set to 0, hence we are leaving the condition for this if (rot>=90)
+	* The center of rotation is also define thanks to dir of the turn and the current position of the car
+	*/
         if (position >= 22 ) {
             Acc = 0.5;	rot = 0;
             round_position(this, motion);
             center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z) * Turn_R * dir;
         }
     }
+    /**
+    * This condition is true if the car is at the end of the road, hence it must turn
+    */
     else if (position >= 22) {
-
-
+	/**
+	* globalSpeed gives by which vector the car should move.
+	* The vector is created colinear with (1, 0, 0) and then rotated by the current car rotation
+	* This vector is the same than is the function turn, it used here to anticipate the collision if
+	* we choose to make the car turn
+	*/
         Vector3 globalSpeed = Vector3((SPEED_T * 10 * fmin(0.04, delta)), 0, 0);
         globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
         
-
-        if (this->move_and_collide(globalSpeed, true, true, true) == NULL) { //No collision
+	/**
+	* Check is there will be a collision if the car turns
+	* If not the car turns, if yes, the car does not turn except if the other car is not on a straight line and
+	* if the other car has a lower speed.
+	* This is basically solving the intersection problem with a right priority and a priority to the more confident (quicker) one
+	*/
+        if (this->move_and_collide(globalSpeed, true, true, true) == NULL) {
             turn(dir, fmin(0.04, delta));
         }
         else {
             
             Vector3 colliderVelocity = this->move_and_collide(globalSpeed, true, true, true)->get_collider_velocity();
-            if (fmod(((Transport*)(this->move_and_collide(globalSpeed, true, true, true)->get_collider()))->get_rotation_degrees().y + 360, 90) != 0) { //Car not on a straight line
+            if (fmod(((Transport*)(this->move_and_collide(globalSpeed, true, true, true)->get_collider()))->get_rotation_degrees().y + 360, 90) != 0) {
                 if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
                     turn(dir, fmin(0.04, delta));
                 }
@@ -340,7 +421,11 @@ void Transport::_physics_process(float delta)
             }
 
         }
-
+	/**
+	* If the car had to go straight of this it done turning, the local position of the car is reset
+	* The position and the rotation of the car is also rounded to avoid futur shifts
+	* Moreover, the possible directions for the next intersection is get and the turning radius set accordingly 
+	*/
         if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
             rot = M_PI / 2;
             align_on_axis(this);
@@ -353,17 +438,18 @@ void Transport::_physics_process(float delta)
 
             prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - position;
             dir = get_direction(this->get_global_transform().get_origin() + Vector3(12, 0, 0).rotated(Vector3(0, 1, 0), this->get_rotation_degrees().y * (M_PI / 180)), this->get_rotation_degrees().y);
-
-            switch (dir) {
-            case -1: Turn_R = 8; break;
-            default: Turn_R = 4; break;
-            }
+		
+	    if (dir == -1) {Turn_R = 8;}
+	    else {Turn_R = 4;}
         }
     }
-
-    compute_speed(SPEED_T, Acc, fmin(0.04, delta), prevPositionVec, this->get_global_transform().get_origin());
+    
+    compute_speed(SPEED_T, Acc, fmin(0.04, delta), prevPositionVec, this->get_global_transform().get_origin()); //< recompute the speed each frame
 }
 
+/**
+* Simulation of the car, recomputing the all the statistics depending on the type of the car
+*/
 void Transport::simulate_step(double days) {
     int years = floor((age + days) / 365 - age / 365);
     co2PerKm *= pow(1.05, years); //increase in emissions with each year
@@ -459,34 +545,25 @@ void Transport::simulate_step(double days) {
         break;
     }
     }
-    //car prohibition
-    /*
-    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)) {
-        {if (workingDays!= (7-(int)(myCity->get("carProhibition")))) {
-        satisfaction /= workingDays/7;
-     }
-     
-    maintenance*=workingDays/7;
-    fuelInput*=workingDays/7;
-    CO2Emission*=workingDays/7;
-    energyUse*=workingDays/7;
-    passengers*=workingDays/7;
-    }
-    }
-    */
-    //car consumption tax
+
     maintenance+=fuelInput*(int)(myCity->get("fuelTax"));
 }
 
+/** 
+* Movement function of cars:turn
+* The function turn the car on a shifted center of Turn_r radius
+* The arguments are the wish direction and delta
+*The function change the position and the rotation of the car and the rotations of wheels or body for 2 wheels
+*/
 void Transport::turn(int dir, float delta) {
     double drot = (SPEED_T * delta * int(((City*)(this->get_tree()->get_root()->get_node("Main/3Dworld")))->get("time_speed"))) * 5 ;
     if (dir == 1) { drot /= 4; }
     else { drot /= 12; }
     rot += drot;
 
-    this->global_translate(-center);			//define the center of rotation
+    this->global_translate(-center);				///<define the center of rotation
     this->set_transform(this->get_transform().rotated(Vector3(0, 1, 0), -drot * dir));
-    this->global_translate(center);				//reset the center of rotation
+    this->global_translate(center);				///<reset the center of rotation
 
     if (dir == 1) {
         
@@ -517,6 +594,12 @@ void Transport::turn(int dir, float delta) {
     }
 }
 
+/**
+* Movement function of car: drive forward
+* The function moves the car with the collision system
+* The speed depends on game speed and the function turns the wheels
+* It also recompute the distance the car made from the previous intersection in the vector position
+*/
 void Transport::straight(float ratioDelta) {
     
 
@@ -541,6 +624,13 @@ void Transport::straight(float ratioDelta) {
     }
 }
 
+/**
+* Function to get the direction the car will take at the next intersection
+* The function use the traffic system array generated in array
+* If the car is out of the array or there is no possible direction, it is destroyed
+* This prevents errors and is also our way to refresh the traffic system
+* When multiple directions are possible, the car chooses a random one
+*/
 int Transport::get_direction(Vector3 pos, double rot) {
     int rotInt = (int)((rot / 90) + 4) % 4;
     std::vector<int> out;
@@ -571,22 +661,37 @@ int Transport::get_direction(Vector3 pos, double rot) {
     return(out[rand() % out.size()]);
 }
 
+/**
+* Getter function for satisfaction
+*/
 double Transport::get_satisfaction(){
 	return this->satisfaction;
 }
 
+/**
+* Getter function for emissions of CO2
+*/
 double Transport::get_co2emissions(){
 	return this->CO2Emission;
 }
 
+/**
+* Getter function for the energy use
+*/
 double Transport::get_energyuse(){
 	return this->energyUse;
 }
-
+/**
+* Getter function for the environmental cost
+*/
 double Transport::get_environmentalcost(){
-    return 0; //at least for now
+    return 0;
 }
 
+/** 
+* Pedestrian constructor
+* Similar to transport one
+*/
 Pedestrian::Pedestrian() {
     motion = Vector3(0, 0, 0);
     rot = (M_PI / 2);
@@ -598,27 +703,31 @@ Pedestrian::Pedestrian() {
 }
 
 
-
+/**
+* Register methods of usual godot's function
+*/
 void Pedestrian::_register_methods() {
     register_method((char*)"_init", &Pedestrian::_init);
     register_method((char*)"_process", &Pedestrian::_process);
     register_method((char*)"_ready", &Pedestrian::_ready);
 }
 
-void Pedestrian::_init() {
-    
-    
-}
+void Pedestrian::_init() {}
 
+/**
+* When the pedestrian is in the scene, the anumation is set and run
+*/
 void Pedestrian::_ready() {
     player = (AnimationPlayer*)(this->get_child(0));
     player->play("Walk");
-
     prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
     prevPositionVec = this->get_global_transform().get_origin();
     myCity = (City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")));
 }
 
+/**
+* Animation function 
+*/
 void Pedestrian::_process(float delta) {
     //std::cout << position << endl;
     player->set_speed_scale(int(myCity->get("time_speed"))); //TO BE CHANGED
@@ -626,23 +735,30 @@ void Pedestrian::_process(float delta) {
     if (rot >= (M_PI / 2)) {
 
         if ( ((int)(myCity->get("time_speed"))) != 0) { straight(delta); }
-
+	/**
+	* The following lines are finding where is the pedestrian on the map and put it back on the walkway 
+	*/
         Vector3 p = this->get_global_transform().get_origin();
-        switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the pedestrian on the road if problems
+        switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                  
         case 0: this->set("translation", Vector3(p.x, 0, p.z + 24 - fmod(p.z + 24, 30) - 9)); break;
         case 2: this->set("translation", Vector3(p.x, 0, p.z + 6 - fmod(p.z + 6, 30) + 9)); break;
         case 3: this->set("translation", Vector3(p.x + 6 - fmod(p.x + 6, 30) + 9, 0, p.z)); break;
         case 1: this->set("translation", Vector3(p.x + 24 - fmod(p.x + 24, 30) - 9, 0, p.z)); break;
         default: break;
         }
-
-
+	
+	/**
+	* When the and of the walkway is reached, the pedestrian will start turning
+	*/
         if (position >= 2*9 - 2 * Turn_R) {
             rot = 0;
             round_position(this, motion);
             center = this->get_global_transform().get_origin() + (this->get_global_transform().get_basis().orthonormalized().z) * Turn_R * dir;
         }
     }
+    /**
+    * After turning, the position and rotation is rounded and then it will start going forward
+    */
     else if (position >= 2*9 - 2 * Turn_R) {
         turn(dir, delta);
 
@@ -655,7 +771,9 @@ void Pedestrian::_process(float delta) {
         }
     }   
 }
-
+/**
+* Turn right
+*/
 void Pedestrian::turn(int dir, float delta) {
     double drot = (SPEED_T * delta * int(myCity->get("time_speed"))) / Turn_R;
     rot += drot;
@@ -666,7 +784,9 @@ void Pedestrian::turn(int dir, float delta) {
 
 
 }
-
+/**
+* Move forward and recompute the distance since the last turn in position
+*/
 void Pedestrian::straight(float delta) {
     Vector3 globalSpeed = Vector3(SPEED_T * delta * int(myCity->get("time_speed")), 0, 0);
     globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));

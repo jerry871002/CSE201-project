@@ -107,7 +107,6 @@ namespace godot {
         int days_since_last_simulation;
         int daycount = 0; //keeps track of the in-game days per year
 
-
         Array statsCarbonEmission{}; //written stats for carbon emissions
 
         double HousingCO2;
@@ -131,8 +130,6 @@ namespace godot {
         Array statsTotalSatisfaction{}; //written stats for population - number of employees
         Array statsPopulation{}; //written stats for population
 
-
-
         // not needed anymore: String return_game_date2();  returns the date :day/month/year as a string
         // date leap years implementation
         string return_word_date(int days); // returns the date from days :day/month/year as a string with words
@@ -147,7 +144,7 @@ namespace godot {
         void change_pie_chart(int value, NodePath name, bool isPositive);
 		void change_pie_label(int value, NodePath name);
 
-        bool ClickActive{ false };
+        bool ResetNotification{ false };
 
         //TRAFFIC
 
