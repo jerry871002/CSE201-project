@@ -62,6 +62,8 @@ MacBook minimum specs:
 
 
 ### Windows
+Follow the steps on imgur : https://imgur.com/a/WZNLLwY
+
 1. Install the standard version of Godot via [this page](https://godotengine.org/download)
 2. Install the IDE VS Community from this page [this page](https://visualstudio.microsoft.com/fr/downloads/)
 3. Make sure to select "Desktop development with C++" and finish the set up of VS
@@ -73,7 +75,7 @@ MacBook minimum specs:
 9. Add a new configuration for Windows Desktop
 10. Manage the export templates
 11. Download the templates
-12. Give it a name, select the Icon res://Icon.ico and export it with "Export project", unckeck "Export with debugs"
+12. Give it a name, select the Icon res://Icon.ico and export it with "Export project", uncheck "Export with debugs"
 13. Save it in any place you want, by double clicking on the dmg file, you will see the game inside it
 14. Enjoy the game :)
 
