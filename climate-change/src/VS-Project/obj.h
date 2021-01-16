@@ -36,8 +36,8 @@ namespace godot {
 
         Node* myCity;
 
-        void add_city_counters();
-        void subtract_city_counters();
+        void add_city_counters(); //adds structure's counters to the ones of the city
+        void subtract_city_counters();//substructs structure's counters from the ones of the city
 
         static void _register_methods();
         virtual void _init();
@@ -61,14 +61,13 @@ namespace godot {
         int hover_animation_counter{ 0 };
         Vector3 object_scale;
 
-        virtual void simulate_step(double days);
-        bool updatable{ false };
-        //void test_update();
+        virtual void simulate_step(double days); //updates the structure's internal state
+        bool updatable{ false }; //an atribute that when true will make simulate_step run for the structure
 
         real_t MenuSize{ 400 };
         real_t InfoBoxWidth{ 300 };
 
-        Vector3 get_position();
+        Vector3 get_position(); //return the coordinates of the structure
 
         bool is_other_structure_within_distance(Vector3, double);
 
@@ -83,26 +82,7 @@ namespace godot {
         double satisfaction{ 1 }; // on scale of 10
         double environmentalCost = 0; // environmental and health costs in euros 
         double age = 0; //age of each particular object in days
-        int numberOfInhabitants{ 0 }; // only for housing, 0 for everything else, put it here to be able to update city counters
-
-
-        // The following will be city-wide counters that will be updated every day : 
-        // income, population, numberOfEmployees, carbonEmission, energyDemand, energySupply
-
-        // income is the total wage (GDP), population is the population of the whole city, numberOfEmployees the total employed people,  
-        // carbonEmission the total CO2, energyDemand the sum of all energy needed and energySupply the maximum production capacity
-
-        // It would be great if someone could write here what variable we have to call to update each
-        // income : we didn't take it into account for the moment
-        // population : we don't have that, thought you would decide about it
-        // numberOfEmployees: employment
-        // carbonEmission : CO2Emission
-        // energyDemand : that corresponds to energyUse for each class
-        // energySupply : that corresponds to energyOutput for each object producing it in the energy class 
-
-        // sim team will program these counters to grab the correct attributes within all structures
-        // if needed within any object they will be passed on by the city object
-        // don't use these specific variable names inside the structures pls or we will all get confused    
+        int numberOfInhabitants{ 0 }; // only for housing, 0 for everything else, put it here to be able to update city counter
 
         double totalDays; //total number of days that have passed in the simulation, will be passed on by the City object
 

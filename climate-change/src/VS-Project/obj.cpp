@@ -25,23 +25,9 @@ Structure::Structure() {
     MenuVisible = false;
     Clickable = false;
     totalDays = 0;
-    /*
-    cost = 0;
-    energyUse = 0;
-    maintenance = 0;
-    satisfaction = 0;
-    income = 0;
-    population = 0;
-    numberOfEmployees = 0;
-    carbonEmission = 0;
-    energyDemand = 0;
-    energySupply = 0;
-     */
+
 }
-/*
-Structure::Structure(double cost, double energyUse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply) :
-    cost{ cost }, energyUse{ energyUse }, maintenance{ maintenance }, satisfaction{ satisfaction }, income{ income }, population{ population }, numberOfEmployees{ numberOfEmployees }, carbonEmission{ carbonEmission }, energyDemand{ energyDemand }, energySupply{ energySupply }{}
-*/
+
 
 Structure::~Structure() {}
 
@@ -73,7 +59,6 @@ void Structure::set_age(double age) {
 }
 
 double Structure::get_co2emissions() {
-    //std::cout << "DEBUG: STRUCTURE GET EMISSIONS" << std::endl;
     if (this->get_main_type() == "Housing") {
         double panelsF = 1;
 	
@@ -119,10 +104,7 @@ double Structure::get_energyuse()
             }
         }
 
-        std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
-        std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
-        std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
-
+       
         return (double)(this->energyUse) * panelsF * turbineF * glazingF;
     }
     
@@ -345,16 +327,9 @@ void Structure::_process(float delta)
 
 void Structure::simulate_step(double days) {
 
-    //std::cout << "DEBUG: STRUCTURE SIMULATION CALLED" << std::endl;
     age += days;
 }
 
-/*
-void Structure::test_update() {
-    Godot::print("The TEST UPDATE function is running");
-    Godot::print("This is a structure but also a " + this->get_object_type());
-}
-*/
 
 void Structure::_input(InputEvent* e)
 {
