@@ -169,7 +169,7 @@ namespace godot {
         double solarSatisfaction = 9; //ratings of these solar panels by surveys
         double solarCost = 450; //cost in euros for one new solar panel (product and installation)
         double solarEnergy = 7.45; //average kWh produced per day
-        double solarLifetime = 350; //true value is 9125 days of energy production warranty. Set at 150 so that we can see the change happen graphically
+        double solarLifetime = 100; //true value is 9125 days of energy production warranty. Set at 150 so that we can see the change happen graphically
         // I think this solarLifeTime variable should be in days i.e. 9125 instead of 25. Can be changed back if you don't agree.
 
 

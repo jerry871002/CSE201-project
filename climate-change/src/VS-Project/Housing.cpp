@@ -132,6 +132,7 @@ void Housing::simulate_step(double days) {
         if (r > temp3)
         {
             doubleGlazingOn = true;
+			this->get_tree()->get_root()->get_node("Main/3Dworld")->set("budget", (double(this->get_tree()->get_root()->get_node("Main/3Dworld")->get("budget")) - (double)this->get("double_glazing_subsidies"))); // line that takes off from budget the subsidy
             doubleGlazingAge = 100;
             
             //std::cout << "DEBUG: PANEL ADDED IN SIMULATE STEP" << std::endl;
@@ -198,7 +199,7 @@ void Housing::simulate_step(double days) {
 		this->solarPanelAge = 0;
 	}
 
-	if (this->doubleGlazingAge >= 18250) {
+	if (this->doubleGlazingAge >= 365) {
 		this->doubleGlazingOn = false;
 		this->doubleGlazingAge = 0;
 	} 
