@@ -434,8 +434,8 @@ void City::generate_initial_city_graphics()
 
                 dist = pos.distance_to(center);
 
-                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
-                float shopprob = calculate_building_prob(0, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
+                float restaurantprob = calculate_building_prob(-10, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
+                float shopprob = calculate_building_prob(-10, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
                 float buildingprob = calculate_building_prob(125, 170, 1.2, dist) + calculate_building_prob(-150, 150, 1, dist);
                 float windmillprob = calculate_building_prob(40, 160, 0.02, dist) + calculate_building_prob(200, 270, 0.15, dist);
                 float lowhouseprob = calculate_building_prob(-200, 170, 5, dist) + calculate_building_prob(200,260,0.12, dist);
@@ -466,8 +466,8 @@ void City::generate_initial_city_graphics()
 
                             Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
 
-                            restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
-                            shopprob = calculate_building_prob(0, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
+                            restaurantprob = calculate_building_prob(-10, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
+                            shopprob = calculate_building_prob(-10, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
                             buildingprob = calculate_building_prob(125, 170, 1.2, dist) + calculate_building_prob(-150, 150, 1, dist);
                             windmillprob = calculate_building_prob(40, 160, 0.02, dist) + calculate_building_prob(200, 270, 0.15, dist);
                             lowhouseprob = calculate_building_prob(-200, 170, 5, dist) + calculate_building_prob(200, 260, 0.12, dist);
@@ -579,9 +579,11 @@ void City::generate_initial_city_graphics()
         if (population < numberOfEmployees * 1.02) {
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
             {
-                this->population -= (int)(*it)->get("numberOfInhabitants");
-                (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") + (int)(rand() % 3));
-                this->population += (int)(*it)->get("numberOfInhabitants");
+                if ((*it)->get_object_type() == "Building") {
+                    this->population -= (int)(*it)->get("numberOfInhabitants");
+                    (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") + (int)(rand() % 3));
+                    this->population += (int)(*it)->get("numberOfInhabitants");
+                }
             }
         }
         if (population > numberOfEmployees * 1.10) {
