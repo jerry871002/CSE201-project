@@ -493,10 +493,6 @@ void House::_ready()
 
 // This function is necessary to properly initialize the houses in Godot and to make sure they have the correct values
 
-void House::house_initialize() {
-	
-
-}
 
 void House::_register_methods()
 {

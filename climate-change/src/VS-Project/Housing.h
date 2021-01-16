@@ -89,7 +89,7 @@ namespace godot {
 		double get_environmentalcost();
 		int houseType;
 
-		void housing_initialize();
+		void house_initialize();
 
 		
 	};
