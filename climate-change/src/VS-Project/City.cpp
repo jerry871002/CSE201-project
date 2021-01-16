@@ -1491,75 +1491,47 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 }
 
 void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
-
-    //std::cout << "DEBUG: add shop called" << std::endl;
     totalSatisfactioWeight += 10;
-    //std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
+
     if (scene.is_valid()) {
-        //std::cout << "DEBUG: creating node" << std::endl;
         Node* node;
-        //std::cout << "DEBUG: instanciating" << std::endl;
         node = scene->instance();
-        //std::cout << "DEBUG: setting scale and translation" << std::endl;
         node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
         node->set("translation", pos);
         if (scene != WindmillScene) { node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0)); }
-        //std::cout << "DEBUG: add child" << std::endl;
         this->add_child(node);
-        //std::cout << "DEBUG: add shop to vector" << std::endl;
         all_energies.push_back((Energy*)node);
         all_structures.push_back((Structure*)node);
 
-        //std::cout << "DEBUG: traffic stuff called" << std::endl;
         // traffic stuff
-        //std::cout << "DEBUG: traffic stuff called" << std::endl;
-        //double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building
-        //double y = ((Structure*)node)->get_position().z / 30; // can be int only for small building
         double x = pos.x / 30; // needs to be double for identifying a 2 by 2 building
         double y = pos.z / 30; // can be int only for small building
 
-        //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
-        //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
-       // std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
         traffic_preparation(x, y);
-        //std::cout << "DEBUG: add energy done" << std::endl;
     }
 }
 
 void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
 
-    //std::cout << "DEBUG: add shop called" << std::endl;
     totalSatisfactioWeight += 5;
-    //std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
+
     if (scene.is_valid()) {
-        //std::cout << "DEBUG: creating node" << std::endl;
         Node* node;
-        //std::cout << "DEBUG: instanciating" << std::endl;
         node = scene->instance();
-        //std::cout << "DEBUG: setting scale and translation" << std::endl;
         node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
         node->set("translation", pos);
         node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0));
-        //std::cout << "DEBUG: add child" << std::endl;
         this->add_child(node);
-        //std::cout << "DEBUG: add shop to vector" << std::endl;
         all_production.push_back((Production*)node);
         all_structures.push_back((Structure*)node);
 
 
 
         // traffic stuff
-        //std::cout << "DEBUG: traffic stuff called" << std::endl;
-        //double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building
-        //double y = ((Structure*)node)->get_position().z / 30; // can be int only for small building
         double x = pos.x / 30; // needs to be double for identifying a 2 by 2 building
         double y = pos.z / 30; // can be int only for small building
 
-        //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
-        //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
-        //std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
         traffic_preparation(x, y);
-        //std::cout << "DEBUG: add production done" << std::endl;
     }
 }
 
@@ -1581,164 +1553,161 @@ void City::traffic_preparation(double x, double y) {
 }
 
 void City::update_traffic(int x, int y, bool newBuilding, int number) {
-    //std::cout << "DEBUG: UPDATE TRAFFIC STARTED for coordinates" << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
-    if (positionOfBuildings[x][y] != 0) { // nothing happens if the building isn't there
-        //std::cout << "DEBUG: updating traffic for coordinates : " << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
-        if (number == 1) {  // the case when it's a 1 by 1 buidling
-            traffic_system[x][y][0][2] = 1;
-            traffic_system[x][y][1][2] = 1;
-            traffic_system[x][y][2][2] = 1;
-            traffic_system[x][y][3][2] = 1;
-            if (x + 1 < sizeOfCity && y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y + 1] == 1 || positionOfBuildings[x + 1][y + 1] == 2 || positionOfBuildings[x + 1][y + 1] == 3)) {
-                traffic_system[x][y][3][0] = 1;
-            }
-            if (y + 1 < sizeOfCity && (positionOfBuildings[x][y + 1] == 1 || positionOfBuildings[x][y + 1] == 2 || positionOfBuildings[x][y + 1] == 5)) {
-                traffic_system[x][y][3][1] = 1;
-            }
-            if (x - 1 >= 0 && y + 1 < sizeOfCity && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 3 || positionOfBuildings[x - 1][y + 1] == 4)) {
-                traffic_system[x][y][2][0] = 1;
-            }
-            if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
-                traffic_system[x][y][2][1] = 1;
-            }
-            if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
-                traffic_system[x][y][1][0] = 1;
-            }
-            if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
-                traffic_system[x][y][1][1] = 1;
-            }
-            if (x + 1 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
-                traffic_system[x][y][0][0] = 1;
-            }
-            if (x + 1 < sizeOfCity && (positionOfBuildings[x + 1][y] == 1 || positionOfBuildings[x + 1][y] == 2 || positionOfBuildings[x + 1][y] == 3)) {
-                traffic_system[x][y][0][1] = 1;
-            }
-            if (newBuilding == true) {  // update all the possible buildings around
-                // no need to check if they exist since if they don't the function checks that with the first line
-                if (x - 1 >= 0) {
-                    if (y - 1 >= 0) {
-                        update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
-                    }
-                    update_traffic(x - 1, y, false, positionOfBuildings[x - 1][y]);
-                    if (y + 1 < sizeOfCity) {
-                        update_traffic(x - 1, y + 1, false, positionOfBuildings[x - 1][y + 1]);
-                    }
-                }
+    // nothing happens if the building isn't there
+    if (positionOfBuildings[x][y] == 0)
+        return;
+
+    if (number == 1) {  // the case when it's a 1 by 1 buidling
+        traffic_system[x][y][0][2] = 1;
+        traffic_system[x][y][1][2] = 1;
+        traffic_system[x][y][2][2] = 1;
+        traffic_system[x][y][3][2] = 1;
+        if (x + 1 < sizeOfCity && y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y + 1] == 1 || positionOfBuildings[x + 1][y + 1] == 2 || positionOfBuildings[x + 1][y + 1] == 3)) {
+            traffic_system[x][y][3][0] = 1;
+        }
+        if (y + 1 < sizeOfCity && (positionOfBuildings[x][y + 1] == 1 || positionOfBuildings[x][y + 1] == 2 || positionOfBuildings[x][y + 1] == 5)) {
+            traffic_system[x][y][3][1] = 1;
+        }
+        if (x - 1 >= 0 && y + 1 < sizeOfCity && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 3 || positionOfBuildings[x - 1][y + 1] == 4)) {
+            traffic_system[x][y][2][0] = 1;
+        }
+        if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
+            traffic_system[x][y][2][1] = 1;
+        }
+        if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
+            traffic_system[x][y][1][0] = 1;
+        }
+        if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
+            traffic_system[x][y][1][1] = 1;
+        }
+        if (x + 1 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
+            traffic_system[x][y][0][0] = 1;
+        }
+        if (x + 1 < sizeOfCity && (positionOfBuildings[x + 1][y] == 1 || positionOfBuildings[x + 1][y] == 2 || positionOfBuildings[x + 1][y] == 3)) {
+            traffic_system[x][y][0][1] = 1;
+        }
+        if (newBuilding == true) {  // update all the possible buildings around
+            // no need to check if they exist since if they don't the function checks that with the first line
+            if (x - 1 >= 0) {
                 if (y - 1 >= 0) {
-                    update_traffic(x, y - 1, false, positionOfBuildings[x][y - 1]);
+                    update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
                 }
+                update_traffic(x - 1, y, false, positionOfBuildings[x - 1][y]);
                 if (y + 1 < sizeOfCity) {
-                    update_traffic(x, y + 1, false, positionOfBuildings[x][y + 1]);
+                    update_traffic(x - 1, y + 1, false, positionOfBuildings[x - 1][y + 1]);
                 }
-                if (x + 1 < sizeOfCity) {
-                    if (y - 1 >= 0) {
-                        update_traffic(x + 1, y - 1, false, positionOfBuildings[x + 1][y - 1]);
-                    }
-                    update_traffic(x + 1, y, false, positionOfBuildings[x + 1][y]);
-                    if (y + 1 < sizeOfCity) {
-                        update_traffic(x + 1, y + 1, false, positionOfBuildings[x + 1][y + 1]);
-                    }
+            }
+            if (y - 1 >= 0) {
+                update_traffic(x, y - 1, false, positionOfBuildings[x][y - 1]);
+            }
+            if (y + 1 < sizeOfCity) {
+                update_traffic(x, y + 1, false, positionOfBuildings[x][y + 1]);
+            }
+            if (x + 1 < sizeOfCity) {
+                if (y - 1 >= 0) {
+                    update_traffic(x + 1, y - 1, false, positionOfBuildings[x + 1][y - 1]);
+                }
+                update_traffic(x + 1, y, false, positionOfBuildings[x + 1][y]);
+                if (y + 1 < sizeOfCity) {
+                    update_traffic(x + 1, y + 1, false, positionOfBuildings[x + 1][y + 1]);
                 }
             }
         }
-        else { // the case when it's a 2 by 2 building
-           // std::cout << "DEBUG: updating traffic for BIG building coordinates : " << x << " " << y << " " << positionOfBuildings[x][y] << std::endl;
-            if (number == 3) {
-                x = x - 1;
-            }
-            if (number == 4) {
-                x = x - 1;
-                y = y - 1;
-            }
-            if (number == 5) {
-                y = y - 1;
-            }
+    }
+    else { // the case when it's a 2 by 2 building
+        if (number == 3) {
+            x = x - 1;
+        } else if (number == 4) {
+            x = x - 1;
+            y = y - 1;
+        } else if (number == 5) {
+            y = y - 1;
+        }
 
 
-            //left top
-            traffic_system[x][y][1][2] = 1;
-            if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
-                traffic_system[x][y][1][0] = 1;
-            }
-            if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
-                traffic_system[x][y][1][1] = 1;
-            }
-            traffic_system[x][y][0][1] = 1;
-            traffic_system[x][y][0][2] = 1;
-            if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
-                traffic_system[x][y][0][0] = 1;
-            }
+        //left top
+        traffic_system[x][y][1][2] = 1;
+        if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
+            traffic_system[x][y][1][0] = 1;
+        }
+        if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
+            traffic_system[x][y][1][1] = 1;
+        }
+        traffic_system[x][y][0][1] = 1;
+        traffic_system[x][y][0][2] = 1;
+        if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
+            traffic_system[x][y][0][0] = 1;
+        }
 
-            //right top
-            traffic_system[x + 1][y][0][2] = 1;
-            if (x + 2 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 2][y - 1] == 1 || positionOfBuildings[x + 2][y - 1] == 2 || positionOfBuildings[x + 2][y - 1] == 5)) {
-                traffic_system[x + 1][y][0][0] = 1;
-            }
-            if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 2 || positionOfBuildings[x + 2][y] == 3)) {
-                traffic_system[x + 1][y][0][1] = 1;
-            }
+        //right top
+        traffic_system[x + 1][y][0][2] = 1;
+        if (x + 2 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 2][y - 1] == 1 || positionOfBuildings[x + 2][y - 1] == 2 || positionOfBuildings[x + 2][y - 1] == 5)) {
+            traffic_system[x + 1][y][0][0] = 1;
+        }
+        if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 2 || positionOfBuildings[x + 2][y] == 3)) {
+            traffic_system[x + 1][y][0][1] = 1;
+        }
 
-            traffic_system[x + 1][y][3][1] = 1;
-            if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 1] == 1 || positionOfBuildings[x + 2][y + 1] == 2 || positionOfBuildings[x + 2][y + 1] == 3)) {
-                traffic_system[x + 1][y][3][0] = 1;
-            }
+        traffic_system[x + 1][y][3][1] = 1;
+        if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 1] == 1 || positionOfBuildings[x + 2][y + 1] == 2 || positionOfBuildings[x + 2][y + 1] == 3)) {
+            traffic_system[x + 1][y][3][0] = 1;
+        }
 
-            //right bottom
-            traffic_system[x + 1][y + 1][3][2] = 1;
-            if (x + 2 < sizeOfCity && y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 2] == 1 || positionOfBuildings[x + 2][y + 2] == 2 || positionOfBuildings[x + 2][y + 2] == 3)) {
-                traffic_system[x + 1][y + 1][3][0] = 1;
-            }
-            if (y + 2 < sizeOfCity && (positionOfBuildings[x + 1][y + 2] == 1 || positionOfBuildings[x + 1][y + 2] == 3 || positionOfBuildings[x + 1][y + 2] == 4)) {
-                traffic_system[x + 1][y + 1][3][1] = 1;
-            }
+        //right bottom
+        traffic_system[x + 1][y + 1][3][2] = 1;
+        if (x + 2 < sizeOfCity && y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 2] == 1 || positionOfBuildings[x + 2][y + 2] == 2 || positionOfBuildings[x + 2][y + 2] == 3)) {
+            traffic_system[x + 1][y + 1][3][0] = 1;
+        }
+        if (y + 2 < sizeOfCity && (positionOfBuildings[x + 1][y + 2] == 1 || positionOfBuildings[x + 1][y + 2] == 3 || positionOfBuildings[x + 1][y + 2] == 4)) {
+            traffic_system[x + 1][y + 1][3][1] = 1;
+        }
 
-            traffic_system[x + 1][y + 1][2][1] = 1;
-            if (y + 2 < sizeOfCity && (positionOfBuildings[x][y + 2] == 1 || positionOfBuildings[x][y + 2] == 3 || positionOfBuildings[x][y + 2] == 4)) {
-                traffic_system[x + 1][y + 1][2][0] = 1;
-            }
+        traffic_system[x + 1][y + 1][2][1] = 1;
+        if (y + 2 < sizeOfCity && (positionOfBuildings[x][y + 2] == 1 || positionOfBuildings[x][y + 2] == 3 || positionOfBuildings[x][y + 2] == 4)) {
+            traffic_system[x + 1][y + 1][2][0] = 1;
+        }
 
-            //left bottom
-            traffic_system[x][y + 1][2][2] = 1;
-            if (x - 1 >= 0 && y + 2 < sizeOfCity && (positionOfBuildings[x - 1][y + 2] == 1 || positionOfBuildings[x - 1][y + 2] == 3 || positionOfBuildings[x - 1][y + 2] == 4)) {
-                traffic_system[x][y + 1][2][0] = 1;
-            }
-            if (x - 1 >= 0 && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 4 || positionOfBuildings[x - 1][y + 1] == 5)) {
-                traffic_system[x][y + 1][2][1] = 1;
-            }
+        //left bottom
+        traffic_system[x][y + 1][2][2] = 1;
+        if (x - 1 >= 0 && y + 2 < sizeOfCity && (positionOfBuildings[x - 1][y + 2] == 1 || positionOfBuildings[x - 1][y + 2] == 3 || positionOfBuildings[x - 1][y + 2] == 4)) {
+            traffic_system[x][y + 1][2][0] = 1;
+        }
+        if (x - 1 >= 0 && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 4 || positionOfBuildings[x - 1][y + 1] == 5)) {
+            traffic_system[x][y + 1][2][1] = 1;
+        }
 
-            traffic_system[x][y + 1][1][1] = 1;
-            if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
-                traffic_system[x + 1][y][1][0] = 1;
-            }
-            if (newBuilding == true) {  // update all the possible buildings around
-                // no need to check if they exist since if they don't the function checks that with the first line
-                if (x - 1 >= 0) {
-                    if (y - 1 >= 0) {
-                        update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
-                    }
-                    update_traffic(x - 1, y, false, positionOfBuildings[x - 1][y]);
-                    update_traffic(x - 1, y + 1, false, positionOfBuildings[x - 1][y + 1]);
-                    if (y + 2 < sizeOfCity) {
-                        update_traffic(x - 1, y + 2, false, positionOfBuildings[x - 1][y + 2]);
-                    }
-                }
+        traffic_system[x][y + 1][1][1] = 1;
+        if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
+            traffic_system[x + 1][y][1][0] = 1;
+        }
+        if (newBuilding == true) {  // update all the possible buildings around
+            // no need to check if they exist since if they don't the function checks that with the first line
+            if (x - 1 >= 0) {
                 if (y - 1 >= 0) {
-                    update_traffic(x, y - 1, false, positionOfBuildings[x][y - 1]);
-                    update_traffic(x + 1, y - 1, false, positionOfBuildings[x + 1][y - 1]);
+                    update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
                 }
+                update_traffic(x - 1, y, false, positionOfBuildings[x - 1][y]);
+                update_traffic(x - 1, y + 1, false, positionOfBuildings[x - 1][y + 1]);
                 if (y + 2 < sizeOfCity) {
-                    update_traffic(x, y + 2, false, positionOfBuildings[x][y + 2]);
-                    update_traffic(x + 1, y + 2, false, positionOfBuildings[x + 1][y + 2]);
+                    update_traffic(x - 1, y + 2, false, positionOfBuildings[x - 1][y + 2]);
                 }
-                if (x + 2 < sizeOfCity) {
-                    if (y - 1 >= 0) {
-                        update_traffic(x + 2, y - 1, false, positionOfBuildings[x + 2][y - 1]);
-                    }
-                    update_traffic(x + 2, y, false, positionOfBuildings[x + 2][y]);
-                    update_traffic(x + 2, y + 1, false, positionOfBuildings[x + 2][y + 1]);
-                    if (y + 2 < sizeOfCity) {
-                        update_traffic(x + 2, y + 2, false, positionOfBuildings[x + 2][y + 2]);
-                    }
+            }
+            if (y - 1 >= 0) {
+                update_traffic(x, y - 1, false, positionOfBuildings[x][y - 1]);
+                update_traffic(x + 1, y - 1, false, positionOfBuildings[x + 1][y - 1]);
+            }
+            if (y + 2 < sizeOfCity) {
+                update_traffic(x, y + 2, false, positionOfBuildings[x][y + 2]);
+                update_traffic(x + 1, y + 2, false, positionOfBuildings[x + 1][y + 2]);
+            }
+            if (x + 2 < sizeOfCity) {
+                if (y - 1 >= 0) {
+                    update_traffic(x + 2, y - 1, false, positionOfBuildings[x + 2][y - 1]);
+                }
+                update_traffic(x + 2, y, false, positionOfBuildings[x + 2][y]);
+                update_traffic(x + 2, y + 1, false, positionOfBuildings[x + 2][y + 1]);
+                if (y + 2 < sizeOfCity) {
+                    update_traffic(x + 2, y + 2, false, positionOfBuildings[x + 2][y + 2]);
                 }
             }
         }
@@ -1750,12 +1719,6 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 std::string return_number_date(int day, int month, int year) {
     return std::to_string(day) + ", " + std::to_string(month) + ", " + std::to_string(year);
 }
-
-/*
-String return_number_date(int day, int month, int year) {
-    return to_godot_string(day) + String(", ") + to_godot_string(month) + String(", ") + to_godot_string(year);
-}
-*/
 
 double find_avg(double array[], int leap) {
     int size;
@@ -2315,32 +2278,20 @@ void City::change_pie_label(int value, NodePath name) {
     label->set("text", godotString);
 }
 
-
-
-
 // auxiliary function to simplify ring city generation
 
 float City::calculate_building_prob(float roota, float rootb, float proportion, double dist) {
-    if (dist < (citysize * roota / 20) || dist >(citysize * rootb / 20)) { return 0; }
-    else {
-
+    if (dist < (citysize * roota / 20) || dist >(citysize * rootb / 20)) { 
+        return 0; 
+    } else {
         // function which calculates coefficients of quadratic equation for a building distribution
         double a = double(proportion / (((rootb - roota) / 6) * (-pow(rootb, 2) - pow(roota, 2) + 2 * roota * rootb)));
-
         double b = double(-(roota + rootb) * a);
-
         double c = double(a * roota * rootb);
 
         // returns specific probability 
         return float(a * pow(((20 * dist / (citysize))), 2) + b * (20 * dist / (citysize)) + c);
-
-
-        // test line to verify that the integral is the proportion
-
-        // return float((a / 3) * (pow(rootb, 3) - pow(roota, 3)) + (b / 2) * (pow(rootb, 2) - pow(roota, 2)) + (rootb - roota) * c);
     }
-
-
 }
 // function that returns unemployment rate
 
@@ -2363,20 +2314,7 @@ void City::set_workingPower(int s) {
 double City::get_budget() {
     return this->budget;
 }
+
 void City::set_budget(double v) {
     this->budget = v;
 }
-
-
-
-
-//in order to check for errors on mac
-int main() {
-    City c = City();
-    while (true) {
-        c._physics_process(1);
-    }
-    std::cout << "DEBUG: TOTAL CARBON EMISSION = " << c.return_carbonEmission() << std::endl;
-    return 0;
-}
-
