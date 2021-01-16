@@ -90,9 +90,9 @@ void Housing::simulate_step(double days) {
 	this->Housing::double_glazing_added_probability();
 	this->Housing::roof_wind_turbines_added_probability();
 
+	//The following code is used to add solar panels, wind turbines or double glazing on a housing building with a certain probability:
 	if (int(this->solarPanelAge) == 0) {
 
-        
         double temp1 = double(1.0 - this->panel_probability);
         double temp2 = double(days / 365.0);
         double temp3 = pow(temp1, temp2);
@@ -123,7 +123,6 @@ void Housing::simulate_step(double days) {
 
 	if (int(this->doubleGlazingAge) == 0) {
 
-        //
         double temp1 = double(1.0 - this->double_glazing_probability);
         double temp2 = double(days / 365.0);
         double temp3 = pow(temp1, temp2);
@@ -182,7 +181,6 @@ void Housing::simulate_step(double days) {
 
     } 
 
-	
 	if (this->PanelsOn) {
 		this->solarPanelAge += days;
 	}
@@ -236,18 +234,33 @@ double Housing::get_double_glazing_age() {
     return this->doubleGlazingAge;
 }
 
+double Housing::get_rooftop_wind_turbines_age() {
+	return this->rooftopWindTurbineAge;
+}
+
 double Housing::get_satisfaction() {
 	std::cout << "DEBUG: HOUSING  satisfaction : " << (this->satisfaction) << std::endl;
+	//We use factors here so that we can update satisfaction when solar panels, wind turbines, or double glazing is added 
+	//That way, the satisfaction is only updated once, when the object is added.
 	double panelsF = 0;
 	double roofturbineF = 0;
+	double doubleglazingF = 0;
 	double treesF = 0;
-	if (this->PanelsOn) { panelsF= 2; };
-    if (this->rooftopWindTurbineOn) { roofturbineF = 1.1; };
+	if (this->PanelsOn) { 
+		panelsF= 2; 
+	}
+    if (this->rooftopWindTurbineOn) {
+		roofturbineF = 1.1; 
+	}
+	if (this->doubleGlazingOn) {
+		doubleglazingF = 1.5;
+	}
 	if (this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall") {
 		if (this->get_node("MeshComponents/Trees")->get("visible")) {
 			treesF = 3;
 		}
 	}
+	//If satisfaction is more than 10 (the max) then we set it to 10
 	if (this->satisfaction + panelsF + roofturbineF + treesF > 10){
 		return 10;
 	}
@@ -257,13 +270,14 @@ double Housing::get_satisfaction() {
 
 }
 
-
+//The following are functions that compute probabilities that a object is added on the housing instance
 void Housing::panel_added_probability(){
 	double panelCost;
     double panel_subsidies = this->get("solar_panel_subsidies_housing"); // input from user of how much are the subsidies
-    // double income_indexed = 0.5;
-    panelCost = this->solarCost - panel_subsidies;  
-    if (panelCost < 0) {
+
+    panelCost = this->solarCost - panel_subsidies;  //We set the cost to the cost after subsidy if there is one
+    
+	if (panelCost < 0) {
 		panelCost = 0; //cannot have a negative solar panel cost
 	}
 
@@ -285,7 +299,6 @@ void Housing::panel_added_probability(){
 void Housing::double_glazing_added_probability(){
 	double doubleGlazingCost;
     double glazing_subsidies = this->get("double_glazing_subsidies"); // input from user of how much are the subsidies
-    // double income_indexed = 0.5;
 	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
     doubleGlazingCost = windowCost * this->windowNumber - double_glazing_subsidies;
 
@@ -315,14 +328,19 @@ void Housing::roof_wind_turbines_added_probability(){
 	if (rooftopWindTurbineOn == true) {
 		roof_wind_turbines_probability = 0;
 	}
+
+	else if (PanelsOn == true) {
+		roof_wind_turbines_probability = 0;
+	}
 }
 
 
 ///	HOUSE CLASS
 /* This is the class that represents the houses in the city. There are two typed of houses : 
 --> low-level houses: houses with bad insulation, that consume a lot of energy because of that 
---> high-level houses: houses with either solar panels or rooftop wind turbine (one or the other is chosen randomly when building a new house
+--> high-level houses: have better insulation, already have double glazing 
 */
+
 double House::get_co2emissions() {
 	double panelsF = 1;
 	
@@ -340,22 +358,23 @@ double House::get_co2emissions() {
 
 double House::get_energyuse() {
 	std::cout << "DEBUG: get energyuse called in House" << std::endl;
+	//We decrease energyUse in the following cases, using factors so that it is not changed more than once 
 	double panelsF = 1;
 	double turbineF = 1;
 	double glazingF = 1;
 	if (this->PanelsOn) {
 			panelsF = 0.6;
-		}
+	}
 
 	if (this->rooftopWindTurbineOn) {
 			turbineF = 0.9;
-		}
+	}
 	
 	if (this->houseType == 1) { // If its a low level house then double glazing decrease energyuse 
 			if (this->doubleGlazingOn) {
 				glazingF = 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
-			}
-		}
+			}	
+	}
 	
 
 	std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
@@ -370,9 +389,8 @@ double House::get_environmentalcost() {
     return this->environmentalCost;
 }
 
-
-House::House() 
-{
+//cintents of constructors put in _ready (next function)
+House::House() {
 
 }
 
@@ -383,6 +401,7 @@ void House::_ready()
 	this->houseType = type;
 	std::cout << "setter is used for house type value : " << this->houseType << std::endl;
 
+	//we get information from City class
 	double employees = (double)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("numberOfEmployees");
 	int population = (int)((City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld"))))->get("population");
 	double unemployment = (double)(100 - 100 * fmin((double)1, (double)(employees / (fmax(population, 1)))) + 0.5);
@@ -394,29 +413,26 @@ void House::_ready()
 		this->doubleGlazingOn = false;
 		this->rooftopWindTurbineOn = false;
 
-
+		//We choose a random number of inhabitants in the house
 		srand((int)time(0));
-		//minimum wage 53 € per day - get money even on saturday and saturday 
-		// i take max to be 333€
-
 		this->numberOfInhabitants = (rand() % (6) + 1);
 
 
 		if (this->numberOfInhabitants >= 2) {
-			//have two salaries 
-			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
+			//i chose to have 2 incomes in the house when there were two people at least, assuming the rest are children
+			
 			srand((int)time(0));
 			double probability = (rand() % (100));
+			//We take int account unemployment so that with the probability, the income is the income of an unemployed person 
 			if (probability <= unemployment) {
 				this->housingIncome = 23 * 2;
 			}
 			else {
-				this->housingIncome = fmax(minIncome, normalGenerator(50, 70)) + fmax(minIncome, normalGenerator(50, 70));
+				this->housingIncome = fmax(minIncome, normalGenerator(50, 70)) + fmax(minIncome, normalGenerator(50, 70)); //Adding two salaries with normal distribution of mean 50 and std 70
 			}
 		}
 
 		else {
-			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
 			srand((int)time(0));
 			double probability = (rand() % (100));
 			if (probability <= unemployment) {
@@ -434,7 +450,7 @@ void House::_ready()
 		this->CO2Emission = 3.51; ////tons per year 
 		this->buildingTime = 140; //in average, building a house takes about 140 days
 		this->satisfaction = 3;
-		//satisfaction = 3; //assuming we are on a scale from 0 to 10
+	
 
 		//attributes special to this class
 		windowNumber = 5;
@@ -623,33 +639,22 @@ int House::get_houseType()
 
 void House::house_type() 
 {
-
 	int type = this->get("houseType");
-
-	
 }
 
 House::~House() {
 
 }
 
-
-
 void House::simulate_step(double days) {
-
-	//std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
-
 	this->Housing::simulate_step(days);
-
-	//maintenance = 0.1765 * energyUse * days;
-	//CO2Emission = 0.0065 * energyUse * days; 
-
-
 }
 
-/// <summary>
+
 ///	BUILDING CLASS
-/// </summary>
+/*This is the subclass that represents building in the city. There are two typed of buildings: low level and high level
+But there is no difference in graphics for the two types of buildings, their difference can be seen on energy use*/
+
 double Building::get_co2emissions() {
 	double panelsF = 1;
 	if (this->PanelsOn) { panelsF = 0.7; };
@@ -778,9 +783,6 @@ void Building::simulate_step(double days) {
 	//std::cout << "DEBUG: BUILDING SIMULATION CALLED" << std::endl;
 
 	this->Housing::simulate_step(days);
-
-	//maintenance = 0.1765 * energyUse * days;
-	//CO2Emission = 0.0065 * energyUse * days;  
 	
 }
 	
