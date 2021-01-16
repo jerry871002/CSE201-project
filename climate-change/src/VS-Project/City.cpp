@@ -396,7 +396,7 @@ void City::generate_initial_city_graphics()
     bool minimumonefactory = false;
     bool minimumonemall = false;
     double dist;
-
+    std::cout << "DEBUG: starting city generation" << std::endl;
     for (int x = 1; x < (citysize / 2) + 1; x++)
     {
         for (int z = 1; z < (citysize / 2) + 1; z++)
@@ -549,7 +549,9 @@ void City::generate_initial_city_graphics()
         }
     }
     trees_iterator = trees_vector.begin();
+    std::cout << "DEBUG: transport to add" << std::endl;
     transport_to_add();
+    std::cout << "DEBUG: transport to add done" << std::endl;
 
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
     {
@@ -557,7 +559,7 @@ void City::generate_initial_city_graphics()
         if (randomcarint == 0) { add_car((Vector3)((Node*)(*it))->get("translation")); }
     }
 
-
+    std::cout << "DEBUG: vectors about to shuffle" << std::endl;
     //   shuffles all the vectors so that buildings arent updated in a noticeable pattern
     std::random_shuffle(all_structures.begin(), all_structures.end());
     std::random_shuffle(all_energies.begin(), all_energies.end());
@@ -599,6 +601,7 @@ void City::generate_initial_city_graphics()
 
 
     }
+    std::cout << "DEBUG: city generation done" << std::endl;
 }
 
 
