@@ -89,7 +89,7 @@ void Housing::simulate_step(double days) {
 	this->Housing::panel_added_probability();	
 	this->Housing::double_glazing_added_probability();
 	this->Housing::roof_wind_turbines_added_probability();
-	//The following code is used to add solar panels, wind turbines or double glazing on a housing building with a certain probability:
+
 	if (int(this->solarPanelAge) == 0) {
 
         
@@ -120,7 +120,7 @@ void Housing::simulate_step(double days) {
         this->get_node("MeshComponents/SolarPanels")->set("visible", PanelsOn);
         //std::cout << "DEBUG: PANEL REMOVED" << std::endl;
     }
-	//The following code is used to add solar panels, wind turbines or double glazing on a housing building with a certain probability:
+
 	if (int(this->doubleGlazingAge) == 0) {
 
         //
@@ -182,7 +182,7 @@ void Housing::simulate_step(double days) {
 
     } 
 
-	//We compute the age of each object so it can be removed after their lifetime
+	
 	if (this->PanelsOn) {
 		this->solarPanelAge += days;
 	}
@@ -235,8 +235,7 @@ double Housing::get_solar_panel_age() {
 double Housing::get_double_glazing_age() {
     return this->doubleGlazingAge;
 }
-//We use factors here so that we can update satisfaction when solar panels, wind turbines, or double glazing is added 
-//That way, the satisfaction is only updated once, when the object is added.
+
 double Housing::get_satisfaction() {
 	std::cout << "DEBUG: HOUSING  satisfaction : " << (this->satisfaction) << std::endl;
 	double panelsF = 0;
@@ -249,7 +248,6 @@ double Housing::get_satisfaction() {
 			treesF = 3;
 		}
 	}
-	//If satisfaction is more than 10 (the max) then we set it to 10
 	if (this->satisfaction + panelsF + roofturbineF + treesF > 10){
 		return 10;
 	}
@@ -259,12 +257,11 @@ double Housing::get_satisfaction() {
 
 }
 
-//The following are functions that compute probabilities that a object is added on the housing instance
+
 void Housing::panel_added_probability(){
 	double panelCost;
     double panel_subsidies = this->get("solar_panel_subsidies_housing"); // input from user of how much are the subsidies
-   
-	//We set the cost to the cost after subsidy if there is one
+    // double income_indexed = 0.5;
     panelCost = this->solarCost - panel_subsidies;  
     if (panelCost < 0) {
 		panelCost = 0; //cannot have a negative solar panel cost
@@ -288,7 +285,7 @@ void Housing::panel_added_probability(){
 void Housing::double_glazing_added_probability(){
 	double doubleGlazingCost;
     double glazing_subsidies = this->get("double_glazing_subsidies"); // input from user of how much are the subsidies
-  
+    // double income_indexed = 0.5;
 	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
     doubleGlazingCost = windowCost * this->windowNumber - double_glazing_subsidies;
 
@@ -306,7 +303,7 @@ void Housing::double_glazing_added_probability(){
 void Housing::roof_wind_turbines_added_probability(){
 	double turbineCost;
     double wind_subsidies = this->get("wind_turbine_subsidies"); // input from user of how much are the subsidies
-    
+    // double income_indexed = 0.5;
 	double housingIncomeIndexed = 1 - ((this->maxIncome - this->housingIncome) / this->maxIncome);
     turbineCost = this->windCost - wind_turbine_subsidies;  
     if (turbineCost < 0) {
@@ -324,10 +321,8 @@ void Housing::roof_wind_turbines_added_probability(){
 ///	HOUSE CLASS
 /* This is the class that represents the houses in the city. There are two typed of houses : 
 --> low-level houses: houses with bad insulation, that consume a lot of energy because of that 
---> high-level houses: high-level houses: have better insulation, already have double glazing 
+--> high-level houses: houses with either solar panels or rooftop wind turbine (one or the other is chosen randomly when building a new house
 */
-
-//We decrease co2 emissions and energyUse in the following cases, using factors so that it is not changed more than once 
 double House::get_co2emissions() {
 	double panelsF = 1;
 	
@@ -356,7 +351,7 @@ double House::get_energyuse() {
 			turbineF = 0.9;
 		}
 	
-	if (this->houseType == 1) { // If its a low level house then double glazing decreases energyuse 
+	if (this->houseType == 1) { // If its a low level house then double glazing decrease energyuse 
 			if (this->doubleGlazingOn) {
 				glazingF = 0.75; //when having better insulation of windows, you don't have the 25% loss of heat anymore            
 			}
@@ -401,14 +396,15 @@ void House::_ready()
 
 
 		srand((int)time(0));
-
+		//minimum wage 53 € per day - get money even on saturday and saturday 
+		// i take max to be 333€
 
 		this->numberOfInhabitants = (rand() % (6) + 1);
 
 
 		if (this->numberOfInhabitants >= 2) {
-			//i chose to have 2 incomes in the house when there were two people at least, assuming the rest are children
-			
+			//have two salaries 
+			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
 			srand((int)time(0));
 			double probability = (rand() % (100));
 			if (probability <= unemployment) {
@@ -420,7 +416,7 @@ void House::_ready()
 		}
 
 		else {
-			
+			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
 			srand((int)time(0));
 			double probability = (rand() % (100));
 			if (probability <= unemployment) {
@@ -438,7 +434,8 @@ void House::_ready()
 		this->CO2Emission = 3.51; ////tons per year 
 		this->buildingTime = 140; //in average, building a house takes about 140 days
 		this->satisfaction = 3;
-		
+		//satisfaction = 3; //assuming we are on a scale from 0 to 10
+
 		//attributes special to this class
 		windowNumber = 5;
 		srand((int)time(0));
@@ -526,14 +523,15 @@ void House::set_houseType(int type)
 
 		
 		srand((int)time(0));
-		
+		//minimum wage 53 € per day - get money even on saturday and saturday 
+		// i take max to be 333€
 
 		this->numberOfInhabitants = (rand() % (6) + 1);
 		
 
 		if (this->numberOfInhabitants >= 2) {
 			//have two salaries 
-			
+			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome + (rand() % (maxIncome - minIncome)) + minIncome;
 			srand((int)time(0));
 			double probability = (rand() % (100));
 			if(probability <= unemployment){
@@ -545,7 +543,7 @@ void House::set_houseType(int type)
 		}
 
 		else {
-			
+			//housingIncome = (rand() % (maxIncome - minIncome)) + minIncome;
 			srand((int)time(0));
 			double probability = (rand() % (100));
 			if (probability <= unemployment) {
@@ -563,7 +561,8 @@ void House::set_houseType(int type)
 		this->CO2Emission = 3.51; ////tons per year 
 		buildingTime = 140; //in average, building a house takes about 140 days
 		this->satisfaction = 3;
-		
+		//satisfaction = 3; //assuming we are on a scale from 0 to 10
+
 		//attributes special to this class
 		windowNumber = 5;
 		srand((int)time(0));
@@ -610,7 +609,7 @@ void House::set_houseType(int type)
 		this->CO2Emission = 3.51; //tons per year
 		buildingTime = 140; //in average, building a house takes about 140 days
 		this->satisfaction = 8;
-		
+		//satisfaction = 10; //assuming we are on a scale from 0 to 10
 		srand((int)time(0));
 		this->age = (rand() % (20 * 365) + 1);
 	}
@@ -642,16 +641,15 @@ void House::simulate_step(double days) {
 
 	this->Housing::simulate_step(days);
 
-	
+	//maintenance = 0.1765 * energyUse * days;
+	//CO2Emission = 0.0065 * energyUse * days; 
 
 
 }
 
-
+/// <summary>
 ///	BUILDING CLASS
-/*This is the subclass that represents building in the city. There are two typed of buildings: low level and high level
-But there is no difference in graphics for the two types of buildings, their difference can be seen on energy use*/
-
+/// </summary>
 double Building::get_co2emissions() {
 	double panelsF = 1;
 	if (this->PanelsOn) { panelsF = 0.7; };
@@ -781,6 +779,8 @@ void Building::simulate_step(double days) {
 
 	this->Housing::simulate_step(days);
 
+	//maintenance = 0.1765 * energyUse * days;
+	//CO2Emission = 0.0065 * energyUse * days;  
 	
 }
 	

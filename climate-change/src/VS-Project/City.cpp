@@ -234,11 +234,11 @@ void City::_physics_process(float delta) {
         (this->simulation_counter) -= 5;
       
         change_pie_chart((int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
-        change_pie_chart(r_plus_to_percentage(carbonEmission, 20000), "PieCO2", false);
+        change_pie_chart(value_pie_chart_C02(carbonEmission, 20000), "PieCO2", false);
         change_pie_chart(income / (numberOfEmployees * 30), "PieIncome", true);
-        change_pie_chart(r_plus_to_percentage(budget, pow(10, 4)), "PieBudget", true);
+        change_pie_chart(value_pie_chart_C02(budget, pow(10, 4)), "PieBudget", true);
         change_pie_chart(4 * (100 - 100 * numberOfEmployees / population), "PieUnemployement", false); //EnergyDemand variable is temporary
-        change_pie_chart(r_plus_to_percentage(energyDemand / all_structures.size(), 25000), "PiePowerDemand", false);
+        change_pie_chart(value_pie_chart_C02(energyDemand / all_structures.size(), 25000), "PiePowerDemand", false);
 
         change_pie_label((int)(10 * return_totalSatisfaction()), "PieSatisfaction");
         change_pie_label(carbonEmission, "PieCO2");
@@ -323,15 +323,12 @@ void City::_physics_process(float delta) {
 
     if (this->notification_active)
     {
-        // If notification is active, increment time counter until timeout
         (this->notification_counter)++;
         if (this->notification_counter > this->notification_timeout)
         {
-            // Hide notification box
             this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
             this->notification_active = false;
             this->notification_counter = 0;
-            // If an automatic reset mechanism was triggered, game is reset after notification timeout
             if (this->ResetNotification) {
                 this->ResetNotification = false;
                 this->_on_Reset_confirmed();
@@ -567,7 +564,7 @@ void City::generate_initial_city_graphics()
     }
 
 
-    // shuffles all the vectors so that buildings arent updated in a noticeable pattern
+    //   shuffles all the vectors so that buildings arent updated in a noticeable pattern
     std::random_shuffle(all_structures.begin(), all_structures.end());
     std::random_shuffle(all_energies.begin(), all_energies.end());
     std::random_shuffle(all_houses.begin(), all_houses.end());
@@ -704,9 +701,8 @@ void City::initialize_stats() {
 
 }
 
-// Buttons and Signals
+// code for various buttons
 
-// signal for "show graph" button
 void City::_on_GraphsButton_pressed()
 {
     this->_on_Reset_cancelled();
@@ -721,7 +717,6 @@ void City::_on_GraphsButton_pressed()
 
 }
 
-// signal for "hide graph" button
 void City::_on_GraphsExit_pressed() {
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/GraphsExit")->set("visible", false);
@@ -731,20 +726,22 @@ void City::_on_GraphsExit_pressed() {
     this->_on_Game_Speed_changed();
 }
 
-// signal for "exit game" button
 void City::_on_ExitButton_pressed()
 {
     this->_on_Reset_cancelled();
     this->time_speed = 0;
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
+
     hide_menus();
+
     this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 }
-
 
 void City::_on_3dButton_pressed()
 {
@@ -752,45 +749,48 @@ void City::_on_3dButton_pressed()
     MenuVisibility = !MenuVisibility;
 }
 
-// signal for "cancel exit" button
 void City::_on_Exit_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
+
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
 }
 
-// signal for "confirm exit" button
 void City::_on_Exit_confirmed()
 {
     this->get_tree()->quit();
 }
 
-// signal for "reset game" button
+
 void City::_on_ResetButton_pressed()
 {
     this->_on_Exit_cancelled();
     this->time_speed = 0;
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
+
     hide_menus();
+
     this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 }
 
-// signal for "cancel reset" button
 void City::_on_Reset_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
 }
 
-// signal for "confirm reset" button
 void City::_on_Reset_confirmed()
 {
     // RESET GAME SETTINGS
@@ -844,14 +844,13 @@ void City::_on_Reset_confirmed()
     this->get_tree()->reload_current_scene();
 }
 
-// signal for "show transport menu" button
+
+
 void City::_on_TransportMenuButton_pressed()
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
-    this->time_speed = 0;
-    this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
 
-    /* Transport types:
+    /*
     * 0 - electic car
     * 1 - big american car
     * 2 - normal car
@@ -875,36 +874,53 @@ void City::_on_TransportMenuButton_pressed()
     transportInfo += to_godot_string((int)(current_car_quantities[7])) + String(" Sports Cars") + String("\n");
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("text", transportInfo);
-    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
 
+    this->time_speed = 0;
+    this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
+
+    this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
+    
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuTransport")->set("visible", true);
 }
 
-// signal called when a menu button is clicked
+
 void City::_on_Menu_pressed(String name)
 {
+
     active_button = name;
 
     hide_menus();
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/InfoBox")->set("visible", false);
 
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("text", String(""));
+
     String ButtonInfo = this->get_button_info_text();
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("text", ButtonInfo);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", true);
+
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
+
 }
 
-// Returns godot string giving information about the chosen policy
-String City::get_button_info_text() 
-{
+
+String City::get_button_info_text() {
+
+    // This method returns text giving information about the various policies 
+    // The placeholder text for the input box changed to correpsond to the old value of the "policy"
+
+    // I DON'T KNOW HOW TO DO THE SECOND PART YET 
+    // I GUESS THESE VALUES SHOULD BE STORED IN CITY AND NOT FETCHED FROM RANDOM OBJECTS
+
     if (this->active_button == String("PanelSubsidyForShops"))
     {
+        //this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->set("placeholder_text", String(""));
         return String("Please input a value between 0 and 450. This will be a solar panel subsidy for shops (restaurants, small shops and malls) in euros.");
     }
     else if (this->active_button == String("WindTurbinesShop"))
@@ -992,7 +1008,6 @@ String City::get_button_info_text()
     }
 }
 
-// Hides all policy menus
 void City::hide_menus()
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/Menus/MenuShop")->set("visible", false);
@@ -1003,20 +1018,18 @@ void City::hide_menus()
 
 }
 
-// signal called when user input is confirmed
 void City::_on_Validate_pressed()
 {
-    // hide user input components
+
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
     String mytext = this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput/TextEdit")->get("text");
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
-    // unpause game
+
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
     this->_on_Game_Speed_changed();
 
-    // check input type
     if (mytext.is_valid_float()) {
         this->implement_policies((double)mytext.to_float());
     }
@@ -1035,8 +1048,10 @@ void City::trigger_notification(String text = String("It appears that some sort 
 }
 
 // code for policies implementation
-void City::implement_policies(double value) 
-{
+void City::implement_policies(double value) {
+
+    Godot::print(this->active_button);
+
     if (this->active_button == String("PanelSubsidyForShops")) {
         if (value >= 0 && value <= 450) {
             Godot::print("PANEL SUBSIDY WILL BE CHANGED FOR ALL SHOPS");
@@ -1050,7 +1065,7 @@ void City::implement_policies(double value)
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
-    else if (this->active_button == String("WindTurbinesShop")) {
+    else if (this->active_button == String("WindTurbinesShop")) {    ///I can Changed the name here
         if (value >= 0 && value <= 800) {
             Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON SHOPS IMPLEMENTED");
             for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
@@ -1063,6 +1078,8 @@ void City::implement_policies(double value)
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
+
+    //##########
     else if (this->active_button == String("WindturbinesHousing")) {
         if (value >= 0 && value <= 800) {
             Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON HOUSING IMPLEMENTED");
@@ -1076,6 +1093,9 @@ void City::implement_policies(double value)
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
     }
+
+    ///######
+
     else if (this->active_button == String("EfficiencySupercriticalCoalPlant")) {
         if (value == 0 || value == 1) {
             Godot::print("THE COAL POWER PLANTS WILL CHANGE THEIR EFFICIENCY");
@@ -1342,7 +1362,7 @@ void City::implement_policies(double value)
     }
 }
 
-// signal called when time speed is changed
+//time speed change
 void City::_on_Game_Speed_changed()
 {
     time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
@@ -1408,6 +1428,7 @@ void City::add_car(Vector3 pos) {
         }
     }
 }
+
 
 //adds a shop at a location given by the vector with a shift
 void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
@@ -1604,6 +1625,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
             y = y - 1;
         }
 
+
         //left top
         traffic_system[x][y][1][2] = 1;
         if (x - 1 >= 0 && y - 1 >= 0 && (positionOfBuildings[x - 1][y - 1] == 1 || positionOfBuildings[x - 1][y - 1] == 4 || positionOfBuildings[x - 1][y - 1] == 5)) {
@@ -1692,6 +1714,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
         }
     }
 }
+
 
 // returns the date as string numbers
 std::string return_number_date(int day, int month, int year) {
@@ -2228,12 +2251,12 @@ double City::normalGenerator(double mean, double stdDev)
     normal_distribution<double> distribution(mean, fmax(stdDev, 0.001));
     return distribution(generator);
 }
-
 // auxiliary function to be able to have values between 1 and 100 in the pie charts
 // 100000 pour power demand et 1 million pour C02
-int City::r_plus_to_percentage(int value, int growth) {
+int City::value_pie_chart_C02(int value, int growth) {
     if (value > 0) {return  (int)(100 * (1 - pow(value / growth, -1))); }
     return (value);
+ 
 }
 
 // changes the pie charts in the 2D interface
