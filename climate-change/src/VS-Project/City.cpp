@@ -615,9 +615,11 @@ void City::generate_initial_city_graphics()
         if (population > numberOfEmployees * 1.10) {
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
             {
-                this->population -= (int)(*it)->get("numberOfInhabitants");
-                (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") - (int)(rand() % 2));
-                this->population += (int)(*it)->get("numberOfInhabitants");
+                if ((*it)->get_object_type()=="Building") {
+                    this->population -= (int)(*it)->get("numberOfInhabitants");
+                    (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") - (int)(rand() % 2));
+                    this->population += (int)(*it)->get("numberOfInhabitants");
+                }
             }
         }
 
@@ -1180,7 +1182,7 @@ void City::implement_policies(double value) {
         }
     }
     else if (this->active_button == String("MaximumCarbonFactories")) {
-        if (42 >= value && value >= 0) {
+        if (42 >= value && value > 1) {
             Godot::print("MAXIMUM EMISSIONS ON FACTORIES IMPLEMENTED");
             for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
             {
@@ -1190,6 +1192,7 @@ void City::implement_policies(double value) {
             }
             this->trigger_notification(String("Carbon maximum policy implemented !"));
         }
+        else if (value==0){ this->trigger_notification(String("Sadly, such a harsh measure was rejected by the population.")); }
         else {
             this->trigger_notification(String("The value you provided was not in the specified range."));
         }
@@ -1526,8 +1529,6 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         all_houses.push_back((Housing*)node);
         all_structures.push_back((Structure*)node);
         trees_vector.push_back((Structure*)node);
-
-        if (((Housing*)node)->get_object_type() == "House") { ((House*)node)->house_initialize(); }
 
 
         // traffic stuff
