@@ -266,18 +266,6 @@ void City::_physics_process(float delta) {
     {
         // CALLED EVERY GAME DAY
 
-        if (budget < 0 && !(under_budget)) {
-            this->trigger_notification(String("You have gone into debt ! This is a serious issue. If you are not in the black next year, your term as mayor will be abruptly ended!"));
-            under_budget = true;
-        }
-
-        if (under_budget) {
-            if (budget >= 0) { under_budget = false;  this->trigger_notification(String("You have gone climbed out of debt ! Congratulations ! Does this mean re-election?"));
-            }
-            else { this->_on_Reset_confirmed(); this->trigger_notification(String("Game over ! You overspent the town's budget in two consecutive years. Better luck this time."));
-            }
-        }
-
         /*
         for (int i = 0; i < statsCarbonEmission.size(); ++i) {
             Godot::print(String(statsCarbonEmission[i]));
@@ -306,6 +294,21 @@ void City::_physics_process(float delta) {
         if (datenumber[0] == 1 && datenumber[1] == 1)
         {
             // CALLED EVERY YEAR
+
+            if (budget < 0 && !(under_budget)) {
+                this->trigger_notification(String("You have gone into debt ! This is a serious issue. If you are not in the black next year, your term as mayor will be abruptly ended!"));
+                under_budget = true;
+            }
+
+            if (under_budget) {
+                if (budget >= 0) {
+                    under_budget = false;  this->trigger_notification(String("You have gone climbed out of debt ! Congratulations ! Does this mean re-election?"));
+                }
+                else {
+                    this->_on_Reset_confirmed(); this->trigger_notification(String("Game over ! You overspent the town's budget in two consecutive years. Better luck this time."));
+                }
+            }
+
             if (!(factoryyearsubsidy) && (yearlyfactorysubsidy > 0)) {   // take off factory subsidies if they havent been changed
                 for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
                 {

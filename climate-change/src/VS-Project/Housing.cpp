@@ -35,17 +35,16 @@ String Housing::get_object_info()
 		}
 		else{ info += "This is a modern house, it likely is constrcuted with energy efficieny in mind." + String("\n"); }
 	}
-	
-	info += "PROBABILITY: " + to_godot_string((double)this->panel_probability) + String("\n");
 	if (this->PanelsOn) {
 		info += "This building has solar panels ! " + String("\n") + "The panels have " + to_godot_string((int)(this->solarPanelAge)) + " days left until they are rendered obsolete." + String("\n");
 	}
 	else {
 		info += "This building has no solar panels. Quite sad. This household would receive " + to_godot_string((int)(this->get("solar_panel_subsidies_housing"))) + " in currency if they installed solar panels." + String("\n");
 	}
-	info += "SUBSIDY TURBINES: " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
-	// info += "PROBABILITY: " + to_godot_string((double)this->roof_wind_turbines_probability) + String("\n");  why does this need to be displayed to the user ??
-	
+	if (this->rooftopWindTurbineOn) { info += "This building has a rooftop mounted wind turbine. Fancy." + String("\n"); }
+	else {
+		info += "If the household decides to buy wind turbines, they'd get a government subsidy of " + to_godot_string((int)(this->get("wind_turbine_subsidies"))) + String("\n");
+	}
 	return info;
 }
 
