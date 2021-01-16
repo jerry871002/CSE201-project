@@ -249,9 +249,9 @@ void City::_physics_process(float delta) {
         change_pie_chart( (int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
         change_pie_chart(value_pie_chart_C02(carbonEmission, 20000), "PieCO2", false);
         change_pie_chart(income / (numberOfEmployees * 30), "PieIncome", true);
-        change_pie_chart(value_pie_chart_C02(budget, pow(10, 6)), "PieBudget", true);
-        change_pie_chart(25-100*numberOfEmployees/population, "PieUnemployement", false); //EnergyDemand variable is temporary
-        change_pie_chart(energyDemand / (all_structures.size() * 5000), "PiePowerDemand", false);
+        change_pie_chart(value_pie_chart_C02(budget, pow(10, 4)), "PieBudget", true);
+        change_pie_chart(4*(100 - 100 * numberOfEmployees / population), "PieUnemployement", false); //EnergyDemand variable is temporary
+        change_pie_chart(value_pie_chart_C02(energyDemand / all_structures.size(), 25000), "PiePowerDemand", false);
 
         change_pie_label( (int)(10 * return_totalSatisfaction()), "PieSatisfaction");
         change_pie_label(carbonEmission, "PieCO2");
@@ -1376,6 +1376,7 @@ void City::implement_policies(double value) {
             for (int i = 0; i < int(value); ++i) {
                 (*trees_iterator)->get_node("MeshComponents/Trees")->set("visible", true);
                 (*trees_iterator)->set("satisfaction", (double)(*trees_iterator)->get("satisfaction") + 4);
+                this->totalSatisfaction += 10/((double)(this->all_structures.size()));
                 trees_iterator++;
                 budget -= 5000;
                 houses_with_trees++;
@@ -1386,6 +1387,7 @@ void City::implement_policies(double value) {
         else {
             this->trigger_notification(String("The value you provided was not possible. Please try planting trees again."));
         }
+        
     }
 }
 
