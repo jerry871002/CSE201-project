@@ -40,6 +40,20 @@ Aim is for the user to have a better understanding of how certain environmental 
 
 ## How to compile and run our project
 ### Windows
+1. Install the standard version of Godot via [this page](https://godotengine.org/download)
+2. Install the IDE VS Community from this page [this page]https://visualstudio.microsoft.com/fr/downloads/
+3. Make sure to select "Desktop development with C++" and finish the set up of VS
+4. Download the complete github repository 
+5. Open the project solution from VS in CSE201-project/climate-change/src/VS-Project/VS-Project.sln
+6. Rebuild the solution in release mode x64
+7. Open godot and import the project from CSE201-project/climate-change/
+8. Once the project is opened in the Godot engine, click `Project > Export` on the top left corner
+9. Add a new configuration for Windows Desktop
+10. Manage the export templates
+11. Download the templates
+12. Give it a name, select the Icon res://Icon.ico and export it with "Export project", unckeck "Export with debugs"
+13. Save it in any place you want, by double clicking on the dmg file, you will see the game inside it
+14. Enjoy the game :)
 
 ### Mac
 1. Install the standard version of Godot via [this page](https://godotengine.org/download)
