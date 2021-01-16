@@ -17,7 +17,6 @@ extern int traffic_system[citysize][citysize][4][3];
 
 // helper functions
 void compute_speed(double& Speed, double &Acc, float delta, Vector3 prevPos, Vector3 pos) {
-    //Speed = (pos - prevPos).dot((pos - prevPos).normalized()) / (10 * delta);
     if ((Speed <= 0.8 && Acc > 0) or (Acc < 0 and Speed + Acc * delta > 0.2)) {
         Speed += Acc * delta;
     }
@@ -368,114 +367,87 @@ void Transport::simulate_step(double days) {
     int years = floor((age + days) / 365 - age / 365);
     co2PerKm *= pow(1.05, years); //increase in emissions with each year
     age += days; //total number of days 
-    /*fuelInput += fuelPerKm * kmPerDay * days; //litres of fuel for car
-    CO2Emission += co2PerKm * kmPerDay * days;*/ // co2 emissions per car
     fuelInput = fuelPerKm * kmPerDay * 365; // litres of fuel in 1 year
-    CO2Emission =365 * co2PerKm * kmPerDay / 1000; // tonnes of co2 in 1 year
+    CO2Emission = 365 * co2PerKm * kmPerDay / 1000; // tonnes of co2 in 1 year
     passengers = capacity * occupancyRate * 365; //number of people that used the car in 1 year period
     switch (transportType) {
-        //maintenance in euros per year
-    case 0: { //electric car
-        if (age <= 365) {
-            maintenance = 1.09 * 365; //maintenance service price per day if car is less than 1 yo
+        // maintenance in euros per year
+        case 0: { // electric car
+            if (age <= 365) {
+                maintenance = 1.09 * 365; //maintenance service price per day if car is less than 1 yo
+            } else if (age <= 730) {
+                maintenance = 1.67 * 365; //maintenance service price per day if car is less than 2 yo
+            } else if (age <= 1095) {
+                maintenance = 1.1 * 365; //maintenance service price per day if car is less than 3 yo
+            } else if (age <= 1460) {
+                maintenance = 1.94 * 365; // maintenance service price per day is car is less than 4 yo
+            } else {
+                maintenance = 2.2 * 365; // maintenance service price per day if car is more than 4 yo
+            }
+            break;
         }
-        else if (age <= 730) {
-            maintenance = 1.67 * 365; //maintenance service price per day if car is less than 2 yo
+        case 1: { // big american car
+        // no repairs price if car is <3yo
+            if (age <= 365) {
+                maintenance = 1.25 * 365; //maintenance price per day if car is less than 1 yo
+            } else if (age <= 730) {
+                maintenance = 1.92 * 365; //maintenance price per day if car is less than 2 yo
+            } else if (age <= 1095) {
+                maintenance = 1.95 * 365; //maintenance price per day if car is less than 3 yo
+            } else if (age <= 1460) {
+                maintenance = 1.86 * 365; // repairs price per day is car is less than 4 yo
+                maintenance = 5.7 * 365; //maintenance price per day if car is less than 4 yo
+            } else {
+                maintenance = 2.78 * 365; //repairs price per day if car is more than 4 yo
+                maintenance = 3.21 * 365; //maintenance price per day if car is more than 4 yo
+            }
+            break;
         }
-        else if (age <= 1095) {
-            maintenance = 1.1 * 365; //maintenance service price per day if car is less than 3 yo
+        case 2: { // normal family car
+        // no repairs price if car is <3yo
+            if (age <= 365) {
+                maintenance = 0.15 * 365; //maintenance price per day if car is less than 1 yo
+            } else if (age <= 730) {
+                maintenance = 0.5 * 365; //maintenance price per day if car is less than 2 yo
+            } else if (age <= 1095) {
+                maintenance = 1.05 * 365; //maintenance price per day if car is less than 3 yo
+            } else if (age <= 1460) {
+                maintenance = 0.765 * 365; // repairs price per day is car is less than 4 yo
+                maintenance += 2.70 * 365; //maintenance price per day if car is less than 4 yo
+            } else {
+                maintenance = 1.17 * 365; //repairs price per day if car is more than 4 yo
+                maintenance = 2.26 * 365; //maintenance price per day if car is more than 4 yo
+            }
+            break;
         }
-        if (age <= 1460) {
-            maintenance = 1.94 * 365; // maintenance service price per day is car is less than 4 yo
+        case 3: { // collection car 
+        // no repairs price if car is < 3yo
+            maintenance = 25 * 365; //maintenance very expensive, does not depend on the age, the car is already old
+            break;
         }
-        else {
-            maintenance = 2.2 * 365; // maintenance service price per day if car is more than 4 yo
+        case 4: { // bike
+            maintenance = 0.8 * 365;
+            break;
         }
-        break;
+        case 5: { //motorcycle
+            maintenance = 2.6 * 365;
+            break;
+        }
+        case 6: { //bus
+            double alpha = (cost - 262500) / 262500;
+            if (alpha < 0) {
+                alpha = 0;
+            }
+            maintenance = (0.67 + alpha * 0.17) * kmPerDay *365; // maintenance cost in euros, positive correlation with bus price
+            break;
+        }
+        case 7: { //sports car
+            maintenance = 2.5 * 365;
+            break;
+        }
     }
-    case 1: { // big american car
-    // no repairs price if car is <3yo
-        if (age <= 365) {
-            maintenance = 1.25 * 365; //maintenance price per day if car is less than 1 yo
-        }
-        else if (age <= 730) {
-            maintenance = 1.92 * 365; //maintenance price per day if car is less than 2 yo
-        }
-        else if (age <= 1095) {
-            maintenance = 1.95 * 365; //maintenance price per day if car is less than 3 yo
-        }
-        if (age <= 1460) {
-            maintenance = 1.86 * 365; // repairs price per day is car is less than 4 yo
-            maintenance = 5.7 * 365; //maintenance price per day if car is less than 4 yo
-        }
-        else {
-            maintenance = 2.78 * 365; //repairs price per day if car is more than 4 yo
-            maintenance = 3.21 * 365; //maintenance price per day if car is more than 4 yo
-        }
-        break;
-    }
-    case 2: { // normal family car
-    // no repairs price if car is <3yo
-        if (age <= 365) {
-            maintenance = 0.15 * 365; //maintenance price per day if car is less than 1 yo
-        }
-        else if (age <= 730) {
-            maintenance = 0.5 * 365; //maintenance price per day if car is less than 2 yo
-        }
-        else if (age <= 1095) {
-            maintenance = 1.05 * 365; //maintenance price per day if car is less than 3 yo
-        }
-        if (age <= 1460) {
-            maintenance = 0.765 * 365; // repairs price per day is car is less than 4 yo
-            maintenance += 2.70 * 365; //maintenance price per day if car is less than 4 yo
-        }
-        else {
-            maintenance = 1.17 * 365; //repairs price per day if car is more than 4 yo
-            maintenance = 2.26 * 365; //maintenance price per day if car is more than 4 yo
-        }
-        break;
-    }
-    case 3: { // collection car 
-    // no repairs price if car is <3yo
-        maintenance = 25 * 365; //maintenance very expensive, does not depend on the age, the car is already old
-        break;
-    }
-    case 4: { //bike
-        maintenance = 0.8 * 365;
-    }
-    case 5: { //motorcycle
-        maintenance = 2.6 * 365;
-    }
-    case 6: { //bus
-        double alpha = (cost - 262500) / 262500;
-        if (alpha < 0) {
-            alpha = 0;
-        }
-        maintenance = (0.67 + alpha * 0.17) * kmPerDay *365; // maintenance cost in euros, positive correlation with bus price
-        break;
-    }
-    case 7: { //sports car
-        maintenance = 2.5 * 365;
-        break;
-    }
-    }
-    //car prohibition
-    /*
-    if ((transportType!=6)&&(transportType!=5)&&(transportType!=4)) {
-        {if (workingDays!= (7-(int)(myCity->get("carProhibition")))) {
-        satisfaction /= workingDays/7;
-     }
-     
-    maintenance*=workingDays/7;
-    fuelInput*=workingDays/7;
-    CO2Emission*=workingDays/7;
-    energyUse*=workingDays/7;
-    passengers*=workingDays/7;
-    }
-    }
-    */
     //car consumption tax
-    maintenance+=fuelInput*(int)(myCity->get("fuelTax"));
+    maintenance += fuelInput * (int)(myCity->get("fuelTax"));
 }
 
 void Transport::turn(int dir, float delta) {
@@ -620,7 +592,6 @@ void Pedestrian::_ready() {
 }
 
 void Pedestrian::_process(float delta) {
-    //std::cout << position << endl;
     player->set_speed_scale(int(myCity->get("time_speed"))); //TO BE CHANGED
 
     if (rot >= (M_PI / 2)) {
@@ -629,11 +600,11 @@ void Pedestrian::_process(float delta) {
 
         Vector3 p = this->get_global_transform().get_origin();
         switch ((int)(((this->get_rotation_degrees().y) / 90) + 4) % 4) {                                   //Put the pedestrian on the road if problems
-        case 0: this->set("translation", Vector3(p.x, 0, p.z + 24 - fmod(p.z + 24, 30) - 9)); break;
-        case 2: this->set("translation", Vector3(p.x, 0, p.z + 6 - fmod(p.z + 6, 30) + 9)); break;
-        case 3: this->set("translation", Vector3(p.x + 6 - fmod(p.x + 6, 30) + 9, 0, p.z)); break;
-        case 1: this->set("translation", Vector3(p.x + 24 - fmod(p.x + 24, 30) - 9, 0, p.z)); break;
-        default: break;
+            case 0: this->set("translation", Vector3(p.x, 0, p.z + 24 - fmod(p.z + 24, 30) - 9)); break;
+            case 2: this->set("translation", Vector3(p.x, 0, p.z + 6 - fmod(p.z + 6, 30) + 9)); break;
+            case 3: this->set("translation", Vector3(p.x + 6 - fmod(p.x + 6, 30) + 9, 0, p.z)); break;
+            case 1: this->set("translation", Vector3(p.x + 24 - fmod(p.x + 24, 30) - 9, 0, p.z)); break;
+            default: break;
         }
 
 
