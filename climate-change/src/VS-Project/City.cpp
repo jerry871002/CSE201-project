@@ -266,18 +266,6 @@ void City::_physics_process(float delta) {
     {
         // CALLED EVERY GAME DAY
 
-        if (budget < 0 && !(under_budget)) {
-            this->trigger_notification(String("You have gone into debt ! This is a serious issue. If you are not in the black next year, your term as mayor will be abruptly ended!"));
-            under_budget = true;
-        }
-
-        if (under_budget) {
-            if (budget >= 0) { under_budget = false;  this->trigger_notification(String("You have gone climbed out of debt ! Congratulations ! Does this mean re-election?"));
-            }
-            else { this->_on_Reset_confirmed(); this->trigger_notification(String("Game over ! You overspent the town's budget in two consecutive years. Better luck this time."));
-            }
-        }
-
         /*
         for (int i = 0; i < statsCarbonEmission.size(); ++i) {
             Godot::print(String(statsCarbonEmission[i]));
@@ -306,6 +294,21 @@ void City::_physics_process(float delta) {
         if (datenumber[0] == 1 && datenumber[1] == 1)
         {
             // CALLED EVERY YEAR
+
+            if (budget < 0 && !(under_budget)) {
+                this->trigger_notification(String("You have gone into debt ! This is a serious issue. If you are not in the black next year, your term as mayor will be abruptly ended!"));
+                under_budget = true;
+            }
+
+            if (under_budget) {
+                if (budget >= 0) {
+                    under_budget = false;  this->trigger_notification(String("You have gone climbed out of debt ! Congratulations ! Does this mean re-election?"));
+                }
+                else {
+                    this->_on_Reset_confirmed(); this->trigger_notification(String("Game over ! You overspent the town's budget in two consecutive years. Better luck this time."));
+                }
+            }
+
             if (!(factoryyearsubsidy) && (yearlyfactorysubsidy > 0)) {   // take off factory subsidies if they havent been changed
                 for (std::vector<Production*>::iterator it = all_production.begin(); it != all_production.end(); ++it)
                 {
@@ -847,14 +850,28 @@ void City::_on_Reset_cancelled()
 
 void City::_on_Reset_confirmed()
 {
+    // RESET GAME SETTINGS
+    this->time_speed = 1.0;
+    this->day_tick = 0;
+    this->set_budget(10000);
+
+    // RESET TRANSPORT POLICIES
+    this->fuelTax = 0;
+    this->weightTax = 0;
+    this->bikeSubsidy = 0;
+    this->electricCarSubsidy = 0;
+    this->busSubsidy = 0;
+    this->carProhibition = 0;
+
+    // RESET OTHER POLICIES
     this->set("workingPower", 0);
 
     // RESET STATS
-
     HousingCO2 = 0;
     ShopsCO2 = 0;
     ProductionCO2 = 0;
     EnergyCO2 = 0;
+    TransportCO2 = 0;
     income = 0;
     population = 0;
     numberOfEmployees = 0;
@@ -865,18 +882,22 @@ void City::_on_Reset_confirmed()
     totalSatisfactioWeight = 0;
     totalSatisfaction = 0;
 
+    // RESET ARRAYS
     statsCarbonEmissionHousing = { };
     statsCarbonEmissionProduction = { };
     statsCarbonEmissionEnergy = { };
     statsCarbonEmissionShops = { };
     statsEnvironmentalCost = { };
+    statsCarbonEmission = {};
+    statsCarbonEmissionSplit = {};
+    statsEnvironmentalCost = {};
     statsIncome = { };
     statsEnergy = { };
     statsUnemployment = { };
     statsTotalSatisfaction = { };
     statsPopulation = { };
 
-
+    // RELOAD SCENE
     this->get_tree()->reload_current_scene();
 }
 
