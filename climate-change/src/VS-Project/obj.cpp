@@ -465,6 +465,9 @@ String Structure::get_object_info()
     if (this->get_object_type() == "Building"){
         info += "This building is a(n) " + this->get_main_type() + " building. Specifically, it is a " + to_godot_string((int)(((int)(this)->get("age")) / 365)) + " year and " + to_godot_string((int)(((int)(this)->get("age")) % 365)) + " days old Apartment Building." + String("\n") + String("\n");
     }
+    else if (this->get_object_type() == "AgriculturalProduction") {
+        info += "This is a field. It is able to produce several different crops." + String("\n") + String("\n");
+    }
     else {
         info += "This building is a(n) " + this->get_main_type() + " building. Specifically, it is a " + to_godot_string((int)(((int)(this)->get("age")) / 365)) + " year and " + to_godot_string((int)(((int)(this)->get("age")) % 365)) + " days old " + this->get_object_type() + "." + String("\n") + String("\n");
     }
