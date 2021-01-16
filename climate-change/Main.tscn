@@ -478,15 +478,15 @@ __meta__ = {
 [node name="Infographics" type="Node2D" parent="2Dworld"]
 position = Vector2( 1658.04, 38.8548 )
 
-[node name="Polygon2D" type="Polygon2D" parent="2Dworld/Infographics"]
-material = ExtResource( 56 )
-position = Vector2( 159.738, 329.152 )
-scale = Vector2( 0.362259, 0.362259 )
-polygon = PoolVector2Array( -66.0562, -576.135, -134.436, -560.774, -189.932, -511.719, -215.698, -441.358, -201.824, -354.645, -159.707, -305.59, -100.246, -278.338, -23.939, -280.815, 38.4946, -316.491, 75.1621, -375.952, 82.0986, -443.836, 56.8281, -507.755, 0.34082, -558.792 )
-
 [node name="Polygon2D2" type="Polygon2D" parent="2Dworld/Infographics"]
 material = ExtResource( 56 )
 position = Vector2( 159.738, 480 )
+scale = Vector2( 0.362259, 0.362259 )
+polygon = PoolVector2Array( -66.0562, -576.135, -134.436, -560.774, -189.932, -511.719, -215.698, -441.358, -201.824, -354.645, -159.707, -305.59, -100.246, -278.338, -23.939, -280.815, 38.4946, -316.491, 75.1621, -375.952, 82.0986, -443.836, 56.8281, -507.755, 0.34082, -558.792 )
+
+[node name="Polygon2D7" type="Polygon2D" parent="2Dworld/Infographics"]
+material = ExtResource( 56 )
+position = Vector2( 159.738, 330 )
 scale = Vector2( 0.362259, 0.362259 )
 polygon = PoolVector2Array( -66.0562, -576.135, -134.436, -560.774, -189.932, -511.719, -215.698, -441.358, -201.824, -354.645, -159.707, -305.59, -100.246, -278.338, -23.939, -280.815, 38.4946, -316.491, 75.1621, -375.952, 82.0986, -443.836, 56.8281, -507.755, 0.34082, -558.792 )
 
@@ -1307,7 +1307,7 @@ __meta__ = {
 margin_left = 525.0
 margin_top = 919.0
 margin_right = 1425.0
-margin_bottom = 1030.0
+margin_bottom = 1031.0
 theme = SubResource( 6 )
 custom_styles/normal = ExtResource( 13 )
 custom_fonts/font = ExtResource( 12 )
@@ -1317,6 +1317,15 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Polygon2D" type="Polygon2D" parent="2Dworld/InvalidInputNotification"]
+material = ExtResource( 56 )
+position = Vector2( 418.092, 84.8592 )
+scale = Vector2( 2.99789, 0.362259 )
+z_index = -1
+z_as_relative = false
+offset = Vector2( 77.1162, 342.704 )
+polygon = PoolVector2Array( -66.0588, -570.221, -200.625, -570.169, -205.394, -560.884, -210.717, -533.634, -214.216, -495.375, -215.698, -441.358, -215.465, -382.669, -213.091, -330.969, -207.357, -290.457, -201.888, -275.369, -23.3892, -274.819, 66.7156, -274.985, 72.907, -283.28, 76.7615, -301.61, 80.1018, -333.013, 82.0986, -367.861, 82.9534, -403.038, 83.0713, -445.981, 81.4792, -496.243, 78.4719, -530.402, 73.9314, -558.217, 68.2114, -571.881 )
 
 [node name="PoliciesInput" type="Node2D" parent="2Dworld"]
 position = Vector2( 17.6389, 1.25995 )
@@ -1387,9 +1396,9 @@ __meta__ = {
 
 [node name="ExitConfirmationBox" type="Control" parent="2Dworld"]
 margin_left = 768.4
-margin_top = 226.746
+margin_top = 331.246
 margin_right = 808.4
-margin_bottom = 266.746
+margin_bottom = 371.246
 __meta__ = {
 "_edit_use_anchors_": false
 }
