@@ -2001,8 +2001,6 @@ void City::write_stat_history_to_file() {
     }
     statsCarbonEmissionTransport.push_back(newCarbonEmissionTransport);
 
-
-
     Array newCarbonEmission{};
     newCarbonEmission.push_back(return_word_date_godot());
     newCarbonEmission.push_back((int)(((carbonEmission + (this->TransportCO2)) / pow(10, 3)) + 0.5));
