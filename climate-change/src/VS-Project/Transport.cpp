@@ -344,42 +344,42 @@ void Transport::_physics_process(float delta)
     if (rot >= (M_PI / 2)) {
         
         int gameSpeed = myCity->get("time_speed");	///< Get the time speed from city
-	/**
-	* If game speed 0, the cars are paused
-	* Otherwise, the car go straight with a minimum delta (*), indeed, if fps are low then delta is gonna be big
-	* and cars will move by more than 1 each frame.
-	* Indeed, the speed of cars is linked to delta, hence, their speed is the same no matter fps is not (*)
-	*/
+        /**
+        * If game speed 0, the cars are paused
+        * Otherwise, the car go straight with a minimum delta (*), indeed, if fps are low then delta is gonna be big
+        * and cars will move by more than 1 each frame.
+        * Indeed, the speed of cars is linked to delta, hence, their speed is the same no matter fps is not (*)
+        */
         if (gameSpeed != 0) { straight(fmin(0.04, delta) / delta); }	
        
         int real_rot = (int)(((this->get_rotation_degrees().y) / 90) + 4) % 4; ///< Get on which axe is the car   
-	/**
-	* The following lines are finding where is the car on the map and put it back on the road
-	*/
-	Vector3 p = this->get_global_transform().get_origin();	///< Get the position of the car
+        /**
+        * The following lines are finding where is the car on the map and put it back on the road
+        */
+	    Vector3 p = this->get_global_transform().get_origin();	///< Get the position of the car
         switch (real_rot) {                                
-        case 0: this->set("translation", Vector3(p.x, 0, p.z + 28 - fmod(p.z + 28, 30) - 13)); break;
-        case 2: this->set("translation", Vector3(p.x, 0, p.z + 2 - fmod(p.z + 2, 30) + 13)); break;
-        case 3: this->set("translation", Vector3(p.x + 2 - fmod(p.x + 2, 30) + 13, 0, p.z)); break;
-        case 1: this->set("translation", Vector3(p.x + 28 - fmod(p.x + 28, 30) - 13, 0, p.z)); break;
-        default: break; }
+            case 0: this->set("translation", Vector3(p.x, 0, p.z + 28 - fmod(p.z + 28, 30) - 13)); break;
+            case 2: this->set("translation", Vector3(p.x, 0, p.z + 2 - fmod(p.z + 2, 30) + 13)); break;
+            case 3: this->set("translation", Vector3(p.x + 2 - fmod(p.x + 2, 30) + 13, 0, p.z)); break;
+            case 1: this->set("translation", Vector3(p.x + 28 - fmod(p.x + 28, 30) - 13, 0, p.z)); break;
+            default: break; 
+        }
 	
-	/**
-	* If the car is closed to the end of the road, the new acceleration is computed to make it slow down
-	* The car slow down on the x axis (because of the road signs) and before turning right (small turn radius)
-	*/
+        /**
+        * If the car is closed to the end of the road, the new acceleration is computed to make it slow down
+        * The car slow down on the x axis (because of the road signs) and before turning right (small turn radius)
+        */
         if (position >= 13 && Acc > 0 && real_rot % 2 == 0) {
             ComputeAcceleration(Acc, SPEED_T, 0.2, 5);
-        }
-        else if (position >= 18 && Acc > 0 && real_rot % 2 == 1 && dir == 1) {
+        } else if (position >= 18 && Acc > 0 && real_rot % 2 == 1 && dir == 1) {
             ComputeAcceleration(Acc, SPEED_T, 0.7, 4);
         }
 	
-	/**
-	* Condition for the car reaching the end of the road
-	* The acceleration is positive again and the rotation is set to 0, hence we are leaving the condition for this if (rot>=90)
-	* The center of rotation is also define thanks to dir of the turn and the current position of the car
-	*/
+        /**
+        * Condition for the car reaching the end of the road
+        * The acceleration is positive again and the rotation is set to 0, hence we are leaving the condition for this if (rot>=90)
+        * The center of rotation is also define thanks to dir of the turn and the current position of the car
+        */
         if (position >= 22 ) {
             Acc = 0.5;	rot = 0;
             round_position(this, motion);
@@ -390,60 +390,55 @@ void Transport::_physics_process(float delta)
     * This condition is true if the car is at the end of the road, hence it must turn
     */
     else if (position >= 22) {
-	/**
-	* globalSpeed gives by which vector the car should move.
-	* The vector is created colinear with (1, 0, 0) and then rotated by the current car rotation
-	* This vector is the same than is the function turn, it used here to anticipate the collision if
-	* we choose to make the car turn
-	*/
+        /**
+        * globalSpeed gives by which vector the car should move.
+        * The vector is created colinear with (1, 0, 0) and then rotated by the current car rotation
+        * This vector is the same than is the function turn, it used here to anticipate the collision if
+        * we choose to make the car turn
+        */
         Vector3 globalSpeed = Vector3((SPEED_T * 10 * fmin(0.04, delta)), 0, 0);
         globalSpeed.rotate(Vector3(0, 1, 0), (this->get_rotation_degrees().y) * (M_PI / 180));
         
-	/**
-	* Check is there will be a collision if the car turns
-	* If not the car turns, if yes, the car does not turn except if the other car is not on a straight line and
-	* if the other car has a lower speed.
-	* This is basically solving the intersection problem with a right priority and a priority to the more confident (quicker) one
-	*/
+        /**
+        * Check is there will be a collision if the car turns
+        * If not the car turns, if yes, the car does not turn except if the other car is not on a straight line and
+        * if the other car has a lower speed.
+        * This is basically solving the intersection problem with a right priority and a priority to the more confident (quicker) one
+        */
         if (this->move_and_collide(globalSpeed, true, true, true) == NULL) {
             turn(dir, fmin(0.04, delta));
-        }
-        else {
-            
+        } else {           
             Vector3 colliderVelocity = this->move_and_collide(globalSpeed, true, true, true)->get_collider_velocity();
             if (fmod(((Transport*)(this->move_and_collide(globalSpeed, true, true, true)->get_collider()))->get_rotation_degrees().y + 360, 90) != 0) {
                 if (colliderVelocity.dot(colliderVelocity) < SPEED_T) {
                     turn(dir, fmin(0.04, delta));
                 }
-            }
-            else if (colliderVelocity.dot(colliderVelocity) == 0) {
+            } else if (colliderVelocity.dot(colliderVelocity) == 0) {
                 turn(dir, fmin(0.04, delta));
             }
-
         }
-	/**
-	* If the car had to go straight of this it done turning, the local position of the car is reset
-	* The position and the rotation of the car is also rounded to avoid futur shifts
-	* Moreover, the possible directions for the next intersection is get and the turning radius set accordingly 
-	*/
+        /**
+        * If the car had to go straight of this it done turning, the local position of the car is reset
+        * The position and the rotation of the car is also rounded to avoid futur shifts
+        * Moreover, the possible directions for the next intersection is get and the turning radius set accordingly 
+        */
         if ((dir != 0 && rot >= (M_PI / 2)) or dir == 0) {
             rot = M_PI / 2;
             align_on_axis(this);
             round_position(this, motion);
             
             switch (dir) {
-            case 0: position = -8; break;
-            default: position = 4; break;
+                case 0: position = -8; break;
+                default: position = 4; break;
             }
 
             prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized()) - position;
             dir = get_direction(this->get_global_transform().get_origin() + Vector3(12, 0, 0).rotated(Vector3(0, 1, 0), this->get_rotation_degrees().y * (M_PI / 180)), this->get_rotation_degrees().y);
 		
-	    if (dir == -1) {Turn_R = 8;}
-	    else {Turn_R = 4;}
+            if (dir == -1) {Turn_R = 8;}
+            else {Turn_R = 4;}
         }
     }
-    
     compute_speed(SPEED_T, Acc, fmin(0.04, delta), prevPositionVec, this->get_global_transform().get_origin()); //< recompute the speed each frame
 }
 
