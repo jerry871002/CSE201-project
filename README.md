@@ -41,23 +41,24 @@ Aim is for the user to have a better understanding of how certain environmental 
 - Paloma
 
 
-#########################################
-#### How to compile and run our project
+
+## How to compile and run our project
 
 
 ####
-!!! MINIMUM REQUIREMENTS !!!
+!!! DISCLAIMER MINIMUM REQUIREMENTS !!!
 
 This game features a large amount of 3D Graphics and will not run on every computer.
 During our programming, most teammembers were not able to run the full game themselves on their laptops.
 Make sure you have a capable computer before going through the steps below.
 
 Windows recommended specs:
-Dedicated GPU or i7-10700 integrated graphics or better 
-16 GB RAM 
+- Dedicated GPU or i7-10700 integrated graphics or better 
+- 16 GB RAM 
 
 MacBook minimum specs:
-MacBook Air 2016
+- MacBook Pro Core i5
+- 16 GB RAM
 
 
 ### Windows
@@ -100,4 +101,25 @@ MacBook Air 2016
 12. Save it in any place you want, by double clicking on the dmg file, you will see the game inside it
 13. Enjoy the game :)
 
-#########################################
+
+## How to play the sim
+
+General way of navigating the game:
+
+Use the arrow keys to move around the city. Click on "Q" to zoom out and on "E" to zoom in. Using the mouse, if you hold down "Shift or space"  and your trackpad you can move around the city that way. This can also be done by holding the center click on an external mouse. The escape key is used to quit the game.
+
+At the top of the game, you will see a firstly the exit and restart button. The date is display at the top left corner, and the slider gives you the ability to increase or decrease time in the game. Laslty, there is a option to click on the graphs at the top right. 
+
+There are serveral tabs to display different graphs. You can hover over the data points and will get more information. Some of the graphs have different lines representing different sectors of the city. 
+
+Laslty, at the very right is a car icon. Click on it to get a better understanding of transport in the city. On the left you will see how many of the different type of transports there are. The circles represents different policies that can be implemented specific to transport.
+
+In the game, clicking on a specific object will lead to an info box to appear about this object. Furthermore different policies associated to the specific sector will be displayed. At any time if you do want to go back to the city / leave the info box, hold "shift" and click on the blurred city. 
+
+For example: clicking on a mall, will give you the specific stats of that particular mall. It will also give you the possibility to implement policies for the entirety of the shop branch (mall, small shop and restaurants). One example is providing subsidies to solar panels. Enter a value between 0 and 450, and you will see that over time much more solar panels will appear on the different shops in the city. 
+
+The indexes of the city are displayed on the right side for you to know what is happening in the entire city.
+
+Have fun with EcoVille, we hope that you find the experience rewarding. 
+
+
