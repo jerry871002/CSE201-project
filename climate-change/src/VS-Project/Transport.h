@@ -20,7 +20,6 @@ namespace godot {
         void _init();
         void _ready();
         void _physics_process(float delta);
-        int physics_counter{ 0 };
 
         // simulation function
         void simulate_step(double days);

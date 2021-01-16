@@ -331,18 +331,13 @@ void Transport::_ready() {
     prevPosition = this->get_global_transform().get_origin().dot(get_global_transform().get_basis().get_axis(0).normalized());
     prevPositionVec = this->get_global_transform().get_origin();
     myCity = (City*)((this->get_tree()->get_root()->get_node("Main")->get_node("3Dworld")));
+}
 
 /**
 * Main loop for transport animation
 */
 void Transport::_physics_process(float delta) 
 {
-    (this->physics_counter)++;
-
-    if (this->physics_counter == 2) {
-        this->physics_counter == 0;
-    }
-
     prevPositionVec = this->get_global_transform().get_origin();
    
     /// If rotation is bigger than the 90deg, the car is in a straight line
@@ -446,10 +441,9 @@ void Transport::_physics_process(float delta)
 		
 	    if (dir == -1) {Turn_R = 8;}
 	    else {Turn_R = 4;}
-            }
         }
     }
-
+    
     compute_speed(SPEED_T, Acc, fmin(0.04, delta), prevPositionVec, this->get_global_transform().get_origin()); //< recompute the speed each frame
 }
 
