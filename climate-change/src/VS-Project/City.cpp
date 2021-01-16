@@ -404,9 +404,6 @@ void City::_input(InputEvent*)
 
 void City::generate_initial_city_graphics()
 {
-
-    // srand((int)time(0));
-
     Vector3 center = Vector3(15.0 * citysize + 62, 0, 15.0 * citysize + 62);
 
     //booleans to ensure correct city creation
@@ -461,16 +458,7 @@ void City::generate_initial_city_graphics()
                 float lowhouseprob = calculate_building_prob(-200, 170, 5, dist) + calculate_building_prob(200,260,0.12, dist);
                 float highhouseprob = calculate_building_prob(-140, 170, 4, dist) + calculate_building_prob(200, 260, 0.35, dist);
 
-
-                //std::cout << "DEBUG: highhouseprob  : " << highhouseprob << std::endl;
-                //std::cout << "DEBUG: lowhouseprob  : " << lowhouseprob << std::endl;
-                //std::cout << "DEBUG: restaurantprob  : " << restaurantprob << std::endl;
-
-
                 float smallerprob = restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob;
-
-
-                //std::cout << "DEBUG: done calculate probability" << std::endl;
 
                 double bigbuildingmaybe = (double((double)rand() / (double)RAND_MAX) * double((mallprob + coalprob + geoprob + nuclearprob + fieldprob + factoryprob + pastureprob + smallerprob)));
                 
@@ -486,11 +474,7 @@ void City::generate_initial_city_graphics()
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob + geoprob)) {   add_energy(bigbuildingpos, GeothermalPowerPlantScene); hasgeo = true; }
                 else if (bigbuildingmaybe < (double)(mallprob + nuclearprob + fieldprob + pastureprob + factoryprob + geoprob + coalprob)) {   add_energy(bigbuildingpos, CoalPowerPlantScene); hascoal = true; }
                 else {
-
-                   //  in the case of a 1x1 building, plop down 4 1x1 in the slot
-
-
-
+                    //  in the case of a 1x1 building, plop down 4 1x1 in the slot
                     srand(int((x + 1) * (z + 1) * (int)(time(0))));
 
                     for (int x1 = 0; x1 < 2; x1++)
@@ -667,8 +651,6 @@ void City::set_initial_visible_components()
 void City::_ready()
 {
     static default_random_engine generator(time(0));
-    //std::cout << "DEBUG: Ready started" << std::endl;
-    // citysize = 10;
 
     this->initialize_stats();
 
@@ -753,7 +735,6 @@ void City::_on_GraphsExit_pressed() {
 
 void City::_on_ExitButton_pressed()
 {
-
     this->_on_Reset_cancelled();
     this->time_speed = 0;
 
@@ -767,8 +748,6 @@ void City::_on_ExitButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
-
-
 }
 
 void City::_on_3dButton_pressed()
@@ -795,9 +774,6 @@ void City::_on_Exit_confirmed()
 
 void City::_on_ResetButton_pressed()
 {
-
-
-
     this->_on_Exit_cancelled();
     this->time_speed = 0;
 
@@ -811,8 +787,6 @@ void City::_on_ResetButton_pressed()
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
-
-
 }
 
 void City::_on_Reset_cancelled()
@@ -1073,7 +1047,6 @@ void City::_on_Validate_pressed()
 
 void City::trigger_notification(String text = String("It appears that some sort of mistake has occured. Please try again."))
 {
-    //std::cout << "INVALID INPUT: EXPECTED FLOAT IN SPECIFIED RANGE" << std::endl;
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("text", text);
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", true);
 
@@ -1102,9 +1075,7 @@ void City::implement_policies(double value) {
             Godot::print("ROOFTOP WINDTURBINES SUBSIDIES ON SHOPS IMPLEMENTED");
             for (std::vector<Shop*>::iterator it = all_shops.begin(); it != all_shops.end(); ++it)
             {
-                //if ((String)(*it)->get("object_type") == (String)("Restaurant")) {}
                 (*it)->set("wind_turbine_subsidies", value);
-
             }
             this->trigger_notification(String("This wind turbine subsidy has been implemented. This will push businesses to utilize wind energy."));
         }
@@ -1458,10 +1429,6 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             std::cout << "ADD A CAR OF TYPE: " << type << std::endl;
             this->add_child((Node*)node);
             ((Transport*)node)->set("transportType", type);
-
-
-            //income -= node->cost;
-            //all_transports.push_back((Transport*)node);         THE TRANSPORTS VECTOR STILL NEEDS TO BE IMPLEMENTED 
         }
     }
 }
@@ -1469,39 +1436,23 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
 
 
 void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
-
-    //std::cout << "DEBUG: add shop called" << std::endl;
     totalSatisfactioWeight += 3;
-    //std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
     if (scene.is_valid()) {
-        //std::cout << "DEBUG: creating node" << std::endl;
         Node* node;
-        //std::cout << "DEBUG: instanciating" << std::endl;
         node = scene->instance();
-        //std::cout << "DEBUG: setting scale and translation" << std::endl;
         node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
         node->set("translation", pos);
         node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0));
         node->get_node("MeshComponents/Trees")->set("visible", false);
-        //std::cout << "DEBUG: add child" << std::endl;
         this->add_child(node);
-        //std::cout << "DEBUG: add shop to vector" << std::endl;
         all_shops.push_back((Shop*)node);
         all_structures.push_back((Structure*)node);
         if (scene != MallScene) { trees_vector.push_back((Structure*)node); }
 
-        //std::cout << "DEBUG: traffic stuff called" << std::endl;
-
         // traffic stuff
-        //std::cout << "DEBUG: traffic stuff called" << std::endl;
-        //double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building
-        //double y = ((Structure*)node)->get_position().z / 30; // can be int only for small building
         double x = pos.x / 30; // needs to be double for identifying a 2 by 2 building
         double y = pos.z / 30; // can be int only for small building
 
-        //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
-        //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
-        //std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
         traffic_preparation(x, y);
     }
 }
@@ -1509,13 +1460,9 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
 void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 
     totalSatisfactioWeight += 1;
-    //std::cout << "DEBUG: add house called" << std::endl;
 
-    //std::cout << "DEBUG: scene is valid  " << scene.is_valid() << std::endl;
     if (scene.is_valid()) {
-        //std::cout << "DEBUG: creating node" << std::endl;
         Node* node;
-        //std::cout << "DEBUG: instanciating" << std::endl;
         node = scene->instance();
         if (scene == LowHouseScene) {
             ((House*)node)->set("houseType", 1.0); //((House*)node)->house_type();
@@ -1523,31 +1470,21 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         if (scene == HighHouseScene) {
             ((House*)node)->set("houseType", 2.0); //((House*)node)->house_type();
         }
-        //std::cout << "DEBUG: setting scale and translation" << std::endl;
         node->set("scale", Vector3(10, 10, 10));  //9 + ((double(rand()) / RAND_MAX) * 2)
         node->set("translation", pos);
         node->set("rotation_degrees", Vector3(0, 180 * (rand() % 2), 0));
         node->get_node("MeshComponents/Trees")->set("visible", false);
-        //std::cout << "DEBUG: add child" << std::endl;
         this->add_child(node);
-        //std::cout << "DEBUG: add house to vector" << std::endl;
         all_houses.push_back((Housing*)node);
         all_structures.push_back((Structure*)node);
         trees_vector.push_back((Structure*)node);
 
 
         // traffic stuff
-        //std::cout << "DEBUG: traffic stuff called" << std::endl;
-        //double x = ((Structure*)node)->get_position().x / 30; // needs to be double for identifying a 2 by 2 building
-        //double y = ((Structure*)node)->get_position().z / 30; // can be int only for small building
         double x = pos.x / 30; // needs to be double for identifying a 2 by 2 building
         double y = pos.z / 30; // can be int only for small building
 
-        //std::cout << "DEBUG: coordinates " << x << " . " << y << std::endl;
-        //std::cout << "DEBUG: size city " << sizeOfCity << std::endl;
-       // std::cout << "DEBUG: position  " << pos.x << " . " << pos.z << std::endl;
         traffic_preparation(x, y);
-        //std::cout << "DEBUG: add house done" << std::endl;
 
         std::cout << "DEBUG: ADD HOUSE DONE" << std::endl;
     }
