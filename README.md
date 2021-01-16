@@ -37,3 +37,22 @@ Aim is for the user to have a better understanding of how certain environmental 
 - Saga
 - Anna
 - Paloma
+
+## How to compile and run our project
+### Windows
+
+### Mac
+
+#### Build from source and run in Godot engine
+1. Install the standard version of Godot via [this page](https://godotengine.org/download)
+2. Install the building tool `scons` via Homebrew
+    ```
+    brew install scons
+    ```
+3. Open a terminal in our project's base directory
+4. Type the command `cd climate-change/src` to move to the directory that contains `SConstruct` (You can check this by the command `ls`)
+5. Type `scons platform=osx` to start building the project
+6. Go back to the `climate-change/` folder and open `project.godot` by double clicking it
+7. Once the project is opened in the Godot engine, click the execute button on the top right corner
+![](https://i.imgur.com/e1DXfdt.png)
+8. Enjoy the game :)
