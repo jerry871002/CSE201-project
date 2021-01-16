@@ -207,19 +207,17 @@ we update `day_tick` and execute simulation()
 
 void City::_physics_process(float delta) {
 
-    change_pie_chart((int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
-    change_pie_chart(value_pie_chart_C02(carbonEmission, 20000), "PieCO2", false);
-    change_pie_chart(income / (numberOfEmployees * 30), "PieIncome", true);
-    change_pie_chart(value_pie_chart_C02(budget, pow(10, 4)), "PieBudget", true);
-    change_pie_chart(4 * (100 - 100 * numberOfEmployees / population), "PieUnemployement", false); //EnergyDemand variable is temporary
-    change_pie_chart(value_pie_chart_C02(energyDemand / all_structures.size(), 25000), "PiePowerDemand", false);
+    // CALLED EVERY PHYSICS FRAME (60 FPS)
+    // TO UPDATE TRANSPORT STATS
+    /*
+    if ((transportType != 6) && (transportType != 5) && (transportType != 4)) {
+        satisfaction *=1- carProhibition / 7;
+        energyUse *= 1-carProhibition / 7;
+        CO2Emission *=1- carProhibition / 7;
+    }
+    */
 
-    change_pie_label((int)(10 * return_totalSatisfaction()), "PieSatisfaction");
-    change_pie_label(carbonEmission, "PieCO2");
-    change_pie_label(income / numberOfEmployees, "PieIncome");
-    change_pie_label(budget, "PieBudget");
-    change_pie_label(fmax(100 - 100 * numberOfEmployees / population, 0), "PieUnemployement");
-    change_pie_label(energyDemand / all_structures.size(), "PiePowerDemand");
+
 
 
     if (bool(this->time_speed))
@@ -240,8 +238,27 @@ void City::_physics_process(float delta) {
         add_car(Vector3(-1,-1,-1)); // specific case, where cars are randomly assigned
 
         (this->simulation_counter) -= 5;
-      
 
+        std::cout << "income = " << (double)(this->get("income")) << std::endl;
+        std::cout << "population = " << (double)(this->get("population")) << std::endl;
+        std::cout << "numberOfEmployees = " << (double)(this->get("numberOfEmployees")) << std::endl;
+        std::cout << "carbonEmission = " << (double)(this->get("carbonEmission")) << std::endl;
+        std::cout << "energyDemand = " << (double)(this->get("energyDemand")) << std::endl;
+        std::cout << "environmentalCost = " << (double)(this->get("environmentalCost")) << std::endl;
+      
+        change_pie_chart( (int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
+        change_pie_chart(value_pie_chart_C02(carbonEmission, 20000), "PieCO2", false);
+        change_pie_chart(income / (numberOfEmployees * 30), "PieIncome", true);
+        change_pie_chart(value_pie_chart_C02(budget, pow(10, 4)), "PieBudget", true);
+        change_pie_chart(4*(100 - 100 * numberOfEmployees / population), "PieUnemployement", false); //EnergyDemand variable is temporary
+        change_pie_chart(value_pie_chart_C02(energyDemand / all_structures.size(), 25000), "PiePowerDemand", false);
+
+        change_pie_label( (int)(10 * return_totalSatisfaction()), "PieSatisfaction");
+        change_pie_label(carbonEmission, "PieCO2");
+        change_pie_label(income / numberOfEmployees, "PieIncome");
+        change_pie_label(budget, "PieBudget");
+        change_pie_label(fmax(100 - 100 * numberOfEmployees / population, 0), "PieUnemployement");
+        change_pie_label(energyDemand / all_structures.size(), "PiePowerDemand");
 
     }
 
