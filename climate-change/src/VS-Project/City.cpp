@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <iostream>
 
+//sleep times functions for windows & macOS
 #ifdef _WIN32
 #include <Windows.h>
 #else
@@ -35,8 +36,10 @@
 
 # define M_PI 3.14159265358979323846  /* pi */
 
+//game engine namespace
 using namespace godot;
 
+//standard name space
 using namespace std;
 
 
@@ -44,7 +47,7 @@ int traffic_system[citysize][citysize][4][3] = { 0 }; //sets everything to non-e
                  // the third coornidate indicates the side of the building and the forth one which way the car can turn
 
 
-
+// initialize city, everything set to zero
 City::City() {
 
     income = 0;
@@ -83,6 +86,7 @@ City::~City()
 
 };
 
+// returns the currents date with leap years based on the days since the simulation began
 int* return_date(int day_tick) {
     int static date[3];
     int Y = 1, M = 1, D = 1;
@@ -99,6 +103,7 @@ int* return_date(int day_tick) {
     return date;
 }
 
+// register these methods/properties to godot
 void City::_register_methods()
 {
     register_method((char*)"_physics_process", &City::_physics_process);
@@ -190,6 +195,7 @@ void City::_process(float)
 
 };
 
+// transform c++ string to godot String
 template<typename T> String to_godot_string(T s)
 {
     std::string standardString = std::to_string(s);
@@ -205,20 +211,8 @@ everytime the integer part of `delta_counter` changes
 we update `day_tick` and execute simulation()
 */
 
+// simulation step
 void City::_physics_process(float delta) {
-
-    // CALLED EVERY PHYSICS FRAME (60 FPS)
-    // TO UPDATE TRANSPORT STATS
-    /*
-    if ((transportType != 6) && (transportType != 5) && (transportType != 4)) {
-        satisfaction *=1- carProhibition / 7;
-        energyUse *= 1-carProhibition / 7;
-        CO2Emission *=1- carProhibition / 7;
-    }
-    */
-
-
-
 
     if (bool(this->time_speed))
     {
@@ -234,26 +228,22 @@ void City::_physics_process(float delta) {
     if (simulation_counter > 5)
     {
         // CALLED EVERY 5 SECONDS
-
-        add_car(Vector3(-1,-1,-1)); // specific case, where cars are randomly assigned
+        Vector2 center = Vector2(15.0 * citysize + 60, 15.0 * citysize + 60);
+        add_car(Vector3(center.x - 15 * citysize / 4, 0, center.y - 15 * citysize / 4)); // specific case, where cars are randomly assigned
+        add_car(Vector3(center.x - 15 * citysize / 4, 0, center.y + 15 * citysize / 4));
+        add_car(Vector3(center.x + 15 * citysize / 4, 0, center.y - 15 * citysize / 4));
+        add_car(Vector3(center.x + 15 * citysize / 4, 0, center.y + 15 * citysize / 4));
 
         (this->simulation_counter) -= 5;
-
-        std::cout << "income = " << (double)(this->get("income")) << std::endl;
-        std::cout << "population = " << (double)(this->get("population")) << std::endl;
-        std::cout << "numberOfEmployees = " << (double)(this->get("numberOfEmployees")) << std::endl;
-        std::cout << "carbonEmission = " << (double)(this->get("carbonEmission")) << std::endl;
-        std::cout << "energyDemand = " << (double)(this->get("energyDemand")) << std::endl;
-        std::cout << "environmentalCost = " << (double)(this->get("environmentalCost")) << std::endl;
       
-        change_pie_chart( (int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
+        change_pie_chart((int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
         change_pie_chart(value_pie_chart_C02(carbonEmission, 20000), "PieCO2", false);
         change_pie_chart(income / (numberOfEmployees * 30), "PieIncome", true);
         change_pie_chart(value_pie_chart_C02(budget, pow(10, 4)), "PieBudget", true);
-        change_pie_chart(4*(100 - 100 * numberOfEmployees / population), "PieUnemployement", false); //EnergyDemand variable is temporary
+        change_pie_chart(4 * (100 - 100 * numberOfEmployees / population), "PieUnemployement", false); //EnergyDemand variable is temporary
         change_pie_chart(value_pie_chart_C02(energyDemand / all_structures.size(), 25000), "PiePowerDemand", false);
 
-        change_pie_label( (int)(10 * return_totalSatisfaction()), "PieSatisfaction");
+        change_pie_label((int)(10 * return_totalSatisfaction()), "PieSatisfaction");
         change_pie_label(carbonEmission, "PieCO2");
         change_pie_label(income / numberOfEmployees, "PieIncome");
         change_pie_label(budget, "PieBudget");
@@ -274,16 +264,14 @@ void City::_physics_process(float delta) {
         */
 
         day_tick++;
-        std::cout << "Day tick : " << (this->day_tick) << endl;
-        this->get_tree()->get_root()->get_node("Main/2Dworld/Date")->set("text", return_word_date_godot());
 
+        this->get_tree()->get_root()->get_node("Main/2Dworld/Date")->set("text", return_word_date_godot());
 
         int* datenumber = return_date(int(this->day_tick));
 
         if (datenumber[0] == 1 || datenumber[0] == 15) {
             write_stat_history_to_file();
         }
-
 
         if (datenumber[0] == 1)
         {
@@ -351,17 +339,11 @@ void City::_physics_process(float delta) {
 }
 
 
+// action on the 3D interface
 void City::_input(InputEvent*)
 {
 
     Input* i = Input::get_singleton();
-
-
-    if (i->is_action_pressed("ui_test"))
-    {
-        transport_to_add();
-        add_car();
-    }
 
     if (i->is_action_pressed("ui_turn") && !(this->get_tree()->get_root()->get_node("Main/2Dworld/TabContainer")->get("visible")))
     {
@@ -402,6 +384,7 @@ void City::_input(InputEvent*)
 };
 
 
+// initializes graphics 3D interface
 void City::generate_initial_city_graphics()
 {
     Vector3 center = Vector3(15.0 * citysize + 62, 0, 15.0 * citysize + 62);
@@ -414,9 +397,9 @@ void City::generate_initial_city_graphics()
     bool minimumonemall = false;
     double dist;
 
-    for (int x = 1; x < (int)(citysize / 2) + 1; x++)
+    for (int x = 1; x < (citysize / 2) + 1; x++)
     {
-        for (int z = 1; z < (int)(citysize / 2) + 1; z++)
+        for (int z = 1; z < (citysize / 2) + 1; z++)
         {
             Vector3 pos = Vector3(60.0 * x, 0, 60.0 * z);
 
@@ -451,8 +434,8 @@ void City::generate_initial_city_graphics()
 
                 dist = pos.distance_to(center);
 
-                float restaurantprob = calculate_building_prob(0, 150, 1.2, dist) + calculate_building_prob(200, 260, 0.1, dist);
-                float shopprob = calculate_building_prob(0, 170, 1.3, dist) + calculate_building_prob(200, 260, 0.15, dist);
+                float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
+                float shopprob = calculate_building_prob(0, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
                 float buildingprob = calculate_building_prob(125, 170, 1.2, dist) + calculate_building_prob(-150, 150, 1, dist);
                 float windmillprob = calculate_building_prob(40, 160, 0.02, dist) + calculate_building_prob(200, 270, 0.15, dist);
                 float lowhouseprob = calculate_building_prob(-200, 170, 5, dist) + calculate_building_prob(200,260,0.12, dist);
@@ -483,8 +466,8 @@ void City::generate_initial_city_graphics()
 
                             Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1);
 
-                            restaurantprob = calculate_building_prob(0, 150, 1.2, dist) + calculate_building_prob(200, 260, 0.1, dist);
-                            shopprob = calculate_building_prob(0, 170, 1.3, dist) + calculate_building_prob(200, 260, 0.15, dist);
+                            restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(200, 260, 0.1, dist);
+                            shopprob = calculate_building_prob(0, 170, 1, dist) + calculate_building_prob(200, 260, 0.15, dist);
                             buildingprob = calculate_building_prob(125, 170, 1.2, dist) + calculate_building_prob(-150, 150, 1, dist);
                             windmillprob = calculate_building_prob(40, 160, 0.02, dist) + calculate_building_prob(200, 270, 0.15, dist);
                             lowhouseprob = calculate_building_prob(-200, 170, 5, dist) + calculate_building_prob(200, 260, 0.12, dist);
@@ -565,16 +548,13 @@ void City::generate_initial_city_graphics()
             }
         }
     }
-    
-    
-    //put cars in the city
     trees_iterator = trees_vector.begin();
     transport_to_add();
 
     for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
     {
         int randomcarint = rand() % 2;
-        if (randomcarint == 0) { std::cout << "DEBUG: adding car" << std::endl;  add_car((Vector3)((Node*)(*it))->get("translation")); }
+        if (randomcarint == 0) { add_car((Vector3)((Node*)(*it))->get("translation")); }
     }
 
 
@@ -586,6 +566,10 @@ void City::generate_initial_city_graphics()
     std::random_shuffle(all_production.begin(), all_production.end());
 
     std::random_shuffle(trees_vector.begin(), trees_vector.end());
+
+    
+
+
 
     this->budget += 1000 * all_structures.size();
 
@@ -615,6 +599,8 @@ void City::generate_initial_city_graphics()
     }
 }
 
+
+// intializes graphics 2D interface
 void City::set_initial_visible_components()
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
@@ -643,7 +629,7 @@ void City::set_initial_visible_components()
 
 
 
-
+// intializes game: time, 2D interface, 3D interface, statistics
 void City::_ready()
 {
     static default_random_engine generator(time(0));
@@ -658,8 +644,8 @@ void City::_ready()
 
 }
 
+// initializes statistics
 void City::initialize_stats() {
-    // initialize stats arrays :
     Array titleCarbonEmission{};
     titleCarbonEmission.push_back(String("Date"));
     titleCarbonEmission.push_back(String("Carbon emissions in thousands of tons"));
@@ -705,6 +691,8 @@ void City::initialize_stats() {
     statsPopulation.push_back(titlePopulation);
 
 }
+
+// code for various buttons
 
 void City::_on_GraphsButton_pressed()
 {
@@ -1041,6 +1029,7 @@ void City::_on_Validate_pressed()
     }
 }
 
+// error notification
 void City::trigger_notification(String text = String("It appears that some sort of mistake has occured. Please try again."))
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("text", text);
@@ -1049,6 +1038,7 @@ void City::trigger_notification(String text = String("It appears that some sort 
     this->notification_active = true;
 }
 
+// code for policies implementation
 void City::implement_policies(double value) {
 
     Godot::print(this->active_button);
@@ -1363,6 +1353,7 @@ void City::implement_policies(double value) {
     }
 }
 
+//time speed change
 void City::_on_Game_Speed_changed()
 {
     time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
@@ -1373,10 +1364,8 @@ void City::_on_Game_Speed_changed()
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
 }
 
-
-void City::add_car(Vector3 pos) { //adds a car at a location given by the vector with a shift
-    std::cout << "CURRENT air quality is: " << airQuality << std::endl;
-
+//adds a car at a location given by the vector with a shift
+void City::add_car(Vector3 pos) {
     const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
     const Ref<PackedScene> SportCarScene = ResourceLoader::get_singleton()->load("res://Resources/Chiron.tscn", "PackedScene");
     const Ref<PackedScene> MotoScene = ResourceLoader::get_singleton()->load("res://Resources/Moto.tscn", "PackedScene");
@@ -1399,12 +1388,11 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
     if (OldCarScene.is_valid() && SportCarScene.is_valid() && MotoScene.is_valid() && BusScene.is_valid() && AmericanCarScene.is_valid() && BikeScene.is_valid() && ElectricCarScene.is_valid() && NormalCarScene.is_valid())
     {
         int type = most_missing_type();
-        std::cout << "The most missing type is currently : " << type << std::endl;
+
         if (type != -1) {
 
             //int type = rand() % 3;
-            Node* node;
-            std::cout << "INSTANCE A CAR OF TYPE: " << type << std::endl;
+            Node* node;;
 
             switch (type) {
             case 0: node = ElectricCarScene->instance(); current_car_quantities[0] += 1; budget -= electricCarSubsidy; break;
@@ -1418,11 +1406,9 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
             default: node = SportCarScene->instance(); current_car_quantities[7] += 1;  break;
             }
 
-            std::cout << "INSTANCE DONE A CAR OF TYPE: " << type << std::endl;
             node->set("scale", Vector3(15, 15, 15));
             node->set("translation", pos + Vector3(-13, 0.2, -13));
 
-            std::cout << "ADD A CAR OF TYPE: " << type << std::endl;
             this->add_child((Node*)node);
             ((Transport*)node)->set("transportType", type);
         }
@@ -1430,7 +1416,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
 }
 
 
-
+//adds a shop at a location given by the vector with a shift
 void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
     totalSatisfactioWeight += 3;
     if (scene.is_valid()) {
@@ -1453,6 +1439,7 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
     }
 }
 
+//adds a house at a location given by the vector with a shift
 void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 
     totalSatisfactioWeight += 1;
@@ -1484,6 +1471,7 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
     }
 }
 
+//adds an energy building at a location given by the vector with a shift
 void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
     totalSatisfactioWeight += 10;
 
@@ -1505,6 +1493,7 @@ void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
     }
 }
 
+//adds a production building at a location given by the vector with a shift
 void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
 
     totalSatisfactioWeight += 5;
@@ -1529,8 +1518,9 @@ void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
     }
 }
 
+// intializes traffic
 void City::traffic_preparation(double x, double y) {
-    if (x < citysize && y < citysize) {//checks that the coordinates are in the city 
+    if (x < sizeOfCity && y < sizeOfCity) {
         if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
             positionOfBuildings[int(x)][int(y)] = 1;
         }
@@ -1544,25 +1534,24 @@ void City::traffic_preparation(double x, double y) {
     }
 }
 
+// working traffic system
 void City::update_traffic(int x, int y, bool newBuilding, int number) {
     // nothing happens if the building isn't there
     if (positionOfBuildings[x][y] == 0)
         return;
 
     if (number == 1) {  // the case when it's a 1 by 1 buidling
-        traffic_system[x][y][0][2] = 1; 
+        traffic_system[x][y][0][2] = 1;
         traffic_system[x][y][1][2] = 1;
         traffic_system[x][y][2][2] = 1;
-        traffic_system[x][y][3][2] = 1;// cars can always turn right around the building
-        
-        //it is checked that a suitable building exists where the car is about to turn
-        if (x + 1 < citysize && y + 1 < citysize && (positionOfBuildings[x + 1][y + 1] == 1 || positionOfBuildings[x + 1][y + 1] == 2 || positionOfBuildings[x + 1][y + 1] == 3)) {
+        traffic_system[x][y][3][2] = 1;
+        if (x + 1 < sizeOfCity && y + 1 < sizeOfCity && (positionOfBuildings[x + 1][y + 1] == 1 || positionOfBuildings[x + 1][y + 1] == 2 || positionOfBuildings[x + 1][y + 1] == 3)) {
             traffic_system[x][y][3][0] = 1;
         }
-        if (y + 1 < citysize && (positionOfBuildings[x][y + 1] == 1 || positionOfBuildings[x][y + 1] == 2 || positionOfBuildings[x][y + 1] == 5)) {
+        if (y + 1 < sizeOfCity && (positionOfBuildings[x][y + 1] == 1 || positionOfBuildings[x][y + 1] == 2 || positionOfBuildings[x][y + 1] == 5)) {
             traffic_system[x][y][3][1] = 1;
         }
-        if (x - 1 >= 0 && y + 1 < citysize && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 3 || positionOfBuildings[x - 1][y + 1] == 4)) {
+        if (x - 1 >= 0 && y + 1 < sizeOfCity && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 3 || positionOfBuildings[x - 1][y + 1] == 4)) {
             traffic_system[x][y][2][0] = 1;
         }
         if (x - 1 >= 0 && (positionOfBuildings[x - 1][y] == 1 || positionOfBuildings[x - 1][y] == 4 || positionOfBuildings[x - 1][y] == 5)) {
@@ -1574,10 +1563,10 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
         if (y - 1 >= 0 && (positionOfBuildings[x][y - 1] == 1 || positionOfBuildings[x][y - 1] == 2 || positionOfBuildings[x][y - 1] == 5)) {
             traffic_system[x][y][1][1] = 1;
         }
-        if (x + 1 < citysize && y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
+        if (x + 1 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
             traffic_system[x][y][0][0] = 1;
         }
-        if (x + 1 < citysize && (positionOfBuildings[x + 1][y] == 1 || positionOfBuildings[x + 1][y] == 2 || positionOfBuildings[x + 1][y] == 3)) {
+        if (x + 1 < sizeOfCity && (positionOfBuildings[x + 1][y] == 1 || positionOfBuildings[x + 1][y] == 2 || positionOfBuildings[x + 1][y] == 3)) {
             traffic_system[x][y][0][1] = 1;
         }
         if (newBuilding == true) {  // update all the possible buildings around
@@ -1587,29 +1576,28 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
                     update_traffic(x - 1, y - 1, false, positionOfBuildings[x - 1][y - 1]);
                 }
                 update_traffic(x - 1, y, false, positionOfBuildings[x - 1][y]);
-                if (y + 1 < citysize) {
+                if (y + 1 < sizeOfCity) {
                     update_traffic(x - 1, y + 1, false, positionOfBuildings[x - 1][y + 1]);
                 }
             }
             if (y - 1 >= 0) {
                 update_traffic(x, y - 1, false, positionOfBuildings[x][y - 1]);
             }
-            if (y + 1 < citysize) {
+            if (y + 1 < sizeOfCity) {
                 update_traffic(x, y + 1, false, positionOfBuildings[x][y + 1]);
             }
-            if (x + 1 < citysize) {
+            if (x + 1 < sizeOfCity) {
                 if (y - 1 >= 0) {
                     update_traffic(x + 1, y - 1, false, positionOfBuildings[x + 1][y - 1]);
                 }
                 update_traffic(x + 1, y, false, positionOfBuildings[x + 1][y]);
-                if (y + 1 < citysize) {
+                if (y + 1 < sizeOfCity) {
                     update_traffic(x + 1, y + 1, false, positionOfBuildings[x + 1][y + 1]);
                 }
             }
         }
     }
     else { // the case when it's a 2 by 2 building
-        //2 is left top square, 3 is right top square, 4 is right bottom square, 5 is left bottom square
         if (number == 3) {
             x = x - 1;
         } else if (number == 4) {
@@ -1629,42 +1617,42 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
             traffic_system[x][y][1][1] = 1;
         }
         traffic_system[x][y][0][1] = 1;
-        traffic_system[x][y][0][2] = 1;//is put in for cars to get destriyed
+        traffic_system[x][y][0][2] = 1;
         if (y - 1 >= 0 && (positionOfBuildings[x + 1][y - 1] == 1 || positionOfBuildings[x + 1][y - 1] == 2 || positionOfBuildings[x + 1][y - 1] == 5)) {
             traffic_system[x][y][0][0] = 1;
         }
 
         //right top
         traffic_system[x + 1][y][0][2] = 1;
-        if (x + 2 < citysize && y - 1 >= 0 && (positionOfBuildings[x + 2][y - 1] == 1 || positionOfBuildings[x + 2][y - 1] == 2 || positionOfBuildings[x + 2][y - 1] == 5)) {
+        if (x + 2 < sizeOfCity && y - 1 >= 0 && (positionOfBuildings[x + 2][y - 1] == 1 || positionOfBuildings[x + 2][y - 1] == 2 || positionOfBuildings[x + 2][y - 1] == 5)) {
             traffic_system[x + 1][y][0][0] = 1;
         }
-        if (x + 2 < citysize && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 2 || positionOfBuildings[x + 2][y] == 3)) {
+        if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y] == 1 || positionOfBuildings[x + 2][y] == 2 || positionOfBuildings[x + 2][y] == 3)) {
             traffic_system[x + 1][y][0][1] = 1;
         }
 
         traffic_system[x + 1][y][3][1] = 1;
-        if (x + 2 < citysize && (positionOfBuildings[x + 2][y + 1] == 1 || positionOfBuildings[x + 2][y + 1] == 2 || positionOfBuildings[x + 2][y + 1] == 3)) {
+        if (x + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 1] == 1 || positionOfBuildings[x + 2][y + 1] == 2 || positionOfBuildings[x + 2][y + 1] == 3)) {
             traffic_system[x + 1][y][3][0] = 1;
         }
 
         //right bottom
         traffic_system[x + 1][y + 1][3][2] = 1;
-        if (x + 2 < citysize && y + 2 < citysize && (positionOfBuildings[x + 2][y + 2] == 1 || positionOfBuildings[x + 2][y + 2] == 2 || positionOfBuildings[x + 2][y + 2] == 3)) {
+        if (x + 2 < sizeOfCity && y + 2 < sizeOfCity && (positionOfBuildings[x + 2][y + 2] == 1 || positionOfBuildings[x + 2][y + 2] == 2 || positionOfBuildings[x + 2][y + 2] == 3)) {
             traffic_system[x + 1][y + 1][3][0] = 1;
         }
-        if (y + 2 < citysize && (positionOfBuildings[x + 1][y + 2] == 1 || positionOfBuildings[x + 1][y + 2] == 3 || positionOfBuildings[x + 1][y + 2] == 4)) {
+        if (y + 2 < sizeOfCity && (positionOfBuildings[x + 1][y + 2] == 1 || positionOfBuildings[x + 1][y + 2] == 3 || positionOfBuildings[x + 1][y + 2] == 4)) {
             traffic_system[x + 1][y + 1][3][1] = 1;
         }
 
         traffic_system[x + 1][y + 1][2][1] = 1;
-        if (y + 2 < citysize && (positionOfBuildings[x][y + 2] == 1 || positionOfBuildings[x][y + 2] == 3 || positionOfBuildings[x][y + 2] == 4)) {
+        if (y + 2 < sizeOfCity && (positionOfBuildings[x][y + 2] == 1 || positionOfBuildings[x][y + 2] == 3 || positionOfBuildings[x][y + 2] == 4)) {
             traffic_system[x + 1][y + 1][2][0] = 1;
         }
 
         //left bottom
         traffic_system[x][y + 1][2][2] = 1;
-        if (x - 1 >= 0 && y + 2 < citysize && (positionOfBuildings[x - 1][y + 2] == 1 || positionOfBuildings[x - 1][y + 2] == 3 || positionOfBuildings[x - 1][y + 2] == 4)) {
+        if (x - 1 >= 0 && y + 2 < sizeOfCity && (positionOfBuildings[x - 1][y + 2] == 1 || positionOfBuildings[x - 1][y + 2] == 3 || positionOfBuildings[x - 1][y + 2] == 4)) {
             traffic_system[x][y + 1][2][0] = 1;
         }
         if (x - 1 >= 0 && (positionOfBuildings[x - 1][y + 1] == 1 || positionOfBuildings[x - 1][y + 1] == 4 || positionOfBuildings[x - 1][y + 1] == 5)) {
@@ -1683,7 +1671,7 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
                 }
                 update_traffic(x - 1, y, false, positionOfBuildings[x - 1][y]);
                 update_traffic(x - 1, y + 1, false, positionOfBuildings[x - 1][y + 1]);
-                if (y + 2 < citysize) {
+                if (y + 2 < sizeOfCity) {
                     update_traffic(x - 1, y + 2, false, positionOfBuildings[x - 1][y + 2]);
                 }
             }
@@ -1691,17 +1679,17 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
                 update_traffic(x, y - 1, false, positionOfBuildings[x][y - 1]);
                 update_traffic(x + 1, y - 1, false, positionOfBuildings[x + 1][y - 1]);
             }
-            if (y + 2 < citysize) {
+            if (y + 2 < sizeOfCity) {
                 update_traffic(x, y + 2, false, positionOfBuildings[x][y + 2]);
                 update_traffic(x + 1, y + 2, false, positionOfBuildings[x + 1][y + 2]);
             }
-            if (x + 2 < citysize) {
+            if (x + 2 < sizeOfCity) {
                 if (y - 1 >= 0) {
                     update_traffic(x + 2, y - 1, false, positionOfBuildings[x + 2][y - 1]);
                 }
                 update_traffic(x + 2, y, false, positionOfBuildings[x + 2][y]);
                 update_traffic(x + 2, y + 1, false, positionOfBuildings[x + 2][y + 1]);
-                if (y + 2 < citysize) {
+                if (y + 2 < sizeOfCity) {
                     update_traffic(x + 2, y + 2, false, positionOfBuildings[x + 2][y + 2]);
                 }
             }
@@ -1710,11 +1698,12 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 }
 
 
-
+// returns the date as string numbers
 std::string return_number_date(int day, int month, int year) {
     return std::to_string(day) + ", " + std::to_string(month) + ", " + std::to_string(year);
 }
 
+// returns average over past year (not used anymore)
 double find_avg(double array[], int leap) {
     int size;
     double sum = 0;
@@ -1730,6 +1719,7 @@ double find_avg(double array[], int leap) {
     return sum / size;
 }
 
+// returns date as a word string
 std::string City::return_word_date(int days) {
 
     int* datenumber = return_date(int(days));
@@ -1778,7 +1768,7 @@ std::string City::return_word_date(int days) {
     return date;
 }
 
-
+// returns current date as a godot String in words
 String City::return_word_date_godot() {
 
     int* datenumber = return_date(int(this->day_tick));
@@ -1829,7 +1819,7 @@ String City::return_word_date_godot() {
 
 
 
-/// edit text files found in /addons/file.samples
+/// edit text files found in /addons/file.samples (not used anymore)
 
 std::string get_path(std::string documentName) {
     //std::ofstream log("C:\\logs\\performance.log", std::ofstream::app | std::ofstream::out);
@@ -1959,7 +1949,7 @@ void delete_line(std::string documentName, std::string dataToDelete) {
 }
 
 
-
+// write current statistics to arrays
 void City::write_stat_history_to_file() {
 
     Array newCarbonEmissionHousing{};
@@ -2096,6 +2086,7 @@ void City::write_stat_history_to_file() {
 }
 
 
+// return current counters functions
 
 double City::return_income() {
     return income;
@@ -2133,12 +2124,10 @@ void City::remove_type_car(int type) {
 
 int City::most_missing_type() {
     int min = 0;
-    std::cout << "missing_car_quantities   ";
     for (int i = 0; i < 8; i++) {
         if (missing_car_quantities[min] > missing_car_quantities[i]) {
             min = i;
         }
-        std::cout << missing_car_quantities[i] << "  ";
     }
     if (missing_car_quantities[min] < 0) {
         missing_car_quantities[min] += 1;
@@ -2150,6 +2139,7 @@ int City::most_missing_type() {
 
 }
 
+// update emissions from transport 
 void City::update_transport_emissions() 
 {
     double emission = 0;
@@ -2160,8 +2150,11 @@ void City::update_transport_emissions()
     TransportCO2 = emission;
 }
 
-void City::transport_to_add() { //now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
-                               // the finction goes through all the buidlings  to get the wage as income
+
+// now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
+// the function goes through all the buidlings to get the wage as income
+void City::transport_to_add() {
+
     Transport electicCar = Transport(0);
     Transport bigCar = Transport(1);
     Transport car = Transport(2);
@@ -2171,10 +2164,7 @@ void City::transport_to_add() { //now the old finction transport_probabilities u
     Transport bus = Transport(6);
     Transport sportsCar = Transport(7);
 
-
     airQuality = pow(1.4, -100 * carbonEmission / (all_structures.size() * 30 * 30 * 10)) + 0.2 * (trees_iterator - trees_vector.begin()) / (trees_vector.size());
-
-    std::cout << "Current air quality is: " << airQuality << std::endl;
 
     double satisfaction[8] = { electicCar.satisfaction, bigCar.satisfaction * ((double)(7 - carProhibition) / 7.0), car.satisfaction * ((double)(7 - carProhibition) / 7.0), collectionCar.satisfaction * ((double)(7 - carProhibition) / 7.0), bike.satisfaction * (1.0 + pow(((double)(carProhibition) / 7.0), 0.2)) * sqrt(airQuality), motorcycle.satisfaction , bus.get_satisfaction(), sportsCar.satisfaction * ((double)(7 - carProhibition) / 7.0) };
     double costs[8] = { electicCar.cost - electricCarSubsidy , bigCar.cost + weightTax * bigCar.weight, car.cost,collectionCar.cost + weightTax * collectionCar.weight , bike.cost - bikeSubsidy , motorcycle.cost, bus.cost - busSubsidy, sportsCar.cost };
@@ -2246,6 +2236,8 @@ int City::value_pie_chart_C02(int value, int growth) {
  
 }
 
+// changes the pie charts in the 2D interface
+// functions for accurate color and fill
 void City::change_pie_chart(int value, NodePath name, bool isPositive)
 {
     value = fmax(value, 0);
@@ -2266,6 +2258,7 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
     }
 }
 
+// change the label of the pie chart
 void City::change_pie_label(int value, NodePath name) {
     Label* label = ((Label*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name)->get_child(1));
     std::string standardString = std::to_string((int)value);
@@ -2274,7 +2267,6 @@ void City::change_pie_label(int value, NodePath name) {
 }
 
 // auxiliary function to simplify ring city generation
-
 float City::calculate_building_prob(float roota, float rootb, float proportion, double dist) {
     if (dist < (citysize * roota / 20) || dist >(citysize * rootb / 20)) { 
         return 0; 
@@ -2288,8 +2280,8 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
         return float(a * pow(((20 * dist / (citysize))), 2) + b * (20 * dist / (citysize)) + c);
     }
 }
-// function that returns unemployment rate
 
+// function that returns unemployment rate
 double City::return_unemployment_rate() {
     if (population != 0) {
         return min(0.0, (1 - this->numberOfEmployees / this->population));
@@ -2297,19 +2289,22 @@ double City::return_unemployment_rate() {
     else { return 0; }
 }
 
-// functions that get and set the value that coordinates the power plants
+// function that gets the value that coordinates the power plants
 int City::get_workingPower() {
     return this->workingPower;
 }
 
+// function that sets the value that coordinates the power plants
 void City::set_workingPower(int s) {
     (this->workingPower) = s;
 }
 
+// function that gets the budget value
 double City::get_budget() {
     return this->budget;
 }
 
+// function that sets the budget value
 void City::set_budget(double v) {
     this->budget = v;
 }

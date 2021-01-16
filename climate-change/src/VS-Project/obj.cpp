@@ -38,7 +38,10 @@ Structure::Structure() {
     energySupply = 0;
      */
 }
-
+/*
+Structure::Structure(double cost, double energyUse, double maintenance, double satisfaction, double income, double population, double numberOfEmployees, double carbonEmission, double energyDemand, double energySupply) :
+    cost{ cost }, energyUse{ energyUse }, maintenance{ maintenance }, satisfaction{ satisfaction }, income{ income }, population{ population }, numberOfEmployees{ numberOfEmployees }, carbonEmission{ carbonEmission }, energyDemand{ energyDemand }, energySupply{ energySupply }{}
+*/
 
 Structure::~Structure() {}
 
@@ -96,7 +99,7 @@ void Structure::set_co2emissions(double emission) {
 double Structure::get_energyuse() 
 {
     if (this->get_main_type() == "Housing") {
-        std::cout << "DEBUG: get energyuse called in Structure for housing" << std::endl;
+
         double panelsF = 1;
         double turbineF = 1;
         double glazingF = 1;
@@ -114,10 +117,6 @@ double Structure::get_energyuse()
                 }
             }
         }
-
-        std::cout << "PanelsOn for this building : " << this->PanelsOn << std::endl;
-        std::cout << "DEBUG: energy use modifier for solar panel : " << panelsF << std::endl;
-        std::cout << "DEBUG: energy use  : " << this->energyUse << std::endl;
 
         return (double)(this->energyUse) * panelsF * turbineF * glazingF;
     }
@@ -340,7 +339,6 @@ void Structure::_process(float delta)
 }
 
 void Structure::simulate_step(double days) {
-
     age += days;
 }
 

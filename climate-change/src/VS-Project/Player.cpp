@@ -47,7 +47,7 @@ void Player::_ready()
 	worldEnv->get_environment()->set_dof_blur_far_enabled(true);
 	worldEnv->get_environment()->set_dof_blur_near_enabled(true);
 
-	this->set("translation", StartPosition);
+	this->set("translation", StartPosition + center);
 	this->set("rotation_degrees", StartRotation);
 
 	this->update_camera_angle();
