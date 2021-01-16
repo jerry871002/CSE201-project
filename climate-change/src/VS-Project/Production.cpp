@@ -93,53 +93,51 @@ AgriculturalProduction::~AgriculturalProduction() {
 }
 
 void AgriculturalProduction::simulate_step(double days) 
-{
-	
+{	
 	this->Production::simulate_step(days);
 
 	switch (agricultureType) {
-	case(0): { // wheat
-		if ((fertilizerBefore == 0) && (fertilizerProhibited == 1)) {
-			fertility *= 0.65;
-			satisfaction /= 0.95;
+		case 0: { // wheat
+			if ((fertilizerBefore == 0) && (fertilizerProhibited == 1)) {
+				fertility *= 0.65;
+				satisfaction /= 0.95;
+			}
+			else if ((fertilizerBefore == 1) && (fertilizerProhibited == 0)) {
+				fertility /= 0.65;
+				satisfaction *= 0.95;
+			}
+			if ((pesticideBefore == 0) && (pesticideProhibited == 1)) {
+				fertility /= 1.15;
+				satisfaction /= 0.85;
+			}
+			else if ((pesticideBefore == 1) && (pesticideProhibited == 0)) {
+				fertility *= 1.15;
+				satisfaction *= 0.85;
+			}
+			GMOBefore = GMOProhibited;
+			pesticideBefore = pesticideProhibited;
+			fertilizerBefore = fertilizerProhibited;
+			production = requiredLand * fertility; //output over the time period
+			waterConsumption = requiredLand * production * 1000* 1500;
+			CO2Emission = 0.4 * production; //co2 tonne per year
+			maintenance = 144 * 365 * requiredLand; //maintenance in euros per year
+			if (fertilizerProhibited == 0) {
+				maintenance += 45 * requiredLand * 365;
+				CO2Emission += 0.3 * CO2Emission;
+			}
+			if (pesticideProhibited == 0) { //depends on the land size
+				CO2Emission += 9.4 * requiredLand;
+				maintenance += 25 * requiredLand*365;
+			}
+			break;
 		}
-		else if ((fertilizerBefore == 1) && (fertilizerProhibited == 0)) {
-			fertility /= 0.65;
-			satisfaction *= 0.95;
-		}
-		if ((pesticideBefore == 0) && (pesticideProhibited == 1)) {
-			fertility /= 1.15;
-			satisfaction /= 0.85;
-		}
-		else if ((pesticideBefore == 1) && (pesticideProhibited == 0)) {
-			fertility *= 1.15;
-			satisfaction *= 0.85;
-		}
-		GMOBefore = GMOProhibited;
-		pesticideBefore = pesticideProhibited;
-		fertilizerBefore = fertilizerProhibited;
-		production = requiredLand * fertility; //output over the time period
-		waterConsumption = requiredLand * production * 1000* 1500;
-		CO2Emission = 0.4 * production; //co2 tonne per year
-		maintenance = 144 * 365 * requiredLand; //maintenance in euros per year
-		if (fertilizerProhibited == 0) {
-			maintenance += 45 * requiredLand * 365;
-			CO2Emission += 0.3 * CO2Emission;
-		}
-		if (pesticideProhibited == 0) { //depends on the land size
-			CO2Emission += 9.4 * requiredLand;
-			maintenance += 25 * requiredLand*365;
-		}
-		break;
-	}
 
-	case(1): {
-		production = (requiredLand * fertility); //required land taken so that this is production in ton per year
-		waterConsumption = production * 1000 * 22; //liters per kg so had to convert production back to kg
-		CO2Emission = 19.18 * production;
-
-		break;
-	}
+		case 1: {
+			production = (requiredLand * fertility); //required land taken so that this is production in ton per year
+			waterConsumption = production * 1000 * 22; //liters per kg so had to convert production back to kg
+			CO2Emission = 19.18 * production;
+			break;
+		}
 	}
 }
 
@@ -152,50 +150,42 @@ void AgriculturalProduction::agriculture_type(int type) {
 	agricultureType = type; // 0 - wheat, 1 - meat, 2 - vegetables
 	employment = 50;
 	switch (agricultureType) {
-	case(0): { // wheat
-		std::random_device rd;
-		std::mt19937 gen(rd());
-		std::normal_distribution <double> wheatfieldsize(1.74, 0.04);
-		requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
-		std::normal_distribution <double> wheatferltility(0.464, 0.004);
-		fertility = wheatferltility(gen); //production of wheat in tonne per km^2
-		std::normal_distribution <double> wheatfieldcost(595000, 1000);
-		cost = wheatfieldcost(gen) * requiredLand; //of land in euros
-		production = fertility * requiredLand; //output of wheat in tonne per year
-		waterConsumption = 1500 * production*1000; //water litres per year
-		CO2Emission = 0.52 * production; //co2 tonne per year
-		pesticideProhibited = 0;
-		fertilizerProhibited = 0;
-		GMOProhibited = 0;
-		fertilizerBefore = 0;
-		GMOBefore = 0;
-		pesticideBefore = 0;
-		std::normal_distribution <double> wheatsatisfaction(5.15, 0.15);
-		satisfaction = wheatsatisfaction(gen);
-		break;
-	}
-	case 1: { // meat
-		std::random_device rd;
-		std::mt19937 gen(rd());
-		std::normal_distribution <double> foodformeatfieldsize(2, 0.1); //size of field giving a yearly production for our city
-		requiredLand = foodformeatfieldsize(gen); // size
-		std::normal_distribution <double> cropsfertility(0.2, 0.005); //  ton per square meter
-		fertility = cropsfertility(gen); 
-		production = (fertility * requiredLand);
-		waterConsumption = 22 * production * 1000; //22L of water per 1 kg of production
-		CO2Emission = 19.18 * production; //co2 per ton of production
-		energyUse = 0;
-		environmentalCost = 0;   
-		satisfaction = 2;
-			
-		/*
-		CO2Emission = 27144; // co2 output per day for meat production in city
-		waterConsumption = 31135; //liters per day
-		production = 1415; //in kg of meat every day
-		energyUse = 0;
-		environmentalCost = 0;
-		break;*/
-	}
+		case 0: { // wheat
+			std::random_device rd;
+			std::mt19937 gen(rd());
+			std::normal_distribution <double> wheatfieldsize(1.74, 0.04);
+			requiredLand = wheatfieldsize(gen); // size of 1 wheat field in km^2
+			std::normal_distribution <double> wheatferltility(0.464, 0.004);
+			fertility = wheatferltility(gen); //production of wheat in tonne per km^2
+			std::normal_distribution <double> wheatfieldcost(595000, 1000);
+			cost = wheatfieldcost(gen) * requiredLand; //of land in euros
+			production = fertility * requiredLand; //output of wheat in tonne per year
+			waterConsumption = 1500 * production*1000; //water litres per year
+			CO2Emission = 0.52 * production; //co2 tonne per year
+			pesticideProhibited = 0;
+			fertilizerProhibited = 0;
+			GMOProhibited = 0;
+			fertilizerBefore = 0;
+			GMOBefore = 0;
+			pesticideBefore = 0;
+			std::normal_distribution <double> wheatsatisfaction(5.15, 0.15);
+			satisfaction = wheatsatisfaction(gen);
+			break;
+		}
+		case 1: { // meat
+			std::random_device rd;
+			std::mt19937 gen(rd());
+			std::normal_distribution <double> foodformeatfieldsize(2, 0.1); //size of field giving a yearly production for our city
+			requiredLand = foodformeatfieldsize(gen); // size
+			std::normal_distribution <double> cropsfertility(0.2, 0.005); //  ton per square meter
+			fertility = cropsfertility(gen); 
+			production = (fertility * requiredLand);
+			waterConsumption = 22 * production * 1000; //22L of water per 1 kg of production
+			CO2Emission = 19.18 * production; //co2 per ton of production
+			energyUse = 0;
+			environmentalCost = 0;   
+			satisfaction = 2;
+		}
 	}
 }
 double AgriculturalProduction::get_satisfaction() {
@@ -421,34 +411,16 @@ template<typename T> String to_godot_string(T s)
 String Production::get_object_info()
 {
 	String info = this->Structure::get_object_info();
-	if (this->get_object_type() == "GoodsFactories") {
-		if (subsidy == true && factory_closed == false) {
-			info += "This factory receives a green subsidy which helps it grow and causes less environmental damage." + String("\n");
-		}
-		if (factory_closed == true) {
-			info += "This factory is closed due to the taxes linked to the maximum carbon law. Citizens are unhappy because of this move." + String("\n");
-		}
-		info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
-
-		info += "This building employs " + to_godot_string((int)(this->employment)) + " hard-working citizens." + String("\n");
-		info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
-		info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
+	if (subsidy == true && factory_closed == false) {
+		info += "This factory receives a green subsidy which helps it grow and causes less environmental damage." + String("\n");
 	}
-	if (this->get_object_type() == "AgriculturalProduction") {
-		if ((((AgriculturalProduction*)this)->agricultureType) == 0){
-			info += "At the moment, this field produces wheat." + String("\n");
-		}
-		if ((((AgriculturalProduction*)this)->agricultureType) == 1) {
-			info += "At the moment, this field produces animal fodder for meat production." + String("\n");
-		}
-		if ((((AgriculturalProduction*)this)->agricultureType) == 2) {
-			info += "At the moment, this field produces vegetables." + String("\n");
-		}
-		if (pesticideProhibited==1){info+= "Pesticides are strictly prohibited." + String("\n");}
-		else { info += "Pesticides are allowed, although supervised by the township." + String("\n");}
-		if (fertilizerProhibited == 1) { info += "Fertilizers are completely banned." + String("\n"); }
-		else { info += "Fertilizers are allowed, although regulated." + String("\n"); }
-		// 0 - wheat, 1 - meat, 2 - vegetables
+	if (factory_closed == true) {
+		info += "This factory is closed due to the taxes linked to the maximum carbon law. Citizens are unhappy because of this move." + String("\n");
 	}
+	info += "This building produces " + to_godot_string((int)(this->get("CO2Emission"))) + " metric tonnes of CO2 yearly." + String("\n");
+	
+	info += "This building employs " + to_godot_string((int)(this->employment)) + " hard-working citizens." + String("\n");
+	info += "Energy used by the building in kWh per year: " + to_godot_string((int)(this->energyUse)) + String("\n");
+	info += "Satisfaction meter, out of 10: " + to_godot_string((int)this->get("satisfaction")) + String("\n");
 	return info;
 }
