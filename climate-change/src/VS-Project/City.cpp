@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <iostream>
 
+//sleep times functions for windows & macOS
 #ifdef _WIN32
 #include <Windows.h>
 #else
@@ -35,8 +36,10 @@
 
 # define M_PI 3.14159265358979323846  /* pi */
 
+//game engine namespace
 using namespace godot;
 
+//standard name space
 using namespace std;
 
 
@@ -44,7 +47,7 @@ int traffic_system[citysize][citysize][4][3] = { 0 }; //sets everything to non-e
                  // the third coornidate indicates the side of the building and the forth one which way the car can turn
 
 
-
+// initialize city, everything set to zero
 City::City() {
 
     income = 0;
@@ -83,6 +86,7 @@ City::~City()
 
 };
 
+// returns the currents date with leap years based on the days since the simulation began
 int* return_date(int day_tick) {
     int static date[3];
     int Y = 1, M = 1, D = 1;
@@ -99,6 +103,7 @@ int* return_date(int day_tick) {
     return date;
 }
 
+// register these methods/properties to godot
 void City::_register_methods()
 {
     register_method((char*)"_physics_process", &City::_physics_process);
@@ -190,6 +195,7 @@ void City::_process(float)
 
 };
 
+// transform c++ string to godot String
 template<typename T> String to_godot_string(T s)
 {
     std::string standardString = std::to_string(s);
@@ -205,6 +211,7 @@ everytime the integer part of `delta_counter` changes
 we update `day_tick` and execute simulation()
 */
 
+// simulation step
 void City::_physics_process(float delta) {
 
     change_pie_chart((int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
@@ -334,6 +341,7 @@ void City::_physics_process(float delta) {
 }
 
 
+// action on the 3D interface
 void City::_input(InputEvent*)
 {
 
@@ -385,6 +393,7 @@ void City::_input(InputEvent*)
 };
 
 
+// initializes graphics 3D interface
 void City::generate_initial_city_graphics()
 {
     Vector3 center = Vector3(15.0 * citysize + 62, 0, 15.0 * citysize + 62);
@@ -602,6 +611,8 @@ void City::generate_initial_city_graphics()
     std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
 }
 
+
+// intializes graphics 2D interface
 void City::set_initial_visible_components()
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
@@ -630,7 +641,7 @@ void City::set_initial_visible_components()
 
 
 
-
+// intializes game: time, 2D interface, 3D interface, statistics
 void City::_ready()
 {
     static default_random_engine generator(time(0));
@@ -645,8 +656,8 @@ void City::_ready()
 
 }
 
+// initializes statistics
 void City::initialize_stats() {
-    // initialize stats arrays :
     Array titleCarbonEmission{};
     titleCarbonEmission.push_back(String("Date"));
     titleCarbonEmission.push_back(String("Carbon emissions in thousands of tons"));
@@ -692,6 +703,8 @@ void City::initialize_stats() {
     statsPopulation.push_back(titlePopulation);
 
 }
+
+// code for various buttons
 
 void City::_on_GraphsButton_pressed()
 {
@@ -1028,6 +1041,7 @@ void City::_on_Validate_pressed()
     }
 }
 
+// error notification
 void City::trigger_notification(String text = String("It appears that some sort of mistake has occured. Please try again."))
 {
     this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("text", text);
@@ -1036,6 +1050,7 @@ void City::trigger_notification(String text = String("It appears that some sort 
     this->notification_active = true;
 }
 
+// code for policies implementation
 void City::implement_policies(double value) {
 
     Godot::print(this->active_button);
@@ -1350,6 +1365,7 @@ void City::implement_policies(double value) {
     }
 }
 
+//time speed change
 void City::_on_Game_Speed_changed()
 {
     time_speed = round(pow(2, (int)(this->get_tree()->get_root()->get_node("Main/2Dworld/Slider")->get_child(0)->get("value")) - 1) - 0.1);
@@ -1360,8 +1376,8 @@ void City::_on_Game_Speed_changed()
     (this->get_tree()->get_root()->get_node("Main/3Dworld/Player"))->set("movable", true);
 }
 
-
-void City::add_car(Vector3 pos) { //adds a car at a location given by the vector with a shift
+//adds a car at a location given by the vector with a shift
+void City::add_car(Vector3 pos) {
     std::cout << "CURRENT air quality is: " << airQuality << std::endl;
 
     const Ref<PackedScene> OldCarScene = ResourceLoader::get_singleton()->load("res://Resources/Bugatti.tscn", "PackedScene");
@@ -1417,7 +1433,7 @@ void City::add_car(Vector3 pos) { //adds a car at a location given by the vector
 }
 
 
-
+//adds a shop at a location given by the vector with a shift
 void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
     totalSatisfactioWeight += 3;
     if (scene.is_valid()) {
@@ -1440,6 +1456,7 @@ void City::add_shop(Vector3 pos, Ref<PackedScene> scene) {
     }
 }
 
+//adds a house at a location given by the vector with a shift
 void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
 
     totalSatisfactioWeight += 1;
@@ -1473,6 +1490,7 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
     }
 }
 
+//adds an energy building at a location given by the vector with a shift
 void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
     totalSatisfactioWeight += 10;
 
@@ -1494,6 +1512,7 @@ void City::add_energy(Vector3 pos, Ref<PackedScene> scene) {
     }
 }
 
+//adds a production building at a location given by the vector with a shift
 void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
 
     totalSatisfactioWeight += 5;
@@ -1518,6 +1537,7 @@ void City::add_production(Vector3 pos, Ref<PackedScene> scene) {
     }
 }
 
+// intializes traffic
 void City::traffic_preparation(double x, double y) {
     if (x < sizeOfCity && y < sizeOfCity) {
         if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
@@ -1535,6 +1555,7 @@ void City::traffic_preparation(double x, double y) {
     }
 }
 
+// working traffic system
 void City::update_traffic(int x, int y, bool newBuilding, int number) {
     // nothing happens if the building isn't there
     if (positionOfBuildings[x][y] == 0)
@@ -1698,11 +1719,12 @@ void City::update_traffic(int x, int y, bool newBuilding, int number) {
 }
 
 
-
+// returns the date as string numbers
 std::string return_number_date(int day, int month, int year) {
     return std::to_string(day) + ", " + std::to_string(month) + ", " + std::to_string(year);
 }
 
+// returns average over past year (not used anymore)
 double find_avg(double array[], int leap) {
     int size;
     double sum = 0;
@@ -1718,6 +1740,7 @@ double find_avg(double array[], int leap) {
     return sum / size;
 }
 
+// returns date as a word string
 std::string City::return_word_date(int days) {
 
     int* datenumber = return_date(int(days));
@@ -1766,7 +1789,7 @@ std::string City::return_word_date(int days) {
     return date;
 }
 
-
+// returns current date as a godot String in words
 String City::return_word_date_godot() {
 
     int* datenumber = return_date(int(this->day_tick));
@@ -1817,7 +1840,7 @@ String City::return_word_date_godot() {
 
 
 
-/// edit text files found in /addons/file.samples
+/// edit text files found in /addons/file.samples (not used anymore)
 
 std::string get_path(std::string documentName) {
     //std::ofstream log("C:\\logs\\performance.log", std::ofstream::app | std::ofstream::out);
@@ -1947,7 +1970,7 @@ void delete_line(std::string documentName, std::string dataToDelete) {
 }
 
 
-
+// write current statistics to arrays
 void City::write_stat_history_to_file() {
 
     Array newCarbonEmissionHousing{};
@@ -2084,6 +2107,7 @@ void City::write_stat_history_to_file() {
 }
 
 
+// return current counters functions
 
 double City::return_income() {
     return income;
@@ -2138,6 +2162,7 @@ int City::most_missing_type() {
 
 }
 
+// update emissions from transport 
 void City::update_transport_emissions() 
 {
     double emission = 0;
@@ -2148,8 +2173,11 @@ void City::update_transport_emissions()
     TransportCO2 = emission;
 }
 
-void City::transport_to_add() { //now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
-                               // the finction goes through all the buidlings  to get the wage as income
+
+// now the old finction transport_probabilities updates the missing_car_quantities with the relavent numbers
+// the function goes through all the buidlings to get the wage as income
+void City::transport_to_add() {
+
     Transport electicCar = Transport(0);
     Transport bigCar = Transport(1);
     Transport car = Transport(2);
@@ -2234,6 +2262,8 @@ int City::value_pie_chart_C02(int value, int growth) {
  
 }
 
+// changes the pie charts in the 2D interface
+// functions for accurate color and fill
 void City::change_pie_chart(int value, NodePath name, bool isPositive)
 {
     value = fmax(value, 0);
@@ -2254,6 +2284,7 @@ void City::change_pie_chart(int value, NodePath name, bool isPositive)
     }
 }
 
+// change the label of the pie chart
 void City::change_pie_label(int value, NodePath name) {
     Label* label = ((Label*)this->get_parent()->get_child(1)->get_node("Infographics")->get_node(name)->get_child(1));
     std::string standardString = std::to_string((int)value);
@@ -2262,7 +2293,6 @@ void City::change_pie_label(int value, NodePath name) {
 }
 
 // auxiliary function to simplify ring city generation
-
 float City::calculate_building_prob(float roota, float rootb, float proportion, double dist) {
     if (dist < (citysize * roota / 20) || dist >(citysize * rootb / 20)) { 
         return 0; 
@@ -2276,8 +2306,8 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
         return float(a * pow(((20 * dist / (citysize))), 2) + b * (20 * dist / (citysize)) + c);
     }
 }
-// function that returns unemployment rate
 
+// function that returns unemployment rate
 double City::return_unemployment_rate() {
     if (population != 0) {
         return min(0.0, (1 - this->numberOfEmployees / this->population));
@@ -2285,19 +2315,22 @@ double City::return_unemployment_rate() {
     else { return 0; }
 }
 
-// functions that get and set the value that coordinates the power plants
+// function that gets the value that coordinates the power plants
 int City::get_workingPower() {
     return this->workingPower;
 }
 
+// function that sets the value that coordinates the power plants
 void City::set_workingPower(int s) {
     (this->workingPower) = s;
 }
 
+// function that gets the budget value
 double City::get_budget() {
     return this->budget;
 }
 
+// function that sets the budget value
 void City::set_budget(double v) {
     this->budget = v;
 }
