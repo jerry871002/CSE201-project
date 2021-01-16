@@ -390,9 +390,9 @@ void House::_ready()
 	if (type == 1) {
 		//Low level house
 		//definition of low level house, has no solar panels, no double glazing and no wind turbines on roof 
-		PanelsOn = false;
-		doubleGlazingOn = false;
-		rooftopWindTurbineOn = false;
+		this->PanelsOn = false;
+		this->doubleGlazingOn = false;
+		this->rooftopWindTurbineOn = false;
 
 
 		srand((int)time(0));
@@ -408,10 +408,10 @@ void House::_ready()
 			srand((int)time(0));
 			double probability = (rand() % (100));
 			if (probability <= unemployment) {
-				housingIncome = 23 * 2;
+				this->housingIncome = 23 * 2;
 			}
 			else {
-				housingIncome = fmax(minIncome, normalGenerator(50, 70)) + fmax(minIncome, normalGenerator(50, 70));
+				this->housingIncome = fmax(minIncome, normalGenerator(50, 70)) + fmax(minIncome, normalGenerator(50, 70));
 			}
 		}
 
@@ -428,11 +428,11 @@ void House::_ready()
 		}
 
 		//Attributes for a low level house 
-		cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
-		energyUse = 25000; //25000kWh per year i.e. 13.69 kWh per day (from heating and all )
-		maintenance = 0.1765; //cost in euros per kWh
+		this->cost = 100000; //cost to build a new house (value for a low cost house, 1000€ / m^2)
+		this->energyUse = 25000; //25000kWh per year i.e. 13.69 kWh per day (from heating and all )
+		this->maintenance = 0.1765; //cost in euros per kWh
 		this->CO2Emission = 3.51; ////tons per year 
-		buildingTime = 140; //in average, building a house takes about 140 days
+		this->buildingTime = 140; //in average, building a house takes about 140 days
 		this->satisfaction = 3;
 		//satisfaction = 3; //assuming we are on a scale from 0 to 10
 
@@ -447,9 +447,9 @@ void House::_ready()
 		// High Level House 
 		//has properties : double glazing 
 
-		PanelsOn = false;
-		doubleGlazingOn = true;
-		rooftopWindTurbineOn = false;
+		this->PanelsOn = false;
+		this->doubleGlazingOn = true;
+		this->rooftopWindTurbineOn = false;
 
 		srand((int)time(0));
 		this->numberOfInhabitants = (rand() % (6) + 1);
@@ -487,13 +487,20 @@ void House::_ready()
 		this->age = (rand() % (20 * 365) + 1);
 	}
 
+
+}
+
+
+// This function is necessary to properly initialize the houses in Godot and to make sure they have the correct values
+
+void House::house_initialize() {
 	
+
 }
 
 void House::_register_methods()
 {
 	register_method((char*)"_ready", &House::_ready);
-	register_method((char*)"house_type", &House::house_type);
 	register_property<House, int>("houseType", &House::set_houseType, &House::get_houseType, 1);
 }
 

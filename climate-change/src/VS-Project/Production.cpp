@@ -316,7 +316,7 @@ void GoodsFactories::simulate_step(double days)
 			this->get_child(1)->set("visible", false);
 			satisfaction = 5;
 		}
-		if (60 < employment <= 120 && chance < 4) {
+		if (60 < employment && employment <= 120 && chance < 4) {
 			employment = 0;
 			factory_closed = true;
 			age = 0;

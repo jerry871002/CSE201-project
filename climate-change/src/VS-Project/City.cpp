@@ -16,7 +16,7 @@
 #include <Label.hpp>
 #include <DirectionalLight.hpp>
 #include <WorldEnvironment.hpp>
-#include <godot.hpp>
+#include <Godot.hpp>
 #include <Node2D.hpp>
 
 #include <PoolArrays.hpp>
@@ -574,37 +574,6 @@ void City::generate_initial_city_graphics()
 
                 }
             }
-            /*    this stuff was for that ring around the fields
-            else
-            {
-                for (int x1 = 0; x1 < 2; x1++)
-                {
-                    for (int z1 = 0; z1 < 2; z1++) {
-                        srand(int((x1 + 1) * (z1 + 1) * (x + 1) * (z + 1)));
-                        Vector3 pos1 = Vector3(30 * x1, 0, 30 * z1) ;
-                        Vector3 pos2 = pos + pos1;
-                        dist = pos2.distance_to(center);
-                        //dist = pow(pow(center.x - pos1.x, 2) + pow(center.z - pos1.z, 2), 0.5);
-                        if (dist <= citysize * 15) {
-                            // plops down a building if theres no space for a 2x2 but there is for a 1x1  ... this should be on the outside of the city so if we want only one or two types on the edge we can set that here
-                            float restaurantprob = calculate_building_prob(0, 150, 1, dist) + calculate_building_prob(260, 300, 0.2, dist);
-                            float shopprob = calculate_building_prob(0, 200, 1.2, dist) + calculate_building_prob(260, 300, 0.2, dist);
-                            float buildingprob = calculate_building_prob(180, 210, 1.5, dist) + calculate_building_prob(-100, 150, 1, dist);
-                            float windmillprob = calculate_building_prob(0, 160, 0.05, dist) + calculate_building_prob(270, 315, 0.3, dist);
-                            float lowhouseprob = calculate_building_prob(-200, 200, 5, dist) + calculate_building_prob(270, 310, 0.25, dist);
-                            float highhouseprob = calculate_building_prob(-140, 200, 4, dist) + calculate_building_prob(270, 310, 0.7, dist);
-                            double type = (double((double)rand() / (double)RAND_MAX) * double(restaurantprob + shopprob + buildingprob + windmillprob + lowhouseprob + highhouseprob));
-                            if (type < (double)(restaurantprob)) { add_shop(pos + pos1, RestaurantScene); }
-                            else if (type < (double)(restaurantprob + shopprob)) { add_shop(pos + pos1, ShopScene); }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob)) { add_house(pos + pos1, LowHouseScene); }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob)) { add_house(pos + pos1, BuildingScene); }
-                            else if (type < (double)(restaurantprob + shopprob + lowhouseprob + buildingprob + windmillprob)) { add_energy(pos + pos1, WindmillScene); }
-                            else { add_house(pos, HighHouseScene); }
-                        }
-                    }
-                }
-            }*/
-
         }
     }
     trees_iterator = trees_vector.begin();
@@ -1558,7 +1527,7 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         all_structures.push_back((Structure*)node);
         trees_vector.push_back((Structure*)node);
 
-
+        if (((Housing*)node)->get_object_type() == "House") { ((House*)node)->house_initialize(); }
 
 
         // traffic stuff
@@ -2177,7 +2146,7 @@ void City::write_stat_history_to_file() {
 
     Array newIncome{};  //GDP
     newIncome.push_back(return_word_date_godot());
-    newIncome.push_back((int)((max(budget, 0) / pow(10, 3)) + 0.5));
+    newIncome.push_back((int)((max(budget, 0.0) / pow(10, 3)) + 0.5));
 
     if (statsIncome.size() > 100) {
         statsIncome.remove(1);
@@ -2434,7 +2403,7 @@ float City::calculate_building_prob(float roota, float rootb, float proportion, 
 
 double City::return_unemployment_rate() {
     if (population != 0) {
-        return min(0,(1 - this->numberOfEmployees / this->population));
+        return min(0.0, (1 - this->numberOfEmployees / this->population));
     }
     else { return 0; }
 }
