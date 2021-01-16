@@ -97,8 +97,9 @@ namespace godot {
 		Building();
 		~Building();
 
-		virtual void _ready();
+		
 		static void _register_methods();
+		virtual void _ready();
 
 		virtual String get_object_type() { return "Building"; };
 
