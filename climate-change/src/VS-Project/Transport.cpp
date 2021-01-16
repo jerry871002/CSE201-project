@@ -323,7 +323,7 @@ void Transport::_init() {
 }
 
 /**
-* Godot ready functio
+* Godot ready function
 *
 * Initialized variables depending on objects from godot scenes
 */

@@ -214,21 +214,6 @@ we update `day_tick` and execute simulation()
 // simulation step
 void City::_physics_process(float delta) {
 
-    change_pie_chart((int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
-    change_pie_chart(value_pie_chart_C02(carbonEmission, 20000), "PieCO2", false);
-    change_pie_chart(income / (numberOfEmployees * 30), "PieIncome", true);
-    change_pie_chart(value_pie_chart_C02(budget, pow(10, 4)), "PieBudget", true);
-    change_pie_chart(4 * (100 - 100 * numberOfEmployees / population), "PieUnemployement", false); //EnergyDemand variable is temporary
-    change_pie_chart(value_pie_chart_C02(energyDemand / all_structures.size(), 25000), "PiePowerDemand", false);
-
-    change_pie_label((int)(10 * return_totalSatisfaction()), "PieSatisfaction");
-    change_pie_label(carbonEmission, "PieCO2");
-    change_pie_label(income / numberOfEmployees, "PieIncome");
-    change_pie_label(budget, "PieBudget");
-    change_pie_label(fmax(100 - 100 * numberOfEmployees / population, 0), "PieUnemployement");
-    change_pie_label(energyDemand / all_structures.size(), "PiePowerDemand");
-
-
     if (bool(this->time_speed))
     {
         (*structures_iterator)->set("updatable", true);
@@ -248,7 +233,19 @@ void City::_physics_process(float delta) {
 
         (this->simulation_counter) -= 5;
       
+        change_pie_chart((int)(10 * return_totalSatisfaction()), "PieSatisfaction", true);
+        change_pie_chart(value_pie_chart_C02(carbonEmission, 20000), "PieCO2", false);
+        change_pie_chart(income / (numberOfEmployees * 30), "PieIncome", true);
+        change_pie_chart(value_pie_chart_C02(budget, pow(10, 4)), "PieBudget", true);
+        change_pie_chart(4 * (100 - 100 * numberOfEmployees / population), "PieUnemployement", false); //EnergyDemand variable is temporary
+        change_pie_chart(value_pie_chart_C02(energyDemand / all_structures.size(), 25000), "PiePowerDemand", false);
 
+        change_pie_label((int)(10 * return_totalSatisfaction()), "PieSatisfaction");
+        change_pie_label(carbonEmission, "PieCO2");
+        change_pie_label(income / numberOfEmployees, "PieIncome");
+        change_pie_label(budget, "PieBudget");
+        change_pie_label(fmax(100 - 100 * numberOfEmployees / population, 0), "PieUnemployement");
+        change_pie_label(energyDemand / all_structures.size(), "PiePowerDemand");
 
     }
 
