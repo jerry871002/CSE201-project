@@ -279,7 +279,7 @@ void GoodsFactories::simulate_step(double days)
 		}
 	}
 
-	if (maximum_CO2 > 0) {
+	if (maximum_CO2 > 0 && maximum_CO2 < 42) {
 		int maxi = 10;
 		if (maximum_CO2 >= 30) {
 			maxi = 10;
@@ -317,6 +317,11 @@ void GoodsFactories::simulate_step(double days)
 			satisfaction = 5;
 		}
 		else {
+			factory_closed = false;
+			if (employment == 0) {
+				std::normal_distribution <double> employees(100, 60);
+				employment = employees(gen);
+			}
 			this->get_child(0)->set("visible", true);
 			this->get_child(1)->set("visible", true);
 		}
@@ -324,6 +329,11 @@ void GoodsFactories::simulate_step(double days)
 		CO2Emission = (co2(gen) * employment) * green * 0.001 * 365; // ton per year
 	}
 	else {
+		factory_closed = false;
+		if (employment == 0) {
+			std::normal_distribution <double> employees(100, 60);
+			employment = employees(gen);
+		}
 		std::normal_distribution <double> co2(42.5, 0.5);
 		CO2Emission = (co2(gen) * employment) * green * 0.001 * 365;
 	}
