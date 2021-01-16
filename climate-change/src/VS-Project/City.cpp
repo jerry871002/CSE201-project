@@ -323,12 +323,15 @@ void City::_physics_process(float delta) {
 
     if (this->notification_active)
     {
+        // If notification is active, increment time counter until timeout
         (this->notification_counter)++;
         if (this->notification_counter > this->notification_timeout)
         {
+            // Hide notification box
             this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
             this->notification_active = false;
             this->notification_counter = 0;
+            // If an automatic reset mechanism was triggered, game is reset after notification timeout
             if (this->ResetNotification) {
                 this->ResetNotification = false;
                 this->_on_Reset_confirmed();
@@ -564,7 +567,7 @@ void City::generate_initial_city_graphics()
     }
 
 
-    //   shuffles all the vectors so that buildings arent updated in a noticeable pattern
+    // shuffles all the vectors so that buildings arent updated in a noticeable pattern
     std::random_shuffle(all_structures.begin(), all_structures.end());
     std::random_shuffle(all_energies.begin(), all_energies.end());
     std::random_shuffle(all_houses.begin(), all_houses.end());
@@ -701,8 +704,9 @@ void City::initialize_stats() {
 
 }
 
-// code for various buttons
+// Buttons and Signals
 
+// signal for "show graph" button
 void City::_on_GraphsButton_pressed()
 {
     this->_on_Reset_cancelled();
@@ -717,6 +721,7 @@ void City::_on_GraphsButton_pressed()
 
 }
 
+// signal for "hide graph" button
 void City::_on_GraphsExit_pressed() {
 
     this->get_tree()->get_root()->get_node("Main/2Dworld/GraphsExit")->set("visible", false);
@@ -726,22 +731,20 @@ void City::_on_GraphsExit_pressed() {
     this->_on_Game_Speed_changed();
 }
 
+// signal for "exit game" button
 void City::_on_ExitButton_pressed()
 {
     this->_on_Reset_cancelled();
     this->time_speed = 0;
-
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
-
     hide_menus();
-
     this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
-
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 }
+
 
 void City::_on_3dButton_pressed()
 {
@@ -749,48 +752,45 @@ void City::_on_3dButton_pressed()
     MenuVisibility = !MenuVisibility;
 }
 
+// signal for "cancel exit" button
 void City::_on_Exit_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
-
-
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ExitConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
 }
 
+// signal for "confirm exit" button
 void City::_on_Exit_confirmed()
 {
     this->get_tree()->quit();
 }
 
-
+// signal for "reset game" button
 void City::_on_ResetButton_pressed()
 {
     this->_on_Exit_cancelled();
     this->time_speed = 0;
-
     this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", true);
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", true);
-
     hide_menus();
-
     this->get_tree()->get_root()->get_node("Main/2Dworld")->get_node("InfoBox")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ButtonInfoBox")->set("visible", false);
-
     this->get_tree()->get_root()->get_node("Main/2Dworld/PoliciesInput")->set("visible", false);
 }
 
+// signal for "cancel reset" button
 void City::_on_Reset_cancelled()
 {
     this->get_tree()->get_root()->get_node("Main/3Dworld/Player")->set("movable", true);
-
     this->get_tree()->get_root()->get_node("Main/2Dworld/Blur")->set("visible", false);
     this->get_tree()->get_root()->get_node("Main/2Dworld/ResetConfirmationBox")->set("visible", false);
     this->_on_Game_Speed_changed();
 }
 
+// signal for "confirm reset" button
 void City::_on_Reset_confirmed()
 {
     // RESET GAME SETTINGS
