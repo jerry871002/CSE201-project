@@ -305,7 +305,8 @@ void City::_physics_process(float delta) {
                     under_budget = false;  this->trigger_notification(String("You have gone climbed out of debt ! Congratulations ! Does this mean re-election?"));
                 }
                 else {
-                    this->_on_Reset_confirmed(); this->trigger_notification(String("Game over ! You overspent the town's budget in two consecutive years. Better luck this time."));
+                    this->ResetNotification = true; 
+                    this->trigger_notification(String("Game over ! You overspent the town's budget in two consecutive years. Better luck this time."));
                 }
             }
 
@@ -341,6 +342,10 @@ void City::_physics_process(float delta) {
             this->get_tree()->get_root()->get_node("Main/2Dworld/InvalidInputNotification")->set("visible", false);
             this->notification_active = false;
             this->notification_counter = 0;
+            if (this->ResetNotification) {
+                this->ResetNotification = false;
+                this->_on_Reset_confirmed();
+            }
         }
     }
 }
