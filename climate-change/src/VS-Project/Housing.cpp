@@ -226,12 +226,24 @@ double Housing::get_double_glazing_age() {
 }
 
 double Housing::get_satisfaction() {
+	std::cout << "DEBUG: HOUSING  satisfaction : " << (this->satisfaction) << std::endl;
+	double panelsF = 0;
+	double roofturbineF = 0;
+	double treesF = 0;
+	if (this->PanelsOn) { panelsF= 2; };
+    if (this->rooftopWindTurbineOn) { roofturbineF = 1.1; };
 	if (this->get_main_type() == "Housing" || (this->get_main_type() == "Shop") && this->get_object_type() == "Mall") {
 		if (this->get_node("MeshComponents/Trees")->get("visible")) {
-			return ((this->satisfaction) + 4);
+			treesF = 2;
 		}
 	}
-	else { return this->satisfaction; }
+	this->satisfaction += panelsF + roofturbineF + treesF;
+	if (this->satisfaction > 10){
+		return 10;
+	}
+	else {
+		return this->satisfaction;
+	}
 
 }
 
