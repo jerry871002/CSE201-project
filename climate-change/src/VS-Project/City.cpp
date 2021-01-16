@@ -568,36 +568,47 @@ void City::generate_initial_city_graphics()
     std::random_shuffle(all_production.begin(), all_production.end());
 
     std::random_shuffle(trees_vector.begin(), trees_vector.end());
-
+    std::cout << "DEBUG: vectors shuffle done" << std::endl;
+    
     
 
 
-
     this->budget += 1000 * all_structures.size();
+    std::cout << "DEBUG:budget changed" << std::endl;
 
     // loop to ensure population and employees match up by tweaking the population
-
+    std::cout << "DEBUG: about to check employment" << std::endl;
+    bool firstloop = false;
     while (population < numberOfEmployees * 1.02 || population > numberOfEmployees * 1.10) {
+        
+        std::cout << "DEBUG: population" << population << "   employed:  " << numberOfEmployees << std::endl;
         if (population < numberOfEmployees * 1.02) {
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
             {
-                if ((*it)->get_object_type() == "Building") {
+                std::cout << "DEBUG: about to check in a house" << std::endl;
+                if (firstloop || (int)(*it)->get("numberOfInhabitants") > 10) {
                     this->population -= (int)(*it)->get("numberOfInhabitants");
+                    std::cout << "DEBUG: numberofinhabitants" << (int)(*it)->get("numberOfInhabitants") << std::endl;
                     (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") + (int)(rand() % 3));
                     this->population += (int)(*it)->get("numberOfInhabitants");
+                    std::cout << "DEBUG: numberofinhabitants" << (int)(*it)->get("numberOfInhabitants") << std::endl;
                 }
             }
         }
         if (population > numberOfEmployees * 1.10) {
             for (std::vector<Housing*>::iterator it = all_houses.begin(); it != all_houses.end(); ++it)
             {
-                if ((*it)->get_object_type()=="Building") {
+                std::cout << "DEBUG: about to check in a house" << std::endl;
+                if ((int)(*it)->get("numberOfInhabitants") > 2) {
                     this->population -= (int)(*it)->get("numberOfInhabitants");
+                    std::cout << "DEBUG: numberofinhabitants" << (int)(*it)->get("numberOfInhabitants") << std::endl;
                     (*it)->set("numberOfInhabitants", (int)(*it)->get("numberOfInhabitants") - (int)(rand() % 2));
                     this->population += (int)(*it)->get("numberOfInhabitants");
+                    std::cout << "DEBUG: numberofinhabitants" << (int)(*it)->get("numberOfInhabitants") << std::endl;
                 }
             }
         }
+        firstloop = true;
 
 
     }
@@ -638,6 +649,8 @@ void City::set_initial_visible_components()
 void City::_ready()
 {
     static default_random_engine generator(time(0));
+
+    traffic_system[citysize][citysize][4][3] = { 0 };
 
     this->initialize_stats();
 
