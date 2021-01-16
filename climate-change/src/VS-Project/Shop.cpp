@@ -80,12 +80,12 @@ double Shop::get_satisfaction() {
     if (this->PanelsOn) { panelsF= 2; };
     if (this->WindTurbineOn) { roofturbineF = 1.1; }; //Increase satisfaction if more eco friendly
     
-    this->satisfaction += panelsF + roofturbineF ;
-	if (this->satisfaction > 9.8){
+
+	if (this->satisfaction + panelsF + roofturbineF  > 9.8){
 		return 9.8;
 	}
 	else {
-		return this->satisfaction;
+		return this->satisfaction += panelsF + roofturbineF ;
 	}
 
 }

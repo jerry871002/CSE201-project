@@ -237,12 +237,11 @@ double Housing::get_satisfaction() {
 			treesF = 2;
 		}
 	}
-	this->satisfaction += panelsF + roofturbineF + treesF;
-	if (this->satisfaction > 10){
+	if (this->satisfaction + panelsF + roofturbineF + treesF > 10){
 		return 10;
 	}
 	else {
-		return this->satisfaction;
+		return this->satisfaction + panelsF + roofturbineF + treesF;
 	}
 
 }
@@ -490,7 +489,7 @@ void House::set_houseType(int type)
 		maintenance = 0.1765; //cost in euros per kWh
 		this->CO2Emission = 3.51; //tons per year
 		buildingTime = 140; //in average, building a house takes about 140 days
-		this->satisfaction = 10;
+		this->satisfaction = 8;
 		//satisfaction = 10; //assuming we are on a scale from 0 to 10
 		srand((int)time(0));
 		this->age = (rand() % (20 * 365) + 1);
