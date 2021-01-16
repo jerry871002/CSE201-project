@@ -140,7 +140,7 @@ namespace godot {
         int rolling_simulation_counter{ -1 };
 
         
-        int value_pie_chart_C02(int, int);
+
         void change_pie_chart(int value, NodePath name, bool isPositive);
 		void change_pie_label(int value, NodePath name);
 
@@ -148,7 +148,10 @@ namespace godot {
 
         //TRAFFIC
 
-        int positionOfBuildings[citysize][citysize] = { 0 }; // sets ever building to non-existing for the traffic array 
+        //const int citysize = 26;
+
+        int sizeOfCity = citysize; // buildings are placed only on a square sizeOfCity * sizeOfCity
+        int positionOfBuildings[citysize][citysize] = { 0 }; // sets  everything to non-existing for the traffic array 
 
         // following functions handle adding structures to the city, takes a position and the required scene
         void add_shop(Vector3 pos, Ref<PackedScene> scene); // adds a shop and updates the traffic array with the shop
@@ -206,7 +209,7 @@ namespace godot {
 
 
         
-		
+		int value_pie_chart_C02(int,int);
 
         float calculate_building_prob(float, float, float, double);
 
@@ -215,6 +218,18 @@ namespace godot {
         void remove_type_car(int type); //reduces by 1 current_car_quantities[type] 
         int most_missing_type();
 
+        /* we can keep these vairables as floats as long as each StaticBody only computes the ADDITIONAL AMOUNT of energy, income etc.
+        and we cannot have different consequences for diff sectors (e.g. housing, production and industry) and thus implement different policies for each*/
+
+        /* other idea: implement arrays based on sector (housing, production, infrastructure), compute additional amounts but differences between sector
+        (other more radical idea: array with all buildings, not necessarily needed?)
+        float income_array[3];
+        float population_array[3];
+        float employed_array[3];
+        float carbon_array[3];
+        float energyDemand_array[3];
+        float energySupply_array[3];
+        */
         //policies for transport
         //tax on car consumption
         double fuelTax; // value per liter of fuel
@@ -250,20 +265,25 @@ namespace godot {
     private:
         // city indices
 
+        
+
+
         double budget; //yearly budget that can be used t proomote the policies
+                       // updated in the undate_time function
    
         bool under_budget = { false };
         
         //probability that a certain type of car will be added
         double airQuality;
         int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
-        int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month, represents the cars that need to get added
+        int missing_car_quantities[8] = { 0 }; //updated in the update_date function every month
 
 
         // method for power plants
         int workingPower{ 0 };
         int get_workingPower();
         void set_workingPower(int);
+
 
 
         bool factoryyearsubsidy{ false };
@@ -296,6 +316,7 @@ namespace godot {
         const Ref<PackedScene> SheepPastureScene = ResourceLoader::get_singleton()->load("res://Resources/PastureSheeps.tscn", "PackedScene");
         const Ref<PackedScene> FieldScene = ResourceLoader::get_singleton()->load("res://Resources/Field.tscn", "PackedScene");
         const Ref<PackedScene> BuildingScene = ResourceLoader::get_singleton()->load("res://Resources/Building.tscn", "PackedScene");
+
 
 
         const Ref<PackedScene> PDScene = ResourceLoader::get_singleton()->load("res://Resources/Pedestrian.tscn", "PackedScene");
