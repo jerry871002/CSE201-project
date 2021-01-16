@@ -597,6 +597,9 @@ void City::generate_initial_city_graphics()
 
 
     }
+
+    
+    std::cout << "DEBUG: CITY GENERATION DONE" << std::endl;
 }
 
 void City::set_initial_visible_components()
@@ -1465,6 +1468,8 @@ void City::add_house(Vector3 pos, Ref<PackedScene> scene) {
         double y = pos.z / 30; // can be int only for small building
 
         traffic_preparation(x, y);
+
+        std::cout << "DEBUG: ADD HOUSE DONE" << std::endl;
     }
 }
 
@@ -1517,6 +1522,7 @@ void City::traffic_preparation(double x, double y) {
     if (x < sizeOfCity && y < sizeOfCity) {
         if (x > int(x) - 0.1 && x < int(x) + 0.1) { // check that it's a small building
             positionOfBuildings[int(x)][int(y)] = 1;
+            //std::cout << " SMALL BUILDING CREATED" << std::endl;
         }
         else {
             positionOfBuildings[int(x)][int(y)] = 2; // assign numbers to the four squares of the 2 by 2 buidling to know it's position by knowing just the coordinates and the number of one square
@@ -1524,6 +1530,7 @@ void City::traffic_preparation(double x, double y) {
             positionOfBuildings[int(x) + 1][int(y) + 1] = 4;
             positionOfBuildings[int(x)][int(y) + 1] = 5;
         }
+        //std::cout << "DEBUG: call the function update traffic" << std::endl;
         update_traffic(int(x), int(y), true, positionOfBuildings[int(x)][int(y)]);
     }
 }
