@@ -250,11 +250,6 @@ namespace godot {
         //to generate random numbers
         double normalGenerator(double mean, double stdDev);
 
-        double return_unemployment_rate();
-
-    private:
-        // city indices
-
         double income;
         int population;
         double numberOfEmployees;
@@ -265,13 +260,22 @@ namespace godot {
         int totalSatisfactioWeight{ 0 };
         int totalSatisfaction;
 
+        double get_budget();
+        void set_budget(double);
+
+        double return_unemployment_rate();
+
+    private:
+        // city indices
+
+        
+
 
         double budget; //yearly budget that can be used t proomote the policies
                        // updated in the undate_time function
-        double get_budget();
-        void set_budget(double);
+   
         bool under_budget = { false };
-
+        
         //probability that a certain type of car will be added
         double airQuality;
         int current_car_quantities[8] = { 0 }; //current quantities of cars by the type in the city 
